@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-24T13:53:29.421Z",
+ "generated_at": "2026-10-24T14:07:22.887Z",
  "earnings_year": "CY2025",
  "rules": {
   "per_bucket": 15,
@@ -37,9 +37,9 @@
   }
  ],
  "counts": {
-  "universe": 5352,
-  "with_financials": 3612,
-  "passed": 639
+  "universe": 3931,
+  "with_financials": 3157,
+  "passed": 590
  },
  "rows": [
   {
@@ -232,23 +232,6 @@
   {
    "bucket": "Mega",
    "rank": 12,
-   "symbol": "MA",
-   "name": "Mastercard Incorporated",
-   "sector": "Consumer Discretionary",
-   "industry": "Business Services",
-   "price": 633.21,
-   "market_cap": 554698254107,
-   "pe": 37.06,
-   "net_income": 14968000000,
-   "revenue": 32791000000,
-   "net_margin": 0.4565,
-   "sales_growth": 0.1642,
-   "profit_growth": 0.1627,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Mega",
-   "rank": 13,
    "symbol": "V",
    "name": "Visa Inc.",
    "sector": "Consumer Discretionary",
@@ -265,7 +248,7 @@
   },
   {
    "bucket": "Mega",
-   "rank": 14,
+   "rank": 13,
    "symbol": "GE",
    "name": "GE Aerospace",
    "sector": "Technology",
@@ -282,7 +265,7 @@
   },
   {
    "bucket": "Mega",
-   "rank": 15,
+   "rank": 14,
    "symbol": "AMZN",
    "name": "Amazon.com Inc.",
    "sector": "Consumer Discretionary",
@@ -295,6 +278,23 @@
    "net_margin": 0.1083,
    "sales_growth": 0.1238,
    "profit_growth": 0.3109,
+   "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Mega",
+   "rank": 15,
+   "symbol": "AMGN",
+   "name": "Amgen Inc.",
+   "sector": "Health Care",
+   "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+   "price": 447.28,
+   "market_cap": 241813883196,
+   "pe": 31.36,
+   "net_income": 7711000000,
+   "revenue": 36751000000,
+   "net_margin": 0.2098,
+   "sales_growth": 0.0995,
+   "profit_growth": 0.8853,
    "fy_end": "2025-12-31"
   },
   {
@@ -385,23 +385,6 @@
   {
    "bucket": "Large",
    "rank": 6,
-   "symbol": "TSEM",
-   "name": "Tower Semiconductor Ltd.",
-   "sector": "Technology",
-   "industry": "Semiconductors",
-   "price": 167.71,
-   "market_cap": 18956429010,
-   "pe": 85.98,
-   "net_income": 220470000,
-   "revenue": 1566104000,
-   "net_margin": 0.1408,
-   "sales_growth": 0.0905,
-   "profit_growth": 0.0606,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Large",
-   "rank": 7,
    "symbol": "ADI",
    "name": "Analog Devices Inc.",
    "sector": "Technology",
@@ -418,7 +401,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 8,
+   "rank": 7,
    "symbol": "PWR",
    "name": "Quanta Services Inc.",
    "sector": "Industrials",
@@ -435,7 +418,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 9,
+   "rank": 8,
    "symbol": "CDNS",
    "name": "Cadence Design Systems Inc.",
    "sector": "Technology",
@@ -452,7 +435,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 10,
+   "rank": 9,
    "symbol": "WDAY",
    "name": "Workday Inc.",
    "sector": "Technology",
@@ -469,7 +452,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 11,
+   "rank": 10,
    "symbol": "PEN",
    "name": "Penumbra Inc.",
    "sector": "Health Care",
@@ -486,7 +469,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 12,
+   "rank": 11,
    "symbol": "FRHC",
    "name": "Freedom Holding Corp.",
    "sector": "Finance",
@@ -503,7 +486,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 13,
+   "rank": 12,
    "symbol": "WAT",
    "name": "Waters Corporation",
    "sector": "Industrials",
@@ -520,7 +503,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 14,
+   "rank": 13,
    "symbol": "EQIX",
    "name": "Equinix Inc.",
    "sector": "Real Estate",
@@ -537,7 +520,7 @@
   },
   {
    "bucket": "Large",
-   "rank": 15,
+   "rank": 14,
    "symbol": "FTNT",
    "name": "Fortinet Inc.",
    "sector": "Technology",
@@ -550,6 +533,23 @@
    "net_margin": 0.2726,
    "sales_growth": 0.1417,
    "profit_growth": 0.062,
+   "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Large",
+   "rank": 15,
+   "symbol": "GLW",
+   "name": "Corning Incorporated",
+   "sector": "Industrials",
+   "industry": "Telecommunications Equipment",
+   "price": 123.99,
+   "market_cap": 106803539161,
+   "pe": 66.92,
+   "net_income": 1596000000,
+   "revenue": 15629000000,
+   "net_margin": 0.1021,
+   "sales_growth": 0.1914,
+   "profit_growth": 2.1542,
    "fy_end": "2025-12-31"
   },
   {
@@ -742,23 +742,6 @@
   {
    "bucket": "Mid",
    "rank": 12,
-   "symbol": "GLNG",
-   "name": "Golar Lng Ltd",
-   "sector": "Consumer Discretionary",
-   "industry": "Marine Transportation",
-   "price": 44.03,
-   "market_cap": 4472975470,
-   "pe": 68.11,
-   "net_income": 65676000,
-   "revenue": 393522000,
-   "net_margin": 0.1669,
-   "sales_growth": 0.5114,
-   "profit_growth": 0.2918,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Mid",
-   "rank": 13,
    "symbol": "SHC",
    "name": "Sotera Health Company",
    "sector": "Health Care",
@@ -775,7 +758,7 @@
   },
   {
    "bucket": "Mid",
-   "rank": 14,
+   "rank": 13,
    "symbol": "PAY",
    "name": "Paymentus Holdings Inc.",
    "sector": "Consumer Discretionary",
@@ -792,7 +775,7 @@
   },
   {
    "bucket": "Mid",
-   "rank": 15,
+   "rank": 14,
    "symbol": "INOD",
    "name": "Innodata Inc.",
    "sector": "Technology",
@@ -805,6 +788,23 @@
    "net_margin": 0.1279,
    "sales_growth": 0.4764,
    "profit_growth": 0.1229,
+   "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Mid",
+   "rank": 15,
+   "symbol": "MTRN",
+   "name": "Materion Corporation",
+   "sector": "Industrials",
+   "industry": "Industrial Specialties",
+   "price": 219.12,
+   "market_cap": 4565085822,
+   "pe": 61.01,
+   "net_income": 74823000,
+   "revenue": 1786550000,
+   "net_margin": 0.0419,
+   "sales_growth": 0.0604,
+   "profit_growth": 11.7077,
    "fy_end": "2025-12-31"
   },
   {
@@ -861,23 +861,6 @@
   {
    "bucket": "Small",
    "rank": 4,
-   "symbol": "NNNN",
-   "name": "Anbio Biotechnology Class A",
-   "sector": "Health Care",
-   "industry": "Biotechnology: In Vitro & In Vivo Diagnostic Substances",
-   "price": 3.71,
-   "market_cap": 533836352,
-   "pe": 83.37,
-   "net_income": 6403463,
-   "revenue": 8646844,
-   "net_margin": 0.7406,
-   "sales_growth": 0.0564,
-   "profit_growth": 1.6986,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Small",
-   "rank": 5,
    "symbol": "RSVR",
    "name": "Reservoir Media Inc.",
    "sector": "Consumer Discretionary",
@@ -894,24 +877,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 6,
-   "symbol": "RDWR",
-   "name": "Radware Ltd.",
-   "sector": "Consumer Discretionary",
-   "industry": "Business Services",
-   "price": 29.78,
-   "market_cap": 1259901567,
-   "pe": 62.2,
-   "net_income": 20257000,
-   "revenue": 301850000,
-   "net_margin": 0.0671,
-   "sales_growth": 0.0981,
-   "profit_growth": 2.3549,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Small",
-   "rank": 7,
+   "rank": 5,
    "symbol": "GHM",
    "name": "Graham Corporation",
    "sector": "Industrials",
@@ -928,7 +894,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 8,
+   "rank": 6,
    "symbol": "PNTG",
    "name": "The Pennant Group Inc.",
    "sector": "Health Care",
@@ -945,7 +911,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 9,
+   "rank": 7,
    "symbol": "IRMD",
    "name": "iRadimed Corporation",
    "sector": "Health Care",
@@ -962,7 +928,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 10,
+   "rank": 8,
    "symbol": "LQDT",
    "name": "Liquidity Services Inc.",
    "sector": "Consumer Discretionary",
@@ -979,7 +945,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 11,
+   "rank": 9,
    "symbol": "PSTL",
    "name": "Postal Realty Trust Inc.",
    "sector": "Real Estate",
@@ -996,7 +962,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 12,
+   "rank": 10,
    "symbol": "SWBI",
    "name": "Smith & Wesson Brands Inc.",
    "sector": "Industrials",
@@ -1013,7 +979,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 13,
+   "rank": 11,
    "symbol": "SHLS",
    "name": "Shoals Technologies Group Inc.",
    "sector": "Technology",
@@ -1030,24 +996,7 @@
   },
   {
    "bucket": "Small",
-   "rank": 14,
-   "symbol": "VTEX",
-   "name": "VTEX Class A Common Shares",
-   "sector": "Technology",
-   "industry": "Computer Software: Prepackaged Software",
-   "price": 4.17,
-   "market_cap": 721382807,
-   "pe": 36.05,
-   "net_income": 20010000,
-   "revenue": 240517000,
-   "net_margin": 0.0832,
-   "sales_growth": 0.0611,
-   "profit_growth": 0.265,
-   "fy_end": "2025-12-31"
-  },
-  {
-   "bucket": "Small",
-   "rank": 15,
+   "rank": 12,
    "symbol": "LINC",
    "name": "Lincoln Educational Services Corporation",
    "sector": "Real Estate",
@@ -1061,6 +1010,57 @@
    "sales_growth": 0.1776,
    "profit_growth": 1.0218,
    "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Small",
+   "rank": 13,
+   "symbol": "KRT",
+   "name": "Karat Packaging Inc.",
+   "sector": "Industrials",
+   "industry": "Plastic Products",
+   "price": 53.84,
+   "market_cap": 1073123859,
+   "pe": 34.09,
+   "net_income": 31478000,
+   "revenue": 467743000,
+   "net_margin": 0.0673,
+   "sales_growth": 0.1067,
+   "profit_growth": 0.0501,
+   "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Small",
+   "rank": 14,
+   "symbol": "LMAT",
+   "name": "LeMaitre Vascular Inc.",
+   "sector": "Health Care",
+   "industry": "Medical/Dental Instruments",
+   "price": 85.33,
+   "market_cap": 1951433700,
+   "pe": 33.82,
+   "net_income": 57700000,
+   "revenue": 249602000,
+   "net_margin": 0.2312,
+   "sales_growth": 0.1353,
+   "profit_growth": 0.3114,
+   "fy_end": "2025-12-31"
+  },
+  {
+   "bucket": "Small",
+   "rank": 15,
+   "symbol": "PAHC",
+   "name": "Phibro Animal Health Corporation",
+   "sector": "Health Care",
+   "industry": "Biotechnology: Pharmaceutical Preparations",
+   "price": 39.81,
+   "market_cap": 1616349815,
+   "pe": 33.49,
+   "net_income": 48264000,
+   "revenue": 1296215000,
+   "net_margin": 0.0372,
+   "sales_growth": 0.2737,
+   "profit_growth": 18.9768,
+   "fy_end": "2025-06-30"
   },
   {
    "bucket": "Micro",
