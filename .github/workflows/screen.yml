@@ -1,0 +1,26 @@
+name: Build screener
+on:
+  schedule:
+    - cron: '30 22 * * 1-5'   # weekdays, ~6:30pm ET after close
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build data/screen.json
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: node scripts/build-screen.mjs data/screen.json
+      - name: Commit if changed
+        run: |
+          git config user.name "screen-bot"
+          git config user.email "screen-bot@users.noreply.github.com"
+          git add data/screen.json
+          git diff --cached --quiet || git commit -m "screen: $(date -u +%F)"
+          git push

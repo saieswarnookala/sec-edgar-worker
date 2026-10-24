@@ -1,0 +1,15 @@
+name = "sec-edgar-mcp"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "f1d65bb9f24c4813a2882d5f153a455c"
+
+[vars]
+# Change saieswarnookala to your GitHub username (repo must be public)
+SCREEN_URL = "https://raw.githubusercontent.com/saieswarnookala/sec-edgar-worker/main/data/screen.json"
+
+# Secrets (set once, not stored here):
+#   npx wrangler secret put SEC_USER_AGENT   -> e.g. "Sai you@email.com"
+#   npx wrangler secret put ACCESS_TOKEN     -> long random string
