@@ -82,7 +82,14 @@ async function nasdaqBars(symbols, end, fetchFn) {
       if (jump > 1.6 || jump < 0.6) throw new Error(`${s}: ${rows[i].d} price jump ${jump.toFixed(2)}x looks like an unadjusted split`);
     }
     const dj = await nqGet(`https://api.nasdaq.com/api/quote/${s}/dividends?assetclass=etf`, fetchFn);
-    const divs = (dj?.data?.dividends?.rows || []).map((r) => ({ d: nqDate(r.exOrEffDate), amt: nqNum(r.amount) })).filter((x) => x.d && x.amt);
+    const drows = dj?.data?.dividends?.rows || dj?.data?.dividendHistoryTable?.rows || dj?.data?.rows || [];
+    const pick = (r, ...ks) => { for (const k of ks) if (r[k] != null && r[k] !== '' && r[k] !== 'N/A') return r[k]; return null; };
+    const divs = drows.map((r) => ({ d: nqDate(pick(r, 'exOrEffDate', 'exDate', 'exDividendDate')), amt: nqNum(pick(r, 'amount', 'cashAmount', 'dividend')) }))
+      .filter((x) => x.d && x.amt && x.d >= START);
+    out._debug = out._debug || {};
+    out._debug[s] = { first_day: rows[0]?.d, days: rows.length, dividends: divs.length, first_div: divs.at(-1)?.d, last_div: divs[0]?.d,
+      data_keys: Object.keys(dj?.data || {}).slice(0, 8), row_keys: drows[0] ? Object.keys(drows[0]).slice(0, 10) : [], status: dj?.status?.rCode };
+    if (!divs.length) throw new Error(`${s}: no dividends found in Nasdaq response ${JSON.stringify(out._debug[s])}`);
     out[s] = applyDividends(rows, divs);
     await new Promise((r) => setTimeout(r, 500));
   }
@@ -301,7 +308,7 @@ export function assemble(bars, now = new Date()) {
     }),
     pack('trend10', 'Trend on 10 ETFs', T.sim.trend10.pts, spyM, { freq: 'monthly', months: T.sim.trend10.months, up_months: r1(T.sim.trend10.up_months), invested: r1(T.sim.trend10.invested), dd_basis: 'month-end closes' }),
   ];
-  return { generated: now.toISOString(), source: bars._source, source_notes: bars._notes || [], strategies };
+  return { generated: now.toISOString(), source: bars._source, source_notes: bars._notes || [], source_debug: bars._debug || null, strategies };
 }
 
 export function toCsv(result) {
