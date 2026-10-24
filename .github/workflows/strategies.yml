@@ -1,0 +1,31 @@
+name: Build strategies
+on:
+  schedule:
+    - cron: '0 23 2 * *'   # 2nd of each month, after the previous month closes
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node test-strategies.mjs
+      - name: Build data/strategies.json
+        env:
+          # optional: if set, uses Alpaca (same data as the Oct 10 run); otherwise Yahoo Finance
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: node scripts/build-strategies.mjs data
+      - name: Commit if changed
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          git add data/strategies.json data/strategy_series.csv
+          git diff --cached --quiet || git commit -m "strategies: $(date -u +%F)"
+          git pull --rebase
+          git push
