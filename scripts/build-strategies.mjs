@@ -81,8 +81,12 @@ async function nasdaqBars(symbols, end, fetchFn) {
       const jump = rows[i].c / rows[i - 1].c;
       if (jump > 1.6 || jump < 0.6) throw new Error(`${s}: ${rows[i].d} price jump ${jump.toFixed(2)}x looks like an unadjusted split`);
     }
-    const dj = await nqGet(`https://api.nasdaq.com/api/quote/${s}/dividends?assetclass=etf`, fetchFn);
-    const drows = dj?.data?.dividends?.rows || dj?.data?.dividendHistoryTable?.rows || dj?.data?.rows || [];
+    let dj = null, drows = [];
+    for (const cls of ['etf', 'stocks']) {
+      dj = await nqGet(`https://api.nasdaq.com/api/quote/${s}/dividends?assetclass=${cls}`, fetchFn);
+      drows = dj?.data?.dividends?.rows || dj?.data?.dividendHistoryTable?.rows || dj?.data?.rows || [];
+      if (drows.length) break;
+    }
     const pick = (r, ...ks) => { for (const k of ks) if (r[k] != null && r[k] !== '' && r[k] !== 'N/A') return r[k]; return null; };
     const divs = drows.map((r) => ({ d: nqDate(pick(r, 'exOrEffDate', 'exDate', 'exDividendDate')), amt: nqNum(pick(r, 'amount', 'cashAmount', 'dividend')) }))
       .filter((x) => x.d && x.amt && x.d >= START);
