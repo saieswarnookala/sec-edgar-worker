@@ -22,11 +22,72 @@ const ym = (d) => d.slice(0, 7);
 
 // ---------------- data ----------------
 // Returns { SYM: [{d:'YYYY-MM-DD', o, c}] } with dividend/split-adjusted open and close, sorted by date.
-export async function loadBars(symbols, { fetchFn = fetch, env = process.env, end } = {}) {
+export async function loadBars(symbols, { fetchFn = fetch, env = process.env, end, sources } = {}) {
   end = end || iso(new Date(Date.now() - 86400000));
-  return env.APCA_API_KEY_ID && env.APCA_API_SECRET_KEY
-    ? alpacaBars(symbols, end, fetchFn, env)
-    : yahooBars(symbols, end, fetchFn);
+  const chain = sources || [
+    ...(env.APCA_API_KEY_ID && env.APCA_API_SECRET_KEY ? [['Alpaca', () => alpacaBars(symbols, end, fetchFn, env)]] : []),
+    ['Yahoo', () => yahooBars(symbols, end, fetchFn)],
+    ['Nasdaq', () => nasdaqBars(symbols, end, fetchFn)],
+  ];
+  const notes = [];
+  for (const [name, fn] of chain) {
+    try {
+      const bars = await fn();
+      for (const s of symbols) if (!bars[s] || bars[s].length < 300) throw new Error(`${s}: only ${bars[s]?.length || 0} days`);
+      bars._notes = notes;
+      return bars;
+    } catch (e) { notes.push(`${name} failed: ${String(e.message || e).slice(0, 300)}`); }
+  }
+  throw new Error('All price sources failed:\n' + notes.join('\n'));
+}
+
+// Nasdaq: unadjusted daily prices + dividend history -> total-return adjusted open/close.
+const NQ_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36',
+  Accept: 'application/json, text/plain, */*', Origin: 'https://www.nasdaq.com', Referer: 'https://www.nasdaq.com/',
+};
+const nqNum = (v) => { const n = Number(String(v ?? '').replace(/[$,\s]/g, '')); return Number.isFinite(n) ? n : null; };
+const nqDate = (v) => { const m = String(v || '').match(/^(\d{2})\/(\d{2})\/(\d{4})$/); return m ? `${m[3]}-${m[1]}-${m[2]}` : null; };
+async function nqGet(url, fetchFn) {
+  for (let i = 0; i < 4; i++) {
+    const r = await fetchFn(url, { headers: NQ_HEADERS });
+    if (r.ok) return r.json();
+    await new Promise((res) => setTimeout(res, 2000 * (i + 1)));
+  }
+  throw new Error('Nasdaq request failed: ' + url);
+}
+export function applyDividends(rows, divs) {
+  // rows ascending {d, o, c} unadjusted; divs [{d: exDate, amt}]. Back-adjust like an "adjusted close".
+  const out = rows.map((r) => ({ ...r }));
+  const ex = [...divs].filter((x) => x.amt > 0).sort((a, b) => (a.d < b.d ? 1 : -1)); // newest first
+  let f = 1, j = 0;
+  for (let i = out.length - 1; i >= 0; i--) {
+    out[i].o *= f; out[i].c *= f;
+    while (j < ex.length && i > 0 && ex[j].d > out[i - 1].d && ex[j].d <= out[i].d) {
+      const prev = rows[i - 1].c;
+      if (prev > 0) f *= 1 - ex[j].amt / prev;
+      j++;
+    }
+  }
+  return out;
+}
+async function nasdaqBars(symbols, end, fetchFn) {
+  const out = {};
+  for (const s of symbols) {
+    const h = await nqGet(`https://api.nasdaq.com/api/quote/${s}/historical?assetclass=etf&fromdate=${START}&todate=${end}&limit=9999`, fetchFn);
+    const rows = (h?.data?.tradesTable?.rows || []).map((r) => ({ d: nqDate(r.date), o: nqNum(r.open), c: nqNum(r.close) }))
+      .filter((r) => r.d && r.o > 0 && r.c > 0).sort((a, b) => (a.d < b.d ? -1 : 1));
+    for (let i = 1; i < rows.length; i++) {
+      const jump = rows[i].c / rows[i - 1].c;
+      if (jump > 1.6 || jump < 0.6) throw new Error(`${s}: ${rows[i].d} price jump ${jump.toFixed(2)}x looks like an unadjusted split`);
+    }
+    const dj = await nqGet(`https://api.nasdaq.com/api/quote/${s}/dividends?assetclass=etf`, fetchFn);
+    const divs = (dj?.data?.dividends?.rows || []).map((r) => ({ d: nqDate(r.exOrEffDate), amt: nqNum(r.amount) })).filter((x) => x.d && x.amt);
+    out[s] = applyDividends(rows, divs);
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  out._source = 'Nasdaq daily prices with dividends added back (adjusted close)';
+  return out;
 }
 
 async function alpacaBars(symbols, end, fetchFn, env) {
@@ -240,7 +301,7 @@ export function assemble(bars, now = new Date()) {
     }),
     pack('trend10', 'Trend on 10 ETFs', T.sim.trend10.pts, spyM, { freq: 'monthly', months: T.sim.trend10.months, up_months: r1(T.sim.trend10.up_months), invested: r1(T.sim.trend10.invested), dd_basis: 'month-end closes' }),
   ];
-  return { generated: now.toISOString(), source: bars._source, strategies };
+  return { generated: now.toISOString(), source: bars._source, source_notes: bars._notes || [], strategies };
 }
 
 export function toCsv(result) {
@@ -254,7 +315,10 @@ export function toCsv(result) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const outDir = process.argv[2] || 'data';
-  const bars = await loadBars([...new Set([...ETFS, CASH, ...DIP_SYMS])]);
+  mkdirSync(outDir, { recursive: true });
+  let bars;
+  try { bars = await loadBars([...new Set([...ETFS, CASH, ...DIP_SYMS])]); }
+  catch (e) { writeFileSync(join(outDir, 'strategies_error.txt'), new Date().toISOString() + '\n' + String(e.message || e) + '\n'); console.error(e.message); process.exit(1); }
   const res = assemble(bars);
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'strategies.json'), JSON.stringify(res, null, 1));

@@ -37,3 +37,13 @@ const csv = S.toCsv(res).trim().split('\n');
 ok(csv[0] === 'strategy,kind,period,value,spy,partial' && csv.length > 400, `CSV written (${csv.length - 1} rows)`);
 console.log(fails ? `\n${fails} FAILED` : '\nall passed');
 process.exitCode = fails ? 1 : 0;
+
+// dividends added back: $1 dividend on a $100 stock -> earlier prices scaled by 0.99
+{
+  const rows = [{ d: '2020-01-02', o: 100, c: 100 }, { d: '2020-01-03', o: 99, c: 99 }, { d: '2020-01-06', o: 99, c: 100 }];
+  const adj = S.applyDividends(rows, [{ d: '2020-01-03', amt: 1 }]);
+  ok(near(adj[0].c, 99) && near(adj[1].c, 99) && near(adj[2].c, 100), 'dividend back-adjustment (total return)');
+  const res2 = await S.loadBars(['SPY'], { sources: [['A', async () => { throw new Error('blocked'); }], ['B', async () => ({ SPY: Array.from({ length: 400 }, (_, i) => ({ d: 'x' + i, o: 1, c: 1 })), _source: 'B' })]] });
+  ok(res2._source === 'B' && res2._notes[0].includes('A failed'), 'falls back to the next price source and notes why');
+  if (fails) process.exitCode = 1;
+}

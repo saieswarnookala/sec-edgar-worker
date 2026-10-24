@@ -22,10 +22,11 @@ jobs:
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
         run: node scripts/build-strategies.mjs data
       - name: Commit if changed
+        if: always()
         run: |
           git config user.name "strategies-bot"
           git config user.email "strategies-bot@users.noreply.github.com"
-          git add data/strategies.json data/strategy_series.csv
+          git add -A data
           git diff --cached --quiet || git commit -m "strategies: $(date -u +%F)"
           git pull --rebase
           git push
