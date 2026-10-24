@@ -40,8 +40,11 @@ const fetchFn = async (url) => {
     if (tag === 'LongTermDebtNoncurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 30e9, end: '2026-06-30' }] });
     if (tag === 'LongTermDebtCurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 5e9, end: '2026-06-30' }] });
     if (tag === 'LongTermDebt' && y === '2025' && q === '4') return J({ data: [{ cik: 4, val: 2e9, end: '2025-12-31' }] });
+    if (tag === 'DebtCurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 7, val: 3e6, end: '2026-06-30' }] });
+    if (tag === 'StockholdersEquity' && y === '2026' && q === '1') return J({ data: [{ cik: 7, val: 30e6, end: '2026-03-31' }, { cik: 8, val: 10e6, end: '2026-03-31' }] });
     return new Response('nf', { status: 404 });
   }
+  if (/InterestExpense\/USD\/CY2025/.test(url) && url.includes('/InterestExpense/')) return J({ data: [{ cik: 8, val: 2e5, end: '2025-12-31' }] });
   const m = url.match(/us-gaap\/(\w+)\/USD\/CY(\d+)\.json/);
   if (m) {
     const [_, tag, y] = m; const cur = y === '2025';
@@ -69,7 +72,8 @@ assert.ok(!U.has('NANO') && !U.has('MEGA3') === false || true);
 assert.equal(U.get('MEGA1').de, 0.35);            // (30+5)/100, newest quarter wins over older
 assert.equal(U.get('BIG1').de, 0.4);              // LongTermDebt total / equity from older quarter
 assert.equal(U.get('MID1').de, 0);                // equity reported, no debt tags
-assert.equal(U.get('SML1').de, null);             // no equity -> unknown
+assert.equal(U.get('SML1').de, 0.1);              // DebtCurrent only (equity from older quarter)
+assert.equal(U.get('MIC1').de, null);             // no debt tags but pays interest -> unknown
 assert.equal(U.get('MEGA1').sales_g1, 0.25);
 assert.ok(Math.abs(U.get('MEGA1').sales_g3 - (Math.pow(50 / 20, 1 / 3) - 1)) < 1e-4);
 assert.ok(Math.abs(U.get('MEGA1').profit_g5 - (Math.pow(5 / 2, 1 / 5) - 1)) < 1e-4);

@@ -101,9 +101,18 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
   };
   const EQ = await instant('StockholdersEquity');
   const LTNC = await instant('LongTermDebtNoncurrent');
+  const LTCLO = await instant('LongTermDebtAndCapitalLeaseObligations');
   const LTC = await instant('LongTermDebtCurrent');
+  const LTCLOC = await instant('LongTermDebtAndCapitalLeaseObligationsCurrent');
+  const DC = await instant('DebtCurrent');
   const LTT = await instant('LongTermDebt');
   const STB = await instant('ShortTermBorrowings');
+  const CP = await instant('CommercialPaper');
+  // interest expense in the latest year: a company with none and no debt tags is treated as debt-free
+  const INT = new Map();
+  for (const tag of ['InterestExpense', 'InterestExpenseNonoperating', 'InterestExpenseDebt']) {
+    for (const d of (await secGet(FRAME_URL(tag, `CY${year}`)))?.data || []) if (!INT.has(d.cik)) INT.set(d.cik, d.val);
+  }
 
   // 4) Universe: one row per company (largest market cap share class, ties by volume)
   const byCik = new Map();
@@ -135,6 +144,22 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     picks.push({ ...c, bucket: b.bucket, pe, net_income: ni, revenue: rev, net_margin, sales_growth, profit_growth, fy_end: NI.get(c.cik).end });
   }
 
+  const g = (m, cik) => m.get(cik)?.val ?? null;
+  const debtOf = (cik, eq) => {
+    const nc = g(LTNC, cik) ?? g(LTCLO, cik);
+    const ltc = g(LTC, cik) ?? g(LTCLOC, cik);
+    const dc = g(DC, cik);
+    const tot = g(LTT, cik);
+    const st = g(STB, cik) ?? g(CP, cik);
+    // DebtCurrent already includes short-term borrowings + current long-term debt
+    const current = ltc != null ? ltc + (st ?? 0) : dc != null ? dc : st;
+    if (nc != null) return nc + (current ?? 0);
+    if (tot != null) return tot + (ltc != null ? (st ?? 0) : dc != null ? 0 : (st ?? 0));
+    if (current != null) return current;
+    const interest = INT.get(cik);
+    if (eq != null && (interest == null || interest === 0)) return 0; // no debt tags and no interest expense
+    return null; // unknown
+  };
   // 5b) Full universe for the Custom screen tab (profitable companies with a P/E)
   const cagr = (now_, then_, n) => (now_ > 0 && then_ > 0 ? Math.pow(now_ / then_, 1 / n) - 1 : null);
   const r4 = (v) => (v == null || !Number.isFinite(v) ? null : +v.toFixed(4));
@@ -146,12 +171,7 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     if (!b) continue;
     const eqD = EQ.get(c.cik);
     const eq = eqD?.val ?? null;
-    let debt = null;
-    const nc = LTNC.get(c.cik)?.val, cur = LTC.get(c.cik)?.val, tot = LTT.get(c.cik)?.val, st = STB.get(c.cik)?.val;
-    if (nc != null) debt = nc + (cur ?? 0) + (st ?? 0);
-    else if (tot != null) debt = tot + (st ?? 0);
-    else if (st != null || cur != null) debt = (st ?? 0) + (cur ?? 0);
-    else if (eq != null) debt = 0; // no borrowings reported
+    const debt = debtOf(c.cik, eq);
     universe.push({
       symbol: c.symbol, name: c.name, sector: c.sector, bucket: b.bucket, price: c.price, market_cap: c.market_cap,
       pe: +(c.market_cap / ni).toFixed(2), net_margin: r4(ni / rev),
