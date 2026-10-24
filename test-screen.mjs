@@ -45,6 +45,8 @@ const fetchFn = async (url) => {
     return new Response('nf', { status: 404 });
   }
   if (/InterestExpense\/USD\/CY2025/.test(url) && url.includes('/InterestExpense/')) return J({ data: [{ cik: 8, val: 2e5, end: '2025-12-31' }] });
+  const qf = url.match(/NetIncomeLoss\/USD\/CY(\d{4})Q(\d)\.json/);
+  if (qf) return J({ data: [...C.filter(([s]) => s !== 'BIG1').map(([, cik]) => ({ cik, val: 1, end: '2025-06-30' })), { cik: 12, val: 1, end: '2025-06-30' }] });
   const m = url.match(/us-gaap\/(\w+)\/USD\/CY(\d+)\.json/);
   if (m) {
     const [_, tag, y] = m; const cur = y === '2025';
@@ -64,13 +66,13 @@ const r = await build({ fetchFn, ua: 'T t@x.com', now: new Date('2026-10-24T00:0
 const syms = r.rows.map((x) => x.bucket + ':' + x.symbol);
 console.log(syms, r.counts, r.earnings_year);
 assert.equal(r.earnings_year, 'CY2025');
-assert.deepEqual(syms, ['Mega:MEGA1', 'Mega:BRK-B', 'Mega:MEGA2', 'Large:BIG1', 'Mid:MID1', 'Small:SML1', 'Micro:MIC1']);
+assert.deepEqual(syms, ['Mega:MEGA1', 'Mega:BRK-B', 'Mega:MEGA2', 'Mid:MID1', 'Small:SML1', 'Micro:MIC1']); // BIG1 = 20-F filer
 assert.equal(r.rows[0].pe, 100); assert.equal(r.rows[0].rank, 1); assert.equal(r.rows[0].name, 'MEGA1 Inc.');
 assert.equal(r.rows.find((x) => x.symbol === 'BRK-B').price, 50);
 const U = new Map(r.universe.map((x) => [x.symbol, x]));
 assert.ok(!U.has('NANO') && !U.has('MEGA3') === false || true);
 assert.equal(U.get('MEGA1').de, 0.35);            // (30+5)/100, newest quarter wins over older
-assert.equal(U.get('BIG1').de, 0.4);              // LongTermDebt total / equity from older quarter
+assert.ok(!U.has('BIG1'));                         // no 10-Qs -> excluded
 assert.equal(U.get('MID1').de, 0);                // equity reported, no debt tags
 assert.equal(U.get('SML1').de, 0.1);              // DebtCurrent only (equity from older quarter)
 assert.equal(U.get('MIC1').de, null);             // no debt tags but pays interest -> unknown

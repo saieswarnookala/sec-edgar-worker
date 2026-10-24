@@ -10,9 +10,9 @@ const TICKERS_URL = 'https://www.sec.gov/files/company_tickers_exchange.json';
 const SUBMISSIONS_URL = (cik) => `https://data.sec.gov/submissions/CIK${cik}.json`;
 const CONCEPT_URL = (cik, tag) => `https://data.sec.gov/api/xbrl/companyconcept/CIK${cik}/us-gaap/${tag}.json`;
 
-const FORMS = new Set(['10-K', '10-K/A', '10-Q', '10-Q/A', '10-KT', '10-KT/A']);
+const FORMS = new Set(['10-K', '10-K/A', '10-Q', '10-Q/A', '10-KT', '10-KT/A', '20-F', '20-F/A', '40-F', '40-F/A']);
 const DAY = 86400000;
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const SUBREQUEST_BUDGET = 46; // free plan hard limit is 50
 
 // kind: flow (summable, quarters derived from YTD), avg (per-share style, no derivation), inst (balance sheet)

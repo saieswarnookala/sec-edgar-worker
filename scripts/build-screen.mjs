@@ -73,6 +73,12 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
   }
   const niPrev = await secGet(FRAME_URL('NetIncomeLoss', `CY${year - 1}`));
   const toMap = (frame) => new Map((frame?.data || []).map((d) => [d.cik, d]));
+  // 10-Q filers only (the Stock analysis tab needs quarterly statements): present in any recent quarterly frame
+  const QFILERS = new Set();
+  for (const per of [`CY${year}Q1`, `CY${year}Q2`, `CY${year}Q3`, `CY${year + 1}Q1`, `CY${year + 1}Q2`]) {
+    for (const d of (await secGet(FRAME_URL('NetIncomeLoss', per)))?.data || []) QFILERS.add(d.cik);
+  }
+
   const NI = toMap(niNow), NI1 = toMap(niPrev);
 
   const REV = new Map(), REV1 = new Map();
@@ -121,7 +127,7 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     if (!symbol || /[\^~]/.test(r.symbol)) continue;
     const cik = cikOf.get(symbol);
     const price = num(r.lastsale), mcap = num(r.marketCap), vol = num(r.volume) || 0;
-    if (!cik || price == null || !mcap) continue;
+    if (!cik || price == null || !mcap || !QFILERS.has(cik)) continue;
     const prev = byCik.get(cik);
     if (!prev || mcap > prev.market_cap || (mcap === prev.market_cap && vol > prev.volume)) {
       byCik.set(cik, { cik, symbol, name: String(r.name || '').replace(/\s+(Common Stock|Class [A-C] Common Stock|Ordinary Shares).*$/i, '').trim(), sector: r.sector || null, industry: r.industry || null, price, market_cap: mcap, volume: vol });
