@@ -98,7 +98,7 @@ await t('initialize', async () => {
 await t('notification → 202', async () => { const r = await call({ jsonrpc: '2.0', method: 'notifications/initialized' }); assert.equal(r.status, 202); });
 await t('tools/list', async () => {
   const j = await (await call({ jsonrpc: '2.0', id: 2, method: 'tools/list' })).json();
-  assert.deepEqual(j.result.tools.map((x) => x.name), ['get_screen', 'get_financials', 'lookup_company']);
+  assert.deepEqual(j.result.tools.map((x) => x.name), ['get_universe', 'get_screen', 'get_financials', 'lookup_company']);
 });
 await t('batch', async () => {
   const j = await (await call([{ jsonrpc: '2.0', id: 1, method: 'ping' }, { jsonrpc: '2.0', method: 'notifications/x' }])).json();
@@ -181,6 +181,9 @@ await t('get_screen reads SCREEN_URL', async () => {
   assert.equal(j.result.structuredContent.rows[0].symbol, 'X');
   const r2 = await worker.fetch(new Request('https://x/mcp/tok123', { method: 'POST', body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_screen', arguments: {} } }) }), env);
   assert.equal((await r2.json()).result.isError, true);
+  globalThis.fetch = async (url) => url === 'https://raw.example/universe.json' ? new Response('{"rows":[{"symbol":"U"}]}') : new Response('nf', { status: 404 });
+  const r4 = await worker.fetch(new Request('https://x/mcp/tok123', { method: 'POST', body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_universe', arguments: {} } }) }), e2);
+  assert.equal(JSON.parse((await r4.json()).result.content[0].text).rows[0].symbol, 'U');
   const kenv = { ...env, CACHE: { get: async (k) => (k === 'screen' ? { rows: [{ bucket: 'Mid', symbol: 'KV' }] } : null) } };
   const r3 = await worker.fetch(new Request('https://x/mcp/tok123', { method: 'POST', body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'get_screen', arguments: {} } }) }), kenv);
   assert.equal((await r3.json()).result.structuredContent.rows[0].symbol, 'KV');

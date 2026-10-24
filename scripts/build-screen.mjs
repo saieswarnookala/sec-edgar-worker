@@ -3,7 +3,7 @@
 // Usage: SEC_USER_AGENT="Name email" node scripts/build-screen.mjs [out=data/screen.json]
 
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 
 export const RULES = {
   per_bucket: 15,
@@ -82,6 +82,29 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     for (const d of b?.data || []) if (!REV1.has(d.cik)) REV1.set(d.cik, d);
   }
 
+  // 3b) Longer history (3Y, 5Y) + latest balance sheet for debt/equity
+  const niY3 = toMap(await secGet(FRAME_URL('NetIncomeLoss', `CY${year - 3}`)));
+  const niY5 = toMap(await secGet(FRAME_URL('NetIncomeLoss', `CY${year - 5}`)));
+  const REV3 = new Map(), REV5 = new Map();
+  for (const tag of REVENUE_TAGS) {
+    for (const d of (await secGet(FRAME_URL(tag, `CY${year - 3}`)))?.data || []) if (!REV3.has(d.cik)) REV3.set(d.cik, d);
+    for (const d of (await secGet(FRAME_URL(tag, `CY${year - 5}`)))?.data || []) if (!REV5.has(d.cik)) REV5.set(d.cik, d);
+  }
+  // instant frames: newest quarter-end first, older ones fill gaps
+  const qEnds = [];
+  { let y = now.getUTCFullYear(), q = Math.floor(now.getUTCMonth() / 3); // current quarter index 0..3 -> last finished = q
+    for (let i = 0; i < 4; i++) { q -= 1; if (q < 0) { q = 3; y -= 1; } qEnds.push(`CY${y}Q${q + 1}I`); } }
+  const instant = async (tag) => {
+    const m = new Map();
+    for (const per of qEnds) for (const d of (await secGet(FRAME_URL(tag, per)))?.data || []) if (!m.has(d.cik)) m.set(d.cik, d);
+    return m;
+  };
+  const EQ = await instant('StockholdersEquity');
+  const LTNC = await instant('LongTermDebtNoncurrent');
+  const LTC = await instant('LongTermDebtCurrent');
+  const LTT = await instant('LongTermDebt');
+  const STB = await instant('ShortTermBorrowings');
+
   // 4) Universe: one row per company (largest market cap share class, ties by volume)
   const byCik = new Map();
   for (const r of nrows) {
@@ -112,6 +135,33 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     picks.push({ ...c, bucket: b.bucket, pe, net_income: ni, revenue: rev, net_margin, sales_growth, profit_growth, fy_end: NI.get(c.cik).end });
   }
 
+  // 5b) Full universe for the Custom screen tab (profitable companies with a P/E)
+  const cagr = (now_, then_, n) => (now_ > 0 && then_ > 0 ? Math.pow(now_ / then_, 1 / n) - 1 : null);
+  const r4 = (v) => (v == null || !Number.isFinite(v) ? null : +v.toFixed(4));
+  const universe = [];
+  for (const c of byCik.values()) {
+    const ni = NI.get(c.cik)?.val, rev = REV.get(c.cik)?.val;
+    if (ni == null || rev == null || ni <= 0 || rev <= 0 || c.price < RULES.min_price) continue;
+    const b = BUCKETS.find((x) => c.market_cap >= x.min && c.market_cap < x.max);
+    if (!b) continue;
+    const eqD = EQ.get(c.cik);
+    const eq = eqD?.val ?? null;
+    let debt = null;
+    const nc = LTNC.get(c.cik)?.val, cur = LTC.get(c.cik)?.val, tot = LTT.get(c.cik)?.val, st = STB.get(c.cik)?.val;
+    if (nc != null) debt = nc + (cur ?? 0) + (st ?? 0);
+    else if (tot != null) debt = tot + (st ?? 0);
+    else if (st != null || cur != null) debt = (st ?? 0) + (cur ?? 0);
+    else if (eq != null) debt = 0; // no borrowings reported
+    universe.push({
+      symbol: c.symbol, name: c.name, sector: c.sector, bucket: b.bucket, price: c.price, market_cap: c.market_cap,
+      pe: +(c.market_cap / ni).toFixed(2), net_margin: r4(ni / rev),
+      sales_g1: r4(cagr(rev, REV1.get(c.cik)?.val, 1)), sales_g3: r4(cagr(rev, REV3.get(c.cik)?.val, 3)), sales_g5: r4(cagr(rev, REV5.get(c.cik)?.val, 5)),
+      profit_g1: r4(cagr(ni, NI1.get(c.cik)?.val, 1)), profit_g3: r4(cagr(ni, niY3.get(c.cik)?.val, 3)), profit_g5: r4(cagr(ni, niY5.get(c.cik)?.val, 5)),
+      de: eq > 0 && debt != null ? r4(debt / eq) : null, fy_end: NI.get(c.cik).end,
+    });
+  }
+  universe.sort((a, b) => b.market_cap - a.market_cap);
+
   const rows = [];
   for (const b of BUCKETS) {
     picks.filter((p) => p.bucket === b.bucket).sort((x, y) => y.pe - x.pe).slice(0, RULES.per_bucket)
@@ -123,6 +173,7 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
   }
 
   return {
+    universe,
     generated_at: now.toISOString(),
     earnings_year: `CY${year}`,
     rules: RULES,
@@ -134,8 +185,10 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const out = process.argv[2] || 'data/screen.json';
-  const result = await build({ ua: process.env.SEC_USER_AGENT });
+  const { universe, ...result } = await build({ ua: process.env.SEC_USER_AGENT });
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(result, null, 1));
-  console.log(`Wrote ${out}: ${result.rows.length} rows, earnings ${result.earnings_year}`, result.counts);
+  const uout = join(dirname(out), 'universe.json');
+  writeFileSync(uout, JSON.stringify({ generated_at: result.generated_at, earnings_year: result.earnings_year, count: universe.length, rows: universe }));
+  console.log(`Wrote ${out}: ${result.rows.length} rows; ${uout}: ${universe.length} rows; earnings ${result.earnings_year}`, result.counts);
 }

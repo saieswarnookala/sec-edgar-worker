@@ -356,7 +356,21 @@ async function getScreen(env) {
   return data;
 }
 
+// Full universe (~3,600 rows) is passed through as text to keep CPU low on the free plan.
+async function getUniverseText(env) {
+  if (!env.SCREEN_URL || env.SCREEN_URL.includes('<your-github-user>')) throw new Error('SCREEN_URL is not set');
+  const url = env.SCREEN_URL.replace(/screen\.json$/, 'universe.json');
+  const res = await fetch(url, { headers: { Accept: 'application/json' }, cf: { cacheTtl: 300 } });
+  if (!res.ok) throw new Error(`Universe file HTTP ${res.status} (has the GitHub Action run yet?)`);
+  return res.text();
+}
+
 const TOOLS = [
+  {
+    name: 'get_universe',
+    description: 'Every profitable US stock (market cap >= $50M) with bucket, price, market_cap, pe, net_margin, sales_g1/g3/g5 and profit_g1/g3/g5 (yearly growth, CAGR for 3Y/5Y), de (borrowings / equity, leases excluded) and fy_end. Rebuilt each weekday. For custom screens.',
+    inputSchema: { type: 'object', properties: {} },
+  },
   {
     name: 'get_screen',
     description: 'Daily screen of US stocks: top 15 per market-cap bucket (Mega, Large, Mid, Small, Micro) with the highest P/E among profitable, growing companies (net margin >= 3%, sales growth >= 5%, profit growth > 0, P/E <= 200). Rows: bucket, rank, symbol, name, sector, industry, price, market_cap, pe, net_income, revenue, net_margin, sales_growth, profit_growth, fy_end.',
@@ -398,6 +412,7 @@ async function handleRpc(msg, env) {
       const args = params?.arguments ?? {};
       try {
         let data;
+        if (name === 'get_universe') return ok(id, { content: [{ type: 'text', text: await getUniverseText(env) }] });
         if (name === 'get_screen') data = await getScreen(env);
         else if (name === 'get_financials') data = await getFinancials(env, args.symbol);
         else if (name === 'lookup_company') data = await lookupCompany(env, args.symbol);
@@ -435,6 +450,7 @@ export default {
         const symbol = url.searchParams.get('symbol');
         if (parts[2] === 'financials') return json(await getFinancials(env, symbol));
         if (parts[2] === 'screen') return json(await getScreen(env));
+        if (parts[2] === 'universe') return new Response(await getUniverseText(env), { headers: { 'Content-Type': 'application/json' } });
         if (parts[2] === 'lookup') return json(await lookupCompany(env, symbol));
       } catch (e) {
         return json({ error: e.message }, 400);

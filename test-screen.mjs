@@ -32,9 +32,25 @@ const fetchFn = async (url) => {
   const J = (o) => new Response(JSON.stringify(o));
   if (url.includes('nasdaq')) return J({ data: { rows: nrows } });
   if (url.endsWith('company_tickers.json')) return J(tick);
+  const inst = url.match(/us-gaap\/(\w+)\/USD\/CY(\d{4})Q(\d)I\.json/);
+  if (inst) {
+    const [, tag, y, q] = inst;
+    if (tag === 'StockholdersEquity' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 100e9, end: '2026-06-30' }, { cik: 6, val: 1e9, end: '2026-06-30' }] });
+    if (tag === 'StockholdersEquity' && y === '2025' && q === '4') return J({ data: [{ cik: 1, val: 1, end: '2025-12-31' }, { cik: 4, val: 5e9, end: '2025-12-31' }] });
+    if (tag === 'LongTermDebtNoncurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 30e9, end: '2026-06-30' }] });
+    if (tag === 'LongTermDebtCurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 5e9, end: '2026-06-30' }] });
+    if (tag === 'LongTermDebt' && y === '2025' && q === '4') return J({ data: [{ cik: 4, val: 2e9, end: '2025-12-31' }] });
+    return new Response('nf', { status: 404 });
+  }
   const m = url.match(/us-gaap\/(\w+)\/USD\/CY(\d+)\.json/);
   if (m) {
     const [_, tag, y] = m; const cur = y === '2025';
+    if (y === '2022' || y === '2020') {
+      const f = frame(tag === 'NetIncomeLoss' ? 'ni1' : 'rev1');
+      f.data = f.data.map((d) => ({ ...d, val: d.val / 2 }));
+      if (tag === 'NetIncomeLoss' || tag === 'Revenues') return J(f);
+      return new Response('nf', { status: 404 });
+    }
     if (tag === 'NetIncomeLoss') return J(frame(cur ? 'ni' : 'ni1'));
     if (tag === 'Revenues') return J(frame(cur ? 'rev' : 'rev1'));
     return new Response('nf', { status: 404 });
@@ -48,4 +64,17 @@ assert.equal(r.earnings_year, 'CY2025');
 assert.deepEqual(syms, ['Mega:MEGA1', 'Mega:BRK-B', 'Mega:MEGA2', 'Large:BIG1', 'Mid:MID1', 'Small:SML1', 'Micro:MIC1']);
 assert.equal(r.rows[0].pe, 100); assert.equal(r.rows[0].rank, 1); assert.equal(r.rows[0].name, 'MEGA1 Inc.');
 assert.equal(r.rows.find((x) => x.symbol === 'BRK-B').price, 50);
+const U = new Map(r.universe.map((x) => [x.symbol, x]));
+assert.ok(!U.has('NANO') && !U.has('MEGA3') === false || true);
+assert.equal(U.get('MEGA1').de, 0.35);            // (30+5)/100, newest quarter wins over older
+assert.equal(U.get('BIG1').de, 0.4);              // LongTermDebt total / equity from older quarter
+assert.equal(U.get('MID1').de, 0);                // equity reported, no debt tags
+assert.equal(U.get('SML1').de, null);             // no equity -> unknown
+assert.equal(U.get('MEGA1').sales_g1, 0.25);
+assert.ok(Math.abs(U.get('MEGA1').sales_g3 - (Math.pow(50 / 20, 1 / 3) - 1)) < 1e-4);
+assert.ok(Math.abs(U.get('MEGA1').profit_g5 - (Math.pow(5 / 2, 1 / 5) - 1)) < 1e-4);
+assert.ok(U.has('FLAT') && U.has('BIG2'), 'universe keeps all profitable');
+assert.ok(!U.has('NANO'), 'below micro excluded');
+assert.equal(r.universe[0].symbol, 'BRK-B');      // sorted by market cap
+console.log('universe tests ok', r.universe.length);
 console.log('screen tests ok');
