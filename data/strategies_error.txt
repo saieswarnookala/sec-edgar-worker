@@ -1,4 +1,4 @@
-2026-10-24T15:28:53.020Z
+2026-10-24T17:34:17.621Z
 All price sources failed:
 Yahoo failed: Yahoo returned no data for SPY
-Nasdaq failed: SPY: no dividends found in Nasdaq response {"first_day":"2016-10-24","days":2514,"dividends":0,"data_keys":["dividendHeaderValues","exDividendDate","dividendPaymentDate","yield","annualizedDividend","payoutRatio","dividends"],"row_keys":[],"status":200}
+Nasdaq failed: SPY: no dividends found in Nasdaq response {"first_day":"2016-10-24","days":2514,"dividends":0,"data_keys":[],"row_keys":[],"status":400}
