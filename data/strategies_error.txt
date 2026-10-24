@@ -1,4 +1,12 @@
-2026-10-24T17:34:17.621Z
+2026-10-24T18:02:20.435Z
 All price sources failed:
+Alpaca failed: Alpaca HTTP 401: <html>
+<head><title>401 Authorization Required</title></head>
+<body>
+<center><h1>401 Authorization Required</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
 Yahoo failed: Yahoo returned no data for SPY
 Nasdaq failed: SPY: no dividends found in Nasdaq response {"first_day":"2016-10-24","days":2514,"dividends":0,"data_keys":[],"row_keys":[],"status":400}
