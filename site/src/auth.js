@@ -2,7 +2,7 @@
 // Users live in KV (AUTH) as user:<name>; sessions as sess:<token> with a 7-day TTL.
 // The first admin is the ADMIN_USERNAME / ADMIN_PASSWORD Worker secret pair (no KV record).
 const enc = new TextEncoder();
-export const ITERATIONS = 20000;          // PBKDF2-SHA256; kept modest for the Workers free-plan CPU limit
+export const ITERATIONS = 8000;           // PBKDF2-SHA256; ~4 ms, safely inside the Workers free-plan 10 ms CPU limit (stored per user, so it can be raised later)
 const SESSION_TTL = 7 * 86400;
 const MAX_FAILS = 5, FAIL_WINDOW = 900;   // 5 wrong passwords per user -> 15 min lock
 const MAX_IP_FAILS = 20;
