@@ -315,6 +315,22 @@ export function assemble(bars, now = new Date()) {
   return { generated: now.toISOString(), source: bars._source, source_notes: bars._notes || [], source_debug: bars._debug || null, strategies };
 }
 
+// Month-end adjusted closes for the momentum pool (dates where all 11 ETFs traded), for tuning in the dashboard.
+export function monthlyCsv(bars) {
+  const syms = [...ETFS, CASH];
+  const px = Object.fromEntries(syms.map((s) => [s, new Map(bars[s].map((b) => [b.d, b.c]))]));
+  const common = [...px[CASH].keys()].filter((d) => syms.every((s) => px[s].has(d))).sort();
+  const me = new Map(); for (const d of common) me.set(ym(d), d);
+  const ends = [...me.values()].slice(0, -1);
+  return ['date,' + syms.join(','), ...ends.map((d) => d + ',' + syms.map((s) => +px[s].get(d).toFixed(4)).join(','))].join('\n') + '\n';
+}
+// Daily adjusted open/close for the dip ETFs.
+export function dailyCsv(bars, syms) {
+  const lines = ['symbol,date,open,close'];
+  for (const s of syms) for (const b of bars[s]) lines.push([s, b.d, +b.o.toFixed(4), +b.c.toFixed(4)].join(','));
+  return lines.join('\n') + '\n';
+}
+
 export function toCsv(result) {
   const lines = ['strategy,kind,period,value,spy,partial'];
   for (const s of result.strategies) {
@@ -334,6 +350,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, 'strategies.json'), JSON.stringify(res, null, 1));
   writeFileSync(join(outDir, 'strategy_series.csv'), toCsv(res));
+  writeFileSync(join(outDir, 'etf_monthly.csv'), monthlyCsv(bars));
+  writeFileSync(join(outDir, 'dip_daily.csv'), dailyCsv(bars, DIP_SYMS));
   console.log(`Source: ${res.source}`);
   for (const s of res.strategies)
     console.log(`${s.name.padEnd(28)} ${s.start} -> ${s.end}  CAGR ${s.cagr}%  total ${s.total}%  maxDD ${s.max_dd}%  | SPY ${s.spy_cagr}%/yr, DD ${s.spy_max_dd}%`);

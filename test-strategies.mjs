@@ -47,3 +47,11 @@ process.exitCode = fails ? 1 : 0;
   ok(res2._source === 'B' && res2._notes[0].includes('A failed'), 'falls back to the next price source and notes why');
   if (fails) process.exitCode = 1;
 }
+
+{
+  const mcsv = S.monthlyCsv(bars).trim().split('\n');
+  ok(mcsv[0] === 'date,' + [...S.ETFS, S.CASH].join(',') && mcsv.length > 120, `monthly price file (${mcsv.length - 1} month-ends, 11 ETFs)`);
+  const dcsv = S.dailyCsv(bars, S.DIP_SYMS).trim().split('\n');
+  ok(dcsv[0] === 'symbol,date,open,close' && dcsv.length > 5000, `daily dip file (${dcsv.length - 1} rows)`);
+  if (fails) process.exitCode = 1;
+}
