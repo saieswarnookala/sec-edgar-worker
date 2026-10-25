@@ -1,0 +1,26 @@
+name: Build long history
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch monthly adjusted prices (Alpha Vantage)
+        env:
+          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+        run: node scripts/build-history.mjs data
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          git add -A data
+          git diff --cached --quiet || git commit -m "history: $(date -u +%F)"
+          git pull --rebase
+          git push
