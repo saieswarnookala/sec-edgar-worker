@@ -473,3 +473,11 @@ export default {
     return out ? json(out) : new Response(null, { status: 202 });
   },
 };
+
+// Used by the Sentinel website (site/src/index.js): ticker lookup without the extra submissions call.
+export async function secListing(env, symbolIn) {
+  const symbol = normSymbol(symbolIn);
+  if (!symbol) throw new Error('symbol is required');
+  return findTicker(new Sec(env), symbol);
+}
+export { getFinancials, lookupCompany };

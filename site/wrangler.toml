@@ -1,0 +1,24 @@
+name = "sentinel-web"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# Every request goes through the Worker first, so nothing is served without a login.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+not_found_handling = "none"
+
+# User accounts + sessions
+[[kv_namespaces]]
+binding = "AUTH"
+id = "8a3b79aa82864a9eb419d2cb334de304"
+
+# Shared with sec-edgar-mcp: 12-hour cache of SEC financials
+[[kv_namespaces]]
+binding = "CACHE"
+id = "f1d65bb9f24c4813a2882d5f153a455c"
+
+# Secrets (set by .github/workflows/site.yml from GitHub repo secrets):
+#   ADMIN_PASSWORD, SEC_USER_AGENT, APCA_API_KEY_ID, APCA_API_SECRET_KEY, FMP_API_KEY (optional), ADMIN_USERNAME (optional, default "admin")

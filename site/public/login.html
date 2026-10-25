@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in · Sentinel</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/theme.css"></head>
+<body><div class="sw-auth">
+<form id="f" autocomplete="on">
+  <h1>Sentinel</h1>
+  <p class="sw-note">Private strategy dashboard. Sign in with the username and password you were given.</p>
+  <label>Username <input name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+  <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+  <button class="sw-btn" type="submit">Sign in</button>
+  <p class="sw-err" id="err" role="alert"></p>
+</form></div>
+<script>
+const f = document.getElementById('f'), err = document.getElementById('err');
+f.addEventListener('submit', async (e) => {
+  e.preventDefault(); err.textContent = '';
+  const btn = f.querySelector('button'); btn.disabled = true;
+  try {
+    const r = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json', 'X-Sentinel': '1' },
+      body: JSON.stringify({ username: f.username.value.trim().toLowerCase(), password: f.password.value }) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { err.textContent = j.error || 'Sign-in failed.'; return; }
+    const next = new URLSearchParams(location.search).get('next');
+    location.href = next && next.startsWith('/') && !next.startsWith('//') ? next : '/';
+  } catch { err.textContent = 'Network error. Try again.'; }
+  finally { btn.disabled = false; }
+});
+</script></body></html>

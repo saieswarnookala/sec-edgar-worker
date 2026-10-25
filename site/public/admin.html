@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Users · Sentinel</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/theme.css"></head>
+<body><div id="sw-bar"><strong>Sentinel</strong><span class="sw-sp"></span><a href="/">Dashboard</a></div>
+<div class="sw-auth" style="min-height:auto;padding-top:28px"><div class="sw-card wide">
+  <h1>Users</h1>
+  <p class="sw-note">People listed here can sign in. Adding an existing username resets their password and signs them out everywhere.</p>
+  <form id="add" class="sw-row">
+    <label>Username <input name="username" autocapitalize="none" spellcheck="false" placeholder="e.g. ravi" required pattern="[a-z0-9._\-]{3,32}"></label>
+    <label>Password (10+ characters) <input name="password" type="text" autocomplete="new-password" required minlength="10"></label>
+    <label>Role <select name="role"><option value="viewer">Viewer</option><option value="admin">Admin (can manage users)</option></select></label>
+    <button class="sw-btn" type="submit">Save user</button>
+  </form>
+  <div style="display:flex;gap:8px;align-items:center"><button class="sw-btn ghost" type="button" id="gen">Generate a password</button><p class="sw-note">Share the password privately (in person or a password manager), not by email.</p></div>
+  <p class="sw-err" id="err" role="alert"></p><p class="sw-ok" id="ok" role="status"></p>
+  <div style="overflow-x:auto"><table class="sw-table"><thead><tr><th>Username</th><th>Role</th><th>Created</th><th>Password changed</th><th></th></tr></thead><tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody></table></div>
+  <p class="sw-note" id="root"></p>
+</div></div>
+<script>
+const $ = (id) => document.getElementById(id), add = $('add');
+const api = async (method, body) => {
+  const r = await fetch('/api/admin/users', { method, headers: { 'content-type': 'application/json', 'X-Sentinel': '1' }, body: body ? JSON.stringify(body) : undefined });
+  const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || 'Request failed'); return j;
+};
+const day = (s) => (s ? new Date(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—');
+async function refresh() {
+  try {
+    const j = await api('GET');
+    $('root').textContent = 'Main admin account: “' + j.root + '” (its password is the ADMIN_PASSWORD secret; change it on GitHub, then redeploy).';
+    const tb = $('rows'); tb.replaceChildren();
+    if (!j.users.length) { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 5; td.textContent = 'No other users yet.'; tr.appendChild(td); tb.appendChild(tr); }
+    for (const u of j.users) {
+      const tr = document.createElement('tr');
+      for (const v of [u.name, u.role === 'admin' ? 'Admin' : 'Viewer', day(u.created), day(u.updated)]) { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); }
+      const td = document.createElement('td'); const b = document.createElement('button'); b.className = 'sw-btn ghost'; b.textContent = 'Remove';
+      b.disabled = u.name === j.you;
+      b.addEventListener('click', async () => { if (!confirm('Remove ' + u.name + '? They will be signed out.')) return; try { await api('DELETE', { username: u.name }); $('ok').textContent = 'Removed ' + u.name + '.'; refresh(); } catch (e) { $('err').textContent = e.message; } });
+      td.appendChild(b); tr.appendChild(td); tb.appendChild(tr);
+    }
+  } catch (e) { $('err').textContent = e.message; }
+}
+$('gen').addEventListener('click', () => {
+  const a = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'; const v = crypto.getRandomValues(new Uint32Array(16));
+  add.password.value = Array.from(v, (x) => a[x % a.length]).join('');
+});
+add.addEventListener('submit', async (e) => {
+  e.preventDefault(); $('err').textContent = ''; $('ok').textContent = '';
+  try {
+    const j = await api('POST', { username: add.username.value.trim().toLowerCase(), password: add.password.value, role: add.role.value });
+    $('ok').textContent = (j.user.existed ? 'Password reset for ' : 'Added ') + j.user.name + '.'; add.reset(); refresh();
+  } catch (e2) { $('err').textContent = e2.message; }
+});
+refresh();
+</script></body></html>
