@@ -103,7 +103,9 @@ async function nasdaqBars(symbols, end, fetchFn) {
 
 async function alpacaBars(symbols, end, fetchFn, env) {
   const out = Object.fromEntries(symbols.map((s) => [s, []]));
-  const p = new URLSearchParams({ symbols: symbols.join(','), timeframe: '1Day', start: START, end, limit: '10000', adjustment: 'all', feed: env.APCA_FEED || 'sip' });
+  // free plan: no SIP data from the last 15 minutes, and a bare date means end of that day in New York -> stop 1 hour ago
+  const endTs = new Date(Math.min(Date.parse(end + 'T23:59:59Z'), Date.now() - 3600e3)).toISOString();
+  const p = new URLSearchParams({ symbols: symbols.join(','), timeframe: '1Day', start: START, end: endTs, limit: '10000', adjustment: 'all', feed: env.APCA_FEED || 'sip' });
   for (;;) {
     const r = await fetchFn('https://data.alpaca.markets/v2/stocks/bars?' + p, {
       headers: { 'APCA-API-KEY-ID': env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': env.APCA_API_SECRET_KEY },
