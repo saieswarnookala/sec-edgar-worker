@@ -1,0 +1,3 @@
+2026-10-25T02:24:37.351Z
+daily: Alpaca daily bars (split + dividend adjusted)
+monthly extra: XLK XLE XLF XLV XLU XLP XLY XLI XLB TIP LQD HYG SLV UUP
