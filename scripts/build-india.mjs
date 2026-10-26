@@ -8,13 +8,14 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseMonthly } from './build-history.mjs';
 
-export const CANDIDATES = ['NIFTYBEES', 'JUNIORBEES', 'BANKBEES', 'GOLDBEES', 'MOM100', 'CPSEETF'];
+export const CANDIDATES = ['NIFTYBEES', 'JUNIORBEES', 'BANKBEES', 'GOLDBEES', 'CPSEETF'];
 // Mutual fund NAVs from AMFI via mfapi.in (free, no key): long total-return history for roles AV doesn't cover.
 // Each entry: role -> search text + a pattern the scheme name must match (Regular plan Growth option has the longest history).
 export const FUNDS = {
   NIFTY50: { q: 'UTI Nifty 50 Index Fund', must: /UTI.*Nifty 50 Index.*(Regular|Reg).*Growth/i, not: /Direct|IDCW|Dividend/i },
   NASDAQ100: { q: 'Motilal Oswal Nasdaq 100 ETF', must: /Motilal.*Nasdaq.?100.*ETF/i, not: /FOF|Fund of Fund/i },
-  GILT: { q: 'SBI Magnum Gilt', must: /SBI.*Magnum Gilt.*(Regular|Reg).*Growth/i, not: /Direct|IDCW|Dividend|PF/i },
+  GILT: { q: 'SBI Magnum Gilt', must: /SBI.*Magnum Gilt.*Growth/i, not: /Direct|IDCW|Dividend|PF|Fixed Period|Short|Bonus/i },
+  MIDCAP: { q: 'Motilal Oswal Midcap 100 ETF', must: /Motilal.*(Midcap|M100).*ETF/i, not: /FOF|Fund of Fund|150/i },
   CASH: { q: 'Nippon India Liquid Fund', must: /Nippon.*Liquid Fund.*Growth/i, not: /Direct|IDCW|Dividend|Bonus|Retail|Institutional/i },
 };
 async function mfSeries(role, f) {
