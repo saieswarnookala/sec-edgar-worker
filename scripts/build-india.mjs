@@ -14,7 +14,9 @@ export const CANDIDATES = ['NIFTYBEES', 'JUNIORBEES', 'BANKBEES', 'GOLDBEES', 'C
 export const FUNDS = {
   NIFTY50: { q: 'UTI Nifty 50 Index Fund', must: /UTI.*Nifty 50 Index.*(Regular|Reg).*Growth/i, not: /Direct|IDCW|Dividend/i },
   NASDAQ100: { q: 'Motilal Oswal Nasdaq 100 ETF', must: /Motilal.*Nasdaq.?100.*ETF/i, not: /FOF|Fund of Fund/i },
-  GILT: { q: 'SBI Magnum Gilt', must: /SBI.*Magnum Gilt.*Growth/i, not: /Direct|IDCW|Dividend|PF|Fixed Period|Short|Bonus/i },
+  GILT: { q: 'ICICI Prudential Gilt Fund', must: /ICICI.*Gilt Fund.*Growth/i, not: /Direct|IDCW|Dividend|PF|Constant|Bonus|Treasury/i },
+  GOLD: { q: 'Nippon India ETF Gold BeES', must: /Gold.?BeES/i, not: /FOF|Fund of Fund|Savings/i },
+  DEBT: { q: 'Aditya Birla Sun Life Income Fund', must: /Aditya Birla.*Income Fund.*Growth/i, not: /Direct|IDCW|Dividend|Quarterly|Half|Monthly|Bonus|Medium|Short/i },
   MIDCAP: { q: 'Motilal Oswal Midcap 100 ETF', must: /Motilal.*(Midcap|M100).*ETF/i, not: /FOF|Fund of Fund|150/i },
   CASH: { q: 'Nippon India Liquid Fund', must: /Nippon.*Liquid Fund.*Growth/i, not: /Direct|IDCW|Dividend|Bonus|Retail|Institutional/i },
 };
