@@ -50,10 +50,6 @@
   "dividend_months": 0,
   "last_12m_return": 0.1589
  },
- "MOM100": {
-  "found": false,
-  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
- },
  "CPSEETF": {
   "found": true,
   "first": "2014-05-30",
@@ -97,6 +93,16 @@
    "SBI Magnum Gilt Fund - Income Distribution cum Capital Withdrawal Option (IDCW) - PF (Regular)",
    "SBI MAGNUM GILT FUND -  GROWTH - PF (Fixed Period - 1 Yr) Option"
   ]
+ },
+ "MIDCAP": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "Motilal Oswal Nifty Midcap 100 ETF",
+  "code": 114456,
+  "first": "2011-02-28",
+  "last": "2026-10-23",
+  "months": 189,
+  "last_12m_return": -0.0625
  },
  "CASH": {
   "found": true,
