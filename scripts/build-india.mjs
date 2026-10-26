@@ -8,7 +8,32 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseMonthly } from './build-history.mjs';
 
-export const CANDIDATES = ['NIFTYBEES', 'JUNIORBEES', 'BANKBEES', 'GOLDBEES', 'MON100', 'LIQUIDBEES', 'SETF10GILT', 'CPSEETF', 'INFRABEES', 'PSUBNKBEES'];
+export const CANDIDATES = ['NIFTYBEES', 'JUNIORBEES', 'BANKBEES', 'GOLDBEES', 'MOM100', 'CPSEETF'];
+// Mutual fund NAVs from AMFI via mfapi.in (free, no key): long total-return history for roles AV doesn't cover.
+// Each entry: role -> search text + a pattern the scheme name must match (Regular plan Growth option has the longest history).
+export const FUNDS = {
+  NIFTY50: { q: 'UTI Nifty 50 Index Fund', must: /UTI.*Nifty 50 Index.*(Regular|Reg).*Growth/i, not: /Direct|IDCW|Dividend/i },
+  NASDAQ100: { q: 'Motilal Oswal Nasdaq 100 ETF', must: /Motilal.*Nasdaq.?100.*ETF/i, not: /FOF|Fund of Fund/i },
+  GILT: { q: 'SBI Magnum Gilt', must: /SBI.*Magnum Gilt.*(Regular|Reg).*Growth/i, not: /Direct|IDCW|Dividend|PF/i },
+  CASH: { q: 'Nippon India Liquid Fund', must: /Nippon.*Liquid Fund.*Growth/i, not: /Direct|IDCW|Dividend|Bonus|Retail|Institutional/i },
+};
+async function mfSeries(role, f) {
+  const hits = await (await fetch('https://api.mfapi.in/mf/search?q=' + encodeURIComponent(f.q))).json();
+  const pick = hits.filter((h) => f.must.test(h.schemeName) && !(f.not && f.not.test(h.schemeName)));
+  if (!pick.length) return { report: { found: false, note: 'no scheme matched', candidates: hits.slice(0, 8).map((h) => h.schemeName) } };
+  // prefer the scheme with the longest history
+  let best = null;
+  for (const h of pick.slice(0, 4)) {
+    const js = await (await fetch('https://api.mfapi.in/mf/' + h.schemeCode)).json();
+    const rows = (js.data || []).map((x) => { const [d, m, y] = x.date.split('-'); return { d: `${y}-${m}-${d}`, c: Number(x.nav) }; }).filter((r) => r.c > 0).sort((a, b) => (a.d < b.d ? -1 : 1));
+    if (!best || (rows.length && rows[0].d < best.rows[0].d)) best = { h, rows };
+    await new Promise((r) => setTimeout(r, 300));
+  }
+  const me = new Map(); for (const r of best.rows) me.set(r.d.slice(0, 7), r);
+  const rows = [...me.values()];
+  return { rows, report: { found: true, source: 'AMFI NAV via mfapi.in', scheme: best.h.schemeName, code: best.h.schemeCode, first: rows[0].d, last: rows[rows.length - 1].d, months: rows.length,
+    last_12m_return: rows.length > 13 ? +(rows[rows.length - 1].c / rows[rows.length - 13].c - 1).toFixed(4) : null } };
+}
 const NICE = [2, 3, 4, 5, 10, 20, 25, 50, 100, 1000];
 
 // Rescale earlier prices when a month-to-month move is an unadjusted split (or reverse split).
@@ -44,6 +69,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       }
     } catch (e) { report[s] = { found: false, note: String(e.message).slice(0, 160) }; }
     await new Promise((r) => setTimeout(r, 1600));
+  }
+  for (const [role, f] of Object.entries(FUNDS)) {
+    try { const r = await mfSeries(role, f); report[role] = r.report; if (r.rows) { const { rows, fixes } = fixSplits(r.rows); clean[role] = rows; if (fixes.length) report[role].split_fixes = fixes; } }
+    catch (e) { report[role] = { found: false, note: String(e.message).slice(0, 160) }; }
   }
   const cur = new Date().toISOString().slice(0, 7);
   const have = Object.keys(clean);
