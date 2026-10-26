@@ -1028,6 +1028,7 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="momentum">Top-3 momentum</button>
       <button type="button" data-sub="momv2">Top-3 momentum v2.0</button>
       <button type="button" data-sub="clv2">Clear leader v2.0</button>
+      <button type="button" data-sub="india">India: Nifty + gold</button>
       <button type="button" data-sub="sma10">SPY 10-month avg</button>
       <button type="button" data-sub="rsi2">RSI(2) dip</button>
       <button type="button" data-sub="rsi2v2">RSI(2) dip v2.0</button>
@@ -1072,6 +1073,7 @@ dash.calc('vs_industry', {
     <div class="sx-tr-panel" data-panel="rsi2v2" id="trading-rsi2v2" hidden></div>
     <div class="sx-tr-panel" data-panel="momv2" id="trading-momv2" hidden></div>
     <div class="sx-tr-panel" data-panel="clv2" id="trading-clv2" hidden></div>
+    <div class="sx-tr-panel" data-panel="india" id="trading-india" hidden></div>
   </section>
 </template>
 
@@ -1831,7 +1833,7 @@ dash.calc('vs_industry', {
   const wireTrading = () => {
     tqa('.sx-tr-tabs button').forEach((b) => b.addEventListener('click', () => { showSub(b.dataset.sub); drawTrading(); }));
     const hh = location.hash.slice(1);
-    showSub(hh.startsWith('trading-') && ['momentum', 'momv2', 'clv2', 'sma10', 'rsi2', 'rsi2v2'].includes(hh.slice(8)) ? hh.slice(8) : 'overview', false);
+    showSub(hh.startsWith('trading-') && ['momentum', 'momv2', 'clv2', 'india', 'sma10', 'rsi2', 'rsi2v2'].includes(hh.slice(8)) ? hh.slice(8) : 'overview', false);
   };
 
   const hbar = (box, label, value, max, text, color) => {
@@ -1870,13 +1872,13 @@ dash.calc('vs_industry', {
   };
   const SPYC = 'color-mix(in srgb, var(--color-fg) 35%, transparent)';
 
-  const yearBars = (box, rows) => {
+  const yearBars = (box, rows, bench = 'SPY') => {
     const w = chartW(box), h = 240, m = { top: 14, right: 8, bottom: 26, left: 44 };
     const vals = rows.flatMap((r) => [r.ret, r.spy]).filter((v) => v != null);
     const y = d3.scaleLinear([Math.min(0, d3.min(vals)), Math.max(0, d3.max(vals))], [h - m.bottom, m.top]).nice();
     const x = d3.scaleBand(rows.map((r) => String(r.year)), [m.left, w - m.right]).padding(0.22);
     const xi = d3.scaleBand(['s', 'b'], [0, x.bandwidth()]).padding(0.08);
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', 'Yearly return, strategy vs SPY');
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', 'Yearly return, strategy vs ' + bench);
     svg.append('g').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.left).attr('x2', w - m.right).attr('y1', y).attr('y2', y).style('stroke', 'var(--color-border-line)');
     svg.append('g').selectAll('text').data(y.ticks(5)).join('text').attr('x', m.left - 6).attr('y', (d) => y(d) + 4).attr('text-anchor', 'end').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => Math.round(d * 100) + '%');
     const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r) => `translate(${x(String(r.year))},0)`);
@@ -1890,18 +1892,19 @@ dash.calc('vs_industry', {
     const tip = tipBox(box);
     g.append('rect').attr('x', 0).attr('width', x.bandwidth()).attr('y', m.top).attr('height', h - m.top - m.bottom).style('fill', 'transparent')
       .on('mousemove', (ev, r) => showTip(box, tip, x(String(r.year)) / w * box.clientWidth + x.bandwidth() / w * box.clientWidth / 2, d3.pointer(ev, box)[1],
-        [r.year + (r.partial ? ' (part of year)' : ''), 'Strategy ' + pct1(r.ret), 'SPY ' + pct1(r.spy), r.ret != null && r.spy != null ? (r.ret >= r.spy ? 'Beat SPY by ' : 'Trailed SPY by ') + (Math.abs(r.ret - r.spy) * 100).toFixed(1) + ' pts' : '']))
+        [r.year + (r.partial ? ' (part of year)' : ''), 'Strategy ' + pct1(r.ret), bench + ' ' + pct1(r.spy), r.ret != null && r.spy != null ? (r.ret >= r.spy ? 'Beat ' + bench + ' by ' : 'Trailed ' + bench + ' by ') + (Math.abs(r.ret - r.spy) * 100).toFixed(1) + ' pts' : '']))
       .on('mouseleave', () => { tip.hidden = true; });
   };
 
-  const growthLine = (box, rows) => {
+  const growthLine = (box, rows, bench = 'SPY', cur = '$') => {
+    const money = (v) => (v == null ? '—' : cur + Math.round(v).toLocaleString(cur === '₹' ? 'en-IN' : 'en-US'));
     const w = chartW(box), h = 240, m = { top: 14, right: 12, bottom: 26, left: 58 };
     const pts = rows.map((r) => ({ t: new Date(r.date + 'T00:00:00Z'), a: r.equity, b: r.spy, date: r.date })).filter((p) => Number.isFinite(p.a));
     const x = d3.scaleUtc(d3.extent(pts, (p) => p.t), [m.left, w - m.right]);
     const y = d3.scaleLinear([Math.min(d3.min(pts, (p) => Math.min(p.a, p.b || p.a)), 10000) * 0.95, d3.max(pts, (p) => Math.max(p.a, p.b || 0))], [h - m.bottom, m.top]).nice();
-    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', 'Growth of $10,000, strategy vs SPY');
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', 'Growth of ' + cur + '10,000, strategy vs ' + bench);
     svg.append('g').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.left).attr('x2', w - m.right).attr('y1', y).attr('y2', y).style('stroke', 'var(--color-border-line)');
-    svg.append('g').selectAll('text').data(y.ticks(5)).join('text').attr('x', m.left - 6).attr('y', (d) => y(d) + 4).attr('text-anchor', 'end').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => '$' + d3.format(d >= 1000 ? ',.0f' : ',')(d));
+    svg.append('g').selectAll('text').data(y.ticks(5)).join('text').attr('x', m.left - 6).attr('y', (d) => y(d) + 4).attr('text-anchor', 'end').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text((d) => cur + d3.format(d >= 1000 ? ',.0f' : ',')(d));
     svg.append('g').selectAll('text').data(x.ticks(w < 520 ? 4 : 8)).join('text').attr('x', x).attr('y', h - 8).attr('text-anchor', 'middle').style('font-size', 'var(--cds-font-size-caption)').style('fill', 'var(--color-fg-muted)').text(d3.utcFormat('%Y'));
     svg.append('line').attr('x1', m.left).attr('x2', w - m.right).attr('y1', y(10000)).attr('y2', y(10000)).style('stroke', 'var(--color-fg-muted)').style('stroke-dasharray', '3 3');
     const ln = (k, color) => svg.append('path').datum(pts.filter((p) => Number.isFinite(p[k]))).attr('fill', 'none').style('stroke', color).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x((p) => x(p.t)).y((p) => y(p[k])));
@@ -1912,7 +1915,7 @@ dash.calc('vs_industry', {
       .on('mousemove', (ev) => {
         const p = pts[bis(pts, x.invert(d3.pointer(ev)[0]))];
         dot.attr('cx', x(p.t)).attr('cy', y(p.a)).attr('opacity', 1);
-        showTip(box, tip, x(p.t) / w * box.clientWidth, y(p.a) / h * box.clientHeight, [fmtDate(p.date), 'Strategy ' + usd0(p.a), 'SPY ' + usd0(p.b)]);
+        showTip(box, tip, x(p.t) / w * box.clientWidth, y(p.a) / h * box.clientHeight, [fmtDate(p.date), 'Strategy ' + money(p.a), bench + ' ' + money(p.b)]);
       })
       .on('mouseleave', () => { tip.hidden = true; dot.attr('opacity', 0); });
   };
@@ -2604,6 +2607,174 @@ const CL = (() => {
     requestAnimationFrame(() => { yearBars(yb, r.years); growthLine(lb, r.curve); });
   };
 
+// India: Nifty + gold models (monthly data: Nifty 50 index fund NAV, GOLDBEES, liquid fund as cash).
+const IN2 = (() => {
+  const COST = 0.0005, W_N = 0.7, W_G = 0.3;
+  const lastDay = (m) => { const [y, mo] = m.split('-').map(Number); return new Date(Date.UTC(y, mo, 0)).toISOString().slice(0, 10); };
+  const MODELS = {
+    mix: { name: '70/30 Nifty + gold, rebalanced yearly', short: '70/30 yearly' },
+    mixtrend: { name: '70/30 + Nifty trend filter', short: '70/30 + trend' },
+    dm: { name: 'Dual momentum: Nifty or gold (12-month)', short: 'Dual momentum' },
+    nifty: { name: 'Hold Nifty 50', short: 'Nifty 50' },
+  };
+  const run = (rowsIn, model = 'mix', start = '2010-10') => {
+    const rows = [...rowsIn].map((r) => ({ m: String(r.month).slice(0, 7), N: Number(r.NIFTY50), G: Number(r.GOLDBEES), C: Number(r.CASH) }))
+      .filter((r) => r.N > 0 && r.G > 0 && r.C > 0).sort((a, b) => (a.m < b.m ? -1 : 1));
+    const i0 = rows.findIndex((r) => r.m >= start);
+    if (i0 < 12) return null;
+    const sma = (i) => { let t = 0; for (let k = i - 9; k <= i; k++) t += rows[k].N; return t / 10; };
+    const r12 = (i, k) => rows[i][k] / rows[i - 12][k] - 1;
+    const up = (i) => rows[i].N >= sma(i);
+    // target weights at month-end i, given current holdings h (value shares) — returns null = keep drifting
+    const target = (i, h, first) => {
+      const dec = rows[i].m.endsWith('-12');
+      if (model === 'nifty') return first ? { N: 1 } : null;
+      if (model === 'mix') return first || dec ? { N: W_N, G: W_G } : null;
+      if (model === 'mixtrend') {
+        const inN = (h.N || 0) > 0, wantN = up(i);
+        if (first || dec) return wantN ? { N: W_N, G: W_G } : { C: W_N, G: W_G };
+        if (inN !== wantN) { const tot = (h.N || 0) + (h.C || 0) + (h.G || 0); const eq = (h.N || 0) + (h.C || 0); return wantN ? { N: eq / tot, G: (h.G || 0) / tot } : { C: eq / tot, G: (h.G || 0) / tot }; }
+        return null;
+      }
+      if (model === 'dm') { const n = r12(i, 'N'), g = r12(i, 'G'), c = r12(i, 'C'); const best = n >= g ? 'N' : 'G'; return { [max(n, g) > c ? best : 'C']: 1 }; }
+      return null;
+    };
+    const max = Math.max;
+    let h = {}, trades = 0;
+    const pts = [{ m: rows[i0].m, eq: 1, nf: 1 }], months = [];
+    let eq = 1, nf = 1;
+    for (let i = i0; i < rows.length - 1; i++) {
+      const tw = target(i, h, i === i0);
+      if (tw) {
+        const tot = Object.values(h).reduce((a, b) => a + b, 0) || eq;
+        const nh = Object.fromEntries(Object.entries(tw).map(([k, w]) => [k, w * tot]));
+        const traded = ['N', 'G', 'C'].reduce((t, k) => t + Math.abs((nh[k] || 0) - (h[k] || 0)), 0) - (i === i0 ? tot : 0);
+        const cost = Math.max(0, traded) * COST;
+        if (traded > tot * 0.002) trades++;
+        h = Object.fromEntries(Object.entries(nh).map(([k, v]) => [k, v * (1 - cost / tot)]));
+      }
+      const before = Object.values(h).reduce((a, b) => a + b, 0);
+      for (const k of Object.keys(h)) h[k] *= rows[i + 1][k] / rows[i][k];
+      const after = Object.values(h).reduce((a, b) => a + b, 0);
+      const r = after / eq - 1; eq = after; nf *= rows[i + 1].N / rows[i].N;
+      months.push({ m: rows[i + 1].m, r, s: rows[i + 1].N / rows[i].N - 1 });
+      pts.push({ m: rows[i + 1].m, eq, nf });
+    }
+    const st = (key, a = '0', b = '9') => { const x = months.filter((p) => p.m >= a && p.m < b); let e = 1, pk = 1, dd = 0; for (const p of x) { e *= 1 + p[key]; pk = Math.max(pk, e); dd = Math.max(dd, 1 - e / pk); } return { total: e - 1, cagr: x.length ? e ** (12 / x.length) - 1 : null, dd }; };
+    const yr = {}; for (const p of months) { const y = p.m.slice(0, 4); yr[y] = yr[y] || { r: 1, s: 1 }; yr[y].r *= 1 + p.r; yr[y].s *= 1 + p.s; }
+    const lastM = months[months.length - 1].m, firstM = months[0].m;
+    const years = Object.entries(yr).map(([y, v]) => ({ year: +y, ret: v.r - 1, spy: v.s - 1, partial: (y === firstM.slice(0, 4) && firstM.slice(5) !== '01') || (y === lastM.slice(0, 4) && lastM.slice(5) !== '12') }));
+    const L = rows.length - 1, tot = Object.values(h).reduce((a, b) => a + b, 0);
+    const exYear = (y) => { const x = months.filter((p) => p.m.slice(0, 4) !== y); let e = 1; for (const p of x) e *= 1 + p.r; return e ** (12 / x.length) - 1; };
+    return {
+      model, start: lastDay(rows[i0].m), end: lastDay(lastM), asOf: lastDay(rows[L].m),
+      summary: { ...st('r'), nifty: st('s'), trades, beatYears: years.filter((y) => !y.partial && y.ret > y.spy + 0.0005).length, fullYears: years.filter((y) => !y.partial).length, ex2025: exYear('2025'), niftyEx2025: (() => { const x = months.filter((p) => p.m.slice(0, 4) !== '2025'); let e = 1; for (const p of x) e *= 1 + p.s; return e ** (12 / x.length) - 1; })() },
+      periods: [['2010–2016', '0', '2017'], ['2017–2021', '2017', '2022'], ['2022–' + lastM.slice(0, 4), '2022', '9'], ['All years', '0', '9']].map(([label, a, b]) => ({ label, strat: st('r', a, b), nifty: st('s', a, b) })),
+      years, curve: pts.map((p) => ({ date: lastDay(p.m), equity: 10000 * p.eq, spy: 10000 * p.nf })),
+      now: { niftyUp: up(L), nifty: rows[L].N, niftyAvg: sma(L), n12: r12(L, 'N'), g12: r12(L, 'G'), c12: r12(L, 'C'), weights: Object.fromEntries(Object.entries(h).map(([k, v]) => [k, v / tot])), month: rows[L].m },
+    };
+  };
+  return { run, MODELS, lastDay };
+})();
+
+  // ---- India: Nifty + gold ----
+  const inrK = (v) => '₹' + Math.round(v).toLocaleString('en-IN');
+  let inBuilt = false, inMemo = { key: null };
+  const drawIN = () => {
+    const el = tq('[data-panel="india"]'); if (!el) return;
+    if (!inBuilt) { inBuilt = true; const o = mk('div', 'sx-in-out', null, ['india_monthly', null, null]); o.style.cssText = 'display:flex;flex-direction:column;gap:var(--cds-gap-lg)'; el.appendChild(o); }
+    const out = el.querySelector('.sx-in-out');
+    const d = dash.data('india_monthly');
+    if (d.status !== 'ok') { out.replaceChildren(mk('div', 'sx-card', d.status === 'loading' || d.status === 'missing' ? 'Loading Indian fund and ETF prices…' : 'Couldn’t load the India price history.')); return; }
+    const model = IN2.MODELS[dash.params().in_model] ? dash.params().in_model : 'mix';
+    if (inMemo.d !== d.data) inMemo = { d: d.data, r: Object.fromEntries(Object.keys(IN2.MODELS).map((k) => [k, IN2.run(d.data, k)])) };
+    const all = inMemo.r, r = all[model];
+    if (!r) { out.replaceChildren(mk('div', 'sx-card', 'Not enough price history.')); return; }
+    const n = r.now, s = r.summary;
+    out.replaceChildren();
+    const nextDec = (() => { const y = Number(n.month.slice(0, 4)) + (n.month.slice(5) === '12' ? 1 : 0); const e = new Date(Date.UTC(y, 11, 31)); while (e.getUTCDay() === 0 || e.getUTCDay() === 6) e.setUTCDate(e.getUTCDate() - 1); return e.toISOString().slice(0, 10); })();
+    const nextMonth = (() => { const [y, m] = n.month.split('-').map(Number); const e = new Date(Date.UTC(y, m + 1, 0)); while (e.getUTCDay() === 0 || e.getUTCDay() === 6) e.setUTCDate(e.getUTCDate() - 1); return e.toISOString().slice(0, 10); })();
+
+    // 1. signal
+    const sig = mk('div', 'sx-card');
+    sig.appendChild(mk('h3', '', 'This month’s signal'));
+    const row = mk('div', 'sx-cl-sig');
+    let hold, why;
+    if (model === 'mix') { hold = '70% NIFTYBEES · 30% GOLDBEES'; why = 'No monthly trading: hold the mix and rebalance back to 70/30 once a year.'; }
+    else if (model === 'mixtrend') { hold = n.niftyUp ? '70% NIFTYBEES · 30% GOLDBEES' : '70% liquid fund · 30% GOLDBEES'; why = n.niftyUp ? 'The Nifty 50 is above its 10-month average, so the stock part stays invested.' : 'The Nifty 50 is below its 10-month average, so the stock part waits in a liquid fund (e.g. LIQUIDBEES) until it closes back above.'; }
+    else if (model === 'dm') { const best = n.n12 >= n.g12 ? 'Nifty 50' : 'gold'; const pick = Math.max(n.n12, n.g12) > n.c12 ? (best === 'gold' ? '100% GOLDBEES' : '100% NIFTYBEES') : '100% liquid fund'; hold = pick; why = `12-month returns: Nifty 50 ${pct1(n.n12)}, gold ${pct1(n.g12)}, liquid fund ${pct1(n.c12)}. Hold whichever of Nifty and gold is stronger, if it beats the liquid fund.`; }
+    else { hold = '100% NIFTYBEES'; why = 'Buy and hold the Nifty 50.'; }
+    row.appendChild(mk('span', 'sx-cl-hold', hold));
+    sig.appendChild(row);
+    sig.appendChild(mk('p', '', why));
+    const ul = mk('ul', 'sx-v2-checks');
+    const ck = (pass, text) => { const li = mk('li'); li.appendChild(mk('span', 'sx-ck ' + (pass ? 'sx-good' : 'sx-bad'), pass ? '✓' : '✕')); li.appendChild(mk('span', '', text)); ul.appendChild(li); };
+    ck(n.niftyUp, `Nifty 50 trend: ${n.nifty.toFixed(1)} vs. 10-month average ${n.niftyAvg.toFixed(1)} — ${n.niftyUp ? 'above (uptrend)' : 'below (downtrend)'}`);
+    ck(n.n12 > n.c12, `Nifty 50 over 12 months: ${pct1(n.n12)} vs. liquid fund ${pct1(n.c12)}`);
+    ck(n.g12 > n.c12, `Gold over 12 months: ${pct1(n.g12)} vs. liquid fund ${pct1(n.c12)}`);
+    sig.appendChild(ul);
+    sig.appendChild(mk('p', 'sx-cap', `Based on the ${fmtDate(r.asOf)} month-end prices. ` + (model === 'mix' ? `Next rebalance: ${fmtDate(nextDec)} (last trading day of the year) — sell some of whichever grew more to get back to 70/30.` : model === 'nifty' ? '' : `Next check: ${fmtDate(nextMonth)} (last trading day of the month).` + (model === 'mixtrend' ? ` Yearly rebalance: ${fmtDate(nextDec)}.` : ''))));
+    out.appendChild(sig);
+
+    // 2. rules + model chips
+    const rc = mk('div', 'sx-card');
+    rc.appendChild(mk('h3', '', 'The models'));
+    const tg = mk('div', 'sx-cl-toggle'); tg.style.marginTop = '0';
+    for (const [k, v] of Object.entries(IN2.MODELS)) {
+      const b = mk('button', 'sx-chip', v.short + (k === 'mix' ? ' (recommended)' : '')); b.type = 'button'; b.setAttribute('aria-pressed', String(k === model));
+      b.addEventListener('click', () => dash.setParams({ in_model: k === 'mix' ? null : k })); tg.appendChild(b);
+    }
+    rc.appendChild(tg);
+    const rules = { mix: ['Keep 70% in a Nifty 50 ETF (NIFTYBEES) and 30% in a gold ETF (GOLDBEES).', 'Once a year, at the last trading day of December, sell some of whichever grew more and buy the other, back to 70/30.', 'Nothing else — no monthly trading.'],
+      mixtrend: ['Same 70/30 mix, rebalanced every December.', 'Each month-end, if the Nifty 50 closes below its 10-month average, move the Nifty part to a liquid fund (e.g. LIQUIDBEES). Gold stays.', 'When the Nifty closes back above its average, move the money back into NIFTYBEES.'],
+      dm: ['Each month-end, compare the 12-month return of the Nifty 50 and gold.', 'Put 100% in whichever is stronger — if it also beats the liquid fund.', 'If neither beats the liquid fund, hold the liquid fund.'],
+      nifty: ['Buy NIFTYBEES and hold it. The benchmark everything is compared against.'] }[model];
+    const ol = mk('ol', 'sx-cl-rules'); for (const t of rules) ol.appendChild(mk('li', '', t)); rc.appendChild(ol);
+    out.appendChild(rc);
+
+    // 3. results
+    const gap = s.cagr - s.nifty.cagr;
+    const res = mk('div', 'sx-card');
+    res.appendChild(mk('p', 'sx-v2-verdict ' + (model === 'nifty' ? '' : gap > 0 ? 'sx-good' : 'sx-bad'), model === 'nifty' ? 'The benchmark' : gap > 0 ? `Beat holding the Nifty 50 by ${(gap * 100).toFixed(1)} pts a year` : `Trailed the Nifty 50 by ${(-gap * 100).toFixed(1)} pts a year`));
+    res.appendChild(mk('p', 'sx-cap', `Backtest ${fmtDate(r.start)} → ${fmtDate(r.end)} · monthly prices, 0.05% cost per side, before taxes`));
+    const grid = mk('div', 'sx-grid');
+    tile(grid, 'Yearly return (CAGR)', pct1(s.cagr) + '/yr', 'Nifty 50: ' + pct1(s.nifty.cagr) + '/yr');
+    tile(grid, '₹10,000 became', inrK(10000 * (1 + s.total)), 'Nifty 50: ' + inrK(10000 * (1 + s.nifty.total)));
+    tile(grid, 'Worst drop (month-end)', dd(s.dd), 'Nifty 50: ' + dd(s.nifty.dd), null, null, 'sx-bad');
+    tile(grid, 'Without 2025', pct1(s.ex2025) + '/yr', 'Nifty 50: ' + pct1(s.niftyEx2025) + '/yr (gold’s big year removed)');
+    tile(grid, 'Trades', String(s.trades), 'About ' + (s.trades / 16).toFixed(1) + ' a year');
+    res.appendChild(grid);
+    const pw = mk('div', 'sx-tablewrap'); pw.style.marginTop = '14px';
+    const pt = mk('table', 'sx-scr'); const ph = mk('thead'); const phr = mk('tr');
+    for (const h of ['Period', 'Strategy /yr', 'Nifty 50 /yr', 'Worst drop', 'Nifty worst drop']) phr.appendChild(mk('th', '', h));
+    ph.appendChild(phr); pt.appendChild(ph); const pb = mk('tbody');
+    for (const p of r.periods) { const tr = mk('tr'); tr.appendChild(mk('td', '', p.label)); tr.appendChild(mk('td', model === 'nifty' ? '' : p.strat.cagr > p.nifty.cagr ? 'sx-good' : 'sx-bad', pct1(p.strat.cagr))); tr.appendChild(mk('td', '', pct1(p.nifty.cagr))); tr.appendChild(mk('td', '', dd(p.strat.dd))); tr.appendChild(mk('td', '', dd(p.nifty.dd))); pb.appendChild(tr); }
+    pt.appendChild(pb); pw.appendChild(pt); res.appendChild(pw);
+    out.appendChild(res);
+
+    // 4. charts
+    const cc = mk('div', 'sx-card');
+    const yc = mk('div'); yc.appendChild(mk('h4', '', 'Year by year vs. Nifty 50'));
+    legend(yc, [[IN2.MODELS[model].short, dash.colors[0]], ['Hold Nifty 50', SPYC]]);
+    const yb = mk('div', 'sx-chart'); yc.appendChild(yb); cc.appendChild(yc);
+    const lc = mk('div'); lc.style.marginTop = '14px'; lc.appendChild(mk('h4', '', 'What ₹10,000 became'));
+    legend(lc, [[IN2.MODELS[model].short, dash.colors[0]], ['Hold Nifty 50', SPYC]]);
+    const lb = mk('div', 'sx-chart'); lc.appendChild(lb); cc.appendChild(lc);
+    out.appendChild(cc);
+
+    // 5. all models compared
+    const ct = mk('div', 'sx-card'); ct.appendChild(mk('h3', '', 'All four models'));
+    const cw = mk('div', 'sx-tablewrap'); const ctb = mk('table', 'sx-scr'); const chd = mk('thead'); const chr = mk('tr');
+    for (const h of ['Model', 'Per year', 'Without 2025', 'Worst drop', 'Trades', 'Years beating Nifty']) chr.appendChild(mk('th', '', h));
+    chd.appendChild(chr); ctb.appendChild(chd); const cb = mk('tbody');
+    for (const [k, v] of Object.entries(all)) { if (!v) continue; const x = v.summary; const tr = mk('tr', k === model ? 'sx-cl-top' : ''); tr.appendChild(mk('td', '', IN2.MODELS[k].name)); tr.appendChild(mk('td', '', pct1(x.cagr))); tr.appendChild(mk('td', '', pct1(x.ex2025))); tr.appendChild(mk('td', '', dd(x.dd))); tr.appendChild(mk('td', '', String(x.trades))); tr.appendChild(mk('td', '', k === 'nifty' ? '—' : x.beatYears + ' of ' + x.fullYears)); cb.appendChild(tr); }
+    ctb.appendChild(cb); cw.appendChild(ctb); ct.appendChild(cw);
+    ct.appendChild(mk('p', 'sx-cap', 'Why 70/30 is the pick: it beat the Nifty even with gold’s 2025 rally removed, cut the worst drop by about 40%, and trades about once a year (mostly long-term capital gains). Dual momentum earned slightly more, but only because of 2025, and switches often (20% short-term gains tax).'));
+    out.appendChild(ct);
+    out.appendChild(mk('p', 'sx-cap', 'Data: Nifty 50 = UTI Nifty 50 Index Fund NAV (dividends included); gold = GOLDBEES (split-adjusted); cash = Nippon India Liquid Fund NAV. From AMFI (mfapi.in) and Alpha Vantage, refreshed monthly by the “Build India data” GitHub Action. Only 16 years of gold history, and it assumes gold keeps behaving as a diversifier. Taxes not included. Not financial advice.'));
+    requestAnimationFrame(() => { yearBars(yb, r.years, 'Nifty 50'); growthLine(lb, r.curve, 'Nifty 50', '₹'); });
+  };
+
   const panel = (el, r, v) => {
     el.replaceChildren();
     const W = 'id=' + r.id;
@@ -2711,6 +2882,7 @@ const CL = (() => {
     drawV2();
     drawM2();
     drawCL();
+    drawIN();
   };
 
   if (h === 'screener' || h.startsWith('screen-')) show('screener', false);

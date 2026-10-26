@@ -22,7 +22,7 @@
   const SOURCES = {
     company: live('company'), prices: live('prices', true), profile: live('profile'), statements: live('statements'),
     industry: file('industry_benchmarks_jan2026.csv', 'csv'), screen: file('screen.json'), universe: file('universe.json'),
-    strategies: file('strategies_oct10.json'), etf_monthly: file('etf_monthly.csv', 'csv'), etf_monthly_long: file('etf_monthly_long.csv', 'csv'),
+    strategies: file('strategies_oct10.json'), etf_monthly: file('etf_monthly.csv', 'csv'), etf_monthly_long: file('etf_monthly_long.csv', 'csv'), india_monthly: file('india_monthly.csv', 'csv'),
     dip_spy: { key: () => 'static', get: () => dipText('SPY') }, dip_qqq: { key: () => 'static', get: () => dipText('QQQ') },
   };
 

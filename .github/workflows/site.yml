@@ -4,7 +4,7 @@ on:
     branches: [main]
     paths: ['site/**', 'src/**', 'data/**', '.github/workflows/site.yml']
   workflow_run:
-    workflows: ['Build screener', 'Build strategies', 'Build long history']
+    workflows: ['Build screener', 'Build strategies', 'Build long history', 'Build India data']
     types: [completed]
   workflow_dispatch: {}
 concurrency:

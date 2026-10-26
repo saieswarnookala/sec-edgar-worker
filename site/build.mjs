@@ -18,7 +18,7 @@ const files = [
   ['site/static-data/industry_benchmarks_jan2026.csv', 'industry_benchmarks_jan2026.csv'],
   ['site/static-data/strategies_oct10.json', 'strategies_oct10.json'],
   ['data/screen.json', 'screen.json'], ['data/universe.json', 'universe.json'],
-  ['data/etf_monthly.csv', 'etf_monthly.csv'], ['data/etf_monthly_long.csv', 'etf_monthly_long.csv'], ['data/dip_daily.csv', 'dip_daily.csv'],
+  ['data/etf_monthly.csv', 'etf_monthly.csv'], ['data/etf_monthly_long.csv', 'etf_monthly_long.csv'], ['data/dip_daily.csv', 'dip_daily.csv'], ['data/india_monthly.csv', 'india_monthly.csv'],
 ];
 for (const [from, to] of files) {
   if (!existsSync(from)) { console.warn('missing', from); continue; }
