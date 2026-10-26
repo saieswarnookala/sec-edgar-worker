@@ -50,15 +50,7 @@
   "dividend_months": 0,
   "last_12m_return": 0.1589
  },
- "MON100": {
-  "found": false,
-  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
- },
- "LIQUIDBEES": {
-  "found": false,
-  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
- },
- "SETF10GILT": {
+ "MOM100": {
   "found": false,
   "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
  },
@@ -71,12 +63,55 @@
   "dividend_months": 0,
   "last_12m_return": -0.0905
  },
- "INFRABEES": {
-  "found": false,
-  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
+ "NIFTY50": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "UTI Nifty 50 Index Fund - Regular Plan - Growth",
+  "code": 100822,
+  "first": "2006-04-28",
+  "last": "2026-10-23",
+  "months": 247,
+  "last_12m_return": -0.115
  },
- "PSUBNKBEES": {
+ "NASDAQ100": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "Motilal Oswal Nasdaq 100 ETF",
+  "code": 114984,
+  "first": "2011-03-31",
+  "last": "2026-10-23",
+  "months": 188,
+  "last_12m_return": 0.2003,
+  "split_fixes": [
+   {
+    "month": "2021-06",
+    "ratio": 10
+   }
+  ]
+ },
+ "GILT": {
   "found": false,
-  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
+  "note": "no scheme matched",
+  "candidates": [
+   "SBI MAGNUM GILT FUND -  GROWTH - PF (Fixed Period - 2 Yrs) Option",
+   "SBI Magnum Gilt Fund - Income Distribution cum Capital Withdrawal Option (IDCW) - PF (Regular)",
+   "SBI MAGNUM GILT FUND -  GROWTH - PF (Fixed Period - 1 Yr) Option"
+  ]
+ },
+ "CASH": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "Nippon India Liquid Fund - Regular Plan - Growth Option",
+  "code": 100851,
+  "first": "2006-04-28",
+  "last": "2026-10-25",
+  "months": 247,
+  "last_12m_return": 0.0623,
+  "split_fixes": [
+   {
+    "month": "2012-08",
+    "ratio": -100
+   }
+  ]
  }
 }
