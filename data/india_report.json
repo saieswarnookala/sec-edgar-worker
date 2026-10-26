@@ -86,13 +86,40 @@
   ]
  },
  "GILT": {
-  "found": false,
-  "note": "no scheme matched",
-  "candidates": [
-   "SBI MAGNUM GILT FUND -  GROWTH - PF (Fixed Period - 2 Yrs) Option",
-   "SBI Magnum Gilt Fund - Income Distribution cum Capital Withdrawal Option (IDCW) - PF (Regular)",
-   "SBI MAGNUM GILT FUND -  GROWTH - PF (Fixed Period - 1 Yr) Option"
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "ICICI Prudential Short Term Gilt Fund - Growth",
+  "code": 100371,
+  "first": "2006-04-28",
+  "last": "2018-05-25",
+  "months": 146,
+  "last_12m_return": 0.0348
+ },
+ "GOLD": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "Nippon India ETF Gold BeES - Direct Plan",
+  "code": 140088,
+  "first": "2016-11-30",
+  "last": "2026-10-23",
+  "months": 120,
+  "last_12m_return": 0.1593,
+  "split_fixes": [
+   {
+    "month": "2019-12",
+    "ratio": 100
+   }
   ]
+ },
+ "DEBT": {
+  "found": true,
+  "source": "AMFI NAV via mfapi.in",
+  "scheme": "Aditya Birla Sun Life Income Fund-Plan E(54EA Growth)",
+  "code": 103180,
+  "first": "2006-04-28",
+  "last": "2011-02-11",
+  "months": 59,
+  "last_12m_return": 0.0455
  },
  "MIDCAP": {
   "found": true,
