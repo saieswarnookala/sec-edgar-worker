@@ -2,7 +2,7 @@
  "NIFTYBEES": {
   "found": true,
   "first": "2009-11-30",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 204,
   "split_fixes": [
    {
@@ -11,35 +11,25 @@
    }
   ],
   "dividend_months": 0,
-  "last_12m_return": -0.1165
+  "last_12m_return": -0.0968
  },
  "JUNIORBEES": {
   "found": true,
   "first": "2009-11-27",
-  "last": "2026-10-26",
+  "last": "2026-10-30",
   "months": 204,
   "split_fixes": [],
   "dividend_months": 0,
-  "last_12m_return": -0.044
+  "last_12m_return": -0.0278
  },
  "BANKBEES": {
-  "found": true,
-  "first": "2005-02-28",
-  "last": "2026-10-26",
-  "months": 261,
-  "split_fixes": [
-   {
-    "month": "2019-12",
-    "ratio": 10
-   }
-  ],
-  "dividend_months": 0,
-  "last_12m_return": -0.058
+  "found": false,
+  "note": "{\n    \"Error Message\": \"Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_MONTHLY_ADJUSTED."
  },
  "GOLDBEES": {
   "found": true,
   "first": "2009-10-30",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 205,
   "split_fixes": [
    {
@@ -48,16 +38,16 @@
    }
   ],
   "dividend_months": 0,
-  "last_12m_return": 0.1589
+  "last_12m_return": 0.1526
  },
  "CPSEETF": {
   "found": true,
   "first": "2014-05-30",
-  "last": "2026-10-26",
+  "last": "2026-10-30",
   "months": 150,
   "split_fixes": [],
   "dividend_months": 0,
-  "last_12m_return": -0.0905
+  "last_12m_return": -0.0713
  },
  "NIFTY50": {
   "found": true,
@@ -65,9 +55,9 @@
   "scheme": "UTI Nifty 50 Index Fund - Regular Plan - Growth",
   "code": 100822,
   "first": "2006-04-28",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 247,
-  "last_12m_return": -0.115
+  "last_12m_return": -0.0972
  },
  "NASDAQ100": {
   "found": true,
@@ -75,9 +65,9 @@
   "scheme": "Motilal Oswal Nasdaq 100 ETF",
   "code": 114984,
   "first": "2011-03-31",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 188,
-  "last_12m_return": 0.2003,
+  "last_12m_return": 0.1766,
   "split_fixes": [
    {
     "month": "2021-06",
@@ -101,9 +91,9 @@
   "scheme": "Nippon India ETF Gold BeES - Direct Plan",
   "code": 140088,
   "first": "2016-11-30",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 120,
-  "last_12m_return": 0.1593,
+  "last_12m_return": 0.1494,
   "split_fixes": [
    {
     "month": "2019-12",
@@ -127,9 +117,9 @@
   "scheme": "Motilal Oswal Nifty Midcap 100 ETF",
   "code": 114456,
   "first": "2011-02-28",
-  "last": "2026-10-23",
+  "last": "2026-10-30",
   "months": 189,
-  "last_12m_return": -0.0625
+  "last_12m_return": -0.0371
  },
  "CASH": {
   "found": true,
@@ -137,9 +127,9 @@
   "scheme": "Nippon India Liquid Fund - Regular Plan - Growth Option",
   "code": 100851,
   "first": "2006-04-28",
-  "last": "2026-10-25",
-  "months": 247,
-  "last_12m_return": 0.0623,
+  "last": "2026-11-01",
+  "months": 248,
+  "last_12m_return": 0.0587,
   "split_fixes": [
    {
     "month": "2012-08",
