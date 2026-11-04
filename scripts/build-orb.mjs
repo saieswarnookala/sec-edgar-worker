@@ -1,3 +1,4 @@
+// v2: 1-minute bars after the opening 5-min bar (v1 used 5-min bars and stopped almost every trade on the entry bar).
 // Opening-range breakout on "stocks in play" (Zarattini, Barbon & Aziz 2024 style). Research only, no orders.
 // Universe: CURRENT S&P 500 (data/sp500_tickers.json) -> survivorship bias. Alpaca SIP 5-min + daily bars.
 // Filters (prior 14 days): open > $5, avg daily volume >= 1M, ATR14 > $0.50.
@@ -15,7 +16,7 @@ export function et(t) { const o = Object.fromEntries(fmt.formatToParts(new Date(
 
 // One trade on one day. bs = regular-session 5-min bars [{o,h,l,c}], bs[0] = opening bar.
 // Returns null (no entry) or {dir, fill, exit, shares, pnl}.
-export function tradeDay(bs, atr, equity) {
+export function tradeDay(bs, atr, equity, optimistic = false) {
   const f = bs[0]; const dir = f.c > f.o ? 1 : f.c < f.o ? -1 : 0; if (!dir) return null;
   const lvl = dir > 0 ? f.h : f.l, sd = 0.1 * atr;
   let fill = null, exit = null;
@@ -25,7 +26,7 @@ export function tradeDay(bs, atr, equity) {
       if (dir > 0 ? b.h < lvl : b.l > lvl) continue;
       fill = dir > 0 ? Math.max(lvl, b.o) : Math.min(lvl, b.o);
       const st = fill - dir * sd;
-      if (dir > 0 ? b.l <= st : b.h >= st) exit = st;
+      if (!optimistic && (dir > 0 ? b.l <= st : b.h >= st)) exit = st;
       continue;
     }
     const st = fill - dir * sd;
@@ -55,20 +56,21 @@ async function main(OUT) {
   const H = { 'APCA-API-KEY-ID': process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.APCA_API_SECRET_KEY };
   const NOW = new Date(Date.now() - 3600e3).toISOString();
   let reqs = 0;
-  async function bars(symbols, tf, start, end) {
+  async function bars(symbols, tf, start, end, per = 250) {
     const out = {};
-    for (let i = 0; i < symbols.length; i += 100) {
+    for (let i = 0; i < symbols.length; i += per) {
       let token = null;
       do {
-        const p = new URLSearchParams({ symbols: symbols.slice(i, i + 100).join(','), timeframe: tf, start, end, limit: '10000', adjustment: 'split', feed: 'sip' });
+        const p = new URLSearchParams({ symbols: symbols.slice(i, i + per).join(','), timeframe: tf, start, end, limit: '10000', adjustment: 'split', feed: 'sip' });
         if (token) p.set('page_token', token);
         let j = null;
-        for (let a = 0; a < 5 && !j; a++) {
-          const r = await fetch('https://data.alpaca.markets/v2/stocks/bars?' + p, { headers: H }); reqs++;
-          if (r.ok) j = await r.json(); else { const t = await r.text(); if (a === 4) throw new Error(`alpaca ${r.status} ${t}`); await sleep(3000 * (a + 1)); }
+        for (let a = 0; a < 6 && !j; a++) {
+          try { const r = await fetch('https://data.alpaca.markets/v2/stocks/bars?' + p, { headers: H }); reqs++;
+            if (r.ok) j = await r.json(); else { const t = await r.text(); if (a === 5) throw new Error(`alpaca ${r.status} ${t}`); await sleep(3000 * (a + 1)); }
+          } catch (e) { if (a === 5) throw e; await sleep(3000 * (a + 1)); }
         }
         for (const [s, arr] of Object.entries(j.bars || {})) (out[s] ||= []).push(...arr);
-        token = j.next_page_token; await sleep(320);
+        token = j.next_page_token; await sleep(310);
       } while (token);
     }
     return out;
@@ -87,42 +89,49 @@ async function main(OUT) {
       (info[et(a[i].t).d] ||= {})[s] = { atr: tr / 14, vol: v / 14 };
     }
   }
+  // trading days from SPY daily bars; bar t = midnight ET in UTC, so 9:30 ET = t + 9.5h
+  const days = daily.SPY.map((b) => ({ d: et(b.t).d, t0: Date.parse(b.t) })).filter((x) => x.d >= pre.slice(0, 10) && Date.parse(x.d) < Date.parse(NOW) - 86400e3 * 0);
+  const iso = (ms) => new Date(ms).toISOString();
   const firstVols = {};
-  const V = { both: { eq: 1, curve: [], trades: 0, wins: 0, longs: 0, shorts: 0, sumR: 0 }, long: { eq: 1, curve: [], trades: 0, wins: 0, longs: 0, shorts: 0, sumR: 0 } };
-  const sample = [];
-  for (let m0 = new Date(START + 'T00:00:00Z'); m0.toISOString() < NOW;) {
-    const m1 = new Date(Date.UTC(m0.getUTCFullYear(), m0.getUTCMonth() + 1, 1));
-    const raw = await bars(syms, '5Min', m0.toISOString(), m1.toISOString() < NOW ? m1.toISOString() : NOW);
-    const byDay = {};
-    for (const [s, arr] of Object.entries(raw)) for (const b of arr) { const e = et(b.t); if (e.m < 570 || e.m >= 960) continue; ((byDay[e.d] ||= {})[s] ||= []).push(b); }
-    for (const d of Object.keys(byDay).sort()) {
-      const cands = [];
-      for (const [s, bs] of Object.entries(byDay[d])) {
-        const f = bs[0]; if (et(f.t).m !== 570) continue;
-        const h = (firstVols[s] ||= []); const avg = h.length >= 14 ? h.slice(-14).reduce((x, y) => x + y, 0) / 14 : null;
-        h.push(f.v); if (h.length > 14) h.shift();
-        const inf = info[d]?.[s]; if (!avg || !inf || f.o <= 5 || inf.vol < 1e6 || inf.atr <= 0.5 || f.c === f.o) continue;
-        const rv = f.v / avg; if (rv >= 1) cands.push({ s, rv, bs, atr: inf.atr });
-      }
-      cands.sort((a, b) => b.rv - a.rv);
-      for (const [vn, X] of Object.entries(V)) {
-        const eq0 = X.eq * 25000; let pnl = 0;
-        for (const c of cands.slice(0, TOP)) {
-          if (vn === 'long' && c.bs[0].c < c.bs[0].o) continue;
-          const t = tradeDay(c.bs, c.atr, eq0); if (!t) continue;
-          pnl += t.pnl; X.trades++; if (t.pnl > 0) X.wins++; t.dir > 0 ? X.longs++ : X.shorts++;
-          X.sumR += t.pnl / (t.shares * 0.1 * c.atr);
-          if (vn === 'both' && sample.length < 300 && Math.random() < 0.02) sample.push({ d, s: c.s, rv: +c.rv.toFixed(1), ...t, pnl: +t.pnl.toFixed(2) });
-        }
-        X.eq *= 1 + pnl / eq0; X.curve.push([d, X.eq]);
-      }
+  const mk = () => ({ eq: 1, curve: [], trades: 0, wins: 0, longs: 0, shorts: 0, sumR: 0 });
+  const V = { both: mk(), long: mk(), both_optimistic: mk(), long_optimistic: mk() };
+  const sample = []; let month = '';
+  for (const { d, t0 } of days) {
+    const o930 = t0 + 9.5 * 3600e3;
+    if (iso(o930 + 6.5 * 3600e3) > NOW) break;
+    const ob = await bars(syms, '5Min', iso(o930), iso(o930 + 4 * 60e3));
+    const cands = [];
+    for (const [s, arr] of Object.entries(ob)) {
+      const f = arr[0]; if (!f || Date.parse(f.t) !== o930) continue;
+      const h = (firstVols[s] ||= []); const avg = h.length >= 14 ? h.slice(-14).reduce((x, y) => x + y, 0) / 14 : null;
+      h.push(f.v); if (h.length > 14) h.shift();
+      if (d < START) continue;
+      const inf = info[d]?.[s]; if (!avg || !inf || f.o <= 5 || inf.vol < 1e6 || inf.atr <= 0.5 || f.c === f.o) continue;
+      const rv = f.v / avg; if (rv >= 1) cands.push({ s, rv, f, atr: inf.atr });
     }
-    console.log(m0.toISOString().slice(0, 7), 'both', V.both.eq.toFixed(3), 'long', V.long.eq.toFixed(3), 'reqs', reqs);
-    m0 = m1;
+    if (d < START) continue;
+    cands.sort((a, b) => b.rv - a.rv);
+    const pick = cands.slice(0, TOP);
+    const m1 = pick.length ? await bars(pick.map((c) => c.s), '1Min', iso(o930 + 5 * 60e3), iso(o930 + 389 * 60e3), 50) : {};
+    for (const [vn, X] of Object.entries(V)) {
+      const eq0 = X.eq * 25000; let pnl = 0;
+      const opt = vn.endsWith('optimistic'), lo = vn.startsWith('long');
+      for (const c of pick) {
+        if (lo && c.f.c < c.f.o) continue;
+        const mb = (m1[c.s] || []).filter((b) => { const e = et(b.t).m; return e >= 575 && e < 960; });
+        if (!mb.length) continue;
+        const t = tradeDay([c.f, ...mb], c.atr, eq0, opt); if (!t) continue;
+        pnl += t.pnl; X.trades++; if (t.pnl > 0) X.wins++; t.dir > 0 ? X.longs++ : X.shorts++;
+        X.sumR += t.pnl / (t.shares * 0.1 * c.atr);
+        if (vn === 'both' && sample.length < 300 && Math.random() < 0.02) sample.push({ d, s: c.s, rv: +c.rv.toFixed(1), ...t, pnl: +t.pnl.toFixed(2) });
+      }
+      X.eq *= 1 + pnl / eq0; X.curve.push([d, X.eq]);
+    }
+    if (d.slice(0, 7) !== month) { month = d.slice(0, 7); console.log(month, Object.entries(V).map(([k, X]) => `${k} ${X.eq.toFixed(3)}`).join(' | '), 'reqs', reqs); }
   }
   const first = V.both.curve[0][0];
   const spyA = daily.SPY.map((b) => [et(b.t).d, b.c]).filter(([d]) => d >= first);
-  const res = { generated: new Date().toISOString(), start_input: START, universe: `current S&P 500 (${syms.length}), survivorship bias`, rules: 'see header of scripts/build-orb.mjs', versions: {}, sample_trades: sample };
+  const res = { generated: new Date().toISOString(), start_input: START, bars: '5-min opening bar + 1-min bars for the day\'s picks', universe: `current S&P 500 (${syms.length}), survivorship bias`, rules: 'see header of scripts/build-orb.mjs; *_optimistic ignores a stop touched inside the entry minute', versions: {}, sample_trades: sample };
   for (const [k, X] of Object.entries(V)) res.versions[k] = { ...stats(X.curve), trades: X.trades, win_rate: +(100 * X.wins / X.trades).toFixed(1), avg_R: +(X.sumR / X.trades).toFixed(3), longs: X.longs, shorts: X.shorts };
   res.versions.spy = stats(spyA.map(([d, c]) => [d, c / spyA[0][1]]));
   writeFileSync(`${OUT}/orb.json`, JSON.stringify(res, null, 1));

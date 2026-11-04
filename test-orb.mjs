@@ -25,4 +25,6 @@ t = tradeDay([B(100, 101, 99.5, 100.8), B(101, 101, 101, 101)], 5, 100000); asse
 assert.deepEqual(et('2025-07-01T13:30:00Z'), { d: '2025-07-01', m: 570 });
 assert.deepEqual(et('2025-01-02T14:30:00Z'), { d: '2025-01-02', m: 570 });
 const s = stats([['2024-01-02', 1], ['2024-12-31', 1.1], ['2025-12-31', 1.21]]); assert.equal(s.yearly[1].ret, 10);
+// optimistic: stop touched in the entry bar is ignored
+t = tradeDay([B(100, 101, 99.5, 100.8), B(100.8, 101.5, 100, 100.2), B(100.2, 103, 100.6, 103)], 5, 100000, true); assert.equal(t.exit, 103);
 console.log('ORB tests passed');
