@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       start:
-        description: start date
+        description: Start date (YYYY-MM-DD)
         default: '2021-01-01'
 permissions:
   contents: write
@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Test
+        run: node test-orb.mjs
       - name: Run ORB backtest
         env:
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
