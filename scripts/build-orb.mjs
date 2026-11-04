@@ -9,7 +9,9 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 
-export const COMM = 0.0035, SLIP = 0.0001, RISK = 0.01, LEV = 4, TOP = 20;
+export const COMM = 0.0035, SLIP = 0.0001, RISK = 0.01, LEV = 4;
+export const TOP = +(process.env.ORB_TOP || 20), STOPF = +(process.env.ORB_STOP || 0.1), MINRV = +(process.env.ORB_MINRV || 1);
+const TAG = process.env.ORB_TAG || '';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
 export function et(t) { const o = Object.fromEntries(fmt.formatToParts(new Date(t)).map((x) => [x.type, x.value])); return { d: `${o.year}-${o.month}-${o.day}`, m: (+o.hour % 24) * 60 + +o.minute }; }
@@ -18,7 +20,7 @@ export function et(t) { const o = Object.fromEntries(fmt.formatToParts(new Date(
 // Returns null (no entry) or {dir, fill, exit, shares, pnl}.
 export function tradeDay(bs, atr, equity, optimistic = false) {
   const f = bs[0]; const dir = f.c > f.o ? 1 : f.c < f.o ? -1 : 0; if (!dir) return null;
-  const lvl = dir > 0 ? f.h : f.l, sd = 0.1 * atr;
+  const lvl = dir > 0 ? f.h : f.l, sd = STOPF * atr;
   let fill = null, exit = null;
   for (let i = 1; i < bs.length && exit == null; i++) {
     const b = bs[i];
@@ -107,7 +109,7 @@ async function main(OUT) {
       h.push(f.v); if (h.length > 14) h.shift();
       if (d < START) continue;
       const inf = info[d]?.[s]; if (!avg || !inf || f.o <= 5 || inf.vol < 1e6 || inf.atr <= 0.5 || f.c === f.o) continue;
-      const rv = f.v / avg; if (rv >= 1) cands.push({ s, rv, f, atr: inf.atr });
+      const rv = f.v / avg; if (rv >= MINRV) cands.push({ s, rv, f, atr: inf.atr });
     }
     if (d < START) continue;
     cands.sort((a, b) => b.rv - a.rv);
@@ -122,7 +124,7 @@ async function main(OUT) {
         if (!mb.length) continue;
         const t = tradeDay([c.f, ...mb], c.atr, eq0, opt); if (!t) continue;
         pnl += t.pnl; X.trades++; if (t.pnl > 0) X.wins++; t.dir > 0 ? X.longs++ : X.shorts++;
-        X.sumR += t.pnl / (t.shares * 0.1 * c.atr);
+        X.sumR += t.pnl / (t.shares * STOPF * c.atr);
         if (vn === 'both' && sample.length < 300 && Math.random() < 0.02) sample.push({ d, s: c.s, rv: +c.rv.toFixed(1), ...t, pnl: +t.pnl.toFixed(2) });
       }
       X.eq *= 1 + pnl / eq0; X.curve.push([d, X.eq]);
@@ -134,7 +136,8 @@ async function main(OUT) {
   const res = { generated: new Date().toISOString(), start_input: START, bars: '5-min opening bar + 1-min bars for the day\'s picks', universe: `current S&P 500 (${syms.length}), survivorship bias`, rules: 'see header of scripts/build-orb.mjs; *_optimistic ignores a stop touched inside the entry minute', versions: {}, sample_trades: sample };
   for (const [k, X] of Object.entries(V)) res.versions[k] = { ...stats(X.curve), trades: X.trades, win_rate: +(100 * X.wins / X.trades).toFixed(1), avg_R: +(X.sumR / X.trades).toFixed(3), longs: X.longs, shorts: X.shorts };
   res.versions.spy = stats(spyA.map(([d, c]) => [d, c / spyA[0][1]]));
-  writeFileSync(`${OUT}/orb.json`, JSON.stringify(res, null, 1));
+  res.params = { TOP, STOPF, MINRV, START };
+  writeFileSync(`${OUT}/orb${TAG ? '_' + TAG : ''}.json`, JSON.stringify(res, null, 1));
   console.log(JSON.stringify(res.versions, (k, v) => (k === 'yearly' ? undefined : v), 1));
 }
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

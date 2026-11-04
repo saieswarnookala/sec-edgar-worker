@@ -1,0 +1,42 @@
+name: ORB grid
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        default: '2023-01-01'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        stop: ['0.25', '0.5', '1.0']
+        top: ['5', '20']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node test-orb.mjs
+      - name: Run
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          ORB_START: ${{ inputs.start }}
+          ORB_STOP: ${{ matrix.stop }}
+          ORB_TOP: ${{ matrix.top }}
+          ORB_TAG: s${{ matrix.stop }}_t${{ matrix.top }}
+        run: node scripts/build-orb.mjs data
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          git add data/orb_*.json || true
+          git diff --cached --quiet && exit 0
+          git commit -m "orb grid: s${{ matrix.stop }} t${{ matrix.top }}"
+          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep $((RANDOM % 20 + 5)); done
