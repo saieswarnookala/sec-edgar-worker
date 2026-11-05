@@ -19,7 +19,7 @@ export function reactionIndex(dates, day, min) {
   return lo < dates.length ? lo : -1;
 }
 // signals[t] = [{s, r, strong}] sorted by r desc, entries at the open of day t. O/C: {sym: arrays aligned to dates}.
-export function simulate(dates, O, C, signals, c, t0) {
+export function simulate(dates, O, C, signals, c, t0, log = null) {
   let cash = 1, pos = [], n = 0, wins = 0, sumR = 0; const curve = [];
   for (let t = t0; t < dates.length; t++) {
     const eq = cash + pos.reduce((a, p) => a + p.val, 0);
@@ -28,22 +28,22 @@ export function simulate(dates, O, C, signals, c, t0) {
       if (pos.length >= c.n) break; if (pos.some((p) => p.s === x.s)) continue;
       const o = O[x.s]?.[t]; if (!o) continue;
       const alloc = Math.min(eq / c.n, cash); if (alloc <= 1e-9) break;
-      cash -= alloc; pos.push({ s: x.s, sh: (alloc * (1 - COST)) / o, alloc, exitT: t + c.h - 1, val: alloc * (1 - COST) });
+      cash -= alloc; pos.push({ t, s: x.s, sh: (alloc * (1 - COST)) / o, alloc, exitT: t + c.h - 1, val: alloc * (1 - COST) });
     }
     for (const p of pos) { const cl = C[p.s]?.[t]; if (cl) p.val = p.sh * cl; }
-    pos = pos.filter((p) => { if (t < p.exitT && t < dates.length - 1) return true; const v = p.val * (1 - COST); cash += v; const r = v / p.alloc - 1; n++; if (r > 0) wins++; sumR += r; return false; });
+    pos = pos.filter((p) => { if (t < p.exitT && t < dates.length - 1) return true; const v = p.val * (1 - COST); cash += v; const r = v / p.alloc - 1; n++; if (r > 0) wins++; sumR += r; if (log) log.push({ s: p.s, d: dates[p.t], ret: +(r * 100).toFixed(2), pnl: v - p.alloc }); return false; });
     curve.push([dates[t], cash + pos.reduce((a, p) => a + p.val, 0)]);
   }
   return { curve, trades: n, wins, sumR };
 }
-async function getJson(url, headers, tries = 6) {
+export async function getJson(url, headers, tries = 6) {
   for (let a = 0; ; a++) {
     try { const r = await fetch(url, { headers }); if (r.ok) return await r.json(); if (r.status === 404) return null; if (a >= tries) throw new Error(`${r.status} ${url}`); }
     catch (e) { if (a >= tries) throw e; }
     await sleep(1500 * 2 ** a);
   }
 }
-async function daily(symbols, start, end) {
+export async function daily(symbols, start, end) {
   const H = { 'APCA-API-KEY-ID': process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.APCA_API_SECRET_KEY }, out = {};
   for (let i = 0; i < symbols.length; i += 200) { let tok = null;
     do { const p = new URLSearchParams({ symbols: symbols.slice(i, i + 200).join(','), timeframe: '1Day', start, end, limit: '10000', adjustment: 'all', feed: 'sip' }); if (tok) p.set('page_token', tok);
@@ -59,7 +59,7 @@ export function parse8k(pages) {
   }
   return ev;
 }
-async function events8k(cik, ua) {
+export async function events8k(cik, ua) {
   const H = { 'User-Agent': ua }, j = await getJson(`https://data.sec.gov/submissions/CIK${String(cik).padStart(10, '0')}.json`, H); if (!j) return [];
   const pages = [j.filings.recent];
   for (const f of j.filings.files || []) { if ((f.filingTo || '9999') < '2016-01-01') continue; await sleep(130); const x = await getJson(`https://data.sec.gov/submissions/${f.name}`, H); if (x) pages.push(x); }
