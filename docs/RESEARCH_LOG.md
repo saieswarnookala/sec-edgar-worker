@@ -1,4 +1,4 @@
-# Sentinel research log - full record (through 2026-11-04)
+# Sentinel research log - full record (through 2026-11-05)
 
 Research only. Nothing here places orders. Not financial advice. Short summary: see `docs/RESEARCH_STATUS.md`.
 
@@ -91,3 +91,40 @@ Idea (Zarattini, Barbon & Aziz 2024): each morning pick top 20 stocks by relativ
 4. Optional: India alerts (trend flip + yearly rebalance); 50/50 Clear leader + gold on dashboard; 100-bagger watchlist screen.
 5. Financial Datasets credits $0; regenerate FMP_API_KEY.
 6. Backlog: Discord call-tracker; walkforward.py; `.zshr` -> `.zshrc` cron typo; Saiesh_Trading_Log.xlsx; repo cleanup; bump actions/checkout + setup-node (Node 20 deprecation).
+
+## 10. ORB research grid (2021 -> Nov 2026) - workflow `ORB research grid`
+- 576 combos x 2 universes (S&P 500, "wide" = all active US common stocks passing price/volume/ATR filters) = 1,152 combos, ~60-70M bars (estimate).
+- Opening range 5/15/30 min; stop 0.1/0.25/0.5/1.0 x ATR; top 5/20; SPY-direction filter; target close/2R/trail 1R; 3% gap filter; long vs both. In-sample 2021-24, out-of-sample 2025-26.
+- S&P 500: no combo beat SPY.
+- Wide: best robust pattern = gappers (|gap| >= 3%), top 5, long only, 5-min range, stop 1x ATR, 2R target: 14.2%/yr IS vs SPY 12.3%; 22.7% OOS vs 15.8% (DD 26.3% IS, 12.5% OOS). Wider stops raised win rate to ~48%; shorting hurt OOS.
+- Results: `data/orb_grid_summary.json`. The earlier 6-version `ORB grid` run partly failed (Actions minutes ran out).
+
+## 11. ORB gappers stress test (2017 -> 2026) - REJECTED
+- 2,304 neighbour combos (range 5/10/15, stop 0.5-1.5 ATR, top 3/5/10, target 1.5/2/3R/close, gap 2-5%, gap-up only vs either, slippage 1c vs 5c).
+- Reference on unseen 2017-20: 7.8%/yr vs SPY 13.6%. Full 2017-26: ~13.0% vs SPY ~13.2%.
+- 0 of 2,304 combos beat SPY in all three periods. With 5c/share slippage the reference loses money every period (-20% / -14% / -8% a year).
+- Conclusion: ORB does not beat holding SPY after realistic costs. Results: `data/orb_gappers_summary.json`.
+
+## 12. Earnings drift (post-earnings-announcement drift) - UNPROVEN
+Rules: SEC 8-K Item 2.02 earnings releases; reaction day = stock return minus SPY; buy next open if reaction >= threshold; equal slots; sell after N trading days; 0.05%/side.
+- Current S&P 500 members only (biased): best ~31%/yr (8% jump, 60 days, 10 stocks) vs SPY 15.1%.
+- Point-in-time S&P 500 (membership rebuilt from Wikipedia changes; 177 of 226 removed companies included; missing = mostly failed banks / no SEC 8-Ks):
+| Version (2016-26) | Per year | Max DD | 2016-20 | 2021-24 | 2025-26 |
+|---|---|---|---|---|---|
+| 8% jump, 60 days, 10 stocks | 13.6% | -42% | 20.7 | 3.7 | 19.4 |
+| **5% jump, 60 days, 10 stocks** | **21.7%** | -32% | 25.0 | 17.2 | 23.9 |
+| 3% jump, 60 days, 10 stocks | 18.3% | -37% | 20.4 | 15.8 | 19.0 |
+| SPY | 15.1% | -34% | 15.8 | 13.5 | 17.0 |
+- Only 2 of 64 combos beat SPY every period; half the profit from ~10 trades.
+- **S&P 400 mid-caps, point-in-time (405 of 510 removed included): same rules 12.7%/yr, DD -50% vs SPY 14.9%; 0 of 64 combos beat SPY over the full period.** Weakens the S&P 500 result - likely partly luck.
+- Older years: Alpaca SIP starts 2016; Alpha Vantage free key = 25 requests/day and lacks delisted names (e.g. LEH). Survivor-free option: Norgate Data (~$30/month).
+- Files: `scripts/earnings-drift.mjs`, `scripts/earnings-drift-pit.mjs`, `data/earnings_drift*.json`.
+
+## 13. Paper trading (started 2026-11-05)
+- Workflow `Paper trade earnings drift` (`.github/workflows/paper-drift.yml`), weekdays 13:20 UTC, market-on-open orders, Alpaca PAPER endpoint hard-coded. Rules: 5% jump, hold 60 trading days, 10 slots of 1/10 equity. State/log: `data/paper_drift_state.json`.
+- First buys 2026-11-05 ($100k paper): MOS 462, XYZ 114, JKHY 55, BKNG 58, APO 81, HSIC 113.
+- Plan: run 3-6 months as a free live test; treat as an experiment given the mid-cap result.
+
+## 14. Infrastructure changes (2026-11-05)
+- GitHub Actions free minutes ran out (private repo) -> repo made **public** (history scanned for secrets first; none found). Anyone can now see code, results and the paper-trading log.
+- Website dashboard updated to v22 (time span on $10,000 tiles).
