@@ -1,5 +1,42 @@
 {
- "positions": [],
+ "positions": [
+  {
+   "symbol": "MOS",
+   "entry_date": "2026-11-05",
+   "qty": 462,
+   "reaction_pct": 15.7
+  },
+  {
+   "symbol": "XYZ",
+   "entry_date": "2026-11-05",
+   "qty": 114,
+   "reaction_pct": 13.7
+  },
+  {
+   "symbol": "JKHY",
+   "entry_date": "2026-11-05",
+   "qty": 55,
+   "reaction_pct": 9.2
+  },
+  {
+   "symbol": "BKNG",
+   "entry_date": "2026-11-05",
+   "qty": 58,
+   "reaction_pct": 8.2
+  },
+  {
+   "symbol": "APO",
+   "entry_date": "2026-11-05",
+   "qty": 81,
+   "reaction_pct": 6.5
+  },
+  {
+   "symbol": "HSIC",
+   "entry_date": "2026-11-05",
+   "qty": 113,
+   "reaction_pct": 5.3
+  }
+ ],
  "history": [
   {
    "run": "2026-11-05T13:48:39.407Z",
@@ -67,7 +104,81 @@
     }
    ],
    "orders": []
+  },
+  {
+   "run": "2026-11-05T13:51:23.449Z",
+   "today": "2026-11-05",
+   "equity": 100000,
+   "dry": false,
+   "earnings_reactions_checked": 34,
+   "signals": [
+    {
+     "symbol": "APO",
+     "r": 0.06459211167916545
+    },
+    {
+     "symbol": "XYZ",
+     "r": 0.13650878413970902
+    },
+    {
+     "symbol": "BKNG",
+     "r": 0.08176730165144974
+    },
+    {
+     "symbol": "HSIC",
+     "r": 0.053058225925993074
+    },
+    {
+     "symbol": "JKHY",
+     "r": 0.0917343550259746
+    },
+    {
+     "symbol": "MOS",
+     "r": 0.157206681162396
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "MOS",
+     "qty": 462,
+     "r": 0.157206681162396
+    },
+    {
+     "symbol": "XYZ",
+     "qty": 114,
+     "r": 0.13650878413970902
+    },
+    {
+     "symbol": "JKHY",
+     "qty": 55,
+     "r": 0.0917343550259746
+    },
+    {
+     "symbol": "BKNG",
+     "qty": 58,
+     "r": 0.08176730165144974
+    },
+    {
+     "symbol": "APO",
+     "qty": 81,
+     "r": 0.06459211167916545
+    },
+    {
+     "symbol": "HSIC",
+     "qty": 113,
+     "r": 0.053058225925993074
+    }
+   ],
+   "orders": [
+    "BUY 462 MOS",
+    "BUY 114 XYZ",
+    "BUY 55 JKHY",
+    "BUY 58 BKNG",
+    "BUY 81 APO",
+    "BUY 113 HSIC"
+   ]
   }
  ],
- "updated": "2026-11-05T13:48:39.407Z"
+ "updated": "2026-11-05T13:51:23.449Z"
 }
