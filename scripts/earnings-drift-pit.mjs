@@ -85,7 +85,8 @@ export function evaluate(dates, O, C, signals, t0, REF) {
 async function main(out = 'data') {
   const ua = process.env.SEC_USER_AGENT; if (!ua) throw new Error('SEC_USER_AGENT missing');
   const REF = 'thr8|hold60|n10|any', H = { 'User-Agent': ua };
-  const html = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': ua } })).text();
+  const wr = await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': `sec-edgar-worker earnings-drift/1.0 (${ua})` } });
+  const html = await wr.text(); console.log('wikipedia', wr.status, html.length, 'tables', [...html.matchAll(/<table[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(','));
   const changes = parseChanges(parseTable(html, 'changes'));
   const current = JSON.parse(readFileSync('data/sp500_tickers.json', 'utf8')).tickers;
   const members = membership(current, changes);
@@ -133,4 +134,4 @@ async function main(out = 'data') {
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
   for (const [k, u] of Object.entries(res.universes)) { const r = u.ref; console.log(`\n== ${k} SPY ${u.spy.all.cagr}%  REF all ${r.all.cagr}% dd ${r.all.max_dd} | ${Object.keys(PER).map((p) => `${p} ${r[p].cagr}`).join(' | ')} | %beat ${JSON.stringify(u.pct_beating_spy)} | top10 share ${u.concentration?.top10_share_of_profit_pct}`); }
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main(process.argv[2] || 'data').catch((e) => { console.error(e); process.exit(1); });
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main(process.argv[2] || 'data').catch((e) => { console.error(e); try { mkdirSync(process.argv[2] || 'data', { recursive: true }); writeFileSync(`${process.argv[2] || 'data'}/earnings_drift_pit_error.txt`, String(e.stack || e)); } catch {} process.exit(1); });
