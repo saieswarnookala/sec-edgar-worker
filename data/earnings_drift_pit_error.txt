@@ -1,0 +1,4 @@
+Error: table changes not found
+    at parseTable (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/earnings-drift-pit.mjs:15:60)
+    at main (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/earnings-drift-pit.mjs:90:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
