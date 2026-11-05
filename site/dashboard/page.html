@@ -2549,7 +2549,7 @@ const CL = (() => {
     res.appendChild(mk('p', 'sx-cap', `Backtest ${fmtDate(r.start)} → ${fmtDate(r.end)} · monthly, dividends reinvested, 0.05% cost per side`));
     const grid = mk('div', 'sx-grid');
     tile(grid, 'Yearly return (CAGR)', pct1(s.cagr) + '/yr', 'SPY: ' + pct1(s.spy.cagr) + '/yr');
-    tile(grid, '$10,000 became', usd0(10000 * (1 + s.total)), 'SPY: ' + usd0(10000 * (1 + s.spy.total)));
+    tile(grid, '$10,000 became', usd0(10000 * (1 + s.total)), spanTxt(r.start, r.end) + ' · SPY: ' + usd0(10000 * (1 + s.spy.total)));
     tile(grid, 'Worst drop (month-end)', dd(s.dd), 'SPY: ' + dd(s.spy.dd), null, null, 'sx-bad');
     tile(grid, 'Switches', String(s.trades), 'About ' + (s.trades / ((Date.parse(r.end) - Date.parse(r.start)) / 31557600000)).toFixed(1) + ' a year');
     tile(grid, 'Full years beating SPY', s.beatYears + ' of ' + s.fullYears, 'Most other years it simply is SPY');
@@ -2677,6 +2677,7 @@ const IN2 = (() => {
   return { run, MODELS, lastDay };
 })();
 
+  const spanTxt = (a, b) => { const yrs = (Date.parse(b) - Date.parse(a)) / 31557600000; const mo = (d) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }); return `in ${yrs.toFixed(1)} years (${mo(a)} → ${mo(b)})`; };
   // ---- India: Nifty + gold ----
   const inrK = (v) => '₹' + Math.round(v).toLocaleString('en-IN');
   let inBuilt = false, inMemo = { key: null };
@@ -2739,7 +2740,7 @@ const IN2 = (() => {
     res.appendChild(mk('p', 'sx-cap', `Backtest ${fmtDate(r.start)} → ${fmtDate(r.end)} · monthly prices, 0.05% cost per side, before taxes`));
     const grid = mk('div', 'sx-grid');
     tile(grid, 'Yearly return (CAGR)', pct1(s.cagr) + '/yr', 'Nifty 50: ' + pct1(s.nifty.cagr) + '/yr');
-    tile(grid, '₹10,000 became', inrK(10000 * (1 + s.total)), 'Nifty 50: ' + inrK(10000 * (1 + s.nifty.total)));
+    tile(grid, '₹10,000 became', inrK(10000 * (1 + s.total)), spanTxt(r.start, r.end) + ' · Nifty 50: ' + inrK(10000 * (1 + s.nifty.total)));
     tile(grid, 'Worst drop (month-end)', dd(s.dd), 'Nifty 50: ' + dd(s.nifty.dd), null, null, 'sx-bad');
     tile(grid, 'Without 2025', pct1(s.ex2025) + '/yr', 'Nifty 50: ' + pct1(s.niftyEx2025) + '/yr (gold’s big year removed)');
     tile(grid, 'Trades', String(s.trades), 'About ' + (s.trades / 16).toFixed(1) + ' a year');
