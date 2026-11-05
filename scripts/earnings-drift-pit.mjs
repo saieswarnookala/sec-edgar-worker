@@ -88,9 +88,29 @@ export function evaluate(dates, O, C, signals, t0, REF) {
 async function main(out = 'data') {
   const ua = process.env.SEC_USER_AGENT; if (!ua) throw new Error('SEC_USER_AGENT missing');
   const REF = 'thr8|hold60|n10|any', H = { 'User-Agent': ua };
-  const wr = await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': `sec-edgar-worker earnings-drift/1.0 (${ua})` } });
-  const html = await wr.text(); console.log('wikipedia', wr.status, html.length, 'tables', [...html.matchAll(/<table[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(','));
-  const changes = parseChanges(parseTable(html, 'changes')); if (changes.length < 100) throw new Error(`only ${changes.length} changes parsed`);
+  const WUA = { 'User-Agent': `sec-edgar-worker earnings-drift/1.0 (${ua})` }, W = 'https://en.wikipedia.org';
+  const page = async (q) => { const r = await fetch(`${W}/w/index.php?title=List_of_S%26P_500_companies${q}`, { headers: WUA }); return r.text(); };
+  const curHtml = await page('');
+  const tryChanges = (h) => { try { const c = parseChanges(parseTable(h, 'changes')); return c.length >= 100 ? c : null; } catch { return null; } };
+  let changes = tryChanges(curHtml), revDate = 'current';
+  if (!changes) {
+    const rv = await (await fetch(`${W}/w/api.php?action=query&prop=revisions&titles=List_of_S%26P_500_companies&rvprop=ids|timestamp&rvlimit=500&format=json`, { headers: WUA })).json();
+    const revs = Object.values(rv.query.pages)[0].revisions;
+    for (const back of [20, 45, 90, 150, 240, 365, 540, 730]) {
+      const cut = new Date(Date.now() - back * 86400e3).toISOString(), r = revs.find((x) => x.timestamp <= cut); if (!r) break;
+      changes = tryChanges(await page(`&oldid=${r.revid}`)); if (changes) { revDate = r.timestamp.slice(0, 10); break; } await sleep(500);
+    }
+  }
+  if (!changes) throw new Error('no changes table in current page or older revisions; headings: ' + [...curHtml.matchAll(/<h2[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(','));
+  // gap fill: current members added after the revision, from "Date added" in today's constituents table
+  let gap = 0;
+  if (revDate !== 'current') {
+    const rows = parseTable(curHtml, 'constituents'), hdr = rows[0].map((x) => x.toLowerCase()), iS = hdr.findIndex((x) => x.startsWith('symbol')), iD = hdr.findIndex((x) => x.includes('date added'));
+    const have = new Set(changes.map((c) => c.addT));
+    for (const r of rows.slice(1)) { const d = /^\d{4}-\d{2}-\d{2}/.exec(r[iD] || '')?.[0] || parseDate(r[iD]); if (d && d > revDate && !have.has((r[iS] || '').toUpperCase())) { changes.push({ date: d, addT: r[iS].toUpperCase(), addN: '', remT: '', remN: '' }); gap++; } }
+    changes.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  }
+  console.log('changes', changes.length, 'from', revDate, 'gap-filled additions', gap);
   const current = JSON.parse(readFileSync('data/sp500_tickers.json', 'utf8')).tickers;
   const members = membership(current, changes);
   const removed = members.filter((m) => m.removed);
@@ -131,7 +151,7 @@ async function main(out = 'data') {
   const t0 = dates.findIndex((d) => d >= '2016-07-01'), curM = members.filter((m) => !m.removed);
   const A = buildSignals(curM, evCache, dates, R, Hh, L, C, false), B = buildSignals(curM, evCache, dates, R, Hh, L, C, true), Cc = buildSignals(members, evCache, dates, R, Hh, L, C, true);
   cov.used = removed.filter((m) => m.cik && R[m.id]).length;
-  const res = { generated: new Date().toISOString(), ref: REF, coverage: cov, signals: { current_only: A.n, current_pit: B.n, full_pit: Cc.n }, universes: {} };
+  const res = { generated: new Date().toISOString(), ref: REF, changes_source: revDate, gap_filled_additions: gap, coverage: cov, signals: { current_only: A.n, current_pit: B.n, full_pit: Cc.n }, universes: {} };
   for (const [k, S] of [['current_only', A], ['current_pit', B], ['full_pit', Cc]]) res.universes[k] = evaluate(dates, O, C, S.signals, t0, REF);
   mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit.json`, JSON.stringify(res, null, 1));
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
