@@ -15,6 +15,7 @@ export function parseTable(html, id) {
   let st = html.indexOf(`id="${id}"`);
   if (st < 0 && id === 'changes') { const h = html.search(/id="Selected_changes|Selected changes/i); if (h >= 0) st = html.indexOf('<table', h); }
   if (st < 0 && id === 'changes') { const all = [...html.matchAll(/<table[^>]*wikitable/g)]; if (all[1]) st = all[1].index; }
+  if (st < 0 && id === 'constituents') { const all = [...html.matchAll(/<table[^>]*wikitable/g)]; if (all[0]) st = all[0].index; }
   if (st < 0) throw new Error(`table ${id} not found; ids: ${[...html.matchAll(/<table[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(',')}; len ${html.length}`);
   const body = html.slice(st, html.indexOf('</table>', st)), rows = [], carry = [];
   for (const tr of body.split(/<tr[^>]*>/).slice(1)) {
@@ -87,14 +88,15 @@ export function evaluate(dates, O, C, signals, t0, REF) {
 
 async function main(out = 'data') {
   const ua = process.env.SEC_USER_AGENT; if (!ua) throw new Error('SEC_USER_AGENT missing');
-  const REF = 'thr8|hold60|n10|any', H = { 'User-Agent': ua };
+  const IDX = process.env.INDEX || 'sp500', TITLE = IDX === 'sp400' ? 'List_of_S%26P_400_companies' : 'List_of_S%26P_500_companies';
+  const REF = process.env.REF || (IDX === 'sp400' ? 'thr5|hold60|n10|any' : 'thr8|hold60|n10|any'), H = { 'User-Agent': ua };
   const WUA = { 'User-Agent': `sec-edgar-worker earnings-drift/1.0 (${ua})` }, W = 'https://en.wikipedia.org';
-  const page = async (q) => { const r = await fetch(`${W}/w/index.php?title=List_of_S%26P_500_companies${q}`, { headers: WUA }); return r.text(); };
+  const page = async (q) => { const r = await fetch(`${W}/w/index.php?title=${TITLE}${q}`, { headers: WUA }); return r.text(); };
   const curHtml = await page('');
   const tryChanges = (h) => { try { const c = parseChanges(parseTable(h, 'changes')); return c.length >= 100 ? c : null; } catch { return null; } };
   let changes = tryChanges(curHtml), revDate = 'current';
   if (!changes) {
-    const rv = await (await fetch(`${W}/w/api.php?action=query&prop=revisions&titles=List_of_S%26P_500_companies&rvprop=ids|timestamp&rvlimit=500&format=json`, { headers: WUA })).json();
+    const rv = await (await fetch(`${W}/w/api.php?action=query&prop=revisions&titles=${TITLE}&rvprop=ids|timestamp&rvlimit=500&format=json`, { headers: WUA })).json();
     const revs = Object.values(rv.query.pages)[0].revisions;
     for (const back of [20, 45, 90, 150, 240, 365, 540, 730]) {
       const cut = new Date(Date.now() - back * 86400e3).toISOString(), r = revs.find((x) => x.timestamp <= cut); if (!r) break;
@@ -104,14 +106,25 @@ async function main(out = 'data') {
   if (!changes) throw new Error('no changes table in current page or older revisions; headings: ' + [...curHtml.matchAll(/<h2[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(','));
   // gap fill: current members added after the revision, from "Date added" in today's constituents table
   let gap = 0;
-  if (revDate !== 'current') {
+  if (revDate !== 'current') try {
     const rows = parseTable(curHtml, 'constituents'), hdr = rows[0].map((x) => x.toLowerCase()), iS = hdr.findIndex((x) => x.startsWith('symbol')), iD = hdr.findIndex((x) => x.includes('date added'));
     const have = new Set(changes.map((c) => c.addT));
     for (const r of rows.slice(1)) { const d = /^\d{4}-\d{2}-\d{2}/.exec(r[iD] || '')?.[0] || parseDate(r[iD]); if (d && d > revDate && !have.has((r[iS] || '').toUpperCase())) { changes.push({ date: d, addT: r[iS].toUpperCase(), addN: '', remT: '', remN: '' }); gap++; } }
     changes.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-  }
+  } catch (e) { console.log('gap fill skipped', e.message); }
   console.log('changes', changes.length, 'from', revDate, 'gap-filled additions', gap);
-  const current = JSON.parse(readFileSync('data/sp500_tickers.json', 'utf8')).tickers;
+  let current;
+  if (IDX === 'sp500') current = JSON.parse(readFileSync('data/sp500_tickers.json', 'utf8')).tickers;
+  else {
+    const tk0 = await getJson('https://www.sec.gov/files/company_tickers.json', H), ck = {};
+    for (const v of Object.values(tk0 || {})) ck[v.ticker.replace('-', '.')] = v.cik_str;
+    const rows = parseTable(curHtml, 'constituents'), hdr = rows[0].map((x) => x.toLowerCase());
+    const iS = hdr.findIndex((x) => /^(symbol|ticker)/.test(x)), iN = hdr.findIndex((x) => /^(security|company)/.test(x));
+    current = rows.slice(1).map((r) => ({ symbol: (r[iS] || '').toUpperCase(), name: r[iN] || '', cik: ck[(r[iS] || '').toUpperCase()] || null })).filter((t) => /^[A-Z.]{1,6}$/.test(t.symbol));
+    console.log(IDX, 'constituents', current.length, 'with cik', current.filter((t) => t.cik).length);
+    if (current.length < 300) throw new Error(`only ${current.length} ${IDX} constituents parsed`);
+    current = current.filter((t) => t.cik);
+  }
   const members = membership(current, changes);
   const removed = members.filter((m) => m.removed);
   console.log('changes', changes.length, 'since 2016', changes.filter((c) => c.date >= '2016-01-01').length, 'removed members', removed.length);
@@ -151,9 +164,9 @@ async function main(out = 'data') {
   const t0 = dates.findIndex((d) => d >= '2016-07-01'), curM = members.filter((m) => !m.removed);
   const A = buildSignals(curM, evCache, dates, R, Hh, L, C, false), B = buildSignals(curM, evCache, dates, R, Hh, L, C, true), Cc = buildSignals(members, evCache, dates, R, Hh, L, C, true);
   cov.used = removed.filter((m) => m.cik && R[m.id]).length;
-  const res = { generated: new Date().toISOString(), ref: REF, changes_source: revDate, gap_filled_additions: gap, coverage: cov, signals: { current_only: A.n, current_pit: B.n, full_pit: Cc.n }, universes: {} };
+  const res = { generated: new Date().toISOString(), index: IDX, ref: REF, changes_source: revDate, gap_filled_additions: gap, coverage: cov, signals: { current_only: A.n, current_pit: B.n, full_pit: Cc.n }, universes: {} };
   for (const [k, S] of [['current_only', A], ['current_pit', B], ['full_pit', Cc]]) res.universes[k] = evaluate(dates, O, C, S.signals, t0, REF);
-  mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit.json`, JSON.stringify(res, null, 1));
+  mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit${IDX === 'sp500' ? '' : '_' + IDX}.json`, JSON.stringify(res, null, 1));
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
   for (const [k, u] of Object.entries(res.universes)) { const r = u.ref; console.log(`\n== ${k} SPY ${u.spy.all.cagr}%  REF all ${r.all.cagr}% dd ${r.all.max_dd} | ${Object.keys(PER).map((p) => `${p} ${r[p].cagr}`).join(' | ')} | %beat ${JSON.stringify(u.pct_beating_spy)} | top10 share ${u.concentration?.top10_share_of_profit_pct}`); }
 }
