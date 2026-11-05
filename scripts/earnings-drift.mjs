@@ -38,16 +38,28 @@ export function simulate(dates, O, C, signals, c, t0, log = null) {
 }
 export async function getJson(url, headers, tries = 6) {
   for (let a = 0; ; a++) {
-    try { const r = await fetch(url, { headers }); if (r.ok) return await r.json(); if (r.status === 404) return null; if (a >= tries) throw new Error(`${r.status} ${url}`); }
-    catch (e) { if (a >= tries) throw e; }
+    try { const r = await fetch(url, { headers }); if (r.ok) return await r.json(); if (r.status === 404) return null; if (r.status === 400 || a >= tries) throw new Error(`${r.status} ${url.slice(0, 200)}`); }
+    catch (e) { if (a >= tries || /^400/.test(e.message)) throw e; }
     await sleep(1500 * 2 ** a);
   }
 }
 export async function daily(symbols, start, end) {
-  const H = { 'APCA-API-KEY-ID': process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.APCA_API_SECRET_KEY }, out = {};
-  for (let i = 0; i < symbols.length; i += 200) { let tok = null;
-    do { const p = new URLSearchParams({ symbols: symbols.slice(i, i + 200).join(','), timeframe: '1Day', start, end, limit: '10000', adjustment: 'all', feed: 'sip' }); if (tok) p.set('page_token', tok);
-      const j = await getJson('https://data.alpaca.markets/v2/stocks/bars?' + p, H); for (const [s, a] of Object.entries(j.bars || {})) (out[s] ||= []).push(...a); tok = j.next_page_token; await sleep(300); } while (tok); }
+  const H = { 'APCA-API-KEY-ID': process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.APCA_API_SECRET_KEY }, out = {}, bad = [];
+  const ok = symbols.filter((s) => /^[A-Z]{1,6}(\.[A-Z]{1,2})?$/.test(s)); bad.push(...symbols.filter((s) => !ok.includes(s)));
+  const batch = async (list) => {
+    let tok = null;
+    try {
+      do { const p = new URLSearchParams({ symbols: list.join(','), timeframe: '1Day', start, end, limit: '10000', adjustment: 'all', feed: 'sip' }); if (tok) p.set('page_token', tok);
+        const j = await getJson('https://data.alpaca.markets/v2/stocks/bars?' + p, H, 4); for (const [s, a] of Object.entries(j?.bars || {})) (out[s] ||= []).push(...a); tok = j?.next_page_token; await sleep(300); } while (tok);
+    } catch (e) {
+      if (!/^400/.test(e.message)) throw e;
+      if (list.length === 1) { bad.push(list[0]); return; }
+      for (const k of list) delete out[k];
+      const h = Math.ceil(list.length / 2); await batch(list.slice(0, h)); await batch(list.slice(h));
+    }
+  };
+  for (let i = 0; i < ok.length; i += 200) await batch(ok.slice(i, i + 200));
+  if (bad.length) console.log('alpaca skipped symbols', bad.length, bad.slice(0, 20).join(','));
   return out;
 }
 export function parse8k(pages) {
