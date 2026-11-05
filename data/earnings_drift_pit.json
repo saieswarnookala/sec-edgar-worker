@@ -1,0 +1,7504 @@
+{
+ "generated": "2026-11-05T05:12:56.890Z",
+ "ref": "thr8|hold60|n10|any",
+ "changes_source": "2026-08-07",
+ "gap_filled_additions": 6,
+ "coverage": {
+  "removed": 226,
+  "cik": 211,
+  "events": 189,
+  "prices": 177,
+  "used": 177,
+  "missing": [
+   "SOLS Solstice Advanced Materials (no earnings 8-Ks)",
+   "AMTM Amentum (no earnings 8-Ks)",
+   "MBC MasterBrand (no earnings 8-Ks)",
+   "SBNY Signature Bank (no earnings 8-Ks)",
+   "CDAY Ceridian (no earnings 8-Ks)",
+   "BMS Bemis (no earnings 8-Ks)",
+   "FRC First Republic Bank (no earnings 8-Ks)",
+   "MXIM Maxim Integrated (no CIK)",
+   "DWDP DuPont (no CIK)",
+   "Q QuintilesIMS (no CIK)",
+   "DISH Dish Network (no earnings 8-Ks)",
+   "IPG Interpublic Group (no CIK)",
+   "DFS Discover Financial (no CIK)",
+   "VFC VF Corporation (no earnings 8-Ks)",
+   "KSS Kohl's (no CIK)",
+   "TSS TSYS (no CIK)",
+   "FOXA 21st Century Fox (no CIK)",
+   "FOX 21st Century Fox (no CIK)",
+   "AET Aetna (no earnings 8-Ks)",
+   "CA CA Technologies (no CIK)",
+   "BCR CR Bard (no CIK)",
+   "DD DuPont (no earnings 8-Ks)",
+   "MJN Mead Johnson (no CIK)",
+   "HAR Harman International (no CIK)",
+   "LLTC Linear Technology (no CIK)",
+   "HOT Starwood (no CIK)",
+   "ARG Airgas (no earnings 8-Ks)",
+   "CAM Cameron International (no earnings 8-Ks)",
+   "POM Pepco Holdings (no earnings 8-Ks)",
+   "ESV Ensco (no earnings 8-Ks)",
+   "GMCR Keurig Green Mountain (no earnings 8-Ks)",
+   "CNX Consol Energy (no earnings 8-Ks)",
+   "PCL Plum Creek Timber (no earnings 8-Ks)",
+   "PCP Precision Castparts Corporation (no earnings 8-Ks)",
+   "BRCM Broadcom Corporation (no earnings 8-Ks)",
+   "ACE Chubb (no earnings 8-Ks)",
+   "FOSL Fossil Group (no earnings 8-Ks)",
+   "ILMN Illumina, Inc. (ticker now used by a current member)",
+   "CTRA Coterra Energy (prices 1880/2600)",
+   "BBWI Bath & Body Works, Inc. (prices 877/2200)",
+   "STI SunTrust Banks (prices 0/990)",
+   "PCG Pacific Gas & Electric Company (ticker now used by a current member)",
+   "EQT EQT Corporation (ticker now used by a current member)",
+   "ANDV Andeavor (prices 294/691)",
+   "DOW Dow Chemical Company (ticker now used by a current member)",
+   "FSLR First Solar (ticker now used by a current member)",
+   "AA Alcoa (prices 100/210)",
+   "TE TECO Energy (prices 0/125)",
+   "SNDK SanDisk (ticker now used by a current member)"
+  ]
+ },
+ "signals": {
+  "current_only": 3476,
+  "current_pit": 2731,
+  "full_pit": 3301
+ },
+ "universes": {
+  "current_only": {
+   "spy": {
+    "p2016_20": {
+     "cagr": 15.83,
+     "total": 93.5,
+     "max_dd": 33.8,
+     "sharpe": 0.88
+    },
+    "p2021_24": {
+     "cagr": 13.52,
+     "total": 65.8,
+     "max_dd": 24.5,
+     "sharpe": 0.85
+    },
+    "p2025_26": {
+     "cagr": 16.99,
+     "total": 33.4,
+     "max_dd": 18.8,
+     "sharpe": 1.02
+    },
+    "all": {
+     "cagr": 15.11,
+     "total": 328,
+     "max_dd": 33.8,
+     "sharpe": 0.89
+    }
+   },
+   "pct_beating_spy": {
+    "p2016_20": 53.1,
+    "p2021_24": 73.4,
+    "p2025_26": 28.1,
+    "every_period": 21.9,
+    "full_period": 54.7
+   },
+   "ref": {
+    "key": "thr8|hold60|n10|any",
+    "trades": 398,
+    "win_rate": 66.6,
+    "avg_trade_pct": 8.12,
+    "all": {
+     "cagr": 31.56,
+     "total": 1601.8,
+     "max_dd": 36,
+     "sharpe": 1.26
+    },
+    "p2016_20": {
+     "cagr": 37.27,
+     "total": 314.6,
+     "max_dd": 34.2,
+     "sharpe": 1.57
+    },
+    "p2021_24": {
+     "cagr": 25.82,
+     "total": 150,
+     "max_dd": 36,
+     "sharpe": 1.06
+    },
+    "p2025_26": {
+     "cagr": 30.97,
+     "total": 64.2,
+     "max_dd": 27.8,
+     "sharpe": 1.09
+    },
+    "beats": [
+     "p2016_20",
+     "p2021_24",
+     "p2025_26"
+    ]
+   },
+   "best": [
+    {
+     "key": "thr8|hold60|n10|any",
+     "trades": 398,
+     "win_rate": 66.6,
+     "avg_trade_pct": 8.12,
+     "all": {
+      "cagr": 31.56,
+      "total": 1601.8,
+      "max_dd": 36,
+      "sharpe": 1.26
+     },
+     "p2016_20": {
+      "cagr": 37.27,
+      "total": 314.6,
+      "max_dd": 34.2,
+      "sharpe": 1.57
+     },
+     "p2021_24": {
+      "cagr": 25.82,
+      "total": 150,
+      "max_dd": 36,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 30.97,
+      "total": 64.2,
+      "max_dd": 27.8,
+      "sharpe": 1.09
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|any",
+     "trades": 350,
+     "win_rate": 66.9,
+     "avg_trade_pct": 9.14,
+     "all": {
+      "cagr": 30.86,
+      "total": 1510,
+      "max_dd": 44.1,
+      "sharpe": 1.27
+     },
+     "p2016_20": {
+      "cagr": 42.47,
+      "total": 390.1,
+      "max_dd": 25.2,
+      "sharpe": 1.97
+     },
+     "p2021_24": {
+      "cagr": 23.59,
+      "total": 132.8,
+      "max_dd": 44.1,
+      "sharpe": 0.96
+     },
+     "p2025_26": {
+      "cagr": 20.62,
+      "total": 41.1,
+      "max_dd": 28.5,
+      "sharpe": 0.81
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 66.4,
+     "avg_trade_pct": 6.8,
+     "all": {
+      "cagr": 27.85,
+      "total": 1166.6,
+      "max_dd": 36.8,
+      "sharpe": 1.17
+     },
+     "p2016_20": {
+      "cagr": 32.29,
+      "total": 251.3,
+      "max_dd": 36.8,
+      "sharpe": 1.32
+     },
+     "p2021_24": {
+      "cagr": 29.55,
+      "total": 180.9,
+      "max_dd": 30.2,
+      "sharpe": 1.28
+     },
+     "p2025_26": {
+      "cagr": 14.55,
+      "total": 28.4,
+      "max_dd": 25.3,
+      "sharpe": 0.66
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 65.5,
+     "avg_trade_pct": 6.38,
+     "all": {
+      "cagr": 25.64,
+      "total": 957.2,
+      "max_dd": 36,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 32.13,
+      "total": 249.4,
+      "max_dd": 36,
+      "sharpe": 1.29
+     },
+     "p2021_24": {
+      "cagr": 21.91,
+      "total": 120.4,
+      "max_dd": 31.8,
+      "sharpe": 1
+     },
+     "p2025_26": {
+      "cagr": 18.84,
+      "total": 37.3,
+      "max_dd": 22.2,
+      "sharpe": 0.81
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|strong",
+     "trades": 317,
+     "win_rate": 62.5,
+     "avg_trade_pct": 8.49,
+     "all": {
+      "cagr": 24.8,
+      "total": 886.6,
+      "max_dd": 38.2,
+      "sharpe": 1.13
+     },
+     "p2016_20": {
+      "cagr": 37.52,
+      "total": 318.1,
+      "max_dd": 21.5,
+      "sharpe": 1.87
+     },
+     "p2021_24": {
+      "cagr": 12.2,
+      "total": 58.3,
+      "max_dd": 38.2,
+      "sharpe": 0.62
+     },
+     "p2025_26": {
+      "cagr": 24.29,
+      "total": 49.1,
+      "max_dd": 26.5,
+      "sharpe": 0.94
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 834,
+     "win_rate": 65.2,
+     "avg_trade_pct": 6.09,
+     "all": {
+      "cagr": 24.77,
+      "total": 883.8,
+      "max_dd": 35.4,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 30.52,
+      "total": 230.7,
+      "max_dd": 35.4,
+      "sharpe": 1.35
+     },
+     "p2021_24": {
+      "cagr": 21.76,
+      "total": 119.3,
+      "max_dd": 31,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 18.05,
+      "total": 35.6,
+      "max_dd": 21.8,
+      "sharpe": 0.82
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|strong",
+     "trades": 376,
+     "win_rate": 62.2,
+     "avg_trade_pct": 6.91,
+     "all": {
+      "cagr": 24.5,
+      "total": 862.4,
+      "max_dd": 42.8,
+      "sharpe": 1.03
+     },
+     "p2016_20": {
+      "cagr": 27.92,
+      "total": 202.1,
+      "max_dd": 42.8,
+      "sharpe": 1.16
+     },
+     "p2021_24": {
+      "cagr": 18.25,
+      "total": 95.1,
+      "max_dd": 39.6,
+      "sharpe": 0.82
+     },
+     "p2025_26": {
+      "cagr": 30.56,
+      "total": 63.2,
+      "max_dd": 24.9,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 69.5,
+     "avg_trade_pct": 5.82,
+     "all": {
+      "cagr": 23.91,
+      "total": 816.4,
+      "max_dd": 36.9,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 26.38,
+      "total": 186.1,
+      "max_dd": 36.9,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 22.98,
+      "total": 128.2,
+      "max_dd": 21.3,
+      "sharpe": 1.13
+     },
+     "p2025_26": {
+      "cagr": 20.28,
+      "total": 40.4,
+      "max_dd": 20,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    }
+   ],
+   "concentration": {
+    "trades": 398,
+    "top10_share_of_profit_pct": 50.7,
+    "top10": [
+     {
+      "s": "MRVL",
+      "d": "2026-03-09",
+      "ret": 230.55
+     },
+     {
+      "s": "SMCI",
+      "d": "2024-01-22",
+      "ret": 113.7
+     },
+     {
+      "s": "RDDT",
+      "d": "2024-10-31",
+      "ret": 71.88
+     },
+     {
+      "s": "SMCI",
+      "d": "2023-05-04",
+      "ret": 148.47
+     },
+     {
+      "s": "STX",
+      "d": "2025-05-01",
+      "ret": 64.25
+     },
+     {
+      "s": "KEYS",
+      "d": "2025-11-26",
+      "ret": 54.45
+     },
+     {
+      "s": "TSLA",
+      "d": "2024-10-25",
+      "ret": 60.92
+     },
+     {
+      "s": "STX",
+      "d": "2025-10-30",
+      "ret": 44.21
+     },
+     {
+      "s": "PLTR",
+      "d": "2024-08-07",
+      "ret": 61.24
+     },
+     {
+      "s": "UAL",
+      "d": "2024-10-17",
+      "ret": 49.39
+     }
+    ]
+   },
+   "all": [
+    {
+     "key": "thr3|hold10|n10|any",
+     "trades": 1476,
+     "win_rate": 57.4,
+     "avg_trade_pct": 1.18,
+     "all": {
+      "cagr": 17.22,
+      "total": 416.2,
+      "max_dd": 18.8,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 17.91,
+      "total": 109.5,
+      "max_dd": 18.8,
+      "sharpe": 1.13
+     },
+     "p2021_24": {
+      "cagr": 21.93,
+      "total": 120.6,
+      "max_dd": 18.1,
+      "sharpe": 1.36
+     },
+     "p2025_26": {
+      "cagr": 6.22,
+      "total": 11.7,
+      "max_dd": 11.1,
+      "sharpe": 0.52
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold10|n10|strong",
+     "trades": 1289,
+     "win_rate": 55,
+     "avg_trade_pct": 1.02,
+     "all": {
+      "cagr": 12.74,
+      "total": 245.3,
+      "max_dd": 17.7,
+      "sharpe": 0.98
+     },
+     "p2016_20": {
+      "cagr": 12.9,
+      "total": 72.4,
+      "max_dd": 17.7,
+      "sharpe": 0.96
+     },
+     "p2021_24": {
+      "cagr": 17.43,
+      "total": 89.8,
+      "max_dd": 10.4,
+      "sharpe": 1.28
+     },
+     "p2025_26": {
+      "cagr": 2.96,
+      "total": 5.5,
+      "max_dd": 14.7,
+      "sharpe": 0.31
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold10|n20|any",
+     "trades": 2220,
+     "win_rate": 57.1,
+     "avg_trade_pct": 1.17,
+     "all": {
+      "cagr": 12.63,
+      "total": 241.7,
+      "max_dd": 17.3,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 13.63,
+      "total": 77.5,
+      "max_dd": 17.3,
+      "sharpe": 1.16
+     },
+     "p2021_24": {
+      "cagr": 14.89,
+      "total": 74,
+      "max_dd": 14.8,
+      "sharpe": 1.2
+     },
+     "p2025_26": {
+      "cagr": 5.67,
+      "total": 10.7,
+      "max_dd": 8.7,
+      "sharpe": 0.59
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold10|n20|strong",
+     "trades": 1885,
+     "win_rate": 55.5,
+     "avg_trade_pct": 1.04,
+     "all": {
+      "cagr": 9.41,
+      "total": 153.2,
+      "max_dd": 19.7,
+      "sharpe": 0.93
+     },
+     "p2016_20": {
+      "cagr": 9.05,
+      "total": 47.5,
+      "max_dd": 19.7,
+      "sharpe": 0.85
+     },
+     "p2021_24": {
+      "cagr": 11.31,
+      "total": 53.3,
+      "max_dd": 12.1,
+      "sharpe": 1.11
+     },
+     "p2025_26": {
+      "cagr": 6.34,
+      "total": 11.9,
+      "max_dd": 7.3,
+      "sharpe": 0.73
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n10|any",
+     "trades": 959,
+     "win_rate": 58.4,
+     "avg_trade_pct": 1.92,
+     "all": {
+      "cagr": 17.34,
+      "total": 422,
+      "max_dd": 31.8,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 16.72,
+      "total": 100.2,
+      "max_dd": 31.8,
+      "sharpe": 0.88
+     },
+     "p2021_24": {
+      "cagr": 19.11,
+      "total": 100.9,
+      "max_dd": 17.4,
+      "sharpe": 1.04
+     },
+     "p2025_26": {
+      "cagr": 15.25,
+      "total": 29.8,
+      "max_dd": 9.7,
+      "sharpe": 1.05
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold20|n10|strong",
+     "trades": 861,
+     "win_rate": 56.3,
+     "avg_trade_pct": 1.85,
+     "all": {
+      "cagr": 15.2,
+      "total": 331.3,
+      "max_dd": 35,
+      "sharpe": 0.92
+     },
+     "p2016_20": {
+      "cagr": 12.39,
+      "total": 68.9,
+      "max_dd": 35,
+      "sharpe": 0.71
+     },
+     "p2021_24": {
+      "cagr": 16.75,
+      "total": 85.5,
+      "max_dd": 15,
+      "sharpe": 1.04
+     },
+     "p2025_26": {
+      "cagr": 18.99,
+      "total": 37.6,
+      "max_dd": 6.5,
+      "sharpe": 1.33
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold20|n20|any",
+     "trades": 1550,
+     "win_rate": 58.3,
+     "avg_trade_pct": 1.93,
+     "all": {
+      "cagr": 14.29,
+      "total": 297.6,
+      "max_dd": 31,
+      "sharpe": 0.97
+     },
+     "p2016_20": {
+      "cagr": 12.95,
+      "total": 72.8,
+      "max_dd": 31,
+      "sharpe": 0.82
+     },
+     "p2021_24": {
+      "cagr": 15.69,
+      "total": 78.8,
+      "max_dd": 17.6,
+      "sharpe": 1.07
+     },
+     "p2025_26": {
+      "cagr": 14.71,
+      "total": 28.7,
+      "max_dd": 6.9,
+      "sharpe": 1.26
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold20|n20|strong",
+     "trades": 1345,
+     "win_rate": 56.7,
+     "avg_trade_pct": 1.93,
+     "all": {
+      "cagr": 12.41,
+      "total": 235,
+      "max_dd": 29.7,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 10.06,
+      "total": 53.8,
+      "max_dd": 29.7,
+      "sharpe": 0.73
+     },
+     "p2021_24": {
+      "cagr": 13.72,
+      "total": 67,
+      "max_dd": 14.1,
+      "sharpe": 1.09
+     },
+     "p2025_26": {
+      "cagr": 15.57,
+      "total": 30.4,
+      "max_dd": 6.9,
+      "sharpe": 1.38
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n10|any",
+     "trades": 566,
+     "win_rate": 62.5,
+     "avg_trade_pct": 3.85,
+     "all": {
+      "cagr": 19.71,
+      "total": 541.9,
+      "max_dd": 35.2,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 23.06,
+      "total": 153.8,
+      "max_dd": 35.2,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 20.19,
+      "total": 108.2,
+      "max_dd": 23.6,
+      "sharpe": 1.05
+     },
+     "p2025_26": {
+      "cagr": 11.15,
+      "total": 21.4,
+      "max_dd": 23.3,
+      "sharpe": 0.63
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n10|strong",
+     "trades": 519,
+     "win_rate": 63,
+     "avg_trade_pct": 3.66,
+     "all": {
+      "cagr": 17.28,
+      "total": 419.1,
+      "max_dd": 38,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 16.85,
+      "total": 101.2,
+      "max_dd": 38,
+      "sharpe": 0.89
+     },
+     "p2021_24": {
+      "cagr": 19.17,
+      "total": 101.3,
+      "max_dd": 17.2,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 14.46,
+      "total": 28.2,
+      "max_dd": 14.8,
+      "sharpe": 0.87
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|any",
+     "trades": 995,
+     "win_rate": 62.1,
+     "avg_trade_pct": 3.75,
+     "all": {
+      "cagr": 17.47,
+      "total": 427.7,
+      "max_dd": 35.5,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 20.67,
+      "total": 132.5,
+      "max_dd": 35.5,
+      "sharpe": 1.07
+     },
+     "p2021_24": {
+      "cagr": 15.88,
+      "total": 80,
+      "max_dd": 17.6,
+      "sharpe": 0.99
+     },
+     "p2025_26": {
+      "cagr": 13.43,
+      "total": 26.1,
+      "max_dd": 15.7,
+      "sharpe": 0.95
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|strong",
+     "trades": 939,
+     "win_rate": 61.3,
+     "avg_trade_pct": 3.47,
+     "all": {
+      "cagr": 14.92,
+      "total": 320.8,
+      "max_dd": 37.4,
+      "sharpe": 0.91
+     },
+     "p2016_20": {
+      "cagr": 15.22,
+      "total": 88.9,
+      "max_dd": 37.4,
+      "sharpe": 0.83
+     },
+     "p2021_24": {
+      "cagr": 16.12,
+      "total": 81.5,
+      "max_dd": 15.5,
+      "sharpe": 1.05
+     },
+     "p2025_26": {
+      "cagr": 11.78,
+      "total": 22.7,
+      "max_dd": 11.5,
+      "sharpe": 0.9
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 69.5,
+     "avg_trade_pct": 5.82,
+     "all": {
+      "cagr": 23.91,
+      "total": 816.4,
+      "max_dd": 36.9,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 26.38,
+      "total": 186.1,
+      "max_dd": 36.9,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 22.98,
+      "total": 128.2,
+      "max_dd": 21.3,
+      "sharpe": 1.13
+     },
+     "p2025_26": {
+      "cagr": 20.28,
+      "total": 40.4,
+      "max_dd": 20,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 66.4,
+     "avg_trade_pct": 5.15,
+     "all": {
+      "cagr": 20.93,
+      "total": 612.5,
+      "max_dd": 36.3,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 25.73,
+      "total": 179.6,
+      "max_dd": 36.3,
+      "sharpe": 1.1
+     },
+     "p2021_24": {
+      "cagr": 16.6,
+      "total": 84.5,
+      "max_dd": 20.5,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 19.2,
+      "total": 38.1,
+      "max_dd": 18.7,
+      "sharpe": 1.06
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|any",
+     "trades": 840,
+     "win_rate": 66.7,
+     "avg_trade_pct": 5.11,
+     "all": {
+      "cagr": 20.72,
+      "total": 599.6,
+      "max_dd": 36.8,
+      "sharpe": 1.03
+     },
+     "p2016_20": {
+      "cagr": 25.12,
+      "total": 173.5,
+      "max_dd": 36.8,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 16.69,
+      "total": 85.1,
+      "max_dd": 25.1,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 19.25,
+      "total": 38.2,
+      "max_dd": 20.5,
+      "sharpe": 1.04
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|strong",
+     "trades": 840,
+     "win_rate": 64.5,
+     "avg_trade_pct": 4.77,
+     "all": {
+      "cagr": 19.36,
+      "total": 522.6,
+      "max_dd": 35.8,
+      "sharpe": 0.99
+     },
+     "p2016_20": {
+      "cagr": 22.33,
+      "total": 147.2,
+      "max_dd": 35.8,
+      "sharpe": 1.03
+     },
+     "p2021_24": {
+      "cagr": 15.66,
+      "total": 78.7,
+      "max_dd": 24.5,
+      "sharpe": 0.89
+     },
+     "p2025_26": {
+      "cagr": 20.56,
+      "total": 41,
+      "max_dd": 19.6,
+      "sharpe": 1.12
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold10|n10|any",
+     "trades": 1153,
+     "win_rate": 57.6,
+     "avg_trade_pct": 1.46,
+     "all": {
+      "cagr": 16.61,
+      "total": 389.1,
+      "max_dd": 15.7,
+      "sharpe": 1.14
+     },
+     "p2016_20": {
+      "cagr": 19.76,
+      "total": 124.7,
+      "max_dd": 14.5,
+      "sharpe": 1.36
+     },
+     "p2021_24": {
+      "cagr": 21.5,
+      "total": 117.4,
+      "max_dd": 15.7,
+      "sharpe": 1.36
+     },
+     "p2025_26": {
+      "cagr": 0.06,
+      "total": 0.1,
+      "max_dd": 11.8,
+      "sharpe": 0.07
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold10|n10|strong",
+     "trades": 970,
+     "win_rate": 54.2,
+     "avg_trade_pct": 1.11,
+     "all": {
+      "cagr": 10.13,
+      "total": 171,
+      "max_dd": 19.6,
+      "sharpe": 0.82
+     },
+     "p2016_20": {
+      "cagr": 15.14,
+      "total": 88.4,
+      "max_dd": 19.6,
+      "sharpe": 1.14
+     },
+     "p2021_24": {
+      "cagr": 8.38,
+      "total": 37.8,
+      "max_dd": 17.7,
+      "sharpe": 0.68
+     },
+     "p2025_26": {
+      "cagr": 2.36,
+      "total": 4.4,
+      "max_dd": 12.1,
+      "sharpe": 0.26
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|any",
+     "trades": 1564,
+     "win_rate": 55.6,
+     "avg_trade_pct": 1.33,
+     "all": {
+      "cagr": 10.01,
+      "total": 168,
+      "max_dd": 14.7,
+      "sharpe": 1
+     },
+     "p2016_20": {
+      "cagr": 11.72,
+      "total": 64.5,
+      "max_dd": 14.7,
+      "sharpe": 1.23
+     },
+     "p2021_24": {
+      "cagr": 12.62,
+      "total": 60.7,
+      "max_dd": 12.5,
+      "sharpe": 1.13
+     },
+     "p2025_26": {
+      "cagr": 0.75,
+      "total": 1.4,
+      "max_dd": 8.3,
+      "sharpe": 0.13
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|strong",
+     "trades": 1254,
+     "win_rate": 53.9,
+     "avg_trade_pct": 1.12,
+     "all": {
+      "cagr": 6.73,
+      "total": 96.1,
+      "max_dd": 14.4,
+      "sharpe": 0.81
+     },
+     "p2016_20": {
+      "cagr": 8.14,
+      "total": 42.1,
+      "max_dd": 11.8,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 6.43,
+      "total": 28.2,
+      "max_dd": 14.4,
+      "sharpe": 0.71
+     },
+     "p2025_26": {
+      "cagr": 4.09,
+      "total": 7.6,
+      "max_dd": 5.5,
+      "sharpe": 0.52
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n10|any",
+     "trades": 827,
+     "win_rate": 58.2,
+     "avg_trade_pct": 2.1,
+     "all": {
+      "cagr": 16.71,
+      "total": 393.4,
+      "max_dd": 30.5,
+      "sharpe": 0.97
+     },
+     "p2016_20": {
+      "cagr": 19.02,
+      "total": 118.6,
+      "max_dd": 30.5,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 20.12,
+      "total": 107.8,
+      "max_dd": 21.3,
+      "sharpe": 1.09
+     },
+     "p2025_26": {
+      "cagr": 4.62,
+      "total": 8.7,
+      "max_dd": 12.5,
+      "sharpe": 0.37
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold20|n10|strong",
+     "trades": 711,
+     "win_rate": 56.8,
+     "avg_trade_pct": 2.19,
+     "all": {
+      "cagr": 14.92,
+      "total": 320.7,
+      "max_dd": 29.8,
+      "sharpe": 0.97
+     },
+     "p2016_20": {
+      "cagr": 15.73,
+      "total": 92.7,
+      "max_dd": 29.8,
+      "sharpe": 0.96
+     },
+     "p2021_24": {
+      "cagr": 16.94,
+      "total": 86.7,
+      "max_dd": 12.9,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 8.88,
+      "total": 16.9,
+      "max_dd": 9.4,
+      "sharpe": 0.69
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold20|n20|any",
+     "trades": 1262,
+     "win_rate": 59.5,
+     "avg_trade_pct": 2.47,
+     "all": {
+      "cagr": 15.18,
+      "total": 330.8,
+      "max_dd": 25.7,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 15.27,
+      "total": 89.3,
+      "max_dd": 25.7,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 17.46,
+      "total": 90,
+      "max_dd": 13.3,
+      "sharpe": 1.24
+     },
+     "p2025_26": {
+      "cagr": 10.32,
+      "total": 19.8,
+      "max_dd": 8.2,
+      "sharpe": 0.93
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold20|n20|strong",
+     "trades": 1073,
+     "win_rate": 58.2,
+     "avg_trade_pct": 2.28,
+     "all": {
+      "cagr": 11.53,
+      "total": 208.7,
+      "max_dd": 31.1,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 9.34,
+      "total": 49.3,
+      "max_dd": 31.1,
+      "sharpe": 0.76
+     },
+     "p2021_24": {
+      "cagr": 14.01,
+      "total": 68.7,
+      "max_dd": 15.9,
+      "sharpe": 1.16
+     },
+     "p2025_26": {
+      "cagr": 11.68,
+      "total": 22.5,
+      "max_dd": 7.4,
+      "sharpe": 1.08
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|any",
+     "trades": 500,
+     "win_rate": 62.6,
+     "avg_trade_pct": 4.63,
+     "all": {
+      "cagr": 22.4,
+      "total": 707.3,
+      "max_dd": 37.5,
+      "sharpe": 1.14
+     },
+     "p2016_20": {
+      "cagr": 22.66,
+      "total": 150.2,
+      "max_dd": 37.5,
+      "sharpe": 1.1
+     },
+     "p2021_24": {
+      "cagr": 25.21,
+      "total": 145.2,
+      "max_dd": 20.9,
+      "sharpe": 1.28
+     },
+     "p2025_26": {
+      "cagr": 16.14,
+      "total": 31.6,
+      "max_dd": 20.4,
+      "sharpe": 0.93
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|strong",
+     "trades": 463,
+     "win_rate": 62.4,
+     "avg_trade_pct": 4,
+     "all": {
+      "cagr": 17.03,
+      "total": 407.7,
+      "max_dd": 37.7,
+      "sharpe": 0.93
+     },
+     "p2016_20": {
+      "cagr": 16.31,
+      "total": 97.1,
+      "max_dd": 37.7,
+      "sharpe": 0.87
+     },
+     "p2021_24": {
+      "cagr": 21.77,
+      "total": 119.4,
+      "max_dd": 17.6,
+      "sharpe": 1.17
+     },
+     "p2025_26": {
+      "cagr": 9.14,
+      "total": 17.4,
+      "max_dd": 16.7,
+      "sharpe": 0.58
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n20|any",
+     "trades": 920,
+     "win_rate": 61,
+     "avg_trade_pct": 3.94,
+     "all": {
+      "cagr": 16.88,
+      "total": 401,
+      "max_dd": 35,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 19.55,
+      "total": 123,
+      "max_dd": 35,
+      "sharpe": 1.03
+     },
+     "p2021_24": {
+      "cagr": 19.48,
+      "total": 103.4,
+      "max_dd": 17.5,
+      "sharpe": 1.11
+     },
+     "p2025_26": {
+      "cagr": 5.58,
+      "total": 10.5,
+      "max_dd": 18.6,
+      "sharpe": 0.42
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n20|strong",
+     "trades": 874,
+     "win_rate": 59.8,
+     "avg_trade_pct": 3.63,
+     "all": {
+      "cagr": 14.81,
+      "total": 316.6,
+      "max_dd": 39.2,
+      "sharpe": 0.88
+     },
+     "p2016_20": {
+      "cagr": 16.54,
+      "total": 98.9,
+      "max_dd": 39.2,
+      "sharpe": 0.89
+     },
+     "p2021_24": {
+      "cagr": 15.34,
+      "total": 76.7,
+      "max_dd": 19.2,
+      "sharpe": 0.96
+     },
+     "p2025_26": {
+      "cagr": 9.71,
+      "total": 18.6,
+      "max_dd": 14,
+      "sharpe": 0.67
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 66.4,
+     "avg_trade_pct": 6.8,
+     "all": {
+      "cagr": 27.85,
+      "total": 1166.6,
+      "max_dd": 36.8,
+      "sharpe": 1.17
+     },
+     "p2016_20": {
+      "cagr": 32.29,
+      "total": 251.3,
+      "max_dd": 36.8,
+      "sharpe": 1.32
+     },
+     "p2021_24": {
+      "cagr": 29.55,
+      "total": 180.9,
+      "max_dd": 30.2,
+      "sharpe": 1.28
+     },
+     "p2025_26": {
+      "cagr": 14.55,
+      "total": 28.4,
+      "max_dd": 25.3,
+      "sharpe": 0.66
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 65.5,
+     "avg_trade_pct": 6.38,
+     "all": {
+      "cagr": 25.64,
+      "total": 957.2,
+      "max_dd": 36,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 32.13,
+      "total": 249.4,
+      "max_dd": 36,
+      "sharpe": 1.29
+     },
+     "p2021_24": {
+      "cagr": 21.91,
+      "total": 120.4,
+      "max_dd": 31.8,
+      "sharpe": 1
+     },
+     "p2025_26": {
+      "cagr": 18.84,
+      "total": 37.3,
+      "max_dd": 22.2,
+      "sharpe": 0.81
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 834,
+     "win_rate": 65.2,
+     "avg_trade_pct": 6.09,
+     "all": {
+      "cagr": 24.77,
+      "total": 883.8,
+      "max_dd": 35.4,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 30.52,
+      "total": 230.7,
+      "max_dd": 35.4,
+      "sharpe": 1.35
+     },
+     "p2021_24": {
+      "cagr": 21.76,
+      "total": 119.3,
+      "max_dd": 31,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 18.05,
+      "total": 35.6,
+      "max_dd": 21.8,
+      "sharpe": 0.82
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|strong",
+     "trades": 798,
+     "win_rate": 63.5,
+     "avg_trade_pct": 6.13,
+     "all": {
+      "cagr": 23.58,
+      "total": 791.2,
+      "max_dd": 39,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 28.58,
+      "total": 209.2,
+      "max_dd": 39,
+      "sharpe": 1.27
+     },
+     "p2021_24": {
+      "cagr": 17.87,
+      "total": 92.7,
+      "max_dd": 30.9,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 24.52,
+      "total": 49.6,
+      "max_dd": 19.9,
+      "sharpe": 1.06
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold10|n10|any",
+     "trades": 750,
+     "win_rate": 56.3,
+     "avg_trade_pct": 1.66,
+     "all": {
+      "cagr": 12.17,
+      "total": 227.7,
+      "max_dd": 15,
+      "sharpe": 1
+     },
+     "p2016_20": {
+      "cagr": 11.71,
+      "total": 64.4,
+      "max_dd": 15,
+      "sharpe": 1.11
+     },
+     "p2021_24": {
+      "cagr": 18.49,
+      "total": 96.8,
+      "max_dd": 13.3,
+      "sharpe": 1.3
+     },
+     "p2025_26": {
+      "cagr": 0.69,
+      "total": 1.3,
+      "max_dd": 11.9,
+      "sharpe": 0.12
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold10|n10|strong",
+     "trades": 596,
+     "win_rate": 55.4,
+     "avg_trade_pct": 1.47,
+     "all": {
+      "cagr": 8.38,
+      "total": 129.7,
+      "max_dd": 15.8,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 10.45,
+      "total": 56.3,
+      "max_dd": 8.4,
+      "sharpe": 1.26
+     },
+     "p2021_24": {
+      "cagr": 8.87,
+      "total": 40.3,
+      "max_dd": 15.8,
+      "sharpe": 0.84
+     },
+     "p2025_26": {
+      "cagr": 2.54,
+      "total": 4.7,
+      "max_dd": 11.1,
+      "sharpe": 0.28
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|any",
+     "trades": 838,
+     "win_rate": 56.8,
+     "avg_trade_pct": 1.72,
+     "all": {
+      "cagr": 6.97,
+      "total": 100.7,
+      "max_dd": 8.1,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 6.54,
+      "total": 32.9,
+      "max_dd": 8.1,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 10.5,
+      "total": 48.9,
+      "max_dd": 7.3,
+      "sharpe": 1.37
+     },
+     "p2025_26": {
+      "cagr": 0.76,
+      "total": 1.4,
+      "max_dd": 7.2,
+      "sharpe": 0.14
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|strong",
+     "trades": 641,
+     "win_rate": 55.9,
+     "avg_trade_pct": 1.64,
+     "all": {
+      "cagr": 5.1,
+      "total": 67.1,
+      "max_dd": 8.1,
+      "sharpe": 0.92
+     },
+     "p2016_20": {
+      "cagr": 5.48,
+      "total": 27,
+      "max_dd": 4.3,
+      "sharpe": 1.22
+     },
+     "p2021_24": {
+      "cagr": 6.19,
+      "total": 27.1,
+      "max_dd": 8.1,
+      "sharpe": 1.03
+     },
+     "p2025_26": {
+      "cagr": 1.91,
+      "total": 3.5,
+      "max_dd": 5.9,
+      "sharpe": 0.31
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n10|any",
+     "trades": 613,
+     "win_rate": 57.7,
+     "avg_trade_pct": 2.96,
+     "all": {
+      "cagr": 17.72,
+      "total": 439.7,
+      "max_dd": 23.4,
+      "sharpe": 1.13
+     },
+     "p2016_20": {
+      "cagr": 15.33,
+      "total": 89.7,
+      "max_dd": 23.4,
+      "sharpe": 1.02
+     },
+     "p2021_24": {
+      "cagr": 22.91,
+      "total": 127.7,
+      "max_dd": 15.4,
+      "sharpe": 1.33
+     },
+     "p2025_26": {
+      "cagr": 12.88,
+      "total": 24.9,
+      "max_dd": 13.3,
+      "sharpe": 0.91
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold20|n10|strong",
+     "trades": 514,
+     "win_rate": 58,
+     "avg_trade_pct": 2.99,
+     "all": {
+      "cagr": 14.49,
+      "total": 304.8,
+      "max_dd": 29.2,
+      "sharpe": 1.03
+     },
+     "p2016_20": {
+      "cagr": 13.18,
+      "total": 74.4,
+      "max_dd": 29.2,
+      "sharpe": 0.96
+     },
+     "p2021_24": {
+      "cagr": 14.99,
+      "total": 74.6,
+      "max_dd": 18.5,
+      "sharpe": 1.03
+     },
+     "p2025_26": {
+      "cagr": 16.79,
+      "total": 33,
+      "max_dd": 12.8,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold20|n20|any",
+     "trades": 816,
+     "win_rate": 58.2,
+     "avg_trade_pct": 3.03,
+     "all": {
+      "cagr": 11.72,
+      "total": 214.1,
+      "max_dd": 19.7,
+      "sharpe": 1.05
+     },
+     "p2016_20": {
+      "cagr": 9.92,
+      "total": 52.9,
+      "max_dd": 19.7,
+      "sharpe": 1.04
+     },
+     "p2021_24": {
+      "cagr": 15.66,
+      "total": 78.7,
+      "max_dd": 12.8,
+      "sharpe": 1.25
+     },
+     "p2025_26": {
+      "cagr": 7.9,
+      "total": 15,
+      "max_dd": 14.7,
+      "sharpe": 0.69
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold20|n20|strong",
+     "trades": 636,
+     "win_rate": 57.7,
+     "avg_trade_pct": 3.17,
+     "all": {
+      "cagr": 9.74,
+      "total": 161.2,
+      "max_dd": 14.8,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 8.55,
+      "total": 44.6,
+      "max_dd": 14.8,
+      "sharpe": 1.14
+     },
+     "p2021_24": {
+      "cagr": 10.52,
+      "total": 49,
+      "max_dd": 10.7,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 11.04,
+      "total": 21.2,
+      "max_dd": 10,
+      "sharpe": 1.02
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n10|any",
+     "trades": 447,
+     "win_rate": 60.9,
+     "avg_trade_pct": 4.66,
+     "all": {
+      "cagr": 19.58,
+      "total": 534.5,
+      "max_dd": 39.5,
+      "sharpe": 0.97
+     },
+     "p2016_20": {
+      "cagr": 19.71,
+      "total": 124.3,
+      "max_dd": 39.5,
+      "sharpe": 0.99
+     },
+     "p2021_24": {
+      "cagr": 21.48,
+      "total": 117.3,
+      "max_dd": 22.6,
+      "sharpe": 1.04
+     },
+     "p2025_26": {
+      "cagr": 15.44,
+      "total": 30.2,
+      "max_dd": 23.3,
+      "sharpe": 0.77
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold40|n10|strong",
+     "trades": 414,
+     "win_rate": 60.6,
+     "avg_trade_pct": 4.78,
+     "all": {
+      "cagr": 18.23,
+      "total": 464.1,
+      "max_dd": 39.1,
+      "sharpe": 0.92
+     },
+     "p2016_20": {
+      "cagr": 20.91,
+      "total": 134.6,
+      "max_dd": 39.1,
+      "sharpe": 1
+     },
+     "p2021_24": {
+      "cagr": 17.83,
+      "total": 92.4,
+      "max_dd": 26.1,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 12.91,
+      "total": 25,
+      "max_dd": 20.5,
+      "sharpe": 0.71
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold40|n20|any",
+     "trades": 734,
+     "win_rate": 60.9,
+     "avg_trade_pct": 4.72,
+     "all": {
+      "cagr": 16.13,
+      "total": 368.8,
+      "max_dd": 27.6,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 17.69,
+      "total": 107.8,
+      "max_dd": 27.6,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 17.53,
+      "total": 90.4,
+      "max_dd": 24.6,
+      "sharpe": 0.99
+     },
+     "p2025_26": {
+      "cagr": 9.65,
+      "total": 18.4,
+      "max_dd": 25.1,
+      "sharpe": 0.56
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr8|hold40|n20|strong",
+     "trades": 610,
+     "win_rate": 60.8,
+     "avg_trade_pct": 5.1,
+     "all": {
+      "cagr": 14.7,
+      "total": 312.7,
+      "max_dd": 24.1,
+      "sharpe": 1.02
+     },
+     "p2016_20": {
+      "cagr": 16.11,
+      "total": 95.6,
+      "max_dd": 20,
+      "sharpe": 1.24
+     },
+     "p2021_24": {
+      "cagr": 12.84,
+      "total": 61.9,
+      "max_dd": 24.1,
+      "sharpe": 0.89
+     },
+     "p2025_26": {
+      "cagr": 15.51,
+      "total": 30.3,
+      "max_dd": 17.9,
+      "sharpe": 0.9
+     },
+     "beats": [
+      "p2016_20"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|any",
+     "trades": 398,
+     "win_rate": 66.6,
+     "avg_trade_pct": 8.12,
+     "all": {
+      "cagr": 31.56,
+      "total": 1601.8,
+      "max_dd": 36,
+      "sharpe": 1.26
+     },
+     "p2016_20": {
+      "cagr": 37.27,
+      "total": 314.6,
+      "max_dd": 34.2,
+      "sharpe": 1.57
+     },
+     "p2021_24": {
+      "cagr": 25.82,
+      "total": 150,
+      "max_dd": 36,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 30.97,
+      "total": 64.2,
+      "max_dd": 27.8,
+      "sharpe": 1.09
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|strong",
+     "trades": 376,
+     "win_rate": 62.2,
+     "avg_trade_pct": 6.91,
+     "all": {
+      "cagr": 24.5,
+      "total": 862.4,
+      "max_dd": 42.8,
+      "sharpe": 1.03
+     },
+     "p2016_20": {
+      "cagr": 27.92,
+      "total": 202.1,
+      "max_dd": 42.8,
+      "sharpe": 1.16
+     },
+     "p2021_24": {
+      "cagr": 18.25,
+      "total": 95.1,
+      "max_dd": 39.6,
+      "sharpe": 0.82
+     },
+     "p2025_26": {
+      "cagr": 30.56,
+      "total": 63.2,
+      "max_dd": 24.9,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n20|any",
+     "trades": 683,
+     "win_rate": 63.4,
+     "avg_trade_pct": 7.26,
+     "all": {
+      "cagr": 23.3,
+      "total": 770.5,
+      "max_dd": 36.4,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 29.72,
+      "total": 221.7,
+      "max_dd": 28,
+      "sharpe": 1.47
+     },
+     "p2021_24": {
+      "cagr": 14.94,
+      "total": 74.3,
+      "max_dd": 36.4,
+      "sharpe": 0.75
+     },
+     "p2025_26": {
+      "cagr": 27.07,
+      "total": 55.3,
+      "max_dd": 27.9,
+      "sharpe": 1.06
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n20|strong",
+     "trades": 580,
+     "win_rate": 62.8,
+     "avg_trade_pct": 7.38,
+     "all": {
+      "cagr": 20.06,
+      "total": 561.3,
+      "max_dd": 30.3,
+      "sharpe": 1.09
+     },
+     "p2016_20": {
+      "cagr": 24.58,
+      "total": 168.3,
+      "max_dd": 20.7,
+      "sharpe": 1.47
+     },
+     "p2021_24": {
+      "cagr": 12.27,
+      "total": 58.7,
+      "max_dd": 30.3,
+      "sharpe": 0.72
+     },
+     "p2025_26": {
+      "cagr": 27.09,
+      "total": 55.3,
+      "max_dd": 22.4,
+      "sharpe": 1.15
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold10|n10|any",
+     "trades": 528,
+     "win_rate": 57.6,
+     "avg_trade_pct": 1.85,
+     "all": {
+      "cagr": 9.38,
+      "total": 152.6,
+      "max_dd": 15.2,
+      "sharpe": 0.9
+     },
+     "p2016_20": {
+      "cagr": 9.35,
+      "total": 49.4,
+      "max_dd": 15.2,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 13.9,
+      "total": 68.1,
+      "max_dd": 11.1,
+      "sharpe": 1.21
+     },
+     "p2025_26": {
+      "cagr": 0.33,
+      "total": 0.6,
+      "max_dd": 11.8,
+      "sharpe": 0.09
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold10|n10|strong",
+     "trades": 411,
+     "win_rate": 56.9,
+     "avg_trade_pct": 1.89,
+     "all": {
+      "cagr": 7.46,
+      "total": 110.3,
+      "max_dd": 13.7,
+      "sharpe": 0.88
+     },
+     "p2016_20": {
+      "cagr": 7.71,
+      "total": 39.6,
+      "max_dd": 8.3,
+      "sharpe": 1.15
+     },
+     "p2021_24": {
+      "cagr": 9.34,
+      "total": 42.8,
+      "max_dd": 13.7,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 2.95,
+      "total": 5.5,
+      "max_dd": 8.8,
+      "sharpe": 0.32
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|any",
+     "trades": 550,
+     "win_rate": 57.6,
+     "avg_trade_pct": 1.78,
+     "all": {
+      "cagr": 4.71,
+      "total": 61,
+      "max_dd": 8.1,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 4.8,
+      "total": 23.4,
+      "max_dd": 8.1,
+      "sharpe": 1.04
+     },
+     "p2021_24": {
+      "cagr": 7,
+      "total": 31,
+      "max_dd": 5.5,
+      "sharpe": 1.22
+     },
+     "p2025_26": {
+      "cagr": -0.23,
+      "total": -0.4,
+      "max_dd": 6.3,
+      "sharpe": 0
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|strong",
+     "trades": 424,
+     "win_rate": 56.8,
+     "avg_trade_pct": 1.81,
+     "all": {
+      "cagr": 3.71,
+      "total": 45.7,
+      "max_dd": 7,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 3.83,
+      "total": 18.4,
+      "max_dd": 4.4,
+      "sharpe": 1.14
+     },
+     "p2021_24": {
+      "cagr": 4.69,
+      "total": 20.1,
+      "max_dd": 7,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 1.35,
+      "total": 2.5,
+      "max_dd": 4.8,
+      "sharpe": 0.25
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n10|any",
+     "trades": 474,
+     "win_rate": 58.6,
+     "avg_trade_pct": 3.38,
+     "all": {
+      "cagr": 15.07,
+      "total": 326.6,
+      "max_dd": 19.3,
+      "sharpe": 1.03
+     },
+     "p2016_20": {
+      "cagr": 15.51,
+      "total": 91,
+      "max_dd": 18,
+      "sharpe": 1.2
+     },
+     "p2021_24": {
+      "cagr": 17.4,
+      "total": 89.6,
+      "max_dd": 19.3,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 9.3,
+      "total": 17.7,
+      "max_dd": 17.6,
+      "sharpe": 0.66
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold20|n10|strong",
+     "trades": 385,
+     "win_rate": 59.7,
+     "avg_trade_pct": 3.85,
+     "all": {
+      "cagr": 14.34,
+      "total": 299.2,
+      "max_dd": 17.8,
+      "sharpe": 1.18
+     },
+     "p2016_20": {
+      "cagr": 13.66,
+      "total": 77.7,
+      "max_dd": 15,
+      "sharpe": 1.32
+     },
+     "p2021_24": {
+      "cagr": 15.7,
+      "total": 78.9,
+      "max_dd": 17.8,
+      "sharpe": 1.19
+     },
+     "p2025_26": {
+      "cagr": 13.19,
+      "total": 25.6,
+      "max_dd": 11.7,
+      "sharpe": 0.96
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold20|n20|any",
+     "trades": 545,
+     "win_rate": 59.3,
+     "avg_trade_pct": 3.72,
+     "all": {
+      "cagr": 9.71,
+      "total": 160.6,
+      "max_dd": 13.6,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 8.87,
+      "total": 46.5,
+      "max_dd": 10.6,
+      "sharpe": 1.31
+     },
+     "p2021_24": {
+      "cagr": 11.52,
+      "total": 54.5,
+      "max_dd": 10.2,
+      "sharpe": 1.24
+     },
+     "p2025_26": {
+      "cagr": 7.99,
+      "total": 15.2,
+      "max_dd": 12.7,
+      "sharpe": 0.74
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n20|strong",
+     "trades": 422,
+     "win_rate": 60.4,
+     "avg_trade_pct": 4.25,
+     "all": {
+      "cagr": 8.72,
+      "total": 137.3,
+      "max_dd": 9.2,
+      "sharpe": 1.25
+     },
+     "p2016_20": {
+      "cagr": 7.37,
+      "total": 37.6,
+      "max_dd": 8.4,
+      "sharpe": 1.4
+     },
+     "p2021_24": {
+      "cagr": 9.41,
+      "total": 43.2,
+      "max_dd": 9.2,
+      "sharpe": 1.33
+     },
+     "p2025_26": {
+      "cagr": 10.66,
+      "total": 20.5,
+      "max_dd": 9,
+      "sharpe": 1.09
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n10|any",
+     "trades": 390,
+     "win_rate": 66.9,
+     "avg_trade_pct": 6.08,
+     "all": {
+      "cagr": 22.34,
+      "total": 702.9,
+      "max_dd": 30.1,
+      "sharpe": 1.1
+     },
+     "p2016_20": {
+      "cagr": 25.99,
+      "total": 182.2,
+      "max_dd": 21.8,
+      "sharpe": 1.5
+     },
+     "p2021_24": {
+      "cagr": 24.51,
+      "total": 139.7,
+      "max_dd": 28.9,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 9.76,
+      "total": 18.7,
+      "max_dd": 26.8,
+      "sharpe": 0.51
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold40|n10|strong",
+     "trades": 341,
+     "win_rate": 65.1,
+     "avg_trade_pct": 6.24,
+     "all": {
+      "cagr": 19.76,
+      "total": 544.2,
+      "max_dd": 32.7,
+      "sharpe": 1.08
+     },
+     "p2016_20": {
+      "cagr": 24.59,
+      "total": 168.3,
+      "max_dd": 16,
+      "sharpe": 1.52
+     },
+     "p2021_24": {
+      "cagr": 16.48,
+      "total": 83.7,
+      "max_dd": 32.7,
+      "sharpe": 0.89
+     },
+     "p2025_26": {
+      "cagr": 15.68,
+      "total": 30.7,
+      "max_dd": 21.2,
+      "sharpe": 0.76
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold40|n20|any",
+     "trades": 534,
+     "win_rate": 65.4,
+     "avg_trade_pct": 6.15,
+     "all": {
+      "cagr": 15.88,
+      "total": 358.7,
+      "max_dd": 23.1,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 16.4,
+      "total": 97.7,
+      "max_dd": 10.9,
+      "sharpe": 1.49
+     },
+     "p2021_24": {
+      "cagr": 14.48,
+      "total": 71.5,
+      "max_dd": 19.3,
+      "sharpe": 1.01
+     },
+     "p2025_26": {
+      "cagr": 17.87,
+      "total": 35.3,
+      "max_dd": 20.7,
+      "sharpe": 0.95
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold40|n20|strong",
+     "trades": 417,
+     "win_rate": 66.2,
+     "avg_trade_pct": 6.96,
+     "all": {
+      "cagr": 14.21,
+      "total": 294.6,
+      "max_dd": 16.8,
+      "sharpe": 1.23
+     },
+     "p2016_20": {
+      "cagr": 13.58,
+      "total": 77.1,
+      "max_dd": 8,
+      "sharpe": 1.5
+     },
+     "p2021_24": {
+      "cagr": 11.77,
+      "total": 55.9,
+      "max_dd": 16.8,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 21.45,
+      "total": 42.9,
+      "max_dd": 11.4,
+      "sharpe": 1.26
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|any",
+     "trades": 350,
+     "win_rate": 66.9,
+     "avg_trade_pct": 9.14,
+     "all": {
+      "cagr": 30.86,
+      "total": 1510,
+      "max_dd": 44.1,
+      "sharpe": 1.27
+     },
+     "p2016_20": {
+      "cagr": 42.47,
+      "total": 390.1,
+      "max_dd": 25.2,
+      "sharpe": 1.97
+     },
+     "p2021_24": {
+      "cagr": 23.59,
+      "total": 132.8,
+      "max_dd": 44.1,
+      "sharpe": 0.96
+     },
+     "p2025_26": {
+      "cagr": 20.62,
+      "total": 41.1,
+      "max_dd": 28.5,
+      "sharpe": 0.81
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|strong",
+     "trades": 317,
+     "win_rate": 62.5,
+     "avg_trade_pct": 8.49,
+     "all": {
+      "cagr": 24.8,
+      "total": 886.6,
+      "max_dd": 38.2,
+      "sharpe": 1.13
+     },
+     "p2016_20": {
+      "cagr": 37.52,
+      "total": 318.1,
+      "max_dd": 21.5,
+      "sharpe": 1.87
+     },
+     "p2021_24": {
+      "cagr": 12.2,
+      "total": 58.3,
+      "max_dd": 38.2,
+      "sharpe": 0.62
+     },
+     "p2025_26": {
+      "cagr": 24.29,
+      "total": 49.1,
+      "max_dd": 26.5,
+      "sharpe": 0.94
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n20|any",
+     "trades": 508,
+     "win_rate": 65.4,
+     "avg_trade_pct": 9.26,
+     "all": {
+      "cagr": 22.45,
+      "total": 710.4,
+      "max_dd": 34,
+      "sharpe": 1.23
+     },
+     "p2016_20": {
+      "cagr": 26.42,
+      "total": 186.5,
+      "max_dd": 17.6,
+      "sharpe": 1.84
+     },
+     "p2021_24": {
+      "cagr": 16.68,
+      "total": 85,
+      "max_dd": 34,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 25.98,
+      "total": 52.9,
+      "max_dd": 24.4,
+      "sharpe": 1.07
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n20|strong",
+     "trades": 408,
+     "win_rate": 64,
+     "avg_trade_pct": 9.68,
+     "all": {
+      "cagr": 19.13,
+      "total": 510.5,
+      "max_dd": 20.8,
+      "sharpe": 1.27
+     },
+     "p2016_20": {
+      "cagr": 20.35,
+      "total": 129.7,
+      "max_dd": 13.3,
+      "sharpe": 1.72
+     },
+     "p2021_24": {
+      "cagr": 14.79,
+      "total": 73.4,
+      "max_dd": 20.8,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 26.17,
+      "total": 53.3,
+      "max_dd": 17.8,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    }
+   ]
+  },
+  "current_pit": {
+   "spy": {
+    "p2016_20": {
+     "cagr": 15.83,
+     "total": 93.5,
+     "max_dd": 33.8,
+     "sharpe": 0.88
+    },
+    "p2021_24": {
+     "cagr": 13.52,
+     "total": 65.8,
+     "max_dd": 24.5,
+     "sharpe": 0.85
+    },
+    "p2025_26": {
+     "cagr": 16.99,
+     "total": 33.4,
+     "max_dd": 18.8,
+     "sharpe": 1.02
+    },
+    "all": {
+     "cagr": 15.11,
+     "total": 328,
+     "max_dd": 33.8,
+     "sharpe": 0.89
+    }
+   },
+   "pct_beating_spy": {
+    "p2016_20": 17.2,
+    "p2021_24": 23.4,
+    "p2025_26": 25,
+    "every_period": 9.4,
+    "full_period": 20.3
+   },
+   "ref": {
+    "key": "thr8|hold60|n10|any",
+    "trades": 344,
+    "win_rate": 64.2,
+    "avg_trade_pct": 5.48,
+    "all": {
+     "cagr": 18.03,
+     "total": 454.6,
+     "max_dd": 33.4,
+     "sharpe": 0.94
+    },
+    "p2016_20": {
+     "cagr": 20.9,
+     "total": 134.4,
+     "max_dd": 24,
+     "sharpe": 1.15
+    },
+    "p2021_24": {
+     "cagr": 10.83,
+     "total": 50.7,
+     "max_dd": 33.4,
+     "sharpe": 0.61
+    },
+    "p2025_26": {
+     "cagr": 27.81,
+     "total": 57,
+     "max_dd": 22.3,
+     "sharpe": 1.17
+    },
+    "beats": [
+     "p2016_20",
+     "p2025_26"
+    ]
+   },
+   "best": [
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 415,
+     "win_rate": 68,
+     "avg_trade_pct": 6.01,
+     "all": {
+      "cagr": 24.28,
+      "total": 844.6,
+      "max_dd": 33,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 29.3,
+      "total": 217.1,
+      "max_dd": 28.4,
+      "sharpe": 1.3
+     },
+     "p2021_24": {
+      "cagr": 18.95,
+      "total": 99.8,
+      "max_dd": 33,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 24.29,
+      "total": 49.1,
+      "max_dd": 21.8,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 68.8,
+     "avg_trade_pct": 5.16,
+     "all": {
+      "cagr": 20.82,
+      "total": 605.8,
+      "max_dd": 35.2,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 22.57,
+      "total": 149.4,
+      "max_dd": 35.2,
+      "sharpe": 0.98
+     },
+     "p2021_24": {
+      "cagr": 20.52,
+      "total": 110.5,
+      "max_dd": 20.7,
+      "sharpe": 1.07
+     },
+     "p2025_26": {
+      "cagr": 17.46,
+      "total": 34.4,
+      "max_dd": 17.1,
+      "sharpe": 1.01
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 409,
+     "win_rate": 65.8,
+     "avg_trade_pct": 5.28,
+     "all": {
+      "cagr": 20.62,
+      "total": 593.7,
+      "max_dd": 32.3,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 23.7,
+      "total": 159.9,
+      "max_dd": 32.3,
+      "sharpe": 1.06
+     },
+     "p2021_24": {
+      "cagr": 16.63,
+      "total": 84.7,
+      "max_dd": 26.3,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 22.19,
+      "total": 44.5,
+      "max_dd": 25.1,
+      "sharpe": 0.92
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 785,
+     "win_rate": 65.7,
+     "avg_trade_pct": 5.24,
+     "all": {
+      "cagr": 19.81,
+      "total": 547.1,
+      "max_dd": 32.9,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 20.63,
+      "total": 132.2,
+      "max_dd": 32.9,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 18.4,
+      "total": 96.2,
+      "max_dd": 24,
+      "sharpe": 0.98
+     },
+     "p2025_26": {
+      "cagr": 21.08,
+      "total": 42.1,
+      "max_dd": 19.2,
+      "sharpe": 1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|any",
+     "trades": 478,
+     "win_rate": 63,
+     "avg_trade_pct": 4.26,
+     "all": {
+      "cagr": 19.77,
+      "total": 545.2,
+      "max_dd": 25.9,
+      "sharpe": 1.1
+     },
+     "p2016_20": {
+      "cagr": 19.41,
+      "total": 121.8,
+      "max_dd": 25.9,
+      "sharpe": 1.06
+     },
+     "p2021_24": {
+      "cagr": 19.66,
+      "total": 104.6,
+      "max_dd": 18.7,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 21.12,
+      "total": 42.2,
+      "max_dd": 17,
+      "sharpe": 1.19
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|any",
+     "trades": 344,
+     "win_rate": 64.2,
+     "avg_trade_pct": 5.48,
+     "all": {
+      "cagr": 18.03,
+      "total": 454.6,
+      "max_dd": 33.4,
+      "sharpe": 0.94
+     },
+     "p2016_20": {
+      "cagr": 20.9,
+      "total": 134.4,
+      "max_dd": 24,
+      "sharpe": 1.15
+     },
+     "p2021_24": {
+      "cagr": 10.83,
+      "total": 50.7,
+      "max_dd": 33.4,
+      "sharpe": 0.61
+     },
+     "p2025_26": {
+      "cagr": 27.81,
+      "total": 57,
+      "max_dd": 22.3,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|any",
+     "trades": 840,
+     "win_rate": 66,
+     "avg_trade_pct": 4.52,
+     "all": {
+      "cagr": 17.81,
+      "total": 444,
+      "max_dd": 33.6,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 20.36,
+      "total": 129.8,
+      "max_dd": 33.6,
+      "sharpe": 0.98
+     },
+     "p2021_24": {
+      "cagr": 12.77,
+      "total": 61.5,
+      "max_dd": 28.3,
+      "sharpe": 0.77
+     },
+     "p2025_26": {
+      "cagr": 23.16,
+      "total": 46.6,
+      "max_dd": 19.2,
+      "sharpe": 1.26
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 65,
+     "avg_trade_pct": 4.38,
+     "all": {
+      "cagr": 17.17,
+      "total": 414.1,
+      "max_dd": 37.1,
+      "sharpe": 0.87
+     },
+     "p2016_20": {
+      "cagr": 17.98,
+      "total": 110.1,
+      "max_dd": 37.1,
+      "sharpe": 0.83
+     },
+     "p2021_24": {
+      "cagr": 15.66,
+      "total": 78.7,
+      "max_dd": 18.8,
+      "sharpe": 0.86
+     },
+     "p2025_26": {
+      "cagr": 18.67,
+      "total": 36.9,
+      "max_dd": 18.1,
+      "sharpe": 1.05
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    }
+   ],
+   "concentration": {
+    "trades": 344,
+    "top10_share_of_profit_pct": 42.1,
+    "top10": [
+     {
+      "s": "PLTR",
+      "d": "2024-11-06",
+      "ret": 94.1
+     },
+     {
+      "s": "KEYS",
+      "d": "2025-11-26",
+      "ret": 54.45
+     },
+     {
+      "s": "STX",
+      "d": "2025-05-01",
+      "ret": 64.25
+     },
+     {
+      "s": "TSLA",
+      "d": "2024-10-25",
+      "ret": 60.92
+     },
+     {
+      "s": "STX",
+      "d": "2025-10-30",
+      "ret": 44.21
+     },
+     {
+      "s": "UAL",
+      "d": "2024-10-17",
+      "ret": 49.39
+     },
+     {
+      "s": "TSLA",
+      "d": "2024-04-25",
+      "ret": 58.06
+     },
+     {
+      "s": "STX",
+      "d": "2026-01-29",
+      "ret": 30.3
+     },
+     {
+      "s": "ORCL",
+      "d": "2026-03-12",
+      "ret": 30.11
+     },
+     {
+      "s": "TXN",
+      "d": "2026-01-29",
+      "ret": 28.77
+     }
+    ]
+   },
+   "all": [
+    {
+     "key": "thr3|hold10|n10|any",
+     "trades": 1294,
+     "win_rate": 55.6,
+     "avg_trade_pct": 0.79,
+     "all": {
+      "cagr": 9.55,
+      "total": 156.6,
+      "max_dd": 23.5,
+      "sharpe": 0.76
+     },
+     "p2016_20": {
+      "cagr": 6.27,
+      "total": 31.4,
+      "max_dd": 23.5,
+      "sharpe": 0.51
+     },
+     "p2021_24": {
+      "cagr": 15.94,
+      "total": 80.4,
+      "max_dd": 11.9,
+      "sharpe": 1.25
+     },
+     "p2025_26": {
+      "cagr": 4.4,
+      "total": 8.2,
+      "max_dd": 11.8,
+      "sharpe": 0.4
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold10|n10|strong",
+     "trades": 1123,
+     "win_rate": 53.3,
+     "avg_trade_pct": 0.56,
+     "all": {
+      "cagr": 5.62,
+      "total": 75.9,
+      "max_dd": 23.1,
+      "sharpe": 0.53
+     },
+     "p2016_20": {
+      "cagr": 1.34,
+      "total": 6.2,
+      "max_dd": 23.1,
+      "sharpe": 0.17
+     },
+     "p2021_24": {
+      "cagr": 13.51,
+      "total": 65.8,
+      "max_dd": 11.8,
+      "sharpe": 1.19
+     },
+     "p2025_26": {
+      "cagr": -0.03,
+      "total": -0.1,
+      "max_dd": 14.8,
+      "sharpe": 0.05
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold10|n20|any",
+     "trades": 1886,
+     "win_rate": 55.9,
+     "avg_trade_pct": 0.87,
+     "all": {
+      "cagr": 7.71,
+      "total": 115.4,
+      "max_dd": 21.8,
+      "sharpe": 0.78
+     },
+     "p2016_20": {
+      "cagr": 4.79,
+      "total": 23.4,
+      "max_dd": 21.8,
+      "sharpe": 0.48
+     },
+     "p2021_24": {
+      "cagr": 11.83,
+      "total": 56.2,
+      "max_dd": 10.1,
+      "sharpe": 1.21
+     },
+     "p2025_26": {
+      "cagr": 6.25,
+      "total": 11.8,
+      "max_dd": 7.1,
+      "sharpe": 0.72
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold10|n20|strong",
+     "trades": 1593,
+     "win_rate": 54.8,
+     "avg_trade_pct": 0.73,
+     "all": {
+      "cagr": 5.41,
+      "total": 72.4,
+      "max_dd": 18.3,
+      "sharpe": 0.64
+     },
+     "p2016_20": {
+      "cagr": 3.11,
+      "total": 14.8,
+      "max_dd": 18.3,
+      "sharpe": 0.37
+     },
+     "p2021_24": {
+      "cagr": 8.09,
+      "total": 36.4,
+      "max_dd": 9.7,
+      "sharpe": 0.96
+     },
+     "p2025_26": {
+      "cagr": 5.4,
+      "total": 10.1,
+      "max_dd": 6.7,
+      "sharpe": 0.69
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n10|any",
+     "trades": 865,
+     "win_rate": 56,
+     "avg_trade_pct": 1.32,
+     "all": {
+      "cagr": 9.84,
+      "total": 163.8,
+      "max_dd": 45.3,
+      "sharpe": 0.62
+     },
+     "p2016_20": {
+      "cagr": 2.96,
+      "total": 14,
+      "max_dd": 45.3,
+      "sharpe": 0.25
+     },
+     "p2021_24": {
+      "cagr": 17.61,
+      "total": 91,
+      "max_dd": 17.2,
+      "sharpe": 1.15
+     },
+     "p2025_26": {
+      "cagr": 10.99,
+      "total": 21.1,
+      "max_dd": 9.4,
+      "sharpe": 0.82
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold20|n10|strong",
+     "trades": 756,
+     "win_rate": 54.5,
+     "avg_trade_pct": 1.5,
+     "all": {
+      "cagr": 10.37,
+      "total": 177.2,
+      "max_dd": 32.2,
+      "sharpe": 0.75
+     },
+     "p2016_20": {
+      "cagr": 5.12,
+      "total": 25.1,
+      "max_dd": 32.2,
+      "sharpe": 0.4
+     },
+     "p2021_24": {
+      "cagr": 15.15,
+      "total": 75.5,
+      "max_dd": 15.4,
+      "sharpe": 1.09
+     },
+     "p2025_26": {
+      "cagr": 13.52,
+      "total": 26.2,
+      "max_dd": 7.4,
+      "sharpe": 1.03
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold20|n20|any",
+     "trades": 1348,
+     "win_rate": 57,
+     "avg_trade_pct": 1.66,
+     "all": {
+      "cagr": 10.44,
+      "total": 179.1,
+      "max_dd": 28.4,
+      "sharpe": 0.83
+     },
+     "p2016_20": {
+      "cagr": 7.15,
+      "total": 36.3,
+      "max_dd": 28.4,
+      "sharpe": 0.54
+     },
+     "p2021_24": {
+      "cagr": 13.3,
+      "total": 64.6,
+      "max_dd": 14.7,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 12.63,
+      "total": 24.4,
+      "max_dd": 6.2,
+      "sharpe": 1.2
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n20|strong",
+     "trades": 1187,
+     "win_rate": 55.3,
+     "avg_trade_pct": 1.57,
+     "all": {
+      "cagr": 8.47,
+      "total": 131.6,
+      "max_dd": 30.4,
+      "sharpe": 0.73
+     },
+     "p2016_20": {
+      "cagr": 4.58,
+      "total": 22.3,
+      "max_dd": 30.4,
+      "sharpe": 0.39
+     },
+     "p2021_24": {
+      "cagr": 10.85,
+      "total": 50.8,
+      "max_dd": 11.4,
+      "sharpe": 0.99
+     },
+     "p2025_26": {
+      "cagr": 13.21,
+      "total": 25.6,
+      "max_dd": 6.3,
+      "sharpe": 1.31
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold40|n10|any",
+     "trades": 537,
+     "win_rate": 63.3,
+     "avg_trade_pct": 3.4,
+     "all": {
+      "cagr": 16.42,
+      "total": 381.1,
+      "max_dd": 42.5,
+      "sharpe": 0.87
+     },
+     "p2016_20": {
+      "cagr": 12.44,
+      "total": 69.3,
+      "max_dd": 42.5,
+      "sharpe": 0.65
+     },
+     "p2021_24": {
+      "cagr": 18.93,
+      "total": 99.7,
+      "max_dd": 16.8,
+      "sharpe": 1.09
+     },
+     "p2025_26": {
+      "cagr": 21.2,
+      "total": 42.4,
+      "max_dd": 17.7,
+      "sharpe": 1.12
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n10|strong",
+     "trades": 496,
+     "win_rate": 62.1,
+     "avg_trade_pct": 2.93,
+     "all": {
+      "cagr": 12.63,
+      "total": 241.7,
+      "max_dd": 42.3,
+      "sharpe": 0.74
+     },
+     "p2016_20": {
+      "cagr": 8.79,
+      "total": 46,
+      "max_dd": 42.3,
+      "sharpe": 0.51
+     },
+     "p2021_24": {
+      "cagr": 16.15,
+      "total": 81.7,
+      "max_dd": 13,
+      "sharpe": 1.03
+     },
+     "p2025_26": {
+      "cagr": 14.8,
+      "total": 28.9,
+      "max_dd": 15.4,
+      "sharpe": 0.89
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|any",
+     "trades": 957,
+     "win_rate": 61.9,
+     "avg_trade_pct": 3.16,
+     "all": {
+      "cagr": 13.83,
+      "total": 281.4,
+      "max_dd": 36.7,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 12.82,
+      "total": 71.9,
+      "max_dd": 36.7,
+      "sharpe": 0.7
+     },
+     "p2021_24": {
+      "cagr": 13.19,
+      "total": 63.9,
+      "max_dd": 16,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 17.92,
+      "total": 35.4,
+      "max_dd": 11.4,
+      "sharpe": 1.24
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|strong",
+     "trades": 910,
+     "win_rate": 60.4,
+     "avg_trade_pct": 2.98,
+     "all": {
+      "cagr": 12.14,
+      "total": 226.7,
+      "max_dd": 37.9,
+      "sharpe": 0.76
+     },
+     "p2016_20": {
+      "cagr": 11.32,
+      "total": 61.8,
+      "max_dd": 37.9,
+      "sharpe": 0.64
+     },
+     "p2021_24": {
+      "cagr": 12.42,
+      "total": 59.5,
+      "max_dd": 15.5,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 13.67,
+      "total": 26.5,
+      "max_dd": 11.5,
+      "sharpe": 1.02
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 68.8,
+     "avg_trade_pct": 5.16,
+     "all": {
+      "cagr": 20.82,
+      "total": 605.8,
+      "max_dd": 35.2,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 22.57,
+      "total": 149.4,
+      "max_dd": 35.2,
+      "sharpe": 0.98
+     },
+     "p2021_24": {
+      "cagr": 20.52,
+      "total": 110.5,
+      "max_dd": 20.7,
+      "sharpe": 1.07
+     },
+     "p2025_26": {
+      "cagr": 17.46,
+      "total": 34.4,
+      "max_dd": 17.1,
+      "sharpe": 1.01
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 65,
+     "avg_trade_pct": 4.38,
+     "all": {
+      "cagr": 17.17,
+      "total": 414.1,
+      "max_dd": 37.1,
+      "sharpe": 0.87
+     },
+     "p2016_20": {
+      "cagr": 17.98,
+      "total": 110.1,
+      "max_dd": 37.1,
+      "sharpe": 0.83
+     },
+     "p2021_24": {
+      "cagr": 15.66,
+      "total": 78.7,
+      "max_dd": 18.8,
+      "sharpe": 0.86
+     },
+     "p2025_26": {
+      "cagr": 18.67,
+      "total": 36.9,
+      "max_dd": 18.1,
+      "sharpe": 1.05
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|any",
+     "trades": 840,
+     "win_rate": 66,
+     "avg_trade_pct": 4.52,
+     "all": {
+      "cagr": 17.81,
+      "total": 444,
+      "max_dd": 33.6,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 20.36,
+      "total": 129.8,
+      "max_dd": 33.6,
+      "sharpe": 0.98
+     },
+     "p2021_24": {
+      "cagr": 12.77,
+      "total": 61.5,
+      "max_dd": 28.3,
+      "sharpe": 0.77
+     },
+     "p2025_26": {
+      "cagr": 23.16,
+      "total": 46.6,
+      "max_dd": 19.2,
+      "sharpe": 1.26
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|strong",
+     "trades": 826,
+     "win_rate": 62.6,
+     "avg_trade_pct": 3.5,
+     "all": {
+      "cagr": 13.24,
+      "total": 261.2,
+      "max_dd": 38.1,
+      "sharpe": 0.74
+     },
+     "p2016_20": {
+      "cagr": 14.23,
+      "total": 81.7,
+      "max_dd": 38.1,
+      "sharpe": 0.72
+     },
+     "p2021_24": {
+      "cagr": 9.06,
+      "total": 41.4,
+      "max_dd": 22.4,
+      "sharpe": 0.59
+     },
+     "p2025_26": {
+      "cagr": 20.39,
+      "total": 40.6,
+      "max_dd": 18.9,
+      "sharpe": 1.18
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold10|n10|any",
+     "trades": 925,
+     "win_rate": 55,
+     "avg_trade_pct": 0.96,
+     "all": {
+      "cagr": 8.34,
+      "total": 128.7,
+      "max_dd": 18.9,
+      "sharpe": 0.74
+     },
+     "p2016_20": {
+      "cagr": 7.18,
+      "total": 36.5,
+      "max_dd": 18.9,
+      "sharpe": 0.64
+     },
+     "p2021_24": {
+      "cagr": 12.85,
+      "total": 62,
+      "max_dd": 14.6,
+      "sharpe": 1.13
+     },
+     "p2025_26": {
+      "cagr": 1.85,
+      "total": 3.4,
+      "max_dd": 11.2,
+      "sharpe": 0.22
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n10|strong",
+     "trades": 768,
+     "win_rate": 52.3,
+     "avg_trade_pct": 0.76,
+     "all": {
+      "cagr": 5.24,
+      "total": 69.6,
+      "max_dd": 20.7,
+      "sharpe": 0.55
+     },
+     "p2016_20": {
+      "cagr": 4.46,
+      "total": 21.6,
+      "max_dd": 20.7,
+      "sharpe": 0.48
+     },
+     "p2021_24": {
+      "cagr": 7.22,
+      "total": 32.1,
+      "max_dd": 15.7,
+      "sharpe": 0.75
+     },
+     "p2025_26": {
+      "cagr": 2.98,
+      "total": 5.5,
+      "max_dd": 9.8,
+      "sharpe": 0.34
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|any",
+     "trades": 1195,
+     "win_rate": 53.8,
+     "avg_trade_pct": 0.84,
+     "all": {
+      "cagr": 4.7,
+      "total": 60.7,
+      "max_dd": 12.4,
+      "sharpe": 0.62
+     },
+     "p2016_20": {
+      "cagr": 3.87,
+      "total": 18.6,
+      "max_dd": 11.1,
+      "sharpe": 0.55
+     },
+     "p2021_24": {
+      "cagr": 7.46,
+      "total": 33.2,
+      "max_dd": 12.4,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 0.93,
+      "total": 1.7,
+      "max_dd": 6.3,
+      "sharpe": 0.15
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|strong",
+     "trades": 954,
+     "win_rate": 51.9,
+     "avg_trade_pct": 0.65,
+     "all": {
+      "cagr": 2.87,
+      "total": 33.9,
+      "max_dd": 12.4,
+      "sharpe": 0.46
+     },
+     "p2016_20": {
+      "cagr": 2,
+      "total": 9.3,
+      "max_dd": 12.1,
+      "sharpe": 0.37
+     },
+     "p2021_24": {
+      "cagr": 4.12,
+      "total": 17.5,
+      "max_dd": 12.4,
+      "sharpe": 0.59
+     },
+     "p2025_26": {
+      "cagr": 2.32,
+      "total": 4.3,
+      "max_dd": 5.6,
+      "sharpe": 0.35
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n10|any",
+     "trades": 689,
+     "win_rate": 56.9,
+     "avg_trade_pct": 2,
+     "all": {
+      "cagr": 12.99,
+      "total": 253.3,
+      "max_dd": 21.8,
+      "sharpe": 0.9
+     },
+     "p2016_20": {
+      "cagr": 11.96,
+      "total": 66.1,
+      "max_dd": 21.8,
+      "sharpe": 0.8
+     },
+     "p2021_24": {
+      "cagr": 16.81,
+      "total": 85.8,
+      "max_dd": 16.6,
+      "sharpe": 1.18
+     },
+     "p2025_26": {
+      "cagr": 7.64,
+      "total": 14.5,
+      "max_dd": 12.5,
+      "sharpe": 0.59
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold20|n10|strong",
+     "trades": 595,
+     "win_rate": 54.5,
+     "avg_trade_pct": 1.73,
+     "all": {
+      "cagr": 9.55,
+      "total": 156.5,
+      "max_dd": 21.9,
+      "sharpe": 0.77
+     },
+     "p2016_20": {
+      "cagr": 7.55,
+      "total": 38.6,
+      "max_dd": 21.9,
+      "sharpe": 0.6
+     },
+     "p2021_24": {
+      "cagr": 11.23,
+      "total": 52.9,
+      "max_dd": 14.7,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 10.95,
+      "total": 21,
+      "max_dd": 11.2,
+      "sharpe": 0.93
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n20|any",
+     "trades": 1030,
+     "win_rate": 57.4,
+     "avg_trade_pct": 1.87,
+     "all": {
+      "cagr": 8.87,
+      "total": 140.6,
+      "max_dd": 25.1,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 5.76,
+      "total": 28.6,
+      "max_dd": 25.1,
+      "sharpe": 0.53
+     },
+     "p2021_24": {
+      "cagr": 12.73,
+      "total": 61.3,
+      "max_dd": 13.8,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 8.4,
+      "total": 16,
+      "max_dd": 7.4,
+      "sharpe": 0.87
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n20|strong",
+     "trades": 863,
+     "win_rate": 55.9,
+     "avg_trade_pct": 1.61,
+     "all": {
+      "cagr": 6.37,
+      "total": 89.3,
+      "max_dd": 21.8,
+      "sharpe": 0.68
+     },
+     "p2016_20": {
+      "cagr": 3.76,
+      "total": 18,
+      "max_dd": 21.8,
+      "sharpe": 0.43
+     },
+     "p2021_24": {
+      "cagr": 8.96,
+      "total": 40.8,
+      "max_dd": 14.6,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 7.34,
+      "total": 13.9,
+      "max_dd": 8.1,
+      "sharpe": 0.81
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold40|n10|any",
+     "trades": 478,
+     "win_rate": 63,
+     "avg_trade_pct": 4.26,
+     "all": {
+      "cagr": 19.77,
+      "total": 545.2,
+      "max_dd": 25.9,
+      "sharpe": 1.1
+     },
+     "p2016_20": {
+      "cagr": 19.41,
+      "total": 121.8,
+      "max_dd": 25.9,
+      "sharpe": 1.06
+     },
+     "p2021_24": {
+      "cagr": 19.66,
+      "total": 104.6,
+      "max_dd": 18.7,
+      "sharpe": 1.1
+     },
+     "p2025_26": {
+      "cagr": 21.12,
+      "total": 42.2,
+      "max_dd": 17,
+      "sharpe": 1.19
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|strong",
+     "trades": 448,
+     "win_rate": 62.3,
+     "avg_trade_pct": 3.97,
+     "all": {
+      "cagr": 16.38,
+      "total": 379.5,
+      "max_dd": 30,
+      "sharpe": 0.94
+     },
+     "p2016_20": {
+      "cagr": 16.22,
+      "total": 96.4,
+      "max_dd": 30,
+      "sharpe": 0.88
+     },
+     "p2021_24": {
+      "cagr": 17.76,
+      "total": 92,
+      "max_dd": 17.3,
+      "sharpe": 1.06
+     },
+     "p2025_26": {
+      "cagr": 13.99,
+      "total": 27.2,
+      "max_dd": 16.4,
+      "sharpe": 0.83
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n20|any",
+     "trades": 861,
+     "win_rate": 59.9,
+     "avg_trade_pct": 3.15,
+     "all": {
+      "cagr": 12.27,
+      "total": 230.8,
+      "max_dd": 32.9,
+      "sharpe": 0.77
+     },
+     "p2016_20": {
+      "cagr": 12.63,
+      "total": 70.6,
+      "max_dd": 32.9,
+      "sharpe": 0.74
+     },
+     "p2021_24": {
+      "cagr": 12.26,
+      "total": 58.6,
+      "max_dd": 23.1,
+      "sharpe": 0.8
+     },
+     "p2025_26": {
+      "cagr": 11.56,
+      "total": 22.3,
+      "max_dd": 13.6,
+      "sharpe": 0.8
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold40|n20|strong",
+     "trades": 772,
+     "win_rate": 58,
+     "avg_trade_pct": 2.42,
+     "all": {
+      "cagr": 8.24,
+      "total": 126.6,
+      "max_dd": 30.7,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 8.31,
+      "total": 43.1,
+      "max_dd": 30.7,
+      "sharpe": 0.57
+     },
+     "p2021_24": {
+      "cagr": 8.95,
+      "total": 40.8,
+      "max_dd": 22.7,
+      "sharpe": 0.66
+     },
+     "p2025_26": {
+      "cagr": 6.61,
+      "total": 12.5,
+      "max_dd": 14.3,
+      "sharpe": 0.51
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 415,
+     "win_rate": 68,
+     "avg_trade_pct": 6.01,
+     "all": {
+      "cagr": 24.28,
+      "total": 844.6,
+      "max_dd": 33,
+      "sharpe": 1.12
+     },
+     "p2016_20": {
+      "cagr": 29.3,
+      "total": 217.1,
+      "max_dd": 28.4,
+      "sharpe": 1.3
+     },
+     "p2021_24": {
+      "cagr": 18.95,
+      "total": 99.8,
+      "max_dd": 33,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 24.29,
+      "total": 49.1,
+      "max_dd": 21.8,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 409,
+     "win_rate": 65.8,
+     "avg_trade_pct": 5.28,
+     "all": {
+      "cagr": 20.62,
+      "total": 593.7,
+      "max_dd": 32.3,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 23.7,
+      "total": 159.9,
+      "max_dd": 32.3,
+      "sharpe": 1.06
+     },
+     "p2021_24": {
+      "cagr": 16.63,
+      "total": 84.7,
+      "max_dd": 26.3,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 22.19,
+      "total": 44.5,
+      "max_dd": 25.1,
+      "sharpe": 0.92
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 785,
+     "win_rate": 65.7,
+     "avg_trade_pct": 5.24,
+     "all": {
+      "cagr": 19.81,
+      "total": 547.1,
+      "max_dd": 32.9,
+      "sharpe": 1.01
+     },
+     "p2016_20": {
+      "cagr": 20.63,
+      "total": 132.2,
+      "max_dd": 32.9,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 18.4,
+      "total": 96.2,
+      "max_dd": 24,
+      "sharpe": 0.98
+     },
+     "p2025_26": {
+      "cagr": 21.08,
+      "total": 42.1,
+      "max_dd": 19.2,
+      "sharpe": 1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|strong",
+     "trades": 713,
+     "win_rate": 62,
+     "avg_trade_pct": 4.09,
+     "all": {
+      "cagr": 13.89,
+      "total": 283.3,
+      "max_dd": 33.1,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 14.3,
+      "total": 82.2,
+      "max_dd": 33.1,
+      "sharpe": 0.82
+     },
+     "p2021_24": {
+      "cagr": 11.96,
+      "total": 56.9,
+      "max_dd": 24.9,
+      "sharpe": 0.74
+     },
+     "p2025_26": {
+      "cagr": 17.31,
+      "total": 34.1,
+      "max_dd": 18.7,
+      "sharpe": 0.89
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold10|n10|any",
+     "trades": 509,
+     "win_rate": 54.4,
+     "avg_trade_pct": 1.21,
+     "all": {
+      "cagr": 5.84,
+      "total": 79.8,
+      "max_dd": 14.6,
+      "sharpe": 0.71
+     },
+     "p2016_20": {
+      "cagr": 4.5,
+      "total": 21.9,
+      "max_dd": 14.6,
+      "sharpe": 0.6
+     },
+     "p2021_24": {
+      "cagr": 8.6,
+      "total": 39,
+      "max_dd": 12.8,
+      "sharpe": 1.05
+     },
+     "p2025_26": {
+      "cagr": 3.33,
+      "total": 6.2,
+      "max_dd": 11.8,
+      "sharpe": 0.36
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n10|strong",
+     "trades": 401,
+     "win_rate": 54.4,
+     "avg_trade_pct": 1.07,
+     "all": {
+      "cagr": 4.03,
+      "total": 50.3,
+      "max_dd": 12.3,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 3.72,
+      "total": 17.8,
+      "max_dd": 7.3,
+      "sharpe": 0.69
+     },
+     "p2021_24": {
+      "cagr": 5.3,
+      "total": 22.9,
+      "max_dd": 12.3,
+      "sharpe": 0.77
+     },
+     "p2025_26": {
+      "cagr": 2.06,
+      "total": 3.8,
+      "max_dd": 10.6,
+      "sharpe": 0.25
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|any",
+     "trades": 538,
+     "win_rate": 54.6,
+     "avg_trade_pct": 1.18,
+     "all": {
+      "cagr": 3.04,
+      "total": 36.3,
+      "max_dd": 7.8,
+      "sharpe": 0.68
+     },
+     "p2016_20": {
+      "cagr": 2.33,
+      "total": 10.9,
+      "max_dd": 7.8,
+      "sharpe": 0.6
+     },
+     "p2021_24": {
+      "cagr": 4.18,
+      "total": 17.8,
+      "max_dd": 6.9,
+      "sharpe": 1.01
+     },
+     "p2025_26": {
+      "cagr": 2.33,
+      "total": 4.3,
+      "max_dd": 5.4,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|strong",
+     "trades": 416,
+     "win_rate": 54.8,
+     "avg_trade_pct": 1.09,
+     "all": {
+      "cagr": 2.17,
+      "total": 24.8,
+      "max_dd": 6.3,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 1.87,
+      "total": 8.7,
+      "max_dd": 3.8,
+      "sharpe": 0.68
+     },
+     "p2021_24": {
+      "cagr": 2.61,
+      "total": 10.8,
+      "max_dd": 6.3,
+      "sharpe": 0.75
+     },
+     "p2025_26": {
+      "cagr": 1.95,
+      "total": 3.6,
+      "max_dd": 4.6,
+      "sharpe": 0.36
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n10|any",
+     "trades": 455,
+     "win_rate": 57.6,
+     "avg_trade_pct": 2.55,
+     "all": {
+      "cagr": 11.06,
+      "total": 195.5,
+      "max_dd": 16,
+      "sharpe": 0.94
+     },
+     "p2016_20": {
+      "cagr": 9.27,
+      "total": 48.9,
+      "max_dd": 15.1,
+      "sharpe": 0.87
+     },
+     "p2021_24": {
+      "cagr": 12.58,
+      "total": 60.4,
+      "max_dd": 16,
+      "sharpe": 1.03
+     },
+     "p2025_26": {
+      "cagr": 12.29,
+      "total": 23.7,
+      "max_dd": 12.7,
+      "sharpe": 0.93
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n10|strong",
+     "trades": 370,
+     "win_rate": 55.7,
+     "avg_trade_pct": 2.37,
+     "all": {
+      "cagr": 8.31,
+      "total": 128.1,
+      "max_dd": 15.6,
+      "sharpe": 0.83
+     },
+     "p2016_20": {
+      "cagr": 7.25,
+      "total": 36.9,
+      "max_dd": 13,
+      "sharpe": 0.87
+     },
+     "p2021_24": {
+      "cagr": 8.7,
+      "total": 39.5,
+      "max_dd": 15.6,
+      "sharpe": 0.84
+     },
+     "p2025_26": {
+      "cagr": 10.15,
+      "total": 19.4,
+      "max_dd": 13.9,
+      "sharpe": 0.81
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n20|any",
+     "trades": 530,
+     "win_rate": 56.4,
+     "avg_trade_pct": 2.47,
+     "all": {
+      "cagr": 6.24,
+      "total": 86.8,
+      "max_dd": 9.5,
+      "sharpe": 0.91
+     },
+     "p2016_20": {
+      "cagr": 5.55,
+      "total": 27.4,
+      "max_dd": 7.6,
+      "sharpe": 0.96
+     },
+     "p2021_24": {
+      "cagr": 6.51,
+      "total": 28.6,
+      "max_dd": 9.5,
+      "sharpe": 0.96
+     },
+     "p2025_26": {
+      "cagr": 7.4,
+      "total": 14,
+      "max_dd": 8.9,
+      "sharpe": 0.8
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n20|strong",
+     "trades": 414,
+     "win_rate": 55.6,
+     "avg_trade_pct": 2.34,
+     "all": {
+      "cagr": 4.61,
+      "total": 59.4,
+      "max_dd": 9.2,
+      "sharpe": 0.82
+     },
+     "p2016_20": {
+      "cagr": 4.18,
+      "total": 20.2,
+      "max_dd": 6.6,
+      "sharpe": 0.97
+     },
+     "p2021_24": {
+      "cagr": 4.25,
+      "total": 18,
+      "max_dd": 8,
+      "sharpe": 0.78
+     },
+     "p2025_26": {
+      "cagr": 6.53,
+      "total": 12.3,
+      "max_dd": 8.6,
+      "sharpe": 0.8
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n10|any",
+     "trades": 379,
+     "win_rate": 62.3,
+     "avg_trade_pct": 4.29,
+     "all": {
+      "cagr": 15.15,
+      "total": 329.4,
+      "max_dd": 22.8,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 14.65,
+      "total": 84.8,
+      "max_dd": 22.8,
+      "sharpe": 0.98
+     },
+     "p2021_24": {
+      "cagr": 13.18,
+      "total": 63.9,
+      "max_dd": 18.8,
+      "sharpe": 0.82
+     },
+     "p2025_26": {
+      "cagr": 20.94,
+      "total": 41.8,
+      "max_dd": 18.7,
+      "sharpe": 1.14
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold40|n10|strong",
+     "trades": 325,
+     "win_rate": 59.4,
+     "avg_trade_pct": 3.76,
+     "all": {
+      "cagr": 10.96,
+      "total": 192.8,
+      "max_dd": 21,
+      "sharpe": 0.75
+     },
+     "p2016_20": {
+      "cagr": 11.91,
+      "total": 65.8,
+      "max_dd": 19.2,
+      "sharpe": 0.86
+     },
+     "p2021_24": {
+      "cagr": 11.27,
+      "total": 53.1,
+      "max_dd": 16.1,
+      "sharpe": 0.79
+     },
+     "p2025_26": {
+      "cagr": 8.09,
+      "total": 15.4,
+      "max_dd": 20.8,
+      "sharpe": 0.5
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n20|any",
+     "trades": 509,
+     "win_rate": 60.7,
+     "avg_trade_pct": 3.98,
+     "all": {
+      "cagr": 9.44,
+      "total": 153.9,
+      "max_dd": 18.5,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 9.92,
+      "total": 52.9,
+      "max_dd": 11.5,
+      "sharpe": 1
+     },
+     "p2021_24": {
+      "cagr": 8.62,
+      "total": 39.1,
+      "max_dd": 11.4,
+      "sharpe": 0.83
+     },
+     "p2025_26": {
+      "cagr": 10.15,
+      "total": 19.4,
+      "max_dd": 18.2,
+      "sharpe": 0.68
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n20|strong",
+     "trades": 404,
+     "win_rate": 58.7,
+     "avg_trade_pct": 3.35,
+     "all": {
+      "cagr": 6.27,
+      "total": 87.5,
+      "max_dd": 17.4,
+      "sharpe": 0.68
+     },
+     "p2016_20": {
+      "cagr": 6.85,
+      "total": 34.6,
+      "max_dd": 9.7,
+      "sharpe": 0.88
+     },
+     "p2021_24": {
+      "cagr": 5.61,
+      "total": 24.3,
+      "max_dd": 9.1,
+      "sharpe": 0.69
+     },
+     "p2025_26": {
+      "cagr": 6.37,
+      "total": 12,
+      "max_dd": 16.6,
+      "sharpe": 0.5
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold60|n10|any",
+     "trades": 344,
+     "win_rate": 64.2,
+     "avg_trade_pct": 5.48,
+     "all": {
+      "cagr": 18.03,
+      "total": 454.6,
+      "max_dd": 33.4,
+      "sharpe": 0.94
+     },
+     "p2016_20": {
+      "cagr": 20.9,
+      "total": 134.4,
+      "max_dd": 24,
+      "sharpe": 1.15
+     },
+     "p2021_24": {
+      "cagr": 10.83,
+      "total": 50.7,
+      "max_dd": 33.4,
+      "sharpe": 0.61
+     },
+     "p2025_26": {
+      "cagr": 27.81,
+      "total": 57,
+      "max_dd": 22.3,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|strong",
+     "trades": 302,
+     "win_rate": 61.3,
+     "avg_trade_pct": 5.61,
+     "all": {
+      "cagr": 15.94,
+      "total": 361.1,
+      "max_dd": 28.4,
+      "sharpe": 0.88
+     },
+     "p2016_20": {
+      "cagr": 17.23,
+      "total": 104.1,
+      "max_dd": 21.2,
+      "sharpe": 1.02
+     },
+     "p2021_24": {
+      "cagr": 8.86,
+      "total": 40.3,
+      "max_dd": 28.4,
+      "sharpe": 0.57
+     },
+     "p2025_26": {
+      "cagr": 29.58,
+      "total": 61,
+      "max_dd": 22.1,
+      "sharpe": 1.17
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n20|any",
+     "trades": 489,
+     "win_rate": 63.2,
+     "avg_trade_pct": 5.68,
+     "all": {
+      "cagr": 13.21,
+      "total": 260.5,
+      "max_dd": 22.6,
+      "sharpe": 0.92
+     },
+     "p2016_20": {
+      "cagr": 15.48,
+      "total": 90.9,
+      "max_dd": 12.6,
+      "sharpe": 1.23
+     },
+     "p2021_24": {
+      "cagr": 8.47,
+      "total": 38.3,
+      "max_dd": 20.5,
+      "sharpe": 0.66
+     },
+     "p2025_26": {
+      "cagr": 18.5,
+      "total": 36.6,
+      "max_dd": 22.6,
+      "sharpe": 0.91
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n20|strong",
+     "trades": 397,
+     "win_rate": 59.9,
+     "avg_trade_pct": 4.82,
+     "all": {
+      "cagr": 8.99,
+      "total": 143.3,
+      "max_dd": 21.9,
+      "sharpe": 0.76
+     },
+     "p2016_20": {
+      "cagr": 10.65,
+      "total": 57.5,
+      "max_dd": 11.1,
+      "sharpe": 1.07
+     },
+     "p2021_24": {
+      "cagr": 5.03,
+      "total": 21.6,
+      "max_dd": 15.9,
+      "sharpe": 0.51
+     },
+     "p2025_26": {
+      "cagr": 13.89,
+      "total": 27,
+      "max_dd": 21.9,
+      "sharpe": 0.78
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n10|any",
+     "trades": 314,
+     "win_rate": 54.8,
+     "avg_trade_pct": 1.19,
+     "all": {
+      "cagr": 3.54,
+      "total": 43.2,
+      "max_dd": 14.4,
+      "sharpe": 0.53
+     },
+     "p2016_20": {
+      "cagr": 3.7,
+      "total": 17.7,
+      "max_dd": 14.4,
+      "sharpe": 0.58
+     },
+     "p2021_24": {
+      "cagr": 3.38,
+      "total": 14.2,
+      "max_dd": 7.6,
+      "sharpe": 0.64
+     },
+     "p2025_26": {
+      "cagr": 3.5,
+      "total": 6.5,
+      "max_dd": 9.2,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n10|strong",
+     "trades": 248,
+     "win_rate": 55.2,
+     "avg_trade_pct": 1.24,
+     "all": {
+      "cagr": 2.89,
+      "total": 34.2,
+      "max_dd": 9,
+      "sharpe": 0.53
+     },
+     "p2016_20": {
+      "cagr": 3.21,
+      "total": 15.3,
+      "max_dd": 7,
+      "sharpe": 0.71
+     },
+     "p2021_24": {
+      "cagr": 2.38,
+      "total": 9.8,
+      "max_dd": 6.2,
+      "sharpe": 0.55
+     },
+     "p2025_26": {
+      "cagr": 3.22,
+      "total": 6,
+      "max_dd": 9,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|any",
+     "trades": 321,
+     "win_rate": 55.5,
+     "avg_trade_pct": 1.2,
+     "all": {
+      "cagr": 1.84,
+      "total": 20.8,
+      "max_dd": 7.6,
+      "sharpe": 0.51
+     },
+     "p2016_20": {
+      "cagr": 1.85,
+      "total": 8.6,
+      "max_dd": 7.6,
+      "sharpe": 0.56
+     },
+     "p2021_24": {
+      "cagr": 1.7,
+      "total": 7,
+      "max_dd": 3.9,
+      "sharpe": 0.64
+     },
+     "p2025_26": {
+      "cagr": 2.15,
+      "total": 4,
+      "max_dd": 4.7,
+      "sharpe": 0.4
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|strong",
+     "trades": 252,
+     "win_rate": 55.6,
+     "avg_trade_pct": 1.22,
+     "all": {
+      "cagr": 1.48,
+      "total": 16.3,
+      "max_dd": 4.3,
+      "sharpe": 0.51
+     },
+     "p2016_20": {
+      "cagr": 1.61,
+      "total": 7.4,
+      "max_dd": 3.6,
+      "sharpe": 0.7
+     },
+     "p2021_24": {
+      "cagr": 1.21,
+      "total": 4.9,
+      "max_dd": 3.1,
+      "sharpe": 0.55
+     },
+     "p2025_26": {
+      "cagr": 1.76,
+      "total": 3.3,
+      "max_dd": 4.3,
+      "sharpe": 0.37
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n10|any",
+     "trades": 297,
+     "win_rate": 57.9,
+     "avg_trade_pct": 3.23,
+     "all": {
+      "cagr": 9.13,
+      "total": 146.6,
+      "max_dd": 13.2,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 9.39,
+      "total": 49.6,
+      "max_dd": 12.3,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 7.73,
+      "total": 34.6,
+      "max_dd": 13.2,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 11.64,
+      "total": 22.4,
+      "max_dd": 12.1,
+      "sharpe": 0.88
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n10|strong",
+     "trades": 239,
+     "win_rate": 59,
+     "avg_trade_pct": 3.59,
+     "all": {
+      "cagr": 8.17,
+      "total": 125,
+      "max_dd": 12.6,
+      "sharpe": 1
+     },
+     "p2016_20": {
+      "cagr": 7.54,
+      "total": 38.6,
+      "max_dd": 6.3,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 6.18,
+      "total": 27,
+      "max_dd": 8.4,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 14.3,
+      "total": 27.8,
+      "max_dd": 11.7,
+      "sharpe": 1.09
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n20|any",
+     "trades": 320,
+     "win_rate": 58.8,
+     "avg_trade_pct": 3.29,
+     "all": {
+      "cagr": 5.02,
+      "total": 65.9,
+      "max_dd": 6.9,
+      "sharpe": 0.95
+     },
+     "p2016_20": {
+      "cagr": 4.71,
+      "total": 23,
+      "max_dd": 6.5,
+      "sharpe": 1.04
+     },
+     "p2021_24": {
+      "cagr": 3.9,
+      "total": 16.5,
+      "max_dd": 6.8,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 8.32,
+      "total": 15.8,
+      "max_dd": 6.4,
+      "sharpe": 0.99
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n20|strong",
+     "trades": 251,
+     "win_rate": 59.4,
+     "avg_trade_pct": 3.47,
+     "all": {
+      "cagr": 4.19,
+      "total": 52.8,
+      "max_dd": 6.4,
+      "sharpe": 0.97
+     },
+     "p2016_20": {
+      "cagr": 3.78,
+      "total": 18.1,
+      "max_dd": 3.1,
+      "sharpe": 1.12
+     },
+     "p2021_24": {
+      "cagr": 3.12,
+      "total": 13,
+      "max_dd": 4.2,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 7.64,
+      "total": 14.5,
+      "max_dd": 5.9,
+      "sharpe": 1.05
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n10|any",
+     "trades": 265,
+     "win_rate": 66,
+     "avg_trade_pct": 5.38,
+     "all": {
+      "cagr": 13.24,
+      "total": 261.4,
+      "max_dd": 23.3,
+      "sharpe": 0.93
+     },
+     "p2016_20": {
+      "cagr": 13.8,
+      "total": 78.7,
+      "max_dd": 13.4,
+      "sharpe": 1.14
+     },
+     "p2021_24": {
+      "cagr": 14.49,
+      "total": 71.6,
+      "max_dd": 13.7,
+      "sharpe": 1.11
+     },
+     "p2025_26": {
+      "cagr": 9.37,
+      "total": 17.9,
+      "max_dd": 21.7,
+      "sharpe": 0.52
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold40|n10|strong",
+     "trades": 218,
+     "win_rate": 63.8,
+     "avg_trade_pct": 5.06,
+     "all": {
+      "cagr": 10.32,
+      "total": 176,
+      "max_dd": 22.5,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 10,
+      "total": 53.4,
+      "max_dd": 9.2,
+      "sharpe": 1.04
+     },
+     "p2021_24": {
+      "cagr": 10.46,
+      "total": 48.7,
+      "max_dd": 9.9,
+      "sharpe": 1.04
+     },
+     "p2025_26": {
+      "cagr": 10.9,
+      "total": 20.9,
+      "max_dd": 21.2,
+      "sharpe": 0.59
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n20|any",
+     "trades": 313,
+     "win_rate": 65.5,
+     "avg_trade_pct": 5.5,
+     "all": {
+      "cagr": 8.27,
+      "total": 127.4,
+      "max_dd": 12.9,
+      "sharpe": 0.96
+     },
+     "p2016_20": {
+      "cagr": 7.7,
+      "total": 39.5,
+      "max_dd": 7.6,
+      "sharpe": 1.09
+     },
+     "p2021_24": {
+      "cagr": 6.75,
+      "total": 29.8,
+      "max_dd": 6.9,
+      "sharpe": 1.01
+     },
+     "p2025_26": {
+      "cagr": 13.19,
+      "total": 25.6,
+      "max_dd": 12.6,
+      "sharpe": 0.93
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n20|strong",
+     "trades": 249,
+     "win_rate": 64.7,
+     "avg_trade_pct": 5.34,
+     "all": {
+      "cagr": 6.42,
+      "total": 90.1,
+      "max_dd": 11.6,
+      "sharpe": 0.9
+     },
+     "p2016_20": {
+      "cagr": 5.51,
+      "total": 27.2,
+      "max_dd": 6.8,
+      "sharpe": 1.01
+     },
+     "p2021_24": {
+      "cagr": 5.2,
+      "total": 22.4,
+      "max_dd": 5.1,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 11.46,
+      "total": 22.1,
+      "max_dd": 10.8,
+      "sharpe": 0.91
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold60|n10|any",
+     "trades": 247,
+     "win_rate": 64.8,
+     "avg_trade_pct": 6.95,
+     "all": {
+      "cagr": 16.42,
+      "total": 381.1,
+      "max_dd": 22.7,
+      "sharpe": 0.98
+     },
+     "p2016_20": {
+      "cagr": 20.7,
+      "total": 132.7,
+      "max_dd": 14.4,
+      "sharpe": 1.49
+     },
+     "p2021_24": {
+      "cagr": 14.27,
+      "total": 70.2,
+      "max_dd": 21.9,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 11.16,
+      "total": 21.4,
+      "max_dd": 22.7,
+      "sharpe": 0.54
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|strong",
+     "trades": 211,
+     "win_rate": 61.1,
+     "avg_trade_pct": 6.81,
+     "all": {
+      "cagr": 13.97,
+      "total": 286.2,
+      "max_dd": 22.2,
+      "sharpe": 0.94
+     },
+     "p2016_20": {
+      "cagr": 14.56,
+      "total": 84.1,
+      "max_dd": 14.5,
+      "sharpe": 1.24
+     },
+     "p2021_24": {
+      "cagr": 10.49,
+      "total": 48.8,
+      "max_dd": 12.9,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 20.52,
+      "total": 40.9,
+      "max_dd": 22.2,
+      "sharpe": 0.86
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n20|any",
+     "trades": 306,
+     "win_rate": 63.7,
+     "avg_trade_pct": 6.36,
+     "all": {
+      "cagr": 9.33,
+      "total": 151.2,
+      "max_dd": 16.9,
+      "sharpe": 0.83
+     },
+     "p2016_20": {
+      "cagr": 11.65,
+      "total": 64,
+      "max_dd": 11.4,
+      "sharpe": 1.29
+     },
+     "p2021_24": {
+      "cagr": 7.95,
+      "total": 35.7,
+      "max_dd": 11.4,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 6.83,
+      "total": 12.9,
+      "max_dd": 16.9,
+      "sharpe": 0.44
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold60|n20|strong",
+     "trades": 246,
+     "win_rate": 60.6,
+     "avg_trade_pct": 6.46,
+     "all": {
+      "cagr": 7.46,
+      "total": 110.4,
+      "max_dd": 15.7,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 8.09,
+      "total": 41.8,
+      "max_dd": 8.5,
+      "sharpe": 1.18
+     },
+     "p2021_24": {
+      "cagr": 5.2,
+      "total": 22.4,
+      "max_dd": 6.6,
+      "sharpe": 0.84
+     },
+     "p2025_26": {
+      "cagr": 11.05,
+      "total": 21.2,
+      "max_dd": 15.7,
+      "sharpe": 0.68
+     },
+     "beats": []
+    }
+   ]
+  },
+  "full_pit": {
+   "spy": {
+    "p2016_20": {
+     "cagr": 15.83,
+     "total": 93.5,
+     "max_dd": 33.8,
+     "sharpe": 0.88
+    },
+    "p2021_24": {
+     "cagr": 13.52,
+     "total": 65.8,
+     "max_dd": 24.5,
+     "sharpe": 0.85
+    },
+    "p2025_26": {
+     "cagr": 16.99,
+     "total": 33.4,
+     "max_dd": 18.8,
+     "sharpe": 1.02
+    },
+    "all": {
+     "cagr": 15.11,
+     "total": 328,
+     "max_dd": 33.8,
+     "sharpe": 0.89
+    }
+   },
+   "pct_beating_spy": {
+    "p2016_20": 10.9,
+    "p2021_24": 12.5,
+    "p2025_26": 21.9,
+    "every_period": 3.1,
+    "full_period": 10.9
+   },
+   "ref": {
+    "key": "thr8|hold60|n10|any",
+    "trades": 381,
+    "win_rate": 61.7,
+    "avg_trade_pct": 4.08,
+    "all": {
+     "cagr": 13.57,
+     "total": 272.4,
+     "max_dd": 42,
+     "sharpe": 0.69
+    },
+    "p2016_20": {
+     "cagr": 20.67,
+     "total": 132.5,
+     "max_dd": 34.2,
+     "sharpe": 0.99
+    },
+    "p2021_24": {
+     "cagr": 3.7,
+     "total": 15.6,
+     "max_dd": 42,
+     "sharpe": 0.28
+    },
+    "p2025_26": {
+     "cagr": 19.43,
+     "total": 38.6,
+     "max_dd": 23.7,
+     "sharpe": 0.87
+    },
+    "beats": [
+     "p2016_20",
+     "p2025_26"
+    ]
+   },
+   "best": [
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 64.5,
+     "avg_trade_pct": 5.46,
+     "all": {
+      "cagr": 21.68,
+      "total": 659.8,
+      "max_dd": 32.2,
+      "sharpe": 1
+     },
+     "p2016_20": {
+      "cagr": 24.96,
+      "total": 172,
+      "max_dd": 32.2,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 17.21,
+      "total": 88.4,
+      "max_dd": 29.2,
+      "sharpe": 0.84
+     },
+     "p2025_26": {
+      "cagr": 23.92,
+      "total": 48.3,
+      "max_dd": 20.8,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 66,
+     "avg_trade_pct": 4.71,
+     "all": {
+      "cagr": 18.33,
+      "total": 469.4,
+      "max_dd": 37.3,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 20.42,
+      "total": 130.3,
+      "max_dd": 37.3,
+      "sharpe": 0.85
+     },
+     "p2021_24": {
+      "cagr": 15.79,
+      "total": 79.5,
+      "max_dd": 23,
+      "sharpe": 0.81
+     },
+     "p2025_26": {
+      "cagr": 19.04,
+      "total": 37.7,
+      "max_dd": 17.1,
+      "sharpe": 1.08
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 61.9,
+     "avg_trade_pct": 4.47,
+     "all": {
+      "cagr": 17.18,
+      "total": 414.7,
+      "max_dd": 34.2,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 22.22,
+      "total": 146.2,
+      "max_dd": 34.2,
+      "sharpe": 0.97
+     },
+     "p2021_24": {
+      "cagr": 9.13,
+      "total": 41.7,
+      "max_dd": 34,
+      "sharpe": 0.51
+     },
+     "p2025_26": {
+      "cagr": 23.6,
+      "total": 47.6,
+      "max_dd": 25.1,
+      "sharpe": 0.97
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 827,
+     "win_rate": 62,
+     "avg_trade_pct": 4.4,
+     "all": {
+      "cagr": 17.12,
+      "total": 411.9,
+      "max_dd": 34.8,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 20.43,
+      "total": 130.4,
+      "max_dd": 34.8,
+      "sharpe": 0.97
+     },
+     "p2021_24": {
+      "cagr": 12.28,
+      "total": 58.7,
+      "max_dd": 30,
+      "sharpe": 0.67
+     },
+     "p2025_26": {
+      "cagr": 20.08,
+      "total": 40,
+      "max_dd": 19.5,
+      "sharpe": 0.97
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|any",
+     "trades": 840,
+     "win_rate": 64.8,
+     "avg_trade_pct": 4.18,
+     "all": {
+      "cagr": 16.15,
+      "total": 369.7,
+      "max_dd": 39,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 17.19,
+      "total": 103.8,
+      "max_dd": 39,
+      "sharpe": 0.81
+     },
+     "p2021_24": {
+      "cagr": 11.78,
+      "total": 55.9,
+      "max_dd": 24.1,
+      "sharpe": 0.7
+     },
+     "p2025_26": {
+      "cagr": 23.69,
+      "total": 47.8,
+      "max_dd": 19,
+      "sharpe": 1.3
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|any",
+     "trades": 490,
+     "win_rate": 61,
+     "avg_trade_pct": 3.48,
+     "all": {
+      "cagr": 15.87,
+      "total": 358.3,
+      "max_dd": 29.1,
+      "sharpe": 0.87
+     },
+     "p2016_20": {
+      "cagr": 14.6,
+      "total": 84.4,
+      "max_dd": 29.1,
+      "sharpe": 0.79
+     },
+     "p2021_24": {
+      "cagr": 15.79,
+      "total": 79.5,
+      "max_dd": 20.2,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 19.39,
+      "total": 38.5,
+      "max_dd": 17.1,
+      "sharpe": 1.08
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n10|any",
+     "trades": 556,
+     "win_rate": 62.1,
+     "avg_trade_pct": 3.14,
+     "all": {
+      "cagr": 15.2,
+      "total": 331.6,
+      "max_dd": 45.4,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 13.17,
+      "total": 74.3,
+      "max_dd": 45.4,
+      "sharpe": 0.65
+     },
+     "p2021_24": {
+      "cagr": 15.15,
+      "total": 75.5,
+      "max_dd": 24.2,
+      "sharpe": 0.86
+     },
+     "p2025_26": {
+      "cagr": 20.62,
+      "total": 41.1,
+      "max_dd": 15,
+      "sharpe": 1.13
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|strong",
+     "trades": 458,
+     "win_rate": 62,
+     "avg_trade_pct": 3.6,
+     "all": {
+      "cagr": 14.57,
+      "total": 307.8,
+      "max_dd": 34.5,
+      "sharpe": 0.82
+     },
+     "p2016_20": {
+      "cagr": 14.18,
+      "total": 81.3,
+      "max_dd": 34.5,
+      "sharpe": 0.76
+     },
+     "p2021_24": {
+      "cagr": 16.38,
+      "total": 83.2,
+      "max_dd": 17.8,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 11.81,
+      "total": 22.8,
+      "max_dd": 17.5,
+      "sharpe": 0.71
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    }
+   ],
+   "concentration": {
+    "trades": 381,
+    "top10_share_of_profit_pct": 46.5,
+    "top10": [
+     {
+      "s": "STX",
+      "d": "2025-05-01",
+      "ret": 64.25
+     },
+     {
+      "s": "KEYS",
+      "d": "2025-11-26",
+      "ret": 54.45
+     },
+     {
+      "s": "TSLA",
+      "d": "2024-10-25",
+      "ret": 60.92
+     },
+     {
+      "s": "STX",
+      "d": "2025-10-30",
+      "ret": 44.21
+     },
+     {
+      "s": "TSLA",
+      "d": "2024-04-25",
+      "ret": 58.06
+     },
+     {
+      "s": "UAL",
+      "d": "2024-10-17",
+      "ret": 49.39
+     },
+     {
+      "s": "ALB",
+      "d": "2020-11-06",
+      "ret": 54.44
+     },
+     {
+      "s": "FFIV",
+      "d": "2020-10-28",
+      "ret": 53.42
+     },
+     {
+      "s": "STX",
+      "d": "2026-01-29",
+      "ret": 30.3
+     },
+     {
+      "s": "ORCL",
+      "d": "2026-03-12",
+      "ret": 30.11
+     }
+    ]
+   },
+   "all": [
+    {
+     "key": "thr3|hold10|n10|any",
+     "trades": 1387,
+     "win_rate": 54.4,
+     "avg_trade_pct": 0.65,
+     "all": {
+      "cagr": 8.31,
+      "total": 128.1,
+      "max_dd": 27,
+      "sharpe": 0.63
+     },
+     "p2016_20": {
+      "cagr": 6.61,
+      "total": 33.3,
+      "max_dd": 27,
+      "sharpe": 0.49
+     },
+     "p2021_24": {
+      "cagr": 12.18,
+      "total": 58.2,
+      "max_dd": 15.2,
+      "sharpe": 0.91
+     },
+     "p2025_26": {
+      "cagr": 4.39,
+      "total": 8.2,
+      "max_dd": 11.8,
+      "sharpe": 0.4
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold10|n10|strong",
+     "trades": 1220,
+     "win_rate": 52,
+     "avg_trade_pct": 0.46,
+     "all": {
+      "cagr": 4.94,
+      "total": 64.6,
+      "max_dd": 27.9,
+      "sharpe": 0.46
+     },
+     "p2016_20": {
+      "cagr": 2.14,
+      "total": 10,
+      "max_dd": 27.9,
+      "sharpe": 0.23
+     },
+     "p2021_24": {
+      "cagr": 10.7,
+      "total": 50,
+      "max_dd": 11.8,
+      "sharpe": 0.95
+     },
+     "p2025_26": {
+      "cagr": -0.11,
+      "total": -0.2,
+      "max_dd": 14.8,
+      "sharpe": 0.05
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold10|n20|any",
+     "trades": 2100,
+     "win_rate": 55.1,
+     "avg_trade_pct": 0.75,
+     "all": {
+      "cagr": 7.4,
+      "total": 109,
+      "max_dd": 22.5,
+      "sharpe": 0.71
+     },
+     "p2016_20": {
+      "cagr": 4.14,
+      "total": 20,
+      "max_dd": 22.5,
+      "sharpe": 0.41
+     },
+     "p2021_24": {
+      "cagr": 11.71,
+      "total": 55.5,
+      "max_dd": 12.4,
+      "sharpe": 1.08
+     },
+     "p2025_26": {
+      "cagr": 6.38,
+      "total": 12,
+      "max_dd": 6.9,
+      "sharpe": 0.72
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold10|n20|strong",
+     "trades": 1796,
+     "win_rate": 54.4,
+     "avg_trade_pct": 0.67,
+     "all": {
+      "cagr": 5.51,
+      "total": 74,
+      "max_dd": 23.3,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 3.03,
+      "total": 14.4,
+      "max_dd": 23.3,
+      "sharpe": 0.33
+     },
+     "p2021_24": {
+      "cagr": 8.36,
+      "total": 37.7,
+      "max_dd": 10.7,
+      "sharpe": 0.92
+     },
+     "p2025_26": {
+      "cagr": 5.58,
+      "total": 10.5,
+      "max_dd": 6.3,
+      "sharpe": 0.7
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n10|any",
+     "trades": 916,
+     "win_rate": 56.1,
+     "avg_trade_pct": 1.11,
+     "all": {
+      "cagr": 8.45,
+      "total": 131.2,
+      "max_dd": 42.7,
+      "sharpe": 0.55
+     },
+     "p2016_20": {
+      "cagr": 5.2,
+      "total": 25.5,
+      "max_dd": 42.7,
+      "sharpe": 0.35
+     },
+     "p2021_24": {
+      "cagr": 10.61,
+      "total": 49.5,
+      "max_dd": 23,
+      "sharpe": 0.73
+     },
+     "p2025_26": {
+      "cagr": 12.01,
+      "total": 23.2,
+      "max_dd": 9.4,
+      "sharpe": 0.88
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n10|strong",
+     "trades": 803,
+     "win_rate": 54,
+     "avg_trade_pct": 1.19,
+     "all": {
+      "cagr": 8.24,
+      "total": 126.7,
+      "max_dd": 40.9,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 3.15,
+      "total": 14.9,
+      "max_dd": 40.9,
+      "sharpe": 0.26
+     },
+     "p2021_24": {
+      "cagr": 11.89,
+      "total": 56.5,
+      "max_dd": 15.2,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 13.4,
+      "total": 26,
+      "max_dd": 7.4,
+      "sharpe": 1.02
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n20|any",
+     "trades": 1440,
+     "win_rate": 56.3,
+     "avg_trade_pct": 1.33,
+     "all": {
+      "cagr": 8.6,
+      "total": 134.6,
+      "max_dd": 32.4,
+      "sharpe": 0.67
+     },
+     "p2016_20": {
+      "cagr": 4.56,
+      "total": 22.1,
+      "max_dd": 32.4,
+      "sharpe": 0.36
+     },
+     "p2021_24": {
+      "cagr": 11.71,
+      "total": 55.5,
+      "max_dd": 16.5,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 12.16,
+      "total": 23.5,
+      "max_dd": 6.3,
+      "sharpe": 1.14
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold20|n20|strong",
+     "trades": 1269,
+     "win_rate": 54.4,
+     "avg_trade_pct": 1.31,
+     "all": {
+      "cagr": 7.51,
+      "total": 111.4,
+      "max_dd": 30.7,
+      "sharpe": 0.65
+     },
+     "p2016_20": {
+      "cagr": 4,
+      "total": 19.3,
+      "max_dd": 30.7,
+      "sharpe": 0.35
+     },
+     "p2021_24": {
+      "cagr": 9.02,
+      "total": 41.1,
+      "max_dd": 13,
+      "sharpe": 0.81
+     },
+     "p2025_26": {
+      "cagr": 13.2,
+      "total": 25.6,
+      "max_dd": 5.6,
+      "sharpe": 1.31
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold40|n10|any",
+     "trades": 556,
+     "win_rate": 62.1,
+     "avg_trade_pct": 3.14,
+     "all": {
+      "cagr": 15.2,
+      "total": 331.6,
+      "max_dd": 45.4,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 13.17,
+      "total": 74.3,
+      "max_dd": 45.4,
+      "sharpe": 0.65
+     },
+     "p2021_24": {
+      "cagr": 15.15,
+      "total": 75.5,
+      "max_dd": 24.2,
+      "sharpe": 0.86
+     },
+     "p2025_26": {
+      "cagr": 20.62,
+      "total": 41.1,
+      "max_dd": 15,
+      "sharpe": 1.13
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n10|strong",
+     "trades": 511,
+     "win_rate": 61.3,
+     "avg_trade_pct": 2.75,
+     "all": {
+      "cagr": 12.05,
+      "total": 224.1,
+      "max_dd": 42.5,
+      "sharpe": 0.7
+     },
+     "p2016_20": {
+      "cagr": 9.96,
+      "total": 53.1,
+      "max_dd": 42.5,
+      "sharpe": 0.56
+     },
+     "p2021_24": {
+      "cagr": 14.74,
+      "total": 73,
+      "max_dd": 17.2,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 11.59,
+      "total": 22.3,
+      "max_dd": 15.3,
+      "sharpe": 0.72
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|any",
+     "trades": 980,
+     "win_rate": 60.7,
+     "avg_trade_pct": 2.88,
+     "all": {
+      "cagr": 12.48,
+      "total": 237.2,
+      "max_dd": 40.9,
+      "sharpe": 0.75
+     },
+     "p2016_20": {
+      "cagr": 11.06,
+      "total": 60.2,
+      "max_dd": 40.9,
+      "sharpe": 0.61
+     },
+     "p2021_24": {
+      "cagr": 11.74,
+      "total": 55.7,
+      "max_dd": 16.4,
+      "sharpe": 0.77
+     },
+     "p2025_26": {
+      "cagr": 17.84,
+      "total": 35.2,
+      "max_dd": 11.9,
+      "sharpe": 1.25
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold40|n20|strong",
+     "trades": 931,
+     "win_rate": 59.6,
+     "avg_trade_pct": 2.57,
+     "all": {
+      "cagr": 10.17,
+      "total": 171.9,
+      "max_dd": 41.3,
+      "sharpe": 0.66
+     },
+     "p2016_20": {
+      "cagr": 7.53,
+      "total": 38.5,
+      "max_dd": 41.3,
+      "sharpe": 0.47
+     },
+     "p2021_24": {
+      "cagr": 12.04,
+      "total": 57.4,
+      "max_dd": 15.3,
+      "sharpe": 0.83
+     },
+     "p2025_26": {
+      "cagr": 12.78,
+      "total": 24.7,
+      "max_dd": 9.9,
+      "sharpe": 0.98
+     },
+     "beats": []
+    },
+    {
+     "key": "thr3|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 66,
+     "avg_trade_pct": 4.71,
+     "all": {
+      "cagr": 18.33,
+      "total": 469.4,
+      "max_dd": 37.3,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 20.42,
+      "total": 130.3,
+      "max_dd": 37.3,
+      "sharpe": 0.85
+     },
+     "p2021_24": {
+      "cagr": 15.79,
+      "total": 79.5,
+      "max_dd": 23,
+      "sharpe": 0.81
+     },
+     "p2025_26": {
+      "cagr": 19.04,
+      "total": 37.7,
+      "max_dd": 17.1,
+      "sharpe": 1.08
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 62.9,
+     "avg_trade_pct": 3.68,
+     "all": {
+      "cagr": 13.92,
+      "total": 284.5,
+      "max_dd": 40.2,
+      "sharpe": 0.71
+     },
+     "p2016_20": {
+      "cagr": 15.48,
+      "total": 90.8,
+      "max_dd": 40.2,
+      "sharpe": 0.7
+     },
+     "p2021_24": {
+      "cagr": 9.49,
+      "total": 43.6,
+      "max_dd": 24.7,
+      "sharpe": 0.56
+     },
+     "p2025_26": {
+      "cagr": 20.26,
+      "total": 40.3,
+      "max_dd": 17.8,
+      "sharpe": 1.13
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|any",
+     "trades": 840,
+     "win_rate": 64.8,
+     "avg_trade_pct": 4.18,
+     "all": {
+      "cagr": 16.15,
+      "total": 369.7,
+      "max_dd": 39,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 17.19,
+      "total": 103.8,
+      "max_dd": 39,
+      "sharpe": 0.81
+     },
+     "p2021_24": {
+      "cagr": 11.78,
+      "total": 55.9,
+      "max_dd": 24.1,
+      "sharpe": 0.7
+     },
+     "p2025_26": {
+      "cagr": 23.69,
+      "total": 47.8,
+      "max_dd": 19,
+      "sharpe": 1.3
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr3|hold60|n20|strong",
+     "trades": 838,
+     "win_rate": 60.9,
+     "avg_trade_pct": 3.01,
+     "all": {
+      "cagr": 11.18,
+      "total": 199,
+      "max_dd": 40.5,
+      "sharpe": 0.63
+     },
+     "p2016_20": {
+      "cagr": 12.18,
+      "total": 67.6,
+      "max_dd": 40.5,
+      "sharpe": 0.62
+     },
+     "p2021_24": {
+      "cagr": 5.51,
+      "total": 23.8,
+      "max_dd": 27.3,
+      "sharpe": 0.39
+     },
+     "p2025_26": {
+      "cagr": 22.01,
+      "total": 44.1,
+      "max_dd": 17.9,
+      "sharpe": 1.27
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold10|n10|any",
+     "trades": 1031,
+     "win_rate": 54.4,
+     "avg_trade_pct": 0.9,
+     "all": {
+      "cagr": 8.52,
+      "total": 132.8,
+      "max_dd": 26.3,
+      "sharpe": 0.71
+     },
+     "p2016_20": {
+      "cagr": 6.24,
+      "total": 31.2,
+      "max_dd": 26.3,
+      "sharpe": 0.52
+     },
+     "p2021_24": {
+      "cagr": 14.22,
+      "total": 69.9,
+      "max_dd": 16.1,
+      "sharpe": 1.12
+     },
+     "p2025_26": {
+      "cagr": 2.38,
+      "total": 4.4,
+      "max_dd": 11.2,
+      "sharpe": 0.26
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold10|n10|strong",
+     "trades": 877,
+     "win_rate": 53.4,
+     "avg_trade_pct": 0.85,
+     "all": {
+      "cagr": 6.77,
+      "total": 96.8,
+      "max_dd": 23.4,
+      "sharpe": 0.64
+     },
+     "p2016_20": {
+      "cagr": 5.86,
+      "total": 29.2,
+      "max_dd": 23.4,
+      "sharpe": 0.53
+     },
+     "p2021_24": {
+      "cagr": 9.43,
+      "total": 43.2,
+      "max_dd": 16.5,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 3.41,
+      "total": 6.4,
+      "max_dd": 9.8,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|any",
+     "trades": 1408,
+     "win_rate": 54,
+     "avg_trade_pct": 0.79,
+     "all": {
+      "cagr": 5.15,
+      "total": 68,
+      "max_dd": 17.6,
+      "sharpe": 0.6
+     },
+     "p2016_20": {
+      "cagr": 3.99,
+      "total": 19.2,
+      "max_dd": 17.6,
+      "sharpe": 0.47
+     },
+     "p2021_24": {
+      "cagr": 8.1,
+      "total": 36.4,
+      "max_dd": 13.9,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 1.78,
+      "total": 3.3,
+      "max_dd": 6.3,
+      "sharpe": 0.26
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold10|n20|strong",
+     "trades": 1145,
+     "win_rate": 51.7,
+     "avg_trade_pct": 0.57,
+     "all": {
+      "cagr": 2.93,
+      "total": 34.8,
+      "max_dd": 15.8,
+      "sharpe": 0.41
+     },
+     "p2016_20": {
+      "cagr": 1.89,
+      "total": 8.8,
+      "max_dd": 15.8,
+      "sharpe": 0.29
+     },
+     "p2021_24": {
+      "cagr": 3.94,
+      "total": 16.7,
+      "max_dd": 14.3,
+      "sharpe": 0.51
+     },
+     "p2025_26": {
+      "cagr": 3.33,
+      "total": 6.2,
+      "max_dd": 5.6,
+      "sharpe": 0.47
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n10|any",
+     "trades": 737,
+     "win_rate": 55.4,
+     "avg_trade_pct": 1.51,
+     "all": {
+      "cagr": 10.13,
+      "total": 171,
+      "max_dd": 26.6,
+      "sharpe": 0.69
+     },
+     "p2016_20": {
+      "cagr": 7.38,
+      "total": 37.7,
+      "max_dd": 26.6,
+      "sharpe": 0.51
+     },
+     "p2021_24": {
+      "cagr": 15.68,
+      "total": 78.8,
+      "max_dd": 19.3,
+      "sharpe": 1.02
+     },
+     "p2025_26": {
+      "cagr": 5.38,
+      "total": 10.1,
+      "max_dd": 12.5,
+      "sharpe": 0.44
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold20|n10|strong",
+     "trades": 637,
+     "win_rate": 54.6,
+     "avg_trade_pct": 1.46,
+     "all": {
+      "cagr": 8.28,
+      "total": 127.5,
+      "max_dd": 30.2,
+      "sharpe": 0.63
+     },
+     "p2016_20": {
+      "cagr": 5.48,
+      "total": 27.1,
+      "max_dd": 30.2,
+      "sharpe": 0.42
+     },
+     "p2021_24": {
+      "cagr": 10.55,
+      "total": 49.2,
+      "max_dd": 17.2,
+      "sharpe": 0.81
+     },
+     "p2025_26": {
+      "cagr": 10.42,
+      "total": 20,
+      "max_dd": 11.2,
+      "sharpe": 0.89
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n20|any",
+     "trades": 1141,
+     "win_rate": 55.8,
+     "avg_trade_pct": 1.54,
+     "all": {
+      "cagr": 7.97,
+      "total": 120.9,
+      "max_dd": 28.6,
+      "sharpe": 0.67
+     },
+     "p2016_20": {
+      "cagr": 6.37,
+      "total": 32,
+      "max_dd": 28.6,
+      "sharpe": 0.52
+     },
+     "p2021_24": {
+      "cagr": 9.49,
+      "total": 43.6,
+      "max_dd": 16.6,
+      "sharpe": 0.8
+     },
+     "p2025_26": {
+      "cagr": 8.73,
+      "total": 16.6,
+      "max_dd": 7,
+      "sharpe": 0.9
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold20|n20|strong",
+     "trades": 994,
+     "win_rate": 54.4,
+     "avg_trade_pct": 1.19,
+     "all": {
+      "cagr": 5,
+      "total": 65.5,
+      "max_dd": 31.9,
+      "sharpe": 0.48
+     },
+     "p2016_20": {
+      "cagr": 1.61,
+      "total": 7.4,
+      "max_dd": 31.9,
+      "sharpe": 0.19
+     },
+     "p2021_24": {
+      "cagr": 6.95,
+      "total": 30.7,
+      "max_dd": 17.4,
+      "sharpe": 0.65
+     },
+     "p2025_26": {
+      "cagr": 9.35,
+      "total": 17.8,
+      "max_dd": 7,
+      "sharpe": 1.02
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold40|n10|any",
+     "trades": 490,
+     "win_rate": 61,
+     "avg_trade_pct": 3.48,
+     "all": {
+      "cagr": 15.87,
+      "total": 358.3,
+      "max_dd": 29.1,
+      "sharpe": 0.87
+     },
+     "p2016_20": {
+      "cagr": 14.6,
+      "total": 84.4,
+      "max_dd": 29.1,
+      "sharpe": 0.79
+     },
+     "p2021_24": {
+      "cagr": 15.79,
+      "total": 79.5,
+      "max_dd": 20.2,
+      "sharpe": 0.88
+     },
+     "p2025_26": {
+      "cagr": 19.39,
+      "total": 38.5,
+      "max_dd": 17.1,
+      "sharpe": 1.08
+     },
+     "beats": [
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n10|strong",
+     "trades": 458,
+     "win_rate": 62,
+     "avg_trade_pct": 3.6,
+     "all": {
+      "cagr": 14.57,
+      "total": 307.8,
+      "max_dd": 34.5,
+      "sharpe": 0.82
+     },
+     "p2016_20": {
+      "cagr": 14.18,
+      "total": 81.3,
+      "max_dd": 34.5,
+      "sharpe": 0.76
+     },
+     "p2021_24": {
+      "cagr": 16.38,
+      "total": 83.2,
+      "max_dd": 17.8,
+      "sharpe": 0.93
+     },
+     "p2025_26": {
+      "cagr": 11.81,
+      "total": 22.8,
+      "max_dd": 17.5,
+      "sharpe": 0.71
+     },
+     "beats": [
+      "p2021_24"
+     ]
+    },
+    {
+     "key": "thr5|hold40|n20|any",
+     "trades": 905,
+     "win_rate": 57.9,
+     "avg_trade_pct": 2.74,
+     "all": {
+      "cagr": 11.01,
+      "total": 194.2,
+      "max_dd": 34.3,
+      "sharpe": 0.67
+     },
+     "p2016_20": {
+      "cagr": 11.73,
+      "total": 64.5,
+      "max_dd": 34.3,
+      "sharpe": 0.66
+     },
+     "p2021_24": {
+      "cagr": 10.36,
+      "total": 48.2,
+      "max_dd": 22.3,
+      "sharpe": 0.67
+     },
+     "p2025_26": {
+      "cagr": 10.77,
+      "total": 20.7,
+      "max_dd": 13.3,
+      "sharpe": 0.75
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold40|n20|strong",
+     "trades": 856,
+     "win_rate": 56.7,
+     "avg_trade_pct": 2.2,
+     "all": {
+      "cagr": 7.55,
+      "total": 112.1,
+      "max_dd": 39.7,
+      "sharpe": 0.51
+     },
+     "p2016_20": {
+      "cagr": 8.02,
+      "total": 41.4,
+      "max_dd": 39.7,
+      "sharpe": 0.49
+     },
+     "p2021_24": {
+      "cagr": 7.08,
+      "total": 31.4,
+      "max_dd": 23.8,
+      "sharpe": 0.51
+     },
+     "p2025_26": {
+      "cagr": 7.47,
+      "total": 14.2,
+      "max_dd": 12.6,
+      "sharpe": 0.57
+     },
+     "beats": []
+    },
+    {
+     "key": "thr5|hold60|n10|any",
+     "trades": 420,
+     "win_rate": 64.5,
+     "avg_trade_pct": 5.46,
+     "all": {
+      "cagr": 21.68,
+      "total": 659.8,
+      "max_dd": 32.2,
+      "sharpe": 1
+     },
+     "p2016_20": {
+      "cagr": 24.96,
+      "total": 172,
+      "max_dd": 32.2,
+      "sharpe": 1.08
+     },
+     "p2021_24": {
+      "cagr": 17.21,
+      "total": 88.4,
+      "max_dd": 29.2,
+      "sharpe": 0.84
+     },
+     "p2025_26": {
+      "cagr": 23.92,
+      "total": 48.3,
+      "max_dd": 20.8,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2016_20",
+      "p2021_24",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n10|strong",
+     "trades": 420,
+     "win_rate": 61.9,
+     "avg_trade_pct": 4.47,
+     "all": {
+      "cagr": 17.18,
+      "total": 414.7,
+      "max_dd": 34.2,
+      "sharpe": 0.8
+     },
+     "p2016_20": {
+      "cagr": 22.22,
+      "total": 146.2,
+      "max_dd": 34.2,
+      "sharpe": 0.97
+     },
+     "p2021_24": {
+      "cagr": 9.13,
+      "total": 41.7,
+      "max_dd": 34,
+      "sharpe": 0.51
+     },
+     "p2025_26": {
+      "cagr": 23.6,
+      "total": 47.6,
+      "max_dd": 25.1,
+      "sharpe": 0.97
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|any",
+     "trades": 827,
+     "win_rate": 62,
+     "avg_trade_pct": 4.4,
+     "all": {
+      "cagr": 17.12,
+      "total": 411.9,
+      "max_dd": 34.8,
+      "sharpe": 0.86
+     },
+     "p2016_20": {
+      "cagr": 20.43,
+      "total": 130.4,
+      "max_dd": 34.8,
+      "sharpe": 0.97
+     },
+     "p2021_24": {
+      "cagr": 12.28,
+      "total": 58.7,
+      "max_dd": 30,
+      "sharpe": 0.67
+     },
+     "p2025_26": {
+      "cagr": 20.08,
+      "total": 40,
+      "max_dd": 19.5,
+      "sharpe": 0.97
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr5|hold60|n20|strong",
+     "trades": 788,
+     "win_rate": 59,
+     "avg_trade_pct": 3.12,
+     "all": {
+      "cagr": 11,
+      "total": 194.1,
+      "max_dd": 38.9,
+      "sharpe": 0.62
+     },
+     "p2016_20": {
+      "cagr": 13.06,
+      "total": 73.5,
+      "max_dd": 38.9,
+      "sharpe": 0.69
+     },
+     "p2021_24": {
+      "cagr": 6.02,
+      "total": 26.3,
+      "max_dd": 29.7,
+      "sharpe": 0.4
+     },
+     "p2025_26": {
+      "cagr": 17.4,
+      "total": 34.3,
+      "max_dd": 17.9,
+      "sharpe": 0.88
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold10|n10|any",
+     "trades": 603,
+     "win_rate": 53.7,
+     "avg_trade_pct": 0.99,
+     "all": {
+      "cagr": 5.55,
+      "total": 74.7,
+      "max_dd": 18,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 3.55,
+      "total": 17,
+      "max_dd": 18,
+      "sharpe": 0.4
+     },
+     "p2021_24": {
+      "cagr": 8.7,
+      "total": 39.5,
+      "max_dd": 17.7,
+      "sharpe": 0.9
+     },
+     "p2025_26": {
+      "cagr": 3.78,
+      "total": 7.1,
+      "max_dd": 11.8,
+      "sharpe": 0.39
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n10|strong",
+     "trades": 483,
+     "win_rate": 53.8,
+     "avg_trade_pct": 0.92,
+     "all": {
+      "cagr": 4.11,
+      "total": 51.7,
+      "max_dd": 16.1,
+      "sharpe": 0.52
+     },
+     "p2016_20": {
+      "cagr": 3.28,
+      "total": 15.6,
+      "max_dd": 11.6,
+      "sharpe": 0.47
+     },
+     "p2021_24": {
+      "cagr": 5.82,
+      "total": 25.3,
+      "max_dd": 16.1,
+      "sharpe": 0.71
+     },
+     "p2025_26": {
+      "cagr": 2.52,
+      "total": 4.7,
+      "max_dd": 10.6,
+      "sharpe": 0.3
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|any",
+     "trades": 653,
+     "win_rate": 54.1,
+     "avg_trade_pct": 1.01,
+     "all": {
+      "cagr": 3.12,
+      "total": 37.3,
+      "max_dd": 10.7,
+      "sharpe": 0.58
+     },
+     "p2016_20": {
+      "cagr": 2.09,
+      "total": 9.7,
+      "max_dd": 10.7,
+      "sharpe": 0.42
+     },
+     "p2021_24": {
+      "cagr": 4.59,
+      "total": 19.6,
+      "max_dd": 10.5,
+      "sharpe": 0.87
+     },
+     "p2025_26": {
+      "cagr": 2.52,
+      "total": 4.7,
+      "max_dd": 5.4,
+      "sharpe": 0.41
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold10|n20|strong",
+     "trades": 505,
+     "win_rate": 54.3,
+     "avg_trade_pct": 0.99,
+     "all": {
+      "cagr": 2.37,
+      "total": 27.4,
+      "max_dd": 8.3,
+      "sharpe": 0.55
+     },
+     "p2016_20": {
+      "cagr": 1.81,
+      "total": 8.4,
+      "max_dd": 6.6,
+      "sharpe": 0.48
+     },
+     "p2021_24": {
+      "cagr": 3.12,
+      "total": 13,
+      "max_dd": 8.3,
+      "sharpe": 0.74
+     },
+     "p2025_26": {
+      "cagr": 2.14,
+      "total": 4,
+      "max_dd": 4.6,
+      "sharpe": 0.39
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n10|any",
+     "trades": 521,
+     "win_rate": 54.9,
+     "avg_trade_pct": 1.93,
+     "all": {
+      "cagr": 9.11,
+      "total": 146.3,
+      "max_dd": 24.4,
+      "sharpe": 0.7
+     },
+     "p2016_20": {
+      "cagr": 6.47,
+      "total": 32.5,
+      "max_dd": 24.4,
+      "sharpe": 0.52
+     },
+     "p2021_24": {
+      "cagr": 10.16,
+      "total": 47.1,
+      "max_dd": 20,
+      "sharpe": 0.77
+     },
+     "p2025_26": {
+      "cagr": 13.58,
+      "total": 26.3,
+      "max_dd": 12.2,
+      "sharpe": 1.02
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n10|strong",
+     "trades": 434,
+     "win_rate": 53.9,
+     "avg_trade_pct": 1.67,
+     "all": {
+      "cagr": 6.51,
+      "total": 91.9,
+      "max_dd": 22.6,
+      "sharpe": 0.58
+     },
+     "p2016_20": {
+      "cagr": 4.77,
+      "total": 23.3,
+      "max_dd": 20.8,
+      "sharpe": 0.47
+     },
+     "p2021_24": {
+      "cagr": 6.17,
+      "total": 27,
+      "max_dd": 22.6,
+      "sharpe": 0.54
+     },
+     "p2025_26": {
+      "cagr": 11.72,
+      "total": 22.6,
+      "max_dd": 13.3,
+      "sharpe": 0.91
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n20|any",
+     "trades": 645,
+     "win_rate": 54.9,
+     "avg_trade_pct": 2.03,
+     "all": {
+      "cagr": 6.09,
+      "total": 84.3,
+      "max_dd": 14.5,
+      "sharpe": 0.72
+     },
+     "p2016_20": {
+      "cagr": 5.25,
+      "total": 25.8,
+      "max_dd": 13.8,
+      "sharpe": 0.67
+     },
+     "p2021_24": {
+      "cagr": 6.46,
+      "total": 28.4,
+      "max_dd": 14.5,
+      "sharpe": 0.75
+     },
+     "p2025_26": {
+      "cagr": 7.43,
+      "total": 14.1,
+      "max_dd": 9.3,
+      "sharpe": 0.8
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold20|n20|strong",
+     "trades": 503,
+     "win_rate": 54.5,
+     "avg_trade_pct": 1.91,
+     "all": {
+      "cagr": 4.48,
+      "total": 57.3,
+      "max_dd": 11.8,
+      "sharpe": 0.66
+     },
+     "p2016_20": {
+      "cagr": 3.92,
+      "total": 18.8,
+      "max_dd": 11.5,
+      "sharpe": 0.64
+     },
+     "p2021_24": {
+      "cagr": 4.19,
+      "total": 17.8,
+      "max_dd": 11.8,
+      "sharpe": 0.62
+     },
+     "p2025_26": {
+      "cagr": 6.57,
+      "total": 12.4,
+      "max_dd": 9,
+      "sharpe": 0.8
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n10|any",
+     "trades": 416,
+     "win_rate": 58.2,
+     "avg_trade_pct": 3.17,
+     "all": {
+      "cagr": 11.17,
+      "total": 198.5,
+      "max_dd": 34.5,
+      "sharpe": 0.66
+     },
+     "p2016_20": {
+      "cagr": 9.48,
+      "total": 50.2,
+      "max_dd": 34.5,
+      "sharpe": 0.57
+     },
+     "p2021_24": {
+      "cagr": 9.23,
+      "total": 42.2,
+      "max_dd": 26.4,
+      "sharpe": 0.56
+     },
+     "p2025_26": {
+      "cagr": 20.01,
+      "total": 39.8,
+      "max_dd": 19.2,
+      "sharpe": 1.1
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold40|n10|strong",
+     "trades": 375,
+     "win_rate": 56.5,
+     "avg_trade_pct": 2.24,
+     "all": {
+      "cagr": 6.58,
+      "total": 93.2,
+      "max_dd": 34.3,
+      "sharpe": 0.45
+     },
+     "p2016_20": {
+      "cagr": 6.36,
+      "total": 31.9,
+      "max_dd": 34.3,
+      "sharpe": 0.44
+     },
+     "p2021_24": {
+      "cagr": 5.63,
+      "total": 24.4,
+      "max_dd": 25.6,
+      "sharpe": 0.4
+     },
+     "p2025_26": {
+      "cagr": 9.32,
+      "total": 17.8,
+      "max_dd": 19.2,
+      "sharpe": 0.56
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n20|any",
+     "trades": 611,
+     "win_rate": 57.4,
+     "avg_trade_pct": 2.69,
+     "all": {
+      "cagr": 7.27,
+      "total": 106.6,
+      "max_dd": 20,
+      "sharpe": 0.58
+     },
+     "p2016_20": {
+      "cagr": 7.87,
+      "total": 40.5,
+      "max_dd": 18.3,
+      "sharpe": 0.65
+     },
+     "p2021_24": {
+      "cagr": 5.9,
+      "total": 25.7,
+      "max_dd": 18,
+      "sharpe": 0.48
+     },
+     "p2025_26": {
+      "cagr": 8.9,
+      "total": 17,
+      "max_dd": 18.9,
+      "sharpe": 0.61
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold40|n20|strong",
+     "trades": 490,
+     "win_rate": 56.1,
+     "avg_trade_pct": 2.06,
+     "all": {
+      "cagr": 4.42,
+      "total": 56.3,
+      "max_dd": 18.9,
+      "sharpe": 0.43
+     },
+     "p2016_20": {
+      "cagr": 5.36,
+      "total": 26.4,
+      "max_dd": 16,
+      "sharpe": 0.54
+     },
+     "p2021_24": {
+      "cagr": 2.8,
+      "total": 11.7,
+      "max_dd": 15.9,
+      "sharpe": 0.31
+     },
+     "p2025_26": {
+      "cagr": 5.69,
+      "total": 10.7,
+      "max_dd": 17.3,
+      "sharpe": 0.45
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold60|n10|any",
+     "trades": 381,
+     "win_rate": 61.7,
+     "avg_trade_pct": 4.08,
+     "all": {
+      "cagr": 13.57,
+      "total": 272.4,
+      "max_dd": 42,
+      "sharpe": 0.69
+     },
+     "p2016_20": {
+      "cagr": 20.67,
+      "total": 132.5,
+      "max_dd": 34.2,
+      "sharpe": 0.99
+     },
+     "p2021_24": {
+      "cagr": 3.7,
+      "total": 15.6,
+      "max_dd": 42,
+      "sharpe": 0.28
+     },
+     "p2025_26": {
+      "cagr": 19.43,
+      "total": 38.6,
+      "max_dd": 23.7,
+      "sharpe": 0.87
+     },
+     "beats": [
+      "p2016_20",
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n10|strong",
+     "trades": 347,
+     "win_rate": 59.4,
+     "avg_trade_pct": 3.53,
+     "all": {
+      "cagr": 10.65,
+      "total": 184.5,
+      "max_dd": 35.4,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 13.97,
+      "total": 79.9,
+      "max_dd": 32.2,
+      "sharpe": 0.77
+     },
+     "p2021_24": {
+      "cagr": 1.61,
+      "total": 6.6,
+      "max_dd": 35.4,
+      "sharpe": 0.18
+     },
+     "p2025_26": {
+      "cagr": 23.96,
+      "total": 48.4,
+      "max_dd": 24.4,
+      "sharpe": 0.98
+     },
+     "beats": [
+      "p2025_26"
+     ]
+    },
+    {
+     "key": "thr8|hold60|n20|any",
+     "trades": 585,
+     "win_rate": 59.5,
+     "avg_trade_pct": 3.9,
+     "all": {
+      "cagr": 10.31,
+      "total": 175.7,
+      "max_dd": 31.4,
+      "sharpe": 0.64
+     },
+     "p2016_20": {
+      "cagr": 14.55,
+      "total": 84,
+      "max_dd": 20.5,
+      "sharpe": 0.92
+     },
+     "p2021_24": {
+      "cagr": 3.2,
+      "total": 13.4,
+      "max_dd": 31.4,
+      "sharpe": 0.27
+     },
+     "p2025_26": {
+      "cagr": 16.37,
+      "total": 32.1,
+      "max_dd": 23.4,
+      "sharpe": 0.82
+     },
+     "beats": []
+    },
+    {
+     "key": "thr8|hold60|n20|strong",
+     "trades": 482,
+     "win_rate": 57.1,
+     "avg_trade_pct": 3.29,
+     "all": {
+      "cagr": 7.2,
+      "total": 105.1,
+      "max_dd": 24.7,
+      "sharpe": 0.54
+     },
+     "p2016_20": {
+      "cagr": 10.12,
+      "total": 54.2,
+      "max_dd": 17.1,
+      "sharpe": 0.78
+     },
+     "p2021_24": {
+      "cagr": 0.79,
+      "total": 3.2,
+      "max_dd": 24.7,
+      "sharpe": 0.13
+     },
+     "p2025_26": {
+      "cagr": 14.83,
+      "total": 28.9,
+      "max_dd": 22.7,
+      "sharpe": 0.79
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n10|any",
+     "trades": 391,
+     "win_rate": 54.5,
+     "avg_trade_pct": 1.03,
+     "all": {
+      "cagr": 3.75,
+      "total": 46.3,
+      "max_dd": 16.7,
+      "sharpe": 0.47
+     },
+     "p2016_20": {
+      "cagr": 4.42,
+      "total": 21.4,
+      "max_dd": 16.7,
+      "sharpe": 0.56
+     },
+     "p2021_24": {
+      "cagr": 3.14,
+      "total": 13.1,
+      "max_dd": 14,
+      "sharpe": 0.44
+     },
+     "p2025_26": {
+      "cagr": 3.5,
+      "total": 6.5,
+      "max_dd": 9.2,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n10|strong",
+     "trades": 309,
+     "win_rate": 55,
+     "avg_trade_pct": 1.1,
+     "all": {
+      "cagr": 3.19,
+      "total": 38.3,
+      "max_dd": 10.1,
+      "sharpe": 0.5
+     },
+     "p2016_20": {
+      "cagr": 3.88,
+      "total": 18.7,
+      "max_dd": 9.5,
+      "sharpe": 0.65
+     },
+     "p2021_24": {
+      "cagr": 2.42,
+      "total": 10,
+      "max_dd": 10.1,
+      "sharpe": 0.43
+     },
+     "p2025_26": {
+      "cagr": 3.22,
+      "total": 6,
+      "max_dd": 9,
+      "sharpe": 0.38
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|any",
+     "trades": 398,
+     "win_rate": 55,
+     "avg_trade_pct": 1.04,
+     "all": {
+      "cagr": 1.96,
+      "total": 22.3,
+      "max_dd": 8.9,
+      "sharpe": 0.46
+     },
+     "p2016_20": {
+      "cagr": 2.21,
+      "total": 10.3,
+      "max_dd": 8.9,
+      "sharpe": 0.53
+     },
+     "p2021_24": {
+      "cagr": 1.61,
+      "total": 6.6,
+      "max_dd": 7.1,
+      "sharpe": 0.44
+     },
+     "p2025_26": {
+      "cagr": 2.15,
+      "total": 4,
+      "max_dd": 4.7,
+      "sharpe": 0.4
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold10|n20|strong",
+     "trades": 313,
+     "win_rate": 55.3,
+     "avg_trade_pct": 1.09,
+     "all": {
+      "cagr": 1.64,
+      "total": 18.2,
+      "max_dd": 5.1,
+      "sharpe": 0.49
+     },
+     "p2016_20": {
+      "cagr": 1.94,
+      "total": 9,
+      "max_dd": 4.9,
+      "sharpe": 0.63
+     },
+     "p2021_24": {
+      "cagr": 1.24,
+      "total": 5,
+      "max_dd": 5.1,
+      "sharpe": 0.43
+     },
+     "p2025_26": {
+      "cagr": 1.76,
+      "total": 3.3,
+      "max_dd": 4.3,
+      "sharpe": 0.37
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n10|any",
+     "trades": 368,
+     "win_rate": 55.7,
+     "avg_trade_pct": 2.63,
+     "all": {
+      "cagr": 9.04,
+      "total": 144.6,
+      "max_dd": 21.4,
+      "sharpe": 0.78
+     },
+     "p2016_20": {
+      "cagr": 9.09,
+      "total": 47.8,
+      "max_dd": 15.9,
+      "sharpe": 0.81
+     },
+     "p2021_24": {
+      "cagr": 7.89,
+      "total": 35.4,
+      "max_dd": 21.4,
+      "sharpe": 0.7
+     },
+     "p2025_26": {
+      "cagr": 11.55,
+      "total": 22.2,
+      "max_dd": 12.1,
+      "sharpe": 0.87
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n10|strong",
+     "trades": 299,
+     "win_rate": 56.9,
+     "avg_trade_pct": 2.9,
+     "all": {
+      "cagr": 8.08,
+      "total": 123.2,
+      "max_dd": 15,
+      "sharpe": 0.83
+     },
+     "p2016_20": {
+      "cagr": 7.26,
+      "total": 37,
+      "max_dd": 11.8,
+      "sharpe": 0.82
+     },
+     "p2021_24": {
+      "cagr": 6.31,
+      "total": 27.6,
+      "max_dd": 15,
+      "sharpe": 0.71
+     },
+     "p2025_26": {
+      "cagr": 14.21,
+      "total": 27.7,
+      "max_dd": 11.7,
+      "sharpe": 1.09
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n20|any",
+     "trades": 397,
+     "win_rate": 56.9,
+     "avg_trade_pct": 2.79,
+     "all": {
+      "cagr": 5.25,
+      "total": 69.6,
+      "max_dd": 11.3,
+      "sharpe": 0.82
+     },
+     "p2016_20": {
+      "cagr": 5.11,
+      "total": 25.1,
+      "max_dd": 8.4,
+      "sharpe": 0.86
+     },
+     "p2021_24": {
+      "cagr": 4.06,
+      "total": 17.2,
+      "max_dd": 11.3,
+      "sharpe": 0.7
+     },
+     "p2025_26": {
+      "cagr": 8.28,
+      "total": 15.7,
+      "max_dd": 6.4,
+      "sharpe": 0.99
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold20|n20|strong",
+     "trades": 312,
+     "win_rate": 57.4,
+     "avg_trade_pct": 2.9,
+     "all": {
+      "cagr": 4.31,
+      "total": 54.6,
+      "max_dd": 7.7,
+      "sharpe": 0.84
+     },
+     "p2016_20": {
+      "cagr": 3.96,
+      "total": 19,
+      "max_dd": 6,
+      "sharpe": 0.86
+     },
+     "p2021_24": {
+      "cagr": 3.24,
+      "total": 13.6,
+      "max_dd": 7.7,
+      "sharpe": 0.72
+     },
+     "p2025_26": {
+      "cagr": 7.6,
+      "total": 14.4,
+      "max_dd": 5.9,
+      "sharpe": 1.04
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n10|any",
+     "trades": 322,
+     "win_rate": 60.9,
+     "avg_trade_pct": 3.48,
+     "all": {
+      "cagr": 9.92,
+      "total": 165.8,
+      "max_dd": 24.5,
+      "sharpe": 0.63
+     },
+     "p2016_20": {
+      "cagr": 12.35,
+      "total": 68.7,
+      "max_dd": 17.6,
+      "sharpe": 0.83
+     },
+     "p2021_24": {
+      "cagr": 7.74,
+      "total": 34.7,
+      "max_dd": 22.3,
+      "sharpe": 0.52
+     },
+     "p2025_26": {
+      "cagr": 8.94,
+      "total": 17,
+      "max_dd": 21.7,
+      "sharpe": 0.5
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n10|strong",
+     "trades": 271,
+     "win_rate": 59.8,
+     "avg_trade_pct": 3.25,
+     "all": {
+      "cagr": 7.69,
+      "total": 115,
+      "max_dd": 24.1,
+      "sharpe": 0.57
+     },
+     "p2016_20": {
+      "cagr": 8.64,
+      "total": 45.1,
+      "max_dd": 14.2,
+      "sharpe": 0.72
+     },
+     "p2021_24": {
+      "cagr": 5.51,
+      "total": 23.8,
+      "max_dd": 18.3,
+      "sharpe": 0.46
+     },
+     "p2025_26": {
+      "cagr": 10.26,
+      "total": 19.6,
+      "max_dd": 21.2,
+      "sharpe": 0.56
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n20|any",
+     "trades": 390,
+     "win_rate": 61.3,
+     "avg_trade_pct": 3.91,
+     "all": {
+      "cagr": 7.19,
+      "total": 104.8,
+      "max_dd": 14.1,
+      "sharpe": 0.71
+     },
+     "p2016_20": {
+      "cagr": 7.58,
+      "total": 38.8,
+      "max_dd": 9.4,
+      "sharpe": 0.82
+     },
+     "p2021_24": {
+      "cagr": 4.13,
+      "total": 17.5,
+      "max_dd": 14.1,
+      "sharpe": 0.47
+     },
+     "p2025_26": {
+      "cagr": 13.17,
+      "total": 25.5,
+      "max_dd": 12.6,
+      "sharpe": 0.92
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold40|n20|strong",
+     "trades": 310,
+     "win_rate": 61,
+     "avg_trade_pct": 3.64,
+     "all": {
+      "cagr": 5.35,
+      "total": 71.3,
+      "max_dd": 12.8,
+      "sharpe": 0.65
+     },
+     "p2016_20": {
+      "cagr": 5.23,
+      "total": 25.7,
+      "max_dd": 8.6,
+      "sharpe": 0.7
+     },
+     "p2021_24": {
+      "cagr": 2.81,
+      "total": 11.7,
+      "max_dd": 9.4,
+      "sharpe": 0.43
+     },
+     "p2025_26": {
+      "cagr": 11.44,
+      "total": 22,
+      "max_dd": 10.8,
+      "sharpe": 0.91
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold60|n10|any",
+     "trades": 304,
+     "win_rate": 60.2,
+     "avg_trade_pct": 4.43,
+     "all": {
+      "cagr": 11.94,
+      "total": 220.8,
+      "max_dd": 36.7,
+      "sharpe": 0.65
+     },
+     "p2016_20": {
+      "cagr": 21.15,
+      "total": 136.7,
+      "max_dd": 22.2,
+      "sharpe": 1.15
+     },
+     "p2021_24": {
+      "cagr": 4.38,
+      "total": 18.6,
+      "max_dd": 36.7,
+      "sharpe": 0.31
+     },
+     "p2025_26": {
+      "cagr": 7.52,
+      "total": 14.2,
+      "max_dd": 24.3,
+      "sharpe": 0.41
+     },
+     "beats": [
+      "p2016_20"
+     ]
+    },
+    {
+     "key": "thr10|hold60|n10|strong",
+     "trades": 263,
+     "win_rate": 56.7,
+     "avg_trade_pct": 4.08,
+     "all": {
+      "cagr": 9.58,
+      "total": 157.4,
+      "max_dd": 30.1,
+      "sharpe": 0.6
+     },
+     "p2016_20": {
+      "cagr": 15.13,
+      "total": 88.2,
+      "max_dd": 21.3,
+      "sharpe": 1.05
+     },
+     "p2021_24": {
+      "cagr": 1.5,
+      "total": 6.1,
+      "max_dd": 30.1,
+      "sharpe": 0.17
+     },
+     "p2025_26": {
+      "cagr": 14.81,
+      "total": 28.9,
+      "max_dd": 24.4,
+      "sharpe": 0.66
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold60|n20|any",
+     "trades": 383,
+     "win_rate": 59.8,
+     "avg_trade_pct": 4.38,
+     "all": {
+      "cagr": 7.75,
+      "total": 116.2,
+      "max_dd": 22.9,
+      "sharpe": 0.62
+     },
+     "p2016_20": {
+      "cagr": 12.24,
+      "total": 67.9,
+      "max_dd": 14.3,
+      "sharpe": 1.03
+     },
+     "p2021_24": {
+      "cagr": 3.18,
+      "total": 13.3,
+      "max_dd": 22.9,
+      "sharpe": 0.32
+     },
+     "p2025_26": {
+      "cagr": 7.2,
+      "total": 13.6,
+      "max_dd": 16.9,
+      "sharpe": 0.45
+     },
+     "beats": []
+    },
+    {
+     "key": "thr10|hold60|n20|strong",
+     "trades": 307,
+     "win_rate": 57.3,
+     "avg_trade_pct": 4.4,
+     "all": {
+      "cagr": 6.14,
+      "total": 85.1,
+      "max_dd": 16,
+      "sharpe": 0.59
+     },
+     "p2016_20": {
+      "cagr": 8.86,
+      "total": 46.4,
+      "max_dd": 12.1,
+      "sharpe": 0.93
+     },
+     "p2021_24": {
+      "cagr": 0.96,
+      "total": 3.9,
+      "max_dd": 16,
+      "sharpe": 0.15
+     },
+     "p2025_26": {
+      "cagr": 11.29,
+      "total": 21.7,
+      "max_dd": 15.7,
+      "sharpe": 0.69
+     },
+     "beats": []
+    }
+   ]
+  }
+ }
+}
