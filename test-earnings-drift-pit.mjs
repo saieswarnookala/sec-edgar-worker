@@ -25,4 +25,6 @@ assert.equal(buildSignals(m, ev, dates, R, Hh, L, C, false).n, 2);
 assert.equal(buildSignals(m, ev, dates, R, Hh, L, C, true).n, 1);
 const O = { V: R.V, SPY: C.SPY }; const S = buildSignals(m, ev, dates, R, Hh, L, C, true).signals;
 const e = evaluate(dates, O, { ...C }, S, 0, 'thr8|hold60|n10|any'); assert.ok(e.ref && e.all.length === 64 && e.spy.all);
+const html2 = '<h2 id="Selected_changes_to_the_list">Selected changes</h2><table class="wikitable sortable"><tr><th>Date</th></tr>' + html.slice(html.indexOf('<tbody>'));
+assert.equal(parseChanges(parseTable(html2, 'changes')).length, 4);
 console.log('earnings drift PIT tests passed');

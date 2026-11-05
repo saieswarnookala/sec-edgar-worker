@@ -12,7 +12,10 @@ export function parseDate(s) { const m = /([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})/.e
 const clean = (h) => h.replace(/<sup[\s\S]*?<\/sup>/g, '').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&#160;|&nbsp;/g, ' ').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
 // Generic wikitable parser with rowspan/colspan. Returns rows of cell strings (header rows included).
 export function parseTable(html, id) {
-  const st = html.indexOf(`id="${id}"`); if (st < 0) throw new Error(`table ${id} not found`);
+  let st = html.indexOf(`id="${id}"`);
+  if (st < 0 && id === 'changes') { const h = html.search(/id="Selected_changes|Selected changes/i); if (h >= 0) st = html.indexOf('<table', h); }
+  if (st < 0 && id === 'changes') { const all = [...html.matchAll(/<table[^>]*wikitable/g)]; if (all[1]) st = all[1].index; }
+  if (st < 0) throw new Error(`table ${id} not found; ids: ${[...html.matchAll(/<table[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(',')}; len ${html.length}`);
   const body = html.slice(st, html.indexOf('</table>', st)), rows = [], carry = [];
   for (const tr of body.split(/<tr[^>]*>/).slice(1)) {
     const cells = [...tr.matchAll(/<(td|th)(\s[^>]*)?>([\s\S]*?)(?=<\/t[dh]>|<t[dh][\s>]|$)/g)].map((m) => ({ txt: clean(m[3]), rs: +(/rowspan="?(\d+)/.exec(m[2] || '')?.[1] || 1), cs: +(/colspan="?(\d+)/.exec(m[2] || '')?.[1] || 1), th: m[1] === 'th' }));
@@ -87,7 +90,7 @@ async function main(out = 'data') {
   const REF = 'thr8|hold60|n10|any', H = { 'User-Agent': ua };
   const wr = await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': `sec-edgar-worker earnings-drift/1.0 (${ua})` } });
   const html = await wr.text(); console.log('wikipedia', wr.status, html.length, 'tables', [...html.matchAll(/<table[^>]*id="([^"]+)"/g)].map((m) => m[1]).join(','));
-  const changes = parseChanges(parseTable(html, 'changes'));
+  const changes = parseChanges(parseTable(html, 'changes')); if (changes.length < 100) throw new Error(`only ${changes.length} changes parsed`);
   const current = JSON.parse(readFileSync('data/sp500_tickers.json', 'utf8')).tickers;
   const members = membership(current, changes);
   const removed = members.filter((m) => m.removed);
