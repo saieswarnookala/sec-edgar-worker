@@ -27,7 +27,7 @@ export async function collect(now = Date.now(), env = process.env) {
   for (const [q, tags] of [['', 'ask_hn'], ['would pay', 'story'], ['is there a tool', 'story'], ['', 'show_hn']]) {
     const r = await get(`https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(q)}&tags=${tags}&numericFilters=created_at_i>${since},points>${tags === 'show_hn' ? 80 : 15}&hitsPerPage=30`);
     if (r.err) { errors.hn = r.err; continue; }
-    for (const h of r.data.hits || []) out.hn.push({ src: tags === 'show_hn' ? 'Show HN' : 'Ask HN', title: h.title, text: (h.story_text || '').replace(/<[^>]+>/g, ' ').slice(0, 400), url: `https://news.ycombinator.com/item?id=${h.objectID}`, points: h.points, comments: h.num_comments });
+    for (const h of r.data.hits || []) out.hn.push({ src: /^show hn/i.test(h.title || '') ? 'Show HN' : /^ask hn/i.test(h.title || '') ? 'Ask HN' : 'Hacker News', title: h.title, text: (h.story_text || '').replace(/<[^>]+>/g, ' ').slice(0, 400), url: `https://news.ycombinator.com/item?id=${h.objectID}`, points: h.points, comments: h.num_comments });
   }
   const gh = await get(`https://api.github.com/search/repositories?q=created:>${new Date(now - 14 * DAY).toISOString().slice(0, 10)}&sort=stars&order=desc&per_page=25`, { headers: env.GITHUB_TOKEN ? { Authorization: `Bearer ${env.GITHUB_TOKEN}` } : {} });
   if (gh.err) errors.github = gh.err; else out.github = (gh.data.items || []).map((r) => ({ src: 'GitHub', title: `${r.full_name}: ${r.description || ''}`.slice(0, 200), url: r.html_url, points: r.stargazers_count, lang: r.language }));
@@ -78,7 +78,7 @@ async function research(signals, recent, env) {
 }
 export function digestIdeas(signals) { // free mode: curated signal digest, no AI
   const ok = (x) => !NOISE.test(x.title);
-  const asks = [...signals.hn, ...signals.reddit].filter((x) => ok(x) && PAIN.test(`${x.title} ${x.text || ''}`)).sort((a, b) => b.score - a.score).slice(0, 5)
+  const asks = [...signals.hn, ...signals.reddit].filter((x) => ok(x) && x.src !== 'Show HN' && PAIN.test(`${x.title} ${x.text || ''}`)).sort((a, b) => b.score - a.score).slice(0, 5)
     .map((x) => ({ title: x.title, category: 'build', what: `People asking for this on ${x.src} (${x.points || 0} points, ${x.comments || 0} comments). Read the thread: what do they use today, and would they pay?`, evidence: [x.url] }));
   const launches = signals.hn.filter((x) => x.src === 'Show HN' && ok(x)).sort((a, b) => (b.points || 0) - (a.points || 0)).slice(0, 3)
     .map((x) => ({ title: x.title, category: 'build', what: `Popular launch (${x.points} points). Ideas: a niche version, integrations, or a hosted service around it.`, evidence: [x.url] }));
