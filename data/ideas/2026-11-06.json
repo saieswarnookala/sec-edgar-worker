@@ -6,7 +6,7 @@
   {
    "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
    "category": "build",
-   "what": "Popular launch (1860 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "what": "Popular launch (1863 points). Ideas: a niche version, integrations, or a hosted service around it.",
    "evidence": [
     "https://news.ycombinator.com/item?id=50326821"
    ]
@@ -14,7 +14,7 @@
   {
    "title": "Show HN: Subvocal – Talk to your computer without making noise",
    "category": "build",
-   "what": "Popular launch (837 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "what": "Popular launch (839 points). Ideas: a niche version, integrations, or a hosted service around it.",
    "evidence": [
     "https://news.ycombinator.com/item?id=50340088"
    ]
@@ -22,7 +22,7 @@
   {
    "title": "Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels",
    "category": "build",
-   "what": "Popular launch (481 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "what": "Popular launch (484 points). Ideas: a niche version, integrations, or a hosted service around it.",
    "evidence": [
     "https://news.ycombinator.com/item?id=50346755"
    ]
@@ -30,7 +30,7 @@
   {
    "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
    "category": "build",
-   "what": "New GitHub project with 20011 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.",
+   "what": "New GitHub project with 20199 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.",
    "evidence": [
     "https://github.com/deepseek-ai/dsh-superagent-prototype"
    ]
@@ -38,7 +38,7 @@
   {
    "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
    "category": "build",
-   "what": "New GitHub project with 16657 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.",
+   "what": "New GitHub project with 17660 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.",
    "evidence": [
     "https://github.com/storytold/craft-anything"
    ]
@@ -46,7 +46,7 @@
   {
    "title": "ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
    "category": "build",
-   "what": "New GitHub project with 12481 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.",
+   "what": "New GitHub project with 12876 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.",
    "evidence": [
     "https://github.com/ccch1mneyyy/dsh-Go"
    ]
@@ -104,7 +104,7 @@
     "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
     "text": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5). It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links back to the comments that mentioned it. Data is downloadable from the about page. To be clear: Claude wrote almost all of it, including the data pipeline and the site. I mostly stee",
     "url": "https://news.ycombinator.com/item?id=50326821",
-    "points": 1860,
+    "points": 1863,
     "comments": 306,
     "score": 9.03
    },
@@ -113,7 +113,7 @@
     "title": "Ask HN: Which TV do you recommend for privacy?",
     "text": "I haven’t owned a TV in years and would like one that respects my privacy. Are there any TV’s which do this well? I am looking for something in the 60”to 80”range and would like a 4k display with at least 60hz display. I don’t mind paying a premium. I have heard good things about Apple TV as a better alternative to most smart TV native apps. Would some TV’s pair better with this than others for pr",
     "url": "https://news.ycombinator.com/item?id=50328896",
-    "points": 728,
+    "points": 730,
     "comments": 884,
     "score": 8.67
    },
@@ -140,34 +140,34 @@
     "title": "Show HN: Subvocal – Talk to your computer without making noise",
     "text": "Hi HN, we&#x27;re Aarush and Arnav from The Subvocal Company (YC F26) ( https:&#x2F;&#x2F;subvocal.company&#x2F; ). We’re building smart glasses that let you talk to your computer without talking out loud. You can mouth words silently and discreetly and the glasses decode them to text at the speed of speech. Here&#x27;s a video of Dave from YC trying it out:  https:&#x2F;&#x2F;www.youtube.com&#x2F",
     "url": "https://news.ycombinator.com/item?id=50340088",
-    "points": 837,
-    "comments": 393,
-    "score": 8.44
+    "points": 839,
+    "comments": 394,
+    "score": 8.45
    },
    {
     "src": "Ask HN",
     "title": "Ask HN: What's your current AI agentic setup?",
     "text": "I&#x27;m curious how people on HN are using AI day to day, and came up with a list of questions I thought could be interesting to know. No need to answer every question of course, just wanted to get a gut feel how people are using AI. 1) What AI subscriptions are you personally paying for? (Claude, ChatGPT&#x2F;Codex, Cursor, etc) - Which tiers? - Have you purchased multiple subscriptions from the",
     "url": "https://news.ycombinator.com/item?id=50366117",
-    "points": 530,
-    "comments": 653,
-    "score": 8.27
+    "points": 537,
+    "comments": 670,
+    "score": 8.29
    },
    {
     "src": "Hacker News",
     "title": "Tell HN: Gemini trains on chat history, even for subscribers (personal accounts)",
     "text": "If you have a personal Google AI subscription, all your saved chat history in Gemini can be used for training and there is no way to opt out unless you turn off chat history or use temporary chat sessions. These chat transcripts may even be read by human reviewers. Although Google claims to disconnect them from your account when human-reviewed, they explicitly warn  not to enter confidential infor",
     "url": "https://news.ycombinator.com/item?id=50363461",
-    "points": 719,
-    "comments": 194,
-    "score": 8
+    "points": 722,
+    "comments": 197,
+    "score": 8.01
    },
    {
     "src": "Hacker News",
     "title": "OpenAI seems to be silently re-enabling model training on Codex chats",
     "text": "My company is pretty paranoid about leaking IP to the frontier labs through prompts, so we&#x27;ve all been diligent about disabling data sharing in Codex&#x2F;Claude Code&#x2F;etc. But yesterday my coworkers and I noticed that the setting had been silently reenabled in Codex. None of us knowingly opted back in. You can check your settings here: https:&#x2F;&#x2F;chatgpt.com&#x2F;settings&#x2F;dat",
     "url": "https://news.ycombinator.com/item?id=50352757",
-    "points": 526,
+    "points": 527,
     "comments": 163,
     "score": 7.66
    },
@@ -185,7 +185,7 @@
     "title": "Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels",
     "text": "I saw HackerTube ( https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50319510 ) a few days ago, the YouTube videos HN keeps\nrecommending, pulled from 19 years of comments. It made me want to flip\nthrough them instead of picking, so I built a TV for it. I have Algo fatigue. Each topic area is a channel (DEVTV, SOLDER, RETRO, ORBIT, ...), plus HN Prime\n(the top 400), a music channel, and Late Nigh",
     "url": "https://news.ycombinator.com/item?id=50346755",
-    "points": 481,
+    "points": 484,
     "comments": 82,
     "score": 7.29
    },
@@ -195,8 +195,8 @@
     "text": "Please state the location and include REMOTE for remote work, REMOTE (US)\nor similar if the country is restricted, and ONSITE when remote work is  not  an option. Please only post if you personally are part of the hiring company—no\nrecruiting firms or job boards. One post per company. If it isn&#x27;t a household name,\nexplain what your company does. Please only post if you are actively filling a ",
     "url": "https://news.ycombinator.com/item?id=50338728",
     "points": 250,
-    "comments": 280,
-    "score": 7.25
+    "comments": 289,
+    "score": 7.26
    },
    {
     "src": "Hacker News",
@@ -206,15 +206,6 @@
     "points": 359,
     "comments": 123,
     "score": 7.21
-   },
-   {
-    "src": "Show HN",
-    "title": "Show HN: A working Nintendo in ~1GB of Qwen weights",
-    "text": "",
-    "url": "https://news.ycombinator.com/item?id=50306442",
-    "points": 297,
-    "comments": 154,
-    "score": 7.14
    },
    {
     "src": "Show HN",
@@ -266,27 +257,45 @@
     "title": "Show HN: I've updated my Linux System Call website and API",
     "text": "I first released those in back in 2020 and now I finally added more architectures, Kernel selector, syscall descriptions and a few other niceties. It should work a bit better on mobile devices too but I am no CSS expert. The API is at  https:&#x2F;&#x2F;api.syscall.sh ",
     "url": "https://news.ycombinator.com/item?id=50334704",
-    "points": 237,
-    "comments": 56,
-    "score": 6.51
+    "points": 238,
+    "comments": 57,
+    "score": 6.52
+   },
+   {
+    "src": "Hacker News",
+    "title": "US FAA says it will phase out floppy disks from air traffic control by 2028",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50388001",
+    "points": 151,
+    "comments": 131,
+    "score": 6.48
    },
    {
     "src": "Show HN",
     "title": "Show HN: After a decade of reversing, I got co-op working in DOS Wing Commander",
     "text": "",
     "url": "https://news.ycombinator.com/item?id=50369895",
-    "points": 250,
+    "points": 254,
     "comments": 38,
-    "score": 6.39
+    "score": 6.4
    },
    {
     "src": "Show HN",
     "title": "Show HN: A decent text-to-image model trained for ~$20K (Apache 2.0 Weights)",
     "text": "My brother and I run a 2-person lab that trains our own generative video models from scratch. The ultimate goal is a set of creative tools that make it easier for anyone to make animation. Video models today are too slow&#x2F;expensive and lack sufficient controls. Creativity is an iterative process. You make, you tweak, you get better. In our opinion, they&#x27;re not usable yet for storytelling.",
     "url": "https://news.ycombinator.com/item?id=50368208",
-    "points": 243,
-    "comments": 23,
-    "score": 6.15
+    "points": 266,
+    "comments": 29,
+    "score": 6.33
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: What in the world is taking Ubuntu so long?",
+    "text": "Ubuntu has CVE-2026-98432 marked as a 9.8, but yet it&#x27;s coming up on a week with no update to fix it.  It&#x27;s still marked as &quot;work in progress&quot; (though at least now they&#x27;ve listed a mitigation): https:&#x2F;&#x2F;ubuntu.com&#x2F;security&#x2F;CVE-2026-98432 I&#x27;ve had mitigations in place for a week, but this response is really shaking my confidence in Ubuntu.  I&#x27;m ",
+    "url": "https://news.ycombinator.com/item?id=50393105",
+    "points": 148,
+    "comments": 83,
+    "score": 6.27
    },
    {
     "src": "Ask HN",
@@ -294,8 +303,8 @@
     "text": "Share your information if you are looking for work. Please use this format:     Location:\n  Remote:\n  Willing to relocate:\n  Technologies:\n  Résumé&#x2F;CV:\n  Email:\n  \nPlease only post if you are personally looking for work. Agencies, recruiters, job boards,\nand so on, are off topic here. Readers: please only email these addresses to discuss work opportunities. Searchers: try  https:&#x2F;&#x2F;w",
     "url": "https://news.ycombinator.com/item?id=50338726",
     "points": 51,
-    "comments": 495,
-    "score": 6.13
+    "comments": 505,
+    "score": 6.14
    },
    {
     "src": "Hacker News",
@@ -303,8 +312,8 @@
     "text": "We opened a ticket with support about Gitbook availability issues and got this in reply. We have yet to see any official customer communication or breach notification. Apologies for the formatting, did the best I could as it&#x27;s a mobile paste. Update: GitBook security incident update\n Hey &lt;$name&gt;,\n The GitBook app, the GitBook API, and published docs are available again. A few services m",
     "url": "https://news.ycombinator.com/item?id=50354336",
     "points": 164,
-    "comments": 44,
-    "score": 6.09
+    "comments": 45,
+    "score": 6.1
    },
    {
     "src": "Show HN",
@@ -321,7 +330,7 @@
     "text": "I&#x27;ve missed out on an awesome computer that I could use for a project because figuring out value took too long. Users paste a listing and receive a value grade, dated component estimates and a shareable report. AI reads the listing but my custom built price engine determines the grade (updated every day). Self financed and working now. Looking for feedback re: scoring, interface, and if its h",
     "url": "https://news.ycombinator.com/item?id=50366929",
     "points": 116,
-    "comments": 82,
+    "comments": 83,
     "score": 6.06
    },
    {
@@ -332,6 +341,24 @@
     "points": 185,
     "comments": 25,
     "score": 5.95
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
+    "text": "Hi HN, we have been developing with Firebase for a long time, and the only way Firebase developers can build apps without directly costing them is using the official Firebase Emulator Suite. However, the issue with this suite is, it&#x27;s dependent and running on Java with a old Console UI (not updated in years), that was not built to support tons and millions of data and has pretty bad developer",
+    "url": "https://news.ycombinator.com/item?id=50378643",
+    "points": 167,
+    "comments": 28,
+    "score": 5.91
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
+    "text": "Hey HN, this is Nathan and Nicholas from Rivet ( https:&#x2F;&#x2F;rivet.dev ) – a fast, high-density, and scalable orchestrator for agentic workloads using the actor model. Rather than running a heavyweight sandbox per agent, each agent gets a lightweight actor backed by S3. Actors provide a long-lived process for long agent turns, in-memory state for context, a WebSocket server for multiplayer, ",
+    "url": "https://news.ycombinator.com/item?id=50381687",
+    "points": 117,
+    "comments": 58,
+    "score": 5.91
    },
    {
     "src": "Show HN",
@@ -357,26 +384,17 @@
     "text": "We are looking for a Cryptography book recommendation to read with our 10 year old who loves making up his own ciphers. He loves reading adult math and science books with us at breakfast like Ignition!, Humble Pi, and The Hunt for Vulcan. All of the kids books that we&#x27;ve found are just puzzles, but I don&#x27;t want to get something way over his head math-wise. A good history with basic theor",
     "url": "https://news.ycombinator.com/item?id=50347425",
     "points": 86,
-    "comments": 81,
-    "score": 5.79
-   },
-   {
-    "src": "Hacker News",
-    "title": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on S3",
-    "text": "Hey HN, this is Nathan and Nicholas from Rivet ( https:&#x2F;&#x2F;rivet.dev ) – a fast, high-density, and scalable orchestrator for agentic workloads using the actor model. Rather than running a heavyweight sandbox per agent, each agent gets a lightweight actor backed by S3. Actors provide a long-lived process for long agent turns, in-memory state for context, a WebSocket server for multiplayer, ",
-    "url": "https://news.ycombinator.com/item?id=50381687",
-    "points": 103,
-    "comments": 53,
-    "score": 5.77
+    "comments": 83,
+    "score": 5.8
    },
    {
     "src": "Hacker News",
     "title": "Launch HN: Kino AI (YC S23) – AI media manager and video editor",
     "text": "Hi HN! I&#x27;m Luke from Kino ( https:&#x2F;&#x2F;kino.ai ). Kino lets you make great videos with your agents and your teammates. Storage of footage and assets, a rich video editor, and review links for teammates are all bundled into one. Your colleagues and Codex &#x2F; Claude Code can work on the same timeline with review notes and footage all in one place. See a basic overview at  https:&#x2F;",
     "url": "https://news.ycombinator.com/item?id=50368804",
-    "points": 107,
-    "comments": 35,
-    "score": 5.62
+    "points": 109,
+    "comments": 36,
+    "score": 5.65
    },
    {
     "src": "Hacker News",
@@ -397,24 +415,6 @@
     "score": 5.56
    },
    {
-    "src": "Show HN",
-    "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
-    "text": "Hi HN, we have been developing with Firebase for a long time, and the only way Firebase developers can build apps without directly costing them is using the official Firebase Emulator Suite. However, the issue with this suite is, it&#x27;s dependent and running on Java with a old Console UI (not updated in years), that was not built to support tons and millions of data and has pretty bad developer",
-    "url": "https://news.ycombinator.com/item?id=50378643",
-    "points": 136,
-    "comments": 18,
-    "score": 5.55
-   },
-   {
-    "src": "Show HN",
-    "title": "Show HN: I built a multiplayer game where you're an aerial fighter cat",
-    "text": "Hi everyone! I had the idea for catcopter on my mind for a long time (got the domain ~13 years ago). It&#x27;s a web multiplayer game where you can fly a dangerous cat and engage in competition with other players and critters (pterodactyls, chickens and angry penguins). I made it initially for me and my friends but it was quite fun so I thought I&#x27;ll share it here too. The game is intentionall",
-    "url": "https://news.ycombinator.com/item?id=50305320",
-    "points": 85,
-    "comments": 43,
-    "score": 5.51
-   },
-   {
     "src": "Hacker News",
     "title": "Tell HN: Please Vote",
     "text": "The strongest sign of a healthy democracy is that people participate in it.  It&#x27;s up to you to decide who to vote for, but no matter who you support, please show up and cast a ballot.  A democracy with 75% voter turnout is healthier than a democracy with 50% voter turnout even exactly the same politicians got elected, because citizens participating in a democratic process signals that they va",
@@ -424,31 +424,13 @@
     "score": 5.48
    },
    {
-    "src": "Hacker News",
-    "title": "Binance hackers used fake job interview to breach PC before $6.3B attack",
-    "text": "",
-    "url": "https://news.ycombinator.com/item?id=50353818",
-    "points": 95,
-    "comments": 32,
-    "score": 5.48
-   },
-   {
     "src": "Show HN",
     "title": "Show HN: Stroq – a local audit of what your coding agent did and why",
     "text": "",
     "url": "https://news.ycombinator.com/item?id=50380704",
-    "points": 88,
-    "comments": 33,
-    "score": 5.43
-   },
-   {
-    "src": "Hacker News",
-    "title": "Apple opens the door to a nightmare world of always-listening tech",
-    "text": "",
-    "url": "https://news.ycombinator.com/item?id=50357683",
-    "points": 73,
-    "comments": 39,
-    "score": 5.34
+    "points": 89,
+    "comments": 34,
+    "score": 5.45
    },
    {
     "src": "Ask HN",
@@ -465,8 +447,8 @@
     "text": "I recently commented on the &quot;who wants to be hired&quot; this month and so far have only received spam. Has anyone had any success with this, or is it just a way to subscribe to junk mail and automated marketing?",
     "url": "https://news.ycombinator.com/item?id=50372294",
     "points": 51,
-    "comments": 42,
-    "score": 5.07
+    "comments": 43,
+    "score": 5.08
    },
    {
     "src": "Hacker News",
@@ -500,18 +482,9 @@
     "title": "WorkOS reports security breach",
     "text": "It&#x27;s not on their website or Trust center yet, but we received the following breach notification from WorkOS: We are writing to notify you of a data security incident that we detected on October 30, 2026 and are continuing to investigate. We value your trust and want to keep you informed while our investigation continues. What Happened On October 30, 2026, at 16:39 UTC, WorkOS detected anomal",
     "url": "https://news.ycombinator.com/item?id=50345712",
-    "points": 80,
+    "points": 81,
     "comments": 11,
-    "score": 4.9
-   },
-   {
-    "src": "Ask HN",
-    "title": "Ask HN: What's it like working at Google nowadays? Core teams like Search, Ads?",
-    "text": "What&#x27;s the culture at Google like these days? For Core Teams Like Gmail, Search, Ads. What&#x27;s it like working in these traditionally critical departments now?",
-    "url": "https://news.ycombinator.com/item?id=50306776",
-    "points": 48,
-    "comments": 28,
-    "score": 4.84
+    "score": 4.91
    },
    {
     "src": "Hacker News",
@@ -524,21 +497,30 @@
    },
    {
     "src": "Ask HN",
+    "title": "Ask HN: What are forgotten topics in computing that deserve a new revisit?",
+    "text": "I mean both things that are enabled by AI coding agents but also things we couldn&#x27;t do because computers weren&#x27;t fast enough in the past.",
+    "url": "https://news.ycombinator.com/item?id=50387483",
+    "points": 39,
+    "comments": 36,
+    "score": 4.77
+   },
+   {
+    "src": "Ask HN",
     "title": "Ask HN: What are you working on? (November 2026)",
     "text": "What are you working on? Any new ideas that you&#x27;re thinking about?",
     "url": "https://news.ycombinator.com/item?id=50328340",
     "points": 23,
-    "comments": 76,
+    "comments": 77,
     "score": 4.65
    },
    {
     "src": "Ask HN",
-    "title": "Ask HN: What are forgotten topics in computing that deserve a new revisit?",
-    "text": "I mean both things that are enabled by AI coding agents but also things we couldn&#x27;t do because computers weren&#x27;t fast enough in the past.",
-    "url": "https://news.ycombinator.com/item?id=50387483",
-    "points": 31,
-    "comments": 29,
-    "score": 4.49
+    "title": "Ask HN: What are you working on? (November 2026)",
+    "text": "What are you working on? What have you been curious about lately?",
+    "url": "https://news.ycombinator.com/item?id=50389501",
+    "points": 23,
+    "comments": 52,
+    "score": 4.48
    },
    {
     "src": "Ask HN",
@@ -546,8 +528,8 @@
     "text": "Now that all I do is basically prompt AI all day, I&#x27;m struggling to actually enjoy work anymore. I don&#x27;t get in the flow like I used with coding, which was when I loved the job the most. I&#x27;m finding all of the AI trends boring at this point. Trying to go with the flow, but not sure I&#x27;m enjoying the ride... How are y&#x27;all feeling?",
     "url": "https://news.ycombinator.com/item?id=50344065",
     "points": 28,
-    "comments": 29,
-    "score": 4.4
+    "comments": 30,
+    "score": 4.42
    },
    {
     "src": "Hacker News",
@@ -559,13 +541,22 @@
     "score": 4.38
    },
    {
+    "src": "Hacker News",
+    "title": "Hugging Face's CEO Says His P(Doom) Is 'Close to Zero'",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50388752",
+    "points": 34,
+    "comments": 18,
+    "score": 4.37
+   },
+   {
     "src": "Show HN",
     "title": "Show HN: Gauge – Open-Source CLI to recursively improve your docs",
     "text": "Hi HN, I’m Evan from Gauge. We’re open-sourcing our CLI to recursively improve your docs for coding agents. The CLI includes a local execution backend, so you don&#x27;t need an account to try it. Explainer video here:  https:&#x2F;&#x2F;youtu.be&#x2F;zhLUlIKB1Mg  The CLI supports a hillclimbing loop: - set up tasks for coding agents that would need your docs, like &#x27;set up Gauge CI checks&#x2",
     "url": "https://news.ycombinator.com/item?id=50371090",
-    "points": 41,
+    "points": 42,
     "comments": 10,
-    "score": 4.29
+    "score": 4.31
    },
    {
     "src": "Hacker News",
@@ -578,18 +569,27 @@
    },
    {
     "src": "Hacker News",
-    "title": "Hugging Face's CEO Says His P(Doom) Is 'Close to Zero'",
-    "text": "",
-    "url": "https://news.ycombinator.com/item?id=50388752",
-    "points": 29,
-    "comments": 7,
-    "score": 3.86
+    "title": "US election results are being suppressed on HN",
+    "text": "Politics is a gray area on HN but we should be able to see and discuss events of this significance. The stories being submitted are all being flagged into oblivion. Sad.  We can do better. I&#x27;ve emailed hn@ on the hope that this will be corrected administratively.",
+    "url": "https://news.ycombinator.com/item?id=50366250",
+    "points": 20,
+    "comments": 21,
+    "score": 3.99
    },
    {
-    "src": "Ask HN",
-    "title": "Ask HN: Is applying to Y Combinator worth it if you aren't an insider?",
-    "text": "I see the application button on the bottom of HN occasionally. I even created an account and started filling out an application. But I&#x27;m hesitant. The upside is a potential initial seed round into my business. The downside is... wasted time? In terms of cost&#x2F;benefit, it seems pretty straight forward. But I get the general impression that applying without knowing someone or being an advan",
-    "url": "https://news.ycombinator.com/item?id=50308286",
+    "src": "Hacker News",
+    "title": "Canva lays off 22% of its workforce; 1,270 people",
+    "text": "This was probably already coming. Sad day for many folks but frankly AI put in a strong pivot in the world of design.",
+    "url": "https://news.ycombinator.com/item?id=50372381",
+    "points": 33,
+    "comments": 5,
+    "score": 3.84
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: You now need a government id in order to create an Anthropic account",
+    "text": "I don&#x27;t know if this is totally new, but I just can&#x27;t believe it. I remember that they requested a telephone number 2 years ago, which was already way too much. But now they forward you to a scetchy website called withpersona.com and want you to make a selife with your passport.",
+    "url": "https://news.ycombinator.com/item?id=50356209",
     "points": 22,
     "comments": 12,
     "score": 3.84
@@ -605,39 +605,12 @@
    },
    {
     "src": "Hacker News",
-    "title": "Tell HN: You now need a government id in order to create an Anthropic account",
-    "text": "I don&#x27;t know if this is totally new, but I just can&#x27;t believe it. I remember that they requested a telephone number 2 years ago, which was already way too much. But now they forward you to a scetchy website called withpersona.com and want you to make a selife with your passport.",
-    "url": "https://news.ycombinator.com/item?id=50356209",
-    "points": 21,
-    "comments": 12,
-    "score": 3.8
-   },
-   {
-    "src": "Hacker News",
-    "title": "Canva lays off 22% of its workforce; 1,270 people",
-    "text": "This was probably already coming. Sad day for many folks but frankly AI put in a strong pivot in the world of design.",
-    "url": "https://news.ycombinator.com/item?id=50372381",
-    "points": 33,
-    "comments": 4,
-    "score": 3.76
-   },
-   {
-    "src": "Hacker News",
-    "title": "\"Wrong\" Email",
-    "text": "Let’s say your LinkedIn account has been restricted, and you can no longer access it. You might try to visit: https:&#x2F;&#x2F;www.linkedin.com&#x2F;&#x2F;help&#x2F;linkedin&#x2F;ask&#x2F;sdsupport or https:&#x2F;&#x2F;www.linkedin.com&#x2F;&#x2F;help&#x2F;linkedin&#x2F;ask&#x2F;ppq to contact customer support. You fill out the form and click &quot;Submit,&quot; but for a split second, a pop-up a",
-    "url": "https://news.ycombinator.com/item?id=50307092",
-    "points": 26,
-    "comments": 5,
-    "score": 3.64
-   },
-   {
-    "src": "Hacker News",
     "title": "Paraguay's president resigns amid banking crisis",
     "text": "",
     "url": "https://news.ycombinator.com/item?id=50381177",
-    "points": 32,
+    "points": 36,
     "comments": 3,
-    "score": 3.64
+    "score": 3.74
    },
    {
     "src": "Hacker News",
@@ -647,6 +620,15 @@
     "points": 22,
     "comments": 4,
     "score": 3.42
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Agentic Identity Broker, OAuth Delegation for AI Agents",
+    "text": "Hi HN, I’m Jan. I am co-author of the Agentic Identity Broker (AIB), an MIT-licensed OAuth2 broker in the Zalando Incubator, that lets a user give an AI agent scoped, revocable access to MCP services. The broker solves three major challenges that are especially relevant in corporate environments: (A) Enable users to delegate workloads to agents without providing the agents all the user’s tokens. (",
+    "url": "https://news.ycombinator.com/item?id=50393235",
+    "points": 17,
+    "comments": 3,
+    "score": 3.11
    },
    {
     "src": "Hacker News",
@@ -663,47 +645,47 @@
     "src": "GitHub",
     "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
     "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
-    "points": 20011,
+    "points": 20199,
     "lang": "TypeScript",
-    "score": 8.6
+    "score": 8.61
    },
    {
     "src": "GitHub",
     "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
     "url": "https://github.com/storytold/craft-anything",
-    "points": 16657,
+    "points": 17660,
     "lang": "Rust",
-    "score": 8.44
+    "score": 8.49
    },
    {
     "src": "GitHub",
     "title": "ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
     "url": "https://github.com/ccch1mneyyy/dsh-Go",
-    "points": 12481,
+    "points": 12876,
     "lang": "Dart",
-    "score": 8.19
+    "score": 8.22
    },
    {
     "src": "GitHub",
     "title": "heydamir/unslop: A Claude skill that turns vibecoded, AI-looking UI into a designed interface",
     "url": "https://github.com/heydamir/unslop",
-    "points": 10368,
+    "points": 10639,
     "lang": "JavaScript",
-    "score": 8.03
+    "score": 8.05
    },
    {
     "src": "GitHub",
     "title": "wangzan101/Mika: An on-device AI agent for Android that operates apps and the web to get things done for you.",
     "url": "https://github.com/wangzan101/Mika",
-    "points": 7309,
+    "points": 7373,
     "lang": "Kotlin",
-    "score": 7.73
+    "score": 7.74
    },
    {
     "src": "GitHub",
     "title": "unclebob/ub-mode: ",
     "url": "https://github.com/unclebob/ub-mode",
-    "points": 7175,
+    "points": 7197,
     "lang": null,
     "score": 7.71
    },
@@ -711,15 +693,15 @@
     "src": "GitHub",
     "title": "rddmwmddr/android-ad-cleaner: 关掉国产安卓手机系统里的广告、热搜、资讯推荐和营销推送。不 root，可还原，支持 AI 智能体一键执行。",
     "url": "https://github.com/rddmwmddr/android-ad-cleaner",
-    "points": 6659,
+    "points": 6732,
     "lang": "Python",
-    "score": 7.65
+    "score": 7.66
    },
    {
     "src": "GitHub",
     "title": "anhao/ai-pose-gallery-zh: 中文版 AI 姿势参考图库 · 1439 组 / 2878 张图片 / 完整汉化 · 零依赖静态画廊",
     "url": "https://github.com/anhao/ai-pose-gallery-zh",
-    "points": 6201,
+    "points": 6242,
     "lang": "TypeScript",
     "score": 7.59
    },
@@ -727,31 +709,31 @@
     "src": "GitHub",
     "title": "patch-gg/pixelfx: 244 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
     "url": "https://github.com/patch-gg/pixelfx",
-    "points": 5480,
+    "points": 5568,
     "lang": "JavaScript",
-    "score": 7.48
+    "score": 7.49
    },
    {
     "src": "GitHub",
     "title": "valentderah/totk-pc-recomp: Static recompilation of The Legend of Zelda: Tears of the Kingdom to native Windows and Linux x86-64, with a Vulkan renderer. Game files not included.",
     "url": "https://github.com/valentderah/totk-pc-recomp",
-    "points": 5271,
+    "points": 5353,
     "lang": "C",
-    "score": 7.44
+    "score": 7.46
    },
    {
     "src": "GitHub",
     "title": "Djihads80/Eglantine: VERY experimental Nintendo Switch 2 emulator",
     "url": "https://github.com/Djihads80/Eglantine",
-    "points": 4650,
+    "points": 4816,
     "lang": "C++",
-    "score": 7.34
+    "score": 7.37
    },
    {
     "src": "GitHub",
     "title": "interplains/Zero-Breach-Toolkit: Free, open-source check for traces of mercenary spyware (Pegasus, Predator, Graphite, Candiru and more) on computers, Android phones and iPhone backups. Double-click a",
     "url": "https://github.com/interplains/Zero-Breach-Toolkit",
-    "points": 4499,
+    "points": 4511,
     "lang": "Python",
     "score": 7.31
    },
@@ -759,7 +741,7 @@
     "src": "GitHub",
     "title": "designfuchen/word-atlas: 词光 · Word Atlas — Illustrated IELTS vocabulary with 7,298 words, UK/US audio and FSRS review. Open-source app + CC BY 4.0 dataset.",
     "url": "https://github.com/designfuchen/word-atlas",
-    "points": 4303,
+    "points": 4315,
     "lang": "TypeScript",
     "score": 7.27
    },
@@ -767,97 +749,97 @@
     "src": "GitHub",
     "title": "BryceYuuu/RUN: RUN · 润：海外移居手册（欧洲 36 国 · 110 条路线 · 主要移民地区）",
     "url": "https://github.com/BryceYuuu/RUN",
-    "points": 4040,
+    "points": 4078,
     "lang": "Python",
-    "score": 7.21
-   },
-   {
-    "src": "GitHub",
-    "title": "KKKKhazix/agent-autoloop: 让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。",
-    "url": "https://github.com/KKKKhazix/agent-autoloop",
-    "points": 3487,
-    "lang": "TypeScript",
-    "score": 7.09
-   },
-   {
-    "src": "GitHub",
-    "title": "t3dotgg/tstack: The agent skills I use every day. Works with Claude Code and Codex.",
-    "url": "https://github.com/t3dotgg/tstack",
-    "points": 3138,
-    "lang": "Python",
-    "score": 6.99
-   },
-   {
-    "src": "GitHub",
-    "title": "haydenschmitty/floorplan: See how your app actually fits together. An interactive, plain-English map of your codebase, drawn by Claude or Codex.",
-    "url": "https://github.com/haydenschmitty/floorplan",
-    "points": 3033,
-    "lang": "JavaScript",
-    "score": 6.96
+    "score": 7.22
    },
    {
     "src": "GitHub",
     "title": "zortos293/Lichii: VERY experimental Nintendo Switch 2 emulator",
     "url": "https://github.com/zortos293/Lichii",
-    "points": 3032,
+    "points": 3656,
     "lang": "C++",
-    "score": 6.96
+    "score": 7.13
+   },
+   {
+    "src": "GitHub",
+    "title": "KKKKhazix/agent-autoloop: 让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。",
+    "url": "https://github.com/KKKKhazix/agent-autoloop",
+    "points": 3640,
+    "lang": "TypeScript",
+    "score": 7.12
+   },
+   {
+    "src": "GitHub",
+    "title": "t3dotgg/tstack: The agent skills I use every day. Works with Claude Code and Codex.",
+    "url": "https://github.com/t3dotgg/tstack",
+    "points": 3172,
+    "lang": "Python",
+    "score": 7
+   },
+   {
+    "src": "GitHub",
+    "title": "haydenschmitty/floorplan: See how your app actually fits together. An interactive, plain-English map of your codebase, drawn by Claude or Codex.",
+    "url": "https://github.com/haydenschmitty/floorplan",
+    "points": 3064,
+    "lang": "JavaScript",
+    "score": 6.97
    },
    {
     "src": "GitHub",
     "title": "worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto: Google_AI_Pro_2Year_ZeroCost_Auto",
     "url": "https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto",
-    "points": 2754,
+    "points": 2851,
     "lang": "Python",
+    "score": 6.91
+   },
+   {
+    "src": "GitHub",
+    "title": "JuneYaooo/rea-video: Reverse-engineer any video, shot by shot: tells whether each shot was filmed, AI-generated or coded, how the captions, cuts and audio were made, and how to remake it. 逆向一切视频，逐镜拆出制",
+    "url": "https://github.com/JuneYaooo/rea-video",
+    "points": 2836,
+    "lang": "Python",
+    "score": 6.91
+   },
+   {
+    "src": "GitHub",
+    "title": "Verlintas/NOIR: 手机隐私审计：用 adb 扫出 Android 应用的权限、上报端点与数据流向，并给出可回滚的处置。Desktop Android leak audit: permissions, endpoints, data flows, reversible fixes.",
+    "url": "https://github.com/Verlintas/NOIR",
+    "points": 2740,
+    "lang": "Kotlin",
     "score": 6.88
    },
    {
     "src": "GitHub",
     "title": "modelflare-ai/AnyModelBot: 🤖 Open-source, local-first alternative to Grok Bot, OpenAI dots and Claude Duet. Your own AI bots on any model: GPT, Claude, Gemini, Grok, DeepSeek, Kimi, GLM and 70+ more ",
     "url": "https://github.com/modelflare-ai/AnyModelBot",
-    "points": 2727,
+    "points": 2724,
     "lang": "Python",
     "score": 6.87
    },
    {
     "src": "GitHub",
-    "title": "Verlintas/NOIR: 手机隐私审计：用 adb 扫出 Android 应用的权限、上报端点与数据流向，并给出可回滚的处置。Desktop Android leak audit: permissions, endpoints, data flows, reversible fixes.",
-    "url": "https://github.com/Verlintas/NOIR",
-    "points": 2682,
-    "lang": "Kotlin",
-    "score": 6.86
-   },
-   {
-    "src": "GitHub",
-    "title": "JuneYaooo/rea-video: Reverse-engineer any video, shot by shot: tells whether each shot was filmed, AI-generated or coded, how the captions, cuts and audio were made, and how to remake it. 逆向一切视频，逐镜拆出制",
-    "url": "https://github.com/JuneYaooo/rea-video",
-    "points": 2543,
-    "lang": "Python",
-    "score": 6.81
-   },
-   {
-    "src": "GitHub",
     "title": "qybaihe/bla: 🛡️ BLA (Blind LLM Agents) — Adversarial defense shield that protects binaries, Electron apps, JS bundles, Python, and WebAssembly against AI reverse-engineering agents like REA. Poison -",
     "url": "https://github.com/qybaihe/bla",
-    "points": 2496,
+    "points": 2537,
     "lang": "TypeScript",
-    "score": 6.79
+    "score": 6.81
    },
    {
     "src": "GitHub",
     "title": "elvarofficial/teardown: A Claude Code skill that turns any machine into a 3D simulator you can take apart",
     "url": "https://github.com/elvarofficial/teardown",
-    "points": 2331,
+    "points": 2398,
     "lang": "JavaScript",
-    "score": 6.74
+    "score": 6.76
    },
    {
     "src": "GitHub",
     "title": "paipiange/nvzhuang: 1407 张 AI 女装参考图集与虚拟试穿网站，支持中英检索、OpenAI Images / Gemini / 豆包及自定义 Base URL、API Key、模型。https://github.com/paipiange/nvzhuang",
     "url": "https://github.com/paipiange/nvzhuang",
-    "points": 2276,
+    "points": 2287,
     "lang": "HTML",
-    "score": 6.71
+    "score": 6.72
    }
   ],
   "news": [
@@ -881,15 +863,15 @@
    },
    {
     "src": "News",
-    "title": "Unit 8200 and Microsoft veterans raise $15 million Seed for cybersecurity startup Brava - CTech",
-    "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFAzbkJVTmd5bS1DVWNuT2FuZi05cDBTdWN0OWxUcFNQRVNKX2FyYnctZjZTeVc5cGI2emdrVzM3N3NDVXgxc1pwamdJSVEzR0F6LXlUQjEwSW42Tzl6RERTOVZvREF6TnB5?oc=5",
-    "date": "Wed, 04 Nov 2026 14:00:00 GMT"
-   },
-   {
-    "src": "News",
     "title": "Boston AI startup promises '100% control' to clients, closes $43M in VC - The Business Journals",
     "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5UZm9zdE5keEZmU2N1N0JhTjk2NEhmRlhnMWpMMFNFVUhsdUhQQjJMQ2V6R3RRSzBoVVZ0TFdvclhpSXZGdjYwRnNQSjhSRG45Mk5QdkgxbGdoVUpxSGdMN18zeXpMQTRFSFJzUkJqVjBtcjNfYWJGZl9TYkMyMkk?oc=5",
     "date": "Wed, 04 Nov 2026 10:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Israeli startups raised at least $872 million in October, led by cybersecurity and AI - CTech",
+    "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1LaHplQ0Z4N1FUN1RGcEx5VWQ0S1lfVTVwbUNpN2k5M1RNRTFDWnlFVlFSN1NWcUJVUGk5RU1zU19uY1otc1JxSlgxSXlwQnF2MVBHR1Bqa0dUUTFrSGhqX0tJR2JyYTQ?oc=5",
+    "date": "Sun, 01 Nov 2026 18:12:00 GMT"
    },
    {
     "src": "News",
@@ -911,9 +893,9 @@
    },
    {
     "src": "News",
-    "title": "Mark Cuban’s Radical Investments Leads $4M Seed Round for Dallas-Based SpendRule - Dallas Innovates",
-    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNZVdFOE9JeS1leWgtbFViS1pSamFXek92S3FpWTh3V2hxZVhIVVN1TEp5bi1VNldRQ1FHSUJpWjlxV2syMU1XQjNVMVc1WWlzSDZ1dnNLNTJ1dXpQV1JkRWU4Tk9wRUg3Si1jSjNPMXc0X25sajFoSnlHMTVMXzFlb2MzV21JNVJ4SWotMHhkQ0c5ZFM1X0xQbVhGa0VSWG9XOVREaXBfM09oejA?oc=5",
-    "date": "Tue, 03 Nov 2026 21:52:26 GMT"
+    "title": "OnSport AI Raises $2M in Pre-Seed Funding - FinSMEs",
+    "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQSUhGUWZrd1dublBWY3J4VkxMc1pqcUpzNHFKZ2N2Wm81cTBLQ2ZENldlNnVJaGg2ckNNaWcwMGdxMmRQVWtWcFNQUUdidm8wcTExMFYwY0dSNE8zaXVuMTJCN0JtVm1BUjlvRk1rV292QVY0Q1dKVTJmdHJlamdEWmg3aw?oc=5",
+    "date": "Fri, 06 Nov 2026 10:54:12 GMT"
    },
    {
     "src": "News",
@@ -923,21 +905,15 @@
    },
    {
     "src": "News",
+    "title": "Syncere Raises $11M in Pre-Seed Funding to Develop Home Robot Disguised as a Lamp - AI Insider",
+    "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOS2Z5WElDVTdROFR4S0J1LVZWSDRFMG9OSHlzS2ZpNktPdkpvTU1INkhUZmExRXAyUkg4R1g0dlE4OGdHcGZsbm45Zk9HdEstMkxqVnpYQmd0cmVaM0NtQkdpS1pFMXY2X2FjV2hlVFpDby1taXk2cDFPYk5WY0ZkR3JyXzM2QlF1WFBrSkh5M2xCaUpzRHlIVVM3MmZ1LTdMekVjQ2VmYjhlSkdMR1BlaWRwaFVFaFJsUVE?oc=5",
+    "date": "Wed, 04 Nov 2026 10:51:14 GMT"
+   },
+   {
+    "src": "News",
     "title": "The AlleyWatch Startup Daily Funding Report: 11/2/2026 - AlleyWatch",
     "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOeDk2OFhkbk5lTkFQUnhoN1JYSndkdmVVSGdTOVNIV1lIQldSb3Z1ZUhidXUzN0xTRE1USUI4SjAweG1nOHFVZEF1N3RQZVZsbTNPdTJQYUdld0p4NnFWTW9KTVA2TWZWMXZOTnNPVnVSbG5XQmdRaXJqU1FNX19IMExzVi1NUF9EZUU0Nnl0dDdyeE0?oc=5",
     "date": "Mon, 02 Nov 2026 19:33:22 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Tumbleweed raises €6.9 mn in Austria’s largest SpaceTech seed round - Beinsure",
-    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPYjhLcl9nc291alVuMmFoVHBYcGpIbG50aDRObWktVllxUFRmVzJVUDVyaDhVNnZDN3B6bzdpSlcwQUVlVDNIczU2RFZNUmJPdi1heUlmMzlGbzk5djNJMXIzUF9QLWFXNzlEWllEX0htOWlIMjN4SjFJR1NNQnhCUVhxT2hpTS12akVkNHp5elE0MmZxdkNN?oc=5",
-    "date": "Wed, 04 Nov 2026 15:42:46 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Finpilot Raises $10 Million Series A Led by Lobby Capital to Bring AI Agents to Institutional Investors - Yahoo Finance",
-    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNLWR1NHMxWDJMc0cxcWtqejlwelRSOVIzWTNOOTE0MUMzOVhnSTRVRWF3LUd6OFBOYUY2VzZPSm1PZUlOLWZfcGg3djJWWUNCc1ROTzhfOHkySUFId1dGTWQzRnpTdzJHeE41Vm1Qek4yRTQ5cWlCUURrbkFFSEpMei12QVZPZndEbjEzSXE1cEVEcE41b1RzUzQ3emlmQQ?oc=5",
-    "date": "Wed, 04 Nov 2026 15:00:00 GMT"
    },
    {
     "src": "News",
@@ -959,6 +935,18 @@
    },
    {
     "src": "News",
+    "title": "Larridin Raises $30 Million in Series A to Prove AI’s Impact Across the Human and Agent Workforce - Yahoo Finance",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPV1JJbnhyNkhDdWZxYXFlV2dkcEdiUkdPYkxBYjY0MDNnLTcyZ0RRcG9zSDAzSEVIcVd3S3QzYWNyM1UzaEttOVB1V0c5WnhvakxrSDE0cUdxcjZ5S1Y5WkNEcEI4N0pGbmgyWFhHLUt0ZEZnUGxpQ3VkVG9IMTZRMVJjbkZBRWlTZGRiZjd3ZW1CemFhTzJWZUlYZjUydw?oc=5",
+    "date": "Mon, 02 Nov 2026 17:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Kalepa raises $75m to scale AI across insurance - FinTech Global",
+    "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPWDBnZWRjemV6UzN3RHdYcW1qUHZTZTI0R1NleVlNWnpZWF9OeHBCQm5GNG5QRWNXNWhTSjVNQ1diQWxVRTZ3NVpnWE1IbXZNOUF3V2pLSHVBN0psR3E4b2c2djZTMmN2d2F6V0p1QWdkYnZGcW81QjBNN0Z3NHFqTjRiV3V0RDNP?oc=5",
+    "date": "Fri, 06 Nov 2026 09:53:17 GMT"
+   },
+   {
+    "src": "News",
     "title": "Ocient Raises $100M Series C Funding to Advance AI Solutions for Petabyte-Scale Environments - HPCwire",
     "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPVGkyTDhZUnRzTlJXZ1h3VGZfN2dCV1lIS1ZZQ3JwVk5TOEJWNFZKTExTaEVldU1lY2N3R2VzMTVPbUxNWGk2aGlnMnlDeGFJRjJKckJvc0xacjdkNTVaUHNvLUxuMWtUTkZIYXVGOWRDbFFGdHZ6X2pzdzMxazM5RXZGcmE4ekJYZjZvTjh6NXg0aTRjVTY4dlYwTGdFVV94ZVFreVNPWG9BQS04MmdQOEg0WkNNTmc4MEdnQ0xBWkg5Y1o5akR2dFROTEVBQVk?oc=5",
     "date": "Fri, 06 Nov 2026 00:57:39 GMT"
@@ -971,15 +959,21 @@
    },
    {
     "src": "News",
-    "title": "Finpilot Raises $10M Series A Led by Lobby Capital to Expand AI Platform for Institutional Investors - citybiz",
-    "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNVkZHRjlxX1ZyU0M1T2hWRFMxNDBHWEsyVWdTZnBDVFVVOGJEdk1lTDNnTFc3aVJfN3V4M1N6dEZWdHVyS1pJdHNOR2ZsVU5rY29VcFJqaFNDeDJmT1ZlU0tHMWp4NmhaRUZUMEJ0UEFOT0pvUV9DcFBHUHo5OFlSc21yRUhwTlZsSV84eXgtaEtMeTFfQmc5N0NhRVh1M1lDejdJRHduT1Q4NHBqMkcxdG9ZcXNVMDJsd0dHVXMzZ3Bqd29GYUxOaFU2dEQ3TXJDejcyUQ?oc=5",
-    "date": "Wed, 04 Nov 2026 21:00:36 GMT"
+    "title": "Fal raises $1.3B Series F at $16B: How two engineers turned a pivot into an AI media giant - Tech Funding News",
+    "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBJUTd4bjVyNmhYRWNyamNTSXN2Uy1fOVFyenk4aXFqTllpWnM5TTdRbkFTTmhPRFEtUUZfTG1Lc2JjY1hSb3NYbEtsa1ZNWHR3UTRPWXcwLVhQWi1KMnA5dnZqRnp3VmZZQWktelA0bC00S3IzR1dybklKSXFzQQ?oc=5",
+    "date": "Wed, 04 Nov 2026 12:19:55 GMT"
    },
    {
     "src": "News",
-    "title": "Five years after its Series A, insurance AI startup Kalepa raises $75M at $470M valuation - Tech Funding News",
-    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1tRHF0c0lfTXpqSzJVSTJtMU53a2ZaRktDY205bXRicUtSS0pKY1hfYnNUQW1renB3bENRQzBSQ0VoUXczeEdFNFg4Qk5NamdUaEk4TGV3VmdGRDY1RXBzQjJUb2RieVJJblY0UTZzQWZaUUVjTDFJ?oc=5",
-    "date": "Thu, 05 Nov 2026 13:03:13 GMT"
+    "title": "Finpilot raises $10M Series A for AI agents that do investors' grunt work - Dealroom",
+    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQekJEc0pJTkx1VnVYTjRuMDA5TUdoYWU4ZUlPN2RzcUJaNTYyVk5uc25WYkJTRG90VTJHODJ4dWg3REl4bS1jZlByU1ZzN3o0angwLWtBU0xpeGpwSXRFNm5wbjFVaWExdEJyVVJUaWhwYTFZa1RuU3pZYl9sV3dEaXlxWkpFZGJKZVFlQW9LZlo4ajdTelJVVjBwMEc3aTBiSC04dEZXNUE?oc=5",
+    "date": "Wed, 04 Nov 2026 18:34:51 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Journify Raises $12M Series A to Expand AI-Powered Advertising Platform Into U.S. and Europe - citybiz",
+    "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOdXpOTWdTWWl6SWtUUFRkczZpVlVQTFRnZDNGd3A3NzZnQTVQWGIwU3gxXzZxWk4tWVpqcTZGWkVuRGRDZ2YyM0ZHZUNqakV3eU9yVU9kVzZPYTdhejJNZXNxYWNXTTRmUml4eV9nSjZtTXRfOWlQbXdSY21Tai1LRDVTTlRRTW5yTVdBcFFhVjBQLXN1UTVZU0xOdVVLb19tYjg1QWFVaU9LRGZuWTJGNlBKbUNuWnpDTURBVGZ1TTBfdFZTWXZzVA?oc=5",
+    "date": "Tue, 03 Nov 2026 16:23:38 GMT"
    },
    {
     "src": "News",
@@ -989,21 +983,9 @@
    },
    {
     "src": "News",
-    "title": "Ocient raises $100M Series C to run AI on petabyte-scale data - Dealroom",
-    "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQREpnS25hR2xpQ3JUWVA5OVI3UmtuOVdRLVFpT1BuZnhSdG1tNFd5SmlKZDdpUmhyd0tuWlo5V3h5bHdBZHZDUmU3dFFPNWhMY0ExZjBIVEVLdmNZWk9pNTg1QVFOdEVHYkJkdlduNm1ta2NYR1VwYXgwSU5xSVgtYmVxNHA2YlR0WHg4a0FzNHNfY3BTX2hXTW1R?oc=5",
-    "date": "Thu, 05 Nov 2026 12:31:54 GMT"
-   },
-   {
-    "src": "News",
     "title": "Fintech Pliant raises $80 mn Series C to expand AI-powered B2B payments - Beinsure",
     "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPU0x3REUybUtOdndvNm5pbktXamxqZFY3ZnkycG5YcUtkZV82d000a09Qc3hfTmJMc1hXUHo3d0NsMGI3cFVadkVyUTJPbWJUeHhEd3ZoVDJOYTBaYWZrYkVOVGRjMDNiOTA1bk5kbk5WWXpyd2JSUjRWNTR0SG5vcTlhQVN4ZmwycEhXMTBDZ3BNUQ?oc=5",
     "date": "Thu, 05 Nov 2026 13:43:43 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Larridin Raises $30 Million in Series A to Prove AI’s Impact Across the Human and Agent Workforce - Yahoo Finance",
-    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPV1JJbnhyNkhDdWZxYXFlV2dkcEdiUkdPYkxBYjY0MDNnLTcyZ0RRcG9zSDAzSEVIcVd3S3QzYWNyM1UzaEttOVB1V0c5WnhvakxrSDE0cUdxcjZ5S1Y5WkNEcEI4N0pGbmgyWFhHLUt0ZEZnUGxpQ3VkVG9IMTZRMVJjbkZBRWlTZGRiZjd3ZW1CemFhTzJWZUlYZjUydw?oc=5",
-    "date": "Mon, 02 Nov 2026 17:00:00 GMT"
    },
    {
     "src": "News",
@@ -1013,33 +995,21 @@
    },
    {
     "src": "News",
-    "title": "What Bluevine learned from $2 billion in mobile check deposits and a growing partner stack - Tearsheet",
-    "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOUEVNRW9kYlI4RjZwR2U5UHRZaUM0Wkl5Mms2X3kxRVlqdmEtaUVZcmp3dmJZSGx6bHhfbENleks4TDREdzBKTHl1MUxqZ1Q5ajBvWE5IZFFldXkwUUt2a3lEbmVaUlZSNG4xY0VJM0pRd1JWZG5DajVOUGl4ME1vMUlwU29PM1JLelJTRGRmRk05RFVkSHZ5b05sOVk2MXFTVEFnb2gweHhyVzZlaElhNDVReEpKV1U0UWdpWA?oc=5",
-    "date": "Thu, 05 Nov 2026 13:13:16 GMT"
+    "title": "HubSpot customers want ‘proof of value’ before they buy - TheStreet",
+    "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9ieUoyd2szbUlLX2NOWDlzR2pwX2tzLVFjbC10Zl9URmZjbFJYUjhDSHY5bTFIOHVRaHN5QklNemZXdndYUk0yampYYXlNVE8zZEFmZ1QxWThvTzRLd0VjbTJnWUZnSTk5ZEVTQUZWWFJlT3YtTEhIOVdR?oc=5",
+    "date": "Fri, 06 Nov 2026 12:37:00 GMT"
    },
    {
     "src": "News",
-    "title": "Exclusive | Demand for Forward-Deployed Engineers Is Leading to $1.5 Million Paychecks - WSJ",
-    "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOOWQ2OGdNZkhPSi1kTnVmOEV2TU16YzA2dEFWT0FGV0lyT0pCVjJCc1J5SWFEakRycUZ1c2tOOHVzUDUtVVdlekJNaEJCbUF2MFJtRmUzWktxLXBWMjRSdWJCLWQ1Tk5GWjcwcTJEcnltQXY4ZjI0c0hQOXp1ZGdKVmRtb1JFdE5oVExBOFBWb3ljRmRCQTdSQ2tkeVFrd2RXZG55QzdhNFFyRU9oc0c2YkNSdEs?oc=5",
-    "date": "Tue, 03 Nov 2026 13:30:00 GMT"
+    "title": "14 Supply Chain Trends for Businesses to Watch in 2026 - Oracle NetSuite",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQWF9oaW9pZFhnRW5BMW9jVlFJOXRIOXBOOEZyVnR0NUgxWDU4cjNEenlLdkZIaEhRNHJCUnY3NlRuc1k3ZVFrRDVvSEJhSm5mUmNVd2txaFE2ekdhTWdjM1FwT3AtYmpuelZzWDhkR2ZWUXJwTDFyS01rOEE2SzNuUkNZemlSYUl3U2ttOHRpRmp2a200ay1qYTktWFE?oc=5",
+    "date": "Tue, 03 Nov 2026 08:00:00 GMT"
    },
    {
     "src": "News",
-    "title": "Sage Finds A $1.1tn SME Green Finance Gap As COP31 Begins - Sustainability Magazine",
-    "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9lSTlyZmQtR2FpWW1XSGFkTmZSV2tSRGlMRTZsUXZfYmV4NWZWWEx4Zmk0WkhONEFpRXFKNkp1N1FVa3l2QlBEdGhnY1RjRkxXRHpmQWs2aUl1ZDNVZGVKTDlVTGZNUDRaRVBNbVM0TWVkTXhkb01rLW5lN24?oc=5",
-    "date": "Fri, 06 Nov 2026 06:43:58 GMT"
-   },
-   {
-    "src": "News",
-    "title": "The best online personal loans of 2026 - CNBC",
-    "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFB0d01uVF9hRlZIRUVCTER5Z2wzb0NILVBwNkliZGxLM2p5V0huMWpVeHZkdG1VQTJmdFp4X09FWWVQUjdrT2lMVnN5LXI0T08za2dDa1FnVTk4aHBRRzFsZFhQTkVhd9IBa0FVX3lxTE83U0Z1UXQ2b1FORTU2ZEhVYi0xUGFEMHhEQWdQa3IxWERSdEp5SFU1dGNkX1Nwc1o5blRJQUYyWUExeWg5aHhneFdzZFhmWllJdTFtMFN5ZEFNb1V6eVdhekxoV3FyS1ROYUxN?oc=5",
-    "date": "Thu, 05 Nov 2026 17:21:25 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Strict rules excluding many B.C. small businesses from tariff relief - Business in Vancouver",
-    "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPajFkeUhsdmZHZ05tVklvcnNsRTB3Q1loSFBKSERZM0pCdzZCUzk2U25UaEtoVHBmTlVmYzBCX0FSZ3BNUWlxeFR5aXdrWFhjeGlpQmlhU0tkc1RRcF9qa2NpVmpNQ0xlNjliOHg1LS11VUh3M3ptaTNDMWFwZU1wNnoxRkVzd2h0bDFFclFudzFSemhjQXR5N0RUOE1ZNVNIdWc?oc=5",
-    "date": "Wed, 04 Nov 2026 14:00:00 GMT"
+    "title": "10 Best Inventory Management Software for Comprehensive Comparison - Small Business Trends",
+    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFA5SUxBWDFobUlnUXB3aWxFTmx0aVZEWXBITzhiempsWmZFbUdSSGR0dUhGbUd2bXlyVmNpdjNOejdHRXZGZHBBcVhGMUJ2eDlFeHZ1SnU1RGRoNlliN2U5dEFTdWdJXzJtUUNJVmF0cjdicW1EdVBv?oc=5",
+    "date": "Fri, 06 Nov 2026 16:31:00 GMT"
    },
    {
     "src": "News",
@@ -1049,21 +1019,15 @@
    },
    {
     "src": "News",
+    "title": "Strict rules excluding many B.C. small businesses from tariff relief - Business in Vancouver",
+    "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPajFkeUhsdmZHZ05tVklvcnNsRTB3Q1loSFBKSERZM0pCdzZCUzk2U25UaEtoVHBmTlVmYzBCX0FSZ3BNUWlxeFR5aXdrWFhjeGlpQmlhU0tkc1RRcF9qa2NpVmpNQ0xlNjliOHg1LS11VUh3M3ptaTNDMWFwZU1wNnoxRkVzd2h0bDFFclFudzFSemhjQXR5N0RUOE1ZNVNIdWc?oc=5",
+    "date": "Wed, 04 Nov 2026 14:00:00 GMT"
+   },
+   {
+    "src": "News",
     "title": "The Complete Guide to Compensation Management - Business.com",
     "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9JbmhpbUN2T1FPMHk2TF96NzVPLTNnQTJJblNHZVVSb1pNZHFpa1huRXZubndDdGRtTTR0b19URVM0ajdfNU9XOTJnZEJCeFcycS04WFg1Sl9vZUZPUTBRcHBXZ0Z0eUlGZERDOWl3?oc=5",
     "date": "Mon, 02 Nov 2026 08:00:00 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Intel and Oracle Join Forces to Enhance AI Capabilities on Cloud - Small Business Trends",
-    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPTXNNLUZGRXJoSFF0em4waU5xeHMwZVNLQ3FLaERNMGowckF2LUNWcGxBQVp0YUVDUzZDaHMwczh1NnZtbmVxcUhBVlgxZTdPOHM3eUZHbDFaXzFtVC1sN05GOE5BUGUyaW12Ul9Db3ZuaGpMUld2TnJNbGthV3gzLUtISVh2ODZwR2RaQXpxbUM5Q2RmaXJN?oc=5",
-    "date": "Sun, 01 Nov 2026 13:05:00 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Best Small Business Loans Of 2026 - Forbes",
-    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9vaDJXSjZzVGNQbTZCc3FQaEcxc1FsemdKMjkwb1NYSTFvMl8zdVdBVFJIOEt4d2lYYUJ5blZ1QkFIS0I1MDhKc04yd05SWlNTMFpsd0NyYmlvQnB2U2tVLWRoYUdUSTFta1JmZklRdy0xOXRYTk8w?oc=5",
-    "date": "Tue, 03 Nov 2026 08:26:00 GMT"
    },
    {
     "src": "News",
@@ -1073,93 +1037,57 @@
    },
    {
     "src": "News",
+    "title": "Are Tech Jobs Still In Demand? Here Are The Roles Employers Are Looking For - Forbes",
+    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE51MFNaV0Q1SmVyZE1Dd2tUdFhCYVQtUDB6a2lPZk53WWtkYzR3X2prd2Q4bndkU3pNUV9sNTJlTGZBdGtMcV9ER21jbkwxemlieTB0WGpqSnFLbG91a29DNWhianBKUU5xYWFRUzZHV2NWbDFESWRn?oc=5",
+    "date": "Thu, 05 Nov 2026 11:30:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "A small Irish business was hit by a cyberattack linked to infected online ad. Then came the ransom demand - The Irish Times",
+    "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQQ2g4STEyZVpVNVJIVTJoQkpPdDBiOVpnb1hBVmNncC14QkpZd1lHS1Q3eXZXaElHaEtiVlN2dGhoZUduQVRVT2JrZlVfckx4bDdkTktpZ2Q1b252WUlRUmRfOEZfUmZJVUNPak41dVg4RDNTcEptQUp0WHZxcm0yNlktX0V3YjZrb0ZMNC1TRF9NdVd1WVdqNjVHRk9hdzdwV0lHWk54T253MjdzeU5MM0xIS2FqcnVENTNfV0hVclFrLUJ2V2VVRURZdGpVU1lKMFM2Qm9adWxJTWNDbGc0UllEZGktekFsVkJtUGRXdUQ?oc=5",
+    "date": "Fri, 06 Nov 2026 06:00:49 GMT"
+   },
+   {
+    "src": "News",
     "title": "Yocale ranks No. 18 on Deloitte’s 2026 Technology Fast 50, the platform behind Yocale.ai - BNN Bloomberg",
     "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNMWdveGVlM1dmZnRNcl9BMzJxd0tUMmZTY096UnlzMHFtR1Q3LTdJVHEyZWdTaWJCaUs1RDBteEYtX3RPNGFLS0lfRU01emctV3psNUl0TnF0ZXFmZEFaWUpiLVl1bmpoRFpTbGVRQzljQVM4aWtBUk1rVjRGWW9nRGQtcnVxMjd5TE5vckJqdk51M25sSHZzZkp4SHZJdUFXS2tVVTFJcEZncTJRT2tTTFFuZERsa3JLdHlDZHRSTzMzSDZuYkpNRnVZak56Y3lWdmoyLWtXS1RNUQ?oc=5",
     "date": "Tue, 03 Nov 2026 14:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "The Small Business Operating System: Building the Infrastructure for the AI Economy - TechFinancials",
+    "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQdUZkX0pQMnZnMHZqNUFXT1p4a0h6WnR0SEFoWjRNRU43dlVNdTdaUERhcjU2Q0FKRE83UHRRc08zQ1otQ2VjblQ1Z2o2QXhqSzBpMzFNSDhxT3lENzJtU3dlRkM5VksxdmJXaVU3ZTVocWU3T2hRYkltY3BoY1FmNWxBRllqS29vck1uQzVCdktLdFlWWVA4aENIeThUMlFzT1FMaUFRRU5KWFRYZ1B6Yk5oQmJ5VTlVRmtYbFpfc0h0dlJCajFsZE9n0gHSAUFVX3lxTE44RVpHeW4xa3NhZTNETVBXZnNadjR0NXQzNU1sMVV4SDFhdnRRN1ZqWlM1aVdhbU9kbFlyTVNzdWhGbkw3bzZFZDdvbGxydlk2WV96WVNvWHEzN25sUXNja0ZJVVFxSl85WlBBWFlZaUJEX051ME9nYVlHTXhDUkdOd3JJZjVOMllEMFF2Snd0bzVvTElfdS1JOTJtS3ZnVG55T0d0dlRLcjB5cHB4bVA2NktfbjdpTnpvWkFUVzlvNVlrd19laTlORjVqTWg5QnJ6UQ?oc=5",
+    "date": "Thu, 05 Nov 2026 05:21:31 GMT"
    }
   ],
   "producthunt": [
    {
     "src": "Product Hunt",
-    "title": "TraceX",
+    "title": "Cursor Craft",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "Tobira Site Agent",
+    "title": "Magic Wonders",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "Kodivo",
+    "title": "Meadow",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "Turnstone",
+    "title": "Native Tasks for Obsidian",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "chalk",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Plainmail",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Rankfender v3.0",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Any Video to Text",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Enhanced for Todoist",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "EdgeBar",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "SafeGrd",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Wonder Dev View",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Thunderduck Inc.",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Meshia",
+    "title": "pwned.coffee",
     "url": "",
     "date": ""
    },
@@ -1171,19 +1099,25 @@
    },
    {
     "src": "Product Hunt",
-    "title": "Letterpress-1",
+    "title": "Openroster",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "DALI AI by SupplyzPro",
+    "title": "Shipnoted",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "Earth Stats",
+    "title": "Meshia",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Moatly",
     "url": "",
     "date": ""
    },
@@ -1195,7 +1129,55 @@
    },
    {
     "src": "Product Hunt",
-    "title": "Koltrix",
+    "title": "Textwhisk",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "axel.md",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "SafeGrd",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Releasebeam",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Alysis Code",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Translucent AI",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Tobira Site Agent",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Cloptima",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Royak",
     "url": "",
     "date": ""
    }

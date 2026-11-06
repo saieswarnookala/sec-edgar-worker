@@ -6,42 +6,42 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 
 **Category:** build
 
-- **What:** Popular launch (1860 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (1863 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50326821>
 
 ## 2. Show HN: Subvocal – Talk to your computer without making noise
 
 **Category:** build
 
-- **What:** Popular launch (837 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (839 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50340088>
 
 ## 3. Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels
 
 **Category:** build
 
-- **What:** Popular launch (481 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (484 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50346755>
 
 ## 4. deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System
 
 **Category:** build
 
-- **What:** New GitHub project with 20011 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 20199 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/deepseek-ai/dsh-superagent-prototype>
 
 ## 5. storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.
 
 **Category:** build
 
-- **What:** New GitHub project with 16657 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 17660 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/storytold/craft-anything>
 
 ## 6. ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。
 
 **Category:** build
 
-- **What:** New GitHub project with 12481 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 12876 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/ccch1mneyyy/dsh-Go>
 
 ## 7. Startup Athena raises $2.5M in pre-seed funding to revamp the revenue model for legal AI - SiliconANGLE
