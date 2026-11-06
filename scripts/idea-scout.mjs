@@ -7,7 +7,7 @@ import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 const UA = { 'User-Agent': 'idea-scout/1.0 (github.com/saieswarnookala/sec-edgar-worker)' };
 const PAIN = /(i would pay|i'd pay|would pay for|willing to pay|is there (a|an|any) (tool|app|service|saas|api|way to automate)|looking for (a|an) (tool|app|service|saas)|wish (there was|someone (would )?(built|made))|nobody has built|somebody (should )?make|(doing|do) (this|it) manually|in (a|excel) spreadsheets?|too expensive|cheaper alternative|open[- ]source alternative)/i;
-const NOISE = /(recommend (a|an)? ?(tv|laptop|phone|book|movie)|who is hiring|who wants to be hired|freelancer\? seeking|salary|layoff|visa)/i;
+const NOISE = /((which|what|best) (tv|laptop|phone|monitor|headphones?|car|book|movie)s?\b|recommend (a|an)? ?(tv|laptop|phone|book|movie)|who is hiring|who wants to be hired|freelancer\? seeking|salary|layoff|visa)/i;
 const DAY = 86400e3;
 
 export function parseRss(xml) {
