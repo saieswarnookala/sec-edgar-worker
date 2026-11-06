@@ -6,7 +6,8 @@
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 const UA = { 'User-Agent': 'idea-scout/1.0 (github.com/saieswarnookala/sec-edgar-worker)' };
-const PAIN = /(i would pay|i'd pay|would pay for|is there (a|any) (tool|app|service)|looking for (a|an) (tool|app|service)|wish (there was|someone)|nobody has built|hate (having|doing)|manual(ly)? |spreadsheet|too expensive|alternative to)/i;
+const PAIN = /(i would pay|i'd pay|would pay for|willing to pay|is there (a|an|any) (tool|app|service|saas|api|way to automate)|looking for (a|an) (tool|app|service|saas)|wish (there was|someone (would )?(built|made))|nobody has built|somebody (should )?make|(doing|do) (this|it) manually|in (a|excel) spreadsheets?|too expensive|cheaper alternative|open[- ]source alternative)/i;
+const NOISE = /(recommend (a|an)? ?(tv|laptop|phone|book|movie)|who is hiring|who wants to be hired|freelancer\? seeking|salary|layoff|visa)/i;
 const DAY = 86400e3;
 
 export function parseRss(xml) {
@@ -75,12 +76,17 @@ async function research(signals, recent, env) {
   const text = (j.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('\n');
   return { ...parseIdeas(text), usage: j.usage };
 }
-export function digestIdeas(signals) { // no-LLM fallback: top pain-point signals
-  const pool = [...signals.hn, ...signals.reddit].filter((x) => PAIN.test(`${x.title} ${x.text || ''}`)).slice(0, 6);
-  const gh = signals.github.slice(0, 3);
-  return { summary: 'Signal digest (no AI analysis: add an ANTHROPIC_API_KEY secret for researched ideas).',
-    ideas: [...pool.map((x) => ({ title: x.title, category: 'build', what: `Demand signal from ${x.src} (${x.points || 0} points, ${x.comments || 0} comments)`, evidence: [x.url], fit: null, confidence: null })),
-      ...gh.map((x) => ({ title: x.title, category: 'build', what: 'Fast-growing new GitHub project; look for a hosted/paid version or integrations', evidence: [x.url] }))] };
+export function digestIdeas(signals) { // free mode: curated signal digest, no AI
+  const ok = (x) => !NOISE.test(x.title);
+  const asks = [...signals.hn, ...signals.reddit].filter((x) => ok(x) && PAIN.test(`${x.title} ${x.text || ''}`)).sort((a, b) => b.score - a.score).slice(0, 5)
+    .map((x) => ({ title: x.title, category: 'build', what: `People asking for this on ${x.src} (${x.points || 0} points, ${x.comments || 0} comments). Read the thread: what do they use today, and would they pay?`, evidence: [x.url] }));
+  const launches = signals.hn.filter((x) => x.src === 'Show HN' && ok(x)).sort((a, b) => (b.points || 0) - (a.points || 0)).slice(0, 3)
+    .map((x) => ({ title: x.title, category: 'build', what: `Popular launch (${x.points} points). Ideas: a niche version, integrations, or a hosted service around it.`, evidence: [x.url] }));
+  const gh = signals.github.filter(ok).slice(0, 3).map((x) => ({ title: x.title, category: 'build', what: `New GitHub project with ${x.points} stars in 2 weeks${x.lang ? ` (${x.lang})` : ''}. Look for a hosted/paid version, support, or plugins.`, evidence: [x.url] }));
+  const money = signals.news.slice(0, 3).map((x) => ({ title: x.title, category: 'service', what: 'Where investors are putting money this week. Look for adjacent problems these customers have.', evidence: [x.url].filter(Boolean) }));
+  const inv = signals.screener.slice(0, 3).map((x) => { const r = x.detail || {}; return { title: `${x.title}${r.sector ? ` (${r.sector})` : ''}`, category: 'invest', what: `From your screener: profitable and growing${r.pe ? `, P/E ${(+r.pe).toFixed(1)}` : ''}${r.net_margin != null ? `, net margin ${(+r.net_margin * (Math.abs(r.net_margin) < 1 ? 100 : 1)).toFixed(1)}%` : ''}. A research lead, not a buy signal.`, evidence: [] }; });
+  return { summary: `Free signal digest: ${asks.length} pain points people want solved, ${launches.length} hot launches, ${gh.length} fast-growing open-source projects, ${money.length} funding stories, ${inv.length} screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)`,
+    ideas: [...asks, ...launches, ...gh, ...money, ...inv] };
 }
 export function toMarkdown(date, res, errors) {
   const L = [`# Idea Scout: ${date}`, '', res.summary || '', ''];

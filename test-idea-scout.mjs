@@ -7,7 +7,8 @@ assert.equal(dedupe([{ url: 'a' }, { url: 'A' }, { url: 'b' }]).length, 2);
 const sig = { hn: [{ src: 'Ask HN', title: 'I would pay for a K8s cost tool', url: 'u1', points: 40 }], reddit: [], github: [{ src: 'GitHub', title: 'x/y: agent', url: 'u2', points: 900 }], producthunt: [], news: [], screener: [] };
 const p = buildPrompt(sig, ['Old idea']); assert.ok(p.includes('K8s cost tool') && p.includes('Old idea') && p.includes('JSON'));
 assert.equal(parseIdeas('Here you go:\n{"summary":"s","ideas":[{"title":"T"}]}\nthanks').ideas[0].title, 'T');
-const d = digestIdeas(sig); assert.equal(d.ideas[0].title, 'I would pay for a K8s cost tool'); assert.equal(d.ideas.length, 2);
+const d = digestIdeas({ ...sig, hn: [...sig.hn.map((x) => ({ ...x, score: 5 })), { src: 'Ask HN', title: 'Which TV do you recommend for privacy?', text: 'doing it manually', score: 9 }] });
+assert.equal(d.ideas[0].title, 'I would pay for a K8s cost tool'); assert.ok(!d.ideas.some((x) => x.title.includes('TV'))); assert.equal(d.ideas.length, 2);
 const md = toMarkdown('2026-11-05', { summary: 'S', ideas: [{ title: 'T', category: 'build', what: 'W', evidence: ['https://e'] }] }, { reddit: '403' });
 assert.ok(md.includes('## 1. T') && md.includes('reddit (403)'));
 // notify with mocked fetch
