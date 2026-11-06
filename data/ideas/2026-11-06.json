@@ -1,40 +1,44 @@
 {
  "date": "2026-11-06",
  "mode": "digest",
- "summary": "Signal digest (no AI analysis: add an ANTHROPIC_API_KEY secret for researched ideas).",
+ "summary": "Free signal digest: 1 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)",
  "ideas": [
-  {
-   "title": "Ask HN: Which TV do you recommend for privacy?",
-   "category": "build",
-   "what": "People asking for this on Ask HN",
-   "evidence": [
-    "https://news.ycombinator.com/item?id=50328896"
-   ],
-   "fit": null,
-   "confidence": null
-  },
   {
    "title": "Show HN: Kairos – Open-source risk and fraud decisioning platform",
    "category": "build",
-   "what": "People asking for this on Ask HN",
+   "what": "People asking for this on Ask HN (104 points, 35 comments). Read the thread: what do they use today, and would they pay?",
    "evidence": [
     "https://news.ycombinator.com/item?id=50358314"
-   ],
-   "fit": null,
-   "confidence": null
+   ]
   },
   {
-   "title": "modelflare-ai/AnyModelBot: 🤖 Open-source, local-first alternative to Grok Bot, OpenAI dots and Claude Duet. Your own AI bots on any model: GPT, Claude, Gemini, Grok, DeepSeek, Kimi, GLM and 70+ more ",
+   "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
    "category": "build",
-   "what": "Fast-growing new GitHub project; look for a hosted/paid version or integrations",
+   "what": "Popular launch (1860 points). Ideas: a niche version, integrations, or a hosted service around it.",
    "evidence": [
-    "https://github.com/modelflare-ai/AnyModelBot"
+    "https://news.ycombinator.com/item?id=50326821"
+   ]
+  },
+  {
+   "title": "Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels",
+   "category": "build",
+   "what": "Popular launch (480 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50346755"
+   ]
+  },
+  {
+   "title": "Show HN: Hacker Times, a New York Times-inspired version of Hacker News",
+   "category": "build",
+   "what": "Popular launch (473 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50346981"
    ]
   },
   {
    "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
    "category": "build",
-   "what": "Fast-growing new GitHub project; look for a hosted/paid version or integrations",
+   "what": "New GitHub project with 19724 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.",
    "evidence": [
     "https://github.com/deepseek-ai/dsh-superagent-prototype"
    ]
@@ -42,10 +46,60 @@
   {
    "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
    "category": "build",
-   "what": "Fast-growing new GitHub project; look for a hosted/paid version or integrations",
+   "what": "New GitHub project with 15767 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.",
    "evidence": [
     "https://github.com/storytold/craft-anything"
    ]
+  },
+  {
+   "title": "ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
+   "category": "build",
+   "what": "New GitHub project with 11904 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/ccch1mneyyy/dsh-Go"
+   ]
+  },
+  {
+   "title": "Startup Athena raises $2.5M in pre-seed funding to revamp the revenue model for legal AI - SiliconANGLE",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPNEZXTVZSaEVYbXJ2aHlGdWg3QWRYLWJCazlYTk1UMDA5TUpiT29hMkRTLWFjV2RjUDVDWl9OTkE1bXE3MFBaRkdoVGp5aEtrdVRGSm1jSWRBa0pwSWxLamtiTWFuN2haNDlwdXRIMG44T3puU09IWTQxYVhXOEx3U2JBM21zN1BQZGlDRldKdTVxLWtkLUFhZ3h4RDRkN09vS0VXeVI3Y2ZtTllJTmpfSDdTSHM4eU5LeEl4TEFmMWZzZw?oc=5"
+   ]
+  },
+  {
+   "title": "Legal AI Startup Athena Raises $2.5M Pre-Seed Funding - Law360",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMirgFBVV95cUxPTFFiWjZWRDhoZUVkOUFKS3lBR3JrZy1hT0E4NWViaTN2MUphWmwyTHlDT0Z0Sjl5VnlpblJPdDhIUk9IbHhOQklFT3pmcnpIQk83S2M3RmZLVTdVOTg0Z2x0MHBwZzdRQjNfd215X1lfa0pVZGhEY3JDdGVJaTYyYXpMVWtlZnhGUGQwVGZiTzgtd0F6UnhEUWxTSXByOWdpYUxoeFhCZmN4U09kNnfSAV5BVV95cUxNV29xZTA0R1NrbjRlUk9DT1l5dFhrNF95c21fY3Rnc3NaVkl4Mnd5MHhnSlZPVW96WjZ1LWR6ZHhRTmhJUTQwUDktaHV5RGhlRlpEcXhhalN3ZEVYUE1R?oc=5"
+   ]
+  },
+  {
+   "title": "Food Supply Startup Lands a $6 Million Seed Funding Round - Los Angeles Business Journal",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMinwFBVV95cUxNdld4TWNKS3lWZFI3YkJNci1CVG9TZW9vUmRFc3lLWEZ2NHRsZ3FKNnpsM2pSRTg4ZEtqRDRYc0lXMWEtQjhDZ0xmLVdDQjFDQTViWjh5MW1ZelR3X09WU1BVTWxCRFd2RkhaR0ZvWWJJX2NPQXUzM3VJOWJuSS0xY1k1Y0UzZEoyLXNPajJySEo5TGtUUjl3TW9jY2U5TDA?oc=5"
+   ]
+  },
+  {
+   "title": "AMD Advanced Micro Devices Inc. (Technology)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 184.1, net margin 12.5%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "MU Micron Technology Inc. (Technology)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 105.4, net margin 22.8%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "LLY Eli Lilly and Company (Health Care)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 64.6, net margin 31.7%. A research lead, not a buy signal.",
+   "evidence": []
   }
  ],
  "errors": {
@@ -54,15 +108,6 @@
  "signals": {
   "hn": [
    {
-    "src": "Ask HN",
-    "title": "Ask HN: Which TV do you recommend for privacy?",
-    "text": "I haven’t owned a TV in years and would like one that respects my privacy. Are there any TV’s which do this well? I am looking for something in the 60”to 80”range and would like a 4k display with at least 60hz display. I don’t mind paying a premium. I have heard good things about Apple TV as a better alternative to most smart TV native apps. Would some TV’s pair better with this than others for pr",
-    "url": "https://news.ycombinator.com/item?id=50328896",
-    "points": 728,
-    "comments": 881,
-    "score": 11.67
-   },
-   {
     "src": "Show HN",
     "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
     "text": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5). It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links back to the comments that mentioned it. Data is downloadable from the about page. To be clear: Claude wrote almost all of it, including the data pipeline and the site. I mostly stee",
@@ -70,6 +115,15 @@
     "points": 1860,
     "comments": 306,
     "score": 9.03
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Which TV do you recommend for privacy?",
+    "text": "I haven’t owned a TV in years and would like one that respects my privacy. Are there any TV’s which do this well? I am looking for something in the 60”to 80”range and would like a 4k display with at least 60hz display. I don’t mind paying a premium. I have heard good things about Apple TV as a better alternative to most smart TV native apps. Would some TV’s pair better with this than others for pr",
+    "url": "https://news.ycombinator.com/item?id=50328896",
+    "points": 728,
+    "comments": 881,
+    "score": 8.67
    },
    {
     "src": "Ask HN",
@@ -310,7 +364,7 @@
     "title": "Show HN: A decent text-to-image model trained for ~$20K (Apache 2.0 Weights)",
     "text": "My brother and I run a 2-person lab that trains our own generative video models from scratch. The ultimate goal is a set of creative tools that make it easier for anyone to make animation. Video models today are too slow&#x2F;expensive and lack sufficient controls. Creativity is an iterative process. You make, you tweak, you get better. In our opinion, they&#x27;re not usable yet for storytelling.",
     "url": "https://news.ycombinator.com/item?id=50368208",
-    "points": 190,
+    "points": 191,
     "comments": 17,
     "score": 5.82
    },
@@ -360,7 +414,7 @@
     "score": 5.55
    },
    {
-    "src": "Show HN",
+    "src": "Ask HN",
     "title": "Show HN: I built a multiplayer game where you're an aerial fighter cat",
     "text": "Hi everyone! I had the idea for catcopter on my mind for a long time (got the domain ~13 years ago). It&#x27;s a web multiplayer game where you can fly a dangerous cat and engage in competition with other players and critters (pterodactyls, chickens and angry penguins). I made it initially for me and my friends but it was quite fun so I thought I&#x27;ll share it here too. The game is intentionall",
     "url": "https://news.ycombinator.com/item?id=50305320",
@@ -424,20 +478,20 @@
    },
    {
     "src": "Ask HN",
+    "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
+    "text": "Hi HN, we have been developing with Firebase for a long time, and the only way Firebase developers can build apps without directly costing them is using the official Firebase Emulator Suite. However, the issue with this suite is, it&#x27;s dependent and running on Java with a old Console UI (not updated in years), that was not built to support tons and millions of data and has pretty bad developer",
+    "url": "https://news.ycombinator.com/item?id=50378643",
+    "points": 81,
+    "comments": 14,
+    "score": 5
+   },
+   {
+    "src": "Ask HN",
     "title": "Tell HN: Don't use Postman, they proxy your info without your permission",
     "text": "When you send a POST request to your server, you think you&#x27;re sending the information to YOUR server, right? That was the default behaviour - as it should be. After updating the Postman client, I noticed Postman also sends the request to their internal servers, which then sends your server the actual request (proxying). I thought I was paranoid until another commenter confirmed the same (http",
     "url": "https://news.ycombinator.com/item?id=50360947",
     "points": 108,
     "comments": 7,
-    "score": 4.98
-   },
-   {
-    "src": "Ask HN",
-    "title": "Show HN: Firenook – Firebase emulators in Rust: 40× faster writes, 10× less RAM",
-    "text": "Hi HN, we have been developing with Firebase for a long time, and the only way Firebase developers can build apps without directly costing them is using the official Firebase Emulator Suite. However, the issue with this suite is, it&#x27;s dependent and running on Java with a old Console UI (not updated in years), that was not built to support tons and millions of data and has pretty bad developer",
-    "url": "https://news.ycombinator.com/item?id=50378643",
-    "points": 79,
-    "comments": 14,
     "score": 4.98
    },
    {
@@ -475,6 +529,15 @@
     "points": 37,
     "comments": 47,
     "score": 4.84
+   },
+   {
+    "src": "Ask HN",
+    "title": "Show HN: BBRouter – Ben Eater's 8-bit computer, simulated on 3D breadboards",
+    "text": "Hi HN, I kept wiring Ben Eater&#x27;s 8-bit computer wrong, so I built a realistic virtual breadboard editor. Some of the nice features are side-by-side diff, scope, schematics auto-sync, auto-router (BBRouter stands for breadboard router), and my favorites: upload from the real Arduino IDE and connect to your AI with MCP, let Claude &amp; co build it or help you troubleshoot. The link is the SAP-",
+    "url": "https://news.ycombinator.com/item?id=50321522",
+    "points": 58,
+    "comments": 14,
+    "score": 4.72
    },
    {
     "src": "Ask HN",
@@ -597,17 +660,9 @@
   "github": [
    {
     "src": "GitHub",
-    "title": "modelflare-ai/AnyModelBot: 🤖 Open-source, local-first alternative to Grok Bot, OpenAI dots and Claude Duet. Your own AI bots on any model: GPT, Claude, Gemini, Grok, DeepSeek, Kimi, GLM and 70+ more ",
-    "url": "https://github.com/modelflare-ai/AnyModelBot",
-    "points": 2720,
-    "lang": "Python",
-    "score": 9.87
-   },
-   {
-    "src": "GitHub",
     "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
     "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
-    "points": 19721,
+    "points": 19724,
     "lang": "TypeScript",
     "score": 8.59
    },
@@ -615,15 +670,15 @@
     "src": "GitHub",
     "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
     "url": "https://github.com/storytold/craft-anything",
-    "points": 15755,
+    "points": 15767,
     "lang": "Rust",
-    "score": 8.39
+    "score": 8.4
    },
    {
     "src": "GitHub",
     "title": "ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
     "url": "https://github.com/ccch1mneyyy/dsh-Go",
-    "points": 11892,
+    "points": 11904,
     "lang": "Dart",
     "score": 8.15
    },
@@ -631,7 +686,7 @@
     "src": "GitHub",
     "title": "heydamir/unslop: A Claude skill that turns vibecoded, AI-looking UI into a designed interface",
     "url": "https://github.com/heydamir/unslop",
-    "points": 10020,
+    "points": 10026,
     "lang": "JavaScript",
     "score": 8
    },
@@ -639,7 +694,7 @@
     "src": "GitHub",
     "title": "wangzan101/Mika: An on-device AI agent for Android that operates apps and the web to get things done for you.",
     "url": "https://github.com/wangzan101/Mika",
-    "points": 7202,
+    "points": 7203,
     "lang": "Kotlin",
     "score": 7.72
    },
@@ -647,7 +702,7 @@
     "src": "GitHub",
     "title": "unclebob/ub-mode: ",
     "url": "https://github.com/unclebob/ub-mode",
-    "points": 7135,
+    "points": 7139,
     "lang": null,
     "score": 7.71
    },
@@ -671,7 +726,7 @@
     "src": "GitHub",
     "title": "patch-gg/pixelfx: 244 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
     "url": "https://github.com/patch-gg/pixelfx",
-    "points": 5363,
+    "points": 5364,
     "lang": "JavaScript",
     "score": 7.46
    },
@@ -679,7 +734,7 @@
     "src": "GitHub",
     "title": "valentderah/totk-pc-recomp: Static recompilation of The Legend of Zelda: Tears of the Kingdom to native Windows and Linux x86-64, with a Vulkan renderer. Game files not included.",
     "url": "https://github.com/valentderah/totk-pc-recomp",
-    "points": 5208,
+    "points": 5209,
     "lang": "C",
     "score": 7.43
    },
@@ -687,7 +742,7 @@
     "src": "GitHub",
     "title": "Djihads80/Eglantine: VERY experimental Nintendo Switch 2 emulator",
     "url": "https://github.com/Djihads80/Eglantine",
-    "points": 4528,
+    "points": 4530,
     "lang": "C++",
     "score": 7.31
    },
@@ -703,7 +758,7 @@
     "src": "GitHub",
     "title": "designfuchen/word-atlas: 词光 · Word Atlas — Illustrated IELTS vocabulary with 7,298 words, UK/US audio and FSRS review. Open-source app + CC BY 4.0 dataset.",
     "url": "https://github.com/designfuchen/word-atlas",
-    "points": 4264,
+    "points": 4265,
     "lang": "TypeScript",
     "score": 7.26
    },
@@ -719,7 +774,7 @@
     "src": "GitHub",
     "title": "KKKKhazix/agent-autoloop: 让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。",
     "url": "https://github.com/KKKKhazix/agent-autoloop",
-    "points": 3364,
+    "points": 3366,
     "lang": "TypeScript",
     "score": 7.05
    },
@@ -727,7 +782,7 @@
     "src": "GitHub",
     "title": "t3dotgg/tstack: The agent skills I use every day. Works with Claude Code and Codex.",
     "url": "https://github.com/t3dotgg/tstack",
-    "points": 3114,
+    "points": 3115,
     "lang": "Python",
     "score": 6.99
    },
@@ -735,15 +790,23 @@
     "src": "GitHub",
     "title": "haydenschmitty/floorplan: See how your app actually fits together. An interactive, plain-English map of your codebase, drawn by Claude or Codex.",
     "url": "https://github.com/haydenschmitty/floorplan",
-    "points": 3010,
+    "points": 3011,
     "lang": "JavaScript",
     "score": 6.96
    },
    {
     "src": "GitHub",
+    "title": "modelflare-ai/AnyModelBot: 🤖 Open-source, local-first alternative to Grok Bot, OpenAI dots and Claude Duet. Your own AI bots on any model: GPT, Claude, Gemini, Grok, DeepSeek, Kimi, GLM and 70+ more ",
+    "url": "https://github.com/modelflare-ai/AnyModelBot",
+    "points": 2720,
+    "lang": "Python",
+    "score": 6.87
+   },
+   {
+    "src": "GitHub",
     "title": "zortos293/Lichii: VERY experimental Nintendo Switch 2 emulator",
     "url": "https://github.com/zortos293/Lichii",
-    "points": 2603,
+    "points": 2607,
     "lang": "C++",
     "score": 6.83
    },
@@ -751,7 +814,7 @@
     "src": "GitHub",
     "title": "Verlintas/NOIR: 手机隐私审计：用 adb 扫出 Android 应用的权限、上报端点与数据流向，并给出可回滚的处置。Desktop Android leak audit: permissions, endpoints, data flows, reversible fixes.",
     "url": "https://github.com/Verlintas/NOIR",
-    "points": 2577,
+    "points": 2579,
     "lang": "Kotlin",
     "score": 6.82
    },
@@ -759,7 +822,7 @@
     "src": "GitHub",
     "title": "worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto: Google_AI_Pro_2Year_ZeroCost_Auto",
     "url": "https://github.com/worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto",
-    "points": 2567,
+    "points": 2568,
     "lang": "Python",
     "score": 6.82
    },
@@ -775,7 +838,7 @@
     "src": "GitHub",
     "title": "JuneYaooo/rea-video: Reverse-engineer any video, shot by shot: tells whether each shot was filmed, AI-generated or coded, how the captions, cuts and audio were made, and how to remake it. 逆向一切视频，逐镜拆出制",
     "url": "https://github.com/JuneYaooo/rea-video",
-    "points": 2266,
+    "points": 2270,
     "lang": "Python",
     "score": 6.71
    },
@@ -783,7 +846,7 @@
     "src": "GitHub",
     "title": "paipiange/nvzhuang: 1407 张 AI 女装参考图集与虚拟试穿网站，支持中英检索、OpenAI Images / Gemini / 豆包及自定义 Base URL、API Key、模型。https://github.com/paipiange/nvzhuang",
     "url": "https://github.com/paipiange/nvzhuang",
-    "points": 2263,
+    "points": 2264,
     "lang": "HTML",
     "score": 6.71
    },
@@ -791,7 +854,7 @@
     "src": "GitHub",
     "title": "elvarofficial/teardown: A Claude Code skill that turns any machine into a 3D simulator you can take apart",
     "url": "https://github.com/elvarofficial/teardown",
-    "points": 2241,
+    "points": 2246,
     "lang": "JavaScript",
     "score": 6.7
    }
@@ -841,21 +904,21 @@
    },
    {
     "src": "News",
-    "title": "Phaze Raises $8.75 Million Seed Round Led by a16z for AI Agent Remote Computer Access - citybiz",
-    "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPa2dPVFpxTVdnS1hHajdOeUFrNGo0MlB4SGV5ajdfN2RFU1NWazBPUGVGLWd0T0dNa1NORlJVOEFHUXNfQnJqb1hmcmhxUVEtR1RIX3cxN3Bvc292VW1mRkxTUE5MSjZoanA1YVFMLXlXZ1Bic1gydjJYUVYwWWdNYk01MkxWZTlwU1cyWUlJREhkMk9qN1BLVUxIa0Fpdk5LcVdzZk45R0MtS0ZKR1dqSmVBX284U3hUcEtmZ0JuVC0?oc=5",
-    "date": "Wed, 04 Nov 2026 14:59:23 GMT"
-   },
-   {
-    "src": "News",
-    "title": "Tumbleweed raises €6.9 mn in Austria’s largest SpaceTech seed round - Beinsure",
-    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPYjhLcl9nc291alVuMmFoVHBYcGpIbG50aDRObWktVllxUFRmVzJVUDVyaDhVNnZDN3B6bzdpSlcwQUVlVDNIczU2RFZNUmJPdi1heUlmMzlGbzk5djNJMXIzUF9QLWFXNzlEWllEX0htOWlIMjN4SjFJR1NNQnhCUVhxT2hpTS12akVkNHp5elE0MmZxdkNN?oc=5",
-    "date": "Wed, 04 Nov 2026 15:42:46 GMT"
-   },
-   {
-    "src": "News",
     "title": "Boston AI startup promises '100% control' to clients, closes $43M in VC - The Business Journals",
     "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5UZm9zdE5keEZmU2N1N0JhTjk2NEhmRlhnMWpMMFNFVUhsdUhQQjJMQ2V6R3RRSzBoVVZ0TFdvclhpSXZGdjYwRnNQSjhSRG45Mk5QdkgxbGdoVUpxSGdMN18zeXpMQTRFSFJzUkJqVjBtcjNfYWJGZl9TYkMyMkk?oc=5",
     "date": "Wed, 04 Nov 2026 10:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Mark Cuban’s Radical Investments Leads $4M Seed Round for Dallas-Based SpendRule - Dallas Innovates",
+    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNZVdFOE9JeS1leWgtbFViS1pSamFXek92S3FpWTh3V2hxZVhIVVN1TEp5bi1VNldRQ1FHSUJpWjlxV2syMU1XQjNVMVc1WWlzSDZ1dnNLNTJ1dXpQV1JkRWU4Tk9wRUg3Si1jSjNPMXc0X25sajFoSnlHMTVMXzFlb2MzV21JNVJ4SWotMHhkQ0c5ZFM1X0xQbVhGa0VSWG9XOVREaXBfM09oejA?oc=5",
+    "date": "Tue, 03 Nov 2026 21:52:26 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Phaze Raises $8.75 Million Seed Round Led by a16z for AI Agent Remote Computer Access - citybiz",
+    "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPa2dPVFpxTVdnS1hHajdOeUFrNGo0MlB4SGV5ajdfN2RFU1NWazBPUGVGLWd0T0dNa1NORlJVOEFHUXNfQnJqb1hmcmhxUVEtR1RIX3cxN3Bvc292VW1mRkxTUE5MSjZoanA1YVFMLXlXZ1Bic1gydjJYUVYwWWdNYk01MkxWZTlwU1cyWUlJREhkMk9qN1BLVUxIa0Fpdk5LcVdzZk45R0MtS0ZKR1dqSmVBX284U3hUcEtmZ0JuVC0?oc=5",
+    "date": "Wed, 04 Nov 2026 14:59:23 GMT"
    },
    {
     "src": "News",
@@ -865,9 +928,9 @@
    },
    {
     "src": "News",
-    "title": "Mark Cuban’s Radical Investments Leads $4M Seed Round for Dallas-Based SpendRule - Dallas Innovates",
-    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNZVdFOE9JeS1leWgtbFViS1pSamFXek92S3FpWTh3V2hxZVhIVVN1TEp5bi1VNldRQ1FHSUJpWjlxV2syMU1XQjNVMVc1WWlzSDZ1dnNLNTJ1dXpQV1JkRWU4Tk9wRUg3Si1jSjNPMXc0X25sajFoSnlHMTVMXzFlb2MzV21JNVJ4SWotMHhkQ0c5ZFM1X0xQbVhGa0VSWG9XOVREaXBfM09oejA?oc=5",
-    "date": "Tue, 03 Nov 2026 21:52:26 GMT"
+    "title": "Tumbleweed raises €6.9 mn in Austria’s largest SpaceTech seed round - Beinsure",
+    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPYjhLcl9nc291alVuMmFoVHBYcGpIbG50aDRObWktVllxUFRmVzJVUDVyaDhVNnZDN3B6bzdpSlcwQUVlVDNIczU2RFZNUmJPdi1heUlmMzlGbzk5djNJMXIzUF9QLWFXNzlEWllEX0htOWlIMjN4SjFJR1NNQnhCUVhxT2hpTS12akVkNHp5elE0MmZxdkNN?oc=5",
+    "date": "Wed, 04 Nov 2026 15:42:46 GMT"
    },
    {
     "src": "News",
@@ -1009,69 +1072,15 @@
    },
    {
     "src": "News",
-    "title": "Neobanking Market Size, Share &amp; Forecast, 2026-2035 - Global Market Insights Inc.",
-    "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1XaU9ZdERRbFVCc2pFWXdoOXdxX2lVV2xuRmZpNVRSZEZ3MXdzR0N3c1ZiaE9icnY4M096N2haWF9sUEo0TVNoY0thWG9tTlNnbHVTUzhnWlZqZHgzVzlYVU9mSUlmWTI4Q0dFMXVnUQ?oc=5",
-    "date": "Sun, 01 Nov 2026 10:16:07 GMT"
+    "title": "Yocale ranks No. 18 on Deloitte’s 2026 Technology Fast 50, the platform behind Yocale.ai - BNN Bloomberg",
+    "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNMWdveGVlM1dmZnRNcl9BMzJxd0tUMmZTY096UnlzMHFtR1Q3LTdJVHEyZWdTaWJCaUs1RDBteEYtX3RPNGFLS0lfRU01emctV3psNUl0TnF0ZXFmZEFaWUpiLVl1bmpoRFpTbGVRQzljQVM4aWtBUk1rVjRGWW9nRGQtcnVxMjd5TE5vckJqdk51M25sSHZzZkp4SHZJdUFXS2tVVTFJcEZncTJRT2tTTFFuZERsa3JLdHlDZHRSTzMzSDZuYkpNRnVZak56Y3lWdmoyLWtXS1RNUQ?oc=5",
+    "date": "Tue, 03 Nov 2026 14:00:00 GMT"
    }
   ],
   "producthunt": [
    {
     "src": "Product Hunt",
-    "title": "Rerun",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
     "title": "Glasshand",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "ChatNest",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Pinku",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Cosyra",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "AI Employees by Easy-Peasy.AI",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Maritime",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Living Brain",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Stitch.ai",
-    "url": "",
-    "date": ""
-   },
-   {
-    "src": "Product Hunt",
-    "title": "Pushary for Teams",
     "url": "",
     "date": ""
    },
@@ -1083,13 +1092,19 @@
    },
    {
     "src": "Product Hunt",
-    "title": "Bridge",
+    "title": "Maritime",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "Wingmen",
+    "title": "Pinku",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "ChatNest",
     "url": "",
     "date": ""
    },
@@ -1101,13 +1116,37 @@
    },
    {
     "src": "Product Hunt",
+    "title": "CC Auto Review",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Pushary for Teams",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
     "title": "Okapi",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "TextKit",
+    "title": "Living Brain",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Rerun",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Wingmen",
     "url": "",
     "date": ""
    },
@@ -1119,13 +1158,37 @@
    },
    {
     "src": "Product Hunt",
-    "title": "Bambu Lab H3C",
+    "title": "Bridge",
     "url": "",
     "date": ""
    },
    {
     "src": "Product Hunt",
-    "title": "CC Auto Review",
+    "title": "Stitch.ai",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "AI Employees by Easy-Peasy.AI",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Cosyra",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "TextKit",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Bambu Lab H3C",
     "url": "",
     "date": ""
    },
