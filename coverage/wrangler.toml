@@ -1,0 +1,5 @@
+name = "coverage-check"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+# Secrets: PORTAL_PASSWORD (required), STEDI_API_KEY (optional, TEST key only), PROVIDER_NPI (optional)

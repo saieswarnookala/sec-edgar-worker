@@ -1,0 +1,29 @@
+name: Deploy coverage portal
+on:
+  push:
+    branches: [main]
+    paths: ['coverage/**', '.github/workflows/coverage.yml']
+  workflow_dispatch: {}
+concurrency: deploy-coverage
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: cd coverage && node test.mjs
+      - name: Deploy to Cloudflare
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PORTAL_PASSWORD: ${{ secrets.COVERAGE_PASSWORD }}
+          STEDI_API_KEY: ${{ secrets.STEDI_API_KEY }}
+        run: |
+          cd coverage
+          npx -y wrangler@4.149.0 deploy
+          node -e 'const o={};for(const k of ["PORTAL_PASSWORD","STEDI_API_KEY"]) if(process.env[k]) o[k]=process.env[k]; require("fs").writeFileSync("/tmp/s.json", JSON.stringify(o)); console.log("secrets:", Object.keys(o).join(", "))'
+          npx -y wrangler@4.149.0 secret bulk /tmp/s.json
+          rm -f /tmp/s.json
