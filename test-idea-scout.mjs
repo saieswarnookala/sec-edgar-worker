@@ -13,7 +13,7 @@ const md = toMarkdown('2026-11-05', { summary: 'S', ideas: [{ title: 'T', catego
 assert.ok(md.includes('## 1. T') && md.includes('reddit (403)'));
 // notify with mocked fetch
 const calls = []; globalThis.fetch = async (url, opt) => { calls.push([url, opt]); return { ok: true, status: 200, json: async () => ({}), text: async () => '' }; };
-const sent = await notify({ NTFY_TOPIC: 'abc' }, 'Title', 'Msg', 'https://click'); assert.deepEqual(sent, ['ntfy ok']); assert.equal(calls[0][0], 'https://ntfy.sh/abc'); assert.equal(calls[0][1].headers.Click, 'https://click');
+const sent = await notify({ NTFY_TOPIC: 'abc' }, 'Title', 'Msg', 'https://click'); assert.equal(sent[0], 'ntfy ok'); assert.equal(calls[0][0], 'https://ntfy.sh/'); const b = JSON.parse(calls[0][1].body); assert.equal(b.topic, 'abc'); assert.equal(b.click, 'https://click'); assert.equal(b.title, 'Title');
 // collect tolerates failing sources
 globalThis.fetch = async () => ({ ok: false, status: 403 });
 const c = await collect(Date.now(), {}); assert.equal(c.signals.hn.length, 0); assert.ok(c.errors.hn);

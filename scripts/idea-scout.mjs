@@ -101,7 +101,10 @@ export function toMarkdown(date, res, errors) {
 }
 export async function notify(env, title, msg, click) {
   const sent = [];
-  if (env.NTFY_TOPIC) { const r = await fetch(`https://ntfy.sh/${env.NTFY_TOPIC}`, { method: 'POST', body: msg, headers: { Title: title, Tags: 'bulb', Click: click, Priority: '3' } }).catch((e) => ({ ok: false, status: e.message })); sent.push(`ntfy ${r.ok ? 'ok' : r.status}`); }
+  if (env.NTFY_TOPIC) { // JSON publish: UTF-8 safe (emoji in headers would throw)
+    const r = await fetch('https://ntfy.sh/', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ topic: env.NTFY_TOPIC.trim(), title, message: msg, tags: ['bulb'], click, priority: 3 }) }).catch((e) => ({ ok: false, status: e.message }));
+    let detail = ''; try { detail = r.text ? (await r.text()).slice(0, 200) : ''; } catch {}
+    sent.push(`ntfy ${r.ok ? 'ok' : r.status} ${detail}`.trim()); }
   if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) { const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: `${title}\n\n${msg}\n\n${click}` }) }).catch((e) => ({ ok: false, status: e.message })); sent.push(`telegram ${r.ok ? 'ok' : r.status}`); }
   return sent;
 }
@@ -118,7 +121,8 @@ async function main(env = process.env) {
   writeFileSync(histF, JSON.stringify([...hist, ...(res.ideas || []).map((x) => ({ date, title: x.title, category: x.category }))].slice(-400), null, 1));
   const top = (res.ideas || []).slice(0, 3).map((x, i) => `${i + 1}. ${x.title}`).join('\n');
   const click = `https://github.com/${env.GITHUB_REPOSITORY || 'saieswarnookala/sec-edgar-worker'}/blob/main/data/ideas/latest.md`;
-  console.log('notify', await notify(env, `💡 ${res.ideas?.length || 0} money ideas (${mode === 'ai' ? 'researched' : 'signals'})`, top || 'No strong signals today.', click));
+  const sent = await notify(env, `💡 ${res.ideas?.length || 0} money ideas (${mode === 'ai' ? 'researched' : 'signals'})`, top || 'No strong signals today.', click);
+  console.log('notify', sent); writeFileSync(`${dir}/notify_log.json`, JSON.stringify({ at: new Date().toISOString(), sent: sent.map((x) => x.replace(env.NTFY_TOPIC || '@@', '***')) }, null, 1));
   console.log(md.slice(0, 1500));
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch((e) => { console.error(e); process.exit(1); });
