@@ -1,0 +1,36 @@
+name: Idea Scout
+on:
+  schedule:
+    - cron: '0 13 * * *'   # daily ~8am Dallas
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: idea-scout
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node test-idea-scout.mjs
+      - name: Research
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/idea-scout.mjs
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          git add -A data/ideas || true
+          git diff --cached --quiet && exit 0
+          git commit -m "idea scout: $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done
