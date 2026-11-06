@@ -79,7 +79,7 @@ export function digestIdeas(signals) { // no-LLM fallback: top pain-point signal
   const pool = [...signals.hn, ...signals.reddit].filter((x) => PAIN.test(`${x.title} ${x.text || ''}`)).slice(0, 6);
   const gh = signals.github.slice(0, 3);
   return { summary: 'Signal digest (no AI analysis: add an ANTHROPIC_API_KEY secret for researched ideas).',
-    ideas: [...pool.map((x) => ({ title: x.title, category: 'build', what: 'People asking for this on ' + x.src, evidence: [x.url], fit: null, confidence: null })),
+    ideas: [...pool.map((x) => ({ title: x.title, category: 'build', what: `Demand signal from ${x.src} (${x.points || 0} points, ${x.comments || 0} comments)`, evidence: [x.url], fit: null, confidence: null })),
       ...gh.map((x) => ({ title: x.title, category: 'build', what: 'Fast-growing new GitHub project; look for a hosted/paid version or integrations', evidence: [x.url] }))] };
 }
 export function toMarkdown(date, res, errors) {
