@@ -36,7 +36,7 @@ async function yahoo(sym) {
     try {
       const r = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?period1=${p1}&period2=${p2}&interval=1d&events=div%2Csplit`, { headers: { 'user-agent': UA } });
       if (r.ok) { const j = await r.json(), res = j.chart?.result?.[0]; if (!res?.timestamp) return null; const q = res.indicators.quote[0], adj = res.indicators.adjclose?.[0]?.adjclose || q.close; const out = {};
-        res.timestamp.forEach((t, k) => { const c = q.close[k], o = q.open[k], ac = adj[k]; if (c > 0 && o > 0 && ac > 0) { const d = new Date((t + 19800) * 1000).toISOString().slice(0, 10); out[d] = { o: o * ac / c, c: ac, tv: (q.volume[k] || 0) * c }; } }); return cleanSeries(out); }
+        res.timestamp.forEach((t, k) => { const c = q.close[k], o = q.open[k], ac = adj[k]; if (c > 0 && o > 0 && ac > 0) { const d = new Date((t + 19800) * 1000).toISOString().slice(0, 10); out[d] = { o: o * ac / c, c: ac, tv: (q.volume[k] || 0) * c }; } }); return cleanSeries(splitAdjust(out)); }
       if (r.status === 404) return null;
     } catch {}
     await sleep(1500 * (a + 1));
@@ -45,13 +45,29 @@ async function yahoo(sym) {
 }
 
 // Remove one-day spikes (bad ticks): a jump of >25% that reverses >20% the next day.
+// Fix unadjusted splits/bonuses: a one-day move matching a common ratio (2,3,4,5,10 or reverse) that persists -> rescale earlier prices.
+export function splitAdjust(p) {
+  const ds = Object.keys(p).sort(); let fixes = 0;
+  for (let i = 1; i < ds.length; i++) {
+    const r = p[ds[i]].c / p[ds[i - 1]].c; if (r > 0.6 && r < 1.7) continue;
+    const next = p[ds[Math.min(i + 3, ds.length - 1)]].c / p[ds[i - 1]].c; // must persist a few days
+    let f = null;
+    for (const k of [2, 3, 4, 5, 10]) { if (Math.abs(r * k - 1) < 0.15 && Math.abs(next * k - 1) < 0.25) f = 1 / k; if (Math.abs(r / k - 1) < 0.15 && Math.abs(next / k - 1) < 0.25) f = k; }
+    if (!f) continue; fixes++;
+    for (let j = 0; j < i; j++) { const x = p[ds[j]]; x.o *= f; x.c *= f; }
+  }
+  if (fixes) p.__splitFixes = fixes;
+  return p;
+}
 export function cleanSeries(p) {
+  const fx = p.__splitFixes; delete p.__splitFixes;
   const ds = Object.keys(p).sort();
   let prev = ds[0];
   for (let i = 1; i < ds.length - 1; i++) {
     const a = p[prev].c, b = p[ds[i]].c, c = p[ds[i + 1]].c, up = b / a - 1, back = c / b - 1;
     if (Math.abs(up) > 0.25 && Math.abs(back) > 0.2 && Math.sign(up) !== Math.sign(back)) delete p[ds[i]]; else prev = ds[i];
   }
+  if (fx) Object.defineProperty(p, 'splitFixes', { value: fx, enumerable: false });
   return p;
 }
 // Merge event lists, keeping the earliest event in any 20-day window per symbol.
@@ -139,7 +155,8 @@ async function main() {
     await sleep(700);
   }
   const bees = beesRaw ? days.map((d) => beesRaw[d]?.c) : null; if (bees) for (let i = 1; i < bees.length; i++) if (!bees[i]) bees[i] = bees[i - 1];
-  const useBees = bees && bees[0] && Object.keys(beesRaw).length > days.length * 0.9;
+  let useBees = bees && bees[0] && Object.keys(beesRaw).length > days.length * 0.9;
+  if (useBees) { const st = stats(days, bees); LOG.push('niftybees dd ' + st.dd + ' splitFixes ' + (beesRaw.splitFixes || 0)); if (st.dd < -60) { useBees = false; LOG.push('NIFTYBEES still broken -> using Nifty 50 index'); } }
   const benchEq = useBees ? bees : days.map((d) => bench[d].c);
   const bstat = stats(days, benchEq);
   const out = { generated: new Date().toISOString(), note: 'nifty100_current = today\'s members (hindsight bias). nifty100_pit = approx point-in-time: top 100 by 120-session median traded value each half-year, from Nifty 500 + former large caps (merged/delisted names only if Yahoo has prices). Costs 0.15%/side. Events: NSE results feed + results announcements from Dec 2024.',
