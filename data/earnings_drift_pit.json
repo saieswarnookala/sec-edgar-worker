@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T00:57:32.839Z",
+ "generated": "2026-11-07T03:11:02.489Z",
  "index": "sp500",
  "ref": "thr8|hold60|n10|any",
  "changes_source": "2026-08-08",
@@ -7626,5 +7626,145 @@
     "benchPreTaxCagr": 14.6
    }
   ]
+ },
+ "robustness": {
+  "spy": {
+   "p2016_20": 15.83,
+   "p2021_24": 13.52,
+   "p2025_26": 14.3,
+   "all": 14.63
+  },
+  "universe": "full_pit",
+  "rows": [
+   {
+    "thr": 4,
+    "hold": 50,
+    "all": 12.52,
+    "maxDD": 33.4,
+    "trades": 437,
+    "p2016_20": 17.11,
+    "p2021_24": 12.12,
+    "p2025_26": 2.95,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 13.4,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   },
+   {
+    "thr": 4,
+    "hold": 60,
+    "all": 19.08,
+    "maxDD": 34.2,
+    "trades": 420,
+    "p2016_20": 24.78,
+    "p2021_24": 15.92,
+    "p2025_26": 12.82,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 15.4,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   },
+   {
+    "thr": 4,
+    "hold": 70,
+    "all": 13.6,
+    "maxDD": 40.8,
+    "trades": 347,
+    "p2016_20": 16.3,
+    "p2021_24": 14.1,
+    "p2025_26": 6.39,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 11.1,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": false
+   },
+   {
+    "thr": 5,
+    "hold": 50,
+    "all": 11.91,
+    "maxDD": 32,
+    "trades": 432,
+    "p2016_20": 16.05,
+    "p2021_24": 12.53,
+    "p2025_26": 1.3,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 13.1,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": false
+   },
+   {
+    "thr": 5,
+    "hold": 60,
+    "all": 21.25,
+    "maxDD": 32.2,
+    "trades": 420,
+    "p2016_20": 24.96,
+    "p2021_24": 17.21,
+    "p2025_26": 21.44,
+    "beatsEveryPeriod": true,
+    "afterTax24Park": 17.4,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   },
+   {
+    "thr": 5,
+    "hold": 70,
+    "all": 12.83,
+    "maxDD": 38.1,
+    "trades": 339,
+    "p2016_20": 12.67,
+    "p2021_24": 14.57,
+    "p2025_26": 9.62,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 11.2,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": false
+   },
+   {
+    "thr": 6,
+    "hold": 50,
+    "all": 14.58,
+    "maxDD": 31.7,
+    "trades": 428,
+    "p2016_20": 21.74,
+    "p2021_24": 9.81,
+    "p2025_26": 8.49,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 15.2,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   },
+   {
+    "thr": 6,
+    "hold": 60,
+    "all": 16.84,
+    "maxDD": 36.7,
+    "trades": 419,
+    "p2016_20": 25.37,
+    "p2021_24": 6.89,
+    "p2025_26": 19.47,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 13.6,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   },
+   {
+    "thr": 6,
+    "hold": 70,
+    "all": 14.3,
+    "maxDD": 46.7,
+    "trades": 332,
+    "p2016_20": 13.13,
+    "p2021_24": 16.77,
+    "p2025_26": 12.04,
+    "beatsEveryPeriod": false,
+    "afterTax24Park": 13.7,
+    "spyAfterTax": 13.3,
+    "beatsAfterTax": true
+   }
+  ],
+  "beatEveryPeriod": 1,
+  "beatAfterTax": 6,
+  "of": 9
  }
 }
