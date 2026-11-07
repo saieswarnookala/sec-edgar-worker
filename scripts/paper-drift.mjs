@@ -49,7 +49,7 @@ async function main() {
   const stFile = 'data/paper_drift_state.json', st0 = existsSync(stFile) ? JSON.parse(readFileSync(stFile, 'utf8')) : { history: [] };
   if (!dry && process.env.FORCE !== '1' && (st0.history || []).some((h) => h.today === today && !h.dry && (h.orders || []).every((o) => !/failed/.test(o)))) { console.log('already traded today', today); return; }
   const nyMin = (() => { const t = new Date().toLocaleString('en-GB', { timeZone: 'America/New_York', hour12: false }).split(' ')[1].split(':'); return +t[0] * 60 + +t[1]; })();
-  const tif = nyMin >= 9 * 60 + 27 && nyMin < 19 * 60 ? 'day' : 'opg';   // opg only accepted 19:00-09:28 ET; otherwise buy at market now
+  const tif = 'day';   // market 'day' orders queue pre-market and fill at the open. (Paper 'opg' orders often expired unfilled: 5 of 6 on 2026-11-05.)
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': `sec-edgar-worker paper-drift/1.0 (${ua})` } })).text();
   const members = parseSp500Html(wiki).filter((t) => t.cik);
   // events whose reaction day is the previous trading day
