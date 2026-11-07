@@ -8,6 +8,7 @@ const COST = 0.0015, START = '2016-01-01';
 const GRID = { thr: [3, 5, 8], hold: [20, 40, 60], slots: [5, 10] };
 const PERIODS = [['2016-01-01', '2020-12-31'], ['2021-01-01', '2024-12-31'], ['2025-01-01', '2026-12-31']];
 let cookie = '';
+const LOG = [];
 async function nse(url) {
   for (let a = 0; a < 4; a++) {
     try {
@@ -71,11 +72,16 @@ async function main() {
   const uni = {};
   for (const [k, name] of [['nifty100', 'NIFTY 100']]) {
     const j = await nse(`https://www.nseindia.com/api/equity-stockIndices?index=${encodeURIComponent(name)}`);
-    uni[k] = (j?.data || []).map((x) => x.symbol).filter((s) => s && !/^NIFTY/.test(s)); console.log(k, uni[k].length, 'members'); await sleep(1500);
+    uni[k] = (j?.data || []).map((x) => x.symbol).filter((s) => s && !/^NIFTY/.test(s));
+    if (!uni[k].length) { // fallback: niftyindices.com constituents CSV
+      try { const t = await (await fetch('https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv', { headers: { 'user-agent': UA } })).text();
+        uni[k] = t.split(/\r?\n/).slice(1).map((l) => l.split(',')[2]).filter((x) => x && /^[A-Z0-9&-]+$/.test(x)); LOG.push('members from niftyindices csv'); } catch (e) { LOG.push('csv fail ' + e.message); }
+    }
+    LOG.push(`${k}: ${uni[k].length} members`); console.log(k, uni[k].length, 'members'); await sleep(1500);
   }
   if (!uni.nifty100.length) throw new Error('could not load index members from NSE');
   const all = [...uni.nifty100];
-  const bench = await yahoo('^NSEI'), beesRaw = await yahoo('NIFTYBEES.NS'); if (!bench) throw new Error('no Nifty data');
+  const bench = await yahoo('^NSEI'), beesRaw = await yahoo('NIFTYBEES.NS'); if (!bench) throw new Error('no Nifty data from Yahoo'); LOG.push('nifty days ' + Object.keys(bench).length + ', bees ' + (beesRaw ? Object.keys(beesRaw).length : 0));
   const days = Object.keys(bench).sort().filter((d) => d >= START);
   const px = {}, evs = {}; let nEv = 0, noPx = [], noEv = [];
   for (const [n, s] of all.entries()) {
@@ -91,6 +97,7 @@ async function main() {
       list.push({ sym: s, ri, date: d1, react: (p[d1].c / p[d0].c - 1) - (bench[d1].c / bench[d0].c - 1) });
     }
     if (!list.length) noEv.push(s); evs[s] = list; nEv += list.length;
+    if (n < 3) LOG.push(`${s}: prices ${Object.keys(p).length}, nse rows ${arr.length}, events ${list.length}`);
     if (n % 25 === 0) console.log(`${n + 1}/${all.length} ${s}: ${list.length} events (total ${nEv})`);
     await sleep(900);
   }
@@ -113,4 +120,4 @@ async function main() {
   }
   mkdirSync('data', { recursive: true }); writeFileSync('data/india_drift.json', JSON.stringify(out, null, 1));
 }
-if ((process.argv[1] || '').split('/').pop() === 'india-drift.mjs') main().catch((e) => { console.error(e); process.exit(1); });
+if ((process.argv[1] || '').split('/').pop() === 'india-drift.mjs') main().catch((e) => { console.error(e); mkdirSync('data', { recursive: true }); writeFileSync('data/india_drift_error.json', JSON.stringify({ at: new Date().toISOString(), error: String(e?.stack || e), log: LOG }, null, 1)); process.exit(1); });
