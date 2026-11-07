@@ -186,6 +186,28 @@ async function main(out = 'data') {
     rob.push(row); console.log('robust', JSON.stringify(row));
   }
   res.robustness = { spy: spyP, universe: 'full_pit', rows: rob, beatEveryPeriod: rob.filter((r) => r.beatsEveryPeriod).length, beatAfterTax: rob.filter((r) => r.beatsAfterTax).length, of: rob.length };
+  // (1) BLEND: money split equally across all 9 neighbour versions (removes lucky timing of one rule).
+  const NB = []; for (const th of [0.04, 0.05, 0.06]) for (const h of [50, 60, 70]) NB.push({ key: `thr${th * 100}|hold${h}|n10|any`, th, h, n: 10, cl: 'any' });
+  const blendCurve = (sig) => { const cs = NB.map((c) => simulate(dates, O, C, sig, c, t0).curve); return cs[0].map(([d], i) => [d, cs.reduce((a, cv) => a + cv[i][1], 0) / cs.length]); };
+  const perStats = (cv) => { const rr = toR2(cv), o = { all: stats(rr).cagr, maxDD: stats(rr).max_dd }; for (const [k, f] of Object.entries(PER)) o[k] = stats(rr.filter(([d]) => f(d))).cagr; return o; };
+  const bl = perStats(blendCurve(Cc.signals));
+  const yrsAT = (Date.parse(dates.at(-1)) - Date.parse(dates[t0])) / 31557600000;
+  const atRuns = NB.map((c) => simTax({ dates, O, C, B: C.SPY, signals: Cc.signals, th: c.th, h: c.h, n: 10, t0, rate: 0.24, park: true, ltRate: 0.15 }));
+  bl.afterTax24Park = +((Math.pow(atRuns.reduce((a, x) => a + x.final, 0) / atRuns.length, 1 / yrsAT) - 1) * 100).toFixed(1); bl.spyAfterTax = atRuns[0].benchCagr;
+  bl.beatsEveryPeriod = Object.keys(PER).every((k) => bl[k] > spyP[k]);
+  res.blend = { versions: NB.map((c) => c.key), spy: spyP, ...bl }; console.log('blend', JSON.stringify(res.blend));
+  // (2) RANDOM PICKS: same signal days and counts, but each stock replaced by a random S&P 500 member of that day. 
+  let seed = 12345; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+  const pool = members.filter((m) => R[m.id] && (!m.removed || m.cik));
+  const elig = {}; for (let t = 0; t < dates.length; t++) if (Cc.signals[t]?.length) elig[t] = pool.filter((m) => dates[t] >= m.start && dates[t] < m.end && O[m.id]?.[t]).map((m) => m.id);
+  const randSig = () => { const out = []; for (const t of Object.keys(elig)) { const e = elig[t]; if (!e.length) continue; out[t] = Cc.signals[t].map((x) => ({ ...x, s: e[Math.floor(rnd() * e.length)] })); } return out; };
+  const refC = NB.find((c) => c.th === 0.05 && c.h === 60), refAll = stats(toR2(simulate(dates, O, C, Cc.signals, refC, t0).curve)).cagr;
+  const rRef = [], rBlend = [];
+  for (let k = 0; k < 1000; k++) { const sg = randSig(); rRef.push(stats(toR2(simulate(dates, O, C, sg, refC, t0).curve)).cagr); if (k < 200) rBlend.push(perStats(blendCurve(sg)).all); }
+  const pct = (arr, v) => +(100 * arr.filter((x) => x < v).length / arr.length).toFixed(1), q = (arr, p) => { const a = [...arr].sort((x, y) => x - y); return +a[Math.floor(p * (a.length - 1))].toFixed(1); };
+  res.random_test = { method: 'same signal days and slot counts, stocks replaced by random point-in-time S&P 500 members; seeded', ref: { rule: refC.key, actual: refAll, runs: rRef.length, beats_pct_of_random: pct(rRef, refAll), random_median: q(rRef, 0.5), random_p95: q(rRef, 0.95) },
+    blend: { actual: bl.all, runs: rBlend.length, beats_pct_of_random: pct(rBlend, bl.all), random_median: q(rBlend, 0.5), random_p95: q(rBlend, 0.95) }, spy: spyP.all };
+  console.log('random', JSON.stringify(res.random_test));
   mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit${IDX === 'sp500' ? '' : '_' + IDX}.json`, JSON.stringify(res, null, 1));
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
   for (const [k, u] of Object.entries(res.universes)) { const r = u.ref; console.log(`\n== ${k} SPY ${u.spy.all.cagr}%  REF all ${r.all.cagr}% dd ${r.all.max_dd} | ${Object.keys(PER).map((p) => `${p} ${r[p].cagr}`).join(' | ')} | %beat ${JSON.stringify(u.pct_beating_spy)} | top10 share ${u.concentration?.top10_share_of_profit_pct}`); }
