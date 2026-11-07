@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-07T00:31:47.472Z",
- "note": "Current index members only (hindsight bias). Costs 0.15%/side. Benchmark: NIFTYBEES (Nifty 50 ETF incl. dividends) or Nifty 50 price index if unavailable.",
+ "generated": "2026-11-07T01:08:38.988Z",
+ "note": "nifty100_current = today's members (hindsight bias). nifty100_pit = approx point-in-time: top 100 by 120-session median traded value each half-year, from Nifty 500 + former large caps (merged/delisted names only if Yahoo has prices). Costs 0.15%/side. Events: NSE results feed + results announcements from Dec 2024.",
  "benchmark": {
-  "name": "NIFTYBEES",
+  "name": "NIFTYBEES (cleaned)",
   "full": {
    "cagr": 12.4,
    "dd": -89.9
@@ -22,29 +22,58 @@
    }
   ]
  },
- "missingPrices": [],
+ "announcementsUsed": 5727,
+ "missingPrices": [
+  "BAGMANE",
+  "DUMMYHEG",
+  "HDFC",
+  "MINDTREE",
+  "LTI",
+  "IBULHSGFIN",
+  "DHFL",
+  "CADILAHC",
+  "MCDOWELL-N",
+  "GRUH",
+  "BHARTIINFRA",
+  "PEL",
+  "SRTRANSFIN",
+  "L&TFH",
+  "MOTHERSUMI",
+  "AMARAJABAT",
+  "TATAMTRDVR",
+  "ADANITRANS",
+  "ADANIGAS",
+  "INFRATEL"
+ ],
  "noEvents": [
-  "HDFCLIFE",
-  "SBILIFE",
-  "ENRIN",
-  "TATACAP",
-  "TMCV",
-  "VAML"
+  "ABBOTINDIA",
+  "BIRET",
+  "EMBASSY",
+  "MCX",
+  "ICICIPRULI"
+ ],
+ "log": [
+  "nifty100 members from csv",
+  "nifty100: 100 members",
+  "nifty500 members from csv",
+  "nifty500: 501 members",
+  "nifty days 2818, bees 2824",
+  "ABB: prices 2825, nse rows 87, ann 8, events 43",
+  "ADANIENSOL: prices 2781, nse rows 86, ann 23, events 44",
+  "ADANIENT: prices 2825, nse rows 158, ann 13, events 44"
  ],
  "universes": {
-  "nifty100": {
-   "members": 100,
-   "withPrices": 100,
-   "events": 3217,
+  "nifty100_current": {
+   "events": 3792,
    "beatBenchFull": 8,
-   "beatAllPeriods": 1,
+   "beatAllPeriods": 2,
    "combos": 18,
    "reference": {
     "thr": 5,
     "hold": 60,
     "slots": 10,
     "full": {
-     "cagr": 18.1,
+     "cagr": 19.4,
      "dd": -17
     },
     "periods": [
@@ -57,13 +86,14 @@
       "dd": -16
      },
      {
-      "cagr": -2.5,
-      "dd": -11.1
+      "cagr": 3.9,
+      "dd": -13.8
      }
     ],
-    "trades": 191,
-    "winRate": 71,
-    "beatAll": false
+    "trades": 232,
+    "winRate": 70,
+    "top10ShareOfGains": 25,
+    "beatAll": true
    },
    "rows": [
     {
@@ -71,7 +101,7 @@
      "hold": 60,
      "slots": 5,
      "full": {
-      "cagr": 24.6,
+      "cagr": 26.7,
       "dd": -33.2
      },
      "periods": [
@@ -84,20 +114,21 @@
        "dd": -25.4
       },
       {
-       "cagr": -4.6,
-       "dd": -18.4
+       "cagr": 4.9,
+       "dd": -20.3
       }
      ],
-     "trades": 162,
+     "trades": 194,
      "winRate": 65,
-     "beatAll": false
+     "top10ShareOfGains": 30,
+     "beatAll": true
     },
     {
      "thr": 5,
      "hold": 60,
      "slots": 5,
      "full": {
-      "cagr": 19.7,
+      "cagr": 20.3,
       "dd": -29.2
      },
      "periods": [
@@ -110,12 +141,13 @@
        "dd": -27.6
       },
       {
-       "cagr": -3.1,
-       "dd": -13.9
+       "cagr": 0,
+       "dd": -18.3
       }
      ],
-     "trades": 127,
-     "winRate": 69,
+     "trades": 154,
+     "winRate": 67,
+     "top10ShareOfGains": 29,
      "beatAll": false
     },
     {
@@ -123,7 +155,7 @@
      "hold": 60,
      "slots": 10,
      "full": {
-      "cagr": 18.8,
+      "cagr": 20.1,
       "dd": -36.5
      },
      "periods": [
@@ -136,12 +168,13 @@
        "dd": -18.6
       },
       {
-       "cagr": -4.5,
-       "dd": -16.1
+       "cagr": 1.8,
+       "dd": -15.9
       }
      ],
-     "trades": 288,
+     "trades": 347,
      "winRate": 65,
+     "top10ShareOfGains": 21,
      "beatAll": false
     },
     {
@@ -149,7 +182,7 @@
      "hold": 60,
      "slots": 10,
      "full": {
-      "cagr": 18.1,
+      "cagr": 19.4,
       "dd": -17
      },
      "periods": [
@@ -162,20 +195,21 @@
        "dd": -16
       },
       {
-       "cagr": -2.5,
-       "dd": -11.1
+       "cagr": 3.9,
+       "dd": -13.8
       }
      ],
-     "trades": 191,
-     "winRate": 71,
-     "beatAll": false
+     "trades": 232,
+     "winRate": 70,
+     "top10ShareOfGains": 25,
+     "beatAll": true
     },
     {
      "thr": 3,
      "hold": 40,
      "slots": 5,
      "full": {
-      "cagr": 17.7,
+      "cagr": 17.1,
       "dd": -35.2
      },
      "periods": [
@@ -188,12 +222,13 @@
        "dd": -14.5
       },
       {
-       "cagr": -3.7,
-       "dd": -8.9
+       "cagr": -6.4,
+       "dd": -23.7
       }
      ],
-     "trades": 175,
-     "winRate": 70,
+     "trades": 210,
+     "winRate": 67,
+     "top10ShareOfGains": 26,
      "beatAll": false
     },
     {
@@ -201,7 +236,7 @@
      "hold": 60,
      "slots": 5,
      "full": {
-      "cagr": 15,
+      "cagr": 14.5,
       "dd": -23.1
      },
      "periods": [
@@ -214,20 +249,21 @@
        "dd": -17.3
       },
       {
-       "cagr": 3.8,
-       "dd": -3.2
+       "cagr": 1.3,
+       "dd": -19.4
       }
      ],
-     "trades": 68,
-     "winRate": 74,
-     "beatAll": true
+     "trades": 80,
+     "winRate": 68,
+     "top10ShareOfGains": 50,
+     "beatAll": false
     },
     {
      "thr": 3,
      "hold": 40,
      "slots": 10,
      "full": {
-      "cagr": 14.8,
+      "cagr": 14.2,
       "dd": -34.8
      },
      "periods": [
@@ -240,12 +276,13 @@
        "dd": -17.4
       },
       {
-       "cagr": -2,
-       "dd": -9.2
+       "cagr": -5.2,
+       "dd": -20.3
       }
      ],
-     "trades": 312,
-     "winRate": 68,
+     "trades": 377,
+     "winRate": 64,
+     "top10ShareOfGains": 19,
      "beatAll": false
     },
     {
@@ -253,7 +290,7 @@
      "hold": 40,
      "slots": 5,
      "full": {
-      "cagr": 14,
+      "cagr": 13.1,
       "dd": -29.1
      },
      "periods": [
@@ -266,12 +303,13 @@
        "dd": -22.2
       },
       {
-       "cagr": -3.2,
-       "dd": -10.5
+       "cagr": -7.4,
+       "dd": -23.6
       }
      ],
-     "trades": 140,
-     "winRate": 71,
+     "trades": 171,
+     "winRate": 68,
+     "top10ShareOfGains": 30,
      "beatAll": false
     },
     {
@@ -292,38 +330,13 @@
        "dd": -15.3
       },
       {
-       "cagr": -2,
-       "dd": -7.9
+       "cagr": -1.9,
+       "dd": -12.2
       }
      ],
-     "trades": 201,
-     "winRate": 72,
-     "beatAll": false
-    },
-    {
-     "thr": 8,
-     "hold": 40,
-     "slots": 5,
-     "full": {
-      "cagr": 10.1,
-      "dd": -20.8
-     },
-     "periods": [
-      {
-       "cagr": 14.2,
-       "dd": -20.8
-      },
-      {
-       "cagr": 9.6,
-       "dd": -14.6
-      },
-      {
-       "cagr": 0.6,
-       "dd": -3.1
-      }
-     ],
-     "trades": 72,
-     "winRate": 79,
+     "trades": 245,
+     "winRate": 69,
+     "top10ShareOfGains": 26,
      "beatAll": false
     },
     {
@@ -331,7 +344,7 @@
      "hold": 20,
      "slots": 5,
      "full": {
-      "cagr": 9.7,
+      "cagr": 11.3,
       "dd": -16.2
      },
      "periods": [
@@ -344,64 +357,40 @@
        "dd": -13
       },
       {
-       "cagr": -2.9,
-       "dd": -7.2
+       "cagr": 5.7,
+       "dd": -10.9
       }
      ],
-     "trades": 212,
+     "trades": 255,
      "winRate": 60,
-     "beatAll": false
-    },
-    {
-     "thr": 5,
-     "hold": 20,
-     "slots": 5,
-     "full": {
-      "cagr": 8.6,
-      "dd": -18.5
-     },
-     "periods": [
-      {
-       "cagr": 12,
-       "dd": -14.3
-      },
-      {
-       "cagr": 8.9,
-       "dd": -18.5
-      },
-      {
-       "cagr": -1,
-       "dd": -3.9
-      }
-     ],
-     "trades": 153,
-     "winRate": 65,
+     "top10ShareOfGains": 24,
      "beatAll": false
     },
     {
      "thr": 8,
-     "hold": 60,
-     "slots": 10,
+     "hold": 40,
+     "slots": 5,
      "full": {
-      "cagr": 8.4,
-      "dd": -11.8
+      "cagr": 9.5,
+      "dd": -20.8
      },
      "periods": [
       {
-       "cagr": 10.6,
-       "dd": -11.8
+       "cagr": 14.2,
+       "dd": -20.8
       },
       {
-       "cagr": 8.5,
-       "dd": -9
+       "cagr": 9.6,
+       "dd": -14.6
       },
       {
-       "cagr": 1.9,
-       "dd": -1.6
+       "cagr": -2.7,
+       "dd": -14.6
       }
      ],
-     "trades": 74,
+     "trades": 84,
      "winRate": 73,
+     "top10ShareOfGains": 53,
      "beatAll": false
     },
     {
@@ -409,7 +398,7 @@
      "hold": 20,
      "slots": 10,
      "full": {
-      "cagr": 8.3,
+      "cagr": 9.4,
       "dd": -16.4
      },
      "periods": [
@@ -422,12 +411,67 @@
        "dd": -14.3
       },
       {
-       "cagr": -3.3,
-       "dd": -6.9
+       "cagr": 2.9,
+       "dd": -5.3
       }
      ],
-     "trades": 341,
+     "trades": 414,
      "winRate": 60,
+     "top10ShareOfGains": 18,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 8.4,
+      "dd": -18.5
+     },
+     "periods": [
+      {
+       "cagr": 12,
+       "dd": -14.3
+      },
+      {
+       "cagr": 8.9,
+       "dd": -18.5
+      },
+      {
+       "cagr": -1.7,
+       "dd": -14.4
+      }
+     ],
+     "trades": 185,
+     "winRate": 63,
+     "top10ShareOfGains": 31,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 8.2,
+      "dd": -11.8
+     },
+     "periods": [
+      {
+       "cagr": 10.6,
+       "dd": -11.8
+      },
+      {
+       "cagr": 8.5,
+       "dd": -9
+      },
+      {
+       "cagr": 0.9,
+       "dd": -10
+      }
+     ],
+     "trades": 86,
+     "winRate": 67,
+     "top10ShareOfGains": 47,
      "beatAll": false
     },
     {
@@ -435,7 +479,7 @@
      "hold": 20,
      "slots": 10,
      "full": {
-      "cagr": 6.9,
+      "cagr": 7,
       "dd": -13.5
      },
      "periods": [
@@ -448,12 +492,13 @@
        "dd": -13.5
       },
       {
-       "cagr": -1,
-       "dd": -3.4
+       "cagr": -0.5,
+       "dd": -6.8
       }
      ],
-     "trades": 208,
-     "winRate": 64,
+     "trades": 252,
+     "winRate": 63,
+     "top10ShareOfGains": 28,
      "beatAll": false
     },
     {
@@ -461,7 +506,7 @@
      "hold": 20,
      "slots": 5,
      "full": {
-      "cagr": 6,
+      "cagr": 5.6,
       "dd": -11.8
      },
      "periods": [
@@ -474,12 +519,13 @@
        "dd": -11.8
       },
       {
-       "cagr": -0.9,
-       "dd": -3.2
+       "cagr": -3.1,
+       "dd": -8.9
       }
      ],
-     "trades": 73,
-     "winRate": 66,
+     "trades": 85,
+     "winRate": 62,
+     "top10ShareOfGains": 60,
      "beatAll": false
     },
     {
@@ -487,7 +533,7 @@
      "hold": 40,
      "slots": 10,
      "full": {
-      "cagr": 5.2,
+      "cagr": 4.9,
       "dd": -10.7
      },
      "periods": [
@@ -500,12 +546,13 @@
        "dd": -7.6
       },
       {
-       "cagr": 0.3,
-       "dd": -1.6
+       "cagr": -1.3,
+       "dd": -7.5
       }
      ],
-     "trades": 76,
-     "winRate": 78,
+     "trades": 88,
+     "winRate": 72,
+     "top10ShareOfGains": 52,
      "beatAll": false
     },
     {
@@ -513,7 +560,7 @@
      "hold": 20,
      "slots": 10,
      "full": {
-      "cagr": 2.9,
+      "cagr": 2.7,
       "dd": -6.1
      },
      "periods": [
@@ -526,13 +573,778 @@
        "dd": -6.1
       },
       {
-       "cagr": -0.5,
-       "dd": -1.6
+       "cagr": -1.5,
+       "dd": -4.5
       }
      ],
-     "trades": 76,
-     "winRate": 64,
+     "trades": 88,
+     "winRate": 61,
+     "top10ShareOfGains": 59,
      "beatAll": false
+    }
+   ]
+  },
+  "nifty100_pit": {
+   "events": 3998,
+   "beatBenchFull": 4,
+   "beatAllPeriods": 0,
+   "combos": 18,
+   "reference": {
+    "thr": 5,
+    "hold": 60,
+    "slots": 10,
+    "full": {
+     "cagr": 12.6,
+     "dd": -32.3
+    },
+    "periods": [
+     {
+      "cagr": 11.9,
+      "dd": -32.3
+     },
+     {
+      "cagr": 18.4,
+      "dd": -21.4
+     },
+     {
+      "cagr": 2,
+      "dd": -17.9
+     }
+    ],
+    "trades": 233,
+    "winRate": 60,
+    "top10ShareOfGains": 26,
+    "beatAll": false
+   },
+   "rows": [
+    {
+     "thr": 3,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 15.1,
+      "dd": -47.1
+     },
+     "periods": [
+      {
+       "cagr": 17.1,
+       "dd": -47.1
+      },
+      {
+       "cagr": 19.5,
+       "dd": -34.8
+      },
+      {
+       "cagr": 0.2,
+       "dd": -18.6
+      }
+     ],
+     "trades": 184,
+     "winRate": 57,
+     "top10ShareOfGains": 31,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 13.8,
+      "dd": -40.7
+     },
+     "periods": [
+      {
+       "cagr": 8.9,
+       "dd": -40.7
+      },
+      {
+       "cagr": 24.9,
+       "dd": -24.5
+      },
+      {
+       "cagr": 4,
+       "dd": -15.7
+      }
+     ],
+     "trades": 331,
+     "winRate": 59,
+     "top10ShareOfGains": 22,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 13.3,
+      "dd": -38.4
+     },
+     "periods": [
+      {
+       "cagr": 16.6,
+       "dd": -38.4
+      },
+      {
+       "cagr": 18.5,
+       "dd": -22.6
+      },
+      {
+       "cagr": -5.7,
+       "dd": -32.5
+      }
+     ],
+     "trades": 147,
+     "winRate": 56,
+     "top10ShareOfGains": 38,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 12.6,
+      "dd": -32.3
+     },
+     "periods": [
+      {
+       "cagr": 11.9,
+       "dd": -32.3
+      },
+      {
+       "cagr": 18.4,
+       "dd": -21.4
+      },
+      {
+       "cagr": 2,
+       "dd": -17.9
+      }
+     ],
+     "trades": 233,
+     "winRate": 60,
+     "top10ShareOfGains": 26,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 9.9,
+      "dd": -26.7
+     },
+     "periods": [
+      {
+       "cagr": 15.1,
+       "dd": -22
+      },
+      {
+       "cagr": 5.5,
+       "dd": -26.7
+      },
+      {
+       "cagr": 5.4,
+       "dd": -13.2
+      }
+     ],
+     "trades": 77,
+     "winRate": 57,
+     "top10ShareOfGains": 56,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 8.6,
+      "dd": -32
+     },
+     "periods": [
+      {
+       "cagr": 12.8,
+       "dd": -32
+      },
+      {
+       "cagr": 11,
+       "dd": -22.2
+      },
+      {
+       "cagr": -6.5,
+       "dd": -18
+      }
+     ],
+     "trades": 167,
+     "winRate": 59,
+     "top10ShareOfGains": 39,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 7.8,
+      "dd": -36.6
+     },
+     "periods": [
+      {
+       "cagr": 5.8,
+       "dd": -36.6
+      },
+      {
+       "cagr": 15.6,
+       "dd": -22.5
+      },
+      {
+       "cagr": -2.6,
+       "dd": -16.6
+      }
+     ],
+     "trades": 364,
+     "winRate": 59,
+     "top10ShareOfGains": 20,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 7.8,
+      "dd": -23.7
+     },
+     "periods": [
+      {
+       "cagr": 11.1,
+       "dd": -19.8
+      },
+      {
+       "cagr": 7,
+       "dd": -23.7
+      },
+      {
+       "cagr": 1.3,
+       "dd": -8.2
+      }
+     ],
+     "trades": 84,
+     "winRate": 64,
+     "top10ShareOfGains": 59,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 7.7,
+      "dd": -36.6
+     },
+     "periods": [
+      {
+       "cagr": 6.4,
+       "dd": -36.6
+      },
+      {
+       "cagr": 16.1,
+       "dd": -28.7
+      },
+      {
+       "cagr": -5.5,
+       "dd": -18.7
+      }
+     ],
+     "trades": 207,
+     "winRate": 58,
+     "top10ShareOfGains": 31,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 6.9,
+      "dd": -32.3
+     },
+     "periods": [
+      {
+       "cagr": 5.7,
+       "dd": -32.3
+      },
+      {
+       "cagr": 13,
+       "dd": -15.7
+      },
+      {
+       "cagr": -2.4,
+       "dd": -12.1
+      }
+     ],
+     "trades": 252,
+     "winRate": 61,
+     "top10ShareOfGains": 28,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 6.7,
+      "dd": -14
+     },
+     "periods": [
+      {
+       "cagr": 10.4,
+       "dd": -11.3
+      },
+      {
+       "cagr": 3.7,
+       "dd": -14
+      },
+      {
+       "cagr": 2.9,
+       "dd": -6.8
+      }
+     ],
+     "trades": 87,
+     "winRate": 59,
+     "top10ShareOfGains": 50,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 4.3,
+      "dd": -12.4
+     },
+     "periods": [
+      {
+       "cagr": 6.4,
+       "dd": -10.4
+      },
+      {
+       "cagr": 3.5,
+       "dd": -12.4
+      },
+      {
+       "cagr": 0.7,
+       "dd": -4.1
+      }
+     ],
+     "trades": 89,
+     "winRate": 63,
+     "top10ShareOfGains": 58,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 4,
+      "dd": -17.5
+     },
+     "periods": [
+      {
+       "cagr": 3.2,
+       "dd": -16.2
+      },
+      {
+       "cagr": 6.2,
+       "dd": -17.5
+      },
+      {
+       "cagr": 1.1,
+       "dd": -7.6
+      }
+     ],
+     "trades": 409,
+     "winRate": 54,
+     "top10ShareOfGains": 20,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 2.9,
+      "dd": -28.3
+     },
+     "periods": [
+      {
+       "cagr": 1.5,
+       "dd": -28.3
+      },
+      {
+       "cagr": 6.8,
+       "dd": -20.8
+      },
+      {
+       "cagr": -1.7,
+       "dd": -12
+      }
+     ],
+     "trades": 254,
+     "winRate": 54,
+     "top10ShareOfGains": 27,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 2.9,
+      "dd": -17.6
+     },
+     "periods": [
+      {
+       "cagr": 4.2,
+       "dd": -17.5
+      },
+      {
+       "cagr": 4.2,
+       "dd": -17.6
+      },
+      {
+       "cagr": -3,
+       "dd": -9.6
+      }
+     ],
+     "trades": 256,
+     "winRate": 54,
+     "top10ShareOfGains": 30,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 2.9,
+      "dd": -18.2
+     },
+     "periods": [
+      {
+       "cagr": 6.7,
+       "dd": -18.1
+      },
+      {
+       "cagr": 0.3,
+       "dd": -18.2
+      },
+      {
+       "cagr": -1.2,
+       "dd": -8.7
+      }
+     ],
+     "trades": 86,
+     "winRate": 52,
+     "top10ShareOfGains": 62,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 2.3,
+      "dd": -20.7
+     },
+     "periods": [
+      {
+       "cagr": 3.9,
+       "dd": -20.7
+      },
+      {
+       "cagr": 3.3,
+       "dd": -17.6
+      },
+      {
+       "cagr": -4.3,
+       "dd": -12.8
+      }
+     ],
+     "trades": 181,
+     "winRate": 51,
+     "top10ShareOfGains": 41,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 1.7,
+      "dd": -9.6
+     },
+     "periods": [
+      {
+       "cagr": 3.7,
+       "dd": -9.6
+      },
+      {
+       "cagr": 0.3,
+       "dd": -9.5
+      },
+      {
+       "cagr": -0.5,
+       "dd": -4.4
+      }
+     ],
+     "trades": 89,
+     "winRate": 53,
+     "top10ShareOfGains": 60,
+     "beatAll": false
+    }
+   ]
+  }
+ },
+ "eventsByYear": {
+  "2016": 1239,
+  "2017": 1320,
+  "2018": 1362,
+  "2019": 1381,
+  "2020": 1460,
+  "2021": 1533,
+  "2022": 1537,
+  "2023": 1667,
+  "2024": 1778,
+  "2025": 1793,
+  "2026": 1815
+ },
+ "pitNotInTodays100": [
+  "ABREL",
+  "ACC",
+  "AMBER",
+  "ANGELONE",
+  "APOLLOTYRE",
+  "ASHOKLEY",
+  "ATGL",
+  "AUBANK",
+  "AUROPHARMA",
+  "AWL",
+  "BALKRISIND",
+  "BALRAMCHIN",
+  "BANDHANBNK",
+  "BANKINDIA",
+  "BATAINDIA",
+  "BDL",
+  "BEML",
+  "BHARATFORG",
+  "BHEL",
+  "BIOCON",
+  "CAMS",
+  "CASTROLIND",
+  "CDSL",
+  "CEATLTD",
+  "CESC",
+  "COCHINSHIP",
+  "COFORGE",
+  "COLPAL",
+  "CONCOR",
+  "DABUR",
+  "DATAPATTNS",
+  "DEEPAKNTR",
+  "DIXON",
+  "ENGINERSIN",
+  "ESCORTS",
+  "FEDERALBNK",
+  "FORTIS",
+  "GLENMARK",
+  "GMDCLTD",
+  "GMRAIRPORT",
+  "GODREJPROP",
+  "GRAPHITE",
+  "GROWW",
+  "GRSE",
+  "GVT&D",
+  "HAVELLS",
+  "HEGAM",
+  "HEROMOTOCO",
+  "HFCL",
+  "HINDCOPPER",
+  "HINDPETRO",
+  "HUDCO",
+  "ICICILIFE",
+  "IDBI",
+  "IDFCFIRSTB",
+  "IEX",
+  "IGL",
+  "INDHOTEL",
+  "INDIACEM",
+  "INDUSINDBK",
+  "INDUSTOWER",
+  "IRCON",
+  "IRCTC",
+  "IREDA",
+  "JETAIRWAYS",
+  "JSWENERGY",
+  "JUBLFOOD",
+  "KALYANKJIL",
+  "KAYNES",
+  "KPITTECH",
+  "LAURUSLABS",
+  "LICHSGFIN",
+  "LICI",
+  "LTF",
+  "LTTS",
+  "LUPIN",
+  "M&MFIN",
+  "MAHABANK",
+  "MANAPPURAM",
+  "MARICO",
+  "MCX",
+  "MPHASIS",
+  "MRF",
+  "MTARTECH",
+  "NATIONALUM",
+  "NAUKRI",
+  "NBCC",
+  "NCC",
+  "NETWEB",
+  "NHPC",
+  "NMDC",
+  "NYKAA",
+  "OFSS",
+  "OIL",
+  "OLAELEC",
+  "PAGEIND",
+  "PAYTM",
+  "PERSISTENT",
+  "PETRONET",
+  "POLICYBZR",
+  "PVRINOX",
+  "RAILTEL",
+  "RBLBANK",
+  "RCOM",
+  "RECLTD",
+  "RELINFRA",
+  "RPOWER",
+  "RVNL",
+  "SAIL",
+  "SAMMAANCAP",
+  "SBICARD",
+  "SHREECEM",
+  "SJVN",
+  "SONACOMS",
+  "SRF",
+  "SUNTV",
+  "SUZLON",
+  "SWIGGY",
+  "TATACHEM",
+  "TATACOMM",
+  "TATAELXSI",
+  "UBL",
+  "UNITDSPR",
+  "UPL",
+  "VOLTAS",
+  "WAAREEENER",
+  "WOCKPHARMA",
+  "YESBANK",
+  "ZEEL"
+ ],
+ "afterTax": {
+  "rule": "thr5|hold60|n10",
+  "benchmark": "NIFTYBEES (cleaned) held, 12.5% LTCG on the gain at the end",
+  "note": "Gains netted yearly, losses carried forward. Dividend tax and the Rs 1.25 lakh LTCG exemption ignored.",
+  "universes": {
+   "nifty100_current": [
+    {
+     "rate": 0,
+     "park": false,
+     "cagr": 18.9,
+     "final": 6.545,
+     "maxDD": -17.3,
+     "taxPaid": 0,
+     "trades": 232,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0,
+     "park": true,
+     "cagr": 24.6,
+     "final": 10.807,
+     "maxDD": -34,
+     "taxPaid": 0,
+     "trades": 232,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0.2,
+     "park": false,
+     "cagr": 15.6,
+     "final": 4.791,
+     "maxDD": -22.4,
+     "taxPaid": 0.948,
+     "trades": 232,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0.2,
+     "park": true,
+     "cagr": 20.3,
+     "final": 7.39,
+     "maxDD": -34.1,
+     "taxPaid": 1.59,
+     "trades": 232,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    }
+   ],
+   "nifty100_pit": [
+    {
+     "rate": 0,
+     "park": false,
+     "cagr": 12.5,
+     "final": 3.583,
+     "maxDD": -32.5,
+     "taxPaid": 0,
+     "trades": 233,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0,
+     "park": true,
+     "cagr": 18.2,
+     "final": 6.136,
+     "maxDD": -39.2,
+     "taxPaid": 0,
+     "trades": 233,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0.2,
+     "park": false,
+     "cagr": 10.2,
+     "final": 2.854,
+     "maxDD": -32.8,
+     "taxPaid": 0.468,
+     "trades": 233,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
+    },
+    {
+     "rate": 0.2,
+     "park": true,
+     "cagr": 14.9,
+     "final": 4.495,
+     "maxDD": -40,
+     "taxPaid": 0.879,
+     "trades": 233,
+     "benchCagr": 11.4,
+     "benchPreTaxCagr": 12.4
     }
    ]
   }
