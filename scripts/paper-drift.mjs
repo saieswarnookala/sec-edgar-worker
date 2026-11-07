@@ -1,4 +1,5 @@
 // Earnings-drift PAPER trader. Runs before the US open on weekdays. PAPER ONLY: endpoint is hard-coded.
+// Idle cash parked in SPY (added 2026-11-06).
 // Rule (from earnings_drift_pit backtest, thr5|hold60|n10|any): S&P 500 stock whose earnings reaction day
 // (SEC 8-K Item 2.02) was the last trading day and that beat SPY by >= 5% that day -> buy at today's open,
 // equal 1/10 of equity, max 10 positions, sell at the open after 60 trading days. Long only. Not financial advice.
@@ -7,7 +8,15 @@ import { pathToFileURL } from 'node:url';
 import { parseSp500Html } from './build-quality-dips.mjs';
 import { parse8k, reactionIndex } from './earnings-drift.mjs';
 export const PAPER = 'https://paper-api.alpaca.markets', DATA = 'https://data.alpaca.markets';
-export const THR = 0.05, HOLD = 60, SLOTS = 10;
+export const THR = 0.05, HOLD = 60, SLOTS = 10, PARK = 'SPY', PARK_BUFFER = 0.02;
+// Idle cash is parked in SPY (backtest: ~+1 pt/yr). Target SPY value = equity*(1-buffer) - value of stock positions after today's trades.
+// Returns a share delta (negative = sell). Small changes (< 0.5% of equity) are skipped to avoid churn.
+export function parkOrder({ equity, stockValue, spyPx, spyHeld = 0, buffer = PARK_BUFFER }) {
+  if (!(spyPx > 0) || !(equity > 0)) return 0;
+  const target = Math.max(0, Math.floor((equity * (1 - buffer) - stockValue) / spyPx));
+  const delta = target - spyHeld;
+  return Math.abs(delta) * spyPx <= equity * 0.005 ? 0 : delta;
+}
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Pure decision logic. state.positions: [{symbol, entry_date, qty}]; days: trading dates ascending ending with today.
@@ -52,16 +61,24 @@ async function main() {
   const bars = (await api(DATA, '/v2/stocks/bars?' + p)).bars || {};
   const ret = (s) => { const a = (bars[s] || []).filter((b) => b.t.slice(0, 10) <= prev); return a.length >= 2 && a.at(-1).t.slice(0, 10) === prev ? a.at(-1).c / a.at(-2).c - 1 : null; };
   const spy = ret('SPY'), signals = [], prices = {};
-  for (const s of cands) { const r = ret(s); const c = (bars[s] || []).at(-1)?.c; if (r != null && spy != null && c >= 5 && r - spy >= THR) { signals.push({ symbol: s, r: r - spy }); prices[s] = c; } }
+  for (const s of cands.filter((x) => x !== PARK)) { const r = ret(s); const c = (bars[s] || []).at(-1)?.c; if (r != null && spy != null && c >= 5 && r - spy >= THR) { signals.push({ symbol: s, r: r - spy }); prices[s] = c; } }
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
   const file = 'data/paper_drift_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
   const d = decide({ today, days, state, held, signals, equity: +acct.equity, prices });
   log.earnings_reactions_checked = cands.length; log.signals = signals; log.sells = d.sells; log.buys = d.buys;
   const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: 'opg' }) });
   const done = [];
+  // SPY parking: value of stocks after today = kept positions (market value) + new buys at last close
+  const mv = Object.fromEntries(posList.map((x) => [x.symbol, +x.market_value]));
+  const stockValue = d.keep.reduce((a, k) => a + (mv[k.symbol] || 0), 0) + d.buys.reduce((a, b) => a + b.qty * prices[b.symbol], 0);
+  const spyPx = (bars.SPY || []).at(-1)?.c, spyHeld = held[PARK] || 0;
+  const park = parkOrder({ equity: +acct.equity, stockValue, spyPx, spyHeld });
+  log.park = { spy_held: spyHeld, spy_delta: park, spy_price: spyPx, stock_value: Math.round(stockValue) };
   if (!dry) {
+    if (park < 0) { try { await order(PARK, -park, 'sell'); done.push(`SELL ${-park} ${PARK} (park)`); } catch (e) { done.push(`SELL ${PARK} failed: ${e.message}`); } }
     for (const s of d.sells) { try { await order(s.symbol, s.qty, 'sell'); done.push(`SELL ${s.qty} ${s.symbol}`); } catch (e) { done.push(`SELL ${s.symbol} failed: ${e.message}`); d.keep.push(state.positions.find((x) => x.symbol === s.symbol)); } }
     for (const b of d.buys) { try { await order(b.symbol, b.qty, 'buy'); done.push(`BUY ${b.qty} ${b.symbol}`); d.keep.push({ symbol: b.symbol, entry_date: today, qty: b.qty, reaction_pct: +(b.r * 100).toFixed(1) }); } catch (e) { done.push(`BUY ${b.symbol} failed: ${e.message}`); } }
+    if (park > 0) { try { await order(PARK, park, 'buy'); done.push(`BUY ${park} ${PARK} (park)`); } catch (e) { done.push(`BUY ${PARK} failed: ${e.message}`); } }
   }
   log.orders = done; state.positions = d.keep.filter(Boolean); state.history = [...(state.history || []), log].slice(-400); state.updated = log.run;
   mkdirSync('data', { recursive: true }); writeFileSync(file, JSON.stringify(state, null, 1));
