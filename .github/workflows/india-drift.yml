@@ -5,7 +5,7 @@ concurrency: india-drift
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     permissions:
       contents: write
     steps:

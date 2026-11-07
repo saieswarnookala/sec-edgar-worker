@@ -6,6 +6,7 @@ const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const COST = 0.0015, START = '2016-01-01';
 const GRID = { thr: [3, 5, 8], hold: [20, 40, 60], slots: [5, 10] };
+const FORMER = ['HDFC', 'MINDTREE', 'LTI', 'IBULHSGFIN', 'DHFL', 'ZEEL', 'IDEA', 'YESBANK', 'CADILAHC', 'MCDOWELL-N', 'GRUH', 'BHARTIINFRA', 'PEL', 'AUROPHARMA', 'GLENMARK', 'RCOM', 'RELINFRA', 'RPOWER', 'JETAIRWAYS', 'SRTRANSFIN', 'L&TFH', 'NIACL', 'GICRE', 'BANKBARODA', 'IDBI', 'PNB', 'CANBK', 'MOTHERSUMI', 'AMARAJABAT', 'TATAMTRDVR', 'ADANITRANS', 'ADANIGAS', 'INFRATEL', 'HDFCAMC', 'VEDL', 'NMDC', 'SAIL', 'BHEL', 'OFSS', 'MRF', 'PAGEIND', 'BOSCHLTD', 'CONCOR', 'PETRONET', 'IGL', 'GAIL', 'ACC', 'AMBUJACEM', 'LUPIN', 'BIOCON', 'COLPAL', 'MARICO', 'DABUR', 'GODREJCP', 'HAVELLS', 'BERGEPAINT', 'PIDILITIND', 'SIEMENS', 'ABB', 'INDIGO', 'NAUKRI', 'UBL', 'TORNTPHARM', 'ICICIPRULI', 'ICICIGI', 'BANDHANBNK', 'PGHH', 'DLF', 'MUTHOOTFIN', 'COFORGE', 'PERSISTENT', 'TATAPOWER', 'TATACHEM', 'CHOLAFIN', 'APOLLOHOSP'];
 const PERIODS = [['2016-01-01', '2020-12-31'], ['2021-01-01', '2024-12-31'], ['2025-01-01', '2026-12-31']];
 let cookie = '';
 const LOG = [];
@@ -34,12 +35,44 @@ async function yahoo(sym) {
     try {
       const r = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?period1=${p1}&period2=${p2}&interval=1d&events=div%2Csplit`, { headers: { 'user-agent': UA } });
       if (r.ok) { const j = await r.json(), res = j.chart?.result?.[0]; if (!res?.timestamp) return null; const q = res.indicators.quote[0], adj = res.indicators.adjclose?.[0]?.adjclose || q.close; const out = {};
-        res.timestamp.forEach((t, k) => { const c = q.close[k], o = q.open[k], ac = adj[k]; if (c > 0 && o > 0 && ac > 0) { const d = new Date((t + 19800) * 1000).toISOString().slice(0, 10); out[d] = { o: o * ac / c, c: ac }; } }); return out; }
+        res.timestamp.forEach((t, k) => { const c = q.close[k], o = q.open[k], ac = adj[k]; if (c > 0 && o > 0 && ac > 0) { const d = new Date((t + 19800) * 1000).toISOString().slice(0, 10); out[d] = { o: o * ac / c, c: ac, tv: (q.volume[k] || 0) * c }; } }); return cleanSeries(out); }
       if (r.status === 404) return null;
     } catch {}
     await sleep(1500 * (a + 1));
   }
   return null;
+}
+
+// Remove one-day spikes (bad ticks): a jump of >25% that reverses >20% the next day.
+export function cleanSeries(p) {
+  const ds = Object.keys(p).sort();
+  let prev = ds[0];
+  for (let i = 1; i < ds.length - 1; i++) {
+    const a = p[prev].c, b = p[ds[i]].c, c = p[ds[i + 1]].c, up = b / a - 1, back = c / b - 1;
+    if (Math.abs(up) > 0.25 && Math.abs(back) > 0.2 && Math.sign(up) !== Math.sign(back)) delete p[ds[i]]; else prev = ds[i];
+  }
+  return p;
+}
+// Merge event lists, keeping the earliest event in any 20-day window per symbol.
+export function dedupeEvents(list) {
+  const out = []; for (const e of [...list].sort((a, b) => a.date.localeCompare(b.date) || (a.mins ?? 0) - (b.mins ?? 0)))
+    if (!out.some((o) => Math.abs(Date.parse(o.date) - Date.parse(e.date)) < 20 * 864e5)) out.push(e);
+  return out;
+}
+// Point-in-time approximation: on each rebalance date (Jan/Jul), the top N by 120-session median traded value.
+export function liquidityUniverse(days, px, syms, n = 100) {
+  const map = new Map(); let cur = new Set(), lastKey = '';
+  for (let i = 0; i < days.length; i++) {
+    const d = days[i], key = d.slice(0, 4) + (d.slice(5, 7) <= '06' ? 'a' : 'b');
+    if (key !== lastKey && i >= 120) {
+      const sc = [];
+      for (const s of syms) { const v = []; for (let k = i - 120; k < i; k++) { const r = px[s]?.[days[k]]; if (r) v.push(r.tv); }
+        if (v.length >= 90) { v.sort((a, b) => a - b); sc.push([s, v[Math.floor(v.length / 2)]]); } }
+      sc.sort((a, b) => b[1] - a[1]); cur = new Set(sc.slice(0, n).map((x) => x[0])); lastKey = key;
+    } else if (key !== lastKey && i < 120) { lastKey = ''; }
+    map.set(i, cur);
+  }
+  return map;
 }
 export function simulate(days, px, events, { thr, hold, slots }) {
   // events: [{sym, ri (reaction day idx), react}] ; entry at open of ri+1, exit at open of ri+1+hold
@@ -70,53 +103,64 @@ async function main() {
   await fetch('https://www.nseindia.com/', { headers: { 'user-agent': UA } }).then((r) => { cookie = (r.headers.getSetCookie?.() || []).map((c) => c.split(';')[0]).join('; '); });
   await nse('https://www.nseindia.com/companies-listing/corporate-filings-financial-results');
   const uni = {};
-  for (const [k, name] of [['nifty100', 'NIFTY 100']]) {
+  for (const [k, name, csv] of [['nifty100', 'NIFTY 100', 'ind_nifty100list'], ['nifty500', 'NIFTY 500', 'ind_nifty500list']]) {
     const j = await nse(`https://www.nseindia.com/api/equity-stockIndices?index=${encodeURIComponent(name)}`);
     uni[k] = (j?.data || []).map((x) => x.symbol).filter((s) => s && !/^NIFTY/.test(s));
-    if (!uni[k].length) { // fallback: niftyindices.com constituents CSV
-      try { const t = await (await fetch('https://www.niftyindices.com/IndexConstituent/ind_nifty100list.csv', { headers: { 'user-agent': UA } })).text();
-        uni[k] = t.split(/\r?\n/).slice(1).map((l) => l.split(',')[2]).filter((x) => x && /^[A-Z0-9&-]+$/.test(x)); LOG.push('members from niftyindices csv'); } catch (e) { LOG.push('csv fail ' + e.message); }
-    }
+    if (!uni[k].length) { try { const t = await (await fetch(`https://www.niftyindices.com/IndexConstituent/${csv}.csv`, { headers: { 'user-agent': UA } })).text();
+      uni[k] = t.split(/\r?\n/).slice(1).map((l) => l.split(',')[2]).filter((x) => x && /^[A-Z0-9&-]+$/.test(x)); LOG.push(k + ' members from csv'); } catch (e) { LOG.push(k + ' csv fail ' + e.message); } }
     LOG.push(`${k}: ${uni[k].length} members`); console.log(k, uni[k].length, 'members'); await sleep(1500);
   }
-  if (!uni.nifty100.length) throw new Error('could not load index members from NSE');
-  const all = [...uni.nifty100];
+  if (!uni.nifty100.length || !uni.nifty500.length) throw new Error('could not load index members');
+  const all = [...new Set([...uni.nifty100, ...uni.nifty500, ...FORMER])];
   const bench = await yahoo('^NSEI'), beesRaw = await yahoo('NIFTYBEES.NS'); if (!bench) throw new Error('no Nifty data from Yahoo'); LOG.push('nifty days ' + Object.keys(bench).length + ', bees ' + (beesRaw ? Object.keys(beesRaw).length : 0));
   const days = Object.keys(bench).sort().filter((d) => d >= START);
-  const px = {}, evs = {}; let nEv = 0, noPx = [], noEv = [];
+  const px = {}, evs = {}; let nEv = 0, noPx = [], noEv = [], annCount = 0;
   for (const [n, s] of all.entries()) {
     const p = await yahoo(s + '.NS'); if (!p) { noPx.push(s); continue; } px[s] = p;
     const j = await nse(`https://www.nseindia.com/api/corporates-financial-results?index=equities&symbol=${encodeURIComponent(s)}&period=Quarterly`);
     const arr = Array.isArray(j) ? j : j?.data || [];
     const first = new Map(); // earliest broadcast per quarter end
     for (const x of arr) { const t = parseNseTime(x.broadCastDate || x.filingDate); const q = x.toDate || x.period; if (!t || !q) continue; const key = q; const prev = first.get(key); if (!prev || t.date < prev.date || (t.date === prev.date && (t.mins ?? 0) < (prev.mins ?? 0))) first.set(key, t); }
+    const extra = [];
+    const an = await nse(`https://www.nseindia.com/api/corporate-announcements?index=equities&symbol=${encodeURIComponent(s)}&from_date=01-12-2024&to_date=${new Date().toISOString().slice(0, 10).split('-').reverse().join('-')}`);
+    for (const x of (Array.isArray(an) ? an : an?.data || [])) { const txt = `${x.desc || ''} ${x.attchmntText || ''}`; if (!/financial result/i.test(txt) || /intimation|newspaper|publication|trading window|schedule of/i.test(txt)) continue; const t = parseNseTime(x.an_dt); if (t) extra.push(t); }
+    annCount += extra.length;
+    const evTimes = dedupeEvents([...first.values(), ...extra]);
     const list = [];
-    for (const t of first.values()) {
+    for (const t of evTimes) {
       const ri = reactionIndex(days, t); if (ri < 1 || ri + 1 >= days.length) continue;
       const d0 = days[ri - 1], d1 = days[ri]; if (!p[d0] || !p[d1]) continue;
       list.push({ sym: s, ri, date: d1, react: (p[d1].c / p[d0].c - 1) - (bench[d1].c / bench[d0].c - 1) });
     }
     if (!list.length) noEv.push(s); evs[s] = list; nEv += list.length;
-    if (n < 3) LOG.push(`${s}: prices ${Object.keys(p).length}, nse rows ${arr.length}, events ${list.length}`);
+    if (n < 3) LOG.push(`${s}: prices ${Object.keys(p).length}, nse rows ${arr.length}, ann ${extra.length}, events ${list.length}`);
     if (n % 25 === 0) console.log(`${n + 1}/${all.length} ${s}: ${list.length} events (total ${nEv})`);
-    await sleep(900);
+    await sleep(700);
   }
-  const bees = beesRaw ? days.map((d, i) => beesRaw[d]?.c) : null; if (bees) for (let i = 1; i < bees.length; i++) if (!bees[i]) bees[i] = bees[i - 1];
-  const benchEq = bees && bees[0] ? bees : days.map((d) => bench[d].c);
-  const out = { generated: new Date().toISOString(), note: 'Current index members only (hindsight bias). Costs 0.15%/side. Benchmark: NIFTYBEES (Nifty 50 ETF incl. dividends) or Nifty 50 price index if unavailable.',
-    benchmark: { name: bees && bees[0] ? 'NIFTYBEES' : 'Nifty 50 (price)', full: stats(days, benchEq), periods: PERIODS.map(([a, b]) => stats(days, benchEq, a, b)) }, missingPrices: noPx, noEvents: noEv, universes: {} };
-  for (const [k, syms] of Object.entries(uni)) {
-    const events = syms.flatMap((s) => evs[s] || []); const rows = [];
+  const bees = beesRaw ? days.map((d) => beesRaw[d]?.c) : null; if (bees) for (let i = 1; i < bees.length; i++) if (!bees[i]) bees[i] = bees[i - 1];
+  const useBees = bees && bees[0] && Object.keys(beesRaw).length > days.length * 0.9;
+  const benchEq = useBees ? bees : days.map((d) => bench[d].c);
+  const bstat = stats(days, benchEq);
+  const out = { generated: new Date().toISOString(), note: 'nifty100_current = today\'s members (hindsight bias). nifty100_pit = approx point-in-time: top 100 by 120-session median traded value each half-year, from Nifty 500 + former large caps (merged/delisted names only if Yahoo has prices). Costs 0.15%/side. Events: NSE results feed + results announcements from Dec 2024.',
+    benchmark: { name: useBees ? 'NIFTYBEES (cleaned)' : 'Nifty 50 price index', full: bstat, periods: PERIODS.map(([a, b]) => stats(days, benchEq, a, b)) }, announcementsUsed: annCount, missingPrices: noPx, noEvents: noEv, log: LOG, universes: {} };
+  const pitMap = liquidityUniverse(days, px, Object.keys(px), 100);
+  const yearEvents = {};
+  const allEvents = Object.values(evs).flat(); for (const e of allEvents) { const y = e.date.slice(0, 4); yearEvents[y] = (yearEvents[y] || 0) + 1; } out.eventsByYear = yearEvents;
+  const formerInPit = new Set(); for (const set of pitMap.values()) for (const s of set) if (!uni.nifty100.includes(s)) formerInPit.add(s); out.pitNotInTodays100 = [...formerInPit].sort();
+  const universes = { nifty100_current: allEvents.filter((e) => uni.nifty100.includes(e.sym)), nifty100_pit: allEvents.filter((e) => pitMap.get(e.ri)?.has(e.sym)) };
+  for (const [k, events] of Object.entries(universes)) {
+    const rows = [];
     for (const thr of GRID.thr) for (const hold of GRID.hold) for (const slots of GRID.slots) {
       const { eq, trades } = simulate(days, px, events, { thr, hold, slots });
       const per = PERIODS.map(([a, b]) => stats(days, eq, a, b));
+      const sorted = [...trades].sort((a, b) => b - a), top10 = sorted.slice(0, 10).reduce((x, y) => x + y, 0), totalPos = sorted.filter((t) => t > 0).reduce((x, y) => x + y, 0);
       rows.push({ thr, hold, slots, full: stats(days, eq), periods: per, trades: trades.length, winRate: trades.length ? +(trades.filter((t) => t > 0).length / trades.length * 100).toFixed(0) : null,
-        beatAll: per.every((p, i) => p && out.benchmark.periods[i] && p.cagr > out.benchmark.periods[i].cagr) });
+        top10ShareOfGains: totalPos ? +(top10 / totalPos * 100).toFixed(0) : null, beatAll: per.every((p, i) => p && out.benchmark.periods[i] && p.cagr > out.benchmark.periods[i].cagr) });
     }
     rows.sort((a, b) => b.full.cagr - a.full.cagr);
-    out.universes[k] = { members: syms.length, withPrices: syms.filter((s) => px[s]).length, events: events.length, beatBenchFull: rows.filter((r) => r.full.cagr > out.benchmark.full.cagr).length, beatAllPeriods: rows.filter((r) => r.beatAll).length, combos: rows.length,
+    out.universes[k] = { events: events.length, beatBenchFull: rows.filter((r) => r.full.cagr > bstat.cagr).length, beatAllPeriods: rows.filter((r) => r.beatAll).length, combos: rows.length,
       reference: rows.find((r) => r.thr === 5 && r.hold === 60 && r.slots === 10), rows };
-    console.log(k, 'events', events.length, 'ref', JSON.stringify(out.universes[k].reference?.full), 'bench', JSON.stringify(out.benchmark.full));
+    console.log(k, 'events', events.length, 'ref', JSON.stringify(out.universes[k].reference?.full), 'bench', JSON.stringify(bstat));
   }
   mkdirSync('data', { recursive: true }); writeFileSync('data/india_drift.json', JSON.stringify(out, null, 1));
 }
