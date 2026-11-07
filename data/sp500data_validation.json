@@ -1,0 +1,130 @@
+{
+ "columns": [
+  "date",
+  "ticker",
+  "open",
+  "high",
+  "low",
+  "close",
+  "volume",
+  "adj_close",
+  "dividends",
+  "stock_splits",
+  "source"
+ ],
+ "rows": 12294730,
+ "tickers": 1895,
+ "date_range": [
+  "1968-01-02",
+  "2026-10-30"
+ ],
+ "coverage_2004_2015": {
+  "members": 779,
+  "with_90pct_days": 444,
+  "missing_examples": [
+   "A",
+   "AAPL",
+   "ABBV",
+   "ABT",
+   "ACN",
+   "ADBE",
+   "ADI",
+   "ADM",
+   "ADP",
+   "ADSK",
+   "AEE",
+   "AEP",
+   "AES",
+   "AFL",
+   "AIG",
+   "AIZ",
+   "AKAM",
+   "ALL",
+   "ALLE",
+   "AMAT",
+   "AME",
+   "AMGN",
+   "AMP",
+   "AMT",
+   "AMZN",
+   "AON",
+   "APA",
+   "APD",
+   "APH",
+   "APTV"
+  ]
+ },
+ "alpaca_compare": {
+  "tickers": 65,
+  "median_pct_days_off": 0.0,
+  "tickers_with_over_1pct_days_off": [
+   {
+    "t": "CHK",
+    "days": 1285,
+    "pct_days_off_0.5pp": 11.98,
+    "max_pp": 279.68,
+    "wealth_alp": 0.045,
+    "wealth_theirs": 0.003
+   },
+   {
+    "t": "CBOE",
+    "days": 2722,
+    "pct_days_off_0.5pp": 2.31,
+    "max_pp": 5.17,
+    "wealth_alp": 6.043,
+    "wealth_theirs": 6.044
+   },
+   {
+    "t": "IBAT",
+    "days": 655,
+    "pct_days_off_0.5pp": 1.22,
+    "max_pp": 3.13,
+    "wealth_alp": 1.446,
+    "wealth_theirs": 1.446
+   }
+  ],
+  "wealth_diff_over_5pct": [
+   {
+    "t": "IR",
+    "days": 2380,
+    "pct_days_off_0.5pp": 0.46,
+    "max_pp": 11.77,
+    "wealth_alp": 3.634,
+    "wealth_theirs": 4.092
+   },
+   {
+    "t": "NC",
+    "days": 2722,
+    "pct_days_off_0.5pp": 0.11,
+    "max_pp": 128.5,
+    "wealth_alp": 1.047,
+    "wealth_theirs": 4.591
+   },
+   {
+    "t": "MTW",
+    "days": 2722,
+    "pct_days_off_0.5pp": 0.11,
+    "max_pp": 81.46,
+    "wealth_alp": 0.368,
+    "wealth_theirs": 1.624
+   },
+   {
+    "t": "CHK",
+    "days": 1285,
+    "pct_days_off_0.5pp": 11.98,
+    "max_pp": 279.68,
+    "wealth_alp": 0.045,
+    "wealth_theirs": 0.003
+   },
+   {
+    "t": "DD",
+    "days": 2722,
+    "pct_days_off_0.5pp": 0.29,
+    "max_pp": 7.61,
+    "wealth_alp": 2.063,
+    "wealth_theirs": 1.898
+   }
+  ],
+  "skipped": []
+ }
+}
