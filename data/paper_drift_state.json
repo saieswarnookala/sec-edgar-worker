@@ -260,7 +260,115 @@
     "BUY CVS failed: 403 /v2/orders: {\"code\":40310000,\"message\":\"opg orders must be submitted after 7:00pm and before 9:28am\"}",
     "BUY EW failed: 403 /v2/orders: {\"code\":40310000,\"message\":\"opg orders must be submitted after 7:00pm and before 9:28am\"}"
    ]
+  },
+  {
+   "run": "2026-11-07T01:40:00.471Z",
+   "today": "2026-11-06",
+   "equity": 99233.81,
+   "dry": true,
+   "earnings_reactions_checked": 43,
+   "signals": [
+    {
+     "symbol": "AFL",
+     "r": 0.05159375197001126
+    },
+    {
+     "symbol": "ALB",
+     "r": 0.07989253595194856
+    },
+    {
+     "symbol": "APP",
+     "r": 0.354487340935152
+    },
+    {
+     "symbol": "CF",
+     "r": 0.10578588283301749
+    },
+    {
+     "symbol": "CPAY",
+     "r": 0.11193695503849976
+    },
+    {
+     "symbol": "CVS",
+     "r": 0.06122532354191079
+    },
+    {
+     "symbol": "EW",
+     "r": 0.05868368591218698
+    },
+    {
+     "symbol": "ES",
+     "r": 0.06481273319905279
+    },
+    {
+     "symbol": "FICO",
+     "r": 0.05317838643199935
+    },
+    {
+     "symbol": "MSI",
+     "r": 0.08437425741245563
+    },
+    {
+     "symbol": "STE",
+     "r": 0.06914116985198027
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "APP",
+     "qty": 27,
+     "r": 0.354487340935152
+    },
+    {
+     "symbol": "CPAY",
+     "qty": 22,
+     "r": 0.11193695503849976
+    },
+    {
+     "symbol": "CF",
+     "qty": 83,
+     "r": 0.10578588283301749
+    },
+    {
+     "symbol": "MSI",
+     "qty": 19,
+     "r": 0.08437425741245563
+    },
+    {
+     "symbol": "ALB",
+     "qty": 100,
+     "r": 0.07989253595194856
+    },
+    {
+     "symbol": "STE",
+     "qty": 39,
+     "r": 0.06914116985198027
+    },
+    {
+     "symbol": "ES",
+     "qty": 137,
+     "r": 0.06481273319905279
+    },
+    {
+     "symbol": "CVS",
+     "qty": 122,
+     "r": 0.06122532354191079
+    },
+    {
+     "symbol": "EW",
+     "qty": 98,
+     "r": 0.05868368591218698
+    }
+   ],
+   "park": {
+    "spy_held": 0,
+    "spy_delta": 0,
+    "spy_price": 733,
+    "stock_value": 97842
+   },
+   "orders": []
   }
  ],
- "updated": "2026-11-06T19:57:35.792Z"
+ "updated": "2026-11-07T01:40:00.471Z"
 }
