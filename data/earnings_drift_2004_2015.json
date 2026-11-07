@@ -1,0 +1,236 @@
+{
+ "generated": "2026-11-07T21:47:20Z",
+ "source": "Johnbrick123/sp500-data snapshot-2026-11 + SEC 8-K 2.02",
+ "window": [
+  "2004-08-01",
+  "2015-12-31"
+ ],
+ "log": {
+  "members_columns": [
+   "date",
+   "ticker"
+  ],
+  "names": 0,
+  "ciks_in_dataset": 0,
+  "days": 3000,
+  "tickers_with_prices": 770,
+  "coverage": {
+   "members": 779,
+   "with_prices": 779,
+   "with_events": 419,
+   "missing": [
+    "AABA  no events (0 ciks)",
+    "ABI-200811  no events (0 ciks)",
+    "ABKFQ-201304  no events (0 ciks)",
+    "ABS-200606  no events (0 ciks)",
+    "ACAS-201701  no events (0 ciks)",
+    "ACS-201002  no events (0 ciks)",
+    "ACV-201105  no events (1 ciks)",
+    "ADCT-201012  no events (1 ciks)",
+    "ADT-201604  no events (1 ciks)",
+    "AET-201811  no events (0 ciks)",
+    "AGN  no events (0 ciks)",
+    "AGN-201503  no events (0 ciks)",
+    "AKS  no events (0 ciks)",
+    "ALTR-201512  no events (0 ciks)",
+    "ALXN  no events (0 ciks)",
+    "AMCC-201701  no events (0 ciks)",
+    "ANDV-201809  no events (0 ciks)",
+    "ANDW-200712  no events (0 ciks)",
+    "ANRZQ-201607  no events (0 ciks)",
+    "APA  no events (1 ciks)",
+    "APC-201908  no events (1 ciks)",
+    "APCC-200702  no events (0 ciks)",
+    "APOL-201702  no events (0 ciks)",
+    "ARG-201605  no events (0 ciks)",
+    "ASH  no events (1 ciks)",
+    "ASN-200710  no events (0 ciks)",
+    "ASO-200611  no events (1 ciks)",
+    "AT-200711  no events (0 ciks)",
+    "ATGE  no events (0 ciks)",
+    "ATVI  no events (0 ciks)",
+    "AV-200710  no events (0 ciks)",
+    "AVB  no events (0 ciks)",
+    "AVGO  no events (1 ciks)",
+    "AVP  no events (0 ciks)",
+    "AW-200812  no events (0 ciks)",
+    "AWE-200410  no events (0 ciks)",
+    "AYE-201102  no events (0 ciks)",
+    "BBBY-202305  no events (0 ciks)",
+    "BCR-201712  no events (0 ciks)",
+    "BDK-201003  no events (0 ciks)",
+    "BEAM-201404  no events (1 ciks)",
+    "BF-B  no events (0 ciks)",
+    "BIG  no events (0 ciks)",
+    "BJS-201004  no events (0 ciks)",
+    "BKR  no events (1 ciks)",
+    "BLK  no events (1 ciks)",
+    "BLS-200612  no events (0 ciks)",
+    "BMC-201309  no events (0 ciks)",
+    "BMET-200709  no events (0 ciks)",
+    "BMS  no events (0 ciks)",
+    "BNI-201002  no events (0 ciks)",
+    "BOL-200710  no events (0 ciks)",
+    "BR-200603  no events (1 ciks)",
+    "BRCM-201601  no events (0 ciks)",
+    "BRK-B  no events (0 ciks)",
+    "BRL-200812  no events (0 ciks)",
+    "BSC-200805  no events (0 ciks)",
+    "BTUUQ-201704  no events (0 ciks)",
+    "BUD-200811  no events (1 ciks)",
+    "BXLT-201606  no events (0 ciks)"
+   ],
+   "signals": 1816
+  }
+ },
+ "spy": {
+  "all": {
+   "cagr": 7.7,
+   "dd": -55.2
+  },
+  "p2004_07": 10.5,
+  "p2008_09": -10.3,
+  "p2010_15": 12.6
+ },
+ "rows": [
+  {
+   "thr": 4,
+   "hold": 50,
+   "all": {
+    "cagr": 12.9,
+    "dd": -42.2
+   },
+   "p2004_07": 14.4,
+   "p2008_09": 21.4,
+   "p2010_15": 9.6,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 4,
+   "hold": 60,
+   "all": {
+    "cagr": 11.3,
+    "dd": -63.6
+   },
+   "p2004_07": 14.0,
+   "p2008_09": -9.3,
+   "p2010_15": 17.7,
+   "beatsEveryPeriod": true
+  },
+  {
+   "thr": 4,
+   "hold": 70,
+   "all": {
+    "cagr": 14.3,
+    "dd": -46.5
+   },
+   "p2004_07": 13.4,
+   "p2008_09": 22.2,
+   "p2010_15": 12.6,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 5,
+   "hold": 50,
+   "all": {
+    "cagr": 11.6,
+    "dd": -44.7
+   },
+   "p2004_07": 13.8,
+   "p2008_09": 19.8,
+   "p2010_15": 7.8,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 5,
+   "hold": 60,
+   "all": {
+    "cagr": 8.8,
+    "dd": -62.2
+   },
+   "p2004_07": 14.7,
+   "p2008_09": -8.6,
+   "p2010_15": 12.0,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 5,
+   "hold": 70,
+   "all": {
+    "cagr": 14.4,
+    "dd": -44.5
+   },
+   "p2004_07": 12.9,
+   "p2008_09": 21.8,
+   "p2010_15": 13.0,
+   "beatsEveryPeriod": true
+  },
+  {
+   "thr": 6,
+   "hold": 50,
+   "all": {
+    "cagr": 7.2,
+    "dd": -49.5
+   },
+   "p2004_07": 13.9,
+   "p2008_09": 5.0,
+   "p2010_15": 4.4,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 6,
+   "hold": 60,
+   "all": {
+    "cagr": 5.6,
+    "dd": -66.4
+   },
+   "p2004_07": 11.4,
+   "p2008_09": -2.6,
+   "p2010_15": 5.3,
+   "beatsEveryPeriod": false
+  },
+  {
+   "thr": 6,
+   "hold": 70,
+   "all": {
+    "cagr": 7.7,
+    "dd": -51.1
+   },
+   "p2004_07": 8.3,
+   "p2008_09": 7.2,
+   "p2010_15": 7.6,
+   "beatsEveryPeriod": false
+  }
+ ],
+ "blend": {
+  "all": {
+   "cagr": 10.8,
+   "dd": -51.4
+  },
+  "p2004_07": 13.0,
+  "p2008_09": 9.3,
+  "p2010_15": 10.3,
+  "beatsEveryPeriod": false
+ },
+ "afterTaxBlendPark": {
+  "0": {
+   "blend": 12.1,
+   "spy": 7.7
+  },
+  "12": {
+   "blend": 10.6,
+   "spy": 6.8
+  },
+  "24": {
+   "blend": 9.2,
+   "spy": 6.8
+  }
+ },
+ "random": {
+  "actual_5_60": 8.8,
+  "runs": 300,
+  "beats_pct": 79.7,
+  "median": 6.7,
+  "p95": 11.2
+ }
+}
