@@ -194,6 +194,11 @@ async function main(out = 'data') {
   const yrsAT = (Date.parse(dates.at(-1)) - Date.parse(dates[t0])) / 31557600000;
   const atRuns = NB.map((c) => simTax({ dates, O, C, B: C.SPY, signals: Cc.signals, th: c.th, h: c.h, n: 10, t0, rate: 0.24, park: true, ltRate: 0.15 }));
   bl.afterTax24Park = +((Math.pow(atRuns.reduce((a, x) => a + x.final, 0) / atRuns.length, 1 / yrsAT) - 1) * 100).toFixed(1); bl.spyAfterTax = atRuns[0].benchCagr;
+  bl.afterTaxByRate = {};
+  for (const rate of [0, 0.12, 0.22, 0.24, 0.32]) {
+    const runs = NB.map((c) => simTax({ dates, O, C, B: C.SPY, signals: Cc.signals, th: c.th, h: c.h, n: 10, t0, rate, park: true, ltRate: 0.15 }));
+    bl.afterTaxByRate[Math.round(rate * 100)] = { blendPark: +((Math.pow(runs.reduce((a, x) => a + x.final, 0) / runs.length, 1 / yrsAT) - 1) * 100).toFixed(1), spy: runs[0].benchCagr };
+  }
   bl.beatsEveryPeriod = Object.keys(PER).every((k) => bl[k] > spyP[k]);
   res.blend = { versions: NB.map((c) => c.key), spy: spyP, ...bl }; console.log('blend', JSON.stringify(res.blend));
   // (2) RANDOM PICKS: same signal days and counts, but each stock replaced by a random S&P 500 member of that day. 
