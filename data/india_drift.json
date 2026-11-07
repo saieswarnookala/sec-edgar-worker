@@ -1,0 +1,540 @@
+{
+ "generated": "2026-11-07T00:31:47.472Z",
+ "note": "Current index members only (hindsight bias). Costs 0.15%/side. Benchmark: NIFTYBEES (Nifty 50 ETF incl. dividends) or Nifty 50 price index if unavailable.",
+ "benchmark": {
+  "name": "NIFTYBEES",
+  "full": {
+   "cagr": 12.4,
+   "dd": -89.9
+  },
+  "periods": [
+   {
+    "cagr": 13.6,
+    "dd": -89.9
+   },
+   {
+    "cagr": 15.3,
+    "dd": -16.1
+   },
+   {
+    "cagr": 2.8,
+    "dd": -14.8
+   }
+  ]
+ },
+ "missingPrices": [],
+ "noEvents": [
+  "HDFCLIFE",
+  "SBILIFE",
+  "ENRIN",
+  "TATACAP",
+  "TMCV",
+  "VAML"
+ ],
+ "universes": {
+  "nifty100": {
+   "members": 100,
+   "withPrices": 100,
+   "events": 3217,
+   "beatBenchFull": 8,
+   "beatAllPeriods": 1,
+   "combos": 18,
+   "reference": {
+    "thr": 5,
+    "hold": 60,
+    "slots": 10,
+    "full": {
+     "cagr": 18.1,
+     "dd": -17
+    },
+    "periods": [
+     {
+      "cagr": 20.1,
+      "dd": -17
+     },
+     {
+      "cagr": 26.1,
+      "dd": -16
+     },
+     {
+      "cagr": -2.5,
+      "dd": -11.1
+     }
+    ],
+    "trades": 191,
+    "winRate": 71,
+    "beatAll": false
+   },
+   "rows": [
+    {
+     "thr": 3,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 24.6,
+      "dd": -33.2
+     },
+     "periods": [
+      {
+       "cagr": 21,
+       "dd": -33.2
+      },
+      {
+       "cagr": 45.8,
+       "dd": -25.4
+      },
+      {
+       "cagr": -4.6,
+       "dd": -18.4
+      }
+     ],
+     "trades": 162,
+     "winRate": 65,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 19.7,
+      "dd": -29.2
+     },
+     "periods": [
+      {
+       "cagr": 20.7,
+       "dd": -29.2
+      },
+      {
+       "cagr": 30.3,
+       "dd": -27.6
+      },
+      {
+       "cagr": -3.1,
+       "dd": -13.9
+      }
+     ],
+     "trades": 127,
+     "winRate": 69,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 18.8,
+      "dd": -36.5
+     },
+     "periods": [
+      {
+       "cagr": 13.1,
+       "dd": -36.5
+      },
+      {
+       "cagr": 39.1,
+       "dd": -18.6
+      },
+      {
+       "cagr": -4.5,
+       "dd": -16.1
+      }
+     ],
+     "trades": 288,
+     "winRate": 65,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 18.1,
+      "dd": -17
+     },
+     "periods": [
+      {
+       "cagr": 20.1,
+       "dd": -17
+      },
+      {
+       "cagr": 26.1,
+       "dd": -16
+      },
+      {
+       "cagr": -2.5,
+       "dd": -11.1
+      }
+     ],
+     "trades": 191,
+     "winRate": 71,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 17.7,
+      "dd": -35.2
+     },
+     "periods": [
+      {
+       "cagr": 15.3,
+       "dd": -35.2
+      },
+      {
+       "cagr": 32.4,
+       "dd": -14.5
+      },
+      {
+       "cagr": -3.7,
+       "dd": -8.9
+      }
+     ],
+     "trades": 175,
+     "winRate": 70,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 60,
+     "slots": 5,
+     "full": {
+      "cagr": 15,
+      "dd": -23.1
+     },
+     "periods": [
+      {
+       "cagr": 18.6,
+       "dd": -23.1
+      },
+      {
+       "cagr": 15.7,
+       "dd": -17.3
+      },
+      {
+       "cagr": 3.8,
+       "dd": -3.2
+      }
+     ],
+     "trades": 68,
+     "winRate": 74,
+     "beatAll": true
+    },
+    {
+     "thr": 3,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 14.8,
+      "dd": -34.8
+     },
+     "periods": [
+      {
+       "cagr": 12.2,
+       "dd": -34.8
+      },
+      {
+       "cagr": 27.1,
+       "dd": -17.4
+      },
+      {
+       "cagr": -2,
+       "dd": -9.2
+      }
+     ],
+     "trades": 312,
+     "winRate": 68,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 14,
+      "dd": -29.1
+     },
+     "periods": [
+      {
+       "cagr": 19,
+       "dd": -29.1
+      },
+      {
+       "cagr": 16.5,
+       "dd": -22.2
+      },
+      {
+       "cagr": -3.2,
+       "dd": -10.5
+      }
+     ],
+     "trades": 140,
+     "winRate": 71,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 12.3,
+      "dd": -16.4
+     },
+     "periods": [
+      {
+       "cagr": 16.3,
+       "dd": -16.4
+      },
+      {
+       "cagr": 14.1,
+       "dd": -15.3
+      },
+      {
+       "cagr": -2,
+       "dd": -7.9
+      }
+     ],
+     "trades": 201,
+     "winRate": 72,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 40,
+     "slots": 5,
+     "full": {
+      "cagr": 10.1,
+      "dd": -20.8
+     },
+     "periods": [
+      {
+       "cagr": 14.2,
+       "dd": -20.8
+      },
+      {
+       "cagr": 9.6,
+       "dd": -14.6
+      },
+      {
+       "cagr": 0.6,
+       "dd": -3.1
+      }
+     ],
+     "trades": 72,
+     "winRate": 79,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 9.7,
+      "dd": -16.2
+     },
+     "periods": [
+      {
+       "cagr": 7.2,
+       "dd": -16.2
+      },
+      {
+       "cagr": 19.3,
+       "dd": -13
+      },
+      {
+       "cagr": -2.9,
+       "dd": -7.2
+      }
+     ],
+     "trades": 212,
+     "winRate": 60,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 8.6,
+      "dd": -18.5
+     },
+     "periods": [
+      {
+       "cagr": 12,
+       "dd": -14.3
+      },
+      {
+       "cagr": 8.9,
+       "dd": -18.5
+      },
+      {
+       "cagr": -1,
+       "dd": -3.9
+      }
+     ],
+     "trades": 153,
+     "winRate": 65,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 60,
+     "slots": 10,
+     "full": {
+      "cagr": 8.4,
+      "dd": -11.8
+     },
+     "periods": [
+      {
+       "cagr": 10.6,
+       "dd": -11.8
+      },
+      {
+       "cagr": 8.5,
+       "dd": -9
+      },
+      {
+       "cagr": 1.9,
+       "dd": -1.6
+      }
+     ],
+     "trades": 74,
+     "winRate": 73,
+     "beatAll": false
+    },
+    {
+     "thr": 3,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 8.3,
+      "dd": -16.4
+     },
+     "periods": [
+      {
+       "cagr": 7.9,
+       "dd": -16.4
+      },
+      {
+       "cagr": 14.5,
+       "dd": -14.3
+      },
+      {
+       "cagr": -3.3,
+       "dd": -6.9
+      }
+     ],
+     "trades": 341,
+     "winRate": 60,
+     "beatAll": false
+    },
+    {
+     "thr": 5,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 6.9,
+      "dd": -13.5
+     },
+     "periods": [
+      {
+       "cagr": 10,
+       "dd": -9.6
+      },
+      {
+       "cagr": 6.9,
+       "dd": -13.5
+      },
+      {
+       "cagr": -1,
+       "dd": -3.4
+      }
+     ],
+     "trades": 208,
+     "winRate": 64,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 20,
+     "slots": 5,
+     "full": {
+      "cagr": 6,
+      "dd": -11.8
+     },
+     "periods": [
+      {
+       "cagr": 12.4,
+       "dd": -9.3
+      },
+      {
+       "cagr": 1.7,
+       "dd": -11.8
+      },
+      {
+       "cagr": -0.9,
+       "dd": -3.2
+      }
+     ],
+     "trades": 73,
+     "winRate": 66,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 40,
+     "slots": 10,
+     "full": {
+      "cagr": 5.2,
+      "dd": -10.7
+     },
+     "periods": [
+      {
+       "cagr": 7.3,
+       "dd": -10.7
+      },
+      {
+       "cagr": 4.8,
+       "dd": -7.6
+      },
+      {
+       "cagr": 0.3,
+       "dd": -1.6
+      }
+     ],
+     "trades": 76,
+     "winRate": 78,
+     "beatAll": false
+    },
+    {
+     "thr": 8,
+     "hold": 20,
+     "slots": 10,
+     "full": {
+      "cagr": 2.9,
+      "dd": -6.1
+     },
+     "periods": [
+      {
+       "cagr": 5.9,
+       "dd": -5.6
+      },
+      {
+       "cagr": 0.9,
+       "dd": -6.1
+      },
+      {
+       "cagr": -0.5,
+       "dd": -1.6
+      }
+     ],
+     "trades": 76,
+     "winRate": 64,
+     "beatAll": false
+    }
+   ]
+  }
+ }
+}
