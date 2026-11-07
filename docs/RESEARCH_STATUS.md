@@ -7,7 +7,7 @@
 - **Earnings drift (S&P 500)**: signal is real (beats 100% of random-pick runs) but the edge is small. Blend of 9 nearby rules 15.6%/yr vs SPY 14.6% pre-tax; after tax with idle cash in SPY: 16.0% at 12%, 13.9% at 24%, 12.4% at 32% vs SPY 13.3%. Best fit: retirement account (18.1% vs 14.6%). The 21% single-rule result was a lucky peak (1/9 neighbours beat SPY every period).
 
 ## Live test
-- Alpaca **paper** account, $100k, started 2026-11-05. From 2026-11-08: blend of 9 versions (4/5/6% jump x 50/60/70-day hold), 1/90 of equity per position, idle cash in SPY, market orders before the open, 4 backup morning runs. Judge after 3-6 months.
+- Alpaca **paper** account, $100k, started 2026-11-05. Rule kept: 5% jump, 60-day hold, 10 slots; idle cash in SPY, market orders before the open, 4 backup morning runs. Judge after 3-6 months; compare with a replay of the blend of 9 on the same prices.
 
 ## Rejected
 - ORB day trading (3,500+ variants, ~100M bars): none beat SPY after costs.
@@ -16,7 +16,7 @@
 - Crypto funding-rate arbitrage: below T-bills since 2025. Merger-arb funds (MNA/ARB): ~1-2 pts over T-bills.
 
 ## Next
-- Paper-trade the blend; compare monthly with SPY.
+- Paper-trade the 5%/60-day rule; compare monthly with SPY and with a blend replay.
 - Optional: pre-2016 test with paid survivorship-free data (Norgate ~$30/mo); exact Nifty 100 history from NSE press releases.
 
 ## Housekeeping

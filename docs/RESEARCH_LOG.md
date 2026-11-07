@@ -172,7 +172,7 @@ PIT beat-every-period: 0/18. Parked version's gain is mostly index exposure (few
 ## 19. Paper trading fixes (2026-11-06/07)
 - 2026-11-05: 6 opg buys submitted 07:52 ET; only BKNG filled, 5 expired (Alpaca paper opg unreliable). 2026-11-06 run started ~15:00 ET (GitHub delay); 9 opg orders rejected.
 - Fixes: market 'day' orders; crons 12:05, 12:35, 13:05, 13:20 UTC with once-per-day guard; idle cash parked in SPY (2% cash buffer, skip moves <0.5% of equity).
-- 2026-11-07: switched to the blend of 9 (4/5/6% x 50/60/70 days), 10 slots per version, 1/90 of equity per position; BKNG kept as legacy, sold on its 60-day schedule.
+- 2026-11-07: decided to KEEP the thr5/hold60/n10 rule live (no change). Later: replay the blend of 9 on the same live prices and compare with the bot's actual results, then decide.
 
 ## 20. Other notes
 - "Day Trader skill" (github.com/Jakeschincariol/day-trader-skill, viral reel): a toolkit, not an edge; its Time Machine resamples the last 60 days of 5-min bars (odds of stop vs target), not a test of whether a setup beats the market. Its own TSLA example was a coin flip. Fine for paper learning only.
