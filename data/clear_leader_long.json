@@ -1,0 +1,870 @@
+{
+ "generated": "2026-11-07T21:45:58Z",
+ "note": "Stand-ins before ETF launch: SPY<-S&P500 TR/VFINX, QQQ<-Nasdaq-100 price index, IWM<-NAESX, EFA<-VGTSX/VTMGX, EEM<-VEIEX, VNQ<-VGSIX, TLT<-VUSTX, IEF<-VFITX, GLD<-gold futures, DBC<-S&P GSCI/PCRIX; T-bills from ^IRX. Assets join the pool once they have 12 months of data.",
+ "first_month_with_data": {
+  "SPY": "1990-02",
+  "QQQ": "1990-02",
+  "IWM": "1990-02",
+  "EFA": "1996-05",
+  "EEM": "1994-06",
+  "VNQ": "1996-06",
+  "TLT": "1990-02",
+  "IEF": "1991-11",
+  "GLD": "2000-09",
+  "DBC": "1990-02"
+ },
+ "variants": {
+  "clear_leader": {
+   "trades": 38,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "EEM": 10,
+    "GLD": 16,
+    "VNQ": 6,
+    "TLT": 3
+   },
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 13.5,
+     "maxDD": 58.9,
+     "growth_of_10k": 914764
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "p1998_2002_dotcom": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 13.1,
+     "maxDD": 56.2,
+     "growth_of_10k": 18508
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "p2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 9.2,
+     "maxDD": 16.6,
+     "growth_of_10k": 15499
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "p2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -12.7,
+     "maxDD": 56.4,
+     "growth_of_10k": 7622
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "p2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 17.0,
+     "maxDD": 19.4,
+     "growth_of_10k": 140428
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "check_since_2008_07": {
+    "from": "2008-07",
+    "to": "2026-10",
+    "months": 220,
+    "strategy": {
+     "cagr": 13.1,
+     "maxDD": 56.4,
+     "growth_of_10k": 95589
+    },
+    "spy": {
+     "cagr": 12.2,
+     "maxDD": 41.8,
+     "growth_of_10k": 82288
+    }
+   },
+   "years": [
+    {
+     "y": "1991",
+     "strategy": 23.7,
+     "spy": 16.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1992",
+     "strategy": 12.0,
+     "spy": 7.6,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1993",
+     "strategy": 9.6,
+     "spy": 9.6,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "1994",
+     "strategy": 0.4,
+     "spy": 0.4,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "1995",
+     "strategy": 29.2,
+     "spy": 38.0,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1996",
+     "strategy": 22.4,
+     "spy": 22.5,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "1997",
+     "strategy": 23.6,
+     "spy": 33.5,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1998",
+     "strategy": 42.2,
+     "spy": 28.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1999",
+     "strategy": 99.8,
+     "spy": 20.4,
+     "held": [
+      "QQQ"
+     ]
+    },
+    {
+     "y": "2000",
+     "strategy": -17.8,
+     "spy": -9.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2001",
+     "strategy": -11.8,
+     "spy": -11.8,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2002",
+     "strategy": -10.2,
+     "spy": -21.6,
+     "held": [
+      "DBC",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2003",
+     "strategy": 31.2,
+     "spy": 28.2,
+     "held": [
+      "DBC",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2004",
+     "strategy": 2.0,
+     "spy": 10.7,
+     "held": [
+      "EEM",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2005",
+     "strategy": 4.8,
+     "spy": 4.8,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2006",
+     "strategy": 3.7,
+     "spy": 15.8,
+     "held": [
+      "GLD",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2007",
+     "strategy": 6.5,
+     "spy": 5.1,
+     "held": [
+      "EEM",
+      "SPY",
+      "VNQ"
+     ]
+    },
+    {
+     "y": "2008",
+     "strategy": -40.4,
+     "spy": -36.8,
+     "held": [
+      "DBC",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2009",
+     "strategy": 27.9,
+     "spy": 26.4,
+     "held": [
+      "EEM",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2010",
+     "strategy": 18.1,
+     "spy": 15.1,
+     "held": [
+      "EEM",
+      "SPY",
+      "VNQ"
+     ]
+    },
+    {
+     "y": "2011",
+     "strategy": 1.9,
+     "spy": 1.9,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2012",
+     "strategy": 8.0,
+     "spy": 16.0,
+     "held": [
+      "SPY",
+      "TLT"
+     ]
+    },
+    {
+     "y": "2013",
+     "strategy": 32.3,
+     "spy": 32.3,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2014",
+     "strategy": 13.5,
+     "spy": 13.5,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2015",
+     "strategy": 1.2,
+     "spy": 1.2,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2016",
+     "strategy": 12.0,
+     "spy": 12.0,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2017",
+     "strategy": 21.7,
+     "spy": 21.7,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2018",
+     "strategy": -4.6,
+     "spy": -4.6,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2019",
+     "strategy": 31.2,
+     "spy": 31.2,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2020",
+     "strategy": 16.7,
+     "spy": 18.3,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2021",
+     "strategy": 26.6,
+     "spy": 28.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2022",
+     "strategy": 4.7,
+     "spy": -18.2,
+     "held": [
+      "DBC",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2023",
+     "strategy": 20.7,
+     "spy": 26.2,
+     "held": [
+      "DBC",
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2024",
+     "strategy": 23.5,
+     "spy": 24.9,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2025",
+     "strategy": 52.5,
+     "spy": 17.7,
+     "held": [
+      "GLD",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2026",
+     "strategy": 18.3,
+     "spy": 11.7,
+     "held": [
+      "DBC",
+      "GLD",
+      "SPY"
+     ]
+    }
+   ]
+  },
+  "clear_leader_crash_filter": {
+   "trades": 66,
+   "months_held": {
+    "SPY": 255,
+    "QQQ": 52,
+    "IEF": 63,
+    "DBC": 23,
+    "EEM": 10,
+    "GLD": 16,
+    "VNQ": 6,
+    "TLT": 3
+   },
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 13.6,
+     "maxDD": 43.3,
+     "growth_of_10k": 935267
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "p1998_2002_dotcom": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 22.8,
+     "maxDD": 25.4,
+     "growth_of_10k": 27960
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "p2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 7.2,
+     "maxDD": 16.6,
+     "growth_of_10k": 14170
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "p2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -4.9,
+     "maxDD": 43.3,
+     "growth_of_10k": 9047
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "p2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 14.0,
+     "maxDD": 17.0,
+     "growth_of_10k": 90487
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "check_since_2008_07": {
+    "from": "2008-07",
+    "to": "2026-10",
+    "months": 220,
+    "strategy": {
+     "cagr": 10.9,
+     "maxDD": 43.3,
+     "growth_of_10k": 67139
+    },
+    "spy": {
+     "cagr": 12.2,
+     "maxDD": 41.8,
+     "growth_of_10k": 82288
+    }
+   },
+   "years": [
+    {
+     "y": "1991",
+     "strategy": 23.7,
+     "spy": 16.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1992",
+     "strategy": 12.0,
+     "spy": 7.6,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1993",
+     "strategy": 9.6,
+     "spy": 9.6,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "1994",
+     "strategy": -2.7,
+     "spy": 0.4,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1995",
+     "strategy": 29.1,
+     "spy": 38.0,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1996",
+     "strategy": 22.4,
+     "spy": 22.5,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "1997",
+     "strategy": 23.6,
+     "spy": 33.5,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1998",
+     "strategy": 27.0,
+     "spy": 28.7,
+     "held": [
+      "IEF",
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "1999",
+     "strategy": 99.8,
+     "spy": 20.4,
+     "held": [
+      "QQQ"
+     ]
+    },
+    {
+     "y": "2000",
+     "strategy": -6.6,
+     "spy": -9.7,
+     "held": [
+      "IEF",
+      "QQQ"
+     ]
+    },
+    {
+     "y": "2001",
+     "strategy": 7.6,
+     "spy": -11.8,
+     "held": [
+      "IEF"
+     ]
+    },
+    {
+     "y": "2002",
+     "strategy": 9.6,
+     "spy": -21.6,
+     "held": [
+      "DBC",
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2003",
+     "strategy": 21.0,
+     "spy": 28.2,
+     "held": [
+      "DBC",
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2004",
+     "strategy": 1.1,
+     "spy": 10.7,
+     "held": [
+      "EEM",
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2005",
+     "strategy": 4.8,
+     "spy": 4.8,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2006",
+     "strategy": 3.7,
+     "spy": 15.8,
+     "held": [
+      "GLD",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2007",
+     "strategy": 6.5,
+     "spy": 5.1,
+     "held": [
+      "EEM",
+      "SPY",
+      "VNQ"
+     ]
+    },
+    {
+     "y": "2008",
+     "strategy": -21.7,
+     "spy": -36.8,
+     "held": [
+      "DBC",
+      "IEF"
+     ]
+    },
+    {
+     "y": "2009",
+     "strategy": 15.6,
+     "spy": 26.4,
+     "held": [
+      "EEM",
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2010",
+     "strategy": 8.3,
+     "spy": 15.1,
+     "held": [
+      "EEM",
+      "IEF",
+      "SPY",
+      "VNQ"
+     ]
+    },
+    {
+     "y": "2011",
+     "strategy": 1.5,
+     "spy": 1.9,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2012",
+     "strategy": 4.0,
+     "spy": 16.0,
+     "held": [
+      "IEF",
+      "SPY",
+      "TLT"
+     ]
+    },
+    {
+     "y": "2013",
+     "strategy": 32.3,
+     "spy": 32.3,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2014",
+     "strategy": 13.5,
+     "spy": 13.5,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2015",
+     "strategy": -3.6,
+     "spy": 1.2,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2016",
+     "strategy": 6.3,
+     "spy": 12.0,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2017",
+     "strategy": 21.7,
+     "spy": 21.7,
+     "held": [
+      "SPY"
+     ]
+    },
+    {
+     "y": "2018",
+     "strategy": -5.3,
+     "spy": -4.6,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2019",
+     "strategy": 11.1,
+     "spy": 31.2,
+     "held": [
+      "IEF",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2020",
+     "strategy": 17.7,
+     "spy": 18.3,
+     "held": [
+      "IEF",
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2021",
+     "strategy": 26.6,
+     "spy": 28.7,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2022",
+     "strategy": 4.7,
+     "spy": -18.2,
+     "held": [
+      "DBC",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2023",
+     "strategy": 15.5,
+     "spy": 26.2,
+     "held": [
+      "DBC",
+      "IEF",
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2024",
+     "strategy": 23.5,
+     "spy": 24.9,
+     "held": [
+      "QQQ",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2025",
+     "strategy": 52.5,
+     "spy": 17.7,
+     "held": [
+      "GLD",
+      "SPY"
+     ]
+    },
+    {
+     "y": "2026",
+     "strategy": 18.3,
+     "spy": 11.7,
+     "held": [
+      "DBC",
+      "GLD",
+      "SPY"
+     ]
+    }
+   ]
+  }
+ }
+}
