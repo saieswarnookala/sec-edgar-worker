@@ -46,6 +46,10 @@ async function main() {
   const days = cal.map((c) => c.date); const log = { run: new Date().toISOString(), today: nowNY, equity: +acct.equity, dry };
   if (days.at(-1) !== nowNY) { console.log('market closed today', nowNY); return; }
   const today = nowNY, prev = days.at(-2);
+  const stFile = 'data/paper_drift_state.json', st0 = existsSync(stFile) ? JSON.parse(readFileSync(stFile, 'utf8')) : { history: [] };
+  if (!dry && process.env.FORCE !== '1' && (st0.history || []).some((h) => h.today === today && !h.dry && (h.orders || []).every((o) => !/failed/.test(o)))) { console.log('already traded today', today); return; }
+  const nyMin = (() => { const t = new Date().toLocaleString('en-GB', { timeZone: 'America/New_York', hour12: false }).split(' ')[1].split(':'); return +t[0] * 60 + +t[1]; })();
+  const tif = nyMin >= 9 * 60 + 27 && nyMin < 19 * 60 ? 'day' : 'opg';   // opg only accepted 19:00-09:28 ET; otherwise buy at market now
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': `sec-edgar-worker paper-drift/1.0 (${ua})` } })).text();
   const members = parseSp500Html(wiki).filter((t) => t.cik);
   // events whose reaction day is the previous trading day
@@ -65,8 +69,9 @@ async function main() {
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
   const file = 'data/paper_drift_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
   const d = decide({ today, days, state, held, signals, equity: +acct.equity, prices });
+  log.tif = tif;
   log.earnings_reactions_checked = cands.length; log.signals = signals; log.sells = d.sells; log.buys = d.buys;
-  const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: 'opg' }) });
+  const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: tif }) });
   const done = [];
   // SPY parking: value of stocks after today = kept positions (market value) + new buys at last close
   const mv = Object.fromEntries(posList.map((x) => [x.symbol, +x.market_value]));
