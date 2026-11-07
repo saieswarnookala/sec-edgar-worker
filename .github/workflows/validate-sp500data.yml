@@ -1,0 +1,27 @@
+name: Validate sp500-data
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas pyarrow
+      - name: Validate
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: python scripts/validate_sp500data.py
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/sp500data_validation.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "sp500-data validation" && for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
