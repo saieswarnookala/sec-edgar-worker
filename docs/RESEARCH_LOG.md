@@ -128,3 +128,51 @@ Rules: SEC 8-K Item 2.02 earnings releases; reaction day = stock return minus SP
 ## 14. Infrastructure changes (2026-11-05)
 - GitHub Actions free minutes ran out (private repo) -> repo made **public** (history scanned for secrets first; none found). Anyone can now see code, results and the paper-trading log.
 - Website dashboard updated to v22 (time span on $10,000 tiles).
+
+
+## 15. Earnings drift: taxes and idle cash (2026-11-06)
+Files: scripts/tax-sim.mjs, scripts/test-tax-sim.mjs (used by earnings-drift-pit.mjs and india-drift.mjs).
+Model: realized gains netted per calendar year, taxed at year end, losses carried forward; idle cash optionally parked in the benchmark ETF (its gains taxed at the same rate, conservative); benchmark = buy and hold, taxed once at the end at the long-term rate. Dividend taxes ignored both sides.
+US S&P 500 full point-in-time, rule thr5|hold60|n10 (SPY after 15% LT tax = 13.3%/yr):
+| Rate | Idle cash | Parked in SPY |
+|---|---|---|
+| 0% | 21.2% | 22.3% |
+| 12% | 18.9% | 19.9% |
+| 22% | 16.9% | 17.8% |
+| 24% | 16.5% | 17.4% (DD -38.9%) |
+| 32% | 14.9% | 15.7% |
+Parking adds ~1 pt/yr, deepens worst drop ~2 pts.
+
+## 16. Robustness grid (2026-11-07) — FAILS the neighbour rule
+4/5/6% jump x 50/60/70-day hold, 10 slots, S&P 500 full PIT. SPY 14.6% (periods 15.8 / 13.5 / 14.3).
+| Jump | 50d | 60d | 70d |
+|---|---|---|---|
+| 4% | 12.5 | 19.1 | 13.6 |
+| 5% | 11.9 | 21.3 | 12.8 |
+| 6% | 14.6 | 16.8 | 14.3 |
+- Beat SPY every period: 1/9 (thr5 hold60 only). After 24% tax + park: 6/9 beat SPY, 3 of them by 0.1-0.4 pts.
+- 2025-26: hold60 21.4%/yr vs hold50 1.3%/yr. ~Half of profit from ~10 trades; hold length changes slot timing (domino effect). Lone peak = luck. Sai's success rule (4% and 6% must also work): not met.
+
+## 17. Blend of 9 + random-picks test (2026-11-07)
+Blend (equal money across all 9): 15.6%/yr vs SPY 14.6%, DD -34.5%; periods 19.5 / 13.3 / 11.5 vs 15.8 / 13.5 / 14.3 (not every period).
+Blend after tax, parked in SPY: 0% 18.1 | 12% 16.0 | 22% 14.3 | 24% 13.9 | 32% 12.4 (SPY 13.3 after 15% LT; 14.6 untaxed).
+Random picks (same signal days/slot counts, stock replaced by random PIT S&P 500 member, seeded): thr5/hold60 21.3% beat 100% of 1,000 runs (median 10.9, p95 15.3); blend 15.6% beat 100% of 200 runs (median 9.5, p95 12.6).
+Conclusion: the earnings-jump signal is real (beats chance), but the structure (cash drag, 3-month holds, short-term tax) eats most of it. Net ≈ SPY at 22-24% tax; +2.5 to +3.5 pts/yr at 12% or in a retirement account; behind at 32%.
+
+## 18. India earnings drift (2026-11-06/07)
+Files: scripts/nse-probe.mjs, scripts/india-drift.mjs, scripts/test-india-drift.mjs, .github/workflows/india-drift.yml -> data/india_drift.json.
+Data: NSE corporates-financial-results (exact broadcast times, to Jan 2025) + corporate-announcements (results filings from Dec 2024) — free, reachable from GitHub Actions; Yahoo daily prices; members from niftyindices.com CSV. Reaction day = same day if filed before 15:30 IST else next session. Costs 0.15%/side. 20% STCG vs 12.5% LTCG on the index. Bad ticks and unadjusted splits removed (NIFTYBEES had one; benchmark fell back to Nifty 50 price index, no dividends).
+| Universe | Pre-tax (5%/60/10) | After 20% tax | Parked, after tax |
+|---|---|---|---|
+| Today's Nifty 100 (biased) | 19.3% | 15.6% | 19.7% |
+| Approx PIT (top 100 by traded value each half-year, Nifty 500 + ~75 former names) | 12.6% (DD -32%) | 10.2% | 14.3% (DD -40%) |
+| Nifty 50 | 11.4% | 10.4% | — |
+PIT beat-every-period: 0/18. Parked version's gain is mostly index exposure (few signals, ~half slots empty). India does not confirm.
+
+## 19. Paper trading fixes (2026-11-06/07)
+- 2026-11-05: 6 opg buys submitted 07:52 ET; only BKNG filled, 5 expired (Alpaca paper opg unreliable). 2026-11-06 run started ~15:00 ET (GitHub delay); 9 opg orders rejected.
+- Fixes: market 'day' orders; crons 12:05, 12:35, 13:05, 13:20 UTC with once-per-day guard; idle cash parked in SPY (2% cash buffer, skip moves <0.5% of equity).
+- 2026-11-07: switched to the blend of 9 (4/5/6% x 50/60/70 days), 10 slots per version, 1/90 of equity per position; BKNG kept as legacy, sold on its 60-day schedule.
+
+## 20. Other notes
+- "Day Trader skill" (github.com/Jakeschincariol/day-trader-skill, viral reel): a toolkit, not an edge; its Time Machine resamples the last 60 days of 5-min bars (odds of stop vs target), not a test of whether a setup beats the market. Its own TSLA example was a coin flip. Fine for paper learning only.

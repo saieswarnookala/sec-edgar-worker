@@ -1,25 +1,27 @@
-# Sentinel research status (updated 2026-11-05)
+# Research status (updated 2026-11-07)
 
-Research only. Not financial advice. Full record: `docs/RESEARCH_LOG.md`.
+## What held up
+- **Clear leader v2.0 ETF momentum**: 14.6%/yr since Jun 2008, DD -43.2%.
+- **50/50 Clear leader + gold**: 11.9%/yr, DD -23.5%. **70/30 SPY + gold** yearly: 11.5%/yr.
+- **India 70/30 Nifty + GOLDBEES**: 10.9%/yr, DD -17.3%.
+- **Earnings drift (S&P 500)**: signal is real (beats 100% of random-pick runs) but the edge is small. Blend of 9 nearby rules 15.6%/yr vs SPY 14.6% pre-tax; after tax with idle cash in SPY: 16.0% at 12%, 13.9% at 24%, 12.4% at 32% vs SPY 13.3%. Best fit: retirement account (18.1% vs 14.6%). The 21% single-rule result was a lucky peak (1/9 neighbours beat SPY every period).
 
-## What has held up
-- **Clear leader v2.0 (ETFs)**: Jun 2008 -> Sep 2026: 14.6%/yr, max DD -43.2% ($10k -> $120,855) vs SPY $83,102.
-- **50/50 Clear leader + gold**: 11.9%/yr, DD -23.5%. **70/30 SPY + gold yearly**: 11.5%/yr, DD -29.8%.
-- **India (Nifty + GOLDBEES 70/30 yearly)**: 10.9%/yr, DD -17.3%.
+## Live test
+- Alpaca **paper** account, $100k, started 2026-11-05. From 2026-11-08: blend of 9 versions (4/5/6% jump x 50/60/70-day hold), 1/90 of equity per position, idle cash in SPY, market orders before the open, 4 backup morning runs. Judge after 3-6 months.
 
-## Being tested live
-- **Earnings drift paper trading** (since 2026-11-05, automatic): buy S&P 500 stocks that beat SPY by >= 5% on earnings day, hold 60 trading days, 10 slots. Backtest (point-in-time S&P 500) 21.7%/yr vs SPY 15.1%, BUT the same rules on S&P 400 mid-caps made 12.7% vs 14.9% -> unproven. Log: `data/paper_drift_state.json`.
-
-## Rejected (lost to SPY after costs)
-Clear leader on single stocks; 100 Baggers factor ETFs; turn-of-month; RSI(2) quality dips; ORB (all ~3,500 versions incl. gappers: 0 of 2,304 neighbours beat SPY in every period, loses with 5c slippage).
+## Rejected
+- ORB day trading (3,500+ variants, ~100M bars): none beat SPY after costs.
+- Quality dips (RSI-2 + SEC quality): 12.7% vs SPY 15.1%.
+- Earnings drift on S&P 400 mid-caps (12.7% vs 14.9%) and India Nifty 100 fair test (10.2% vs 10.4% after tax).
+- Crypto funding-rate arbitrage: below T-bills since 2025. Merger-arb funds (MNA/ARB): ~1-2 pts over T-bills.
 
 ## Next
-1. Let paper trading run 3-6 months; compare to SPY monthly.
-2. Optional: survivor-free data (Norgate ~$30/mo) to test earnings drift 2005-2015.
-3. Add paper-trade Slack alerts once `SLACK_WEBHOOK_URL` exists.
+- Paper-trade the blend; compare monthly with SPY.
+- Optional: pre-2016 test with paid survivorship-free data (Norgate ~$30/mo); exact Nifty 100 history from NSE press releases.
 
 ## Housekeeping
-- Revoke the GitHub token shared in chat (github.com/settings/tokens). Repo is now public.
-- Add `SLACK_WEBHOOK_URL` repo secret; rotate old webhook.
-- Check github.com/settings/billing for any Actions charge.
-- Backlog: Discord call-tracker, walkforward.py, `.zshr` cron typo, trading log xlsx, repo cleanup, bump action versions (Node 20 warning), India alerts.
+- Revoke the GitHub PAT pasted in chat (github.com/settings/tokens). Scheduled jobs use repo secrets.
+- Check GitHub billing (private repo minutes exhausted); move Coverage Check deploy to its own repo after the reset.
+- Bump actions/checkout and setup-node (Node 20 deprecation).
+
+Research only. Not financial advice.
