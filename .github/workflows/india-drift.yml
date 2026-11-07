@@ -1,0 +1,21 @@
+name: India earnings drift
+on:
+  workflow_dispatch: {}
+concurrency: india-drift
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/test-india-drift.mjs
+      - run: node scripts/india-drift.mjs
+      - name: Commit results
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/india_drift.json && git commit -m "India earnings drift results" && git pull --rebase && git push || echo "nothing to commit"
