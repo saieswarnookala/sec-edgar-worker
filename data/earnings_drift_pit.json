@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T17:32:34.230Z",
+ "generated": "2026-11-07T17:53:53.159Z",
  "index": "sp500",
  "ref": "thr8|hold60|n10|any",
  "changes_source": "2026-08-08",
@@ -7792,6 +7792,28 @@
   "p2025_26": 11.52,
   "afterTax24Park": 13.9,
   "spyAfterTax": 13.3,
+  "afterTaxByRate": {
+   "0": {
+    "blendPark": 18.1,
+    "spy": 13.3
+   },
+   "12": {
+    "blendPark": 16,
+    "spy": 13.3
+   },
+   "22": {
+    "blendPark": 14.3,
+    "spy": 13.3
+   },
+   "24": {
+    "blendPark": 13.9,
+    "spy": 13.3
+   },
+   "32": {
+    "blendPark": 12.4,
+    "spy": 13.3
+   }
+  },
   "beatsEveryPeriod": false
  },
  "random_test": {
