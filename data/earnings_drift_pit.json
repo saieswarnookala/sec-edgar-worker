@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-07T03:11:02.489Z",
+ "generated": "2026-11-07T17:32:34.230Z",
  "index": "sp500",
  "ref": "thr8|hold60|n10|any",
  "changes_source": "2026-08-08",
@@ -7766,5 +7766,51 @@
   "beatEveryPeriod": 1,
   "beatAfterTax": 6,
   "of": 9
+ },
+ "blend": {
+  "versions": [
+   "thr4|hold50|n10|any",
+   "thr4|hold60|n10|any",
+   "thr4|hold70|n10|any",
+   "thr5|hold50|n10|any",
+   "thr5|hold60|n10|any",
+   "thr5|hold70|n10|any",
+   "thr6|hold50|n10|any",
+   "thr6|hold60|n10|any",
+   "thr6|hold70|n10|any"
+  ],
+  "spy": {
+   "p2016_20": 15.83,
+   "p2021_24": 13.52,
+   "p2025_26": 14.3,
+   "all": 14.63
+  },
+  "all": 15.6,
+  "maxDD": 34.5,
+  "p2016_20": 19.47,
+  "p2021_24": 13.32,
+  "p2025_26": 11.52,
+  "afterTax24Park": 13.9,
+  "spyAfterTax": 13.3,
+  "beatsEveryPeriod": false
+ },
+ "random_test": {
+  "method": "same signal days and slot counts, stocks replaced by random point-in-time S&P 500 members; seeded",
+  "ref": {
+   "rule": "thr5|hold60|n10|any",
+   "actual": 21.25,
+   "runs": 1000,
+   "beats_pct_of_random": 100,
+   "random_median": 10.9,
+   "random_p95": 15.3
+  },
+  "blend": {
+   "actual": 15.6,
+   "runs": 200,
+   "beats_pct_of_random": 100,
+   "random_median": 9.5,
+   "random_p95": 12.6
+  },
+  "spy": 14.63
  }
 }
