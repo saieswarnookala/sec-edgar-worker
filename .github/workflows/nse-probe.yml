@@ -1,0 +1,18 @@
+name: NSE probe
+on:
+  workflow_dispatch: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/nse-probe.mjs
+      - name: Commit result
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/nse_probe.json && git commit -m "NSE probe result" && git pull --rebase && git push || echo "nothing to commit"
