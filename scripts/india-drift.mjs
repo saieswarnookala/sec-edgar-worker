@@ -2,6 +2,7 @@
 // Events: NSE quarterly results broadcast times. Reaction = stock minus Nifty on the first session after the news.
 // Buy next open, hold N sessions, equal slots, long only. Costs 0.15%/side (STT, stamp, charges, slippage).
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { taxGrid } from './tax-sim.mjs';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const COST = 0.0015, START = '2016-01-01';
@@ -161,6 +162,14 @@ async function main() {
     out.universes[k] = { events: events.length, beatBenchFull: rows.filter((r) => r.full.cagr > bstat.cagr).length, beatAllPeriods: rows.filter((r) => r.beatAll).length, combos: rows.length,
       reference: rows.find((r) => r.thr === 5 && r.hold === 60 && r.slots === 10), rows };
     console.log(k, 'events', events.length, 'ref', JSON.stringify(out.universes[k].reference?.full), 'bench', JSON.stringify(bstat));
+  }
+  // After-tax + idle cash (rule: 5% jump, hold 60, 10 slots). STCG 20% on the strategy; benchmark ETF held, 12.5% LTCG once at the end (exemption ignored).
+  const O = {}, Cl = {}; for (const [s, p] of Object.entries(px)) { O[s] = days.map((d) => p[d]?.o ?? null); let last = null; Cl[s] = days.map((d) => (last = p[d]?.c ?? last)); }
+  out.afterTax = { rule: 'thr5|hold60|n10', benchmark: out.benchmark.name + ' held, 12.5% LTCG on the gain at the end', note: 'Gains netted yearly, losses carried forward. Dividend tax and the Rs 1.25 lakh LTCG exemption ignored.', universes: {} };
+  for (const [k, events] of Object.entries(universes)) {
+    const sig = []; for (const e of events) (sig[e.ri + 1] ||= []).push({ s: e.sym, r: e.react }); for (const x of sig) if (x) x.sort((a, b) => b.r - a.r);
+    out.afterTax.universes[k] = taxGrid({ dates: days, O, C: Cl, B: benchEq, signals: sig, th: 0.05, h: 60, n: 10, cost: COST }, [0, 0.2], 0.125);
+    for (const r of out.afterTax.universes[k]) console.log('after-tax', k, JSON.stringify(r));
   }
   mkdirSync('data', { recursive: true }); writeFileSync('data/india_drift.json', JSON.stringify(out, null, 1));
 }

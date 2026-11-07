@@ -5,6 +5,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { stats } from './orb-research.mjs';
+import { taxGrid } from './tax-sim.mjs';
 import { COMBOS, PER, THRS, reactionIndex, simulate, getJson, daily, events8k } from './earnings-drift.mjs';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const MON = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
@@ -166,6 +167,10 @@ async function main(out = 'data') {
   cov.used = removed.filter((m) => m.cik && R[m.id]).length;
   const res = { generated: new Date().toISOString(), index: IDX, ref: REF, changes_source: revDate, gap_filled_additions: gap, coverage: cov, signals: { current_only: A.n, current_pit: B.n, full_pit: Cc.n }, universes: {} };
   for (const [k, S] of [['current_only', A], ['current_pit', B], ['full_pit', Cc]]) res.universes[k] = evaluate(dates, O, C, S.signals, t0, REF);
+  // After-tax + idle cash (rule: 5% jump, hold 60, 10 slots). Short-term rates tested; SPY buy-and-hold taxed 15% long-term once at the end.
+  res.after_tax = { rule: 'thr5|hold60|n10|any', universe: 'full_pit', benchmark: 'SPY buy and hold, 15% long-term tax on the gain at the end', note: 'Federal only (Texas has no state income tax). Gains netted yearly, losses carried forward. Dividend taxes ignored for both.',
+    rows: taxGrid({ dates, O, C, B: C.SPY, signals: Cc.signals, th: 0.05, h: 60, n: 10, t0 }, [0, 0.12, 0.22, 0.24, 0.32], 0.15) };
+  for (const r of res.after_tax.rows) console.log('after-tax', JSON.stringify(r));
   mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit${IDX === 'sp500' ? '' : '_' + IDX}.json`, JSON.stringify(res, null, 1));
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
   for (const [k, u] of Object.entries(res.universes)) { const r = u.ref; console.log(`\n== ${k} SPY ${u.spy.all.cagr}%  REF all ${r.all.cagr}% dd ${r.all.max_dd} | ${Object.keys(PER).map((p) => `${p} ${r[p].cagr}`).join(' | ')} | %beat ${JSON.stringify(u.pct_beating_spy)} | top10 share ${u.concentration?.top10_share_of_profit_pct}`); }
