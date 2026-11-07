@@ -1,0 +1,114 @@
+{
+  "at": "2026-11-07T00:24:35.881Z",
+  "tests": [
+    {
+      "symbol": "RELIANCE",
+      "kind": "results",
+      "status": 200,
+      "count": 130,
+      "newest": "16-Jan-2025 20:20",
+      "oldest": "-",
+      "sample": "{\"audited\":\"Un-Audited\",\"bank\":\"N\",\"broadCastDate\":\"16-Jan-2025 20:20:21\",\"companyName\":\"Reliance Industries Limited\",\"consolidated\":\"Non-Consolidated\",\"cumulative\":\"Non-cumulative\",\"difference\":\"00:00:33\",\"exchdisstime\":\"16-Jan-2025 20:20:54\",\"filingDate\":\"16-Jan-2025 20:20\",\"financialYear\":\"01-Apr-2024 To 31-Mar-2025\",\"format\":\"New\",\"fromDate\":\"01-Oct-2024\",\"indAs\":\"Ind-AS New\",\"industry\":\"-\",\"i"
+    },
+    {
+      "symbol": "RELIANCE",
+      "kind": "boardMeetings",
+      "status": 200,
+      "count": 20,
+      "newest": "30-Oct-2026",
+      "oldest": "05-Sep-2024",
+      "sample": "{\"bm_symbol\":\"RELIANCE\",\"bm_date\":\"30-Oct-2026\",\"bm_purpose\":\"Board Meeting Intimation\",\"bm_desc\":\"RELIANCE INDUSTRIES LIMITED has informed the Exchange about Board Meeting to be held on 30-Oct-2026 to consider and approve the Half Yearly Unaudited Financial results of the Company for the period ended September 2026 and Fund raising.\",\"sm_indusrty\":\"Refineries\",\"bm_timestamp\":\"27-Oct-2026 19:20:14"
+    },
+    {
+      "symbol": "RELIANCE",
+      "kind": "announcements",
+      "status": 200,
+      "count": 84,
+      "newest": "28-Dec-2016 21:22:00",
+      "oldest": "05-Jan-2016 17:18:00",
+      "sample": "{\"an_dt\":\"28-Dec-2016 21:22:00\",\"attFileSize\":null,\"attchmntFile\":\"https://nsearchives.nseindia.com/corporate/SEFilingMR28122016_28122016212243_727.zip\",\"attchmntText\":\"Reliance Industries Limited has informed the Exchange regarding a press release dated December 28, 2016, titled \\\"RELIANCE COMMISSIONS NEW PARAXYLENE PLANT AT JAMNAGAR ON RELIANCE FOUNDER S DAY\\\".\",\"bflag\":null,\"csvName\":null,\"desc"
+    },
+    {
+      "symbol": "TCS",
+      "kind": "results",
+      "status": 200,
+      "count": 162,
+      "newest": "09-Jan-2025 21:39",
+      "oldest": "-",
+      "sample": "{\"audited\":\"Audited\",\"bank\":\"N\",\"broadCastDate\":\"09-Jan-2025 21:39:43\",\"companyName\":\"Tata Consultancy Services Limited\",\"consolidated\":\"Consolidated\",\"cumulative\":\"Non-cumulative\",\"difference\":\"00:00:23\",\"exchdisstime\":\"09-Jan-2025 21:40:06\",\"filingDate\":\"09-Jan-2025 21:39\",\"financialYear\":\"01-Apr-2024 To 31-Mar-2025\",\"format\":\"New\",\"fromDate\":\"01-Oct-2024\",\"indAs\":\"Ind-AS New\",\"industry\":\"-\",\"is"
+    },
+    {
+      "symbol": "TCS",
+      "kind": "boardMeetings",
+      "status": 200,
+      "count": 20,
+      "newest": "08-Oct-2026",
+      "oldest": "11-Jul-2024",
+      "sample": "{\"bm_symbol\":\"TCS\",\"bm_date\":\"08-Oct-2026\",\"bm_purpose\":\"Board Meeting Intimation\",\"bm_desc\":\"TATA CONSULTANCY SERVICES LIMITED has informed the Exchange about Board Meeting to be held on 08-Oct-2026 to consider and approve the Quarterly Audited Financial results of the Company for the period ended September 2026 and Dividend.\",\"sm_indusrty\":\"Computers - Software\",\"bm_timestamp\":\"22-Sep-2026 18:40"
+    },
+    {
+      "symbol": "TCS",
+      "kind": "announcements",
+      "status": 200,
+      "count": 135,
+      "newest": "30-Dec-2016 18:30:00",
+      "oldest": "07-Jan-2016 08:27:00",
+      "sample": "{\"an_dt\":\"30-Dec-2016 18:30:00\",\"attFileSize\":null,\"attchmntFile\":\"https://nsearchives.nseindia.com/corporate/analystmeet_30122016183034_344.zip\",\"attchmntText\":\"Tata Consultancy Services Limited has informed the Exchange regarding Analysts/Institutional Investor Meet/Con. Call Updates\",\"bflag\":null,\"csvName\":null,\"desc\":\"Analysts/Institutional Investor Meet/Con. Call Updates\",\"difference\":\"-\",\"dt"
+    },
+    {
+      "symbol": "INFY",
+      "kind": "results",
+      "status": 200,
+      "count": 144,
+      "newest": "16-Jan-2025 19:42",
+      "oldest": "-",
+      "sample": "{\"audited\":\"Audited\",\"bank\":\"N\",\"broadCastDate\":\"16-Jan-2025 19:42:10\",\"companyName\":\"Infosys Limited\",\"consolidated\":\"Non-Consolidated\",\"cumulative\":\"Non-cumulative\",\"difference\":\"00:00:34\",\"exchdisstime\":\"16-Jan-2025 19:42:44\",\"filingDate\":\"16-Jan-2025 19:42\",\"financialYear\":\"01-Apr-2024 To 31-Mar-2025\",\"format\":\"New\",\"fromDate\":\"01-Oct-2024\",\"indAs\":\"Ind-AS New\",\"industry\":\"-\",\"isin\":\"INE009A01"
+    },
+    {
+      "symbol": "INFY",
+      "kind": "boardMeetings",
+      "status": 200,
+      "count": 20,
+      "newest": "23-Oct-2026",
+      "oldest": "17-Oct-2024",
+      "sample": "{\"bm_symbol\":\"INFY\",\"bm_date\":\"23-Oct-2026\",\"bm_purpose\":\"Board Meeting Intimation\",\"bm_desc\":\"INFOSYS LIMITED has informed the Exchange about Board Meeting to be held on 23-Oct-2026 to consider and approve the Half Yearly Audited Financial results of the Company for the period ended September 2026 and Dividend.\",\"sm_indusrty\":\"Computers - Software\",\"bm_timestamp\":\"16-Sep-2026 18:34:49\",\"sm_name\":"
+    },
+    {
+      "symbol": "INFY",
+      "kind": "announcements",
+      "status": 200,
+      "count": 81,
+      "newest": "15-Dec-2016 10:50:00",
+      "oldest": "07-Jan-2016 09:55:00",
+      "sample": "{\"an_dt\":\"15-Dec-2016 10:50:00\",\"attFileSize\":null,\"attchmntFile\":\"https://nsearchives.nseindia.com/corporate/INFY_15122016105028.zip\",\"attchmntText\":\"Infosys Limited has informed the Exchange regarding Analysts/Institutional Investor Meet/Con. Call Updates.\",\"bflag\":null,\"csvName\":null,\"desc\":\"Analysts/Institutional Investor Meet/Con. Call Updates\",\"difference\":\"-\",\"dt\":\"15122016105000\",\"exchdiss"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "kind": "results",
+      "status": 200,
+      "count": 103,
+      "newest": "23-Jan-2025 12:27",
+      "oldest": "-",
+      "sample": "{\"audited\":\"Un-Audited\",\"bank\":\"B\",\"broadCastDate\":\"23-Jan-2025 12:27:21\",\"companyName\":\"HDFC Bank Limited\",\"consolidated\":\"Consolidated\",\"cumulative\":\"Non-cumulative\",\"difference\":\"00:00:40\",\"exchdisstime\":\"23-Jan-2025 12:28:01\",\"filingDate\":\"23-Jan-2025 12:27\",\"financialYear\":\"01-Apr-2024 To 31-Mar-2025\",\"format\":\"New\",\"fromDate\":\"01-Oct-2024\",\"indAs\":\"Non-Ind-AS\",\"industry\":\"-\",\"isin\":\"INE040A0"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "kind": "boardMeetings",
+      "status": 200,
+      "count": 20,
+      "newest": "17-Oct-2026",
+      "oldest": "22-Jan-2025",
+      "sample": "{\"bm_symbol\":\"HDFCBANK\",\"bm_date\":\"17-Oct-2026\",\"bm_purpose\":\"Board Meeting Intimation\",\"bm_desc\":\"HDFC BANK LIMITED has informed the Exchange about Board Meeting to be held on 17-Oct-2026 to inter-alia consider and approve the Unaudited Financial results of the Company for the Half Yearly ended September 2026 .\",\"sm_indusrty\":\"Banks\",\"bm_timestamp\":\"22-Sep-2026 10:56:37\",\"sm_name\":\"HDFC Bank Limi"
+    },
+    {
+      "symbol": "HDFCBANK",
+      "kind": "announcements",
+      "status": 200,
+      "count": 156,
+      "newest": "31-Dec-2016 10:11:00",
+      "oldest": "21-Jan-2016 12:28:00",
+      "sample": "{\"an_dt\":\"31-Dec-2016 10:11:00\",\"attFileSize\":null,\"attchmntFile\":\"https://nsearchives.nseindia.com/corporate/30Dec2016Scheduleofanalystandinvestormeet_31122016101145_026.zip\",\"attchmntText\":\"HDFC Bank Limited has informed the Exchange regarding Analysts/Institutional Investor Meet/Con. Call Updates\",\"bflag\":null,\"csvName\":null,\"desc\":\"Analysts/Institutional Investor Meet/Con. Call Updates\",\"diffe"
+    }
+  ],
+  "home": 200
+}
