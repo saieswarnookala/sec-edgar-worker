@@ -5,7 +5,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { stats } from './orb-research.mjs';
-import { taxGrid } from './tax-sim.mjs';
+import { taxGrid, simTax } from './tax-sim.mjs';
 import { COMBOS, PER, THRS, reactionIndex, simulate, getJson, daily, events8k } from './earnings-drift.mjs';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const MON = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
@@ -171,6 +171,21 @@ async function main(out = 'data') {
   res.after_tax = { rule: 'thr5|hold60|n10|any', universe: 'full_pit', benchmark: 'SPY buy and hold, 15% long-term tax on the gain at the end', note: 'Federal only (Texas has no state income tax). Gains netted yearly, losses carried forward. Dividend taxes ignored for both.',
     rows: taxGrid({ dates, O, C, B: C.SPY, signals: Cc.signals, th: 0.05, h: 60, n: 10, t0 }, [0, 0.12, 0.22, 0.24, 0.32], 0.15) };
   for (const r of res.after_tax.rows) console.log('after-tax', JSON.stringify(r));
+  // Robustness: neighbours of the chosen rule. Success = all (or nearly all) beat SPY in every period.
+  const toR2 = (cv) => cv.slice(1).map(([d, e], i) => [d, e / cv[i][1] - 1]);
+  const spyR2 = toR2(dates.slice(t0).map((d, i) => [d, C.SPY[t0 + i]]));
+  const spyP = Object.fromEntries(Object.entries(PER).map(([k, f]) => [k, stats(spyR2.filter(([d]) => f(d))).cagr])); spyP.all = stats(spyR2).cagr;
+  const rob = [];
+  for (const th of [0.04, 0.05, 0.06]) for (const h of [50, 60, 70]) {
+    const sim = simulate(dates, O, C, Cc.signals, { key: `thr${th * 100}|hold${h}|n10|any`, th, h, n: 10, cl: 'any' }, t0), rr = toR2(sim.curve);
+    const row = { thr: th * 100, hold: h, all: stats(rr).cagr, maxDD: stats(rr).max_dd, trades: sim.trades };
+    for (const [k, f] of Object.entries(PER)) row[k] = stats(rr.filter(([d]) => f(d))).cagr;
+    row.beatsEveryPeriod = Object.keys(PER).every((k) => row[k] > spyP[k]);
+    const at = simTax({ dates, O, C, B: C.SPY, signals: Cc.signals, th, h, n: 10, t0, rate: 0.24, park: true, ltRate: 0.15 });
+    row.afterTax24Park = at.cagr; row.spyAfterTax = at.benchCagr; row.beatsAfterTax = at.cagr > at.benchCagr;
+    rob.push(row); console.log('robust', JSON.stringify(row));
+  }
+  res.robustness = { spy: spyP, universe: 'full_pit', rows: rob, beatEveryPeriod: rob.filter((r) => r.beatsEveryPeriod).length, beatAfterTax: rob.filter((r) => r.beatsAfterTax).length, of: rob.length };
   mkdirSync(out, { recursive: true }); writeFileSync(`${out}/earnings_drift_pit${IDX === 'sp500' ? '' : '_' + IDX}.json`, JSON.stringify(res, null, 1));
   console.log('coverage', JSON.stringify({ ...cov, missing: cov.missing.length }), 'signals', JSON.stringify(res.signals));
   for (const [k, u] of Object.entries(res.universes)) { const r = u.ref; console.log(`\n== ${k} SPY ${u.spy.all.cagr}%  REF all ${r.all.cagr}% dd ${r.all.max_dd} | ${Object.keys(PER).map((p) => `${p} ${r[p].cagr}`).join(' | ')} | %beat ${JSON.stringify(u.pct_beating_spy)} | top10 share ${u.concentration?.top10_share_of_profit_pct}`); }
