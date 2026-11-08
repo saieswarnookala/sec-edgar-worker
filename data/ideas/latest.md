@@ -1,48 +1,48 @@
-# Idea Scout: 2026-11-07
+# Idea Scout: 2026-11-08
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
-## 1. Show HN: HackerBooks – HackerTube, but for books mentioned on HN
+## 1. Show HN: Subvocal – Talk to your computer without making noise
 
 **Category:** build
 
-- **What:** Popular launch (1865 points). Ideas: a niche version, integrations, or a hosted service around it.
-- **Evidence:** <https://news.ycombinator.com/item?id=50326821>
-
-## 2. Show HN: Subvocal – Talk to your computer without making noise
-
-**Category:** build
-
-- **What:** Popular launch (841 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (843 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50340088>
 
-## 3. Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels
+## 2. Show HN: HackerTV – HN's most-recommended Youtube videos as 24/7 TV channels
 
 **Category:** build
 
 - **What:** Popular launch (488 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50346755>
 
-## 4. deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System
+## 3. Show HN: Hacker Times, a New York Times-inspired version of Hacker News
 
 **Category:** build
 
-- **What:** New GitHub project with 20748 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/deepseek-ai/dsh-superagent-prototype>
+- **What:** Popular launch (475 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **Evidence:** <https://news.ycombinator.com/item?id=50346981>
 
-## 5. storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.
+## 4. storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.
 
 **Category:** build
 
-- **What:** New GitHub project with 20149 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 22305 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/storytold/craft-anything>
 
-## 6. ccch1mneyyy/dsh-Go: dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。
+## 5. deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System
 
 **Category:** build
 
-- **What:** New GitHub project with 14136 stars in 2 weeks (Dart). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/ccch1mneyyy/dsh-Go>
+- **What:** New GitHub project with 21149 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/deepseek-ai/dsh-superagent-prototype>
+
+## 6. heydamir/unslop: A Claude skill that turns vibecoded, AI-looking UI into a designed interface
+
+**Category:** build
+
+- **What:** New GitHub project with 11816 stars in 2 weeks (JavaScript). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/heydamir/unslop>
 
 ## 7. Startup Athena raises $2.5M in pre-seed funding to revamp the revenue model for legal AI - SiliconANGLE
 
