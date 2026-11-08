@@ -96,7 +96,7 @@ def main():
         RB.append(sim(rnd, 3, "close")["cagr"])
     OUT["random_hold3"] = {"median": float(np.median(RB)), "p95": float(np.percentile(RB, 95)), "max": float(max(RB))}
     V.sort(key=lambda v: -v["cagr"]); OUT["variants"] = V
-    os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/selective_robust.json", "w"), indent=1)
+    os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/selective_robust.json", "w"), indent=1, default=float)
 try:
     main()
 except Exception:
