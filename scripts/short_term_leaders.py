@@ -17,7 +17,8 @@ def main():
     px["aopen"] = px.open * px.adj_close / px.close
     if "volume" in px: px["dv"] = px.volume * px.close
     dates = sorted(px[px.ticker == "SPY"].date.unique()); 
-    P = lambda v: px.pivot_table(index="date", columns="ticker", values=v).reindex(dates)
+    ALLT = sorted(px.ticker.unique())
+    P = lambda v: px.pivot_table(index="date", columns="ticker", values=v, dropna=False).reindex(index=dates, columns=ALLT)
     C, O = P("adj_close"), P("aopen"); valid = C.notna()
     DV = P("dv") if "dv" in px else None
     del px
