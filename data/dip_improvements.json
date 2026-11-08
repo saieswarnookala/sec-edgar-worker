@@ -1,0 +1,148 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "variants": {
+  "0_baseline": {
+   "cagr": 15.5,
+   "dd": -27.6,
+   "per": {
+    "1998-2002": 31.6,
+    "2003-2007": 10.7,
+    "2008-2009": 3.7,
+    "2010-2015": 5.3,
+    "2016-2020": 13.9,
+    "2021-2026": 23.8
+   },
+   "trades_per_month": 15.0,
+   "win_rate": 53.8,
+   "avg_trade": 0.54,
+   "avg_days_held": 3.0,
+   "invested_pct": 21.5,
+   "label": "Final strategy as is (buy at close, 0.05%/side, sell after 3 days)"
+  },
+  "1a_costs": {
+   "cagr": 11.4,
+   "dd": -31.1,
+   "per": {
+    "1998-2002": 22.4,
+    "2003-2007": 7.5,
+    "2008-2009": -0.4,
+    "2010-2015": 3.7,
+    "2016-2020": 11.8,
+    "2021-2026": 18.3
+   },
+   "trades_per_month": 15.0,
+   "win_rate": 52.0,
+   "avg_trade": 0.34,
+   "avg_days_held": 3.0,
+   "invested_pct": 21.5,
+   "label": "1. Realistic: higher costs 0.15%/side (slippage)"
+  },
+  "1b_open": {
+   "cagr": 11.5,
+   "dd": -27.2,
+   "per": {
+    "1998-2002": 13.7,
+    "2003-2007": 8.2,
+    "2008-2009": 4.4,
+    "2010-2015": 5.5,
+    "2016-2020": 14.1,
+    "2021-2026": 19.6
+   },
+   "trades_per_month": 15.0,
+   "win_rate": 52.2,
+   "avg_trade": 0.33,
+   "avg_days_held": 3.0,
+   "invested_pct": 21.5,
+   "label": "1. Realistic: buy next morning's open"
+  },
+  "1c_open_costs": {
+   "cagr": 7.6,
+   "dd": -29.5,
+   "per": {
+    "1998-2002": 5.7,
+    "2003-2007": 5.1,
+    "2008-2009": 0.3,
+    "2010-2015": 3.9,
+    "2016-2020": 11.9,
+    "2021-2026": 14.2
+   },
+   "trades_per_month": 15.0,
+   "win_rate": 50.2,
+   "avg_trade": 0.13,
+   "avg_days_held": 3.0,
+   "invested_pct": 21.5,
+   "label": "1. Realistic: next morning open + 0.15%/side"
+  },
+  "2a_exit5": {
+   "cagr": 18.5,
+   "dd": -27.8,
+   "per": {
+    "1998-2002": 43.0,
+    "2003-2007": 13.5,
+    "2008-2009": 4.0,
+    "2010-2015": 6.8,
+    "2016-2020": 15.0,
+    "2021-2026": 24.7
+   },
+   "trades_per_month": 13.7,
+   "win_rate": 63.4,
+   "avg_trade": 0.75,
+   "avg_days_held": 3.2,
+   "invested_pct": 20.7,
+   "label": "2. Smart exit: sell when back above 5-day average (max 5 days)"
+  },
+  "2b_exit10": {
+   "cagr": 19.6,
+   "dd": -30.2,
+   "per": {
+    "1998-2002": 48.8,
+    "2003-2007": 15.0,
+    "2008-2009": 6.6,
+    "2010-2015": 7.5,
+    "2016-2020": 15.1,
+    "2021-2026": 23.2
+   },
+   "trades_per_month": 13.2,
+   "win_rate": 64.7,
+   "avg_trade": 0.84,
+   "avg_days_held": 3.7,
+   "invested_pct": 23.2,
+   "label": "2. Smart exit: sell when back above 5-day average (max 10 days)"
+  },
+  "3_blend": {
+   "cagr": 15.7,
+   "dd": -26.9,
+   "per": {
+    "1998-2002": 37.5,
+    "2003-2007": 10.2,
+    "2008-2009": 3.6,
+    "2010-2015": 6.3,
+    "2016-2020": 15.3,
+    "2021-2026": 18.5
+   },
+   "label": "3. Blend: 8%/10% dip x 2/3-day hold, equal money"
+  },
+  "4_fear": {
+   "cagr": 15.4,
+   "dd": -34.7,
+   "per": {
+    "1998-2002": 26.9,
+    "2003-2007": 12.7,
+    "2008-2009": 3.7,
+    "2010-2015": 5.2,
+    "2016-2020": 12.9,
+    "2021-2026": 26.2
+   },
+   "trades_per_month": 15.0,
+   "win_rate": 53.8,
+   "avg_trade": 0.54,
+   "avg_days_held": 3.0,
+   "invested_pct": 23.4,
+   "label": "4. Fear boost: up to 20% per trade when SPY volatility is in top 20% of past year"
+  }
+ },
+ "note": "Each improvement tested alone on the final strategy (5-day dip >=10% vs SPY, stock above 200d, hold 3, waiting money in SPY only above ~10-month average). VIX not in dataset; SPY 20-day volatility used instead."
+}
