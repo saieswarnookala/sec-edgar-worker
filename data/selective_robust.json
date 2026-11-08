@@ -1,0 +1,10 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "grid_summary": {
+  "n": 36,
+  "median_cagr": 13.05,
+  "min_cagr": 11.0,
+  "beat_spy": py\", line 101, in <module>\n    main()\n  File \"/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/selective_robust.py\", line 99, in main\n    os.makedirs(\"data\", exist_ok=True); json.dump(OUT, open(\"data/selective_robust.json\", \"w\"), indent=1)\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/__init__.py\", line 179, in dump\n    for chunk in iterable:\n                 ^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/encoder.py\", line 432, in _iterencode\n    yield from _iterencode_dict(o, _current_indent_level)\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/encoder.py\", line 406, in _iterencode_dict\n    yield from chunks\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/encoder.py\", line 439, in _iterencode\n    o = _default(o)\n        ^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/json/encoder.py\", line 180, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\nTypeError: Object of type int64 is not JSON serializable\n"}
