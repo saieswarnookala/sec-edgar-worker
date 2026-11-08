@@ -1,0 +1,1552 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "best": {
+  "cagr": 14.8,
+  "dd": -54.4,
+  "per": {
+   "1998-2002": 23.4,
+   "2003-2007": 14.3,
+   "2008-2009": -16.5,
+   "2010-2015": 11.4,
+   "2016-2020": 15.8,
+   "2021-2026": 23.7
+  },
+  "trades": 4014,
+  "trades_per_month": 11.6,
+  "avg_trade": 0.5,
+  "win_rate": 53.3,
+  "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+  "hold": 3,
+  "entry": "close"
+ },
+ "random_same_hold": {
+  "median": 5.699999999999999,
+  "p95": 7.32,
+  "max": 7.7
+ },
+ "variants": [
+  {
+   "cagr": 14.8,
+   "dd": -54.4,
+   "per": {
+    "1998-2002": 23.4,
+    "2003-2007": 14.3,
+    "2008-2009": -16.5,
+    "2010-2015": 11.4,
+    "2016-2020": 15.8,
+    "2021-2026": 23.7
+   },
+   "trades": 4014,
+   "trades_per_month": 11.6,
+   "avg_trade": 0.5,
+   "win_rate": 53.3,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 14.3,
+   "dd": -54.6,
+   "per": {
+    "1998-2002": 19.7,
+    "2003-2007": 14.9,
+    "2008-2009": -13.9,
+    "2010-2015": 11.1,
+    "2016-2020": 16.2,
+    "2021-2026": 22.3
+   },
+   "trades": 3076,
+   "trades_per_month": 8.9,
+   "avg_trade": 0.66,
+   "win_rate": 53.2,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 11.4,
+   "dd": -55.5,
+   "per": {
+    "1998-2002": 9.0,
+    "2003-2007": 12.6,
+    "2008-2009": -17.0,
+    "2010-2015": 11.3,
+    "2016-2020": 15.6,
+    "2021-2026": 20.5
+   },
+   "trades": 4014,
+   "trades_per_month": 11.6,
+   "avg_trade": 0.27,
+   "win_rate": 51.8,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 11.4,
+   "dd": -55.7,
+   "per": {
+    "1998-2002": 5.6,
+    "2003-2007": 13.7,
+    "2008-2009": -15.0,
+    "2010-2015": 11.5,
+    "2016-2020": 15.9,
+    "2021-2026": 21.3
+   },
+   "trades": 3076,
+   "trades_per_month": 8.9,
+   "avg_trade": 0.42,
+   "win_rate": 52.4,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 10.1,
+   "dd": -57.2,
+   "per": {
+    "1998-2002": 11.7,
+    "2003-2007": 8.0,
+    "2008-2009": -11.9,
+    "2010-2015": 13.5,
+    "2016-2020": 16.6,
+    "2021-2026": 10.0
+   },
+   "trades": 2439,
+   "trades_per_month": 7.1,
+   "avg_trade": 0.56,
+   "win_rate": 52.1,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 9.0,
+   "dd": -56.4,
+   "per": {
+    "1998-2002": 1.1,
+    "2003-2007": 17.5,
+    "2008-2009": -2.4,
+    "2010-2015": 20.3,
+    "2016-2020": 4.0,
+    "2021-2026": 6.2
+   },
+   "trades": 2442,
+   "trades_per_month": 7.1,
+   "avg_trade": 0.92,
+   "win_rate": 54.1,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 8.8,
+   "dd": -54.8,
+   "per": {
+    "1998-2002": -0.9,
+    "2003-2007": 16.4,
+    "2008-2009": -6.6,
+    "2010-2015": 20.6,
+    "2016-2020": 2.4,
+    "2021-2026": 10.9
+   },
+   "trades": 1875,
+   "trades_per_month": 5.4,
+   "avg_trade": 0.87,
+   "win_rate": 53.8,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 8.8,
+   "dd": -60.7,
+   "per": {
+    "1998-2002": 5.7,
+    "2003-2007": 7.3,
+    "2008-2009": -13.5,
+    "2010-2015": 13.7,
+    "2016-2020": 16.6,
+    "2021-2026": 9.9
+   },
+   "trades": 2439,
+   "trades_per_month": 7.1,
+   "avg_trade": 0.42,
+   "win_rate": 51.6,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 8.6,
+   "dd": -58.9,
+   "per": {
+    "1998-2002": 2.3,
+    "2003-2007": 14.5,
+    "2008-2009": -8.7,
+    "2010-2015": 16.8,
+    "2016-2020": 10.4,
+    "2021-2026": 5.9
+   },
+   "trades": 2917,
+   "trades_per_month": 8.4,
+   "avg_trade": 0.34,
+   "win_rate": 51.7,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 8.6,
+   "dd": -54.6,
+   "per": {
+    "1998-2002": -0.2,
+    "2003-2007": 16.0,
+    "2008-2009": -5.6,
+    "2010-2015": 17.6,
+    "2016-2020": 4.0,
+    "2021-2026": 10.8
+   },
+   "trades": 1875,
+   "trades_per_month": 5.4,
+   "avg_trade": 0.85,
+   "win_rate": 53.0,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 8.5,
+   "dd": -57.7,
+   "per": {
+    "1998-2002": 5.4,
+    "2003-2007": 19.6,
+    "2008-2009": -3.9,
+    "2010-2015": 10.9,
+    "2016-2020": 7.4,
+    "2021-2026": 5.0
+   },
+   "trades": 3764,
+   "trades_per_month": 10.9,
+   "avg_trade": 0.36,
+   "win_rate": 53.1,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 8.5,
+   "dd": -57.6,
+   "per": {
+    "1998-2002": 4.0,
+    "2003-2007": 20.5,
+    "2008-2009": -4.9,
+    "2010-2015": 13.6,
+    "2016-2020": 6.7,
+    "2021-2026": 4.2
+   },
+   "trades": 3764,
+   "trades_per_month": 10.9,
+   "avg_trade": 0.36,
+   "win_rate": 52.8,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 8.5,
+   "dd": -56.7,
+   "per": {
+    "1998-2002": -0.2,
+    "2003-2007": 16.6,
+    "2008-2009": -2.6,
+    "2010-2015": 22.5,
+    "2016-2020": 2.3,
+    "2021-2026": 5.3
+   },
+   "trades": 2442,
+   "trades_per_month": 7.1,
+   "avg_trade": 0.87,
+   "win_rate": 54.2,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 8.0,
+   "dd": -59.2,
+   "per": {
+    "1998-2002": 3.0,
+    "2003-2007": 13.9,
+    "2008-2009": -8.2,
+    "2010-2015": 13.0,
+    "2016-2020": 9.6,
+    "2021-2026": 6.8
+   },
+   "trades": 2917,
+   "trades_per_month": 8.4,
+   "avg_trade": 0.31,
+   "win_rate": 51.4,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 8.0,
+   "dd": -57.8,
+   "per": {
+    "1998-2002": 2.8,
+    "2003-2007": 7.4,
+    "2008-2009": -16.5,
+    "2010-2015": 16.8,
+    "2016-2020": 15.7,
+    "2021-2026": 7.6
+   },
+   "trades": 1763,
+   "trades_per_month": 5.1,
+   "avg_trade": 0.78,
+   "win_rate": 51.0,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.9,
+   "dd": -55.2,
+   "per": {
+    "1998-2002": -1.1,
+    "2003-2007": 10.1,
+    "2008-2009": -13.3,
+    "2010-2015": 12.3,
+    "2016-2020": 12.5,
+    "2021-2026": 14.4
+   },
+   "trades": 902,
+   "trades_per_month": 2.6,
+   "avg_trade": -0.08,
+   "win_rate": 49.1,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.8,
+   "dd": -56.8,
+   "per": {
+    "1998-2002": -0.0,
+    "2003-2007": 14.1,
+    "2008-2009": -7.4,
+    "2010-2015": 15.8,
+    "2016-2020": 6.4,
+    "2021-2026": 8.2
+   },
+   "trades": 4830,
+   "trades_per_month": 14.0,
+   "avg_trade": 0.1,
+   "win_rate": 51.6,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.8,
+   "dd": -55.4,
+   "per": {
+    "1998-2002": -1.4,
+    "2003-2007": 10.8,
+    "2008-2009": -12.9,
+    "2010-2015": 11.8,
+    "2016-2020": 12.3,
+    "2021-2026": 13.8
+   },
+   "trades": 884,
+   "trades_per_month": 2.6,
+   "avg_trade": -0.05,
+   "win_rate": 48.8,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.8,
+   "dd": -62.5,
+   "per": {
+    "1998-2002": 0.9,
+    "2003-2007": 12.7,
+    "2008-2009": -9.8,
+    "2010-2015": 18.3,
+    "2016-2020": 8.6,
+    "2021-2026": 5.1
+   },
+   "trades": 2109,
+   "trades_per_month": 6.1,
+   "avg_trade": 0.73,
+   "win_rate": 52.9,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.8,
+   "dd": -55.4,
+   "per": {
+    "1998-2002": -2.3,
+    "2003-2007": 10.5,
+    "2008-2009": -11.0,
+    "2010-2015": 12.8,
+    "2016-2020": 12.2,
+    "2021-2026": 13.0
+   },
+   "trades": 658,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.36,
+   "win_rate": 47.4,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.7,
+   "dd": -55.6,
+   "per": {
+    "1998-2002": -2.5,
+    "2003-2007": 11.3,
+    "2008-2009": -10.5,
+    "2010-2015": 12.0,
+    "2016-2020": 12.5,
+    "2021-2026": 12.2
+   },
+   "trades": 656,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.32,
+   "win_rate": 47.3,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.6,
+   "dd": -54.8,
+   "per": {
+    "1998-2002": -0.7,
+    "2003-2007": 10.5,
+    "2008-2009": -9.6,
+    "2010-2015": 13.2,
+    "2016-2020": 12.3,
+    "2021-2026": 9.3
+   },
+   "trades": 852,
+   "trades_per_month": 2.5,
+   "avg_trade": 0.04,
+   "win_rate": 48.4,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.5,
+   "dd": -56.1,
+   "per": {
+    "1998-2002": -2.3,
+    "2003-2007": 13.9,
+    "2008-2009": -10.4,
+    "2010-2015": 18.7,
+    "2016-2020": 6.5,
+    "2021-2026": 7.7
+   },
+   "trades": 2709,
+   "trades_per_month": 7.8,
+   "avg_trade": 0.0,
+   "win_rate": 51.2,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.4,
+   "dd": -55.2,
+   "per": {
+    "1998-2002": 0.8,
+    "2003-2007": 16.5,
+    "2008-2009": -9.4,
+    "2010-2015": 17.6,
+    "2016-2020": 4.9,
+    "2021-2026": 4.3
+   },
+   "trades": 2406,
+   "trades_per_month": 7.0,
+   "avg_trade": 0.15,
+   "win_rate": 51.5,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.4,
+   "dd": -58.8,
+   "per": {
+    "1998-2002": 0.4,
+    "2003-2007": 7.0,
+    "2008-2009": -17.1,
+    "2010-2015": 16.4,
+    "2016-2020": 15.8,
+    "2021-2026": 7.5
+   },
+   "trades": 1763,
+   "trades_per_month": 5.1,
+   "avg_trade": 0.68,
+   "win_rate": 50.8,
+   "name": "5d drop >=10% vs SPY, stock above 200d, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.3,
+   "dd": -56.4,
+   "per": {
+    "1998-2002": -2.1,
+    "2003-2007": 15.4,
+    "2008-2009": -8.4,
+    "2010-2015": 19.4,
+    "2016-2020": 4.0,
+    "2021-2026": 5.9
+   },
+   "trades": 4830,
+   "trades_per_month": 14.0,
+   "avg_trade": 0.07,
+   "win_rate": 51.3,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.3,
+   "dd": -63.2,
+   "per": {
+    "1998-2002": 1.1,
+    "2003-2007": 12.3,
+    "2008-2009": -9.7,
+    "2010-2015": 15.7,
+    "2016-2020": 8.9,
+    "2021-2026": 5.1
+   },
+   "trades": 2109,
+   "trades_per_month": 6.1,
+   "avg_trade": 0.69,
+   "win_rate": 52.5,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.3,
+   "dd": -55.9,
+   "per": {
+    "1998-2002": -1.5,
+    "2003-2007": 13.1,
+    "2008-2009": -9.5,
+    "2010-2015": 14.5,
+    "2016-2020": 8.3,
+    "2021-2026": 8.6
+   },
+   "trades": 2709,
+   "trades_per_month": 7.8,
+   "avg_trade": -0.02,
+   "win_rate": 50.6,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.2,
+   "dd": -55.4,
+   "per": {
+    "1998-2002": -1.9,
+    "2003-2007": 9.4,
+    "2008-2009": -14.2,
+    "2010-2015": 11.6,
+    "2016-2020": 12.9,
+    "2021-2026": 12.7
+   },
+   "trades": 902,
+   "trades_per_month": 2.6,
+   "avg_trade": -0.3,
+   "win_rate": 47.6,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.2,
+   "dd": -55.6,
+   "per": {
+    "1998-2002": -2.7,
+    "2003-2007": 9.8,
+    "2008-2009": -12.1,
+    "2010-2015": 12.2,
+    "2016-2020": 12.6,
+    "2021-2026": 11.8
+   },
+   "trades": 658,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.59,
+   "win_rate": 45.6,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.2,
+   "dd": -55.3,
+   "per": {
+    "1998-2002": 1.6,
+    "2003-2007": 16.1,
+    "2008-2009": -8.6,
+    "2010-2015": 13.8,
+    "2016-2020": 6.5,
+    "2021-2026": 4.7
+   },
+   "trades": 2406,
+   "trades_per_month": 7.0,
+   "avg_trade": 0.12,
+   "win_rate": 51.3,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 7.1,
+   "dd": -55.6,
+   "per": {
+    "1998-2002": -2.2,
+    "2003-2007": 10.1,
+    "2008-2009": -13.9,
+    "2010-2015": 11.1,
+    "2016-2020": 12.8,
+    "2021-2026": 12.2
+   },
+   "trades": 884,
+   "trades_per_month": 2.6,
+   "avg_trade": -0.28,
+   "win_rate": 47.4,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.1,
+   "dd": -55.8,
+   "per": {
+    "1998-2002": -3.0,
+    "2003-2007": 10.7,
+    "2008-2009": -11.6,
+    "2010-2015": 11.5,
+    "2016-2020": 12.9,
+    "2021-2026": 11.0
+   },
+   "trades": 656,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.56,
+   "win_rate": 45.9,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 7.1,
+   "dd": -54.9,
+   "per": {
+    "1998-2002": -2.2,
+    "2003-2007": 11.6,
+    "2008-2009": -10.5,
+    "2010-2015": 13.0,
+    "2016-2020": 11.7,
+    "2021-2026": 8.2
+   },
+   "trades": 649,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.32,
+   "win_rate": 47.1,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.9,
+   "dd": -55.0,
+   "per": {
+    "1998-2002": -1.5,
+    "2003-2007": 9.8,
+    "2008-2009": -10.6,
+    "2010-2015": 12.6,
+    "2016-2020": 12.7,
+    "2021-2026": 7.9
+   },
+   "trades": 852,
+   "trades_per_month": 2.5,
+   "avg_trade": -0.19,
+   "win_rate": 47.8,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 6.7,
+   "dd": -55.1,
+   "per": {
+    "1998-2002": -3.3,
+    "2003-2007": 11.0,
+    "2008-2009": -10.9,
+    "2010-2015": 16.6,
+    "2016-2020": 7.9,
+    "2021-2026": 7.9
+   },
+   "trades": 2800,
+   "trades_per_month": 8.1,
+   "avg_trade": -0.14,
+   "win_rate": 48.6,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 6.6,
+   "dd": -55.8,
+   "per": {
+    "1998-2002": -2.3,
+    "2003-2007": 10.2,
+    "2008-2009": -9.8,
+    "2010-2015": 12.4,
+    "2016-2020": 10.0,
+    "2021-2026": 9.0
+   },
+   "trades": 2800,
+   "trades_per_month": 8.1,
+   "avg_trade": -0.14,
+   "win_rate": 48.6,
+   "name": "breakout: rose >=8% vs SPY, vol>=3x, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.5,
+   "dd": -57.0,
+   "per": {
+    "1998-2002": -3.6,
+    "2003-2007": 12.9,
+    "2008-2009": -10.1,
+    "2010-2015": 17.4,
+    "2016-2020": 7.8,
+    "2021-2026": 4.3
+   },
+   "trades": 3539,
+   "trades_per_month": 10.2,
+   "avg_trade": -0.01,
+   "win_rate": 50.6,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 6.5,
+   "dd": -55.1,
+   "per": {
+    "1998-2002": -2.7,
+    "2003-2007": 11.0,
+    "2008-2009": -11.8,
+    "2010-2015": 12.5,
+    "2016-2020": 12.1,
+    "2021-2026": 7.1
+   },
+   "trades": 649,
+   "trades_per_month": 1.9,
+   "avg_trade": -0.57,
+   "win_rate": 46.2,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 6.4,
+   "dd": -58.2,
+   "per": {
+    "1998-2002": -4.4,
+    "2003-2007": 10.1,
+    "2008-2009": -10.8,
+    "2010-2015": 13.7,
+    "2016-2020": 11.1,
+    "2021-2026": 8.2
+   },
+   "trades": 807,
+   "trades_per_month": 2.3,
+   "avg_trade": -0.13,
+   "win_rate": 46.6,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.2,
+   "dd": -59.3,
+   "per": {
+    "1998-2002": -3.7,
+    "2003-2007": 7.9,
+    "2008-2009": -15.4,
+    "2010-2015": 8.9,
+    "2016-2020": 12.3,
+    "2021-2026": 14.4
+   },
+   "trades": 3238,
+   "trades_per_month": 9.4,
+   "avg_trade": -0.07,
+   "win_rate": 48.3,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.2,
+   "dd": -60.4,
+   "per": {
+    "1998-2002": 1.1,
+    "2003-2007": 11.4,
+    "2008-2009": -11.0,
+    "2010-2015": 11.2,
+    "2016-2020": 6.8,
+    "2021-2026": 7.1
+   },
+   "trades": 4740,
+   "trades_per_month": 13.7,
+   "avg_trade": 0.27,
+   "win_rate": 52.0,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 6.2,
+   "dd": -59.4,
+   "per": {
+    "1998-2002": -2.5,
+    "2003-2007": 12.1,
+    "2008-2009": -9.4,
+    "2010-2015": 12.9,
+    "2016-2020": 9.1,
+    "2021-2026": 5.6
+   },
+   "trades": 3539,
+   "trades_per_month": 10.2,
+   "avg_trade": -0.02,
+   "win_rate": 50.2,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.1,
+   "dd": -58.3,
+   "per": {
+    "1998-2002": -3.9,
+    "2003-2007": 8.3,
+    "2008-2009": -12.6,
+    "2010-2015": 9.8,
+    "2016-2020": 11.8,
+    "2021-2026": 12.0
+   },
+   "trades": 1846,
+   "trades_per_month": 5.3,
+   "avg_trade": -0.32,
+   "win_rate": 46.4,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.1,
+   "dd": -57.6,
+   "per": {
+    "1998-2002": -2.5,
+    "2003-2007": 10.7,
+    "2008-2009": -12.4,
+    "2010-2015": 13.3,
+    "2016-2020": 10.8,
+    "2021-2026": 5.8
+   },
+   "trades": 629,
+   "trades_per_month": 1.8,
+   "avg_trade": -0.56,
+   "win_rate": 45.8,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 6.0,
+   "dd": -63.1,
+   "per": {
+    "1998-2002": -3.7,
+    "2003-2007": 17.7,
+    "2008-2009": -9.6,
+    "2010-2015": 13.4,
+    "2016-2020": 4.4,
+    "2021-2026": 4.8
+   },
+   "trades": 2702,
+   "trades_per_month": 7.8,
+   "avg_trade": 0.57,
+   "win_rate": 53.3,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 5.9,
+   "dd": -57.6,
+   "per": {
+    "1998-2002": -5.1,
+    "2003-2007": 8.7,
+    "2008-2009": -11.7,
+    "2010-2015": 9.4,
+    "2016-2020": 12.1,
+    "2021-2026": 11.4
+   },
+   "trades": 1826,
+   "trades_per_month": 5.3,
+   "avg_trade": -0.34,
+   "win_rate": 47.0,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 5.9,
+   "dd": -57.2,
+   "per": {
+    "1998-2002": -1.4,
+    "2003-2007": 9.8,
+    "2008-2009": -9.4,
+    "2010-2015": 11.3,
+    "2016-2020": 7.9,
+    "2021-2026": 7.4
+   },
+   "trades": 5203,
+   "trades_per_month": 15.1,
+   "avg_trade": -0.08,
+   "win_rate": 49.0,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 5.8,
+   "dd": -63.2,
+   "per": {
+    "1998-2002": -4.4,
+    "2003-2007": 17.9,
+    "2008-2009": -8.9,
+    "2010-2015": 12.0,
+    "2016-2020": 5.1,
+    "2021-2026": 4.9
+   },
+   "trades": 2702,
+   "trades_per_month": 7.8,
+   "avg_trade": 0.58,
+   "win_rate": 53.0,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 5.8,
+   "dd": -59.8,
+   "per": {
+    "1998-2002": -5.0,
+    "2003-2007": 9.4,
+    "2008-2009": -11.6,
+    "2010-2015": 13.1,
+    "2016-2020": 11.5,
+    "2021-2026": 6.8
+   },
+   "trades": 807,
+   "trades_per_month": 2.3,
+   "avg_trade": -0.35,
+   "win_rate": 45.7,
+   "name": "panic dip: fell >=8% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 5.6,
+   "dd": -61.2,
+   "per": {
+    "1998-2002": 1.4,
+    "2003-2007": 10.4,
+    "2008-2009": -10.4,
+    "2010-2015": 7.8,
+    "2016-2020": 7.9,
+    "2021-2026": 7.0
+   },
+   "trades": 4740,
+   "trades_per_month": 13.7,
+   "avg_trade": 0.26,
+   "win_rate": 51.9,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 5.6,
+   "dd": -57.7,
+   "per": {
+    "1998-2002": -3.0,
+    "2003-2007": 10.1,
+    "2008-2009": -13.4,
+    "2010-2015": 12.8,
+    "2016-2020": 11.1,
+    "2021-2026": 4.7
+   },
+   "trades": 629,
+   "trades_per_month": 1.8,
+   "avg_trade": -0.79,
+   "win_rate": 44.8,
+   "name": "panic dip: fell >=8% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 5.4,
+   "dd": -58.8,
+   "per": {
+    "1998-2002": -4.0,
+    "2003-2007": 7.4,
+    "2008-2009": -14.1,
+    "2010-2015": 9.3,
+    "2016-2020": 11.8,
+    "2021-2026": 10.5
+   },
+   "trades": 1846,
+   "trades_per_month": 5.3,
+   "avg_trade": -0.43,
+   "win_rate": 45.3,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 5.4,
+   "dd": -56.3,
+   "per": {
+    "1998-2002": -3.6,
+    "2003-2007": 11.0,
+    "2008-2009": -10.3,
+    "2010-2015": 15.3,
+    "2016-2020": 5.3,
+    "2021-2026": 4.7
+   },
+   "trades": 5203,
+   "trades_per_month": 15.1,
+   "avg_trade": -0.11,
+   "win_rate": 48.6,
+   "name": "breakout: rose >=5% vs SPY, vol>=3x, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 5.3,
+   "dd": -59.5,
+   "per": {
+    "1998-2002": -5.2,
+    "2003-2007": 8.2,
+    "2008-2009": -15.4,
+    "2010-2015": 14.3,
+    "2016-2020": 6.6,
+    "2021-2026": 10.2
+   },
+   "trades": 1466,
+   "trades_per_month": 4.2,
+   "avg_trade": -0.08,
+   "win_rate": 49.0,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 5.2,
+   "dd": -58.2,
+   "per": {
+    "1998-2002": -5.2,
+    "2003-2007": 7.8,
+    "2008-2009": -13.2,
+    "2010-2015": 8.9,
+    "2016-2020": 12.2,
+    "2021-2026": 10.0
+   },
+   "trades": 1826,
+   "trades_per_month": 5.3,
+   "avg_trade": -0.44,
+   "win_rate": 46.0,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 4.9,
+   "dd": -60.4,
+   "per": {
+    "1998-2002": -4.6,
+    "2003-2007": 7.0,
+    "2008-2009": -16.5,
+    "2010-2015": 7.9,
+    "2016-2020": 10.9,
+    "2021-2026": 11.8
+   },
+   "trades": 3238,
+   "trades_per_month": 9.4,
+   "avg_trade": -0.2,
+   "win_rate": 47.1,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 4.9,
+   "dd": -63.8,
+   "per": {
+    "1998-2002": -7.4,
+    "2003-2007": 6.8,
+    "2008-2009": -14.1,
+    "2010-2015": 11.0,
+    "2016-2020": 11.9,
+    "2021-2026": 9.7
+   },
+   "trades": 2615,
+   "trades_per_month": 7.6,
+   "avg_trade": -0.04,
+   "win_rate": 48.6,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.9,
+   "dd": -67.2,
+   "per": {
+    "1998-2002": -3.4,
+    "2003-2007": 8.8,
+    "2008-2009": -9.0,
+    "2010-2015": 8.7,
+    "2016-2020": 6.7,
+    "2021-2026": 8.9
+   },
+   "trades": 7133,
+   "trades_per_month": 20.7,
+   "avg_trade": 0.03,
+   "win_rate": 50.7,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.8,
+   "dd": -61.5,
+   "per": {
+    "1998-2002": -5.4,
+    "2003-2007": 7.4,
+    "2008-2009": -13.0,
+    "2010-2015": 11.5,
+    "2016-2020": 10.9,
+    "2021-2026": 6.5
+   },
+   "trades": 1710,
+   "trades_per_month": 5.0,
+   "avg_trade": -0.33,
+   "win_rate": 47.3,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.8,
+   "dd": -64.8,
+   "per": {
+    "1998-2002": -6.5,
+    "2003-2007": 8.7,
+    "2008-2009": -12.0,
+    "2010-2015": 16.3,
+    "2016-2020": 6.3,
+    "2021-2026": 5.6
+   },
+   "trades": 3776,
+   "trades_per_month": 10.9,
+   "avg_trade": -0.2,
+   "win_rate": 47.8,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 4.7,
+   "dd": -60.7,
+   "per": {
+    "1998-2002": -5.8,
+    "2003-2007": 7.3,
+    "2008-2009": -16.1,
+    "2010-2015": 8.3,
+    "2016-2020": 10.8,
+    "2021-2026": 11.4
+   },
+   "trades": 3072,
+   "trades_per_month": 8.9,
+   "avg_trade": -0.17,
+   "win_rate": 47.5,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.7,
+   "dd": -59.9,
+   "per": {
+    "1998-2002": -5.4,
+    "2003-2007": 7.4,
+    "2008-2009": -16.4,
+    "2010-2015": 14.2,
+    "2016-2020": 6.4,
+    "2021-2026": 9.0
+   },
+   "trades": 1466,
+   "trades_per_month": 4.2,
+   "avg_trade": -0.18,
+   "win_rate": 49.5,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 4.7,
+   "dd": -66.8,
+   "per": {
+    "1998-2002": -5.3,
+    "2003-2007": 8.0,
+    "2008-2009": -11.1,
+    "2010-2015": 11.7,
+    "2016-2020": 7.6,
+    "2021-2026": 7.4
+   },
+   "trades": 3776,
+   "trades_per_month": 10.9,
+   "avg_trade": -0.2,
+   "win_rate": 47.8,
+   "name": "breakout: rose >=8% vs SPY, vol>=2x, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.4,
+   "dd": -62.2,
+   "per": {
+    "1998-2002": -5.1,
+    "2003-2007": 10.6,
+    "2008-2009": -11.9,
+    "2010-2015": 12.8,
+    "2016-2020": 5.0,
+    "2021-2026": 4.9
+   },
+   "trades": 7133,
+   "trades_per_month": 20.7,
+   "avg_trade": 0.01,
+   "win_rate": 50.7,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 4.2,
+   "dd": -67.6,
+   "per": {
+    "1998-2002": -11.4,
+    "2003-2007": 6.6,
+    "2008-2009": -20.5,
+    "2010-2015": 19.8,
+    "2016-2020": 7.0,
+    "2021-2026": 8.9
+   },
+   "trades": 1946,
+   "trades_per_month": 5.6,
+   "avg_trade": -0.02,
+   "win_rate": 50.1,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 4.1,
+   "dd": -62.0,
+   "per": {
+    "1998-2002": -5.5,
+    "2003-2007": 6.6,
+    "2008-2009": -14.5,
+    "2010-2015": 11.0,
+    "2016-2020": 10.7,
+    "2021-2026": 5.4
+   },
+   "trades": 1710,
+   "trades_per_month": 5.0,
+   "avg_trade": -0.43,
+   "win_rate": 47.0,
+   "name": "panic dip: fell >=5% vs SPY, vol>=3x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 3.8,
+   "dd": -64.5,
+   "per": {
+    "1998-2002": -8.0,
+    "2003-2007": 6.0,
+    "2008-2009": -15.0,
+    "2010-2015": 10.2,
+    "2016-2020": 10.8,
+    "2021-2026": 7.7
+   },
+   "trades": 2615,
+   "trades_per_month": 7.6,
+   "avg_trade": -0.17,
+   "win_rate": 48.0,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 3.7,
+   "dd": -59.7,
+   "per": {
+    "1998-2002": -10.1,
+    "2003-2007": 11.9,
+    "2008-2009": -5.6,
+    "2010-2015": 10.3,
+    "2016-2020": 6.7,
+    "2021-2026": 3.9
+   },
+   "trades": 3179,
+   "trades_per_month": 9.2,
+   "avg_trade": -0.02,
+   "win_rate": 49.9,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 10,
+   "entry": "close"
+  },
+  {
+   "cagr": 3.6,
+   "dd": -61.3,
+   "per": {
+    "1998-2002": -6.5,
+    "2003-2007": 6.6,
+    "2008-2009": -17.1,
+    "2010-2015": 7.3,
+    "2016-2020": 9.7,
+    "2021-2026": 9.4
+   },
+   "trades": 3072,
+   "trades_per_month": 8.9,
+   "avg_trade": -0.28,
+   "win_rate": 46.8,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 3.4,
+   "dd": -69.7,
+   "per": {
+    "1998-2002": -12.0,
+    "2003-2007": 5.9,
+    "2008-2009": -20.7,
+    "2010-2015": 19.5,
+    "2016-2020": 6.4,
+    "2021-2026": 7.0
+   },
+   "trades": 1946,
+   "trades_per_month": 5.6,
+   "avg_trade": -0.14,
+   "win_rate": 49.8,
+   "name": "panic dip: fell >=5% vs SPY, vol>=2x, stock above 200d, market up",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 3.4,
+   "dd": -66.9,
+   "per": {
+    "1998-2002": -0.7,
+    "2003-2007": 12.6,
+    "2008-2009": -14.9,
+    "2010-2015": 5.7,
+    "2016-2020": 9.3,
+    "2021-2026": -0.8
+   },
+   "trades": 2417,
+   "trades_per_month": 7.0,
+   "avg_trade": 0.09,
+   "win_rate": 50.3,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 20,
+   "entry": "close"
+  },
+  {
+   "cagr": 2.8,
+   "dd": -68.5,
+   "per": {
+    "1998-2002": -1.3,
+    "2003-2007": 11.9,
+    "2008-2009": -18.9,
+    "2010-2015": 4.7,
+    "2016-2020": 9.8,
+    "2021-2026": -0.5
+   },
+   "trades": 2417,
+   "trades_per_month": 7.0,
+   "avg_trade": -0.01,
+   "win_rate": 49.9,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 20,
+   "entry": "open"
+  },
+  {
+   "cagr": 2.7,
+   "dd": -62.1,
+   "per": {
+    "1998-2002": -11.4,
+    "2003-2007": 10.8,
+    "2008-2009": -6.5,
+    "2010-2015": 8.4,
+    "2016-2020": 6.7,
+    "2021-2026": 2.9
+   },
+   "trades": 3179,
+   "trades_per_month": 9.2,
+   "avg_trade": -0.14,
+   "win_rate": 49.2,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 10,
+   "entry": "open"
+  },
+  {
+   "cagr": 2.4,
+   "dd": -72.7,
+   "per": {
+    "1998-2002": -6.6,
+    "2003-2007": 5.9,
+    "2008-2009": -12.3,
+    "2010-2015": 7.0,
+    "2016-2020": 1.1,
+    "2021-2026": 9.4
+   },
+   "trades": 8528,
+   "trades_per_month": 24.7,
+   "avg_trade": -0.11,
+   "win_rate": 48.8,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 2.4,
+   "dd": -67.6,
+   "per": {
+    "1998-2002": -11.7,
+    "2003-2007": 9.1,
+    "2008-2009": -15.0,
+    "2010-2015": 10.5,
+    "2016-2020": 8.4,
+    "2021-2026": 3.5
+   },
+   "trades": 3612,
+   "trades_per_month": 10.5,
+   "avg_trade": -0.22,
+   "win_rate": 48.1,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 5,
+   "entry": "close"
+  },
+  {
+   "cagr": 1.6,
+   "dd": -71.4,
+   "per": {
+    "1998-2002": -9.5,
+    "2003-2007": 7.6,
+    "2008-2009": -14.5,
+    "2010-2015": 11.7,
+    "2016-2020": -1.9,
+    "2021-2026": 5.7
+   },
+   "trades": 8528,
+   "trades_per_month": 24.7,
+   "avg_trade": -0.15,
+   "win_rate": 48.3,
+   "name": "breakout: rose >=5% vs SPY, vol>=2x, market up",
+   "hold": 3,
+   "entry": "open"
+  },
+  {
+   "cagr": 1.4,
+   "dd": -72.8,
+   "per": {
+    "1998-2002": -12.9,
+    "2003-2007": 8.3,
+    "2008-2009": -17.3,
+    "2010-2015": 10.5,
+    "2016-2020": 7.1,
+    "2021-2026": 2.3
+   },
+   "trades": 3716,
+   "trades_per_month": 10.8,
+   "avg_trade": -0.35,
+   "win_rate": 47.6,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 3,
+   "entry": "close"
+  },
+  {
+   "cagr": 1.3,
+   "dd": -70.6,
+   "per": {
+    "1998-2002": -13.6,
+    "2003-2007": 7.5,
+    "2008-2009": -14.9,
+    "2010-2015": 9.0,
+    "2016-2020": 9.5,
+    "2021-2026": 1.7
+   },
+   "trades": 3612,
+   "trades_per_month": 10.5,
+   "avg_trade": -0.33,
+   "win_rate": 47.1,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 5,
+   "entry": "open"
+  },
+  {
+   "cagr": 0.7,
+   "dd": -75.2,
+   "per": {
+    "1998-2002": -14.1,
+    "2003-2007": 6.6,
+    "2008-2009": -16.6,
+    "2010-2015": 8.9,
+    "2016-2020": 8.1,
+    "2021-2026": 1.8
+   },
+   "trades": 3716,
+   "trades_per_month": 10.8,
+   "avg_trade": -0.45,
+   "win_rate": 46.2,
+   "name": "panic dip, no filters: fell >=8% vs SPY, vol>=3x",
+   "hold": 3,
+   "entry": "open"
+  }
+ ]
+}
