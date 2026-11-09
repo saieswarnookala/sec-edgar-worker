@@ -104,7 +104,62 @@
    ],
    "park_trades": [],
    "orders": []
+  },
+  {
+   "run": "2026-11-09T19:58:43.690Z",
+   "today": "2026-11-09",
+   "ny_time": "14:58",
+   "equity": 10000,
+   "dry": true,
+   "own_account": true,
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 753.885,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "DELL": -0.11461175778445121,
+    "EXPE": -0.1325449322518374,
+    "IT": -0.19683905213324138,
+    "MPC": -0.11027548987975977,
+    "NUE": -0.11053110717328041,
+    "STLD": -0.10332210614534787
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "IT",
+     "qty": 5,
+     "dip_pct": -19.7
+    },
+    {
+     "symbol": "EXPE",
+     "qty": 3,
+     "dip_pct": -13.3
+    },
+    {
+     "symbol": "DELL",
+     "qty": 2,
+     "dip_pct": -11.5
+    },
+    {
+     "symbol": "NUE",
+     "qty": 4,
+     "dip_pct": -11.1
+    },
+    {
+     "symbol": "MPC",
+     "qty": 2,
+     "dip_pct": -11
+    },
+    {
+     "symbol": "STLD",
+     "qty": 4,
+     "dip_pct": -10.3
+    }
+   ],
+   "park_trades": [],
+   "orders": []
   }
  ],
- "updated": "2026-11-09T19:53:48.111Z"
+ "updated": "2026-11-09T19:58:43.690Z"
 }
