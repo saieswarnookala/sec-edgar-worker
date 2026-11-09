@@ -118,4 +118,9 @@ async function main() {
   mkdirSync('data', { recursive: true }); writeFileSync(file, JSON.stringify(state, null, 1));
   console.log(JSON.stringify({ ...log, signals: Object.keys(scores).length + ' stocks' }, null, 1));
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch((e) => { console.error(e); process.exit(1); });
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch((e) => {
+  console.error(e);
+  try { const f = 'data/paper_dip_state.json', st = existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : { positions: [], history: [] };
+    st.last_error = { at: new Date().toISOString(), message: String(e?.stack || e).slice(0, 1500) }; mkdirSync('data', { recursive: true }); writeFileSync(f, JSON.stringify(st, null, 1)); } catch {}
+  process.exit(1);
+});
