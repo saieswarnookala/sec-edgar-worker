@@ -1,0 +1,355 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 22.5,
+   "dd": -45.7,
+   "per": {
+    "1998-2002": 57.7,
+    "2003-2007": 15.4,
+    "2008-2009": -4.4,
+    "2010-2015": 8.7,
+    "2016-2020": 14.4,
+    "2021-2026": 35.4
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "Clear Leader + crash filter (monthly, 10-mo avg)"
+  },
+  {
+   "cagr": 19.0,
+   "dd": -32.9,
+   "per": {
+    "1998-2002": 49.5,
+    "2003-2007": 12.9,
+    "2008-2009": 1.7,
+    "2010-2015": 3.3,
+    "2016-2020": 13.1,
+    "2021-2026": 30.4
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "Clear Leader, cash when SPY below 50-day avg (checked daily)"
+  },
+  {
+   "cagr": 17.6,
+   "dd": -32.7,
+   "per": {
+    "1998-2002": 50.0,
+    "2003-2007": 11.5,
+    "2008-2009": 1.0,
+    "2010-2015": 1.8,
+    "2016-2020": 9.6,
+    "2021-2026": 29.9
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "CL + crash filter, plus cash when SPY below 50-day avg"
+  },
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "Clear Leader, cash when SPY below 100-day avg (checked daily)"
+  },
+  {
+   "cagr": 21.3,
+   "dd": -25.8,
+   "per": {
+    "1998-2002": 54.9,
+    "2003-2007": 12.5,
+    "2008-2009": 10.4,
+    "2010-2015": 5.7,
+    "2016-2020": 11.6,
+    "2021-2026": 33.9
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "CL + crash filter, plus cash when SPY below 100-day avg"
+  },
+  {
+   "cagr": 20.9,
+   "dd": -28.3,
+   "per": {
+    "1998-2002": 48.7,
+    "2003-2007": 11.2,
+    "2008-2009": 15.8,
+    "2010-2015": 5.6,
+    "2016-2020": 12.2,
+    "2021-2026": 35.3
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "Clear Leader, cash when SPY below 150-day avg (checked daily)"
+  },
+  {
+   "cagr": 21.3,
+   "dd": -28.3,
+   "per": {
+    "1998-2002": 50.6,
+    "2003-2007": 11.8,
+    "2008-2009": 11.2,
+    "2010-2015": 7.1,
+    "2016-2020": 12.6,
+    "2021-2026": 34.7
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "CL + crash filter, plus cash when SPY below 150-day avg"
+  },
+  {
+   "cagr": 20.0,
+   "dd": -32.5,
+   "per": {
+    "1998-2002": 49.7,
+    "2003-2007": 11.2,
+    "2008-2009": 9.2,
+    "2010-2015": 3.6,
+    "2016-2020": 15.4,
+    "2021-2026": 31.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "Clear Leader, cash when SPY below 200-day avg (checked daily)"
+  },
+  {
+   "cagr": 20.5,
+   "dd": -32.5,
+   "per": {
+    "1998-2002": 51.3,
+    "2003-2007": 11.3,
+    "2008-2009": 8.5,
+    "2010-2015": 5.0,
+    "2016-2020": 16.4,
+    "2021-2026": 30.7
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "CL + crash filter, plus cash when SPY below 200-day avg"
+  },
+  {
+   "cagr": 18.5,
+   "dd": -27.8,
+   "per": {
+    "1998-2002": 43.0,
+    "2003-2007": 13.5,
+    "2008-2009": 4.0,
+    "2010-2015": 6.8,
+    "2016-2020": 15.0,
+    "2021-2026": 24.7
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "setup": "Smart exit, ideal",
+   "parking": "SPY trend (current)"
+  },
+  {
+   "cagr": 14.3,
+   "dd": -47.1,
+   "per": {
+    "1998-2002": 27.2,
+    "2003-2007": 10.0,
+    "2008-2009": -7.9,
+    "2010-2015": 7.9,
+    "2016-2020": 11.3,
+    "2021-2026": 25.8
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "Clear Leader + crash filter (monthly, 10-mo avg)"
+  },
+  {
+   "cagr": 11.0,
+   "dd": -31.4,
+   "per": {
+    "1998-2002": 20.4,
+    "2003-2007": 7.6,
+    "2008-2009": -2.1,
+    "2010-2015": 2.5,
+    "2016-2020": 9.9,
+    "2021-2026": 21.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "Clear Leader, cash when SPY below 50-day avg (checked daily)"
+  },
+  {
+   "cagr": 9.7,
+   "dd": -34.5,
+   "per": {
+    "1998-2002": 20.9,
+    "2003-2007": 6.3,
+    "2008-2009": -2.9,
+    "2010-2015": 1.0,
+    "2016-2020": 6.6,
+    "2021-2026": 20.7
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "CL + crash filter, plus cash when SPY below 50-day avg"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "Clear Leader, cash when SPY below 100-day avg (checked daily)"
+  },
+  {
+   "cagr": 13.1,
+   "dd": -26.2,
+   "per": {
+    "1998-2002": 24.8,
+    "2003-2007": 7.2,
+    "2008-2009": 6.1,
+    "2010-2015": 4.9,
+    "2016-2020": 8.5,
+    "2021-2026": 24.4
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "CL + crash filter, plus cash when SPY below 100-day avg"
+  },
+  {
+   "cagr": 12.8,
+   "dd": -30.1,
+   "per": {
+    "1998-2002": 19.8,
+    "2003-2007": 6.1,
+    "2008-2009": 11.4,
+    "2010-2015": 4.8,
+    "2016-2020": 9.0,
+    "2021-2026": 25.7
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "Clear Leader, cash when SPY below 150-day avg (checked daily)"
+  },
+  {
+   "cagr": 13.1,
+   "dd": -30.1,
+   "per": {
+    "1998-2002": 21.3,
+    "2003-2007": 6.6,
+    "2008-2009": 6.9,
+    "2010-2015": 6.3,
+    "2016-2020": 9.5,
+    "2021-2026": 25.1
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "CL + crash filter, plus cash when SPY below 150-day avg"
+  },
+  {
+   "cagr": 11.9,
+   "dd": -34.4,
+   "per": {
+    "1998-2002": 20.6,
+    "2003-2007": 6.0,
+    "2008-2009": 5.0,
+    "2010-2015": 2.8,
+    "2016-2020": 12.2,
+    "2021-2026": 22.3
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "Clear Leader, cash when SPY below 200-day avg (checked daily)"
+  },
+  {
+   "cagr": 12.4,
+   "dd": -34.4,
+   "per": {
+    "1998-2002": 21.9,
+    "2003-2007": 6.1,
+    "2008-2009": 4.3,
+    "2010-2015": 4.2,
+    "2016-2020": 13.2,
+    "2021-2026": 21.5
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "CL + crash filter, plus cash when SPY below 200-day avg"
+  },
+  {
+   "cagr": 10.5,
+   "dd": -29.6,
+   "per": {
+    "1998-2002": 15.2,
+    "2003-2007": 8.2,
+    "2008-2009": 0.1,
+    "2010-2015": 5.9,
+    "2016-2020": 11.9,
+    "2021-2026": 15.8
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "setup": "Smart exit, realistic (next open + 0.15%)",
+   "parking": "SPY trend (current)"
+  }
+ ]
+}
