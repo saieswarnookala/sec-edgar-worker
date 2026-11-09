@@ -1,5 +1,48 @@
 {
- "positions": [],
+ "positions": [
+  {
+   "symbol": "IT",
+   "entry_date": "2026-11-09",
+   "qty": 5,
+   "dip_pct": -19.7
+  },
+  {
+   "symbol": "EXPE",
+   "entry_date": "2026-11-09",
+   "qty": 3,
+   "dip_pct": -13.2
+  },
+  {
+   "symbol": "DELL",
+   "entry_date": "2026-11-09",
+   "qty": 2,
+   "dip_pct": -11.7
+  },
+  {
+   "symbol": "NUE",
+   "entry_date": "2026-11-09",
+   "qty": 4,
+   "dip_pct": -11
+  },
+  {
+   "symbol": "MPC",
+   "entry_date": "2026-11-09",
+   "qty": 2,
+   "dip_pct": -10.9
+  },
+  {
+   "symbol": "STLD",
+   "entry_date": "2026-11-09",
+   "qty": 4,
+   "dip_pct": -10.4
+  },
+  {
+   "symbol": "IFF",
+   "entry_date": "2026-11-09",
+   "qty": 11,
+   "dip_pct": -10.1
+  }
+ ],
  "history": [
   {
    "run": "2026-11-09T06:32:58.058Z",
@@ -159,7 +202,76 @@
    ],
    "park_trades": [],
    "orders": []
+  },
+  {
+   "run": "2026-11-09T20:09:52.876Z",
+   "today": "2026-11-09",
+   "ny_time": "15:09",
+   "equity": 10000,
+   "dry": false,
+   "own_account": true,
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 754.14,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "DELL": -0.11666932771548377,
+    "EXPE": -0.13167992926271532,
+    "IT": -0.19696557197443,
+    "IFF": -0.10062004554846549,
+    "MPC": -0.1094295687681267,
+    "NUE": -0.1101138099113943,
+    "STLD": -0.10366115680350496
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "IT",
+     "qty": 5,
+     "dip_pct": -19.7
+    },
+    {
+     "symbol": "EXPE",
+     "qty": 3,
+     "dip_pct": -13.2
+    },
+    {
+     "symbol": "DELL",
+     "qty": 2,
+     "dip_pct": -11.7
+    },
+    {
+     "symbol": "NUE",
+     "qty": 4,
+     "dip_pct": -11
+    },
+    {
+     "symbol": "MPC",
+     "qty": 2,
+     "dip_pct": -10.9
+    },
+    {
+     "symbol": "STLD",
+     "qty": 4,
+     "dip_pct": -10.4
+    },
+    {
+     "symbol": "IFF",
+     "qty": 11,
+     "dip_pct": -10.1
+    }
+   ],
+   "park_trades": [],
+   "orders": [
+    "BUY 5 IT (dip -19.7%)",
+    "BUY 3 EXPE (dip -13.2%)",
+    "BUY 2 DELL (dip -11.7%)",
+    "BUY 4 NUE (dip -11%)",
+    "BUY 2 MPC (dip -10.9%)",
+    "BUY 4 STLD (dip -10.4%)",
+    "BUY 11 IFF (dip -10.1%)"
+   ]
   }
  ],
- "updated": "2026-11-09T19:58:43.690Z"
+ "updated": "2026-11-09T20:09:52.876Z"
 }
