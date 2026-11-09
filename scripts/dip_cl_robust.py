@@ -12,6 +12,14 @@ def ydaily(sym):
             return s[~s.index.duplicated()].sort_index()
         except Exception as e: err = e; time.sleep(3 * (a + 1))
     print("daily fail", sym, err); return pd.Series(dtype=float)
+def fetch(url, dest):
+    import time
+    for i in range(6):
+        try:
+            urllib.request.urlretrieve(url, dest); return
+        except Exception as e:
+            print("download retry", i + 1, url, e, flush=True); time.sleep(20 * (i + 1))
+    raise RuntimeError("download failed: " + url)
 def main():
     g = {"__name__": "cl"}; exec(open("scripts/clear_leader_long.py").read(), g)
     ASSETS = g["ASSETS"]; CLROWS = {k: g["run"](crash=c)[0] for k, c in [("cl", False), ("cl_crash", True)]}
@@ -30,7 +38,7 @@ def main():
     # ---- stock data
     REL = "https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/"
     for f in ["prices.parquet", "membership_intervals.parquet"]:
-        if not os.path.exists("/tmp/" + f): urllib.request.urlretrieve(REL + f, "/tmp/" + f)
+        if not os.path.exists("/tmp/" + f): fetch(REL + f, "/tmp/" + f)
     px = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "open", "close", "adj_close"])
     px["date"] = pd.to_datetime(px.date); px = px[px.date >= "1997-01-01"]
     mem = pd.read_parquet("/tmp/membership_intervals.parquet"); mem["start"] = pd.to_datetime(mem.start); mem["end"] = pd.to_datetime(mem.end)
