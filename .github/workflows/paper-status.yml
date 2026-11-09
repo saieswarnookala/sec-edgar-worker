@@ -1,0 +1,30 @@
+name: Paper accounts status (read-only)
+on:
+  workflow_dispatch:
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Show orders and positions (read-only GET requests)
+        env:
+          DIP_KEY_ID: ${{ secrets.DIP_KEY_ID }}
+          DIP_SECRET_KEY: ${{ secrets.DIP_SECRET_KEY }}
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: |
+          cat > s.mjs <<'JS'
+          const P = 'https://paper-api.alpaca.markets';
+          const accts = [['DIP $10k', process.env.DIP_KEY_ID, process.env.DIP_SECRET_KEY], ['DRIFT $100k', process.env.APCA_API_KEY_ID, process.env.APCA_API_SECRET_KEY]];
+          for (const [name, k, s] of accts) {
+            const g = async (p) => (await fetch(P + p, { headers: { 'APCA-API-KEY-ID': k, 'APCA-API-SECRET-KEY': s } })).json();
+            const a = await g('/v2/account');
+            console.log(`\n=== ${name} === equity ${a.equity} cash ${a.cash}`);
+            for (const o of await g('/v2/orders?status=all&limit=20&direction=desc'))
+              console.log('ORDER', o.side, o.qty, o.symbol, o.time_in_force, o.status, 'filled', o.filled_qty, '@', o.filled_avg_price, o.submitted_at);
+            for (const p of await g('/v2/positions'))
+              console.log('POS', p.symbol, p.qty, 'avg', p.avg_entry_price, 'now', p.current_price, 'P/L', p.unrealized_pl);
+          }
+          JS
+          node s.mjs

@@ -1,7 +1,7 @@
 name: Paper trade dip + Clear Leader parking
 on:
   schedule:
-    - cron: '15,25,35,45 19,20 * * 1-5'   # covers 3:15-3:45 pm ET in both EST and EDT; the script only acts 3:00-3:49 pm ET, once a day
+    - cron: '15,25,35,45 19,20 * * 1-5'   # covers 3:15-3:45 pm ET in both EST and EDT; the script only acts 3:00–3:57 pm ET, once a day
   workflow_dispatch:
     inputs:
       dry_run:

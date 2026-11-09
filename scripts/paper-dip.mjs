@@ -72,7 +72,7 @@ async function main() {
   const log = { run: new Date().toISOString(), today, ny_time: `${nyParts.hour}:${nyParts.minute}`, equity, dry, own_account: own };
   const force = process.env.FORCE === '1';
   if (days.at(-1) !== today && !force) { console.log('market closed today', today); return; }
-  if (!force && (nyMin < 15 * 60 || nyMin >= 15 * 60 + 49)) { console.log('outside 3:00-3:49 pm ET window', log.ny_time); return; }
+  if (!force && (nyMin < 15 * 60 || nyMin >= 15 * 60 + 58)) { console.log('outside 3:00-3:57 pm ET window', log.ny_time); return; }
   if (!force && !dry && (state.history || []).some((h) => h.today === today && !h.dry)) { console.log('already traded today', today); return; }
   // universe
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': 'sec-edgar-worker paper-dip/1.0' } })).text();
@@ -102,12 +102,14 @@ async function main() {
   const scores = {};
   for (const s of members) { if (etfs.includes(s)) continue; const sc = dipScore(closes[s] || [], prices[s], closes.SPY, prices.SPY); if (sc != null) scores[s] = sc; }
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
+  // sync with the broker: drop positions that never filled / were sold, use real share counts
+  if (own) { const before = state.positions.map((p) => p.symbol); state.positions = state.positions.filter((p) => held[p.symbol] > 0).map((p) => ({ ...p, qty: Math.min(p.qty, held[p.symbol]) })); const gone = before.filter((s) => !state.positions.some((p) => p.symbol === s)); if (gone.length) log.synced_out = gone; }
   const parkHeld = Object.fromEntries(Object.entries(held).filter(([s]) => etfs.includes(s) && !state.positions.some((p) => p.symbol === s)));
   const d = decide({ today, days, state: own ? state : { positions: [] }, held: own ? held : {}, equity: own ? equity : 10000, prices, closes, scores, park, parkHeld: own ? parkHeld : {} });
   Object.assign(log, { clear_leader: clPos, clear_leader_why: cl?.now?.why, spy: prices.SPY, park: park || 'CASH (SPY below 100-day average)', signals: scores, sells: d.sells, buys: d.buys, park_trades: d.parkTrades });
   const done = [];
   if (!dry) {
-    const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: 'cls' }) });
+    const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: 'day' }) });
     for (const t of d.parkTrades.filter((x) => x.side === 'sell')) { try { await order(t.symbol, t.qty, 'sell'); done.push(`SELL ${t.qty} ${t.symbol} (${t.reason})`); } catch (e) { done.push(`SELL ${t.symbol} failed: ${e.message}`); } }
     for (const s of d.sells) { try { await order(s.symbol, s.qty, 'sell'); done.push(`SELL ${s.qty} ${s.symbol} (${s.reason})`); } catch (e) { done.push(`SELL ${s.symbol} failed: ${e.message}`); d.keep.push(state.positions.find((x) => x.symbol === s.symbol)); } }
     for (const b of d.buys) { try { await order(b.symbol, b.qty, 'buy'); done.push(`BUY ${b.qty} ${b.symbol} (dip ${b.dip_pct}%)`); d.keep.push({ symbol: b.symbol, entry_date: today, qty: b.qty, dip_pct: b.dip_pct }); } catch (e) { done.push(`BUY ${b.symbol} failed: ${e.message}`); } }
