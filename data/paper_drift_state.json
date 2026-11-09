@@ -5,6 +5,18 @@
    "entry_date": "2026-11-05",
    "qty": 58,
    "reaction_pct": 8.2
+  },
+  {
+   "symbol": "ABNB",
+   "entry_date": "2026-11-09",
+   "qty": 52,
+   "reaction_pct": 11.4
+  },
+  {
+   "symbol": "AKAM",
+   "entry_date": "2026-11-09",
+   "qty": 119,
+   "reaction_pct": 6.4
   }
  ],
  "history": [
@@ -368,7 +380,49 @@
     "stock_value": 97842
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-09T22:08:14.296Z",
+   "today": "2026-11-09",
+   "equity": 99390.41,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 38,
+   "signals": [
+    {
+     "symbol": "ABNB",
+     "r": 0.11361011469521465
+    },
+    {
+     "symbol": "AKAM",
+     "r": 0.06432189582576764
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "ABNB",
+     "qty": 52,
+     "r": 0.11361011469521465
+    },
+    {
+     "symbol": "AKAM",
+     "qty": 119,
+     "r": 0.06432189582576764
+    }
+   ],
+   "park": {
+    "spy_held": 0,
+    "spy_delta": 92,
+    "spy_price": 735.29,
+    "stock_value": 29250
+   },
+   "orders": [
+    "BUY 52 ABNB",
+    "BUY 119 AKAM",
+    "BUY 92 SPY (park)"
+   ]
   }
  ],
- "updated": "2026-11-07T01:40:00.471Z"
+ "updated": "2026-11-09T22:08:14.296Z"
 }
