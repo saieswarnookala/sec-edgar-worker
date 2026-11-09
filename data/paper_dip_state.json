@@ -1,0 +1,8 @@
+{
+ "positions": [],
+ "history": [],
+ "last_error": {
+  "at": "2026-11-09T06:28:40.939Z",
+  "message": "Error: 400 /v2/stocks/bars: {\"message\":\"invalid symbol: BRK/B\"}\n\n    at api (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:65:152)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async main (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:87:27)"
+ }
+}
