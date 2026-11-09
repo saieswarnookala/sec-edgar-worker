@@ -55,11 +55,56 @@
    ],
    "park_trades": [],
    "orders": []
+  },
+  {
+   "run": "2026-11-09T19:53:48.111Z",
+   "today": "2026-11-09",
+   "ny_time": "14:53",
+   "equity": 99353.87,
+   "dry": true,
+   "own_account": false,
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 753.05,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "DELL": -0.11621297459971525,
+    "IT": -0.19674897535052827,
+    "MPC": -0.10997848109604225,
+    "NUE": -0.1096009653072243,
+    "STLD": -0.10205309457286016
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "IT",
+     "qty": 5,
+     "dip_pct": -19.7
+    },
+    {
+     "symbol": "DELL",
+     "qty": 2,
+     "dip_pct": -11.6
+    },
+    {
+     "symbol": "MPC",
+     "qty": 2,
+     "dip_pct": -11
+    },
+    {
+     "symbol": "NUE",
+     "qty": 4,
+     "dip_pct": -11
+    },
+    {
+     "symbol": "STLD",
+     "qty": 4,
+     "dip_pct": -10.2
+    }
+   ],
+   "park_trades": [],
+   "orders": []
   }
  ],
- "last_error": {
-  "at": "2026-11-09T06:28:40.939Z",
-  "message": "Error: 400 /v2/stocks/bars: {\"message\":\"invalid symbol: BRK/B\"}\n\n    at api (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:65:152)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async main (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:87:27)"
- },
- "updated": "2026-11-09T06:32:58.058Z"
+ "updated": "2026-11-09T19:53:48.111Z"
 }
