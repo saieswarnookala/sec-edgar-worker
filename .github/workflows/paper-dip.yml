@@ -1,0 +1,44 @@
+name: Paper trade dip + Clear Leader parking
+on:
+  schedule:
+    - cron: '15,25,35,45 19,20 * * 1-5'   # covers 3:15-3:45 pm ET in both EST and EDT; the script only acts 3:00-3:49 pm ET, once a day
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1 = decide only, place no orders'
+        default: '1'
+      force:
+        description: '1 = ignore the time window / closed-market check (for testing)'
+        default: '0'
+permissions:
+  contents: write
+concurrency: paper-dip
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node test-paper-dip.mjs
+      - name: Trade (separate $10k PAPER account; dry run until DIP_KEY_ID is set)
+        env:
+          DIP_KEY_ID: ${{ secrets.DIP_KEY_ID }}
+          DIP_SECRET_KEY: ${{ secrets.DIP_SECRET_KEY }}
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          DRY_RUN: ${{ inputs.dry_run || '0' }}
+          FORCE: ${{ inputs.force || '0' }}
+        run: node scripts/paper-dip.mjs
+      - name: Commit state
+        if: always()
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          git add data/paper_dip_state.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "paper dip: $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done
