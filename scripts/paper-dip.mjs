@@ -76,7 +76,7 @@ async function main() {
   if (!force && !dry && (state.history || []).some((h) => h.today === today && !h.dry)) { console.log('already traded today', today); return; }
   // universe
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': 'sec-edgar-worker paper-dip/1.0' } })).text();
-  const members = [...new Set(parseSp500Html(wiki).map((m) => m.symbol.replace('.', '/')))];
+  const members = [...new Set(parseSp500Html(wiki).map((m) => m.symbol))];
   const etfs = [...POOL, 'BIL'];
   const syms = [...new Set([...members, ...etfs])];
   // prior daily closes (exclude today)
