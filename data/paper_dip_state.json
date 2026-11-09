@@ -1,8 +1,65 @@
 {
  "positions": [],
- "history": [],
+ "history": [
+  {
+   "run": "2026-11-09T06:32:58.058Z",
+   "today": "2026-11-09",
+   "ny_time": "01:32",
+   "equity": 99251.79,
+   "dry": true,
+   "own_account": false,
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 736.07,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "P": -0.1282732670313712,
+    "EXPE": -0.11203528633711257,
+    "IT": -0.1709417219306133,
+    "HPE": -0.10449216635044589,
+    "IFF": -0.10570737417284515,
+    "MPC": -0.11223963377847368
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "IT",
+     "qty": 5,
+     "dip_pct": -17.1
+    },
+    {
+     "symbol": "P",
+     "qty": 10,
+     "dip_pct": -12.8
+    },
+    {
+     "symbol": "MPC",
+     "qty": 2,
+     "dip_pct": -11.2
+    },
+    {
+     "symbol": "EXPE",
+     "qty": 3,
+     "dip_pct": -11.2
+    },
+    {
+     "symbol": "IFF",
+     "qty": 12,
+     "dip_pct": -10.6
+    },
+    {
+     "symbol": "HPE",
+     "qty": 22,
+     "dip_pct": -10.4
+    }
+   ],
+   "park_trades": [],
+   "orders": []
+  }
+ ],
  "last_error": {
   "at": "2026-11-09T06:28:40.939Z",
   "message": "Error: 400 /v2/stocks/bars: {\"message\":\"invalid symbol: BRK/B\"}\n\n    at api (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:65:152)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async main (file:///home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/paper-dip.mjs:87:27)"
- }
+ },
+ "updated": "2026-11-09T06:32:58.058Z"
 }
