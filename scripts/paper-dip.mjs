@@ -114,7 +114,7 @@ async function main() {
     for (const t of d.parkTrades.filter((x) => x.side === 'buy')) { try { await order(t.symbol, t.qty, 'buy'); done.push(`BUY ${t.qty} ${t.symbol} (parking)`); } catch (e) { done.push(`BUY ${t.symbol} failed: ${e.message}`); } }
     state.positions = d.keep.filter(Boolean);
   }
-  log.orders = done; state.history = [...(state.history || []), log].slice(-400); state.updated = log.run;
+  log.orders = done; delete state.last_error; state.history = [...(state.history || []), log].slice(-400); state.updated = log.run;
   mkdirSync('data', { recursive: true }); writeFileSync(file, JSON.stringify(state, null, 1));
   console.log(JSON.stringify({ ...log, signals: Object.keys(scores).length + ' stocks' }, null, 1));
 }
