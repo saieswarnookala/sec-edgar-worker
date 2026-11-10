@@ -98,6 +98,128 @@ def run():
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "checks":
+        STCG, LTCG, SLAB, CAP0, EXEMPT, DIV = 0.20 * 1.04, 0.125 * 1.04, 0.30 * 1.04, 1_000_000.0, 125_000.0, 0.013
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
+        gtr = (gold > gold.rolling(100).mean()).shift(1, fill_value=False).values
+        dv = (1 + DIV) ** (1 / 248) - 1
+        def tsig(k): return (n > n.rolling(k).mean()).shift(1, fill_value=False).values.astype(bool)
+        years = dates.year.values
+        def sim_tax(S, R, sig, below, cost=0.003, entry="open", mx=5, slots=10, tax=True, trades_on=True):
+            """Rupee simulation (Rs 10 lakh start) with Indian taxes: dip trades = short-term gains (20.8%), Nifty ETF gains
+            short/long term by holding length (20.8% / 13% above Rs 1.25L), liquid fund & gold & dividends at 31.2% slab.
+            Losses offset gains within a year (short-term losses also against long-term), net losses carried forward.
+            Everything still held at the end is sold and taxed, so results are comparable with buy-and-hold."""
+            eq = CAP0; pos = []; curve = np.ones(D) * CAP0
+            acc = {"nifty": 0.0, "liquid": 0.0, "gold": 0.0}; seg0 = None; cur = None
+            st = lt = slab = 0.0; cf_st = cf_lt = 0.0; paid = 0.0
+            def realize(asset, t):
+                nonlocal st, lt, slab
+                gval = acc[asset]; acc[asset] = 0.0
+                if asset == "nifty":
+                    if seg0 is not None and t - seg0 > 248: lt += gval
+                    else: st += gval
+                else: slab += gval   # liquid fund and short-held gold: taxed at slab
+            def year_end():
+                nonlocal st, lt, slab, cf_st, cf_lt, eq, paid
+                a = st + cf_st; b = lt + cf_lt
+                if a < 0 and b > 0:
+                    b2 = b + a; a, b = (0.0, b2) if b2 >= 0 else (b2, 0.0)
+                tx = STCG * max(a, 0.0) + LTCG * max(b - EXEMPT, 0.0) + SLAB * max(slab, 0.0)
+                cf_st = min(a, 0.0); cf_lt = min(b, 0.0); st = lt = slab = 0.0
+                if tax: eq -= tx; paid += tx
+            for t in range(START, D):
+                asset = ("nifty" if sig[t] else ("liquid" if below == "liquid" else ("gold" if (below == "gold" or gtr[t]) else "liquid")))
+                if asset != cur:
+                    if cur is not None: realize(cur, t)
+                    if cur is not None: eq -= 0.0005 * max(0.0, eq - sum(p[2] for p in pos))
+                    cur = asset; seg0 = t if asset == "nifty" else None
+                ar = nr[t] + dv if asset == "nifty" else (liq[t] if asset == "liquid" else gr[t])
+                held_val = sum(p[2] for p in pos); park_val = max(0.0, eq - held_val)
+                gain = park_val * ar
+                if asset == "nifty": acc["nifty"] += park_val * nr[t]; slab += park_val * dv
+                else: acc[asset] += gain
+                day = gain
+                for p in pos:
+                    gg = OC[t, p[0]] if (entry == "open" and p[1] == 0) else Rt[t, p[0]]
+                    day += p[2] * gg; p[2] *= 1 + gg
+                eq += day; keep = []
+                for p in pos:
+                    p[1] += 1
+                    if p[1] >= mx or over5[t, p[0]]:
+                        c = cost * p[2]; eq -= c; st += p[2] - p[3] - c - cost * p[3]
+                    else: keep.append(p)
+                pos = keep
+                if trades_on:
+                    held = {p[0] for p in pos}; used = sum(p[2] for p in pos)
+                    new = [c for c in sorted(np.where(S[t])[0], key=lambda c: -R[t, c]) if c not in held][: max(0, slots - len(pos))]
+                    if new:
+                        w = min(eq / slots, max(0.0, eq - used) / len(new))
+                        for c in new: pos.append([c, 0, w, w]); eq -= cost * w   # [col, days, value now, cost basis]
+                if t + 1 == D or years[t + 1] != years[t]:
+                    if t + 1 == D:   # sell everything and settle
+                        for p in pos: st += p[2] - p[3]
+                        realize(cur, t)
+                    year_end()
+                curve[t] = eq
+            c = pd.Series(curve[START:] / CAP0, index=dates[START:]); pr = c.pct_change().fillna(0); yrs = len(pr) / 248
+            per = {}
+            for a2, b2 in [("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")]:
+                q = pr[(pr.index >= a2) & (pr.index <= b2 + "-12-31")]; per[a2 + "-" + b2] = round(100 * ((1 + q).prod() ** (248 / max(len(q), 1)) - 1), 1)
+            return {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1), "per": per, "tax_paid_lakh": round(paid / 1e5, 1), "final_lakh": round(c.iloc[-1] * CAP0 / 1e5, 1)}
+        def nifty_hold(tax=True):
+            v = CAP0; basis = CAP0; curve = []
+            for t in range(START, D):
+                v *= 1 + nr[t]; d = v * dv
+                v += d * (1 - SLAB) if tax else d
+                if tax: basis += d * (1 - SLAB)
+                curve.append(v)
+            if tax: curve[-1] -= LTCG * max(curve[-1] - basis - EXEMPT, 0)
+            c = pd.Series(curve, index=dates[START:]) / CAP0; yrs = len(c) / 248
+            return {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1), "final_lakh": round(c.iloc[-1] * CAP0 / 1e5, 1)}
+        OUT["checks"] = {"nifty_hold_with_dividends_pre_tax": nifty_hold(False), "nifty_hold_with_dividends_after_tax": nifty_hold(True)}
+        print("nifty", OUT["checks"], flush=True)
+        M = members(200).values; ab = above.values & M & ~glitch.values; R = (-rl).values; volok = ~(vr > 2.0).values
+        S12 = (rl.values <= -0.12) & ab & volok
+        tax_rows = []
+        for name, S, k, below, on in [("Trend switch only: 100-day, else liquid", S12, 100, "liquid", False),
+                                       ("Trend switch only: 150-day, else gold if trending / liquid", S12, 150, "gold if trending else liquid", False),
+                                       ("SAFEST: 12% dips + 100-day, else liquid", S12, 100, "liquid", True),
+                                       ("BEST: 12% dips + 150-day, else gold if trending / liquid", S12, 150, "gold if trending else liquid", True)]:
+            for tx in (False, True):
+                r = sim_tax(S, R, tsig(k), below, tax=tx, trades_on=on); r.update(version=name, tax="after tax" if tx else "before tax (with dividends)")
+                tax_rows.append(r); print(name, r["tax"], r["cagr"], r["dd"], r["tax_paid_lakh"], r["final_lakh"], flush=True)
+        OUT["checks"]["after_tax"] = tax_rows
+        # ---- luck check 1: nearby versions (realistic, pre-tax, 100-day / liquid parking)
+        park = np.where(tsig(100), nr + dv, liq); base = sim(np.zeros_like(M), R, park); grid = []
+        vol_cache = {None: np.ones_like(volok), 1.5: ~(vr > 1.5).values, 2.0: volok, 3.0: ~(vr > 3.0).values}
+        for k in (150, 200):
+            Mk = members(k).values; abk = above.values & Mk & ~glitch.values
+            for th in (0.10, 0.11, 0.12, 0.13, 0.14):
+                for vc in (None, 1.5, 2.0, 3.0):
+                    for mx in (4, 5, 7):
+                        S = (rl.values <= -th) & abk & vol_cache[vc]
+                        r = sim(S, R, park, entry="open", cost=0.003, mx=mx); r.update(universe=k, dip=th, vol=vc, max_days=mx); grid.append(r)
+            print("grid", k, len(grid), flush=True)
+        cg = np.array([g_["cagr"] for g_ in grid]); dg = np.array([g_["dd"] for g_ in grid])
+        OUT["checks"]["nearby"] = {"versions": len(grid), "parking_only": base, "median_cagr": float(np.median(cg)), "min_cagr": float(cg.min()), "max_cagr": float(cg.max()),
+                                   "beat_parking_only": int((cg > base["cagr"]).sum()), "beat_nifty_pre_tax": int((cg > OUT["checks"]["nifty_hold_with_dividends_pre_tax"]["cagr"]).sum()),
+                                   "median_dd": float(np.median(dg)), "worst_dd": float(dg.min()), "rows": grid}
+        print("nearby", {k2: v for k2, v in OUT["checks"]["nearby"].items() if k2 != "rows"}, flush=True)
+        # ---- luck check 2: random stocks instead of dips (same number of buys on the same days)
+        rng = np.random.default_rng(7); elig = above.values & M & ~glitch.values; rnd = []
+        cnt = S12.sum(axis=1)
+        for seed in range(20):
+            Sr = np.zeros_like(S12)
+            for t in np.where(cnt > 0)[0]:
+                cand = np.where(elig[t])[0]
+                if len(cand): Sr[t, rng.choice(cand, size=min(cnt[t], len(cand)), replace=False)] = True
+            r = sim(Sr, rng.random(R.shape), park, entry="open", cost=0.003); rnd.append(r["cagr"])
+        real = sim(S12, R, park, entry="open", cost=0.003)
+        OUT["checks"]["random"] = {"real_12pct_dips": real, "random_median": float(np.median(rnd)), "random_best": float(max(rnd)), "random_worst": float(min(rnd)), "runs": 20}
+        print("random", OUT["checks"]["random"]["random_median"], max(rnd), "real", real["cagr"], flush=True)
+        OUT["checks"]["assumptions"] = "Rs 10 lakh start; STCG 20.8%, LTCG 13% above Rs 1.25L/yr, liquid fund/gold/dividends at 31.2% slab; Nifty dividends ~1.3%/yr; liquid fund 6%/yr; realistic fills (next open, 0.30%/side); 0.05% per parking switch. Indian resident taxes only."
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_checks.json", "w"), indent=1, default=float); return
     if MODE == "trend":
         g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill() if g is not None else None
         if gold is None or gold.notna().sum() < 1000:   # fallback: gold futures in USD x USDINR
@@ -152,4 +274,4 @@ def run():
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
 try: run()
 except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open("data/india_trend.json" if sys.argv[1:2] == ["trend"] else "data/india_dip.json", "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
