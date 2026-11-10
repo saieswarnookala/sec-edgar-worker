@@ -1,0 +1,986 @@
+358 symbols in shard 1
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+4 / 358 symbols 1009 trades 5.0 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+8 / 358 symbols 3168 trades 9.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+12 / 358 symbols 4946 trades 14.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+16 / 358 symbols 6149 trades 22.2 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+20 / 358 symbols 7625 trades 26.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+24 / 358 symbols 8173 trades 28.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+28 / 358 symbols 9537 trades 35.5 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+32 / 358 symbols 10640 trades 42.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+36 / 358 symbols 12028 trades 46.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+40 / 358 symbols 13454 trades 50.3 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+44 / 358 symbols 14287 trades 56.5 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+48 / 358 symbols 15648 trades 58.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+52 / 358 symbols 16434 trades 60.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+56 / 358 symbols 17539 trades 62.2 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+60 / 358 symbols 19686 trades 65.2 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+64 / 358 symbols 21296 trades 67.4 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+68 / 358 symbols 22551 trades 72.0 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+72 / 358 symbols 24357 trades 80.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+76 / 358 symbols 25817 trades 87.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+80 / 358 symbols 26841 trades 91.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+84 / 358 symbols 27580 trades 94.1 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+88 / 358 symbols 28644 trades 96.3 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+92 / 358 symbols 30539 trades 101.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+96 / 358 symbols 31545 trades 105.7 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+100 / 358 symbols 33912 trades 109.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+104 / 358 symbols 34566 trades 113.4 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+108 / 358 symbols 37034 trades 119.5 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+112 / 358 symbols 38324 trades 124.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+116 / 358 symbols 39392 trades 130.5 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+120 / 358 symbols 40621 trades 133.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+124 / 358 symbols 42001 trades 138.4 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+128 / 358 symbols 43618 trades 145.8 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+132 / 358 symbols 45339 trades 148.3 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+136 / 358 symbols 46314 trades 152.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+140 / 358 symbols 46999 trades 156.4 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+144 / 358 symbols 47712 trades 159.9 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+148 / 358 symbols 48793 trades 164.2 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+152 / 358 symbols 50205 trades 169.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+156 / 358 symbols 51572 trades 177.9 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+160 / 358 symbols 53449 trades 182.5 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+164 / 358 symbols 54150 trades 186.0 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+168 / 358 symbols 55056 trades 190.7 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+172 / 358 symbols 56021 trades 202.3 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+176 / 358 symbols 57407 trades 208.5 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+180 / 358 symbols 58641 trades 211.9 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+184 / 358 symbols 60042 trades 218.7 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+188 / 358 symbols 61367 trades 226.7 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+192 / 358 symbols 63287 trades 229.3 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+196 / 358 symbols 63463 trades 234.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+200 / 358 symbols 64605 trades 236.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+204 / 358 symbols 65660 trades 240.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+208 / 358 symbols 67164 trades 244.9 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+212 / 358 symbols 68456 trades 251.2 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+216 / 358 symbols 70289 trades 260.4 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+220 / 358 symbols 71022 trades 265.2 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+224 / 358 symbols 72853 trades 270.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+228 / 358 symbols 74068 trades 272.7 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+232 / 358 symbols 75577 trades 277.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+236 / 358 symbols 76491 trades 281.5 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+240 / 358 symbols 78081 trades 284.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+244 / 358 symbols 79372 trades 287.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+248 / 358 symbols 81659 trades 290.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+252 / 358 symbols 82620 trades 292.8 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+256 / 358 symbols 84148 trades 294.7 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+260 / 358 symbols 86621 trades 297.4 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+264 / 358 symbols 87183 trades 299.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+268 / 358 symbols 89322 trades 302.5 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+272 / 358 symbols 89778 trades 303.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+276 / 358 symbols 90172 trades 306.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+280 / 358 symbols 90670 trades 308.9 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+284 / 358 symbols 90886 trades 311.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+288 / 358 symbols 92269 trades 313.8 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+292 / 358 symbols 92700 trades 315.3 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+296 / 358 symbols 93868 trades 316.8 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+300 / 358 symbols 95589 trades 320.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+304 / 358 symbols 97413 trades 322.6 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+308 / 358 symbols 98524 trades 324.9 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+312 / 358 symbols 99706 trades 327.0 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+316 / 358 symbols 100918 trades 330.2 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+320 / 358 symbols 101451 trades 331.8 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+324 / 358 symbols 102642 trades 334.4 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+328 / 358 symbols 104029 trades 337.3 min
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/intraday_orb.py:31: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  day = day.join(first, rsuffix="_or")
+332 / 358 symbols 105307 trades 339.6 min
