@@ -1,6 +1,9 @@
 name: India dip strategy test
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      mode:
+        default: dip
 permissions:
   contents: write
 jobs:
@@ -16,14 +19,14 @@ jobs:
       - name: Run test
         shell: bash
         run: |
-          set -o pipefail; python -u scripts/india_dip.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+          set -o pipefail; python -u scripts/india_dip.py ${{ inputs.mode }} 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit
         if: always()
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/india_dip.json 2>/dev/null || true
+          git add data/india_dip.json data/india_trend.json 2>/dev/null || true
           git diff --cached --quiet && exit 0
-          git commit -qm "india dip test"
+          git commit -qm "india test: ${{ inputs.mode }}"
           for i in 1 2 3 4 5; do out=$(git pull --rebase --autostash -X theirs 2>&1 && git push 2>&1) && exit 0; echo "::warning::push try $i: $(echo "$out" | tail -c 300 | tr '\n' ' ')"; sleep 7; done
           exit 1

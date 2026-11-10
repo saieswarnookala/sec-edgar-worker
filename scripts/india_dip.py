@@ -35,6 +35,7 @@ def universe():
     if not syms: raise RuntimeError("could not load Nifty 500 list")
     return sorted(set(syms) | set(FORMER))
 def run():
+    MODE = sys.argv[1] if len(sys.argv) > 1 else "dip"
     syms = universe(); print(len(syms), "symbols", flush=True)
     nifty = yahoo("^NSEI"); px = {}
     for i, s in enumerate(syms):
@@ -97,6 +98,44 @@ def run():
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "trend":
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill() if g is not None else None
+        if gold is None or gold.notna().sum() < 1000:   # fallback: gold futures in USD x USDINR
+            gu, fx = yahoo("GC=F"), yahoo("USDINR=X"); gold = (gu.c.reindex(dates).ffill() * fx.c.reindex(dates).ffill())
+        gr = gold.pct_change().fillna(0).values
+        OUT["gold_source"] = "GOLDBEES" if g is not None and g.c.reindex(dates).notna().sum() >= 1000 else "GC=F x USDINR"
+        nm = n.copy(); me = nm.groupby(nm.index.to_period("M")).transform("last") == nm   # month-end closes
+        def trend_sig(kind):
+            if kind.endswith("m"):   # N-month average, checked at month ends only
+                k = int(kind[:-1]); mc = nm[me]; ok = (mc > mc.rolling(k).mean()).reindex(dates).ffill().fillna(False)
+            else: ok = nm > nm.rolling(int(kind)).mean()
+            return ok.shift(1, fill_value=False).values.astype(bool)
+        gtr = (gold > gold.rolling(100).mean()).shift(1, fill_value=False).values
+        SW = 0.0005   # cost per switch (ETF, ~0.05%)
+        def park_series(sig, below):
+            alt = {"liquid": liq, "cash": np.zeros(D), "gold": gr, "gold if trending else liquid": np.where(gtr, gr, liq)}[below]
+            r = np.where(sig, nr, alt).astype(float)
+            sw = np.r_[False, sig[1:] != sig[:-1]]; r[sw] -= SW
+            if below == "gold if trending else liquid":
+                sw2 = np.r_[False, (gtr[1:] != gtr[:-1])] & ~sig; r[sw2] -= SW
+            return r
+        TR = {}
+        for kind in ("50", "100", "150", "200", "10m"):
+            for below in ("liquid", "cash", "gold", "gold if trending else liquid"):
+                ps = park_series(trend_sig(kind), below); TR[(kind, below)] = ps
+                r = summarize(np.cumprod(1 + ps) / np.prod(1 + ps[:START + 1])); r.update(avg=kind, below=below, scenario="parking only", switches_per_year=round(float(np.sum(np.r_[False, trend_sig(kind)[1:] != trend_sig(kind)[:-1]][START:]) / ((D - START) / 248)), 1))
+                OUT["results"].append(r); print(kind, below, r["cagr"], r["dd"], r["switches_per_year"], r["per"], flush=True)
+        # best dip version (top 200, 12% dip, skip volume > 2x) on top of each parking rule
+        M = members(200).values; ab = above.values & M & ~glitch.values; R = (-rl).values; volok = ~(vr > 2.0).values
+        for th in (0.10, 0.12):
+            S = (rl.values <= -th) & ab & volok
+            for (kind, below), ps in TR.items():
+                if below not in ("liquid", "gold if trending else liquid"): continue
+                for tag, kw in [("ideal", {}), ("realistic", dict(entry="open", cost=0.003))]:
+                    r = sim(S, R, ps, **kw); r.update(avg=kind, below=below, scenario=tag, dip=f"{int(th*100)}% + volume<2x, top 200")
+                    OUT["results"].append(r); print("dip", th, kind, below, tag, r["cagr"], r["dd"], flush=True)
+        OUT["note"] += " Trend rule: hold Nifty while above its average (checked daily at the close, acted on next day; '10m' = 10-month average checked at month end); otherwise the 'below' choice. 0.05% per switch."
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_trend.json", "w"), indent=1, default=float); return
     for k in (100, 200):
         M = members(k).values; ab = above.values & M & ~glitch.values; R = (-rl).values; volok = ~(vr > 2.0).values
         for th in (0.08, 0.10, 0.12):
@@ -113,4 +152,4 @@ def run():
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
 try: run()
 except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open("data/india_dip.json", "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open("data/india_trend.json" if sys.argv[1:2] == ["trend"] else "data/india_dip.json", "w")); print(traceback.format_exc()); sys.exit(1)
