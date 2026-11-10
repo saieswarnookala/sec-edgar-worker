@@ -157,6 +157,31 @@ def main():
         Sp = ((rp <= -0.10) & above & M).values
         add("dip vs industry peers (instead of SPY)", sig=Sp)
         add("dip vs BOTH SPY and industry peers", sig=S & Sp)
+    elif MODE == "combo":
+        V = VOL[tick]; vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
+        r5 = Cf[tick].pct_change(5).where(M); grp = pd.Series(GRP, index=tick)
+        peer = pd.DataFrame(np.nan, index=dates, columns=tick)
+        for g, cols in grp.dropna().groupby(grp.dropna()).groups.items():
+            x = r5[list(cols)]; sm = x.sum(axis=1, min_count=1); n = x.notna().sum(axis=1)
+            for c in cols: peer[c] = ((sm - x[c].fillna(0)) / (n - x[c].notna())).where((n - x[c].notna()) >= 3)
+        peer = peer.fillna(pd.DataFrame({c: spy.pct_change(5) for c in tick}))
+        rp = (Cf[tick].pct_change(5) - peer).values
+        EARN = np.zeros((D, len(tick)), dtype=bool); ds = dates.strftime("%Y-%m-%d").values
+        for j, t in enumerate(tick):
+            for d, mi in (SEC.get(t) or {}).get("events", []):
+                k = int(np.searchsorted(ds, d))
+                if k < D and ds[k] == d and mi >= 570: k += 1
+                if k < D: EARN[k:min(D, k + 5), j] = True
+        for k in (1.75, 2.0, 2.5):
+            add(f"volume < {k}x", sig=S & ~(vr > k))
+            add(f"volume < {k}x + dip vs peers too", sig=S & ~(vr > k) & (rp <= -0.10))
+        add("volume < 2x + dip vs peers + skip earnings", sig=S & ~(vr > 2.0) & (rp <= -0.10) & ~EARN)
+        rlv = rl.values; ab = (above & M).values
+        for th in (0.08, 0.12):   # nearby dip sizes: does the gain hold?
+            Sth = (rlv <= -th) & ab
+            add(f"[dip {int(th*100)}%] baseline", sig=Sth)
+            add(f"[dip {int(th*100)}%] volume < 2x", sig=Sth & ~(vr > 2.0))
+            add(f"[dip {int(th*100)}%] volume < 2x + dip vs peers", sig=Sth & ~(vr > 2.0) & (rp <= -th))
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
