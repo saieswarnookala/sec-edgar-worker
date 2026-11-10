@@ -1,45 +1,9 @@
 {
  "positions": [
   {
-   "symbol": "IT",
-   "entry_date": "2026-11-09",
-   "qty": 5,
-   "dip_pct": -19.7
-  },
-  {
-   "symbol": "EXPE",
-   "entry_date": "2026-11-09",
-   "qty": 3,
-   "dip_pct": -13.2
-  },
-  {
-   "symbol": "DELL",
-   "entry_date": "2026-11-09",
-   "qty": 2,
-   "dip_pct": -11.7
-  },
-  {
-   "symbol": "NUE",
-   "entry_date": "2026-11-09",
-   "qty": 4,
-   "dip_pct": -11
-  },
-  {
-   "symbol": "MPC",
-   "entry_date": "2026-11-09",
-   "qty": 2,
-   "dip_pct": -10.9
-  },
-  {
-   "symbol": "STLD",
-   "entry_date": "2026-11-09",
-   "qty": 4,
-   "dip_pct": -10.4
-  },
-  {
    "symbol": "IFF",
    "entry_date": "2026-11-09",
-   "qty": 11,
+   "qty": 3,
    "dip_pct": -10.1
   }
  ],
@@ -271,7 +235,46 @@
     "BUY 4 STLD (dip -10.4%)",
     "BUY 11 IFF (dip -10.1%)"
    ]
+  },
+  {
+   "run": "2026-11-10T23:29:43.650Z",
+   "today": "2026-11-10",
+   "ny_time": "18:29",
+   "equity": 9996.18,
+   "dry": true,
+   "own_account": true,
+   "volume_check": {
+    "P": {
+     "ratio": 0.64,
+     "today_est": 2323358
+    }
+   },
+   "synced_out": [
+    "IT",
+    "EXPE",
+    "DELL",
+    "NUE",
+    "MPC",
+    "STLD"
+   ],
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 749.93,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "P": -0.12724732322468768
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "P",
+     "qty": 9,
+     "dip_pct": -12.7
+    }
+   ],
+   "park_trades": [],
+   "orders": []
   }
  ],
- "updated": "2026-11-09T20:09:52.876Z"
+ "updated": "2026-11-10T23:29:43.650Z"
 }
