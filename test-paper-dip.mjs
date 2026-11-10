@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -25,3 +25,14 @@ ok('decide: exits, entries, parking resize', () => {
   assert.ok(d.parkTrades.some((t) => t.symbol === 'QQQ' && t.side === 'buy'));
 });
 console.log(`\n${n} passed`);
+
+// volume filter
+{
+  const base = Array(54).fill(1000);
+  const quiet = volumeRatio(base, 1500), heavy = volumeRatio([...Array(50).fill(1000), 3000, 3000, 3000, 3000], 4000);
+  if (!(Math.abs(quiet - 1.1) < 1e-9)) throw new Error('quiet ratio ' + quiet);
+  if (!(Math.abs(heavy - 3.2) < 1e-9)) throw new Error('heavy ratio ' + heavy);
+  if (volumeRatio(Array(20).fill(1), 1) !== null) throw new Error('short history should be null');
+  if (!(volFraction(930) === 0.74 && volFraction(960) === 1 && volFraction(500) === 0)) throw new Error('vol curve');
+  console.log('ok   volume filter ratio and curve');
+}

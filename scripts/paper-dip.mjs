@@ -3,6 +3,8 @@
 // Rule (from dip_fast_robust backtest, main settings):
 //   Entry: S&P 500 stock above its 200-day average that fell >= 10% more than SPY over the last 5 trading days.
 //          Biggest dips first, up to 10 positions, 10% of equity each.
+//          NEW (Nov 10 backtest): skip dips that came on heavy volume: average daily volume over the 5-day drop
+//          (today estimated from SIP bars up to 16 min ago) > 2x the stock's normal volume (50 days before the drop).
 //   Exit (smart exit): sell at the close once the stock closes above its 5-day average, or after 5 trading days.
 //   Waiting money: Clear Leader v2.0 ETF (no crash filter), but CASH when SPY is below its 100-day average.
 // Signals use live prices ~10-40 min before the close as a stand-in for the close. Long only. Not financial advice.
@@ -12,7 +14,7 @@ import { parseSp500Html } from './build-quality-dips.mjs';
 import { run as clRun, POOL } from './clear-leader.mjs';
 import { monthRows } from './clear-leader-alert.mjs';
 export const PAPER = 'https://paper-api.alpaca.markets', DATA = 'https://data.alpaca.markets';
-export const DIP = 0.10, LOOKBACK = 5, TREND = 200, EXIT_MA = 5, MAX_HOLD = 5, SLOTS = 10, WEIGHT = 0.10, CRASH_MA = 100, BUFFER = 0.02, MIN_PX = 5;
+export const DIP = 0.10, LOOKBACK = 5, TREND = 200, EXIT_MA = 5, MAX_HOLD = 5, SLOTS = 10, WEIGHT = 0.10, CRASH_MA = 100, BUFFER = 0.02, MIN_PX = 5, VOL_MAX = 2.0;
 const avg = (a) => a.reduce((x, y) => x + y, 0) / a.length;
 
 // closes: array of prior daily closes (ascending, excludes today); px: today's live price.
@@ -22,6 +24,20 @@ export function dipScore(closes, px, spyCloses, spyPx) {
   if (!(px > ma200)) return null;
   const ex = px / closes.at(-LOOKBACK) - 1 - (spyPx / spyCloses.at(-LOOKBACK) - 1);
   return ex <= -DIP ? ex : null;
+}
+// Typical share of a day's volume traded by a given time (ET minutes since midnight), U-shaped curve incl. closing auction.
+const VOL_CURVE = [[570, 0], [600, 0.12], [660, 0.25], [720, 0.35], [780, 0.43], [840, 0.52], [900, 0.64], [930, 0.74], [960, 1]];
+export function volFraction(min) {
+  if (min <= 570) return 0; if (min >= 960) return 1;
+  for (let i = 1; i < VOL_CURVE.length; i++) { const [m1, f1] = VOL_CURVE[i], [m0, f0] = VOL_CURVE[i - 1]; if (min <= m1) return f0 + (f1 - f0) * (min - m0) / (m1 - m0); }
+  return 1;
+}
+// vols: prior full-day volumes (ascending, excludes today); todayEst: estimated full-day volume today (or null).
+// Ratio = average volume over the 5-day drop window / average over the 50 days before it (same as the backtest).
+export function volumeRatio(vols, todayEst) {
+  if (vols.length < 54) return null;
+  const recent = todayEst > 0 ? [...vols.slice(-4), todayEst] : vols.slice(-5), base = vols.slice(-54, -4);
+  const b = avg(base); return b > 0 ? avg(recent) / b : null;
 }
 export function shouldExit({ age, closes, px }) {
   if (age >= MAX_HOLD) return `held ${age} days (max ${MAX_HOLD})`;
@@ -81,10 +97,10 @@ async function main() {
   const syms = [...new Set([...members, ...etfs])];
   // prior daily closes (exclude today)
   const prevDay = days.at(-1) === today ? days.at(-2) : days.at(-1);
-  const closes = Object.fromEntries(syms.map((s) => [s, []])), etfBars = Object.fromEntries(etfs.map((s) => [s, []]));
+  const closes = Object.fromEntries(syms.map((s) => [s, []])), vols = Object.fromEntries(syms.map((s) => [s, []])), etfBars = Object.fromEntries(etfs.map((s) => [s, []]));
   for (let i = 0; i < syms.length; i += 100) {
     const p = new URLSearchParams({ symbols: syms.slice(i, i + 100).join(','), timeframe: '1Day', start: days.at(-260), end: prevDay + 'T23:59:00Z', adjustment: 'all', feed: 'sip', limit: '10000' });
-    for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + p); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) closes[s].push(b.c); if (!js.next_page_token) break; p.set('page_token', js.next_page_token); }
+    for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + p); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) { closes[s].push(b.c); vols[s].push(b.v); } if (!js.next_page_token) break; p.set('page_token', js.next_page_token); }
   }
   // live prices (IEX feed is real-time on the free plan)
   const prices = {};
@@ -101,6 +117,22 @@ async function main() {
   // signals
   const scores = {};
   for (const s of members) { if (etfs.includes(s)) continue; const sc = dipScore(closes[s] || [], prices[s], closes.SPY, prices.SPY); if (sc != null) scores[s] = sc; }
+  // volume filter: today's SIP volume so far (free plan allows SIP data older than 15 min), scaled to a full day
+  const cut = new Date(Date.now() - 16 * 60e3), cutMin = (() => { const f = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(cut); return +f.find((x) => x.type === 'hour').value * 60 + +f.find((x) => x.type === 'minute').value; })();
+  const cands0 = Object.keys(scores), partial = {}, volInfo = {};
+  if (cands0.length && cutMin > 600) {
+    try {
+      const vp = new URLSearchParams({ symbols: cands0.join(','), timeframe: '30Min', start: today + 'T13:00:00Z', end: cut.toISOString(), feed: 'sip', limit: '10000' });
+      for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + vp); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) { const m = new Date(b.t); const hm = +new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(m) * 60 + m.getUTCMinutes(); if (hm >= 570) partial[s] = (partial[s] || 0) + b.v; } if (!js.next_page_token) break; vp.set('page_token', js.next_page_token); }
+    } catch (e) { log.volume_error = String(e.message || e).slice(0, 200); }
+  }
+  const frac = volFraction(cutMin);
+  for (const s of cands0) {
+    const est = partial[s] && frac > 0.2 ? partial[s] / frac : null, r = volumeRatio(vols[s] || [], est);
+    volInfo[s] = { ratio: r == null ? null : +r.toFixed(2), today_est: est ? Math.round(est) : null };
+    if (r != null && r > VOL_MAX) { log.skipped_heavy_volume = [...(log.skipped_heavy_volume || []), `${s} (${r.toFixed(1)}x)`]; delete scores[s]; }
+  }
+  log.volume_check = volInfo;
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
   // sync with the broker: drop positions that never filled / were sold, use real share counts
   if (own) { const before = state.positions.map((p) => p.symbol); state.positions = state.positions.filter((p) => held[p.symbol] > 0).map((p) => ({ ...p, qty: Math.min(p.qty, held[p.symbol]) })); const gone = before.filter((s) => !state.positions.some((p) => p.symbol === s)); if (gone.length) log.synced_out = gone; }
