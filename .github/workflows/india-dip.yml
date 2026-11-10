@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/india_dip.json data/india_trend.json data/india_checks.json 2>/dev/null || true
+          git add data/india_dip.json data/india_trend.json data/india_checks.json data/india_oos.json 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -qm "india test: ${{ inputs.mode }}"
           for i in 1 2 3 4 5; do out=$(git pull --rebase --autostash -X theirs 2>&1 && git push 2>&1) && exit 0; echo "::warning::push try $i: $(echo "$out" | tail -c 300 | tr '\n' ' ')"; sleep 7; done

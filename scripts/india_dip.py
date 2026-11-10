@@ -92,12 +92,60 @@ def run():
         for a, b in [("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")]:
             q = p[(p.index >= a) & (p.index <= b + "-12-31")]; per[a + "-" + b] = round(100 * ((1 + q).prod() ** (248 / max(len(q), 1)) - 1), 1)
         o = {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1), "per": per}
+        for nm_, a, b in [("train_2008_2018", "2008", "2018-12-31"), ("test_2019_2026", "2019", "2100")]:
+            q = c[(c.index >= a) & (c.index <= b)]
+            if len(q) > 100: o[nm_] = {"cagr": round(100 * ((q.iloc[-1] / q.iloc[0]) ** (248 / len(q)) - 1), 1), "dd": round(100 * (q / q.cummax() - 1).min(), 1)}
         if inv is not None: o["invested_pct"] = round(100 * float(np.mean(inv)), 1)
         if tr: o["trades"] = len(tr); o["win_rate"] = round(100 * float((np.array(tr) > 0).mean()), 1); o["avg_trade_pct"] = round(100 * float(np.mean(tr)), 2)
         return o
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "oos":
+        # Out-of-sample check: pick settings using 2008-2018 only, then see how they did on 2019-2026.
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
+        gtr = (gold > gold.rolling(100).mean()).shift(1, fill_value=False).values; dv = (1 + 0.013) ** (1 / 248) - 1
+        nm = n.copy(); me = nm.groupby(nm.index.to_period("M")).transform("last") == nm
+        def tsig(kind):
+            if kind == "10m":
+                mc = nm[me]; ok = (mc > mc.rolling(10).mean()).reindex(dates).ffill().fillna(False)
+            else: ok = nm > nm.rolling(int(kind)).mean()
+            return ok.shift(1, fill_value=False).values.astype(bool)
+        def park(kind, below):
+            sg = tsig(kind); alt = {"liquid": liq, "gold": gr, "gold if trending else liquid": np.where(gtr, gr, liq)}[below]
+            r = np.where(sg, nr + dv, alt).astype(float); r[np.r_[False, sg[1:] != sg[:-1]]] -= 0.0005; return r
+        M = members(200).values; ab = above.values & M & ~glitch.values; R = (-rl).values
+        VC = {"none": np.ones_like(ab), "2x": ~(vr > 2.0).values}
+        rows = []
+        for kind in ("50", "100", "150", "200", "10m"):
+            for below in ("liquid", "gold", "gold if trending else liquid"):
+                pk = park(kind, below)
+                r = sim(np.zeros_like(ab), R, pk); r.update(avg=kind, below=below, dip="none", vol="-"); rows.append(r)
+                for th in (0.10, 0.12, 0.14):
+                    for vk, vm in VC.items():
+                        r = sim((rl.values <= -th) & ab & vm, R, pk, entry="open", cost=0.003); r.update(avg=kind, below=below, dip=f"{int(th*100)}%", vol=vk); rows.append(r)
+                print(kind, below, len(rows), flush=True)
+        def pick(rows_, key):
+            return max(rows_, key=key)
+        tr = lambda r: r["train_2008_2018"]["cagr"]
+        trr = lambda r: r["train_2008_2018"]["cagr"] / max(1.0, -r["train_2008_2018"]["dd"])   # return per unit of drop
+        ny = pd.Series(nr + dv, index=dates)
+        def bench(a, b):
+            q = ny[(ny.index >= a) & (ny.index <= b)]; c = (1 + q).cumprod(); return {"cagr": round(100 * (c.iloc[-1] ** (248 / len(c)) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1)}
+        sel = lambda r: {k: r[k] for k in ("avg", "below", "dip", "vol", "train_2008_2018", "test_2019_2026", "cagr", "dd")}
+        test_c = np.array([r["test_2019_2026"]["cagr"] for r in rows])
+        ours = [r for r in rows if (r["avg"], r["below"], r["dip"], r["vol"]) in {("100", "liquid", "12%", "2x"), ("150", "gold if trending else liquid", "12%", "2x")}]
+        OUT["oos"] = {"nifty_with_dividends": {"train_2008_2018": bench("2008", "2018-12-31"), "test_2019_2026": bench("2019", "2100")},
+                      "picked_by_best_train_return": sel(pick(rows, tr)),
+                      "picked_by_best_train_return_per_drop": sel(pick(rows, trr)),
+                      "picked_best_with_dips_by_train_return": sel(pick([r for r in rows if r["dip"] != "none"], tr)),
+                      "our_chosen_versions_full_period_picks": [sel(r) for r in ours],
+                      "all_versions_test_period": {"n": len(rows), "median": float(np.median(test_c)), "min": float(test_c.min()), "max": float(test_c.max()),
+                                                   "beat_nifty_test": int((test_c > bench("2019", "2100")["cagr"]).sum())},
+                      "rows": [sel(r) for r in rows],
+                      "note": "Realistic fills (next open, 0.30%/side), before tax, Nifty with ~1.3% dividends, liquid fund 6%/yr. Settings picked using 2008-2018 only."}
+        print(json.dumps({k: v for k, v in OUT["oos"].items() if k != "rows"}, indent=1), flush=True)
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_oos.json", "w"), indent=1, default=float); return
     if MODE == "checks":
         STCG, LTCG, SLAB, CAP0, EXEMPT, DIV = 0.20 * 1.04, 0.125 * 1.04, 0.30 * 1.04, 1_000_000.0, 125_000.0, 0.013
         g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
@@ -274,4 +322,4 @@ def run():
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
 try: run()
 except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)

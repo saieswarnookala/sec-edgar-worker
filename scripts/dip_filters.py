@@ -182,6 +182,70 @@ def main():
             add(f"[dip {int(th*100)}%] baseline", sig=Sth)
             add(f"[dip {int(th*100)}%] volume < 2x", sig=Sth & ~(vr > 2.0))
             add(f"[dip {int(th*100)}%] volume < 2x + dip vs peers", sig=Sth & ~(vr > 2.0) & (rp <= -th))
+    elif MODE == "tax":
+        # US after-tax test for a Texas resident (no state income tax). Short-term gains (held <= 1 year) taxed at the
+        # federal bracket; long-term at 15%. Losses offset gains within a year and carry forward (the $3k/yr offset
+        # against salary is ignored). Everything still held at the end is sold and taxed. Wash-sale rules ignored.
+        V = VOL[tick]; vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
+        Sv = S & ~(vr > 2.0)
+        posm = {r["m"]: r["pos"] for r in CLROWS["cl"]}; s100 = sma(100)
+        lab = np.array([(posm.get(m, "SPY") if s100[i] else "CASH") for i, m in enumerate(mon)])
+        park = PKN[100]; years = dates.year.values; LT = 0.15
+        def sim_tax(sig, st_rate, cost=0.0005, entry="close", mx=5, slots=10, tax=True):
+            eq = 1.0; curve = np.ones(D); pos = []; cur = None; seg0 = None; acc = 0.0
+            st = lt = 0.0; cf_st = cf_lt = 0.0; paid = 0.0
+            def year_end():
+                nonlocal st, lt, cf_st, cf_lt, eq, paid
+                a2 = st + cf_st; b2 = lt + cf_lt
+                if a2 < 0 and b2 > 0: b3 = b2 + a2; a2, b2 = (0.0, b3) if b3 >= 0 else (b3, 0.0)
+                if b2 < 0 and a2 > 0: a3 = a2 + b2; a2, b2 = (a3, 0.0) if a3 >= 0 else (0.0, a3)
+                tx = st_rate * max(a2, 0.0) + LT * max(b2, 0.0); cf_st = min(a2, 0.0); cf_lt = min(b2, 0.0); st = lt = 0.0
+                if tax: eq -= tx; paid += tx
+            def realize(t):
+                nonlocal st, lt, acc
+                if seg0 is not None and t - seg0 > 252: lt += acc
+                else: st += acc
+                acc = 0.0
+            for t in range(START, D):
+                if lab[t] != cur:
+                    if cur is not None and cur != "CASH": realize(t)
+                    cur = lab[t]; seg0 = t if cur != "CASH" else None
+                used = sum(p_[2] for p_ in pos); pv = max(0.0, eq - used); g = pv * park[t]; acc += g; day = g
+                for p_ in pos:
+                    gg = OC[t, p_[0]] if (entry == "open" and p_[1] == 0) else Rt[t, p_[0]]
+                    day += p_[2] * gg; p_[2] *= 1 + gg
+                eq += day; keep = []
+                for p_ in pos:
+                    p_[1] += 1
+                    if p_[1] >= mx or over5[t, p_[0]]:
+                        c = cost * p_[2]; eq -= c; st += p_[2] - p_[3] - c - cost * p_[3]
+                    else: keep.append(p_)
+                pos = keep; held = {p_[0] for p_ in pos}; used = sum(p_[2] for p_ in pos)
+                new = [c for c in sorted(np.where(sig[t])[0], key=lambda c: -R[t, c]) if c not in held][: max(0, slots - len(pos))]
+                if new:
+                    w = min(eq / slots, max(0.0, eq - used) / len(new))
+                    for c in new: pos.append([c, 0, w, w]); eq -= cost * w
+                if t + 1 == D or years[t + 1] != years[t]:
+                    if t + 1 == D:
+                        for p_ in pos: st += p_[2] - p_[3]
+                        if cur != "CASH": realize(t)
+                    year_end()
+                curve[t] = eq
+            c = pd.Series(curve[START:], index=dates[START:]); pr = c.pct_change().fillna(0); yrs = len(pr) / 252
+            per = {}
+            for a2, b2 in [("1998", "2002"), ("2003", "2007"), ("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")]:
+                q = pr[(pr.index >= a2) & (pr.index <= b2 + "-12-31")]; per[a2 + "-" + b2] = round(100 * ((1 + q).prod() ** (252 / max(len(q), 1)) - 1), 1)
+            return {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1), "per": per, "tax_paid_pct_of_start": round(100 * paid, 0), "final_x": round(float(c.iloc[-1]), 1)}
+        sp = spy.iloc[START:] / spy.iloc[START]; yrs = len(sp) / 252; DY = 0.017
+        g_ = sp.iloc[-1]; div_drag = (1 - LT * DY / (1 + 0.08)) ** yrs   # ~qualified dividends taxed yearly
+        spy_after = 1 + (g_ * div_drag - 1) * (1 - LT)
+        OUT["SPY_after_tax"] = {"cagr": round(100 * (spy_after ** (1 / yrs) - 1), 1), "final_x": round(float(spy_after), 1), "note": "dividends ~1.7%/yr taxed 15% yearly, gains taxed 15% once at the end"}
+        OUT["SPY"]["final_x"] = round(float(g_), 1)
+        for vname, sig in [("current (no volume filter)", S), ("with volume filter (skip > 2x)", Sv)]:
+            for scen, kw in [("ideal", {}), ("realistic", dict(entry="open", cost=0.0015))]:
+                r = sim_tax(sig, 0.0, tax=False, **kw); r.update(variant=vname, scenario=scen, tax="before tax / Roth IRA"); G.append(r); print(vname, scen, "pre", r["cagr"], r["final_x"], flush=True)
+                for br in (0.22, 0.24, 0.32, 0.35):
+                    r = sim_tax(sig, br, **kw); r.update(variant=vname, scenario=scen, tax=f"after tax, {int(br*100)}% bracket"); G.append(r); print(vname, scen, br, r["cagr"], r["dd"], r["final_x"], flush=True)
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
