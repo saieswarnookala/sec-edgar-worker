@@ -1,0 +1,20 @@
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+SPY long last 30 min if first 30 min up ideal 0.02%/side -6.6 -52.2 -2.17 1412
+SPY long last 30 min if first 30 min up realistic 0.05%/side -13.6 -79.5 -4.55 1412
+SPY long/short by first 30 min ideal 0.02%/side -11.3 -72.8 -2.42 2714
+SPY long/short by first 30 min realistic 0.05%/side -23.7 -94.6 -5.5 2714
+SPY long if first 30 min AND 15:00-15:30 both up ideal 0.02%/side -3.1 -29.3 -1.56 728
+SPY long if first 30 min AND 15:00-15:30 both up realistic 0.05%/side -6.9 -54.2 -3.39 728
+SPY long/short, only big first-30-min moves (top 30%) ideal 0.02%/side -4.1 -36.8 -1.1 741
+SPY long/short, only big first-30-min moves (top 30%) realistic 0.05%/side -8.0 -59.5 -2.14 741
+SPY long only, big up first 30 min (top 30%) ideal 0.02%/side -2.5 -23.9 -1.04 385
+SPY long only, big up first 30 min (top 30%) realistic 0.05%/side -4.5 -39.6 -1.87 385
+SPY always long last 30 min (baseline) ideal 0.02%/side -10.8 -71.2 -2.3 2729
+SPY always long last 30 min (baseline) realistic 0.05%/side -23.3 -94.4 -5.4 2729
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
