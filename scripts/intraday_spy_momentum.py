@@ -50,7 +50,7 @@ def run():
         st = stats(out); st["trades"] = len(trades); st["days_traded"] = len(set(trades)); return st
     for name, kw in [("long+short, 1x", {}), ("long only, 1x", dict(long_only=True)), ("long+short, vol target (<=4x)", dict(sizing="vol")),
                      ("long only, 3 trades/week (PDT)", dict(long_only=True, pdt=True))]:
-        for tag, cost in [("ideal 0.02%/side", 0.0002), ("realistic 0.05%/side", 0.0005), ("harsh 0.10%/side", 0.001)]:
+        for tag, cost in [("no costs", 0.0), ("SPY spread ~0.002%/side", 0.00002), ("0.01%/side", 0.0001), ("0.02%/side", 0.0002)]:
             r = sim(cost=cost, **kw); r.update(variant=name, costs=tag); res.setdefault("results", []).append(r); print(name, tag, {k: r[k] for k in ("cagr", "dd", "sharpe", "trades")}, r.get("to_apr2024"), r.get("may2024_on"), flush=True)
     res["benchmark_" + sym] = spy_daily_stats() if sym == "SPY" else None
     res["note"] = "Alpaca 1-min SIP, regular hours, 2016-now. Paper sample ended Apr 2024: 'may2024_on' is out-of-sample for its rules."

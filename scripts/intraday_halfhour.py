@@ -21,7 +21,7 @@ def run():
             "always long last 30 min (baseline)": pd.Series(1.0, index=r1.index),
         }
         for name, sig in rules.items():
-            for tag, cost in [("ideal 0.02%/side", 0.0002), ("realistic 0.05%/side", 0.0005)]:
+            for tag, cost in [("no costs", 0.0), ("ETF spread ~0.002%/side", 0.00002), ("0.01%/side", 0.0001), ("0.02%/side", 0.0002)]:
                 s = sig.fillna(0); daily = s * rl - 2 * cost * s.abs()
                 st = stats(daily); st.update(symbol=sym, rule=name, costs=tag, trades=int((s != 0).sum()), win_rate=round(100 * float(((s * rl) > 0)[s != 0].mean()), 1))
                 res["results"].append(st); print(sym, name, tag, st["cagr"], st["dd"], st["sharpe"], st["trades"], flush=True)
@@ -31,7 +31,7 @@ def run():
                 if s[d] != 0:
                     k = wk[d]; n[k] = n.get(k, 0) + 1
                     if n[k] > 3: s[d] = 0
-            daily = s * rl - 2 * 0.0005 * s.abs(); st = stats(daily); st.update(symbol=sym, rule=name + " [max 3/week]", costs="realistic 0.05%/side", trades=int((s != 0).sum()))
+            daily = s * rl - 2 * 0.00002 * s.abs(); st = stats(daily); st.update(symbol=sym, rule=name + " [max 3/week]", costs="ETF spread ~0.002%/side", trades=int((s != 0).sum()))
             res["results"].append(st)
     res["benchmark_SPY"] = spy_daily_stats()
     save("intraday_halfhour", res)
