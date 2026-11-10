@@ -11,12 +11,14 @@ def _get(url):
             return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=90))
         except Exception as e:
             code = getattr(e, "code", None)
-            print("retry", i + 1, code, str(e)[:120], flush=True); time.sleep(5 * (i + 1) if code != 429 else 30)
+            body = e.read().decode()[:300] if hasattr(e, "read") else ""
+            print("retry", i + 1, code, str(e)[:120], body, flush=True)
+            if code in (401, 403) and i >= 1: raise RuntimeError(f"alpaca {code}: {body}"); time.sleep(5 * (i + 1) if code != 429 else 30)
     raise RuntimeError("alpaca failed: " + url[:200])
 
 def bars(symbols, timeframe, start=START, end=None, regular=True):
     """All bars for symbols -> DataFrame [sym, t (NY time), o, h, l, c, v]; regular session only by default."""
-    end = end or pd.Timestamp.utcnow().strftime("%Y-%m-%d")
+    end = end or (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=1)).strftime("%Y-%m-%d")  # free plan: no SIP data from the last 15 minutes
     p = {"symbols": ",".join(symbols), "timeframe": timeframe, "start": start, "end": end, "adjustment": "all", "feed": "sip", "limit": "10000"}
     rows = []
     while True:
