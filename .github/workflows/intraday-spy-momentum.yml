@@ -21,8 +21,12 @@ jobs:
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
       - name: Commit
         if: always()
+        shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/logs/ 2>/dev/null || true; git add data/intraday_spy_momentum*.json 2>/dev/null || true
+          git add -A data/ 2>&1 || true
+          echo "::warning::staged: $(git diff --cached --name-only | tr '\n' ' ')"
           git diff --cached --quiet && exit 0
-          git commit -m "intraday test: spy_momentum" && for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 7; done
+          git commit -qm "intraday test: spy_momentum"
+          for i in 1 2 3 4 5; do out=$(git pull --rebase -X theirs 2>&1 && git push 2>&1) && echo "::warning::pushed" && exit 0; echo "::warning::push try $i: $(echo "$out" | tail -c 400 | tr '\n' ' ')"; sleep 7; done
+          exit 1
