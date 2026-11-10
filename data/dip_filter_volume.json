@@ -1,0 +1,196 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 20.6,
+   "dd": -24.8,
+   "per": {
+    "1998-2002": 49.2,
+    "2003-2007": 11.6,
+    "2008-2009": 20.7,
+    "2010-2015": 3.3,
+    "2016-2020": 13.8,
+    "2021-2026": 32.0
+   },
+   "invested_pct": 14.5,
+   "win_rate": 64.4,
+   "variant": "skip dips with volume > 1.5x normal",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.4,
+   "dd": -25.1,
+   "per": {
+    "1998-2002": 23.6,
+    "2003-2007": 8.6,
+    "2008-2009": 17.3,
+    "2010-2015": 4.0,
+    "2016-2020": 11.5,
+    "2021-2026": 25.3
+   },
+   "invested_pct": 14.5,
+   "win_rate": 58.1,
+   "variant": "skip dips with volume > 1.5x normal",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.0,
+   "variant": "skip dips with volume > 2.0x normal",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 17.8,
+   "win_rate": 58.4,
+   "variant": "skip dips with volume > 2.0x normal",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.4,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 50.6,
+    "2003-2007": 11.6,
+    "2008-2009": 18.1,
+    "2010-2015": 5.5,
+    "2016-2020": 13.4,
+    "2021-2026": 34.1
+   },
+   "invested_pct": 20.0,
+   "win_rate": 63.5,
+   "variant": "skip dips with volume > 3.0x normal",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.7,
+   "dd": -25.8,
+   "per": {
+    "1998-2002": 23.3,
+    "2003-2007": 6.6,
+    "2008-2009": 14.0,
+    "2010-2015": 4.9,
+    "2016-2020": 10.5,
+    "2021-2026": 24.4
+   },
+   "invested_pct": 20.0,
+   "win_rate": 57.7,
+   "variant": "skip dips with volume > 3.0x normal",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 10.3,
+   "dd": -53.8,
+   "per": {
+    "1998-2002": 7.2,
+    "2003-2007": 4.3,
+    "2008-2009": 25.6,
+    "2010-2015": 5.2,
+    "2016-2020": 9.4,
+    "2021-2026": 19.8
+   },
+   "invested_pct": 4.2,
+   "win_rate": 62.2,
+   "variant": "ONLY dips with volume > 2x normal (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 8.9,
+   "dd": -55.4,
+   "per": {
+    "1998-2002": 4.6,
+    "2003-2007": 3.3,
+    "2008-2009": 24.3,
+    "2010-2015": 4.0,
+    "2016-2020": 9.0,
+    "2021-2026": 18.1
+   },
+   "invested_pct": 4.2,
+   "win_rate": 55.0,
+   "variant": "ONLY dips with volume > 2x normal (check)",
+   "scenario": "realistic"
+  }
+ ],
+ "mode": "volume"
+}
