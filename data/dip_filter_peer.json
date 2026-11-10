@@ -1,0 +1,132 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.8,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 49.3,
+    "2003-2007": 11.0,
+    "2008-2009": 19.8,
+    "2010-2015": 5.5,
+    "2016-2020": 13.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 21.3,
+   "win_rate": 62.0,
+   "variant": "dip vs industry peers (instead of SPY)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 12.7,
+   "dd": -26.3,
+   "per": {
+    "1998-2002": 23.9,
+    "2003-2007": 6.4,
+    "2008-2009": 14.1,
+    "2010-2015": 4.6,
+    "2016-2020": 10.4,
+    "2021-2026": 19.3
+   },
+   "invested_pct": 21.4,
+   "win_rate": 56.1,
+   "variant": "dip vs industry peers (instead of SPY)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.8,
+   "dd": -21.1,
+   "per": {
+    "1998-2002": 45.2,
+    "2003-2007": 10.4,
+    "2008-2009": 21.9,
+    "2010-2015": 4.8,
+    "2016-2020": 14.3,
+    "2021-2026": 29.1
+   },
+   "invested_pct": 16.6,
+   "win_rate": 63.3,
+   "variant": "dip vs BOTH SPY and industry peers",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.8,
+   "dd": -22.9,
+   "per": {
+    "1998-2002": 23.3,
+    "2003-2007": 6.9,
+    "2008-2009": 17.7,
+    "2010-2015": 4.2,
+    "2016-2020": 11.7,
+    "2021-2026": 23.0
+   },
+   "invested_pct": 16.7,
+   "win_rate": 56.9,
+   "variant": "dip vs BOTH SPY and industry peers",
+   "scenario": "realistic"
+  }
+ ],
+ "mode": "peer"
+}
