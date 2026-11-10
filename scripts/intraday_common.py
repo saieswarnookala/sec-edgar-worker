@@ -18,7 +18,7 @@ def _get(url):
 
 def bars(symbols, timeframe, start=START, end=None, regular=True):
     """All bars for symbols -> DataFrame [sym, t (NY time), o, h, l, c, v]; regular session only by default."""
-    end = end or (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=1)).strftime("%Y-%m-%d")  # free plan: no SIP data from the last 15 minutes
+    end = end or (pd.Timestamp.now(tz="UTC") - pd.Timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ")  # free plan: no SIP data from the last 15 minutes
     p = {"symbols": ",".join(symbols), "timeframe": timeframe, "start": start, "end": end, "adjustment": "all", "feed": "sip", "limit": "10000"}
     rows = []
     while True:
