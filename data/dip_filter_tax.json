@@ -1,0 +1,414 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2,
+  "final_x": 12.7
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.2,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "tax_paid_pct_of_start": 0.0,
+   "final_x": 287.7,
+   "variant": "current (no volume filter)",
+   "scenario": "ideal",
+   "tax": "before tax / Roth IRA"
+  },
+  {
+   "cagr": 17.8,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 42.3,
+    "2003-2007": 9.8,
+    "2008-2009": 14.6,
+    "2010-2015": 4.2,
+    "2016-2020": 12.1,
+    "2021-2026": 27.0
+   },
+   "tax_paid_pct_of_start": 3072.0,
+   "final_x": 110.7,
+   "variant": "current (no volume filter)",
+   "scenario": "ideal",
+   "tax": "after tax, 22% bracket"
+  },
+  {
+   "cagr": 17.4,
+   "dd": -26.6,
+   "per": {
+    "1998-2002": 41.4,
+    "2003-2007": 9.6,
+    "2008-2009": 14.2,
+    "2010-2015": 4.1,
+    "2016-2020": 11.9,
+    "2021-2026": 26.4
+   },
+   "tax_paid_pct_of_start": 3137.0,
+   "final_x": 101.2,
+   "variant": "current (no volume filter)",
+   "scenario": "ideal",
+   "tax": "after tax, 24% bracket"
+  },
+  {
+   "cagr": 15.9,
+   "dd": -30.7,
+   "per": {
+    "1998-2002": 38.0,
+    "2003-2007": 8.7,
+    "2008-2009": 12.8,
+    "2010-2015": 3.5,
+    "2016-2020": 11.4,
+    "2021-2026": 23.7
+   },
+   "tax_paid_pct_of_start": 3202.0,
+   "final_x": 70.0,
+   "variant": "current (no volume filter)",
+   "scenario": "ideal",
+   "tax": "after tax, 32% bracket"
+  },
+  {
+   "cagr": 15.3,
+   "dd": -32.2,
+   "per": {
+    "1998-2002": 36.6,
+    "2003-2007": 8.3,
+    "2008-2009": 12.3,
+    "2010-2015": 3.4,
+    "2016-2020": 11.2,
+    "2021-2026": 22.6
+   },
+   "tax_paid_pct_of_start": 3165.0,
+   "final_x": 60.7,
+   "variant": "current (no volume filter)",
+   "scenario": "ideal",
+   "tax": "after tax, 35% bracket"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.7
+   },
+   "tax_paid_pct_of_start": 0.0,
+   "final_x": 38.7,
+   "variant": "current (no volume filter)",
+   "scenario": "realistic",
+   "tax": "before tax / Roth IRA"
+  },
+  {
+   "cagr": 11.0,
+   "dd": -28.6,
+   "per": {
+    "1998-2002": 17.6,
+    "2003-2007": 5.8,
+    "2008-2009": 11.4,
+    "2010-2015": 3.6,
+    "2016-2020": 9.4,
+    "2021-2026": 19.4
+   },
+   "tax_paid_pct_of_start": 532.0,
+   "final_x": 20.0,
+   "variant": "current (no volume filter)",
+   "scenario": "realistic",
+   "tax": "after tax, 22% bracket"
+  },
+  {
+   "cagr": 10.7,
+   "dd": -29.1,
+   "per": {
+    "1998-2002": 17.2,
+    "2003-2007": 5.6,
+    "2008-2009": 11.2,
+    "2010-2015": 3.5,
+    "2016-2020": 9.3,
+    "2021-2026": 18.9
+   },
+   "tax_paid_pct_of_start": 557.0,
+   "final_x": 18.8,
+   "variant": "current (no volume filter)",
+   "scenario": "realistic",
+   "tax": "after tax, 24% bracket"
+  },
+  {
+   "cagr": 9.8,
+   "dd": -31.5,
+   "per": {
+    "1998-2002": 15.5,
+    "2003-2007": 5.1,
+    "2008-2009": 10.3,
+    "2010-2015": 3.1,
+    "2016-2020": 8.9,
+    "2021-2026": 16.8
+   },
+   "tax_paid_pct_of_start": 632.0,
+   "final_x": 14.6,
+   "variant": "current (no volume filter)",
+   "scenario": "realistic",
+   "tax": "after tax, 32% bracket"
+  },
+  {
+   "cagr": 9.4,
+   "dd": -32.5,
+   "per": {
+    "1998-2002": 14.9,
+    "2003-2007": 5.0,
+    "2008-2009": 10.0,
+    "2010-2015": 2.9,
+    "2016-2020": 8.7,
+    "2021-2026": 16.1
+   },
+   "tax_paid_pct_of_start": 650.0,
+   "final_x": 13.3,
+   "variant": "current (no volume filter)",
+   "scenario": "realistic",
+   "tax": "after tax, 35% bracket"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.2,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "tax_paid_pct_of_start": 0.0,
+   "final_x": 304.5,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "ideal",
+   "tax": "before tax / Roth IRA"
+  },
+  {
+   "cagr": 18.0,
+   "dd": -27.6,
+   "per": {
+    "1998-2002": 43.9,
+    "2003-2007": 9.2,
+    "2008-2009": 17.0,
+    "2010-2015": 3.2,
+    "2016-2020": 12.9,
+    "2021-2026": 27.0
+   },
+   "tax_paid_pct_of_start": 3232.0,
+   "final_x": 116.3,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "ideal",
+   "tax": "after tax, 22% bracket"
+  },
+  {
+   "cagr": 17.6,
+   "dd": -27.9,
+   "per": {
+    "1998-2002": 43.0,
+    "2003-2007": 9.0,
+    "2008-2009": 16.6,
+    "2010-2015": 3.1,
+    "2016-2020": 12.7,
+    "2021-2026": 26.4
+   },
+   "tax_paid_pct_of_start": 3297.0,
+   "final_x": 106.2,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "ideal",
+   "tax": "after tax, 24% bracket"
+  },
+  {
+   "cagr": 16.1,
+   "dd": -29.8,
+   "per": {
+    "1998-2002": 39.4,
+    "2003-2007": 8.2,
+    "2008-2009": 15.0,
+    "2010-2015": 2.7,
+    "2016-2020": 12.2,
+    "2021-2026": 23.6
+   },
+   "tax_paid_pct_of_start": 3355.0,
+   "final_x": 73.2,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "ideal",
+   "tax": "after tax, 32% bracket"
+  },
+  {
+   "cagr": 15.5,
+   "dd": -31.4,
+   "per": {
+    "1998-2002": 38.0,
+    "2003-2007": 7.8,
+    "2008-2009": 14.4,
+    "2010-2015": 2.5,
+    "2016-2020": 12.0,
+    "2021-2026": 22.6
+   },
+   "tax_paid_pct_of_start": 3312.0,
+   "final_x": 63.4,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "ideal",
+   "tax": "after tax, 35% bracket"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "tax_paid_pct_of_start": 0.0,
+   "final_x": 55.0,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "realistic",
+   "tax": "before tax / Roth IRA"
+  },
+  {
+   "cagr": 12.1,
+   "dd": -27.5,
+   "per": {
+    "1998-2002": 21.6,
+    "2003-2007": 6.2,
+    "2008-2009": 13.3,
+    "2010-2015": 3.3,
+    "2016-2020": 10.3,
+    "2021-2026": 20.3
+   },
+   "tax_paid_pct_of_start": 725.0,
+   "final_x": 26.9,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "realistic",
+   "tax": "after tax, 22% bracket"
+  },
+  {
+   "cagr": 11.9,
+   "dd": -27.7,
+   "per": {
+    "1998-2002": 21.2,
+    "2003-2007": 6.0,
+    "2008-2009": 13.0,
+    "2010-2015": 3.2,
+    "2016-2020": 10.2,
+    "2021-2026": 19.7
+   },
+   "tax_paid_pct_of_start": 756.0,
+   "final_x": 25.1,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "realistic",
+   "tax": "after tax, 24% bracket"
+  },
+  {
+   "cagr": 10.8,
+   "dd": -29.1,
+   "per": {
+    "1998-2002": 19.2,
+    "2003-2007": 5.5,
+    "2008-2009": 11.8,
+    "2010-2015": 2.8,
+    "2016-2020": 9.8,
+    "2021-2026": 17.6
+   },
+   "tax_paid_pct_of_start": 841.0,
+   "final_x": 19.1,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "realistic",
+   "tax": "after tax, 32% bracket"
+  },
+  {
+   "cagr": 10.4,
+   "dd": -30.1,
+   "per": {
+    "1998-2002": 18.5,
+    "2003-2007": 5.3,
+    "2008-2009": 11.3,
+    "2010-2015": 2.7,
+    "2016-2020": 9.6,
+    "2021-2026": 16.8
+   },
+   "tax_paid_pct_of_start": 859.0,
+   "final_x": 17.2,
+   "variant": "with volume filter (skip > 2x)",
+   "scenario": "realistic",
+   "tax": "after tax, 35% bracket"
+  }
+ ],
+ "SPY_after_tax": {
+  "cagr": 8.4,
+  "final_x": 10.2,
+  "note": "dividends ~1.7%/yr taxed 15% yearly, gains taxed 15% once at the end"
+ },
+ "mode": "tax"
+}
