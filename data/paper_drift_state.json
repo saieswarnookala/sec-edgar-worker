@@ -422,7 +422,27 @@
     "BUY 119 AKAM",
     "BUY 92 SPY (park)"
    ]
+  },
+  {
+   "run": "2026-11-10T19:29:48.245Z",
+   "today": "2026-11-10",
+   "equity": 99672.08,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 7,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 92,
+    "spy_delta": -1,
+    "spy_price": 752.69,
+    "stock_value": 29024
+   },
+   "orders": [
+    "SELL 1 SPY (park)"
+   ]
   }
  ],
- "updated": "2026-11-09T22:08:14.296Z"
+ "updated": "2026-11-10T19:29:48.245Z"
 }
