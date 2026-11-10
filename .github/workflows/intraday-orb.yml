@@ -1,0 +1,52 @@
+name: Intraday test - opening range breakout
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy pyarrow
+      - run: python scripts/intraday_orb.py collect ${{ matrix.shard }} 4
+        env:
+          APCA_API_KEY_ID: ${{ matrix.shard < 2 && secrets.APCA_API_KEY_ID || secrets.DIP_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ matrix.shard < 2 && secrets.APCA_API_SECRET_KEY || secrets.DIP_SECRET_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orb-part-${{ matrix.shard }}
+          path: parts/
+  combine:
+    needs: collect
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy
+      - uses: actions/download-artifact@v4
+        with:
+          path: parts/
+      - run: python scripts/intraday_orb.py
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/intraday_orb.json data/intraday_orb_trades.csv.gz 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "intraday test: opening range breakout" && for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 7; done

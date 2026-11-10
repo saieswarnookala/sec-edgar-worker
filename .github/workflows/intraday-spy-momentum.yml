@@ -1,0 +1,26 @@
+name: Intraday test - spy momentum
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy
+      - run: python scripts/intraday_spy_momentum.py
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/intraday_spy_momentum*.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "intraday test: spy_momentum" && for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 7; done
