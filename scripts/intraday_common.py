@@ -5,15 +5,21 @@ import numpy as np, pandas as pd
 H = {"APCA-API-KEY-ID": os.environ.get("APCA_API_KEY_ID", ""), "APCA-API-SECRET-KEY": os.environ.get("APCA_API_SECRET_KEY", "")}
 START = "2016-01-04"
 
+_last = [0.0]
 def _get(url):
-    for i in range(8):
+    """Throttled (~180 requests/min, under Alpaca's free 200/min) with patient retries on rate limits and network errors."""
+    for i in range(40):
+        wait = 0.34 - (time.time() - _last[0])
+        if wait > 0: time.sleep(wait)
+        _last[0] = time.time()
         try:
             return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=90))
         except Exception as e:
             code = getattr(e, "code", None)
             body = e.read().decode()[:300] if hasattr(e, "read") else ""
             print("retry", i + 1, code, str(e)[:120], body, flush=True)
-            if code in (401, 403) and i >= 1: raise RuntimeError(f"alpaca {code}: {body}"); time.sleep(5 * (i + 1) if code != 429 else 30)
+            if code in (401, 403) and i >= 1: raise RuntimeError(f"alpaca {code}: {body}")
+            time.sleep(60 if code == 429 else min(60, 5 * (i + 1)))
     raise RuntimeError("alpaca failed: " + url[:200])
 
 def bars(symbols, timeframe, start=START, end=None, regular=True):

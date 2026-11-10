@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3]
+        shard: [0, 1]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,11 +18,11 @@ jobs:
           python-version: '3.12'
       - run: pip install pandas numpy pyarrow
       - run: |
-          mkdir -p parts; set -o pipefail; python -u scripts/intraday_orb.py collect ${{ matrix.shard }} 4 2>&1 | tee /tmp/run.log | tee parts/log_${{ matrix.shard }}.txt || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+          mkdir -p parts; set -o pipefail; python -u scripts/intraday_orb.py collect ${{ matrix.shard }} 2 2>&1 | tee /tmp/run.log | tee parts/log_${{ matrix.shard }}.txt || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
         shell: bash
         env:
-          APCA_API_KEY_ID: ${{ matrix.shard < 2 && secrets.APCA_API_KEY_ID || secrets.DIP_KEY_ID }}
-          APCA_API_SECRET_KEY: ${{ matrix.shard < 2 && secrets.APCA_API_SECRET_KEY || secrets.DIP_SECRET_KEY }}
+          APCA_API_KEY_ID: ${{ matrix.shard < 1 && secrets.APCA_API_KEY_ID || secrets.DIP_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ matrix.shard < 1 && secrets.APCA_API_SECRET_KEY || secrets.DIP_SECRET_KEY }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
