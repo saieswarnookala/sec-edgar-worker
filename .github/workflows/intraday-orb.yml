@@ -17,11 +17,14 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pandas numpy pyarrow
-      - run: python scripts/intraday_orb.py collect ${{ matrix.shard }} 4
+      - run: |
+          mkdir -p parts; set -o pipefail; python -u scripts/intraday_orb.py collect ${{ matrix.shard }} 4 2>&1 | tee parts/log_${{ matrix.shard }}.txt
+        shell: bash
         env:
           APCA_API_KEY_ID: ${{ matrix.shard < 2 && secrets.APCA_API_KEY_ID || secrets.DIP_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ matrix.shard < 2 && secrets.APCA_API_SECRET_KEY || secrets.DIP_SECRET_KEY }}
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: orb-part-${{ matrix.shard }}
           path: parts/
@@ -39,7 +42,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: parts/
-      - run: python scripts/intraday_orb.py
+      - run: |
+          mkdir -p data/logs; cp parts/*/log_*.txt data/logs/ 2>/dev/null || true; set -o pipefail; python -u scripts/intraday_orb.py 2>&1 | tee data/logs/intraday_orb.log
+        shell: bash
         env:
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
@@ -47,6 +52,6 @@ jobs:
         if: always()
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/intraday_orb.json data/intraday_orb_trades.csv.gz 2>/dev/null || true
+          git add data/logs/ data/intraday_orb.json data/intraday_orb_trades.csv.gz 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "intraday test: opening range breakout" && for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 7; done
