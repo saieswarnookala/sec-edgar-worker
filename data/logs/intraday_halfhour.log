@@ -1,20 +1,62 @@
 retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
 
-SPY long last 30 min if first 30 min up ideal 0.02%/side -6.6 -52.2 -2.17 1412
-SPY long last 30 min if first 30 min up realistic 0.05%/side -13.6 -79.5 -4.55 1412
-SPY long/short by first 30 min ideal 0.02%/side -11.3 -72.8 -2.42 2714
-SPY long/short by first 30 min realistic 0.05%/side -23.7 -94.6 -5.5 2714
-SPY long if first 30 min AND 15:00-15:30 both up ideal 0.02%/side -3.1 -29.3 -1.56 728
-SPY long if first 30 min AND 15:00-15:30 both up realistic 0.05%/side -6.9 -54.2 -3.39 728
-SPY long/short, only big first-30-min moves (top 30%) ideal 0.02%/side -4.1 -36.8 -1.1 741
-SPY long/short, only big first-30-min moves (top 30%) realistic 0.05%/side -8.0 -59.5 -2.14 741
-SPY long only, big up first 30 min (top 30%) ideal 0.02%/side -2.5 -23.9 -1.04 385
-SPY long only, big up first 30 min (top 30%) realistic 0.05%/side -4.5 -39.6 -1.87 385
-SPY always long last 30 min (baseline) ideal 0.02%/side -10.8 -71.2 -2.3 2729
-SPY always long last 30 min (baseline) realistic 0.05%/side -23.3 -94.4 -5.4 2729
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+SPY long last 30 min if first 30 min up no costs -1.6 -16.8 -0.49 1412
+SPY long last 30 min if first 30 min up ETF spread ~0.002%/side -2.1 -21.2 -0.66 1412
+SPY long last 30 min if first 30 min up 0.01%/side -4.1 -36.8 -1.34 1412
+SPY long last 30 min if first 30 min up 0.02%/side -6.6 -52.2 -2.17 1412
+SPY long/short by first 30 min no costs -1.9 -21.5 -0.37 2714
+SPY long/short by first 30 min ETF spread ~0.002%/side -2.9 -28.2 -0.58 2714
+SPY long/short by first 30 min 0.01%/side -6.7 -53.4 -1.4 2714
+SPY long/short by first 30 min 0.02%/side -11.3 -72.8 -2.42 2714
+SPY long if first 30 min AND 15:00-15:30 both up no costs -0.5 -7.2 -0.22 728
+SPY long if first 30 min AND 15:00-15:30 both up ETF spread ~0.002%/side -0.7 -8.6 -0.36 728
+SPY long if first 30 min AND 15:00-15:30 both up 0.01%/side -1.8 -18.3 -0.9 728
+SPY long if first 30 min AND 15:00-15:30 both up 0.02%/side -3.1 -29.3 -1.56 728
+SPY long/short, only big first-30-min moves (top 30%) no costs -1.5 -21.1 -0.38 741
+SPY long/short, only big first-30-min moves (top 30%) ETF spread ~0.002%/side -1.8 -21.7 -0.45 741
+SPY long/short, only big first-30-min moves (top 30%) 0.01%/side -2.8 -26.8 -0.74 741
+SPY long/short, only big first-30-min moves (top 30%) 0.02%/side -4.1 -36.8 -1.1 741
+SPY long only, big up first 30 min (top 30%) no costs -1.1 -13.3 -0.45 385
+SPY long only, big up first 30 min (top 30%) ETF spread ~0.002%/side -1.2 -14.3 -0.51 385
+SPY long only, big up first 30 min (top 30%) 0.01%/side -1.8 -18.2 -0.75 385
+SPY long only, big up first 30 min (top 30%) 0.02%/side -2.5 -23.9 -1.04 385
+SPY always long last 30 min (baseline) no costs -1.3 -20.2 -0.24 2729
+SPY always long last 30 min (baseline) ETF spread ~0.002%/side -2.3 -24.2 -0.45 2729
+SPY always long last 30 min (baseline) 0.01%/side -6.1 -50.3 -1.27 2729
+SPY always long last 30 min (baseline) 0.02%/side -10.8 -71.2 -2.3 2729
 retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
 
 retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
 
 retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
 
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+QQQ long last 30 min if first 30 min up no costs -0.8 -12.8 -0.19 1445
+QQQ long last 30 min if first 30 min up ETF spread ~0.002%/side -1.4 -14.9 -0.32 1445
+QQQ long last 30 min if first 30 min up 0.01%/side -3.4 -31.7 -0.86 1445
+QQQ long last 30 min if first 30 min up 0.02%/side -6.0 -48.8 -1.53 1445
+QQQ long/short by first 30 min no costs -1.5 -16.8 -0.24 2712
+QQQ long/short by first 30 min ETF spread ~0.002%/side -2.5 -24.9 -0.42 2712
+QQQ long/short by first 30 min 0.01%/side -6.3 -51.1 -1.14 2712
+QQQ long/short by first 30 min 0.02%/side -10.9 -71.4 -2.04 2712
+QQQ long if first 30 min AND 15:00-15:30 both up no costs -0.4 -8.1 -0.14 764
+QQQ long if first 30 min AND 15:00-15:30 both up ETF spread ~0.002%/side -0.7 -8.8 -0.25 764
+QQQ long if first 30 min AND 15:00-15:30 both up 0.01%/side -1.8 -18.0 -0.69 764
+QQQ long if first 30 min AND 15:00-15:30 both up 0.02%/side -3.1 -29.6 -1.25 764
+QQQ long/short, only big first-30-min moves (top 30%) no costs -1.3 -18.2 -0.3 783
+QQQ long/short, only big first-30-min moves (top 30%) ETF spread ~0.002%/side -1.6 -19.6 -0.36 783
+QQQ long/short, only big first-30-min moves (top 30%) 0.01%/side -2.8 -27.5 -0.64 783
+QQQ long/short, only big first-30-min moves (top 30%) 0.02%/side -4.1 -37.4 -0.98 783
+QQQ long only, big up first 30 min (top 30%) no costs -1.4 -16.0 -0.46 402
+QQQ long only, big up first 30 min (top 30%) ETF spread ~0.002%/side -1.5 -17.1 -0.51 402
+QQQ long only, big up first 30 min (top 30%) 0.01%/side -2.1 -21.4 -0.72 402
+QQQ long only, big up first 30 min (top 30%) 0.02%/side -2.8 -26.7 -0.97 402
+QQQ always long last 30 min (baseline) no costs -0.4 -15.6 -0.05 2729
+QQQ always long last 30 min (baseline) ETF spread ~0.002%/side -1.4 -19.1 -0.23 2729
+QQQ always long last 30 min (baseline) 0.01%/side -5.3 -45.3 -0.95 2729
+QQQ always long last 30 min (baseline) 0.02%/side -10.0 -68.3 -1.85 2729
