@@ -1,0 +1,1808 @@
+{
+ "years": "2008-01-01 to 2026-11-09",
+ "stocks_with_prices": 485,
+ "nifty50": {
+  "cagr": 7.8,
+  "dd": -59.9,
+  "per": {
+   "2008-2009": -8.2,
+   "2010-2015": 7.4,
+   "2016-2020": 12.1,
+   "2021-2026": 10.5
+  },
+  "train_2008_2018": {
+   "cagr": 5.4,
+   "dd": -59.9
+  },
+  "test_2019_2026": {
+   "cagr": 11.4,
+   "dd": -38.4
+  }
+ },
+ "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.",
+ "results": [],
+ "oos": {
+  "nifty_with_dividends": {
+   "train_2008_2018": {
+    "cagr": 6.8,
+    "dd": -59.4
+   },
+   "test_2019_2026": {
+    "cagr": 12.7,
+    "dd": -38.3
+   }
+  },
+  "picked_by_best_train_return": {
+   "avg": "150",
+   "below": "gold if trending else liquid",
+   "dip": "12%",
+   "vol": "2x",
+   "train_2008_2018": {
+    "cagr": 13.4,
+    "dd": -18.5
+   },
+   "test_2019_2026": {
+    "cagr": 19.0,
+    "dd": -21.6
+   },
+   "cagr": 15.8,
+   "dd": -21.6
+  },
+  "picked_by_best_train_return_per_drop": {
+   "avg": "100",
+   "below": "liquid",
+   "dip": "none",
+   "vol": "-",
+   "train_2008_2018": {
+    "cagr": 11.6,
+    "dd": -14.8
+   },
+   "test_2019_2026": {
+    "cagr": 12.1,
+    "dd": -13.3
+   },
+   "cagr": 11.8,
+   "dd": -14.8
+  },
+  "picked_best_with_dips_by_train_return": {
+   "avg": "150",
+   "below": "gold if trending else liquid",
+   "dip": "12%",
+   "vol": "2x",
+   "train_2008_2018": {
+    "cagr": 13.4,
+    "dd": -18.5
+   },
+   "test_2019_2026": {
+    "cagr": 19.0,
+    "dd": -21.6
+   },
+   "cagr": 15.8,
+   "dd": -21.6
+  },
+  "our_chosen_versions_full_period_picks": [
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.3,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 15.2,
+     "dd": -12.6
+    },
+    "cagr": 14.1,
+    "dd": -18.5
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.4,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 19.0,
+     "dd": -21.6
+    },
+    "cagr": 15.8,
+    "dd": -21.6
+   }
+  ],
+  "all_versions_test_period": {
+   "n": 105,
+   "median": 16.5,
+   "min": 9.6,
+   "max": 23.0,
+   "beat_nifty_test": 94
+  },
+  "rows": [
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 8.8,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 11.9,
+     "dd": -14.2
+    },
+    "cagr": 10.1,
+    "dd": -29.4
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 7.7,
+     "dd": -29.3
+    },
+    "test_2019_2026": {
+     "cagr": 13.1,
+     "dd": -13.4
+    },
+    "cagr": 9.9,
+    "dd": -29.3
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 8.8,
+     "dd": -29.3
+    },
+    "test_2019_2026": {
+     "cagr": 13.4,
+     "dd": -13.6
+    },
+    "cagr": 10.6,
+    "dd": -29.3
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.3,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 15.1,
+     "dd": -13.7
+    },
+    "cagr": 12.3,
+    "dd": -29.4
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.9,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 14.8,
+     "dd": -13.4
+    },
+    "cagr": 12.5,
+    "dd": -29.4
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 9.7,
+     "dd": -30.3
+    },
+    "test_2019_2026": {
+     "cagr": 16.4,
+     "dd": -14.6
+    },
+    "cagr": 12.4,
+    "dd": -30.3
+   },
+   {
+    "avg": "50",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.2,
+     "dd": -30.3
+    },
+    "test_2019_2026": {
+     "cagr": 15.9,
+     "dd": -14.9
+    },
+    "cagr": 12.6,
+    "dd": -30.3
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 10.4,
+     "dd": -28.1
+    },
+    "test_2019_2026": {
+     "cagr": 18.0,
+     "dd": -33.0
+    },
+    "cagr": 13.5,
+    "dd": -33.0
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 9.2,
+     "dd": -27.5
+    },
+    "test_2019_2026": {
+     "cagr": 18.7,
+     "dd": -31.4
+    },
+    "cagr": 13.1,
+    "dd": -31.4
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.2,
+     "dd": -27.2
+    },
+    "test_2019_2026": {
+     "cagr": 19.4,
+     "dd": -29.4
+    },
+    "cagr": 13.9,
+    "dd": -29.4
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.7,
+     "dd": -28.1
+    },
+    "test_2019_2026": {
+     "cagr": 21.0,
+     "dd": -31.6
+    },
+    "cagr": 15.5,
+    "dd": -31.6
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.2,
+     "dd": -28.1
+    },
+    "test_2019_2026": {
+     "cagr": 20.9,
+     "dd": -29.7
+    },
+    "cagr": 15.8,
+    "dd": -29.7
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.3,
+     "dd": -29.0
+    },
+    "test_2019_2026": {
+     "cagr": 23.0,
+     "dd": -33.5
+    },
+    "cagr": 16.0,
+    "dd": -33.5
+   },
+   {
+    "avg": "50",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.8,
+     "dd": -29.0
+    },
+    "test_2019_2026": {
+     "cagr": 22.6,
+     "dd": -32.1
+    },
+    "cagr": 16.2,
+    "dd": -32.1
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 10.0,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 16.5,
+     "dd": -33.0
+    },
+    "cagr": 12.7,
+    "dd": -33.0
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 8.8,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 17.3,
+     "dd": -33.2
+    },
+    "cagr": 12.3,
+    "dd": -33.2
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 9.9,
+     "dd": -29.3
+    },
+    "test_2019_2026": {
+     "cagr": 17.9,
+     "dd": -31.1
+    },
+    "cagr": 13.1,
+    "dd": -31.1
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.4,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 19.5,
+     "dd": -32.4
+    },
+    "cagr": 14.7,
+    "dd": -32.4
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.0,
+     "dd": -29.4
+    },
+    "test_2019_2026": {
+     "cagr": 19.4,
+     "dd": -30.4
+    },
+    "cagr": 15.0,
+    "dd": -30.4
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.8,
+     "dd": -30.3
+    },
+    "test_2019_2026": {
+     "cagr": 21.4,
+     "dd": -34.3
+    },
+    "cagr": 15.1,
+    "dd": -34.3
+   },
+   {
+    "avg": "50",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.4,
+     "dd": -30.3
+    },
+    "test_2019_2026": {
+     "cagr": 21.0,
+     "dd": -33.0
+    },
+    "cagr": 15.3,
+    "dd": -33.0
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.6,
+     "dd": -14.8
+    },
+    "test_2019_2026": {
+     "cagr": 12.1,
+     "dd": -13.3
+    },
+    "cagr": 11.8,
+    "dd": -14.8
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.2,
+     "dd": -23.9
+    },
+    "test_2019_2026": {
+     "cagr": 13.0,
+     "dd": -11.6
+    },
+    "cagr": 11.3,
+    "dd": -23.9
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.3,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 13.3,
+     "dd": -11.9
+    },
+    "cagr": 12.1,
+    "dd": -23.5
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.6,
+     "dd": -18.7
+    },
+    "test_2019_2026": {
+     "cagr": 15.5,
+     "dd": -13.4
+    },
+    "cagr": 13.8,
+    "dd": -18.7
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.3,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 15.2,
+     "dd": -12.6
+    },
+    "cagr": 14.1,
+    "dd": -18.5
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.1,
+     "dd": -19.4
+    },
+    "test_2019_2026": {
+     "cagr": 16.5,
+     "dd": -13.4
+    },
+    "cagr": 13.9,
+    "dd": -19.4
+   },
+   {
+    "avg": "100",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.7,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 16.0,
+     "dd": -13.8
+    },
+    "cagr": 14.1,
+    "dd": -19.5
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.9,
+     "dd": -26.2
+    },
+    "test_2019_2026": {
+     "cagr": 15.5,
+     "dd": -32.1
+    },
+    "cagr": 13.5,
+    "dd": -32.1
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.5,
+     "dd": -29.1
+    },
+    "test_2019_2026": {
+     "cagr": 16.2,
+     "dd": -29.8
+    },
+    "cagr": 12.9,
+    "dd": -29.8
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.5,
+     "dd": -25.9
+    },
+    "test_2019_2026": {
+     "cagr": 16.8,
+     "dd": -28.0
+    },
+    "cagr": 13.8,
+    "dd": -28.0
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.6,
+     "dd": -24.4
+    },
+    "test_2019_2026": {
+     "cagr": 18.8,
+     "dd": -30.4
+    },
+    "cagr": 15.2,
+    "dd": -30.4
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.2,
+     "dd": -25.0
+    },
+    "test_2019_2026": {
+     "cagr": 18.6,
+     "dd": -28.6
+    },
+    "cagr": 15.5,
+    "dd": -28.6
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.3,
+     "dd": -24.7
+    },
+    "test_2019_2026": {
+     "cagr": 20.4,
+     "dd": -32.4
+    },
+    "cagr": 15.7,
+    "dd": -32.4
+   },
+   {
+    "avg": "100",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.9,
+     "dd": -24.8
+    },
+    "test_2019_2026": {
+     "cagr": 20.0,
+     "dd": -31.0
+    },
+    "cagr": 15.9,
+    "dd": -31.0
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.9,
+     "dd": -19.0
+    },
+    "test_2019_2026": {
+     "cagr": 15.6,
+     "dd": -29.4
+    },
+    "cagr": 13.5,
+    "dd": -29.4
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.4,
+     "dd": -26.6
+    },
+    "test_2019_2026": {
+     "cagr": 16.3,
+     "dd": -28.6
+    },
+    "cagr": 12.9,
+    "dd": -28.6
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.5,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 16.9,
+     "dd": -26.6
+    },
+    "cagr": 13.8,
+    "dd": -26.6
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.7,
+     "dd": -18.8
+    },
+    "test_2019_2026": {
+     "cagr": 18.8,
+     "dd": -28.3
+    },
+    "cagr": 15.3,
+    "dd": -28.3
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.3,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 18.7,
+     "dd": -27.0
+    },
+    "cagr": 15.6,
+    "dd": -27.0
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.2,
+     "dd": -19.6
+    },
+    "test_2019_2026": {
+     "cagr": 20.4,
+     "dd": -30.4
+    },
+    "cagr": 15.6,
+    "dd": -30.4
+   },
+   {
+    "avg": "100",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.8,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 19.9,
+     "dd": -28.9
+    },
+    "cagr": 15.8,
+    "dd": -28.9
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 10.6,
+     "dd": -19.8
+    },
+    "test_2019_2026": {
+     "cagr": 12.3,
+     "dd": -12.4
+    },
+    "cagr": 11.3,
+    "dd": -19.8
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 8.7,
+     "dd": -23.9
+    },
+    "test_2019_2026": {
+     "cagr": 12.5,
+     "dd": -14.5
+    },
+    "cagr": 10.3,
+    "dd": -23.9
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 9.7,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 12.9,
+     "dd": -14.2
+    },
+    "cagr": 11.0,
+    "dd": -23.5
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.3,
+     "dd": -18.7
+    },
+    "test_2019_2026": {
+     "cagr": 15.4,
+     "dd": -12.7
+    },
+    "cagr": 13.0,
+    "dd": -18.7
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.9,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 15.1,
+     "dd": -12.4
+    },
+    "cagr": 13.2,
+    "dd": -18.5
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.8,
+     "dd": -19.4
+    },
+    "test_2019_2026": {
+     "cagr": 16.6,
+     "dd": -12.1
+    },
+    "cagr": 13.2,
+    "dd": -19.4
+   },
+   {
+    "avg": "150",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.4,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 16.1,
+     "dd": -12.3
+    },
+    "cagr": 13.4,
+    "dd": -19.5
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.0,
+     "dd": -27.4
+    },
+    "test_2019_2026": {
+     "cagr": 16.1,
+     "dd": -27.9
+    },
+    "cagr": 13.1,
+    "dd": -27.9
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 9.5,
+     "dd": -26.7
+    },
+    "test_2019_2026": {
+     "cagr": 16.5,
+     "dd": -27.0
+    },
+    "cagr": 12.4,
+    "dd": -27.0
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.3,
+     "dd": -27.1
+    },
+    "test_2019_2026": {
+     "cagr": 17.0,
+     "dd": -25.3
+    },
+    "cagr": 13.1,
+    "dd": -27.1
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.7,
+     "dd": -26.6
+    },
+    "test_2019_2026": {
+     "cagr": 19.3,
+     "dd": -26.8
+    },
+    "cagr": 14.9,
+    "dd": -26.8
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.3,
+     "dd": -27.3
+    },
+    "test_2019_2026": {
+     "cagr": 19.0,
+     "dd": -25.2
+    },
+    "cagr": 15.1,
+    "dd": -27.3
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.4,
+     "dd": -25.3
+    },
+    "test_2019_2026": {
+     "cagr": 20.9,
+     "dd": -28.4
+    },
+    "cagr": 15.3,
+    "dd": -28.4
+   },
+   {
+    "avg": "150",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.0,
+     "dd": -26.0
+    },
+    "test_2019_2026": {
+     "cagr": 20.4,
+     "dd": -27.1
+    },
+    "cagr": 15.5,
+    "dd": -27.1
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 12.1,
+     "dd": -18.6
+    },
+    "test_2019_2026": {
+     "cagr": 16.1,
+     "dd": -23.6
+    },
+    "cagr": 13.8,
+    "dd": -23.6
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.4,
+     "dd": -25.7
+    },
+    "test_2019_2026": {
+     "cagr": 16.3,
+     "dd": -25.6
+    },
+    "cagr": 12.9,
+    "dd": -25.7
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.3,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 16.8,
+     "dd": -23.4
+    },
+    "cagr": 13.7,
+    "dd": -23.5
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.7,
+     "dd": -19.0
+    },
+    "test_2019_2026": {
+     "cagr": 19.2,
+     "dd": -23.8
+    },
+    "cagr": 15.5,
+    "dd": -23.8
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.4,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 19.0,
+     "dd": -21.6
+    },
+    "cagr": 15.8,
+    "dd": -21.6
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.3,
+     "dd": -19.4
+    },
+    "test_2019_2026": {
+     "cagr": 20.9,
+     "dd": -25.0
+    },
+    "cagr": 15.9,
+    "dd": -25.0
+   },
+   {
+    "avg": "150",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.9,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 20.4,
+     "dd": -23.5
+    },
+    "cagr": 16.1,
+    "dd": -23.5
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 8.9,
+     "dd": -19.1
+    },
+    "test_2019_2026": {
+     "cagr": 9.6,
+     "dd": -18.1
+    },
+    "cagr": 9.1,
+    "dd": -19.1
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 7.7,
+     "dd": -27.9
+    },
+    "test_2019_2026": {
+     "cagr": 9.7,
+     "dd": -18.6
+    },
+    "cagr": 8.5,
+    "dd": -27.9
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 8.6,
+     "dd": -24.3
+    },
+    "test_2019_2026": {
+     "cagr": 10.1,
+     "dd": -18.7
+    },
+    "cagr": 9.2,
+    "dd": -24.3
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.0,
+     "dd": -22.4
+    },
+    "test_2019_2026": {
+     "cagr": 12.8,
+     "dd": -18.5
+    },
+    "cagr": 11.1,
+    "dd": -22.4
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.5,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 12.6,
+     "dd": -18.4
+    },
+    "cagr": 11.3,
+    "dd": -18.5
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 9.4,
+     "dd": -22.1
+    },
+    "test_2019_2026": {
+     "cagr": 13.9,
+     "dd": -17.1
+    },
+    "cagr": 11.2,
+    "dd": -22.1
+   },
+   {
+    "avg": "200",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 9.9,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 13.4,
+     "dd": -17.6
+    },
+    "cagr": 11.3,
+    "dd": -19.5
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 9.7,
+     "dd": -27.8
+    },
+    "test_2019_2026": {
+     "cagr": 15.4,
+     "dd": -22.5
+    },
+    "cagr": 12.0,
+    "dd": -27.8
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 9.0,
+     "dd": -28.7
+    },
+    "test_2019_2026": {
+     "cagr": 15.3,
+     "dd": -20.3
+    },
+    "cagr": 11.6,
+    "dd": -28.7
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 9.8,
+     "dd": -26.8
+    },
+    "test_2019_2026": {
+     "cagr": 15.9,
+     "dd": -20.3
+    },
+    "cagr": 12.3,
+    "dd": -26.8
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.0,
+     "dd": -26.0
+    },
+    "test_2019_2026": {
+     "cagr": 18.6,
+     "dd": -20.8
+    },
+    "cagr": 14.1,
+    "dd": -26.0
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.4,
+     "dd": -26.5
+    },
+    "test_2019_2026": {
+     "cagr": 18.5,
+     "dd": -20.3
+    },
+    "cagr": 14.3,
+    "dd": -26.5
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.4,
+     "dd": -25.7
+    },
+    "test_2019_2026": {
+     "cagr": 20.1,
+     "dd": -22.1
+    },
+    "cagr": 14.3,
+    "dd": -25.7
+   },
+   {
+    "avg": "200",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.9,
+     "dd": -26.4
+    },
+    "test_2019_2026": {
+     "cagr": 19.7,
+     "dd": -22.4
+    },
+    "cagr": 14.4,
+    "dd": -26.4
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.2,
+     "dd": -21.0
+    },
+    "test_2019_2026": {
+     "cagr": 13.5,
+     "dd": -27.2
+    },
+    "cagr": 12.1,
+    "dd": -27.2
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.0,
+     "dd": -26.7
+    },
+    "test_2019_2026": {
+     "cagr": 13.4,
+     "dd": -22.2
+    },
+    "cagr": 11.4,
+    "dd": -26.7
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.9,
+     "dd": -23.6
+    },
+    "test_2019_2026": {
+     "cagr": 14.0,
+     "dd": -22.8
+    },
+    "cagr": 12.2,
+    "dd": -23.6
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.2,
+     "dd": -20.0
+    },
+    "test_2019_2026": {
+     "cagr": 16.7,
+     "dd": -24.9
+    },
+    "cagr": 14.1,
+    "dd": -24.9
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.7,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 16.6,
+     "dd": -24.5
+    },
+    "cagr": 14.3,
+    "dd": -24.5
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 11.6,
+     "dd": -21.4
+    },
+    "test_2019_2026": {
+     "cagr": 18.3,
+     "dd": -25.8
+    },
+    "cagr": 14.3,
+    "dd": -25.8
+   },
+   {
+    "avg": "200",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.2,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 17.8,
+     "dd": -26.4
+    },
+    "cagr": 14.5,
+    "dd": -26.4
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 9.7,
+     "dd": -23.7
+    },
+    "test_2019_2026": {
+     "cagr": 11.4,
+     "dd": -11.7
+    },
+    "cagr": 10.4,
+    "dd": -23.7
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 8.1,
+     "dd": -24.0
+    },
+    "test_2019_2026": {
+     "cagr": 11.3,
+     "dd": -13.8
+    },
+    "cagr": 9.4,
+    "dd": -24.0
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 9.1,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 11.8,
+     "dd": -13.7
+    },
+    "cagr": 10.2,
+    "dd": -23.5
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.7,
+     "dd": -22.3
+    },
+    "test_2019_2026": {
+     "cagr": 14.6,
+     "dd": -12.0
+    },
+    "cagr": 12.3,
+    "dd": -22.3
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.2,
+     "dd": -22.1
+    },
+    "test_2019_2026": {
+     "cagr": 14.4,
+     "dd": -11.4
+    },
+    "cagr": 12.4,
+    "dd": -22.1
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.3,
+     "dd": -21.7
+    },
+    "test_2019_2026": {
+     "cagr": 15.8,
+     "dd": -11.3
+    },
+    "cagr": 12.5,
+    "dd": -21.7
+   },
+   {
+    "avg": "10m",
+    "below": "liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 10.8,
+     "dd": -22.1
+    },
+    "test_2019_2026": {
+     "cagr": 15.3,
+     "dd": -11.4
+    },
+    "cagr": 12.6,
+    "dd": -22.1
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.7,
+     "dd": -26.6
+    },
+    "test_2019_2026": {
+     "cagr": 15.8,
+     "dd": -20.0
+    },
+    "cagr": 13.4,
+    "dd": -26.6
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.3,
+     "dd": -29.9
+    },
+    "test_2019_2026": {
+     "cagr": 15.6,
+     "dd": -20.3
+    },
+    "cagr": 12.4,
+    "dd": -29.9
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.3,
+     "dd": -27.1
+    },
+    "test_2019_2026": {
+     "cagr": 16.2,
+     "dd": -20.7
+    },
+    "cagr": 13.3,
+    "dd": -27.1
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.7,
+     "dd": -23.8
+    },
+    "test_2019_2026": {
+     "cagr": 19.1,
+     "dd": -19.6
+    },
+    "cagr": 15.3,
+    "dd": -24.1
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.2,
+     "dd": -20.9
+    },
+    "test_2019_2026": {
+     "cagr": 18.9,
+     "dd": -19.6
+    },
+    "cagr": 15.5,
+    "dd": -23.9
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.3,
+     "dd": -26.9
+    },
+    "test_2019_2026": {
+     "cagr": 20.7,
+     "dd": -20.0
+    },
+    "cagr": 15.7,
+    "dd": -26.9
+   },
+   {
+    "avg": "10m",
+    "below": "gold",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.9,
+     "dd": -24.4
+    },
+    "test_2019_2026": {
+     "cagr": 20.1,
+     "dd": -20.0
+    },
+    "cagr": 15.8,
+    "dd": -24.4
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "none",
+    "vol": "-",
+    "train_2008_2018": {
+     "cagr": 11.7,
+     "dd": -18.9
+    },
+    "test_2019_2026": {
+     "cagr": 14.8,
+     "dd": -21.1
+    },
+    "cagr": 13.0,
+    "dd": -23.1
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 10.1,
+     "dd": -25.7
+    },
+    "test_2019_2026": {
+     "cagr": 14.5,
+     "dd": -21.9
+    },
+    "cagr": 11.9,
+    "dd": -25.7
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "10%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 11.1,
+     "dd": -23.5
+    },
+    "test_2019_2026": {
+     "cagr": 15.1,
+     "dd": -21.8
+    },
+    "cagr": 12.7,
+    "dd": -24.7
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.6,
+     "dd": -19.4
+    },
+    "test_2019_2026": {
+     "cagr": 18.0,
+     "dd": -20.8
+    },
+    "cagr": 14.8,
+    "dd": -23.9
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "12%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 13.1,
+     "dd": -18.5
+    },
+    "test_2019_2026": {
+     "cagr": 17.9,
+     "dd": -20.8
+    },
+    "cagr": 15.1,
+    "dd": -23.6
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "none",
+    "train_2008_2018": {
+     "cagr": 12.3,
+     "dd": -19.4
+    },
+    "test_2019_2026": {
+     "cagr": 19.7,
+     "dd": -21.1
+    },
+    "cagr": 15.3,
+    "dd": -22.5
+   },
+   {
+    "avg": "10m",
+    "below": "gold if trending else liquid",
+    "dip": "14%",
+    "vol": "2x",
+    "train_2008_2018": {
+     "cagr": 12.8,
+     "dd": -19.5
+    },
+    "test_2019_2026": {
+     "cagr": 19.1,
+     "dd": -21.1
+    },
+    "cagr": 15.4,
+    "dd": -21.8
+   }
+  ],
+  "note": "Realistic fills (next open, 0.30%/side), before tax, Nifty with ~1.3% dividends, liquid fund 6%/yr. Settings picked using 2008-2018 only."
+ }
+}
