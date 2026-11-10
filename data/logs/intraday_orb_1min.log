@@ -1,0 +1,25 @@
+64361 trades
+top 20, long+short, equal 5% each no costs -7.7 -59.3 50391 12.6 -0.034
+top 20, long+short, equal 5% each 0.02%/side -15.9 -84.9 50391 12.4 -0.034
+top 20, long+short, equal 5% each 0.05%/side -26.9 -96.7 50391 12.1 -0.034
+top 20, long+short, equal 5% each 0.10%/side -42.1 -99.7 50391 11.7 -0.034
+top 20, long only, equal 5% each no costs -7.6 -59.0 40082 13.0 -0.042
+top 20, long only, equal 5% each 0.02%/side -14.2 -81.3 40082 12.8 -0.042
+top 20, long only, equal 5% each 0.05%/side -23.2 -94.3 40082 12.5 -0.042
+top 20, long only, equal 5% each 0.10%/side -36.2 -99.2 40082 12.0 -0.042
+top 20, long+short, paper sizing (1% risk, <=4x) no costs -30.7 -98.3 50391 12.6 -0.034
+top 20, long+short, paper sizing (1% risk, <=4x) 0.02%/side -53.6 -100.0 50391 12.4 -0.034
+top 20, long+short, paper sizing (1% risk, <=4x) 0.05%/side -74.6 -100.0 50391 12.1 -0.034
+top 20, long+short, paper sizing (1% risk, <=4x) 0.10%/side -90.7 -100.0 50391 11.7 -0.034
+top 5, long+short, equal 20% each no costs -15.3 -84.4 13460 10.4 -0.066
+top 5, long+short, equal 20% each 0.02%/side -23.3 -94.6 13460 10.3 -0.066
+top 5, long+short, equal 20% each 0.05%/side -34.0 -98.9 13460 10.1 -0.066
+top 5, long+short, equal 20% each 0.10%/side -48.5 -99.9 13460 9.7 -0.066
+1 stock/day, max 3/week, long only, 100% (PDT) no costs -12.5 -77.5 1689 9.7 -0.082
+1 stock/day, max 3/week, long only, 100% (PDT) 0.02%/side -17.8 -88.4 1689 9.6 -0.082
+1 stock/day, max 3/week, long only, 100% (PDT) 0.05%/side -25.1 -95.7 1689 9.4 -0.082
+1 stock/day, max 3/week, long only, 100% (PDT) 0.10%/side -36.0 -99.2 1689 8.9 -0.082
+1 stock/day, max 3/week, long+short, 100% (PDT) no costs -17.5 -88.2 1689 8.0 -0.119
+1 stock/day, max 3/week, long+short, 100% (PDT) 0.02%/side -22.5 -93.8 1689 8.0 -0.119
+1 stock/day, max 3/week, long+short, 100% (PDT) 0.05%/side -29.5 -97.7 1689 7.8 -0.119
+1 stock/day, max 3/week, long+short, 100% (PDT) 0.10%/side -39.7 -99.6 1689 7.5 -0.119

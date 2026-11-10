@@ -1,0 +1,32 @@
+0 / 1355 days 23 trades 0.0 min
+50 / 1355 days 1239 trades 0.5 min
+100 / 1355 days 2397 trades 0.8 min
+150 / 1355 days 3417 trades 1.2 min
+200 / 1355 days 4497 trades 1.6 min
+250 / 1355 days 5580 trades 2.0 min
+300 / 1355 days 6861 trades 2.4 min
+350 / 1355 days 8037 trades 2.9 min
+400 / 1355 days 9188 trades 3.3 min
+450 / 1355 days 10377 trades 3.7 min
+500 / 1355 days 11464 trades 4.1 min
+550 / 1355 days 12825 trades 4.6 min
+600 / 1355 days 14021 trades 5.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+650 / 1355 days 15301 trades 6.6 min
+700 / 1355 days 16480 trades 7.1 min
+750 / 1355 days 17669 trades 7.5 min
+800 / 1355 days 18955 trades 8.0 min
+850 / 1355 days 20105 trades 8.4 min
+900 / 1355 days 21279 trades 8.8 min
+950 / 1355 days 22494 trades 9.2 min
+1000 / 1355 days 23571 trades 9.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+1050 / 1355 days 24804 trades 11.1 min
+1100 / 1355 days 25953 trades 11.5 min
+1150 / 1355 days 27153 trades 11.9 min
+1200 / 1355 days 28359 trades 12.3 min
+1250 / 1355 days 29558 trades 12.7 min
+1300 / 1355 days 30877 trades 13.2 min
+1350 / 1355 days 32136 trades 13.6 min

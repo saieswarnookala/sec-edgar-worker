@@ -1,0 +1,42 @@
+0 / 1356 days 19 trades 0.0 min
+50 / 1356 days 1236 trades 0.6 min
+100 / 1356 days 2335 trades 1.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+150 / 1356 days 3440 trades 3.6 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+200 / 1356 days 4508 trades 5.2 min
+250 / 1356 days 5575 trades 5.7 min
+300 / 1356 days 6853 trades 6.3 min
+350 / 1356 days 8027 trades 6.8 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+400 / 1356 days 9175 trades 9.4 min
+450 / 1356 days 10363 trades 10.0 min
+500 / 1356 days 11425 trades 10.5 min
+550 / 1356 days 12703 trades 11.1 min
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+retry 1 429 HTTP Error 429: Too Many Requests {"message": "too many requests."}
+
+600 / 1356 days 13882 trades 13.7 min
+650 / 1356 days 15163 trades 14.3 min
+700 / 1356 days 16313 trades 14.9 min
+750 / 1356 days 17491 trades 15.6 min
+800 / 1356 days 18775 trades 16.3 min
+850 / 1356 days 19946 trades 16.8 min
+900 / 1356 days 21141 trades 17.4 min
+950 / 1356 days 22269 trades 17.9 min
+1000 / 1356 days 23346 trades 18.4 min
+1050 / 1356 days 24574 trades 18.9 min
+1100 / 1356 days 25637 trades 19.3 min
+1150 / 1356 days 26872 trades 20.1 min
+1200 / 1356 days 28095 trades 21.2 min
+1250 / 1356 days 29314 trades 22.0 min
+1300 / 1356 days 30658 trades 22.7 min
+1350 / 1356 days 31971 trades 23.4 min
