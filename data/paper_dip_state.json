@@ -5,6 +5,12 @@
    "entry_date": "2026-11-09",
    "qty": 3,
    "dip_pct": -10.1
+  },
+  {
+   "symbol": "EXPE",
+   "entry_date": "2026-11-11",
+   "qty": 3,
+   "dip_pct": -16.9
   }
  ],
  "history": [
@@ -274,7 +280,48 @@
    ],
    "park_trades": [],
    "orders": []
+  },
+  {
+   "run": "2026-11-11T20:57:31.125Z",
+   "today": "2026-11-11",
+   "ny_time": "15:57",
+   "equity": 9995.37,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "EXPE": {
+     "ratio": 1.89,
+     "today_est": 2454108
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 759.675,
+   "park": "DBC",
+   "signals": {
+    "EXPE": -0.16876916998429747
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "EXPE",
+     "qty": 3,
+     "dip_pct": -16.9
+    }
+   ],
+   "park_trades": [
+    {
+     "symbol": "DBC",
+     "qty": 284,
+     "side": "buy",
+     "reason": "resize parking"
+    }
+   ],
+   "orders": [
+    "BUY 3 EXPE (dip -16.9%)",
+    "BUY 284 DBC (parking)"
+   ]
   }
  ],
- "updated": "2026-11-10T23:29:43.650Z"
+ "updated": "2026-11-11T20:57:31.125Z"
 }
