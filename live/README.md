@@ -39,6 +39,17 @@ A missed run is never re-run late.
 3. From your laptop: `ssh -L 8765:localhost:8765 ubuntu@<public-ip>`, then on the VM: `cd ~/sec-edgar-worker/live && node live-dip.mjs login`, open the printed link on your laptop and sign in.
 4. `node live-dip.mjs doctor`: put the agentic account number in `RH_ACCOUNT`, send Claude the `place_equity_order_schema` and the two mapping lines (no balances needed).
 
+## Fallback: official Claude Code connection
+If the direct connection has any trouble, switch every Robinhood call to the official Claude Code + Robinhood MCP route.
+Our code still decides every order; each call runs Claude Code allowed to use exactly one Robinhood tool, and the bot checks
+from Claude Code's own event log that it made exactly one call, to that tool, with exactly our arguments.
+Any difference halts the bot. (It can only be caught after the call, so keep Robinhood trade approvals ON in this mode at first.)
+1. On the VM: `claude` and sign in to your Claude account, then `/exit`.
+2. `claude mcp add -s user --transport http robinhood https://agent.robinhood.com/mcp/trading`
+3. `claude`, then `/mcp`, select robinhood, authenticate (use the SSH tunnel if it asks for a localhost callback), `/exit`.
+4. In `config.env` set `EXECUTOR=claude`, then `node live-dip.mjs doctor`.
+Each run makes about 15-30 short Claude Code calls, which count toward your Claude usage.
+
 ## Rollout
 1. **Dry week**: `LIVE_MODE=dry`. Daily phone alerts show exactly what it would have traded. Compare with the paper bot.
 2. **Approval week**: `LIVE_MODE=live` with Robinhood trade approvals ON: you tap approve on each order.

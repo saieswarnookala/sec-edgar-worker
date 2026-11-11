@@ -17,6 +17,9 @@ sudo timedatectl set-ntp true || true
 echo "== code"
 if [ -d "$DIR/.git" ]; then git -C "$DIR" pull --ff-only; else git clone -q "$REPO" "$DIR"; fi
 cd "$DIR/live" && npm ci --silent
+if [ "${INSTALL_CLAUDE:-1}" = "1" ] && ! command -v claude >/dev/null; then
+  echo "== Claude Code (fallback way to reach Robinhood)"; sudo npm install -g --silent @anthropic-ai/claude-code
+fi
 
 echo "== config"
 mkdir -p "$CFG" && chmod 700 "$CFG"
@@ -32,6 +35,7 @@ HC_PING_URL=                  # optional: healthchecks.io ping URL (alerts you i
 MAX_DRAWDOWN=0.35             # stop everything if the account falls 35% from its peak
 # MAX_ORDER_USD=200           # default: 20% of the account per order
 # EQUITY_CAP=1000             # only trade this much even if the account holds more
+EXECUTOR=direct               # direct = our code talks to Robinhood; claude = go through official Claude Code (fallback)
 CONF
 fi
 chmod 600 "$CFG/config.env"

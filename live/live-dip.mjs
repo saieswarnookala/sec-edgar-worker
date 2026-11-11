@@ -9,12 +9,15 @@
 //   LIVE_MODE=dry|live (default dry)   RH_ACCOUNT=<agentic account number>   APCA_API_KEY_ID / APCA_API_SECRET_KEY (market data)
 //   NTFY_TOPIC=<topic> [NTFY_URL=https://ntfy.sh]   HC_PING_URL=<healthchecks.io ping url, optional>
 //   MAX_ORDER_USD (default 20% of account)   MAX_DRAWDOWN=0.35   EQUITY_CAP=<only trade this much of the account, optional>
+//   EXECUTOR=direct|claude (default direct). claude = every Robinhood call goes through official Claude Code + Robinhood MCP
+//     (CLAUDE_BIN, CLAUDE_MCP_SERVER=robinhood); our code still decides the orders and checks each call Claude makes.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, openSync, closeSync, unlinkSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { gatherSignals, decide, PAPER, DATA } from '../scripts/paper-dip.mjs';
 import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
 import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys } from './orders.mjs';
+import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
 
 const E = process.env, MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry';
 const STATE = join(HOME, 'dip-state.json'), HALT = join(HOME, 'HALT'), TOOLS = join(HOME, 'tools.json'), LOCK = join(HOME, 'run.lock');
@@ -45,9 +48,12 @@ const tradingDays = async (today) => (await api(PAPER, `/v2/calendar?start=${new
 
 // ---- Robinhood helpers (argument names come from the tools' own schemas) ----
 let toolMap = {};
+const EXECUTOR = E.EXECUTOR === 'claude' ? 'claude' : 'direct';
+const reloginHint = () => (EXECUTOR === 'claude' ? 'On the VM run: claude, then /mcp, select robinhood, re-authenticate' : 'On the VM run: node live-dip.mjs login');
 async function rh() {
-  const fresh = await ensureFresh();
-  const { client } = await connect();
+  let client, fresh;
+  if (EXECUTOR === 'claude') { client = claudeClient({ toolsFile: TOOLS }); fresh = { executor: 'claude' }; }
+  else { fresh = await ensureFresh(); ({ client } = await connect()); }
   const { tools } = await client.listTools();
   toolMap = Object.fromEntries(tools.map((t) => [t.name, t]));
   for (const need of ['get_portfolio', 'get_equity_positions', 'get_equity_orders', 'place_equity_order']) if (!toolMap[need]) throw new Error(`Robinhood tool ${need} not available (tools changed?)`);
@@ -70,6 +76,7 @@ async function fractionalMap(client, syms) {
 
 // ---- commands ----
 async function cmdDoctor() {
+  if (EXECUTOR === 'claude' && existsSync(TOOLS)) unlinkSync(TOOLS);
   const { client, fresh } = await rh();
   const tools = Object.values(toolMap).map((t) => ({ name: t.name, description: t.description?.slice(0, 200), inputSchema: t.inputSchema }));
   writeFileSync(TOOLS, JSON.stringify(tools, null, 1));
@@ -77,7 +84,7 @@ async function cmdDoctor() {
   const r = await rhRead(client);
   const test = buildOrderArgs(toolMap.place_equity_order, { symbol: 'SPY', side: 'buy', dollars: 5 }, E.RH_ACCOUNT);
   const test2 = buildOrderArgs(toolMap.place_equity_order, { symbol: 'SPY', side: 'sell', shares: 0.01 }, E.RH_ACCOUNT);
-  console.log(JSON.stringify({ token: fresh, tools: tools.length, saved_schemas: TOOLS, place_equity_order_schema: toolMap.place_equity_order.inputSchema, dollar_order_mapping: test, share_order_mapping: test2,
+  console.log(JSON.stringify({ executor: EXECUTOR, token: fresh, tools: tools.length, saved_schemas: TOOLS, place_equity_order_schema: toolMap.place_equity_order.inputSchema, dollar_order_mapping: test, share_order_mapping: test2,
     accounts: JSON.stringify(accts).replace(/\d{6,}/g, (m) => '…' + m.slice(-4)).slice(0, 1500), money: r.money, positions: r.held, open_or_recent_orders: r.orders.slice(0, 5) }, null, 1));
   console.log('\nSend Claude the "place_equity_order_schema" and both "mapping" lines above (no balances needed).');
 }
@@ -92,8 +99,8 @@ async function cmdHealth() {
     if (problems.length) { await notify('Dip bot: needs attention', problems.join('\n'), { priority: 4, tags: 'warning' }); await ping('/fail'); }
     else { await ping(); console.log(JSON.stringify({ ok: true, mode: MODE, equity: r.money.equity, buying_power: r.money.buying_power, token_hours_left: hrs, refreshed: fresh.refreshed })); }
   } catch (e) {
-    const auth = e instanceof AuthRequired || /401|unauthor/i.test(String(e.message));
-    await notify(auth ? 'Dip bot: Robinhood login expired' : 'Dip bot: health check failed', auth ? 'Sign in again on the VM: node live-dip.mjs login (takes 1 minute). No trades until then.' : String(e.message).slice(0, 500), { priority: 5, tags: 'rotating_light' });
+    const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(String(e.message));
+    await notify(auth ? 'Dip bot: Robinhood login expired' : 'Dip bot: health check failed', auth ? reloginHint() + ' (takes 1 minute). No trades until then.' : String(e.message).slice(0, 500), { priority: 5, tags: 'rotating_light' });
     await ping('/fail'); process.exitCode = 1;
   }
 }
@@ -141,7 +148,10 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
       if (toolMap.review_equity_order) { try { o.review = await call(client, 'review_equity_order', buildOrderArgs(toolMap.review_equity_order, o, E.RH_ACCOUNT).args || b.args); } catch (e) { failed.push({ ...o, error: 'review: ' + e.message }); return; } }
       if (MODE !== 'live') { placed.push({ ...o, dry: true, args: b.args }); return; }
       try { const r = await call(client, 'place_equity_order', b.args); const id = r?.id ?? r?.order_id ?? r?.order?.id; placed.push({ ...o, id, state: r?.state ?? r?.status ?? r?.order?.state }); }
-      catch (e) { failed.push({ ...o, error: e.message }); }
+      catch (e) {
+        failed.push({ ...o, error: e.message });
+        if (e instanceof UnexpectedAction) { writeFileSync(HALT, `Claude Code did something other than the exact order on ${today}: ${e.message}. Check Robinhood, then: node live-dip.mjs resume`); throw e; }
+      }
     };
     for (const o of orders.filter((x) => x.side === 'sell')) await place(o);
     // sells fill instantly during market hours; with a limited-margin account the proceeds are spendable right away
@@ -157,8 +167,8 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`)].join('\n') || 'No trades today.', { priority: failed.length ? 4 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
   } catch (e) {
     log.error = String(e.message || e);
-    const auth = e instanceof AuthRequired || /401|unauthor/i.test(log.error);
-    await notify(auth ? 'Dip bot: Robinhood login expired, NO trades placed' : 'Dip bot: run failed', auth ? 'Run on the VM: node live-dip.mjs login' : log.error.slice(0, 600), { priority: 5, tags: 'rotating_light' });
+    const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(log.error);
+    await notify(auth ? 'Dip bot: Robinhood login expired, NO trades placed' : 'Dip bot: run failed', auth ? reloginHint() : log.error.slice(0, 600), { priority: 5, tags: 'rotating_light' });
     process.exitCode = 1;
   } finally {
     unlock();

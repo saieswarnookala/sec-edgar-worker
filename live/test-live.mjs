@@ -31,8 +31,31 @@ if (!mode) {
     assert.equal(readOrders({ orders: [{ id: 'o1', symbol: 'A', side: 'BUY', state: 'filled', average_price: '10.5' }] })[0].avg_price, 10.5);
     assert.deepEqual(readMoney({ portfolio: { total_value: '1000.5', buying_power: { amount: '200' } } }), { equity: 1000.5, buying_power: 200 });
   });
-  for (const m of ['dry', 'live', 'auth']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
+  for (const m of ['dry', 'live', 'auth', 'claude', 'claudebad']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
   console.log(`${n} unit tests passed + dry and live runs against a fake Robinhood`);
+} else if (mode === 'claude' || mode === 'claudebad') {
+  // Claude Code fallback: every call goes through (fake) `claude -p`; we check each call it makes.
+  const home = mkdtempSync(join(tmpdir(), 'live-'));
+  const tools = JSON.parse(JSON.stringify([{ name: 'get_portfolio', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_positions', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_orders', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_tradability', inputSchema: { type: 'object', properties: { symbol: { type: 'string' } } } }, { name: 'place_equity_order', inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { enum: ['buy', 'sell'] }, type: { enum: ['market', 'limit'] }, quantity: { type: 'number' }, dollar_amount: { type: 'number' } }, required: ['account_number', 'symbol', 'side', 'type'] } }]));
+  writeFileSync(join(home, 'tools.json'), JSON.stringify(tools));
+  writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [{ symbol: 'AAA', entry_date: '2026-10-01', qty: 0.25 }], history: [] }));
+  const fake = join(home, 'fake.json');
+  Object.assign(process.env, { SENTINEL_HOME: home, EXECUTOR: 'claude', CLAUDE_BIN: new URL('./test-fixtures/fake-claude.mjs', import.meta.url).pathname, FAKE_CLAUDE_STATE: fake, FAKE_CLAUDE_MISBEHAVE: mode === 'claudebad' ? '1' : '0', LIVE_MODE: 'live', RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
+  const { cmdTrade } = await import('./live-dip.mjs');
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
+  const days = ['2026-10-01', '2026-10-02', '2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', today];
+  const gather = async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500 }, closes: { AAA: [40, 40, 40, 40, 40] }, scores: { CCC: -0.15, NOFR: -0.12 }, park: 'SPY', volInfo: {} });
+  await cmdTrade({ force: true, gather, getDays: async () => days });
+  const h = JSON.parse(readFileSync(join(home, 'dip-state.json'), 'utf8')).history.at(-1), placed = JSON.parse(readFileSync(fake, 'utf8')).placed;
+  if (mode === 'claude') {
+    assert.ok(!h.error, 'run error: ' + h.error); assert.equal(placed.length, 4); assert.equal(h.placed.length, 4);
+    console.log('ok   Claude Code mode placed', placed.map((a) => `${a.side} ${a.symbol}`).join(', '), '(each call checked)');
+  } else {
+    assert.ok(existsSync(join(home, 'HALT')), 'changed order amount must halt the bot'); assert.match(h.error, /changed the arguments/);
+    assert.ok(!placed.some((p, i) => i > 0 && p.side === 'buy' && placed.indexOf(p) > placed.findIndex((x) => x.dollar_amount > 500)), 'no further orders after the bad one');
+    console.log('ok   Claude Code changing an order amount is caught: bot halted, no more orders');
+  }
+  process.exit(0);
 } else if (mode === 'auth') {
   // expired / missing login: fail closed, place nothing, never open a browser
   const home = mkdtempSync(join(tmpdir(), 'live-'));
