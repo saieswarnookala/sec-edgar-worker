@@ -36,3 +36,16 @@ console.log(`\n${n} passed`);
   if (!(volFraction(930) === 0.74 && volFraction(960) === 1 && volFraction(500) === 0)) throw new Error('vol curve');
   console.log('ok   volume filter ratio and curve');
 }
+{
+  // fractional sizing for a small live account: $1,000 with a $600 stock still gets a ~$100 slot
+  const days = ['2026-11-06', '2026-11-09'];
+  const d = decide({ today: '2026-11-09', days, equity: 1000, state: { positions: [] }, held: {}, prices: { BIG: 600, SMALL: 20, QQQ: 500 },
+    closes: {}, scores: { BIG: -0.15, SMALL: -0.11 }, park: 'QQQ', parkHeld: {}, fractional: true });
+  const big = d.buys.find((b) => b.symbol === 'BIG');
+  if (!big || Math.abs(big.qty * 600 - 100) > 0.01 || big.qty >= 1) throw new Error('fractional buy ' + JSON.stringify(d.buys));
+  const pk = d.parkTrades.find((t) => t.symbol === 'QQQ');
+  if (!pk || pk.side !== 'buy' || Math.abs(pk.qty * 500 - 780) > 0.01) throw new Error('fractional parking ' + JSON.stringify(d.parkTrades));
+  const whole = decide({ today: '2026-11-09', days, equity: 1000, state: { positions: [] }, held: {}, prices: { BIG: 600, QQQ: 500 }, closes: {}, scores: { BIG: -0.15 }, park: 'QQQ', parkHeld: {} });
+  if (whole.buys.length) throw new Error('whole shares should skip a $600 stock in a $100 slot');
+  console.log('ok   fractional sizing for small live account');
+}

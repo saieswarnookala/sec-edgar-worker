@@ -49,7 +49,9 @@ export function parkSymbol({ clPos, spyCloses, spyPx }) {
   return spyPx > ma ? clPos : null; // null = cash
 }
 // Decide trades. state.positions: [{symbol, entry_date, qty}]; days: trading dates ending with today.
-export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld }) {
+// fractional: size in fractions of a share (live Robinhood account with ~$100 slots); default whole shares (Alpaca paper).
+export const roundQty = (q, fractional) => fractional ? Math.floor(q * 1e6) / 1e6 : Math.floor(q);
+export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld, fractional = false, minOrderUsd = 1 }) {
   const ti = days.indexOf(today), sells = [], keep = [];
   for (const p of state.positions) {
     if (!held[p.symbol]) continue;
@@ -62,34 +64,22 @@ export function decide({ today, days, state, held, equity, prices, closes, score
   const cands = Object.entries(scores).filter(([s]) => !POOL.includes(s) && !keep.some((p) => p.symbol === s))
     .sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, SLOTS - keep.length));
   const w = cands.length ? Math.min(WEIGHT, freeFrac / cands.length) : 0, buys = [];
-  for (const [s, ex] of cands) { const qty = Math.floor((w * equity) / prices[s]); if (qty >= 1) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1) }); }
+  for (const [s, ex] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1) }); }
   const stockVal = keptVal + buys.reduce((a, b) => a + b.qty * prices[b.symbol], 0);
   // parking: sell any ETF that isn't today's park target; size the target to the leftover
   const parkTrades = [];
   for (const [s, q] of Object.entries(parkHeld)) if (q > 0 && s !== park) parkTrades.push({ symbol: s, qty: q, side: 'sell', reason: 'switch parking' });
   if (park && prices[park]) {
-    const target = Math.max(0, Math.floor((equity * (1 - BUFFER) - stockVal) / prices[park])), cur = parkHeld[park] || 0, delta = target - cur;
-    if (Math.abs(delta) * prices[park] > equity * 0.005) parkTrades.push({ symbol: park, qty: Math.abs(delta), side: delta > 0 ? 'buy' : 'sell', reason: 'resize parking' });
+    const target = Math.max(0, roundQty((equity * (1 - BUFFER) - stockVal) / prices[park], fractional)), cur = parkHeld[park] || 0, delta = roundQty(Math.abs(target - cur), fractional) * Math.sign(target - cur);
+    if (Math.abs(delta) * prices[park] > Math.max(equity * 0.005, fractional ? minOrderUsd : 0)) parkTrades.push({ symbol: park, qty: Math.abs(delta), side: delta > 0 ? 'buy' : 'sell', reason: 'resize parking' });
   }
   return { sells, buys, keep, parkTrades, stockVal };
 }
 
-async function main() {
-  const own = !!process.env.DIP_KEY_ID;
-  const H = { 'APCA-API-KEY-ID': process.env.DIP_KEY_ID || process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.DIP_SECRET_KEY || process.env.APCA_API_SECRET_KEY, 'Content-Type': 'application/json' };
-  const dry = process.env.DRY_RUN === '1' || !own;   // never trade the earnings-drift account: without its own keys this is a dry run
-  const api = async (base, path, opt = {}) => { const r = await fetch(base + path, { ...opt, headers: H }); const t = await r.text(); if (!r.ok) throw new Error(`${r.status} ${path.split('?')[0]}: ${t.slice(0, 300)}`); return t ? JSON.parse(t) : null; };
-  const nyParts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
-  const today = `${nyParts.year}-${nyParts.month}-${nyParts.day}`, nyMin = +nyParts.hour * 60 + +nyParts.minute;
-  const acct = await api(PAPER, '/v2/account'), equity = +acct.equity;
-  const cal = await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`);
-  const days = cal.map((c) => c.date);
-  const file = 'data/paper_dip_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
-  const log = { run: new Date().toISOString(), today, ny_time: `${nyParts.hour}:${nyParts.minute}`, equity, dry, own_account: own };
-  const force = process.env.FORCE === '1';
-  if (days.at(-1) !== today && !force) { console.log('market closed today', today); return; }
-  if (!force && (nyMin < 15 * 60 || nyMin >= 15 * 60 + 58)) { console.log('outside 3:00-3:57 pm ET window', log.ny_time); return; }
-  if (!force && !dry && (state.history || []).some((h) => h.today === today && !h.dry)) { console.log('already traded today', today); return; }
+// Market data + signals (shared by the Alpaca paper bot and the live Robinhood runner in live/).
+// api(base, path) must be an authenticated Alpaca fetcher (data only is used here).
+export async function gatherSignals({ api, today, days }) {
+  const out = {};
   // universe
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': 'sec-edgar-worker paper-dip/1.0' } })).text();
   const members = [...new Set(parseSp500Html(wiki).map((m) => m.symbol))];
@@ -124,21 +114,44 @@ async function main() {
     try {
       const vp = new URLSearchParams({ symbols: cands0.join(','), timeframe: '30Min', start: today + 'T13:00:00Z', end: cut.toISOString(), feed: 'sip', limit: '10000' });
       for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + vp); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) { const m = new Date(b.t); const hm = +new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(m) * 60 + m.getUTCMinutes(); if (hm >= 570) partial[s] = (partial[s] || 0) + b.v; } if (!js.next_page_token) break; vp.set('page_token', js.next_page_token); }
-    } catch (e) { log.volume_error = String(e.message || e).slice(0, 200); }
+    } catch (e) { out.volume_error = String(e.message || e).slice(0, 200); }
   }
   const frac = volFraction(cutMin);
   for (const s of cands0) {
     const est = partial[s] && frac > 0.2 ? partial[s] / frac : null, r = volumeRatio(vols[s] || [], est);
     volInfo[s] = { ratio: r == null ? null : +r.toFixed(2), today_est: est ? Math.round(est) : null };
-    if (r != null && r > VOL_MAX) { log.skipped_heavy_volume = [...(log.skipped_heavy_volume || []), `${s} (${r.toFixed(1)}x)`]; delete scores[s]; }
+    if (r != null && r > VOL_MAX) { out.skipped_heavy_volume = [...(out.skipped_heavy_volume || []), `${s} (${r.toFixed(1)}x)`]; delete scores[s]; }
   }
-  log.volume_check = volInfo;
+  return { ...out, members, etfs, closes, prices, scores, park, clPos, clWhy: cl?.now?.why, volInfo };
+}
+
+async function main() {
+  const own = !!process.env.DIP_KEY_ID;
+  const H = { 'APCA-API-KEY-ID': process.env.DIP_KEY_ID || process.env.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': process.env.DIP_SECRET_KEY || process.env.APCA_API_SECRET_KEY, 'Content-Type': 'application/json' };
+  const dry = process.env.DRY_RUN === '1' || !own;   // never trade the earnings-drift account: without its own keys this is a dry run
+  const api = async (base, path, opt = {}) => { const r = await fetch(base + path, { ...opt, headers: H }); const t = await r.text(); if (!r.ok) throw new Error(`${r.status} ${path.split('?')[0]}: ${t.slice(0, 300)}`); return t ? JSON.parse(t) : null; };
+  const nyParts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  const today = `${nyParts.year}-${nyParts.month}-${nyParts.day}`, nyMin = +nyParts.hour * 60 + +nyParts.minute;
+  const acct = await api(PAPER, '/v2/account'), equity = +acct.equity;
+  const cal = await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`);
+  const days = cal.map((c) => c.date);
+  const file = 'data/paper_dip_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
+  const log = { run: new Date().toISOString(), today, ny_time: `${nyParts.hour}:${nyParts.minute}`, equity, dry, own_account: own };
+  const force = process.env.FORCE === '1';
+  if (days.at(-1) !== today && !force) { console.log('market closed today', today); return; }
+  if (!force && (nyMin < 15 * 60 || nyMin >= 15 * 60 + 58)) { console.log('outside 3:00-3:57 pm ET window', log.ny_time); return; }
+  if (!force && !dry && (state.history || []).some((h) => h.today === today && !h.dry)) { console.log('already traded today', today); return; }
+  const g = await gatherSignals({ api, today, days });
+  const { etfs, closes, prices, scores, park, clPos } = g;
+  if (g.volume_error) log.volume_error = g.volume_error;
+  if (g.skipped_heavy_volume) log.skipped_heavy_volume = g.skipped_heavy_volume;
+  log.volume_check = g.volInfo;
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
   // sync with the broker: drop positions that never filled / were sold, use real share counts
   if (own) { const before = state.positions.map((p) => p.symbol); state.positions = state.positions.filter((p) => held[p.symbol] > 0).map((p) => ({ ...p, qty: Math.min(p.qty, held[p.symbol]) })); const gone = before.filter((s) => !state.positions.some((p) => p.symbol === s)); if (gone.length) log.synced_out = gone; }
   const parkHeld = Object.fromEntries(Object.entries(held).filter(([s]) => etfs.includes(s) && !state.positions.some((p) => p.symbol === s)));
   const d = decide({ today, days, state: own ? state : { positions: [] }, held: own ? held : {}, equity: own ? equity : 10000, prices, closes, scores, park, parkHeld: own ? parkHeld : {} });
-  Object.assign(log, { clear_leader: clPos, clear_leader_why: cl?.now?.why, spy: prices.SPY, park: park || 'CASH (SPY below 100-day average)', signals: scores, sells: d.sells, buys: d.buys, park_trades: d.parkTrades });
+  Object.assign(log, { clear_leader: clPos, clear_leader_why: g.clWhy, spy: prices.SPY, park: park || 'CASH (SPY below 100-day average)', signals: scores, sells: d.sells, buys: d.buys, park_trades: d.parkTrades });
   const done = [];
   if (!dry) {
     const order = (symbol, qty, side) => api(PAPER, '/v2/orders', { method: 'POST', body: JSON.stringify({ symbol, qty: String(qty), side, type: 'market', time_in_force: 'day' }) });

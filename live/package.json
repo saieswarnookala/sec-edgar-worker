@@ -1,0 +1,10 @@
+{
+  "name": "sentinel-live",
+  "private": true,
+  "type": "module",
+  "description": "Live Robinhood runner for the dip strategy (runs on the Oracle VM). Not financial advice.",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "3.25.76"
+  }
+}
