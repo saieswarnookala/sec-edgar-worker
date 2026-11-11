@@ -101,6 +101,36 @@ def run():
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "gold":
+        # Where to hide when Nifty is below its trend: faster/slower gold exits, gold-vs-cash, gold+liquid splits.
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
+        dv = (1 + 0.013) ** (1 / 248) - 1
+        gt = lambda k: (gold > gold.rolling(k).mean()).shift(1, fill_value=False).values
+        gmom = (gold.pct_change(63) > 0).shift(1, fill_value=False).values
+        ALT = {"liquid fund only": liq, "gold always": gr, "cash only": np.zeros(D)}
+        for k in (20, 50, 100, 150, 200): ALT[f"gold if above its {k}-day avg, else liquid"] = np.where(gt(k), gr, liq)
+        ALT["gold if above its 50-day avg, else CASH"] = np.where(gt(50), gr, 0.0)
+        ALT["gold if 3-month gain > 0, else liquid"] = np.where(gmom, gr, liq)
+        ALT["gold if above 50-day AND 200-day avg, else liquid"] = np.where(gt(50) & gt(200), gr, liq)
+        ALT["50% gold + 50% liquid"] = 0.5 * gr + 0.5 * liq
+        ALT["50% liquid + 50% gold-if-above-100-day (else liquid)"] = 0.5 * liq + 0.5 * np.where(gt(100), gr, liq)
+        def tsig(k): return (n > n.rolling(k).mean()).shift(1, fill_value=False).values.astype(bool)
+        M = members(200).values; ab = above.values & M & ~glitch.values; R = (-rl).values; S12 = (rl.values <= -0.12) & ab & ~(vr > 2.0).values
+        rows = []
+        def per2(r):
+            return {k: r["per"][k] for k in r["per"]}
+        for k in (100, 150):
+            sg = tsig(k)
+            for name, alt in ALT.items():
+                pk = np.where(sg, nr + dv, alt).astype(float); pk[np.r_[False, sg[1:] != sg[:-1]]] -= 0.0005
+                a1 = sim(np.zeros_like(ab), R, pk); a2 = sim(S12, R, pk, entry="open", cost=0.003)
+                row = {"nifty_avg": k, "hide_in": name, "parking_only": {kk: a1[kk] for kk in ("cagr", "dd", "per", "train_2008_2018", "test_2019_2026")},
+                       "with_12pct_dips_realistic": {kk: a2[kk] for kk in ("cagr", "dd", "per", "train_2008_2018", "test_2019_2026")}}
+                rows.append(row); print(k, name, a1["cagr"], a1["dd"], a1["per"]["2010-2015"], "| dips", a2["cagr"], a2["dd"], a2["test_2019_2026"], flush=True)
+        gy = pd.Series(gr, index=dates)
+        OUT["gold_by_period"] = {pp: round(100 * ((1 + gy[(gy.index >= pp[:4]) & (gy.index <= pp[5:] + "-12-31")]).prod() ** (248 / max(1, ((gy.index >= pp[:4]) & (gy.index <= pp[5:] + "-12-31")).sum())) - 1), 1) for pp in ("2008-2009", "2010-2015", "2016-2020", "2021-2026")}
+        OUT["gold_tests"] = rows; OUT["note"] += " Before tax, Nifty with ~1.3% dividends, liquid fund 6%/yr, 0.05% per Nifty switch (gold/liquid switches not charged)."
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_gold.json", "w"), indent=1, default=float); return
     if MODE == "oos":
         # Out-of-sample check: pick settings using 2008-2018 only, then see how they did on 2019-2026.
         g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
@@ -322,4 +352,4 @@ def run():
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
 try: run()
 except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
