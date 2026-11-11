@@ -246,6 +246,107 @@ def main():
                 r = sim_tax(sig, 0.0, tax=False, **kw); r.update(variant=vname, scenario=scen, tax="before tax / Roth IRA"); G.append(r); print(vname, scen, "pre", r["cagr"], r["final_x"], flush=True)
                 for br in (0.22, 0.24, 0.32, 0.35):
                     r = sim_tax(sig, br, **kw); r.update(variant=vname, scenario=scen, tax=f"after tax, {int(br*100)}% bracket"); G.append(r); print(vname, scen, br, r["cagr"], r["dd"], r["final_x"], flush=True)
+    elif MODE == "both":
+        # ONE shared pot: earnings-drift trades + dip trades, idle money in Clear Leader (cash when SPY < 100-day avg).
+        # Drift: stock beat SPY by >= X% on its earnings reaction day (SEC 8-K 2.02; filed before 9:30 -> same day, else next),
+        #        buy next open, sell at the close after H trading days. Dip: current best + volume filter, smart exit.
+        # Each trade gets 1/slots of the pot; drift buys happen at the open, dip buys at the close (so drift goes first).
+        V = VOL[tick]; vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
+        Sv = S & ~(vr > 2.0); Mv = M.values
+        Ca = Cf[tick].values; ds = dates.strftime("%Y-%m-%d").values; spv = spy.values
+        RX = np.full((D, len(tick)), np.nan)          # reaction (stock minus SPY) on reaction day k, stored at entry day k+1
+        for j, t in enumerate(tick):
+            for d, mi in (SEC.get(t) or {}).get("events", []):
+                k = int(np.searchsorted(ds, d))
+                if k < D and ds[k] == d and mi >= 570: k += 1
+                if k < 1 or k + 1 >= D or not Mv[k, j]: continue
+                c0, c1 = Ca[k, j], Ca[k - 1, j]
+                if c0 > 0 and c1 > 0: RX[k + 1, j] = c0 / c1 - 1 - (spv[k] / spv[k - 1] - 1)
+        T0 = int(np.searchsorted(dates.values, np.datetime64("2004-09-01")))
+        posm = {r["m"]: r["pos"] for r in CLROWS["cl"]}; s100 = sma(100)
+        lab = np.array([(posm.get(m, "SPY") if s100[i] else "CASH") for i, m in enumerate(mon)]); park = PKN[100]; years = dates.year.values
+        def run(slots=10, use_dip=True, use_drift=True, th=0.05, hold=60, real=False, rate=0.0, split=None):
+            cost = 0.0015 if real else 0.0005; eq = 1.0; curve = np.ones(D); pos = []; inv = []; ntr = {"dip": 0, "drift": 0}
+            cur = None; seg0 = None; acc = 0.0; st_ = lt_ = cf_s = cf_l = 0.0
+            def realize(t):
+                nonlocal acc, st_, lt_
+                if seg0 is not None and t - seg0 > 252: lt_ += acc
+                else: st_ += acc
+                acc = 0.0
+            def year_end():
+                nonlocal st_, lt_, cf_s, cf_l, eq
+                a2, b2 = st_ + cf_s, lt_ + cf_l
+                if a2 < 0 and b2 > 0: b3 = b2 + a2; a2, b2 = (0.0, b3) if b3 >= 0 else (b3, 0.0)
+                if b2 < 0 and a2 > 0: a3 = a2 + b2; a2, b2 = (a3, 0.0) if a3 >= 0 else (0.0, a3)
+                eq -= rate * max(a2, 0.0) + (0.15 if rate else 0.0) * max(b2, 0.0); cf_s, cf_l = min(a2, 0.0), min(b2, 0.0); st_ = lt_ = 0.0
+            for t in range(T0, D):
+                if lab[t] != cur:
+                    if cur is not None and cur != "CASH": realize(t)
+                    cur = lab[t]; seg0 = t if cur != "CASH" else None
+                # 1) drift buys at the open
+                if use_drift:
+                    row = RX[t]; cand = np.where(row >= th)[0]
+                    for j in sorted(cand, key=lambda j: -row[j]):
+                        kinds = [p_ for p_ in pos if p_[4] == "drift"]
+                        cap = slots if split is None else split[1]
+                        if (len(pos) if split is None else len(kinds)) >= cap: break
+                        if any(p_[0] == j for p_ in pos) or not (O[tick[j]].values[t] > 0): continue
+                        used = sum(p_[2] for p_ in pos); w = min(eq / slots, max(0.0, eq - used))
+                        if w <= 1e-9: break
+                        pos.append([j, -1, w, w, "drift", t + hold - 1]); eq -= cost * w; ntr["drift"] += 1
+                # 2) the day's returns
+                used = sum(p_[2] for p_ in pos); pv = max(0.0, eq - used); g = pv * park[t]; acc += g; day = g
+                for p_ in pos:
+                    gg = OC[t, p_[0]] if (p_[1] == -1 or (p_[4] == "dip" and real and p_[1] == 0)) else Rt[t, p_[0]]
+                    if p_[1] == -1: p_[1] = 0
+                    day += p_[2] * gg; p_[2] *= 1 + gg
+                eq += day; inv.append(used / max(eq, 1e-12))
+                # 3) exits at the close
+                keep = []
+                for p_ in pos:
+                    p_[1] += 1
+                    out = (t >= p_[5]) if p_[4] == "drift" else (p_[1] >= 5 or over5[t, p_[0]])
+                    if out: c = cost * p_[2]; eq -= c; st_ += p_[2] - p_[3] - c - cost * p_[3]
+                    else: keep.append(p_)
+                pos = keep
+                # 4) dip buys at the close (or next open if realistic: same accounting as the dip tests)
+                if use_dip:
+                    held = {p_[0] for p_ in pos}; used = sum(p_[2] for p_ in pos)
+                    room = (slots - len(pos)) if split is None else (split[0] - sum(1 for p_ in pos if p_[4] == "dip"))
+                    new = [c for c in sorted(np.where(Sv[t])[0], key=lambda c: -R[t, c]) if c not in held][: max(0, room)]
+                    for c in new:
+                        w = min(eq / slots, max(0.0, eq - used))
+                        if w <= 1e-9: break
+                        pos.append([c, 0, w, w, "dip", 0]); eq -= cost * w; used += w; ntr["dip"] += 1
+                if t + 1 == D or years[t + 1] != years[t]:
+                    if t + 1 == D:
+                        for p_ in pos: st_ += p_[2] - p_[3]
+                        if cur != "CASH": realize(t)
+                    if rate: year_end()
+                curve[t] = eq
+            c = pd.Series(curve[T0:], index=dates[T0:]); pr = c.pct_change().fillna(0); yrs = len(pr) / 252
+            per = {}
+            for a2, b2 in [("2004", "2007"), ("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")]:
+                q = pr[(pr.index >= a2) & (pr.index <= b2 + "-12-31")]; per[a2 + "-" + b2] = round(100 * ((1 + q).prod() ** (252 / max(len(q), 1)) - 1), 1)
+            return {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * (c / c.cummax() - 1).min(), 1), "per": per,
+                    "invested_pct": round(100 * float(np.mean(inv)), 1), "trades_per_year": {k: round(v / yrs, 1) for k, v in ntr.items()}, "final_x": round(float(c.iloc[-1]), 1)}
+        sp = spy.iloc[T0:] / spy.iloc[T0]; OUT["SPY_2004"] = {"cagr": round(100 * (sp.iloc[-1] ** (252 / len(sp)) - 1), 1), "dd": round(100 * (sp / sp.cummax() - 1).min(), 1)}
+        BOTH = []
+        def addb(label, **kw):
+            for real in (False, True):
+                for rate in (0.0, 0.24):
+                    r = run(real=real, rate=rate, **kw); r.update(variant=label, scenario="realistic" if real else "ideal", tax="after tax (24%)" if rate else "before tax")
+                    BOTH.append(r); print(label, r["scenario"], r["tax"], r["cagr"], r["dd"], r["invested_pct"], r["trades_per_year"], flush=True)
+        addb("dip only (10 x 10%)", use_drift=False)
+        addb("drift only, 5%/60 days (10 x 10%)", use_dip=False)
+        addb("SEPARATE: 5 dip slots + 5 drift slots (10% each)", split=(5, 5))
+        for sl in (10, 15, 20): addb(f"SHARED pot, {sl} slots ({round(100/sl,1)}% each)", slots=sl)
+        for th in (0.04, 0.05, 0.06):          # robustness: drift settings inside the shared pot (15 slots)
+            for hd in (50, 60, 70):
+                for real in (False, True):
+                    r = run(slots=15, th=th, hold=hd, real=real); r.update(variant=f"[grid] shared 15 slots, drift {int(th*100)}%/{hd}d", scenario="realistic" if real else "ideal", tax="before tax")
+                    BOTH.append(r); print(r["variant"], r["scenario"], r["cagr"], r["dd"], flush=True)
+        OUT["both"] = BOTH
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
