@@ -1,0 +1,1764 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  }
+ ],
+ "SPY_2004": {
+  "cagr": 11.1,
+  "dd": -55.2
+ },
+ "both": [
+  {
+   "cagr": 15.6,
+   "dd": -34.1,
+   "per": {
+    "2004-2007": 15.6,
+    "2008-2009": 22.9,
+    "2010-2015": 8.8,
+    "2016-2020": 18.9,
+    "2021-2026": 17.8
+   },
+   "invested_pct": 66.9,
+   "trades_per_year": {
+    "dip": 66.2,
+    "drift": 29.6
+   },
+   "final_x": 24.8,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 4%/50d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.04,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.6,
+   "dd": -44.9,
+   "per": {
+    "2004-2007": 11.2,
+    "2008-2009": 4.7,
+    "2010-2015": 13.9,
+    "2016-2020": 19.4,
+    "2021-2026": 20.6
+   },
+   "invested_pct": 74.9,
+   "trades_per_year": {
+    "dip": 66.3,
+    "drift": 28.2
+   },
+   "final_x": 24.5,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 4%/60d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.04,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.9,
+   "dd": -35.3,
+   "per": {
+    "2004-2007": 11.4,
+    "2008-2009": 25.7,
+    "2010-2015": 8.2,
+    "2016-2020": 14.8,
+    "2021-2026": 13.1
+   },
+   "invested_pct": 72.8,
+   "trades_per_year": {
+    "dip": 65.8,
+    "drift": 23.3
+   },
+   "final_x": 14.7,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 4%/70d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.04,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 16.2,
+   "dd": -34.1,
+   "per": {
+    "2004-2007": 17.8,
+    "2008-2009": 19.2,
+    "2010-2015": 7.9,
+    "2016-2020": 18.4,
+    "2021-2026": 21.5
+   },
+   "invested_pct": 66.0,
+   "trades_per_year": {
+    "dip": 66.1,
+    "drift": 29.2
+   },
+   "final_x": 27.9,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 5%/50d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.05,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.5,
+   "dd": -44.8,
+   "per": {
+    "2004-2007": 12.6,
+    "2008-2009": 3.0,
+    "2010-2015": 10.3,
+    "2016-2020": 20.1,
+    "2021-2026": 19.7
+   },
+   "invested_pct": 74.7,
+   "trades_per_year": {
+    "dip": 66.0,
+    "drift": 28.0
+   },
+   "final_x": 20.0,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 5%/60d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.05,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 16.0,
+   "dd": -37.0,
+   "per": {
+    "2004-2007": 14.4,
+    "2008-2009": 29.2,
+    "2010-2015": 11.6,
+    "2016-2020": 16.7,
+    "2021-2026": 16.6
+   },
+   "invested_pct": 71.3,
+   "trades_per_year": {
+    "dip": 65.9,
+    "drift": 22.9
+   },
+   "final_x": 26.6,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 5%/70d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.05,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.6,
+   "dd": -33.7,
+   "per": {
+    "2004-2007": 13.3,
+    "2008-2009": 16.1,
+    "2010-2015": 7.6,
+    "2016-2020": 21.0,
+    "2021-2026": 20.7
+   },
+   "invested_pct": 64.9,
+   "trades_per_year": {
+    "dip": 65.9,
+    "drift": 28.6
+   },
+   "final_x": 24.6,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 6%/50d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.06,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.7,
+   "dd": -46.0,
+   "per": {
+    "2004-2007": 15.1,
+    "2008-2009": 3.8,
+    "2010-2015": 8.7,
+    "2016-2020": 22.0,
+    "2021-2026": 15.0
+   },
+   "invested_pct": 73.3,
+   "trades_per_year": {
+    "dip": 65.9,
+    "drift": 27.5
+   },
+   "final_x": 17.3,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 6%/60d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.06,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.3,
+   "dd": -34.1,
+   "per": {
+    "2004-2007": 11.6,
+    "2008-2009": 19.4,
+    "2010-2015": 11.0,
+    "2016-2020": 22.3,
+    "2021-2026": 14.8
+   },
+   "invested_pct": 69.5,
+   "trades_per_year": {
+    "dip": 65.9,
+    "drift": 22.1
+   },
+   "final_x": 23.3,
+   "variant": "[grid] cap 3 dip + 7 drift, drift 6%/70d",
+   "caps": [
+    3,
+    7
+   ],
+   "th": 0.06,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 17.3,
+   "dd": -45.0,
+   "per": {
+    "2004-2007": 15.7,
+    "2008-2009": 4.8,
+    "2010-2015": 11.4,
+    "2016-2020": 22.6,
+    "2021-2026": 24.7
+   },
+   "invested_pct": 74.6,
+   "trades_per_year": {
+    "dip": 66.0,
+    "drift": 28.0
+   },
+   "final_x": 34.1,
+   "variant": "cap 3 dip + 7 drift (5%/60d)",
+   "caps": [
+    3,
+    7
+   ],
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.4,
+   "dd": -47.4,
+   "per": {
+    "2004-2007": 12.2,
+    "2008-2009": 3.8,
+    "2010-2015": 8.8,
+    "2016-2020": 18.4,
+    "2021-2026": 18.5
+   },
+   "invested_pct": 74.7,
+   "trades_per_year": {
+    "dip": 66.0,
+    "drift": 28.0
+   },
+   "final_x": 16.3,
+   "variant": "cap 3 dip + 7 drift (5%/60d)",
+   "caps": [
+    3,
+    7
+   ],
+   "scenario": "ideal",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 14.5,
+   "dd": -44.8,
+   "per": {
+    "2004-2007": 12.6,
+    "2008-2009": 3.0,
+    "2010-2015": 10.3,
+    "2016-2020": 20.1,
+    "2021-2026": 19.7
+   },
+   "invested_pct": 74.7,
+   "trades_per_year": {
+    "dip": 66.0,
+    "drift": 28.0
+   },
+   "final_x": 20.0,
+   "variant": "cap 3 dip + 7 drift (5%/60d)",
+   "caps": [
+    3,
+    7
+   ],
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 11.3,
+   "dd": -46.7,
+   "per": {
+    "2004-2007": 9.7,
+    "2008-2009": 2.4,
+    "2010-2015": 7.9,
+    "2016-2020": 16.5,
+    "2021-2026": 14.6
+   },
+   "invested_pct": 74.8,
+   "trades_per_year": {
+    "dip": 66.0,
+    "drift": 28.0
+   },
+   "final_x": 10.6,
+   "variant": "cap 3 dip + 7 drift (5%/60d)",
+   "caps": [
+    3,
+    7
+   ],
+   "scenario": "realistic",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 13.8,
+   "dd": -32.1,
+   "per": {
+    "2004-2007": 13.0,
+    "2008-2009": 17.5,
+    "2010-2015": 7.7,
+    "2016-2020": 17.2,
+    "2021-2026": 16.7
+   },
+   "invested_pct": 60.1,
+   "trades_per_year": {
+    "dip": 74.4,
+    "drift": 25.6
+   },
+   "final_x": 17.5,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 4%/50d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.04,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -42.3,
+   "per": {
+    "2004-2007": 10.3,
+    "2008-2009": 6.6,
+    "2010-2015": 13.0,
+    "2016-2020": 18.5,
+    "2021-2026": 23.4
+   },
+   "invested_pct": 66.6,
+   "trades_per_year": {
+    "dip": 74.9,
+    "drift": 24.1
+   },
+   "final_x": 25.9,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 4%/60d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.04,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.0,
+   "dd": -31.8,
+   "per": {
+    "2004-2007": 7.7,
+    "2008-2009": 22.6,
+    "2010-2015": 8.3,
+    "2016-2020": 17.4,
+    "2021-2026": 14.3
+   },
+   "invested_pct": 65.0,
+   "trades_per_year": {
+    "dip": 74.3,
+    "drift": 20.1
+   },
+   "final_x": 15.0,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 4%/70d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.04,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.7,
+   "dd": -32.2,
+   "per": {
+    "2004-2007": 16.3,
+    "2008-2009": 12.8,
+    "2010-2015": 7.8,
+    "2016-2020": 18.9,
+    "2021-2026": 18.2
+   },
+   "invested_pct": 59.3,
+   "trades_per_year": {
+    "dip": 74.5,
+    "drift": 25.2
+   },
+   "final_x": 20.8,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 5%/50d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.05,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -39.7,
+   "per": {
+    "2004-2007": 12.2,
+    "2008-2009": 4.9,
+    "2010-2015": 11.4,
+    "2016-2020": 19.6,
+    "2021-2026": 23.3
+   },
+   "invested_pct": 66.6,
+   "trades_per_year": {
+    "dip": 74.7,
+    "drift": 24.0
+   },
+   "final_x": 25.5,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 5%/60d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.05,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.7,
+   "dd": -32.0,
+   "per": {
+    "2004-2007": 13.4,
+    "2008-2009": 31.5,
+    "2010-2015": 10.2,
+    "2016-2020": 16.3,
+    "2021-2026": 17.2
+   },
+   "invested_pct": 64.0,
+   "trades_per_year": {
+    "dip": 74.5,
+    "drift": 19.7
+   },
+   "final_x": 25.2,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 5%/70d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.05,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -30.1,
+   "per": {
+    "2004-2007": 12.5,
+    "2008-2009": 14.3,
+    "2010-2015": 8.0,
+    "2016-2020": 20.3,
+    "2021-2026": 19.1
+   },
+   "invested_pct": 58.5,
+   "trades_per_year": {
+    "dip": 74.4,
+    "drift": 24.8
+   },
+   "final_x": 21.5,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 6%/50d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.06,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.7,
+   "dd": -42.5,
+   "per": {
+    "2004-2007": 16.2,
+    "2008-2009": 5.8,
+    "2010-2015": 10.7,
+    "2016-2020": 19.6,
+    "2021-2026": 17.4
+   },
+   "invested_pct": 65.6,
+   "trades_per_year": {
+    "dip": 74.6,
+    "drift": 23.6
+   },
+   "final_x": 21.0,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 6%/60d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.06,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.1,
+   "dd": -32.2,
+   "per": {
+    "2004-2007": 9.2,
+    "2008-2009": 21.8,
+    "2010-2015": 10.7,
+    "2016-2020": 21.9,
+    "2021-2026": 15.2
+   },
+   "invested_pct": 62.6,
+   "trades_per_year": {
+    "dip": 74.5,
+    "drift": 19.2
+   },
+   "final_x": 22.4,
+   "variant": "[grid] cap 4 dip + 6 drift, drift 6%/70d",
+   "caps": [
+    4,
+    6
+   ],
+   "th": 0.06,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 19.1,
+   "dd": -39.0,
+   "per": {
+    "2004-2007": 16.0,
+    "2008-2009": 7.9,
+    "2010-2015": 12.1,
+    "2016-2020": 22.5,
+    "2021-2026": 29.9
+   },
+   "invested_pct": 66.4,
+   "trades_per_year": {
+    "dip": 74.7,
+    "drift": 24.0
+   },
+   "final_x": 47.8,
+   "variant": "cap 4 dip + 6 drift (5%/60d)",
+   "caps": [
+    4,
+    6
+   ],
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.8,
+   "dd": -41.9,
+   "per": {
+    "2004-2007": 12.4,
+    "2008-2009": 6.0,
+    "2010-2015": 9.4,
+    "2016-2020": 18.3,
+    "2021-2026": 22.5
+   },
+   "invested_pct": 66.5,
+   "trades_per_year": {
+    "dip": 74.7,
+    "drift": 24.0
+   },
+   "final_x": 21.4,
+   "variant": "cap 4 dip + 6 drift (5%/60d)",
+   "caps": [
+    4,
+    6
+   ],
+   "scenario": "ideal",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -39.7,
+   "per": {
+    "2004-2007": 12.2,
+    "2008-2009": 4.9,
+    "2010-2015": 11.4,
+    "2016-2020": 19.6,
+    "2021-2026": 23.3
+   },
+   "invested_pct": 66.6,
+   "trades_per_year": {
+    "dip": 74.7,
+    "drift": 24.0
+   },
+   "final_x": 25.5,
+   "variant": "cap 4 dip + 6 drift (5%/60d)",
+   "caps": [
+    4,
+    6
+   ],
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.2,
+   "dd": -41.9,
+   "per": {
+    "2004-2007": 9.4,
+    "2008-2009": 3.7,
+    "2010-2015": 8.8,
+    "2016-2020": 16.1,
+    "2021-2026": 17.4
+   },
+   "invested_pct": 66.7,
+   "trades_per_year": {
+    "dip": 74.7,
+    "drift": 24.0
+   },
+   "final_x": 12.9,
+   "variant": "cap 4 dip + 6 drift (5%/60d)",
+   "caps": [
+    4,
+    6
+   ],
+   "scenario": "realistic",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 13.9,
+   "dd": -25.9,
+   "per": {
+    "2004-2007": 9.9,
+    "2008-2009": 22.5,
+    "2010-2015": 6.7,
+    "2016-2020": 16.3,
+    "2021-2026": 19.2
+   },
+   "invested_pct": 53.0,
+   "trades_per_year": {
+    "dip": 81.0,
+    "drift": 21.6
+   },
+   "final_x": 17.9,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 4%/50d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.04,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 16.0,
+   "dd": -35.8,
+   "per": {
+    "2004-2007": 7.8,
+    "2008-2009": 10.1,
+    "2010-2015": 11.7,
+    "2016-2020": 19.6,
+    "2021-2026": 24.7
+   },
+   "invested_pct": 58.0,
+   "trades_per_year": {
+    "dip": 81.4,
+    "drift": 20.1
+   },
+   "final_x": 26.7,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 4%/60d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.04,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.8,
+   "dd": -33.2,
+   "per": {
+    "2004-2007": 7.7,
+    "2008-2009": 11.8,
+    "2010-2015": 7.2,
+    "2016-2020": 17.0,
+    "2021-2026": 18.8
+   },
+   "invested_pct": 57.2,
+   "trades_per_year": {
+    "dip": 80.9,
+    "drift": 16.9
+   },
+   "final_x": 14.4,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 4%/70d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.04,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.7,
+   "dd": -26.2,
+   "per": {
+    "2004-2007": 14.1,
+    "2008-2009": 18.4,
+    "2010-2015": 7.3,
+    "2016-2020": 17.4,
+    "2021-2026": 19.5
+   },
+   "invested_pct": 52.2,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 21.2
+   },
+   "final_x": 20.9,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 5%/50d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.05,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 16.9,
+   "dd": -31.3,
+   "per": {
+    "2004-2007": 11.0,
+    "2008-2009": 12.8,
+    "2010-2015": 11.3,
+    "2016-2020": 21.3,
+    "2021-2026": 24.3
+   },
+   "invested_pct": 58.1,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 20.1
+   },
+   "final_x": 31.7,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 5%/60d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.05,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.1,
+   "dd": -28.6,
+   "per": {
+    "2004-2007": 10.8,
+    "2008-2009": 29.7,
+    "2010-2015": 8.0,
+    "2016-2020": 16.6,
+    "2021-2026": 19.1
+   },
+   "invested_pct": 56.0,
+   "trades_per_year": {
+    "dip": 81.0,
+    "drift": 16.5
+   },
+   "final_x": 22.3,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 5%/70d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.05,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.9,
+   "dd": -28.8,
+   "per": {
+    "2004-2007": 13.2,
+    "2008-2009": 12.4,
+    "2010-2015": 8.5,
+    "2016-2020": 21.7,
+    "2021-2026": 21.8
+   },
+   "invested_pct": 51.5,
+   "trades_per_year": {
+    "dip": 81.2,
+    "drift": 20.8
+   },
+   "final_x": 26.1,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 6%/50d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.06,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.7,
+   "dd": -34.3,
+   "per": {
+    "2004-2007": 12.8,
+    "2008-2009": 10.0,
+    "2010-2015": 10.2,
+    "2016-2020": 19.9,
+    "2021-2026": 21.8
+   },
+   "invested_pct": 57.4,
+   "trades_per_year": {
+    "dip": 80.9,
+    "drift": 19.8
+   },
+   "final_x": 25.3,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 6%/60d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.06,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.9,
+   "dd": -30.7,
+   "per": {
+    "2004-2007": 9.6,
+    "2008-2009": 22.4,
+    "2010-2015": 10.5,
+    "2016-2020": 21.9,
+    "2021-2026": 18.0
+   },
+   "invested_pct": 55.2,
+   "trades_per_year": {
+    "dip": 81.2,
+    "drift": 16.2
+   },
+   "final_x": 26.0,
+   "variant": "[grid] cap 5 dip + 5 drift, drift 6%/70d",
+   "caps": [
+    5,
+    5
+   ],
+   "th": 0.06,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 20.2,
+   "dd": -31.8,
+   "per": {
+    "2004-2007": 15.1,
+    "2008-2009": 15.7,
+    "2010-2015": 12.0,
+    "2016-2020": 24.2,
+    "2021-2026": 30.6
+   },
+   "invested_pct": 57.9,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 20.1
+   },
+   "final_x": 58.8,
+   "variant": "cap 5 dip + 5 drift (5%/60d)",
+   "caps": [
+    5,
+    5
+   ],
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -34.4,
+   "per": {
+    "2004-2007": 11.7,
+    "2008-2009": 12.3,
+    "2010-2015": 9.3,
+    "2016-2020": 19.7,
+    "2021-2026": 23.1
+   },
+   "invested_pct": 58.0,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 20.1
+   },
+   "final_x": 25.5,
+   "variant": "cap 5 dip + 5 drift (5%/60d)",
+   "caps": [
+    5,
+    5
+   ],
+   "scenario": "ideal",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 16.9,
+   "dd": -31.3,
+   "per": {
+    "2004-2007": 11.0,
+    "2008-2009": 12.8,
+    "2010-2015": 11.3,
+    "2016-2020": 21.3,
+    "2021-2026": 24.3
+   },
+   "invested_pct": 58.1,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 20.1
+   },
+   "final_x": 31.7,
+   "variant": "cap 5 dip + 5 drift (5%/60d)",
+   "caps": [
+    5,
+    5
+   ],
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.2,
+   "dd": -33.4,
+   "per": {
+    "2004-2007": 8.6,
+    "2008-2009": 10.0,
+    "2010-2015": 8.7,
+    "2016-2020": 17.4,
+    "2021-2026": 18.1
+   },
+   "invested_pct": 58.1,
+   "trades_per_year": {
+    "dip": 81.1,
+    "drift": 20.1
+   },
+   "final_x": 15.4,
+   "variant": "cap 5 dip + 5 drift (5%/60d)",
+   "caps": [
+    5,
+    5
+   ],
+   "scenario": "realistic",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 13.3,
+   "dd": -26.1,
+   "per": {
+    "2004-2007": 9.2,
+    "2008-2009": 23.8,
+    "2010-2015": 6.5,
+    "2016-2020": 14.9,
+    "2021-2026": 18.2
+   },
+   "invested_pct": 45.7,
+   "trades_per_year": {
+    "dip": 85.8,
+    "drift": 17.5
+   },
+   "final_x": 15.9,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 4%/50d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.04,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.0,
+   "dd": -30.6,
+   "per": {
+    "2004-2007": 6.8,
+    "2008-2009": 10.4,
+    "2010-2015": 9.9,
+    "2016-2020": 17.7,
+    "2021-2026": 24.9
+   },
+   "invested_pct": 49.2,
+   "trades_per_year": {
+    "dip": 86.2,
+    "drift": 16.1
+   },
+   "final_x": 21.9,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 4%/60d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.04,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.3,
+   "dd": -28.7,
+   "per": {
+    "2004-2007": 8.3,
+    "2008-2009": 10.3,
+    "2010-2015": 6.3,
+    "2016-2020": 16.8,
+    "2021-2026": 18.0
+   },
+   "invested_pct": 48.6,
+   "trades_per_year": {
+    "dip": 85.7,
+    "drift": 13.6
+   },
+   "final_x": 13.1,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 4%/70d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.04,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.6,
+   "dd": -28.0,
+   "per": {
+    "2004-2007": 12.5,
+    "2008-2009": 20.1,
+    "2010-2015": 5.6,
+    "2016-2020": 17.6,
+    "2021-2026": 17.2
+   },
+   "invested_pct": 44.9,
+   "trades_per_year": {
+    "dip": 85.9,
+    "drift": 17.2
+   },
+   "final_x": 16.7,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 5%/50d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.05,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -24.0,
+   "per": {
+    "2004-2007": 9.8,
+    "2008-2009": 11.6,
+    "2010-2015": 9.5,
+    "2016-2020": 18.6,
+    "2021-2026": 25.5
+   },
+   "invested_pct": 49.3,
+   "trades_per_year": {
+    "dip": 86.1,
+    "drift": 16.1
+   },
+   "final_x": 25.7,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 5%/60d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.05,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.0,
+   "dd": -26.1,
+   "per": {
+    "2004-2007": 11.4,
+    "2008-2009": 25.3,
+    "2010-2015": 7.7,
+    "2016-2020": 15.4,
+    "2021-2026": 21.4
+   },
+   "invested_pct": 48.2,
+   "trades_per_year": {
+    "dip": 86.0,
+    "drift": 13.3
+   },
+   "final_x": 22.2,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 5%/70d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.05,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.1,
+   "dd": -23.1,
+   "per": {
+    "2004-2007": 11.4,
+    "2008-2009": 10.8,
+    "2010-2015": 7.4,
+    "2016-2020": 19.7,
+    "2021-2026": 19.3
+   },
+   "invested_pct": 44.3,
+   "trades_per_year": {
+    "dip": 86.0,
+    "drift": 16.8
+   },
+   "final_x": 18.5,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 6%/50d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.06,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.5,
+   "dd": -28.0,
+   "per": {
+    "2004-2007": 10.1,
+    "2008-2009": 12.5,
+    "2010-2015": 9.3,
+    "2016-2020": 20.3,
+    "2021-2026": 22.6
+   },
+   "invested_pct": 48.9,
+   "trades_per_year": {
+    "dip": 85.9,
+    "drift": 15.9
+   },
+   "final_x": 24.5,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 6%/60d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.06,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.4,
+   "dd": -25.2,
+   "per": {
+    "2004-2007": 10.8,
+    "2008-2009": 19.8,
+    "2010-2015": 8.4,
+    "2016-2020": 17.1,
+    "2021-2026": 18.9
+   },
+   "invested_pct": 47.2,
+   "trades_per_year": {
+    "dip": 86.0,
+    "drift": 13.1
+   },
+   "final_x": 19.7,
+   "variant": "[grid] cap 6 dip + 4 drift, drift 6%/70d",
+   "caps": [
+    6,
+    4
+   ],
+   "th": 0.06,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 19.1,
+   "dd": -26.7,
+   "per": {
+    "2004-2007": 13.7,
+    "2008-2009": 14.7,
+    "2010-2015": 10.1,
+    "2016-2020": 21.5,
+    "2021-2026": 31.9
+   },
+   "invested_pct": 49.1,
+   "trades_per_year": {
+    "dip": 86.1,
+    "drift": 16.1
+   },
+   "final_x": 47.5,
+   "variant": "cap 6 dip + 4 drift (5%/60d)",
+   "caps": [
+    6,
+    4
+   ],
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -26.9,
+   "per": {
+    "2004-2007": 10.7,
+    "2008-2009": 11.4,
+    "2010-2015": 7.8,
+    "2016-2020": 17.6,
+    "2021-2026": 24.1
+   },
+   "invested_pct": 49.2,
+   "trades_per_year": {
+    "dip": 86.1,
+    "drift": 16.1
+   },
+   "final_x": 21.6,
+   "variant": "cap 6 dip + 4 drift (5%/60d)",
+   "caps": [
+    6,
+    4
+   ],
+   "scenario": "ideal",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -24.0,
+   "per": {
+    "2004-2007": 9.8,
+    "2008-2009": 11.6,
+    "2010-2015": 9.5,
+    "2016-2020": 18.6,
+    "2021-2026": 25.5
+   },
+   "invested_pct": 49.3,
+   "trades_per_year": {
+    "dip": 86.1,
+    "drift": 16.1
+   },
+   "final_x": 25.7,
+   "variant": "cap 6 dip + 4 drift (5%/60d)",
+   "caps": [
+    6,
+    4
+   ],
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.3,
+   "dd": -25.2,
+   "per": {
+    "2004-2007": 7.7,
+    "2008-2009": 8.9,
+    "2010-2015": 7.3,
+    "2016-2020": 15.4,
+    "2021-2026": 19.2
+   },
+   "invested_pct": 49.4,
+   "trades_per_year": {
+    "dip": 86.1,
+    "drift": 16.1
+   },
+   "final_x": 13.2,
+   "variant": "cap 6 dip + 4 drift (5%/60d)",
+   "caps": [
+    6,
+    4
+   ],
+   "scenario": "realistic",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 12.8,
+   "dd": -29.5,
+   "per": {
+    "2004-2007": 7.9,
+    "2008-2009": 15.4,
+    "2010-2015": 6.5,
+    "2016-2020": 14.6,
+    "2021-2026": 20.2
+   },
+   "invested_pct": 38.0,
+   "trades_per_year": {
+    "dip": 90.1,
+    "drift": 13.4
+   },
+   "final_x": 14.4,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 4%/50d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.04,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.6,
+   "dd": -22.0,
+   "per": {
+    "2004-2007": 5.0,
+    "2008-2009": 17.2,
+    "2010-2015": 8.1,
+    "2016-2020": 14.9,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 40.2,
+   "trades_per_year": {
+    "dip": 90.7,
+    "drift": 12.1
+   },
+   "final_x": 20.2,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 4%/60d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.04,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.0,
+   "dd": -27.7,
+   "per": {
+    "2004-2007": 7.1,
+    "2008-2009": 7.4,
+    "2010-2015": 6.4,
+    "2016-2020": 15.9,
+    "2021-2026": 19.5
+   },
+   "invested_pct": 39.9,
+   "trades_per_year": {
+    "dip": 89.9,
+    "drift": 10.3
+   },
+   "final_x": 12.4,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 4%/70d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.04,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.6,
+   "dd": -31.4,
+   "per": {
+    "2004-2007": 9.3,
+    "2008-2009": 14.2,
+    "2010-2015": 5.0,
+    "2016-2020": 16.5,
+    "2021-2026": 19.1
+   },
+   "invested_pct": 37.2,
+   "trades_per_year": {
+    "dip": 90.1,
+    "drift": 13.1
+   },
+   "final_x": 13.9,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 5%/50d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.05,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.3,
+   "dd": -20.8,
+   "per": {
+    "2004-2007": 8.6,
+    "2008-2009": 11.9,
+    "2010-2015": 7.7,
+    "2016-2020": 18.3,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 40.3,
+   "trades_per_year": {
+    "dip": 90.3,
+    "drift": 12.1
+   },
+   "final_x": 23.4,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 5%/60d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.05,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -28.4,
+   "per": {
+    "2004-2007": 7.3,
+    "2008-2009": 15.6,
+    "2010-2015": 6.2,
+    "2016-2020": 16.3,
+    "2021-2026": 22.0
+   },
+   "invested_pct": 39.5,
+   "trades_per_year": {
+    "dip": 90.0,
+    "drift": 10.1
+   },
+   "final_x": 16.4,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 5%/70d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.05,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.9,
+   "dd": -23.6,
+   "per": {
+    "2004-2007": 9.4,
+    "2008-2009": 11.9,
+    "2010-2015": 6.5,
+    "2016-2020": 20.0,
+    "2021-2026": 20.4
+   },
+   "invested_pct": 36.8,
+   "trades_per_year": {
+    "dip": 90.2,
+    "drift": 12.8
+   },
+   "final_x": 18.0,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 6%/50d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.06,
+   "hold": 50,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.0,
+   "dd": -21.1,
+   "per": {
+    "2004-2007": 7.1,
+    "2008-2009": 14.1,
+    "2010-2015": 7.3,
+    "2016-2020": 19.0,
+    "2021-2026": 25.4
+   },
+   "invested_pct": 40.1,
+   "trades_per_year": {
+    "dip": 90.0,
+    "drift": 12.0
+   },
+   "final_x": 22.2,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 6%/60d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.06,
+   "hold": 60,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 13.6,
+   "dd": -26.6,
+   "per": {
+    "2004-2007": 7.7,
+    "2008-2009": 13.9,
+    "2010-2015": 7.0,
+    "2016-2020": 18.1,
+    "2021-2026": 20.4
+   },
+   "invested_pct": 38.8,
+   "trades_per_year": {
+    "dip": 90.1,
+    "drift": 9.9
+   },
+   "final_x": 16.8,
+   "variant": "[grid] cap 7 dip + 3 drift, drift 6%/70d",
+   "caps": [
+    7,
+    3
+   ],
+   "th": 0.06,
+   "hold": 70,
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 18.8,
+   "dd": -22.9,
+   "per": {
+    "2004-2007": 12.6,
+    "2008-2009": 16.0,
+    "2010-2015": 8.3,
+    "2016-2020": 21.4,
+    "2021-2026": 33.5
+   },
+   "invested_pct": 40.2,
+   "trades_per_year": {
+    "dip": 90.3,
+    "drift": 12.1
+   },
+   "final_x": 45.5,
+   "variant": "cap 7 dip + 3 drift (5%/60d)",
+   "caps": [
+    7,
+    3
+   ],
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 14.8,
+   "dd": -23.5,
+   "per": {
+    "2004-2007": 9.8,
+    "2008-2009": 12.4,
+    "2010-2015": 6.3,
+    "2016-2020": 17.8,
+    "2021-2026": 25.5
+   },
+   "invested_pct": 40.3,
+   "trades_per_year": {
+    "dip": 90.3,
+    "drift": 12.1
+   },
+   "final_x": 21.1,
+   "variant": "cap 7 dip + 3 drift (5%/60d)",
+   "caps": [
+    7,
+    3
+   ],
+   "scenario": "ideal",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 15.3,
+   "dd": -20.8,
+   "per": {
+    "2004-2007": 8.6,
+    "2008-2009": 11.9,
+    "2010-2015": 7.7,
+    "2016-2020": 18.3,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 40.3,
+   "trades_per_year": {
+    "dip": 90.3,
+    "drift": 12.1
+   },
+   "final_x": 23.4,
+   "variant": "cap 7 dip + 3 drift (5%/60d)",
+   "caps": [
+    7,
+    3
+   ],
+   "scenario": "realistic",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 12.0,
+   "dd": -24.0,
+   "per": {
+    "2004-2007": 6.7,
+    "2008-2009": 9.1,
+    "2010-2015": 5.8,
+    "2016-2020": 15.4,
+    "2021-2026": 20.1
+   },
+   "invested_pct": 40.4,
+   "trades_per_year": {
+    "dip": 90.3,
+    "drift": 12.1
+   },
+   "final_x": 12.3,
+   "variant": "cap 7 dip + 3 drift (5%/60d)",
+   "caps": [
+    7,
+    3
+   ],
+   "scenario": "realistic",
+   "tax": "after tax (24%)"
+  },
+  {
+   "cagr": 18.3,
+   "dd": -32.8,
+   "per": {
+    "2004-2007": 13.8,
+    "2008-2009": 9.3,
+    "2010-2015": 10.9,
+    "2016-2020": 21.9,
+    "2021-2026": 29.4
+   },
+   "invested_pct": 56.6,
+   "trades_per_year": {
+    "dip": 85.5,
+    "drift": 24.0
+   },
+   "final_x": 41.1,
+   "variant": "cap 6 dip + 6 drift, 12 slots x 8.3%",
+   "scenario": "ideal",
+   "tax": "before tax"
+  },
+  {
+   "cagr": 15.4,
+   "dd": -32.2,
+   "per": {
+    "2004-2007": 10.3,
+    "2008-2009": 7.1,
+    "2010-2015": 10.3,
+    "2016-2020": 19.4,
+    "2021-2026": 23.9
+   },
+   "invested_pct": 56.8,
+   "trades_per_year": {
+    "dip": 85.5,
+    "drift": 24.0
+   },
+   "final_x": 24.0,
+   "variant": "cap 6 dip + 6 drift, 12 slots x 8.3%",
+   "scenario": "realistic",
+   "tax": "before tax"
+  }
+ ],
+ "mode": "both2"
+}
