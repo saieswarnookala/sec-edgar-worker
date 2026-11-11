@@ -1038,12 +1038,12 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="drift">Earnings drift</button>
       <button type="button" data-sub="clv2">Clear leader v2.0</button>
       <button type="button" data-sub="indiadip">India: dip + Nifty trend</button>
+      <button type="button" data-sub="india">India: Nifty + gold (ETFs)</button>
       <button type="button" data-sub="calc">Growth calculator</button>
       <button type="button" data-sub="overview">Overview</button>
       <button type="button" data-sub="momentum">Top-3 momentum</button>
       <button type="button" data-sub="momv2">Top-3 momentum v2.0</button>
       <button type="button" data-sub="intraday">Same-day tests</button>
-      <button type="button" data-sub="india">India: Nifty + gold</button>
       <button type="button" data-sub="sma10">SPY 10-month avg</button>
       <button type="button" data-sub="rsi2">RSI(2) dip</button>
       <button type="button" data-sub="rsi2v2">RSI(2) dip v2.0</button>
@@ -1861,7 +1861,7 @@ dash.calc('vs_industry', {
     return e;
   };
   // "Day trading" shows only the strategies we paper trade or rely on; everything else lives under "Tested strategies"
-  const LIVE = ['dip', 'drift', 'clv2', 'indiadip', 'calc'];
+  const LIVE = ['dip', 'drift', 'clv2', 'indiadip', 'india', 'calc'];
   const ALLSUBS = ['overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc'];
   let mode = 'trading';
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
@@ -1951,7 +1951,7 @@ dash.calc('vs_industry', {
     const t = tq('.sx-tr-title'), p = tq('.sx-tr-intro');
     if (t) t.textContent = m === 'trading' ? 'Strategies we use' : 'Tested strategies';
     if (p) p.textContent = m === 'trading'
-      ? 'The best results from all our testing. Dip + smart parking and Earnings drift are being paper traded now; Clear leader v2.0 decides where the dip strategy parks idle money. India: dip + Nifty trend is the tested Indian version (not paper traded yet).'
+      ? 'The best results from all our testing. Dip + smart parking and Earnings drift are being paper traded now; Clear leader v2.0 decides where the dip strategy parks idle money. India: dip + Nifty trend (stock trading) and India: Nifty + gold (simple ETF mix, monthly signal) are the Indian versions; neither is paper traded yet.'
       : 'Everything else we backtested, kept for reference. Each was tested and not chosen; the Overview compares the Oct 10 strategies with simply holding SPY.';
     showSub(k && inMode(k) ? k : (m === 'trading' ? 'dip' : 'overview'), link);
   };
