@@ -321,7 +321,32 @@
     "BUY 3 EXPE (dip -16.9%)",
     "BUY 284 DBC (parking)"
    ]
+  },
+  {
+   "run": "2026-11-11T21:12:01.971Z",
+   "today": "2026-11-11",
+   "ny_time": "16:12",
+   "equity": 9990.43,
+   "dry": true,
+   "own_account": true,
+   "volume_check": {
+    "EXPE": {
+     "ratio": 1.86,
+     "today_est": 2204338
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 759.8,
+   "park": "DBC",
+   "signals": {
+    "EXPE": -0.16861560707130996
+   },
+   "sells": [],
+   "buys": [],
+   "park_trades": [],
+   "orders": []
   }
  ],
- "updated": "2026-11-11T20:57:31.125Z"
+ "updated": "2026-11-11T21:12:01.971Z"
 }
