@@ -33,11 +33,12 @@ jobs:
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          GH_DISPATCH_TOKEN: ${{ secrets.GH_DISPATCH_TOKEN }}
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "::warning::Add the CLOUDFLARE_API_TOKEN repo secret to deploy the website."; exit 0; fi
           if [ -z "$ADMIN_PASSWORD" ]; then echo "::error::Add the SENTINEL_ADMIN_PASSWORD repo secret first (the main admin login)."; exit 1; fi
           cd site
           npx -y wrangler@4.149.0 deploy
-          node -e 'const o={};for(const k of ["ADMIN_PASSWORD","SEC_USER_AGENT","APCA_API_KEY_ID","APCA_API_SECRET_KEY","FMP_API_KEY"]) if(process.env[k]) o[k]=process.env[k]; require("fs").writeFileSync("/tmp/secrets.json", JSON.stringify(o)); console.log("secrets:", Object.keys(o).join(", "))'
+          node -e 'const o={};for(const k of ["ADMIN_PASSWORD","SEC_USER_AGENT","APCA_API_KEY_ID","APCA_API_SECRET_KEY","FMP_API_KEY","GH_DISPATCH_TOKEN"]) if(process.env[k]) o[k]=process.env[k]; require("fs").writeFileSync("/tmp/secrets.json", JSON.stringify(o)); console.log("secrets:", Object.keys(o).join(", "))'
           npx -y wrangler@4.149.0 secret bulk /tmp/secrets.json
           rm -f /tmp/secrets.json

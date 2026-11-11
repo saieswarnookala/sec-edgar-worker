@@ -78,4 +78,31 @@ export default {
     const html = (res.headers.get('content-type') || '').includes('text/html');
     return withHeaders(res, { 'cache-control': html || path.startsWith('/data/') ? 'private, no-cache' : 'private, max-age=3600' });
   },
+
+  // Cloudflare cron timer: GitHub's own schedules skip or delay runs, so we start the paper-trading bots from here.
+  // Each bot runs at most once a day, so the backup times are harmless.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runTimer(event.cron, env));
+  },
 };
+
+export const TIMERS = {
+  '5 11 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],          // 6:05 ET in winter / 7:05 ET in summer (pre-market)
+  '35 12 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],         // backup: 7:35 / 8:35 ET
+  '40 19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // 3:40 pm ET (summer 19:40 UTC, winter 20:40 UTC); off-window hour exits
+  '50 19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // backup: 3:50 pm ET
+};
+export async function runTimer(cron, env, fetchFn = fetch) {
+  const t = TIMERS[cron];
+  if (!t) return { skipped: cron };
+  if (!env.GH_DISPATCH_TOKEN) return { error: 'GH_DISPATCH_TOKEN secret not set' };
+  const [wf, inputs] = t;
+  const r = await fetchFn(`https://api.github.com/repos/saieswarnookala/sec-edgar-worker/actions/workflows/${wf}/dispatches`, {
+    method: 'POST',
+    headers: { authorization: `token ${env.GH_DISPATCH_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'sentinel-timer', 'content-type': 'application/json' },
+    body: JSON.stringify({ ref: 'main', inputs }),
+  });
+  const out = { cron, workflow: wf, status: r.status, at: new Date().toISOString() };
+  try { if (env.CACHE) await env.CACHE.put('timer:last:' + wf, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 14 }); } catch {}
+  return out;
+}
