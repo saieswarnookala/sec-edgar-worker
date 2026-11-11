@@ -12,7 +12,7 @@ not_found_handling = "none"
 
 # Cron timer: starts the paper-trading bots on time (see scheduled() in src/index.js). Times are UTC.
 [triggers]
-crons = ["5 11 * * 1-5", "35 12 * * 1-5", "40 19,20 * * 1-5", "50 19,20 * * 1-5"]
+crons = ["5 11 * * 1-5", "35 12 * * 1-5", "25 19,20 * * 1-5", "40 19,20 * * 1-5"]
 
 # User accounts + sessions
 [[kv_namespaces]]
