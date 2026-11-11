@@ -246,7 +246,7 @@ def main():
                 r = sim_tax(sig, 0.0, tax=False, **kw); r.update(variant=vname, scenario=scen, tax="before tax / Roth IRA"); G.append(r); print(vname, scen, "pre", r["cagr"], r["final_x"], flush=True)
                 for br in (0.22, 0.24, 0.32, 0.35):
                     r = sim_tax(sig, br, **kw); r.update(variant=vname, scenario=scen, tax=f"after tax, {int(br*100)}% bracket"); G.append(r); print(vname, scen, br, r["cagr"], r["dd"], r["final_x"], flush=True)
-    elif MODE == "both":
+    elif MODE in ("both", "both2"):
         # ONE shared pot: earnings-drift trades + dip trades, idle money in Clear Leader (cash when SPY < 100-day avg).
         # Drift: stock beat SPY by >= X% on its earnings reaction day (SEC 8-K 2.02; filed before 9:30 -> same day, else next),
         #        buy next open, sell at the close after H trading days. Dip: current best + volume filter, smart exit.
@@ -337,16 +337,31 @@ def main():
                 for rate in (0.0, 0.24):
                     r = run(real=real, rate=rate, **kw); r.update(variant=label, scenario="realistic" if real else "ideal", tax="after tax (24%)" if rate else "before tax")
                     BOTH.append(r); print(label, r["scenario"], r["tax"], r["cagr"], r["dd"], r["invested_pct"], r["trades_per_year"], flush=True)
-        addb("dip only (10 x 10%)", use_drift=False)
-        addb("drift only, 5%/60 days (10 x 10%)", use_dip=False)
-        addb("SEPARATE: 5 dip slots + 5 drift slots (10% each)", split=(5, 5))
-        for sl in (10, 15, 20): addb(f"SHARED pot, {sl} slots ({round(100/sl,1)}% each)", slots=sl)
-        for th in (0.04, 0.05, 0.06):          # robustness: drift settings inside the shared pot (15 slots)
-            for hd in (50, 60, 70):
+        if MODE == "both":
+            addb("dip only (10 x 10%)", use_drift=False)
+            addb("drift only, 5%/60 days (10 x 10%)", use_dip=False)
+            addb("SEPARATE: 5 dip slots + 5 drift slots (10% each)", split=(5, 5))
+            for sl in (10, 15, 20): addb(f"SHARED pot, {sl} slots ({round(100/sl,1)}% each)", slots=sl)
+            for th in (0.04, 0.05, 0.06):          # robustness: drift settings inside the shared pot (15 slots)
+                for hd in (50, 60, 70):
+                    for real in (False, True):
+                        r = run(slots=15, th=th, hold=hd, real=real); r.update(variant=f"[grid] shared 15 slots, drift {int(th*100)}%/{hd}d", scenario="realistic" if real else "ideal", tax="before tax")
+                        BOTH.append(r); print(r["variant"], r["scenario"], r["cagr"], r["dd"], flush=True)
+        else:
+            # robustness of the CAPPED mix: different caps x the 9 drift settings (realistic, before tax),
+            # plus each cap at 5%/60d after tax, plus a bigger 6+6 (12 slots, 8.3% each) version
+            for caps in ((3, 7), (4, 6), (5, 5), (6, 4), (7, 3)):
+                for th in (0.04, 0.05, 0.06):
+                    for hd in (50, 60, 70):
+                        r = run(split=caps, th=th, hold=hd, real=True); r.update(variant=f"[grid] cap {caps[0]} dip + {caps[1]} drift, drift {int(th*100)}%/{hd}d", caps=list(caps), th=th, hold=hd, scenario="realistic", tax="before tax")
+                        BOTH.append(r); print(r["variant"], r["cagr"], r["dd"], flush=True)
                 for real in (False, True):
-                    r = run(slots=15, th=th, hold=hd, real=real); r.update(variant=f"[grid] shared 15 slots, drift {int(th*100)}%/{hd}d", scenario="realistic" if real else "ideal", tax="before tax")
-                    BOTH.append(r); print(r["variant"], r["scenario"], r["cagr"], r["dd"], flush=True)
-        OUT["both"] = BOTH
+                    for rate in (0.0, 0.24):
+                        r = run(split=caps, real=real, rate=rate); r.update(variant=f"cap {caps[0]} dip + {caps[1]} drift (5%/60d)", caps=list(caps), scenario="realistic" if real else "ideal", tax="after tax (24%)" if rate else "before tax")
+                        BOTH.append(r); print(r["variant"], r["scenario"], r["tax"], r["cagr"], r["dd"], flush=True)
+            for real in (False, True):
+                r = run(slots=12, split=(6, 6), real=real); r.update(variant="cap 6 dip + 6 drift, 12 slots x 8.3%", scenario="realistic" if real else "ideal", tax="before tax"); BOTH.append(r); print(r["variant"], r["cagr"], r["dd"], flush=True)
+        OUT["both"] = BOTH; OUT["mode"] = MODE
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
