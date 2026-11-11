@@ -17,6 +17,12 @@
    "entry_date": "2026-11-09",
    "qty": 119,
    "reaction_pct": 6.4
+  },
+  {
+   "symbol": "TTWO",
+   "entry_date": "2026-11-11",
+   "qty": 44,
+   "reaction_pct": 8.7
   }
  ],
  "history": [
@@ -442,7 +448,39 @@
    "orders": [
     "SELL 1 SPY (park)"
    ]
+  },
+  {
+   "run": "2026-11-11T11:05:43.315Z",
+   "today": "2026-11-11",
+   "equity": 100241.64,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 8,
+   "signals": [
+    {
+     "symbol": "TTWO",
+     "r": 0.08680453121957832
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "TTWO",
+     "qty": 44,
+     "r": 0.08680453121957832
+    }
+   ],
+   "park": {
+    "spy_held": 91,
+    "spy_delta": -12,
+    "spy_price": 749.92,
+    "stock_value": 38861
+   },
+   "orders": [
+    "SELL 12 SPY (park)",
+    "BUY 44 TTWO"
+   ]
   }
  ],
- "updated": "2026-11-10T19:29:48.245Z"
+ "updated": "2026-11-11T11:05:43.315Z"
 }
