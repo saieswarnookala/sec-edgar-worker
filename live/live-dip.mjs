@@ -19,6 +19,21 @@ import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired
 import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
 
+// Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
+// (e.g. MAX_DRAWDOWN="0.35   # ..." would silently disable the breaker), so the file always wins, comments stripped.
+export function parseConfig(text) {
+  const out = {};
+  for (const raw of String(text).split('\n')) {
+    const line = raw.trim(); if (!line || line.startsWith('#')) continue;
+    const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/); if (!m) continue;
+    let v = m[2].trim();
+    if (/^["']/.test(v)) { const q = v[0], end = v.indexOf(q, 1); v = end > 0 ? v.slice(1, end) : v.slice(1); } else v = v.replace(/(^|\s+)#.*$/, '').trim();
+    out[m[1]] = v;
+  }
+  return out;
+}
+const CFG = join(HOME, 'config.env');
+if (existsSync(CFG)) Object.assign(process.env, parseConfig(readFileSync(CFG, 'utf8')));
 const E = process.env, MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry';
 const STATE = join(HOME, 'dip-state.json'), HALT = join(HOME, 'HALT'), TOOLS = join(HOME, 'tools.json'), LOCK = join(HOME, 'run.lock');
 mkdirSync(HOME, { recursive: true, mode: 0o700 });
@@ -56,6 +71,7 @@ let toolMap = {};
 const EXECUTOR = E.EXECUTOR === 'claude' ? 'claude' : 'direct';
 const reloginHint = () => (EXECUTOR === 'claude' ? 'On the VM run: claude, then /mcp, select robinhood, re-authenticate' : 'On the VM run: node live-dip.mjs login');
 async function rh() {
+  if (!/^\w{5,20}$/.test(E.RH_ACCOUNT || '')) throw new Error('RH_ACCOUNT is missing or invalid in ~/.sentinel-live/config.env (the MCP account number)');
   let client, fresh;
   if (EXECUTOR === 'claude') { client = claudeClient({ toolsFile: TOOLS }); fresh = { executor: 'claude' }; }
   else { fresh = await ensureFresh(); ({ client } = await connect()); }

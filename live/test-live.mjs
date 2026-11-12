@@ -40,6 +40,11 @@ if (!mode) {
   });
   process.env.SENTINEL_HOME = mkdtempSync(join(tmpdir(), 'live-'));
   const { tradeWindow } = await import('./live-dip.mjs');
+  const { parseConfig } = await import('./live-dip.mjs');
+  ok('config: inline comments stripped, quotes kept, blanks empty', () => {
+    const c = parseConfig('LIVE_MODE=live                 # dry = plan\nMAX_DRAWDOWN=0.35   # stop\nRH_ACCOUNT=   # number\nNTFY_TOPIC="a#b"\n# X=1\nBAD line');
+    assert.deepEqual(c, { LIVE_MODE: 'live', MAX_DRAWDOWN: '0.35', RH_ACCOUNT: '', NTFY_TOPIC: 'a#b' });
+  });
   ok('trade window follows the real close (normal and half days)', () => {
     assert.deepEqual(tradeWindow(960), { start: 947, end: 958, cutoff: 958.75 });   // 3:47-3:58, last order 3:58:45
     assert.deepEqual(tradeWindow(780), { start: 767, end: 778, cutoff: 778.75 });   // half day: 12:47-12:58
