@@ -346,7 +346,56 @@
    "buys": [],
    "park_trades": [],
    "orders": []
+  },
+  {
+   "run": "2026-11-12T23:19:34.485Z",
+   "today": "2026-11-12",
+   "ny_time": "18:19",
+   "equity": 10012.3,
+   "dry": true,
+   "own_account": true,
+   "volume_check": {
+    "GPN": {
+     "ratio": 1.71,
+     "today_est": 9844667
+    },
+    "IFF": {
+     "ratio": 1.3,
+     "today_est": 2400532
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 757.37,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "GPN": -0.10505152086301217,
+    "IFF": -0.10179718517048786
+   },
+   "sells": [
+    {
+     "symbol": "EXPE",
+     "qty": 3,
+     "reason": "bounced above 5-day average"
+    }
+   ],
+   "buys": [
+    {
+     "symbol": "GPN",
+     "qty": 11,
+     "dip_pct": -10.5
+    }
+   ],
+   "park_trades": [
+    {
+     "symbol": "DBC",
+     "qty": 284,
+     "side": "sell",
+     "reason": "switch parking"
+    }
+   ],
+   "orders": []
   }
  ],
- "updated": "2026-11-11T21:12:01.971Z"
+ "updated": "2026-11-12T23:19:34.485Z"
 }
