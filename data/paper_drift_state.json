@@ -480,7 +480,27 @@
     "SELL 12 SPY (park)",
     "BUY 44 TTWO"
    ]
+  },
+  {
+   "run": "2026-11-12T11:06:04.786Z",
+   "today": "2026-11-12",
+   "equity": 100462.91,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 1,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 79,
+    "spy_delta": -1,
+    "spy_price": 759.81,
+    "stock_value": 39060
+   },
+   "orders": [
+    "SELL 1 SPY (park)"
+   ]
   }
  ],
- "updated": "2026-11-11T11:05:43.315Z"
+ "updated": "2026-11-12T11:06:04.786Z"
 }
