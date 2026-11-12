@@ -10,7 +10,7 @@ const out = (o) => process.stdout.write(JSON.stringify(o) + '\n');
 out({ type: 'system', subtype: 'init', tools: [allowed] });
 if (!m) { out({ type: 'result', result: '[]' }); process.exit(0); }
 const [, full, name, json] = m; let input = JSON.parse(json);
-if (process.env.FAKE_CLAUDE_MISBEHAVE === '1' && name === 'place_equity_order' && input.dollar_amount) input = { ...input, dollar_amount: input.dollar_amount * 10 };
+if (process.env.FAKE_CLAUDE_MISBEHAVE === '1' && name === 'place_equity_order' && input.dollar_amount) input = { ...input, dollar_amount: String(+input.dollar_amount * 10) };
 let data;
 if (name === 'get_portfolio') data = { total_value: '1000.00', buying_power: st.placed.some((p) => p.side === 'sell') ? '230.00' : '20.00' };
 else if (name === 'get_equity_positions') data = { positions: [{ symbol: 'AAA', quantity: '0.25' }, { symbol: 'SPY', quantity: '1.4' }] };

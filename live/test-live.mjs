@@ -11,7 +11,7 @@ const mode = process.argv[2];
 if (!mode) {
   let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
   const schema = { inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { enum: ['BUY', 'SELL'] }, type: { enum: ['MARKET', 'LIMIT'] }, quantity: { type: 'number' }, dollar_amount: { type: 'number' } }, required: ['account_number', 'symbol', 'side', 'type'] } };
-  ok('maps a dollar order onto the schema (enum case respected)', () => assert.deepEqual(buildOrderArgs(schema, { symbol: 'AAPL', side: 'buy', dollars: 99.999 }, 'A1').args, { account_number: 'A1', symbol: 'AAPL', side: 'BUY', type: 'MARKET', dollar_amount: 100 }));
+  ok('maps a dollar order onto the schema (enum case respected)', () => assert.deepEqual(buildOrderArgs(schema, { symbol: 'AAPL', side: 'buy', dollars: 99.999 }, 'A1').args, { account_number: 'A1', symbol: 'AAPL', side: 'BUY', type: 'MARKET', dollar_amount: 99.99 }));
   ok('maps a share sell', () => assert.equal(buildOrderArgs(schema, { symbol: 'AAPL', side: 'sell', shares: 0.1234567 }, 'A1').args.quantity, 0.123457));
   ok('fails closed when the schema has no dollar field', () => { const s2 = JSON.parse(JSON.stringify(schema)); delete s2.inputSchema.properties.dollar_amount; assert.equal(buildOrderArgs(s2, { symbol: 'X', side: 'buy', dollars: 5 }, 'A1').ok, false); });
   ok('fails closed on an unknown required field', () => { const s2 = JSON.parse(JSON.stringify(schema)); s2.inputSchema.properties.ref = { type: 'string' }; s2.inputSchema.required.push('ref'); assert.match(buildOrderArgs(s2, { symbol: 'X', side: 'buy', dollars: 5 }, 'A1').error, /ref/); });
@@ -25,6 +25,13 @@ if (!mode) {
     assert.ok(p.some((x) => /too big/.test(x)) && p.some((x) => /universe/.test(x)) && p.some((x) => /more BBB/.test(x)) && p.some((x) => /duplicate/.test(x)));
   });
   ok('limits: clean plan passes', () => assert.deepEqual(checkLimits([{ symbol: 'AAA', side: 'buy', dollars: 100 }], { equity: 1000, held: {}, prices: { AAA: 10 }, allowed: new Set(['AAA']), maxOrderUsd: 200 }), []));
+  ok('Robinhood format: string amounts, gfd, regular hours, stable ref_id', () => {
+    const rs = { inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { type: 'string' }, type: { type: 'string' }, quantity: { type: 'string' }, dollar_amount: { type: 'string' }, time_in_force: { type: 'string' }, market_hours: { type: 'string' }, ref_id: { type: 'string' } }, required: ['account_number', 'symbol', 'side', 'type'] } };
+    const a = buildOrderArgs(rs, { symbol: 'SPY', side: 'buy', dollars: 99.996, refKey: 'k1' }, 'A1').args, b = buildOrderArgs(rs, { symbol: 'SPY', side: 'buy', dollars: 50, refKey: 'k1' }, 'A1').args;
+    assert.equal(a.dollar_amount, '99.99'); assert.equal(a.time_in_force, 'gfd'); assert.equal(a.market_hours, 'regular_hours'); assert.equal(a.type, 'market');
+    assert.match(a.ref_id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/); assert.equal(a.ref_id, b.ref_id);
+    assert.equal(buildOrderArgs(rs, { symbol: 'SPY', side: 'sell', shares: 0.1234567 }, 'A1').args.quantity, '0.123456');
+  });
   ok('buys shrink to buying power', () => { const o = fitBuys([{ symbol: 'A', side: 'buy', dollars: 100 }, { symbol: 'B', side: 'buy', dollars: 100 }], 100, {}); assert.ok(o.every((x) => x.dollars <= 50)); });
   ok('reads positions/orders/money from nested replies', () => {
     assert.deepEqual(readPositions({ results: [{ symbol: 'aapl', quantity: '0.5' }, { instrument: { symbol: 'SPY' }, quantity: 2 }] }), { AAPL: 0.5, SPY: 2 });
@@ -36,7 +43,7 @@ if (!mode) {
 } else if (mode === 'claude' || mode === 'claudebad') {
   // Claude Code fallback: every call goes through (fake) `claude -p`; we check each call it makes.
   const home = mkdtempSync(join(tmpdir(), 'live-'));
-  const tools = JSON.parse(JSON.stringify([{ name: 'get_portfolio', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_positions', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_orders', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_tradability', inputSchema: { type: 'object', properties: { symbol: { type: 'string' } } } }, { name: 'place_equity_order', inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { enum: ['buy', 'sell'] }, type: { enum: ['market', 'limit'] }, quantity: { type: 'number' }, dollar_amount: { type: 'number' } }, required: ['account_number', 'symbol', 'side', 'type'] } }]));
+  const tools = JSON.parse(JSON.stringify([{ name: 'get_portfolio', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_positions', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_orders', inputSchema: { type: 'object', properties: { account_number: { type: 'string' } } } }, { name: 'get_equity_tradability', inputSchema: { type: 'object', properties: { symbol: { type: 'string' } } } }, { name: 'place_equity_order', inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { enum: ['buy', 'sell'] }, type: { enum: ['market', 'limit'] }, quantity: { type: 'string' }, dollar_amount: { type: 'string' }, time_in_force: { type: 'string' }, market_hours: { type: 'string' }, ref_id: { type: 'string' } }, required: ['account_number', 'symbol', 'side', 'type'] } }]));
   writeFileSync(join(home, 'tools.json'), JSON.stringify(tools));
   writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [{ symbol: 'AAA', entry_date: '2026-10-01', qty: 0.25 }], history: [] }));
   const fake = join(home, 'fake.json');
@@ -52,7 +59,7 @@ if (!mode) {
     console.log('ok   Claude Code mode placed', placed.map((a) => `${a.side} ${a.symbol}`).join(', '), '(each call checked)');
   } else {
     assert.ok(existsSync(join(home, 'HALT')), 'changed order amount must halt the bot'); assert.match(h.error, /changed the arguments/);
-    assert.ok(!placed.some((p, i) => i > 0 && p.side === 'buy' && placed.indexOf(p) > placed.findIndex((x) => x.dollar_amount > 500)), 'no further orders after the bad one');
+    assert.ok(!placed.some((p, i) => i > 0 && p.side === 'buy' && placed.indexOf(p) > placed.findIndex((x) => +x.dollar_amount > 500)), 'no further orders after the bad one');
     console.log('ok   Claude Code changing an order amount is caught: bot halted, no more orders');
   }
   process.exit(0);
@@ -83,7 +90,7 @@ if (!mode) {
     s.tool('get_equity_positions', { account_number: z.string() }, async () => j({ positions: [{ symbol: 'AAA', quantity: '0.25' }, { symbol: 'SPY', quantity: '1.4' }] }));
     s.tool('get_equity_orders', { account_number: z.string() }, async () => j({ orders: [] }));
     s.tool('get_equity_tradability', { symbol: z.string() }, async ({ symbol }) => j({ symbol, tradable: true, fractional_tradability: symbol === 'NOFR' ? 'untradable' : 'tradable' }));
-    const sch = { account_number: z.string(), symbol: z.string(), side: z.enum(['buy', 'sell']), type: z.enum(['market', 'limit']), quantity: z.number().optional(), dollar_amount: z.number().optional() };
+    const sch = { account_number: z.string(), symbol: z.string(), side: z.enum(['buy', 'sell']), type: z.enum(['market', 'limit']), quantity: z.string().optional(), dollar_amount: z.string().optional(), time_in_force: z.string().optional(), market_hours: z.string().optional(), ref_id: z.string().optional() };
     s.tool('review_equity_order', sch, async (a) => j({ ok: true, warnings: [] }));
     s.tool('place_equity_order', sch, async (a) => { placed.push(a); return j({ id: 'ord' + placed.length, state: 'queued' }); });
     return s;

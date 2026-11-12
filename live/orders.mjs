@@ -44,6 +44,11 @@ export function readMoney(data) {
 }
 
 // ---- schema-driven argument building ----
+import { createHash } from 'node:crypto';
+// Robinhood takes amounts as strings ("100.00"); keep numbers if a schema ever asks for numbers.
+const fmt = (prop, v, dp) => { const f = Math.floor(v * 10 ** dp + 1e-9) / 10 ** dp; return prop?.type === 'string' ? f.toFixed(dp).replace(dp > 2 ? /\.?0+$/ : /$^/, '') : f; };
+// Same order on the same day -> same idempotency key, so a retry or the backup run can't place it twice.
+export const refId = (key) => { const h = createHash('sha256').update(String(key)).digest('hex'); return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-${'89ab'[parseInt(h[16], 16) % 4]}${h.slice(17, 20)}-${h.slice(20, 32)}`; };
 const props = (schema) => schema?.inputSchema?.properties || schema?.properties || {};
 const required = (schema) => schema?.inputSchema?.required || schema?.required || [];
 const pick = (p, res) => { for (const re of res) { const k = Object.keys(p).find((x) => re.test(x)); if (k) return k; } return null; };
@@ -60,14 +65,16 @@ export function buildOrderArgs(schema, order, account) {
   args[kSym] = order.symbol;
   const side = enumVal(p[kSide], order.side); if (!side) return miss('side value ' + order.side); args[kSide] = side;
   if (order.dollars != null) {
-    if (kUsd) args[kUsd] = +order.dollars.toFixed(2);
+    if (kUsd) args[kUsd] = fmt(p[kUsd], order.dollars, 2);
     else return miss('dollar amount');
     if (kType) { const t = enumVal(p[kType], 'market'); if (!t) return miss('market type'); args[kType] = t; }
   } else {
-    if (!kQty) return miss('quantity'); args[kQty] = +(+order.shares).toFixed(6);
+    if (!kQty) return miss('quantity'); args[kQty] = fmt(p[kQty], +order.shares, 6);
     if (kType) { const t = enumVal(p[kType], 'market'); if (!t) return miss('market type'); args[kType] = t; }
   }
-  if (kTif && (need.has(kTif) || p[kTif]?.enum)) { const t = enumVal(p[kTif], 'gfd') ?? enumVal(p[kTif], 'day'); if (t) args[kTif] = t; }
+  if (kTif) { const t = enumVal(p[kTif], 'gfd') ?? enumVal(p[kTif], 'day'); if (t) args[kTif] = t; }
+  const kHours = pick(p, [/^market_hours$/i]); if (kHours) { const h = enumVal(p[kHours], 'regular_hours'); if (h) args[kHours] = h; }
+  const kRef = pick(p, [/^ref_id$/i, /idempoten/i]); if (kRef && order.refKey) args[kRef] = refId(order.refKey);
   // optional marker for which variant (some schemas split dollar vs share orders with a flag)
   const kBasis = pick(p, [/^(order_)?basis$|amount_type|size_type|quantity_type/i]);
   if (kBasis) { const want = order.dollars != null ? 'dollar' : 'share'; const v = enumVal(p[kBasis], want) ?? enumVal(p[kBasis], want === 'dollar' ? 'notional' : 'quantity'); if (v) args[kBasis] = v; }

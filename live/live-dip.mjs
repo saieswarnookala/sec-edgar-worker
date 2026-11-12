@@ -143,6 +143,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const placed = [], failed = [];
     const place = async (o) => {
       if (!force && ny().min >= 15 * 60 + 58.75) { failed.push({ ...o, error: 'too close to the close, skipped' }); return; }
+      o.refKey = `${E.RH_ACCOUNT}|${today}|${o.symbol}|${o.side}`;
       const b = buildOrderArgs(toolMap.place_equity_order, o, E.RH_ACCOUNT);
       if (!b.ok) { failed.push({ ...o, error: b.error }); return; }
       if (toolMap.review_equity_order) { try { o.review = await call(client, 'review_equity_order', buildOrderArgs(toolMap.review_equity_order, o, E.RH_ACCOUNT).args || b.args); } catch (e) { failed.push({ ...o, error: 'review: ' + e.message }); return; } }
