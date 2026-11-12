@@ -1,0 +1,171 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "max_dd": -55.2,
+  "bears": {
+   "2000-02 dot-com": -47.5,
+   "2008 crisis": -55.2,
+   "2020 covid": -33.7,
+   "2022 bear": -24.5
+  },
+  "avg_in_spy_down_months": -3.66,
+  "corr_spy_monthly": 1.0
+ },
+ "MAX (lottery) short top 20": {
+  "cagr": -21.1,
+  "max_dd": -99.9,
+  "bears": {
+   "2000-02 dot-com": 148.2,
+   "2008 crisis": 200.1,
+   "2020 covid": 56.0,
+   "2022 bear": 13.6
+  },
+  "avg_in_spy_down_months": 5.9,
+  "corr_spy_monthly": -0.78
+ },
+ "MAX short top 20, only when SPY < 200d": {
+  "cagr": -9.1,
+  "max_dd": -96.3,
+  "bears": {
+   "2000-02 dot-com": 109.6,
+   "2008 crisis": 141.7,
+   "2020 covid": 34.7,
+   "2022 bear": -2.7
+  },
+  "avg_in_spy_down_months": 3.3,
+  "corr_spy_monthly": -0.61
+ },
+ "high-volatility short top 20": {
+  "cagr": -22.3,
+  "max_dd": -100.0,
+  "bears": {
+   "2000-02 dot-com": 141.6,
+   "2008 crisis": 338.6,
+   "2020 covid": 63.3,
+   "2022 bear": 24.8
+  },
+  "avg_in_spy_down_months": 7.67,
+  "corr_spy_monthly": -0.76
+ },
+ "high-volatility short, only when SPY < 200d": {
+  "cagr": -10.7,
+  "max_dd": -97.1,
+  "bears": {
+   "2000-02 dot-com": 84.8,
+   "2008 crisis": 233.0,
+   "2020 covid": 42.2,
+   "2022 bear": -3.4
+  },
+  "avg_in_spy_down_months": 4.16,
+  "corr_spy_monthly": -0.6
+ },
+ "momentum losers short bottom 20": {
+  "cagr": -20.8,
+  "max_dd": -99.9,
+  "bears": {
+   "2000-02 dot-com": 27.7,
+   "2008 crisis": 282.0,
+   "2020 covid": 71.7,
+   "2022 bear": 36.5
+  },
+  "avg_in_spy_down_months": 7.71,
+  "corr_spy_monthly": -0.72
+ },
+ "momentum losers short, only when SPY < 200d": {
+  "cagr": -11.4,
+  "max_dd": -97.1,
+  "bears": {
+   "2000-02 dot-com": 28.5,
+   "2008 crisis": 193.4,
+   "2020 covid": 46.8,
+   "2022 bear": 20.6
+  },
+  "avg_in_spy_down_months": 4.23,
+  "corr_spy_monthly": -0.57
+ },
+ "near 52w low & weak short 20": {
+  "cagr": -17.5,
+  "max_dd": -99.6,
+  "bears": {
+   "2000-02 dot-com": -39.3,
+   "2008 crisis": 109.1,
+   "2020 covid": 59.1,
+   "2022 bear": 6.6
+  },
+  "avg_in_spy_down_months": 4.24,
+  "corr_spy_monthly": -0.76
+ },
+ "long/short momentum (long top 20, short bottom 20)": {
+  "cagr": -9.4,
+  "max_dd": -99.3,
+  "bears": {
+   "2000-02 dot-com": -35.8,
+   "2008 crisis": 54.5,
+   "2020 covid": 19.4,
+   "2022 bear": 43.4
+  },
+  "avg_in_spy_down_months": 3.93,
+  "corr_spy_monthly": -0.31
+ },
+ "long low-vol / short high-vol (20/20)": {
+  "cagr": -14.5,
+  "max_dd": -99.4,
+  "bears": {
+   "2000-02 dot-com": 206.2,
+   "2008 crisis": 214.9,
+   "2020 covid": 28.9,
+   "2022 bear": 22.4
+  },
+  "avg_in_spy_down_months": 6.76,
+  "corr_spy_monthly": -0.64
+ },
+ "long/short momentum, only when SPY < 200d": {
+  "cagr": -10.6,
+  "max_dd": -97.8,
+  "bears": {
+   "2000-02 dot-com": -21.6,
+   "2008 crisis": 21.1,
+   "2020 covid": 16.4,
+   "2022 bear": 39.4
+  },
+  "avg_in_spy_down_months": 2.26,
+  "corr_spy_monthly": -0.33
+ },
+ "live_dip_beta_avg": 0.62,
+ "live dip, market-neutral (short beta x SPY)": {
+  "cagr": 9.2,
+  "max_dd": -39.4,
+  "bears": {
+   "2000-02 dot-com": 53.6,
+   "2008 crisis": 23.7,
+   "2020 covid": 13.1,
+   "2022 bear": 22.3
+  },
+  "avg_in_spy_down_months": 0.45,
+  "corr_spy_monthly": -0.01
+ },
+ "live dip, hedged only when SPY < 200d": {
+  "cagr": 13.1,
+  "max_dd": -35.3,
+  "bears": {
+   "2000-02 dot-com": 23.2,
+   "2008 crisis": 13.0,
+   "2020 covid": -2.8,
+   "2022 bear": 7.2
+  },
+  "avg_in_spy_down_months": -1.23,
+  "corr_spy_monthly": 0.3
+ },
+ "live dip (unhedged, reference)": {
+  "cagr": 14.9,
+  "max_dd": -25.4,
+  "bears": {
+   "2000-02 dot-com": 8.7,
+   "2008 crisis": 1.5,
+   "2020 covid": -6.8,
+   "2022 bear": 4.6
+  },
+  "avg_in_spy_down_months": -1.69,
+  "corr_spy_monthly": 0.49
+ }
+}
