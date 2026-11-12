@@ -1,0 +1,27 @@
+name: ATR swing test 3
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/*.parquet
+          key: sp500data-snapshot-2026-11
+      - run: pip install pandas pyarrow numpy
+      - run: python -u scripts/atr_swing3.py
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/atr_swing3.json || true
+          git diff --cached --quiet && exit 0
+          git commit -qm "ATR swing test 3 results"
+          for i in 1 2 3 4 5; do git pull --rebase -X theirs && git push && exit 0; sleep 10; done
