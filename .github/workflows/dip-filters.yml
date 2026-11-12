@@ -64,6 +64,7 @@ jobs:
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
           git checkout -- data/clear_leader_long.json 2>/dev/null || true
           git add data/dip_filter_${{ matrix.mode }}.json 2>/dev/null || true
+          [ "${{ matrix.mode }}" = curve ] && git add data/dip_curve.csv 2>/dev/null || true
           if [ "${{ matrix.mode }}" = earnings ]; then git add data/sec_events_sic.json 2>/dev/null || true; else git checkout -- data/sec_events_sic.json 2>/dev/null || rm -f data/sec_events_sic.json; fi
           git diff --cached --quiet && exit 0
           git commit -qm "dip improvement test: ${{ matrix.mode }}"

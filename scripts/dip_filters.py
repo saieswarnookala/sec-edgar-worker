@@ -79,6 +79,7 @@ def main():
     rl = Cf[tick].pct_change(5).sub(spy.pct_change(5), axis=0)
     S = ((rl <= -0.10) & above & M).values; R = (-rl).values
     D = len(dates); START = int(np.searchsorted(dates.values, np.datetime64("1998-01-01")))
+    LASTC = [None]
     def sim(park, hold=3, cost=0.0005, entry="close", smart=False, mx=5, trade=True, slots=10, sig=None, cap=None, stop=None):
         SS = S if sig is None else sig
         eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []
@@ -110,6 +111,7 @@ def main():
                     for c in new: pos.append([c, 0, w, 1.0]); eq *= 1 - cost * w
             curve[t] = eq
         c = pd.Series(curve[START:], index=dates[START:]); p = c.pct_change().fillna(0); yrs = len(p) / 252
+        LASTC[0] = c
         per = {}
         for a, b in [("1998", "2002"), ("2003", "2007"), ("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")]:
             q = p[(p.index >= a) & (p.index <= b + "-12-31")]; per[a + "-" + b] = round(100 * ((1 + q).prod() ** (252 / max(len(q), 1)) - 1), 1)
@@ -362,6 +364,14 @@ def main():
             for real in (False, True):
                 r = run(slots=12, split=(6, 6), real=real); r.update(variant="cap 6 dip + 6 drift, 12 slots x 8.3%", scenario="realistic" if real else "ideal", tax="before tax"); BOTH.append(r); print(r["variant"], r["cagr"], r["dd"], flush=True)
         OUT["both"] = BOTH; OUT["mode"] = MODE
+    elif MODE == "curve":
+        # daily equity of the live strategy (volume filter, smart exit, Clear Leader parking w/ SPY 100d), for combining with other strategies
+        V = VOL[tick]; vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
+        cur = {}
+        for tag, b in base_kw:
+            r = sim(PKN[100], **b, sig=S & ~(vr > 2.0)); r.update(variant="volume < 2x (live strategy)", scenario=tag); G.append(r); cur[tag] = LASTC[0]
+            print("curve", tag, r["cagr"], r["dd"], flush=True)
+        pd.DataFrame({"ideal": cur["ideal"], "realistic": cur["realistic"]}).rename_axis("date").to_csv("data/dip_curve.csv", float_format="%.6f")
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
