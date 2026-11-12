@@ -163,7 +163,10 @@ elif MODE == "insider":
     cm = cik_map(); ev = []; loaded = []
     for y in range(2006, 2027):
         for q in range(1, 5):
-            b = sec(f"https://www.sec.gov/files/structureddata/data/form-345-data-sets/{y}q{q}_form345.zip", raw=True)
+            b = None
+            for host in ["https://www.sec.gov", "https://dcm.sec.gov"]:
+                b = sec(f"{host}/files/structureddata/data/insider-transactions-data-sets/{y}q{q}_form345.zip", raw=True, tries=3)
+                if b: break
             if not b: continue
             try:
                 z = zipfile.ZipFile(io.BytesIO(b)); nm = {n.split("/")[-1].upper(): n for n in z.namelist()}
@@ -184,6 +187,7 @@ elif MODE == "insider":
             s = s[s.cik.isin(cm.keys()) & (s.val > 0) & s.date.notna()]
             ev.append(s[["date", "cik", "owner", "val"]]); loaded.append(f"{y}q{q}"); print("loaded", y, q, len(s), flush=True)
             time.sleep(0.3)
+    if not ev: raise SystemExit("no Form 4 data sets downloaded")
     E = pd.concat(ev); print("purchase filings at S&P 500 issuers:", len(E), "quarters", len(loaded), flush=True)
     # for each filing day: distinct buyers and $ bought in the trailing 30 calendar days (filed on or before that day)
     cl = []
