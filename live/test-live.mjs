@@ -12,7 +12,7 @@ if (!mode) {
   let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
   const schema = { inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { enum: ['BUY', 'SELL'] }, type: { enum: ['MARKET', 'LIMIT'] }, quantity: { type: 'number' }, dollar_amount: { type: 'number' } }, required: ['account_number', 'symbol', 'side', 'type'] } };
   ok('maps a dollar order onto the schema (enum case respected)', () => assert.deepEqual(buildOrderArgs(schema, { symbol: 'AAPL', side: 'buy', dollars: 99.999 }, 'A1').args, { account_number: 'A1', symbol: 'AAPL', side: 'BUY', type: 'MARKET', dollar_amount: 99.99 }));
-  ok('maps a share sell', () => assert.equal(buildOrderArgs(schema, { symbol: 'AAPL', side: 'sell', shares: 0.1234567 }, 'A1').args.quantity, 0.123457));
+  ok('maps a share sell', () => assert.equal(buildOrderArgs(schema, { symbol: 'AAPL', side: 'sell', shares: 0.1234567 }, 'A1').args.quantity, 0.123456));
   ok('fails closed when the schema has no dollar field', () => { const s2 = JSON.parse(JSON.stringify(schema)); delete s2.inputSchema.properties.dollar_amount; assert.equal(buildOrderArgs(s2, { symbol: 'X', side: 'buy', dollars: 5 }, 'A1').ok, false); });
   ok('fails closed on an unknown required field', () => { const s2 = JSON.parse(JSON.stringify(schema)); s2.inputSchema.properties.ref = { type: 'string' }; s2.inputSchema.required.push('ref'); assert.match(buildOrderArgs(s2, { symbol: 'X', side: 'buy', dollars: 5 }, 'A1').error, /ref/); });
   ok('sells come before buys', () => {
