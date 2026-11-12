@@ -1,0 +1,272 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "max_dd": -55.2,
+  "bears": {
+   "2000-02 dot-com": -47.5,
+   "2008 crisis": -55.2,
+   "2020 covid": -33.7,
+   "2022 bear": -24.5
+  },
+  "avg_in_spy_down_months": -3.66,
+  "corr_spy_monthly": 1.0
+ },
+ "dip_long (reference)": {
+  "cagr": 8.6,
+  "max_dd": -37.2,
+  "bears": {
+   "2000-02 dot-com": 55.0,
+   "2008 crisis": -1.0,
+   "2020 covid": -1.7,
+   "2022 bear": 11.7
+  },
+  "avg_in_spy_down_months": -0.17,
+  "corr_spy_monthly": 0.28,
+  "trades": 4761
+ },
+ "dip_inverse (short our dip buys)": {
+  "cagr": -17.7,
+  "max_dd": -99.7,
+  "bears": {
+   "2000-02 dot-com": -49.9,
+   "2008 crisis": 4.4,
+   "2020 covid": 0.3,
+   "2022 bear": -11.7
+  },
+  "avg_in_spy_down_months": -0.94,
+  "corr_spy_monthly": -0.26,
+  "trades": 8673
+ },
+ "rip_short 8% weak stocks": {
+  "cagr": -10.5,
+  "max_dd": -96.5,
+  "bears": {
+   "2000-02 dot-com": 27.2,
+   "2008 crisis": 222.6,
+   "2020 covid": 33.8,
+   "2022 bear": -6.8
+  },
+  "avg_in_spy_down_months": 3.12,
+  "corr_spy_monthly": -0.59,
+  "trades": 10701
+ },
+ "rip_short 10% weak stocks": {
+  "cagr": -5.6,
+  "max_dd": -86.3,
+  "bears": {
+   "2000-02 dot-com": 34.0,
+   "2008 crisis": 230.5,
+   "2020 covid": 28.1,
+   "2022 bear": 7.3
+  },
+  "avg_in_spy_down_months": 3.05,
+  "corr_spy_monthly": -0.56,
+  "trades": 7795
+ },
+ "rip_short 12% weak stocks": {
+  "cagr": -4.8,
+  "max_dd": -82.5,
+  "bears": {
+   "2000-02 dot-com": 27.9,
+   "2008 crisis": 161.4,
+   "2020 covid": 19.0,
+   "2022 bear": 7.2
+  },
+  "avg_in_spy_down_months": 2.78,
+  "corr_spy_monthly": -0.53,
+  "trades": 5689
+ },
+ "rip_short 10% any stock": {
+  "cagr": -12.5,
+  "max_dd": -98.9,
+  "bears": {
+   "2000-02 dot-com": 140.5,
+   "2008 crisis": 277.3,
+   "2020 covid": 52.9,
+   "2022 bear": -5.6
+  },
+  "avg_in_spy_down_months": 3.96,
+  "corr_spy_monthly": -0.61,
+  "trades": 14518
+ },
+ "rip_short 10% only when SPY below 200d": {
+  "cagr": -3.9,
+  "max_dd": -81.2,
+  "bears": {
+   "2000-02 dot-com": 18.3,
+   "2008 crisis": 190.7,
+   "2020 covid": 25.1,
+   "2022 bear": 1.5
+  },
+  "avg_in_spy_down_months": 2.26,
+  "corr_spy_monthly": -0.5,
+  "trades": 4108
+ },
+ "drift_short 4% hold 20d (2004+)": {
+  "cagr": -10.1,
+  "max_dd": -92.0,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": 49.8,
+   "2020 covid": 43.7,
+   "2022 bear": 8.5
+  },
+  "avg_in_spy_down_months": 2.36,
+  "corr_spy_monthly": -0.67,
+  "trades": 1542
+ },
+ "drift_short 4% hold 60d (2004+)": {
+  "cagr": -15.5,
+  "max_dd": -98.5,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": 112.8,
+   "2020 covid": 35.9,
+   "2022 bear": 32.6
+  },
+  "avg_in_spy_down_months": 4.46,
+  "corr_spy_monthly": -0.79,
+  "trades": 895
+ },
+ "drift_short 6% hold 20d (2004+)": {
+  "cagr": -7.3,
+  "max_dd": -84.1,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": 9.6,
+   "2020 covid": 31.2,
+   "2022 bear": 8.9
+  },
+  "avg_in_spy_down_months": 1.98,
+  "corr_spy_monthly": -0.6,
+  "trades": 1186
+ },
+ "drift_short 6% hold 60d (2004+)": {
+  "cagr": -15.0,
+  "max_dd": -98.3,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": 108.2,
+   "2020 covid": 49.0,
+   "2022 bear": 26.5
+  },
+  "avg_in_spy_down_months": 4.35,
+  "corr_spy_monthly": -0.8,
+  "trades": 830
+ },
+ "drift_short 8% hold 20d (2004+)": {
+  "cagr": -8.6,
+  "max_dd": -89.7,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": -16.3,
+   "2020 covid": 10.5,
+   "2022 bear": 18.1
+  },
+  "avg_in_spy_down_months": 1.37,
+  "corr_spy_monthly": -0.44,
+  "trades": 897
+ },
+ "drift_short 8% hold 60d (2004+)": {
+  "cagr": -14.3,
+  "max_dd": -98.2,
+  "bears": {
+   "2000-02 dot-com": null,
+   "2008 crisis": 92.9,
+   "2020 covid": 22.5,
+   "2022 bear": 44.0
+  },
+  "avg_in_spy_down_months": 3.61,
+  "corr_spy_monthly": -0.74,
+  "trades": 702
+ },
+ "spy_short_below_200d_else_cash": {
+  "cagr": -5.3,
+  "max_dd": -80.3,
+  "bears": {
+   "2000-02 dot-com": 23.9,
+   "2008 crisis": 55.3,
+   "2020 covid": 17.3,
+   "2022 bear": 8.2
+  },
+  "avg_in_spy_down_months": 1.05,
+  "corr_spy_monthly": -0.64,
+  "trades": null
+ },
+ "spy_short_below_100d_else_cash": {
+  "cagr": -7.3,
+  "max_dd": -89.4,
+  "bears": {
+   "2000-02 dot-com": -1.3,
+   "2008 crisis": 54.6,
+   "2020 covid": 31.5,
+   "2022 bear": 5.2
+  },
+  "avg_in_spy_down_months": 1.0,
+  "corr_spy_monthly": -0.68,
+  "trades": null
+ },
+ "spy_long_above_short_below_200d": {
+  "cagr": 0.6,
+  "max_dd": -57.9,
+  "bears": {
+   "2000-02 dot-com": -7.3,
+   "2008 crisis": 33.8,
+   "2020 covid": -3.8,
+   "2022 bear": -7.6
+  },
+  "avg_in_spy_down_months": -1.28,
+  "corr_spy_monthly": 0.04,
+  "trades": null
+ },
+ "live_dip_strategy": {
+  "cagr": 14.9,
+  "max_dd": -25.4,
+  "bears": {
+   "2000-02 dot-com": 8.7,
+   "2008 crisis": 1.5,
+   "2020 covid": -6.8,
+   "2022 bear": 4.6
+  },
+  "avg_in_spy_down_months": -1.69,
+  "corr_spy_monthly": 0.49
+ },
+ "combos_70_dip_30_x": {
+  "rip_short 10% weak stocks": {
+   "cagr": 9.5,
+   "max_dd": -28.1,
+   "bears": {
+    "2000-02 dot-com": 22.0,
+    "2008 crisis": 52.6,
+    "2020 covid": 3.0,
+    "2022 bear": 5.9
+   },
+   "avg_in_spy_down_months": -0.27,
+   "corr_spy_monthly": 0.1
+  },
+  "drift_short 6% hold 60d (2004+)": {
+   "cagr": 4.5,
+   "max_dd": -36.7,
+   "bears": {
+    "2000-02 dot-com": null,
+    "2008 crisis": 27.9,
+    "2020 covid": 8.2,
+    "2022 bear": 11.3
+   },
+   "avg_in_spy_down_months": -0.13,
+   "corr_spy_monthly": -0.03
+  },
+  "spy_short_below_200d_else_cash": {
+   "cagr": 8.9,
+   "max_dd": -23.0,
+   "bears": {
+    "2000-02 dot-com": 15.0,
+    "2008 crisis": 16.2,
+    "2020 covid": 0.1,
+    "2022 bear": 6.1
+   },
+   "avg_in_spy_down_months": -0.87,
+   "corr_spy_monthly": 0.29
+  }
+ }
+}
