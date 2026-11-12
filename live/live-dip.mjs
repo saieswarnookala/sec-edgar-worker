@@ -160,7 +160,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const allowed = new Set([...g.members, ...etfs, ...Object.keys(held)]);
     const maxOrderUsd = +(E.MAX_ORDER_USD || Math.max(5, equity * 0.2));
     const problems = checkLimits(orders, { equity, held, prices: g.prices, allowed, maxOrderUsd });
-    Object.assign(log, { account_value: accountValue, equity_used: equity, buying_power: before.money.buying_power, park: g.park || 'CASH', signals: Object.keys(g.scores).length, skipped_heavy_volume: g.skipped_heavy_volume, plan: orders });
+    Object.assign(log, { account_value: accountValue, equity_used: equity, buying_power: before.money.buying_power, park: g.park || 'CASH', signals: Object.keys(g.scores).length, signal_list: Object.entries(g.scores).sort((a, b) => a[1] - b[1]).map(([k, v]) => `${k} ${(v * 100).toFixed(1)}%`), skipped_heavy_volume: g.skipped_heavy_volume, plan: orders });
     if (problems.length) { writeFileSync(HALT, `Safety check failed on ${today}: ${problems.join('; ')}`); throw new Error('safety check failed: ' + problems.join('; ')); }
     const placed = [], failed = [];
     const place = async (o) => {
@@ -187,7 +187,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
     const lines = placed.map((p) => `${p.side.toUpperCase()} ${p.symbol} ${p.dollars != null ? '$' + p.dollars.toFixed(2) : p.shares + ' sh'} (${p.why})`);
-    await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`)].join('\n') || 'No trades today.', { priority: failed.length ? 4 : MODE === 'live' ? 3 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
+    await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`), `Dips: ${log.signal_list.join(', ') || 'none'} | parking: ${log.park}`].join('\n'), { priority: failed.length ? 4 : MODE === 'live' ? 3 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
   } catch (e) {
     log.error = String(e.message || e);
     const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(log.error);
