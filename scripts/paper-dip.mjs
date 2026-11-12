@@ -1,5 +1,5 @@
 // "Dip + smart exit + Clear Leader parking" PAPER trader ($10k). PAPER ONLY: endpoint is hard-coded.
-// Runs ~3:15-3:49 pm ET on weekdays and places MARKET-ON-CLOSE orders (fills at the 4:00 pm close).
+// Runs ~3:25-3:40 pm ET on weekdays (12:25-12:40 pm on 1 pm half days) and places MARKET-ON-CLOSE orders (fills at the 4:00 pm close).
 // Rule (from dip_fast_robust backtest, main settings):
 //   Entry: S&P 500 stock above its 200-day average that fell >= 10% more than SPY over the last 5 trading days.
 //          Biggest dips first, up to 10 positions, 10% of equity each.
@@ -27,6 +27,10 @@ export function dipScore(closes, px, spyCloses, spyPx) {
 }
 // Typical share of a day's volume traded by a given time (ET minutes since midnight), U-shaped curve incl. closing auction.
 const VOL_CURVE = [[570, 0], [600, 0.12], [660, 0.25], [720, 0.35], [780, 0.43], [840, 0.52], [900, 0.64], [930, 0.74], [960, 1]];
+// Half days (1 pm close): squeeze the same curve into the shorter session.
+export function sessionMinute(min, closeMin = 960) { return closeMin >= 960 ? min : 570 + (min - 570) * 390 / (closeMin - 570); }
+// Trade window: the hour before the close, last run 2 min before it (regular day = 3:00-3:57 pm ET).
+export function inWindow(nyMin, closeMin = 960) { return nyMin >= closeMin - 60 && nyMin < closeMin - 2; }
 export function volFraction(min) {
   if (min <= 570) return 0; if (min >= 960) return 1;
   for (let i = 1; i < VOL_CURVE.length; i++) { const [m1, f1] = VOL_CURVE[i], [m0, f0] = VOL_CURVE[i - 1]; if (min <= m1) return f0 + (f1 - f0) * (min - m0) / (m1 - m0); }
@@ -78,7 +82,7 @@ export function decide({ today, days, state, held, equity, prices, closes, score
 
 // Market data + signals (shared by the Alpaca paper bot and the live Robinhood runner in live/).
 // api(base, path) must be an authenticated Alpaca fetcher (data only is used here).
-export async function gatherSignals({ api, today, days }) {
+export async function gatherSignals({ api, today, days, closeMin = 960 }) {
   const out = {};
   // universe
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': 'sec-edgar-worker paper-dip/1.0' } })).text();
@@ -116,7 +120,7 @@ export async function gatherSignals({ api, today, days }) {
       for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + vp); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) { const m = new Date(b.t); const hm = +new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(m) * 60 + m.getUTCMinutes(); if (hm >= 570) partial[s] = (partial[s] || 0) + b.v; } if (!js.next_page_token) break; vp.set('page_token', js.next_page_token); }
     } catch (e) { out.volume_error = String(e.message || e).slice(0, 200); }
   }
-  const frac = volFraction(cutMin);
+  const frac = volFraction(sessionMinute(cutMin, closeMin));
   for (const s of cands0) {
     const est = partial[s] && frac > 0.2 ? partial[s] / frac : null, r = volumeRatio(vols[s] || [], est);
     volInfo[s] = { ratio: r == null ? null : +r.toFixed(2), today_est: est ? Math.round(est) : null };
@@ -135,13 +139,15 @@ async function main() {
   const acct = await api(PAPER, '/v2/account'), equity = +acct.equity;
   const cal = await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`);
   const days = cal.map((c) => c.date);
+  const todayCal = cal.find((c) => c.date === today), closeMin = todayCal ? +todayCal.close.slice(0, 2) * 60 + +todayCal.close.slice(3, 5) : 960;
   const file = 'data/paper_dip_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
   const log = { run: new Date().toISOString(), today, ny_time: `${nyParts.hour}:${nyParts.minute}`, equity, dry, own_account: own };
   const force = process.env.FORCE === '1';
   if (days.at(-1) !== today && !force) { console.log('market closed today', today); return; }
-  if (!force && (nyMin < 15 * 60 || nyMin >= 15 * 60 + 58)) { console.log('outside 3:00-3:57 pm ET window', log.ny_time); return; }
+  if (closeMin < 960) log.half_day_close = todayCal.close;
+  if (!force && !inWindow(nyMin, closeMin)) { console.log(`outside trade window (close ${todayCal?.close || '16:00'} ET)`, log.ny_time); return; }
   if (!force && !dry && (state.history || []).some((h) => h.today === today && !h.dry)) { console.log('already traded today', today); return; }
-  const g = await gatherSignals({ api, today, days });
+  const g = await gatherSignals({ api, today, days, closeMin });
   const { etfs, closes, prices, scores, park, clPos } = g;
   if (g.volume_error) log.volume_error = g.volume_error;
   if (g.skipped_heavy_volume) log.skipped_heavy_volume = g.skipped_heavy_volume;

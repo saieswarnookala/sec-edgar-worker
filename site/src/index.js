@@ -91,6 +91,8 @@ export const TIMERS = {
   '35 12 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],         // backup: 7:35 / 8:35 ET
   '25 19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // 3:25 pm ET (summer 19:25 UTC, winter 20:25 UTC); off-window hour exits
   '40 19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // backup: 3:40 pm ET (GitHub can take ~10 min to start a run)
+  '25 16,17 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // 12:25 pm ET for 1 pm half days; the bot exits on normal days
+  '40 16,17 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],   // backup 12:40 pm ET
 };
 export async function runTimer(cron, env, fetchFn = fetch) {
   const t = TIMERS[cron];

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -23,6 +23,15 @@ ok('decide: exits, entries, parking resize', () => {
   assert.equal(d.buys[0].qty, 25);                                  // 10% of $10k / $40
   assert.ok(d.parkTrades.some((t) => t.symbol === 'SPY' && t.side === 'sell'));
   assert.ok(d.parkTrades.some((t) => t.symbol === 'QQQ' && t.side === 'buy'));
+});
+ok('half day: trade window is 12:00-12:57 pm, normal day 3:00-3:57 pm', () => {
+  assert.ok(inWindow(15 * 60 + 25) && !inWindow(12 * 60 + 25) && !inWindow(15 * 60 + 58));
+  assert.ok(inWindow(12 * 60 + 25, 780) && !inWindow(15 * 60 + 25, 780) && !inWindow(12 * 60 + 58, 780));
+});
+ok('half day: volume curve squeezed into the 9:30-1:00 session', () => {
+  assert.equal(sessionMinute(900), 900);
+  assert.equal(sessionMinute(780, 780), 960);                        // 1:00 pm close = end of curve; 12:28 on a half day ~ 3:00 on a normal day
+  assert.ok(Math.abs(volFraction(sessionMinute(12 * 60 + 28, 780)) - volFraction(15 * 60)) < 0.02);
 });
 console.log(`\n${n} passed`);
 
