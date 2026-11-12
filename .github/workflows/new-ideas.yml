@@ -1,0 +1,43 @@
+name: New strategy ideas
+on:
+  workflow_dispatch:
+    inputs:
+      modes:
+        description: 'JSON list of tests'
+        default: '["insider", "buyback", "additions", "high52"]'
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: ${{ fromJSON(inputs.modes) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/*.parquet
+          key: sp500data-snapshot-2026-11
+      - run: pip install pandas pyarrow numpy
+      - name: Run test
+        shell: bash
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          set -o pipefail; python -u scripts/new_ideas.py ${{ matrix.mode }} 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+      - name: Commit
+        if: always()
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/new_ideas_${{ matrix.mode }}.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -qm "new ideas: ${{ matrix.mode }}"
+          for i in 1 2 3 4 5 6; do out=$(git pull --rebase --autostash -X theirs 2>&1 && git push 2>&1) && exit 0; echo "::warning::push try $i"; sleep $((RANDOM % 10 + 5)); done
+          exit 1
