@@ -40,7 +40,7 @@ px = px[px.ticker.isin(set(mem.ticker) | {"SPY"})].copy(); px["aopen"] = px.open
 dates = pd.DatetimeIndex(sorted(px[px.ticker == "SPY"].date.unique())); ALLT = sorted(px.ticker.unique())
 P = lambda v: px.pivot_table(index="date", columns="ticker", values=v, dropna=False).reindex(index=dates, columns=ALLT)
 C, O = P("adj_close"), P("aopen")
-SPL = px[px.stock_splits.fillna(0) > 0][["date", "ticker", "stock_splits"]] if MODE == "buyback" else None
+SPL = px[px.stock_splits.fillna(0) > 0][["date", "ticker", "stock_splits"]] if MODE.startswith("buyback") else None
 del px
 tick = [t for t in ALLT if t != "SPY"]; TI = {t: i for i, t in enumerate(tick)}
 valid = C[tick].notna(); Cf = C.ffill()
@@ -56,19 +56,20 @@ D = len(dates); di = lambda d: int(np.searchsorted(dates.values, np.datetime64(p
 monthstart = np.r_[True, dates.month[1:] != dates.month[:-1]]
 PARK = {"spy": spyr, "cash": np.zeros(D)}
 
-def sim(S, R, hold, slots, park, start, end=None, monthly=False):
+def sim(S, R, hold, slots, park, start, end=None, monthly=False, reb=None, contrib=None):
     """S, R: (D x N) bool / float. Buy top-R signals at next open, hold `hold` days (renewed if still signalled), 1/slots each."""
-    end = end or D; eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []
+    end = end or D; eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []; reb = monthstart if reb is None else reb
     for t in range(start, end):
         used = sum(p[2] for p in pos); day = 0.0
         for p in pos:
             g = OC[t, p[0]] if p[1] == 0 else Rt[t, p[0]]; p[3] *= 1 + g; day += p[2] * g
+            if contrib is not None: contrib[p[0]] = contrib.get(p[0], 0.0) + p[2] * (g - park[t])
         day += max(0.0, 1 - used) * park[t]; inv.append(used); eq *= 1 + day
         keep = []
         for p in pos:
             g = OC[t, p[0]] if p[1] == 0 else Rt[t, p[0]]
             p[1] += 1; p[2] *= (1 + g) / (1 + day)
-            if (p[1] >= hold - 5 and monthstart[t]) if monthly else p[1] >= hold:   # monthly ideas exit only on rebalance days
+            if (p[1] >= hold - 5 and reb[t]) if monthly else p[1] >= hold:   # monthly ideas exit only on rebalance days
                 if S[t, p[0]]: p[1] = 1; keep.append(p); continue          # still a signal: keep holding, no trade
                 eq *= 1 - COST * p[2]; tr.append(p[3] - 1 - 2 * COST)
             else: keep.append(p)
@@ -126,6 +127,43 @@ def cik_map():
     for t, v in j.items():
         if v.get("cik") and t in TI: m.setdefault(int(v["cik"]), []).append(t)
     return m
+
+def buyback_obs():
+    cm = cik_map(); obs = {}   # ticker -> DataFrame(filed, shares)
+    for i, (cik, tks) in enumerate(cm.items()):
+        j = sec(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"); time.sleep(0.12)
+        if not j: continue
+        f = j.get("facts", {}); rows = None
+        for ns, tag in [("dei", "EntityCommonStockSharesOutstanding"), ("us-gaap", "CommonStockSharesOutstanding")]:
+            u = f.get(ns, {}).get(tag, {}).get("units", {}).get("shares")
+            if u: rows = pd.DataFrame(u); break
+        if rows is None or rows.empty: continue
+        rows = rows[rows.form.isin(["10-K", "10-Q", "10-K/A", "10-Q/A"])]
+        s = rows.groupby("accn").agg(filed=("filed", "first"), shares=("val", "sum")).reset_index()   # sum share classes per filing
+        s["filed"] = pd.to_datetime(s.filed); s = s.sort_values("filed").drop_duplicates("filed", keep="last")
+        for tk in tks: obs[tk] = s[["filed", "shares"]].values
+        if i % 100 == 0: print("companyfacts", i, len(cm), flush=True)
+    splits = {t: g.set_index("date").stock_splits for t, g in SPL.groupby("ticker")}
+    return obs, splits
+
+def chg_matrix(obs, splits, reb, lag_days=0):
+    CHG = np.full((D, len(tick)), np.nan)
+    for tk, a in obs.items():
+        j = TI[tk]; fd = pd.DatetimeIndex(a[:, 0]); sh = a[:, 1].astype(float); sp = splits.get(tk)
+        for t in np.where(reb)[0]:
+            d = dates[t] - pd.Timedelta(days=lag_days)
+            i1 = fd.searchsorted(d, "right") - 1
+            if i1 < 0 or (d - fd[i1]).days > 130: continue
+            win = np.where((fd <= d - pd.Timedelta(days=300)) & (fd >= d - pd.Timedelta(days=430)))[0]
+            if not len(win): continue
+            i0 = win[-1]; adj = 1.0
+            if sp is not None:
+                k = sp[(sp.index > fd[i0]) & (sp.index <= fd[i1])]
+                if len(k): adj = float(np.prod(k.values))
+            if sh[i0] <= 0: continue
+            c = sh[i1] / (sh[i0] * adj) - 1
+            if -0.4 < c < 0.4: CHG[t, j] = c
+    return CHG
 
 # ---------------- modes
 if MODE == "high52":
@@ -217,38 +255,8 @@ elif MODE == "insider":
              extra={"quarters_loaded": loaded, "purchase_filings": int(len(E))})
 
 elif MODE == "buyback":
-    cm = cik_map(); obs = {}   # ticker -> DataFrame(filed, shares)
-    for i, (cik, tks) in enumerate(cm.items()):
-        j = sec(f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"); time.sleep(0.12)
-        if not j: continue
-        f = j.get("facts", {}); rows = None
-        for ns, tag in [("dei", "EntityCommonStockSharesOutstanding"), ("us-gaap", "CommonStockSharesOutstanding")]:
-            u = f.get(ns, {}).get(tag, {}).get("units", {}).get("shares")
-            if u: rows = pd.DataFrame(u); break
-        if rows is None or rows.empty: continue
-        rows = rows[rows.form.isin(["10-K", "10-Q", "10-K/A", "10-Q/A"])]
-        s = rows.groupby("accn").agg(filed=("filed", "first"), shares=("val", "sum")).reset_index()   # sum share classes per filing
-        s["filed"] = pd.to_datetime(s.filed); s = s.sort_values("filed").drop_duplicates("filed", keep="last")
-        for tk in tks: obs[tk] = s[["filed", "shares"]].values
-        if i % 100 == 0: print("companyfacts", i, len(cm), flush=True)
-    splits = {t: g.set_index("date").stock_splits for t, g in SPL.groupby("ticker")}
-    CHG = np.full((D, len(tick)), np.nan)
-    for tk, a in obs.items():
-        j = TI[tk]; fd = pd.DatetimeIndex(a[:, 0]); sh = a[:, 1].astype(float); sp = splits.get(tk)
-        for t in np.where(monthstart)[0]:
-            d = dates[t]
-            i1 = fd.searchsorted(d, "right") - 1
-            if i1 < 0 or (d - fd[i1]).days > 130: continue
-            win = np.where((fd <= d - pd.Timedelta(days=300)) & (fd >= d - pd.Timedelta(days=430)))[0]
-            if not len(win): continue
-            i0 = win[-1]; adj = 1.0
-            if sp is not None:
-                k = sp[(sp.index > fd[i0]) & (sp.index <= fd[i1])]
-                if len(k): adj = float(np.prod(k.values))
-            if sh[i0] <= 0: continue
-            c = sh[i1] / (sh[i0] * adj) - 1
-            if -0.4 < c < 0.4: CHG[t, j] = c
-    print("stocks with share-count history:", len(obs), "signal months with data:", int((~np.isnan(CHG)).any(1).sum()), flush=True)
+    obs, splits = buyback_obs(); CHG = chg_matrix(obs, splits, monthstart)
+    print("stocks with share-count history:", len(obs), flush=True)
     Mv = M.values
     def S(kw):
         out = np.zeros((D, len(tick)), bool)
@@ -260,5 +268,83 @@ elif MODE == "buyback":
     grid = grid_of(shrink=[0.01, 0.03, 0.05], slots=[10, 20, 30], hold=[21, 63], park=["spy"])
     evaluate(S, lambda kw: Rb, grid, 2011, 2019, lambda kw: f"shares down >= {int(kw['shrink'] * 100)}% in a year, top {kw['slots']}, hold {kw['hold']}d",
              extra={"stocks_with_share_history": len(obs)})
+elif MODE == "buyback2":
+    # Is the buyback edge real or luck? Nearby settings, timing, data lag, random-picks test, top-contributor removal, year by year.
+    obs, splits = buyback_obs(); Mv = M.values
+    s0, sp = di("2011-01-01"), di("2019-01-01")
+    spyc = pd.Series(spy.values[s0:], index=dates[s0:])
+    bench = {"SPY_full": cagr(spyc), "SPY_dd": mdd(spyc), "SPY_A": cagr(spyc.iloc[:sp - s0]), "SPY_B": cagr(spyc.iloc[sp - s0:]), "A": "2011-2018", "B": "2019-2026"}
+    dom = np.zeros(D, int)
+    for t in range(1, D): dom[t] = 0 if monthstart[t] else dom[t - 1] + 1
+    def topk(CHG, k, excl=()):
+        out = np.zeros((D, len(tick)), bool)
+        for t in np.where(~np.isnan(CHG).all(1))[0]:
+            ok = np.where(Mv[t] & (CHG[t] < 0))[0]
+            if excl: ok = np.array([c for c in ok if c not in excl], int)
+            if len(ok): out[t, ok[np.argsort(CHG[t, ok])][:k]] = True
+        return out
+    def run(CHG, k, hold, reb=monthstart, excl=(), contrib=None, S=None):
+        S = topk(CHG, k, excl) if S is None else S
+        c, tr, inv = sim(S, np.nan_to_num(-CHG, nan=-9), hold, k, PARK["spy"], s0, monthly=True, reb=reb, contrib=contrib)
+        return c, dict(cagr=cagr(c), dd=mdd(c), A=cagr(c.iloc[:sp - s0]), B=cagr(c.iloc[sp - s0:]), trades_per_yr=round(len(tr) / (len(c) / 252), 1),
+                       win=round(100 * float(np.mean(np.array(tr) > 0)), 1) if tr else None)
+    OUT = {"mode": MODE, "built": time.strftime("%Y-%m-%d"), "benchmark": bench, "stocks_with_share_history": len(obs)}
+    CH0 = chg_matrix(obs, splits, monthstart)
+    # 1. how many stocks (slots) x hold
+    grid = []
+    for k in [3, 5, 7, 8, 10, 12, 15, 20, 25, 30, 40]:
+        for h in [21, 63, 126]:
+            _, r = run(CH0, k, h); r.update(slots=k, hold=h); grid.append(r); print("slots", k, "hold", h, r, flush=True)
+    OUT["slots_grid"] = grid
+    # 2. rebalance day within the month
+    reb_res = []
+    for off in [0, 5, 10, 15]:
+        reb = (dom == off); CH = CH0 if off == 0 else chg_matrix(obs, splits, reb)
+        for k in [7, 10, 15]:
+            _, r = run(CH, k, 63, reb=reb); r.update(trading_day_of_month=off, slots=k); reb_res.append(r); print("reb", off, k, r, flush=True)
+    OUT["rebalance_day"] = reb_res
+    # 3. assume filings reach us late
+    lag_res = []
+    for lag in [0, 10, 30, 60]:
+        CH = CH0 if lag == 0 else chg_matrix(obs, splits, monthstart, lag)
+        _, r = run(CH, 10, 63); r.update(lag_days=lag); lag_res.append(r); print("lag", lag, r, flush=True)
+    OUT["filing_lag"] = lag_res
+    # 4. luck test: 10 random stocks a month (a) from all shrinkers, (b) from everyone with data
+    rng = np.random.default_rng(7); luck = {}; RZ = np.zeros((D, len(tick))); _, top10 = run(CH0, 10, 63)
+    for name, pool in [("random_shrinkers", lambda t: np.where(Mv[t] & (CH0[t] < -0.01))[0]), ("random_any", lambda t: np.where(Mv[t] & ~np.isnan(CH0[t]))[0])]:
+        vals = []
+        for i in range(200):
+            S = np.zeros((D, len(tick)), bool)
+            for t in np.where(monthstart)[0]:
+                ok = pool(t)
+                if len(ok): S[t, rng.choice(ok, min(10, len(ok)), replace=False)] = True
+            c, tr, _ = sim(S, RZ, 63, 10, PARK["spy"], s0, monthly=True)
+            vals.append(cagr(c))
+        luck[name] = {"top10_beats_pct_of_random": round(100 * float(np.mean(np.array(vals) < top10["cagr"])), 1), "median": float(np.median(vals)), "p90": float(np.percentile(vals, 90)), "p99": float(np.percentile(vals, 99)), "max": float(max(vals))}
+        print("luck", name, luck[name], flush=True)
+    luck["top10_actual"] = top10["cagr"]
+    OUT["luck"] = luck
+    # 5. which stocks drive it; remove the biggest contributors entirely
+    con = {}; c10, _ = run(CH0, 10, 63, contrib=con)
+    top = sorted(con.items(), key=lambda x: -x[1])
+    OUT["top_contributors"] = [{"ticker": tick[j], "excess_contribution_pct": round(100 * v, 1)} for j, v in top[:20]]
+    OUT["worst_contributors"] = [{"ticker": tick[j], "excess_contribution_pct": round(100 * v, 1)} for j, v in top[-10:]]
+    OUT["stocks_traded"] = len(con)
+    rm = []
+    for n in [1, 3, 5, 10, 20]:
+        ex = {j for j, _ in top[:n]}
+        _, r = run(CH0, 10, 63, excl=ex); r.update(removed_top=n, removed=[tick[j] for j in ex]); rm.append(r); print("remove top", n, r["cagr"], r["B"], flush=True)
+    OUT["remove_top_contributors"] = rm
+    # 6. year by year vs SPY
+    yr = []
+    c20, _ = run(CH0, 20, 63)
+    for y in range(2011, 2027):
+        m = (c10.index.year == y)
+        if m.sum() < 20: continue
+        f = lambda c: round(100 * (c[m].iloc[-1] / c[m].iloc[0] - 1), 1)
+        yr.append({"year": y, "top10": f(c10), "top20": f(c20), "SPY": f(spyc)})
+    OUT["years"] = yr; OUT["years_top10_beat_SPY"] = sum(r["top10"] > r["SPY"] for r in yr); OUT["years_counted"] = len(yr)
+    json.dump(OUT, open(f"data/new_ideas_{MODE}.json", "w"), indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o))
+    print(json.dumps({k: v for k, v in OUT.items() if k not in ("slots_grid", "rebalance_day")}, indent=1, default=str))
 else:
     raise SystemExit("unknown mode " + MODE)
