@@ -61,8 +61,16 @@ All "realistic" = trading costs included; after tax = federal 24% short-term / 1
 | All short selling (mirror dip, mirror drift, SPY short, lottery, volatility, losers, long/short, hedged dip) | −4% to −25%/yr; big crash gains | Market rises most years; short losses compound; edge is in small hard-to-borrow stocks |
 | Buying options (calls, protective puts) | −1% to −14%/yr; puts cut returns | Buyers pay the premium |
 | Selling options (Cboe PutWrite index, real data 1996–2026) | 8.6%/yr, −37% vs SPY 10.3%, −55% | Less than SPY and far less than dip; Robinhood agent can't trade options |
+| Insider buying clusters (SEC Form 4, 2007–2026) | Best 13.3% vs SPY 10.8% but −50 to −63% drops; picked on 2007–15 → 12.3% in 2016–26 vs SPY 14.9% | Failed unseen years |
+| Buy on joining S&P 500 / 52-week-high momentum (1998–2026) | Joins 4–8%, 52w high 6–11% vs SPY 9.2% | Below SPY |
+| Buy on removal from S&P 500 | Up to 20% but all from 1998–2011; 2012–26 ≤ SPY | Edge is in the past |
 
 Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, data/short_side.json, data/short_research.json, data/options_research.json, data/india_*.json, data/dip_slots.json, data/dip_curve.csv (daily equity of the live dip strategy).
+
+### Promising, needs more checks: net buybacks (Nov 12)
+- Rule: monthly, top 10 S&P 500 stocks whose share count fell most over the past year (SEC cover-page shares, split-adjusted, ~2011–2026), hold ≥ 63 days.
+- 17.8%/yr vs SPY 13.9%, worst drop −43% vs −34%; 2011–18 13.1% vs 11.1%, 2019–26 22.7% vs 16.9%. Top 20: 15.2%, top 30 ≈ SPY (edge sits in the most extreme names).
+- Next checks before any paper bot: which stocks drive it (concentration), random-picks luck test, after tax, as a sleeve beside the dip strategy. File data/new_ideas_buyback.json (scripts/new_ideas.py, new-ideas.yml).
 
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
@@ -95,11 +103,11 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 1. Review daily dry-run alerts vs the paper dip bot.
 2. ~Nov 17: confirm the Robinhood token refreshed itself (`dip status` shows token hours).
 3. After a clean dry week: fund $1,000, set LIVE_MODE=live, approvals on.
-4. Paper dip bot: handle 1 pm half days.
+4. ~~Paper dip bot: handle 1 pm half days.~~ Done Nov 12 (window from calendar close; dip timers now one Cloudflare cron `25,40 16,17,19,20 * * 1-5`, free plan allows 5 triggers).
 5. Build the 6+4 dip + drift capped paper bot.
 6. India balanced strategy: paper tracking; NRI/PIS/US tax advice first.
 7. Maybe later: 30% "future leaders" slice beside the dip strategy.
-8. Sai: revoke the old GitHub token; confirm the $100 Oracle card hold was released.
+8. Sai: revoke the old GitHub token AND the classic ghp_ token pasted Nov 12 (all repos, expires Feb 2027); confirm the $100 Oracle card hold was released.
 9. Backlog: remove old DIP_KEY_ID/DIP_SECRET_KEY from the claimsure-demo repo; drift bot blend-of-9 switch; bump actions/checkout + setup-node (Node 20 deprecation); SLACK_WEBHOOK_URL; walkforward.py; cron typo.
 
 ## 8. Things Sai has asked about (short answers)
