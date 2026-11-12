@@ -71,7 +71,7 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Rule: monthly, top 10 S&P 500 stocks whose share count fell most over the past year (SEC cover-page shares, split-adjusted, 2011–2026), hold >= 63 days: 17.8%/yr vs SPY 13.9%, worst drop −43% vs −34%.
 - Robustness (data/new_ideas_buyback2.json): smooth across 3–40 stocks (fewer = more return and bigger drops; 30–40 stocks ~ SPY); rebalance day and 10–60 day filing lag barely matter; beats 99% of 200 random 10-shrinker portfolios (random shrinkers median 13.1% < SPY).
 - But: WDC alone added ~30 pts of excess; without the top 5 contributors 13.8% (= SPY). Beat SPY only 8 of 16 years; 2019–24 ~12.7%/yr vs SPY ~17.3%; the 2019–26 edge is mostly 2025–26 (+57%, +54%).
-- Verdict: not a replacement for the dip strategy. Maybe later: a small sleeve beside dip, tested as a combo.
+- Verdict: not a replacement for the dip strategy. Maybe later: a small sleeve beside dip, tested as a combo. Doc: docs/BUYBACKS.md; dashboard: Day trading → Buybacks.
 
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
