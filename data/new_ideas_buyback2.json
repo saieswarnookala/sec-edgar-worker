@@ -1,0 +1,843 @@
+{
+ "mode": "buyback2",
+ "built": "2026-11-12",
+ "benchmark": {
+  "SPY_full": 13.9,
+  "SPY_dd": -33.7,
+  "SPY_A": 11.1,
+  "SPY_B": 16.9,
+  "A": "2011-2018",
+  "B": "2019-2026"
+ },
+ "stocks_with_share_history": 708,
+ "slots_grid": [
+  {
+   "cagr": 21.6,
+   "dd": -37.8,
+   "A": 11.6,
+   "B": 32.7,
+   "trades_per_yr": 8.2,
+   "win": 61.5,
+   "slots": 3,
+   "hold": 21
+  },
+  {
+   "cagr": 25.5,
+   "dd": -42.5,
+   "A": 10.9,
+   "B": 42.4,
+   "trades_per_yr": 5.8,
+   "win": 68.1,
+   "slots": 3,
+   "hold": 63
+  },
+  {
+   "cagr": 28.5,
+   "dd": -39.8,
+   "A": 14.3,
+   "B": 44.6,
+   "trades_per_yr": 4.6,
+   "win": 68.1,
+   "slots": 3,
+   "hold": 126
+  },
+  {
+   "cagr": 18.6,
+   "dd": -47.1,
+   "A": 10.3,
+   "B": 27.6,
+   "trades_per_yr": 14.2,
+   "win": 59.6,
+   "slots": 5,
+   "hold": 21
+  },
+  {
+   "cagr": 18.2,
+   "dd": -54.6,
+   "A": 12.2,
+   "B": 24.7,
+   "trades_per_yr": 9.0,
+   "win": 64.8,
+   "slots": 5,
+   "hold": 63
+  },
+  {
+   "cagr": 21.8,
+   "dd": -50.0,
+   "A": 13.3,
+   "B": 31.2,
+   "trades_per_yr": 7.2,
+   "win": 66.4,
+   "slots": 5,
+   "hold": 126
+  },
+  {
+   "cagr": 17.9,
+   "dd": -44.3,
+   "A": 12.3,
+   "B": 23.9,
+   "trades_per_yr": 20.1,
+   "win": 61.2,
+   "slots": 7,
+   "hold": 21
+  },
+  {
+   "cagr": 16.5,
+   "dd": -48.9,
+   "A": 11.7,
+   "B": 21.6,
+   "trades_per_yr": 12.0,
+   "win": 65.1,
+   "slots": 7,
+   "hold": 63
+  },
+  {
+   "cagr": 20.3,
+   "dd": -47.2,
+   "A": 11.9,
+   "B": 29.6,
+   "trades_per_yr": 9.2,
+   "win": 64.8,
+   "slots": 7,
+   "hold": 126
+  },
+  {
+   "cagr": 17.7,
+   "dd": -42.0,
+   "A": 12.1,
+   "B": 23.8,
+   "trades_per_yr": 22.0,
+   "win": 60.9,
+   "slots": 8,
+   "hold": 21
+  },
+  {
+   "cagr": 18.4,
+   "dd": -44.5,
+   "A": 13.9,
+   "B": 23.3,
+   "trades_per_yr": 13.4,
+   "win": 66.4,
+   "slots": 8,
+   "hold": 63
+  },
+  {
+   "cagr": 19.6,
+   "dd": -44.0,
+   "A": 12.3,
+   "B": 27.6,
+   "trades_per_yr": 10.1,
+   "win": 68.1,
+   "slots": 8,
+   "hold": 126
+  },
+  {
+   "cagr": 17.6,
+   "dd": -39.0,
+   "A": 12.1,
+   "B": 23.5,
+   "trades_per_yr": 27.6,
+   "win": 61.7,
+   "slots": 10,
+   "hold": 21
+  },
+  {
+   "cagr": 17.8,
+   "dd": -43.2,
+   "A": 13.1,
+   "B": 22.7,
+   "trades_per_yr": 15.8,
+   "win": 65.6,
+   "slots": 10,
+   "hold": 63
+  },
+  {
+   "cagr": 18.2,
+   "dd": -43.4,
+   "A": 11.4,
+   "B": 25.5,
+   "trades_per_yr": 12.6,
+   "win": 64.3,
+   "slots": 10,
+   "hold": 126
+  },
+  {
+   "cagr": 16.2,
+   "dd": -42.1,
+   "A": 11.5,
+   "B": 21.2,
+   "trades_per_yr": 32.0,
+   "win": 60.6,
+   "slots": 12,
+   "hold": 21
+  },
+  {
+   "cagr": 17.3,
+   "dd": -42.3,
+   "A": 13.5,
+   "B": 21.2,
+   "trades_per_yr": 18.7,
+   "win": 65.2,
+   "slots": 12,
+   "hold": 63
+  },
+  {
+   "cagr": 17.7,
+   "dd": -42.7,
+   "A": 12.1,
+   "B": 23.7,
+   "trades_per_yr": 14.5,
+   "win": 65.5,
+   "slots": 12,
+   "hold": 126
+  },
+  {
+   "cagr": 15.7,
+   "dd": -43.0,
+   "A": 12.7,
+   "B": 18.8,
+   "trades_per_yr": 38.2,
+   "win": 60.4,
+   "slots": 15,
+   "hold": 21
+  },
+  {
+   "cagr": 15.9,
+   "dd": -42.6,
+   "A": 13.1,
+   "B": 18.8,
+   "trades_per_yr": 22.3,
+   "win": 65.4,
+   "slots": 15,
+   "hold": 63
+  },
+  {
+   "cagr": 16.5,
+   "dd": -42.3,
+   "A": 11.8,
+   "B": 21.4,
+   "trades_per_yr": 17.3,
+   "win": 66.3,
+   "slots": 15,
+   "hold": 126
+  },
+  {
+   "cagr": 14.6,
+   "dd": -44.4,
+   "A": 12.4,
+   "B": 16.9,
+   "trades_per_yr": 48.6,
+   "win": 60.3,
+   "slots": 20,
+   "hold": 21
+  },
+  {
+   "cagr": 15.2,
+   "dd": -41.8,
+   "A": 13.3,
+   "B": 17.2,
+   "trades_per_yr": 28.0,
+   "win": 65.0,
+   "slots": 20,
+   "hold": 63
+  },
+  {
+   "cagr": 15.2,
+   "dd": -41.7,
+   "A": 12.1,
+   "B": 18.4,
+   "trades_per_yr": 22.0,
+   "win": 67.4,
+   "slots": 20,
+   "hold": 126
+  },
+  {
+   "cagr": 13.7,
+   "dd": -45.4,
+   "A": 12.0,
+   "B": 15.4,
+   "trades_per_yr": 57.6,
+   "win": 58.7,
+   "slots": 25,
+   "hold": 21
+  },
+  {
+   "cagr": 14.7,
+   "dd": -41.1,
+   "A": 12.7,
+   "B": 16.7,
+   "trades_per_yr": 34.2,
+   "win": 64.9,
+   "slots": 25,
+   "hold": 63
+  },
+  {
+   "cagr": 15.2,
+   "dd": -41.1,
+   "A": 12.1,
+   "B": 18.5,
+   "trades_per_yr": 25.7,
+   "win": 68.2,
+   "slots": 25,
+   "hold": 126
+  },
+  {
+   "cagr": 13.7,
+   "dd": -43.1,
+   "A": 11.7,
+   "B": 15.7,
+   "trades_per_yr": 68.0,
+   "win": 61.0,
+   "slots": 30,
+   "hold": 21
+  },
+  {
+   "cagr": 14.4,
+   "dd": -39.9,
+   "A": 11.9,
+   "B": 16.9,
+   "trades_per_yr": 39.2,
+   "win": 65.5,
+   "slots": 30,
+   "hold": 63
+  },
+  {
+   "cagr": 15.1,
+   "dd": -40.2,
+   "A": 11.8,
+   "B": 18.5,
+   "trades_per_yr": 30.2,
+   "win": 67.1,
+   "slots": 30,
+   "hold": 126
+  },
+  {
+   "cagr": 14.1,
+   "dd": -44.3,
+   "A": 12.7,
+   "B": 15.5,
+   "trades_per_yr": 82.8,
+   "win": 61.5,
+   "slots": 40,
+   "hold": 21
+  },
+  {
+   "cagr": 14.9,
+   "dd": -43.4,
+   "A": 12.9,
+   "B": 16.8,
+   "trades_per_yr": 49.3,
+   "win": 67.1,
+   "slots": 40,
+   "hold": 63
+  },
+  {
+   "cagr": 15.2,
+   "dd": -43.5,
+   "A": 13.0,
+   "B": 17.4,
+   "trades_per_yr": 36.9,
+   "win": 69.8,
+   "slots": 40,
+   "hold": 126
+  }
+ ],
+ "rebalance_day": [
+  {
+   "cagr": 16.5,
+   "dd": -48.9,
+   "A": 11.7,
+   "B": 21.6,
+   "trades_per_yr": 12.0,
+   "win": 65.1,
+   "trading_day_of_month": 0,
+   "slots": 7
+  },
+  {
+   "cagr": 17.8,
+   "dd": -43.2,
+   "A": 13.1,
+   "B": 22.7,
+   "trades_per_yr": 15.8,
+   "win": 65.6,
+   "trading_day_of_month": 0,
+   "slots": 10
+  },
+  {
+   "cagr": 15.9,
+   "dd": -42.6,
+   "A": 13.1,
+   "B": 18.8,
+   "trades_per_yr": 22.3,
+   "win": 65.4,
+   "trading_day_of_month": 0,
+   "slots": 15
+  },
+  {
+   "cagr": 16.5,
+   "dd": -47.7,
+   "A": 11.0,
+   "B": 22.3,
+   "trades_per_yr": 12.0,
+   "win": 63.7,
+   "trading_day_of_month": 5,
+   "slots": 7
+  },
+  {
+   "cagr": 17.2,
+   "dd": -43.2,
+   "A": 12.8,
+   "B": 21.9,
+   "trades_per_yr": 16.6,
+   "win": 65.6,
+   "trading_day_of_month": 5,
+   "slots": 10
+  },
+  {
+   "cagr": 15.2,
+   "dd": -42.2,
+   "A": 12.6,
+   "B": 17.8,
+   "trades_per_yr": 22.6,
+   "win": 64.4,
+   "trading_day_of_month": 5,
+   "slots": 15
+  },
+  {
+   "cagr": 16.7,
+   "dd": -47.7,
+   "A": 10.6,
+   "B": 23.3,
+   "trades_per_yr": 12.0,
+   "win": 60.8,
+   "trading_day_of_month": 10,
+   "slots": 7
+  },
+  {
+   "cagr": 16.9,
+   "dd": -46.0,
+   "A": 12.5,
+   "B": 21.6,
+   "trades_per_yr": 16.5,
+   "win": 65.0,
+   "trading_day_of_month": 10,
+   "slots": 10
+  },
+  {
+   "cagr": 14.7,
+   "dd": -43.4,
+   "A": 12.0,
+   "B": 17.4,
+   "trades_per_yr": 22.5,
+   "win": 63.4,
+   "trading_day_of_month": 10,
+   "slots": 15
+  },
+  {
+   "cagr": 16.2,
+   "dd": -46.9,
+   "A": 10.0,
+   "B": 22.9,
+   "trades_per_yr": 11.5,
+   "win": 59.3,
+   "trading_day_of_month": 15,
+   "slots": 7
+  },
+  {
+   "cagr": 17.3,
+   "dd": -46.1,
+   "A": 13.1,
+   "B": 21.8,
+   "trades_per_yr": 16.3,
+   "win": 64.7,
+   "trading_day_of_month": 15,
+   "slots": 10
+  },
+  {
+   "cagr": 15.5,
+   "dd": -43.9,
+   "A": 13.2,
+   "B": 17.8,
+   "trades_per_yr": 23.2,
+   "win": 65.6,
+   "trading_day_of_month": 15,
+   "slots": 15
+  }
+ ],
+ "filing_lag": [
+  {
+   "cagr": 17.8,
+   "dd": -43.2,
+   "A": 13.1,
+   "B": 22.7,
+   "trades_per_yr": 15.8,
+   "win": 65.6,
+   "lag_days": 0
+  },
+  {
+   "cagr": 18.4,
+   "dd": -44.4,
+   "A": 13.2,
+   "B": 23.9,
+   "trades_per_yr": 15.8,
+   "win": 65.2,
+   "lag_days": 10
+  },
+  {
+   "cagr": 18.2,
+   "dd": -43.2,
+   "A": 13.6,
+   "B": 23.0,
+   "trades_per_yr": 15.4,
+   "win": 66.0,
+   "lag_days": 30
+  },
+  {
+   "cagr": 19.2,
+   "dd": -41.9,
+   "A": 14.1,
+   "B": 24.7,
+   "trades_per_yr": 15.3,
+   "win": 64.0,
+   "lag_days": 60
+  }
+ ],
+ "luck": {
+  "random_shrinkers": {
+   "top10_beats_pct_of_random": 99.0,
+   "median": 13.1,
+   "p90": 15.91,
+   "p99": 17.702999999999996,
+   "max": 18.4
+  },
+  "random_any": {
+   "top10_beats_pct_of_random": 100.0,
+   "median": 11.7,
+   "p90": 14.6,
+   "p99": 17.1,
+   "max": 17.6
+  },
+  "top10_actual": 17.8
+ },
+ "top_contributors": [
+  {
+   "ticker": "WDC",
+   "excess_contribution_pct": 30.3
+  },
+  {
+   "ticker": "GME",
+   "excess_contribution_pct": 9.2
+  },
+  {
+   "ticker": "MPC",
+   "excess_contribution_pct": 6.9
+  },
+  {
+   "ticker": "JBL",
+   "excess_contribution_pct": 6.7
+  },
+  {
+   "ticker": "UAL",
+   "excess_contribution_pct": 6.4
+  },
+  {
+   "ticker": "SYF",
+   "excess_contribution_pct": 6.4
+  },
+  {
+   "ticker": "CF",
+   "excess_contribution_pct": 6.2
+  },
+  {
+   "ticker": "TPR",
+   "excess_contribution_pct": 6.1
+  },
+  {
+   "ticker": "AZO",
+   "excess_contribution_pct": 5.8
+  },
+  {
+   "ticker": "ELV",
+   "excess_contribution_pct": 5.2
+  },
+  {
+   "ticker": "TT",
+   "excess_contribution_pct": 4.3
+  },
+  {
+   "ticker": "GM",
+   "excess_contribution_pct": 4.0
+  },
+  {
+   "ticker": "GAP",
+   "excess_contribution_pct": 3.9
+  },
+  {
+   "ticker": "CRM",
+   "excess_contribution_pct": 3.7
+  },
+  {
+   "ticker": "VLO",
+   "excess_contribution_pct": 3.7
+  },
+  {
+   "ticker": "PTC",
+   "excess_contribution_pct": 3.3
+  },
+  {
+   "ticker": "GE",
+   "excess_contribution_pct": 3.2
+  },
+  {
+   "ticker": "MMM",
+   "excess_contribution_pct": 3.1
+  },
+  {
+   "ticker": "HAL",
+   "excess_contribution_pct": 3.0
+  },
+  {
+   "ticker": "DTE",
+   "excess_contribution_pct": 3.0
+  }
+ ],
+ "worst_contributors": [
+  {
+   "ticker": "HWM",
+   "excess_contribution_pct": -3.7
+  },
+  {
+   "ticker": "BBY",
+   "excess_contribution_pct": -3.7
+  },
+  {
+   "ticker": "JCI",
+   "excess_contribution_pct": -4.1
+  },
+  {
+   "ticker": "EBAY",
+   "excess_contribution_pct": -4.7
+  },
+  {
+   "ticker": "BFH",
+   "excess_contribution_pct": -5.4
+  },
+  {
+   "ticker": "NOV",
+   "excess_contribution_pct": -5.4
+  },
+  {
+   "ticker": "AIG",
+   "excess_contribution_pct": -5.5
+  },
+  {
+   "ticker": "DXC",
+   "excess_contribution_pct": -5.8
+  },
+  {
+   "ticker": "DVN",
+   "excess_contribution_pct": -6.9
+  },
+  {
+   "ticker": "SIG",
+   "excess_contribution_pct": -7.1
+  }
+ ],
+ "stocks_traded": 169,
+ "remove_top_contributors": [
+  {
+   "cagr": 15.7,
+   "dd": -43.2,
+   "A": 13.1,
+   "B": 18.5,
+   "trades_per_yr": 15.8,
+   "win": 65.5,
+   "removed_top": 1,
+   "removed": [
+    "WDC"
+   ]
+  },
+  {
+   "cagr": 14.8,
+   "dd": -43.2,
+   "A": 11.8,
+   "B": 18.0,
+   "trades_per_yr": 16.3,
+   "win": 65.4,
+   "removed_top": 3,
+   "removed": [
+    "MPC",
+    "WDC",
+    "GME"
+   ]
+  },
+  {
+   "cagr": 13.8,
+   "dd": -43.1,
+   "A": 10.8,
+   "B": 16.9,
+   "trades_per_yr": 16.5,
+   "win": 64.8,
+   "removed_top": 5,
+   "removed": [
+    "JBL",
+    "UAL",
+    "MPC",
+    "GME",
+    "WDC"
+   ]
+  },
+  {
+   "cagr": 11.1,
+   "dd": -43.1,
+   "A": 10.1,
+   "B": 12.2,
+   "trades_per_yr": 16.5,
+   "win": 63.5,
+   "removed_top": 10,
+   "removed": [
+    "JBL",
+    "CF",
+    "SYF",
+    "UAL",
+    "MPC",
+    "GME",
+    "TPR",
+    "ELV",
+    "AZO",
+    "WDC"
+   ]
+  },
+  {
+   "cagr": 8.0,
+   "dd": -43.1,
+   "A": 7.7,
+   "B": 8.2,
+   "trades_per_yr": 16.6,
+   "win": 60.5,
+   "removed_top": 20,
+   "removed": [
+    "TT",
+    "GE",
+    "JBL",
+    "MMM",
+    "UAL",
+    "MPC",
+    "GME",
+    "ELV",
+    "GM",
+    "CRM",
+    "HAL",
+    "PTC",
+    "VLO",
+    "SYF",
+    "WDC",
+    "CF",
+    "TPR",
+    "GAP",
+    "AZO",
+    "DTE"
+   ]
+  }
+ ],
+ "years": [
+  {
+   "year": 2011,
+   "top10": 10.0,
+   "top20": 7.1,
+   "SPY": 0.8
+  },
+  {
+   "year": 2012,
+   "top10": 30.2,
+   "top20": 24.8,
+   "SPY": 14.2
+  },
+  {
+   "year": 2013,
+   "top10": 61.0,
+   "top20": 60.0,
+   "SPY": 29.0
+  },
+  {
+   "year": 2014,
+   "top10": 4.7,
+   "top20": 8.2,
+   "SPY": 14.6
+  },
+  {
+   "year": 2015,
+   "top10": -8.4,
+   "top20": -8.9,
+   "SPY": 1.3
+  },
+  {
+   "year": 2016,
+   "top10": 24.3,
+   "top20": 22.3,
+   "SPY": 13.6
+  },
+  {
+   "year": 2017,
+   "top10": 10.6,
+   "top20": 20.0,
+   "SPY": 20.8
+  },
+  {
+   "year": 2018,
+   "top10": -13.0,
+   "top20": -13.8,
+   "SPY": -5.2
+  },
+  {
+   "year": 2019,
+   "top10": 23.0,
+   "top20": 25.6,
+   "SPY": 31.1
+  },
+  {
+   "year": 2020,
+   "top10": 7.0,
+   "top20": 7.7,
+   "SPY": 17.3
+  },
+  {
+   "year": 2021,
+   "top10": 36.5,
+   "top20": 37.9,
+   "SPY": 30.5
+  },
+  {
+   "year": 2022,
+   "top10": -15.3,
+   "top20": -20.2,
+   "SPY": -18.6
+  },
+  {
+   "year": 2023,
+   "top10": 11.5,
+   "top20": 20.5,
+   "SPY": 26.7
+  },
+  {
+   "year": 2024,
+   "top10": 21.0,
+   "top20": 13.7,
+   "SPY": 25.6
+  },
+  {
+   "year": 2025,
+   "top10": 57.2,
+   "top20": 30.5,
+   "SPY": 18.0
+  },
+  {
+   "year": 2026,
+   "top10": 53.6,
+   "top20": 29.7,
+   "SPY": 11.5
+  }
+ ],
+ "years_top10_beat_SPY": 8,
+ "years_counted": 16
+}
