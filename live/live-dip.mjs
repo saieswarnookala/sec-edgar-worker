@@ -171,7 +171,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
     const lines = placed.map((p) => `${p.side.toUpperCase()} ${p.symbol} ${p.dollars != null ? '$' + p.dollars.toFixed(2) : p.shares + ' sh'} (${p.why})`);
-    await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`)].join('\n') || 'No trades today.', { priority: failed.length ? 4 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
+    await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`)].join('\n') || 'No trades today.', { priority: failed.length ? 4 : MODE === 'live' ? 3 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
   } catch (e) {
     log.error = String(e.message || e);
     const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(log.error);
@@ -202,7 +202,7 @@ async function cmdVerify() {
     state.verify = [...(state.verify || []), v].slice(-500); saveState(state);
     if (strangers.length) { writeFileSync(HALT, `Orders today that the bot did not place: ${v.strangers.join(', ')}. Check Robinhood, then: node live-dip.mjs resume`); await notify('Dip bot HALTED: unknown orders in the account', v.strangers.join('\n'), { priority: 5, tags: 'rotating_light' }); }
     else if (unfilled.length) await notify('Dip bot: some orders did not fill', v.unfilled.join('\n'), { priority: 4, tags: 'warning' });
-    else if (h?.placed?.length && MODE === 'live') await notify(`Dip bot ${today}: all ${fills.length} filled`, `Account $${(r.money.equity || 0).toFixed(2)}. Avg cost vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = better than close)`, { priority: 2, tags: 'white_check_mark' });
+    else if (h?.placed?.length && MODE === 'live') await notify(`Dip bot ${today}: all ${fills.length} filled`, `Account $${(r.money.equity || 0).toFixed(2)}. Avg cost vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = better than close)`, { priority: 3, tags: 'white_check_mark' });
     console.log(JSON.stringify(v, null, 1));
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
 }
