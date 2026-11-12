@@ -1,0 +1,73 @@
+{
+ "spy": {
+  "cagr": 9.2,
+  "dd": -55.2,
+  "h1": 3.6,
+  "h2": 14.7
+ },
+ "dip": {
+  "cagr": 14.9,
+  "dd": -25.4,
+  "h1": 13.1,
+  "h2": 16.5
+ },
+ "oos_pick (8, 80%, 15% of high, mkt filter+exit)": {
+  "cagr": 16.8,
+  "dd": -42.8,
+  "h1": 21.1,
+  "h2": 12.8
+ },
+ "70% dip + 30% oos_pick": {
+  "cagr": 16.0,
+  "dd": -23.7,
+  "h1": 16.0,
+  "h2": 15.9
+ },
+ "50% dip + 50% oos_pick": {
+  "cagr": 16.5,
+  "dd": -28.9,
+  "h1": 17.7,
+  "h2": 15.2
+ },
+ "hindsight_best (10, 90%, 10%, mkt filter)": {
+  "cagr": 18.2,
+  "dd": -48.5,
+  "h1": 14.5,
+  "h2": 21.9
+ },
+ "70% dip + 30% hindsight_best": {
+  "cagr": 16.5,
+  "dd": -22.4,
+  "h1": 14.1,
+  "h2": 18.6
+ },
+ "50% dip + 50% hindsight_best": {
+  "cagr": 17.2,
+  "dd": -26.6,
+  "h1": 14.5,
+  "h2": 19.8
+ },
+ "plain (15, 90%, 10%, no filter)": {
+  "cagr": 14.6,
+  "dd": -54.8,
+  "h1": 11.6,
+  "h2": 17.6
+ },
+ "70% dip + 30% plain": {
+  "cagr": 15.4,
+  "dd": -22.5,
+  "h1": 13.3,
+  "h2": 17.3
+ },
+ "50% dip + 50% plain": {
+  "cagr": 15.5,
+  "dd": -30.4,
+  "h1": 13.2,
+  "h2": 17.7
+ },
+ "corr_with_dip": {
+  "oos_pick (8, 80%, 15% of high, mkt filter+exit)": 0.54,
+  "hindsight_best (10, 90%, 10%, mkt filter)": 0.56,
+  "plain (15, 90%, 10%, no filter)": 0.57
+ }
+}
