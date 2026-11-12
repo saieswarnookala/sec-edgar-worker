@@ -67,10 +67,11 @@ All "realistic" = trading costs included; after tax = federal 24% short-term / 1
 
 Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, data/short_side.json, data/short_research.json, data/options_research.json, data/india_*.json, data/dip_slots.json, data/dip_curve.csv (daily equity of the live dip strategy).
 
-### Promising, needs more checks: net buybacks (Nov 12)
-- Rule: monthly, top 10 S&P 500 stocks whose share count fell most over the past year (SEC cover-page shares, split-adjusted, ~2011–2026), hold ≥ 63 days.
-- 17.8%/yr vs SPY 13.9%, worst drop −43% vs −34%; 2011–18 13.1% vs 11.1%, 2019–26 22.7% vs 16.9%. Top 20: 15.2%, top 30 ≈ SPY (edge sits in the most extreme names).
-- Next checks before any paper bot: which stocks drive it (concentration), random-picks luck test, after tax, as a sleeve beside the dip strategy. File data/new_ideas_buyback.json (scripts/new_ideas.py, new-ideas.yml).
+### Net buybacks (Nov 12): real signal, but lumpy; not traded
+- Rule: monthly, top 10 S&P 500 stocks whose share count fell most over the past year (SEC cover-page shares, split-adjusted, 2011–2026), hold >= 63 days: 17.8%/yr vs SPY 13.9%, worst drop −43% vs −34%.
+- Robustness (data/new_ideas_buyback2.json): smooth across 3–40 stocks (fewer = more return and bigger drops; 30–40 stocks ~ SPY); rebalance day and 10–60 day filing lag barely matter; beats 99% of 200 random 10-shrinker portfolios (random shrinkers median 13.1% < SPY).
+- But: WDC alone added ~30 pts of excess; without the top 5 contributors 13.8% (= SPY). Beat SPY only 8 of 16 years; 2019–24 ~12.7%/yr vs SPY ~17.3%; the 2019–26 edge is mostly 2025–26 (+57%, +54%).
+- Verdict: not a replacement for the dip strategy. Maybe later: a small sleeve beside dip, tested as a combo.
 
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
