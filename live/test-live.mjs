@@ -78,7 +78,7 @@ if (!mode) {
   // expired / missing login: fail closed, place nothing, never open a browser
   const home = mkdtempSync(join(tmpdir(), 'live-'));
   writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [], history: [] }));
-  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: 'http://localhost:9/mcp', LIVE_MODE: 'live', NTFY_TOPIC: '' });
+  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: 'http://localhost:9/mcp', LIVE_MODE: 'live', RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
   const { cmdTrade } = await import('./live-dip.mjs');
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
   await cmdTrade({ force: true, gather: async () => { throw new Error('should not get here'); }, getDays: async () => [today] });
