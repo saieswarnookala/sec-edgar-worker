@@ -202,7 +202,7 @@ async function cmdVerify() {
     state.verify = [...(state.verify || []), v].slice(-500); saveState(state);
     if (strangers.length) { writeFileSync(HALT, `Orders today that the bot did not place: ${v.strangers.join(', ')}. Check Robinhood, then: node live-dip.mjs resume`); await notify('Dip bot HALTED: unknown orders in the account', v.strangers.join('\n'), { priority: 5, tags: 'rotating_light' }); }
     else if (unfilled.length) await notify('Dip bot: some orders did not fill', v.unfilled.join('\n'), { priority: 4, tags: 'warning' });
-    else if (h?.placed?.length) await notify(`Dip bot ${today}: all ${fills.length} filled`, `Account $${(r.money.equity || 0).toFixed(2)}. Avg cost vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = better than close)`, { priority: 2, tags: 'white_check_mark' });
+    else if (h?.placed?.length && MODE === 'live') await notify(`Dip bot ${today}: all ${fills.length} filled`, `Account $${(r.money.equity || 0).toFixed(2)}. Avg cost vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = better than close)`, { priority: 2, tags: 'white_check_mark' });
     console.log(JSON.stringify(v, null, 1));
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
 }
