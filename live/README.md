@@ -21,6 +21,7 @@ No AI picks stocks or sizes orders. Not financial advice; you can lose the money
 ## Schedule (New York time, weekdays)
 - 8:45 am  `health`: login + account check, phone alert if anything is wrong
 - 3:47 pm  `trade` (backup run 3:52): sells first, then buys, all done before 3:58:45 so they fill near the close
+  (on 1 pm half days, like the day after Thanksgiving, the same happens at 12:47 / 12:52, using the market calendar's real close)
 - 4:35 pm  `verify`: fills vs close, unfilled orders, stranger orders
 
 A missed run is never re-run late.

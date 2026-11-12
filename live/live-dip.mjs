@@ -44,7 +44,12 @@ const unlock = () => { try { unlinkSync(LOCK); } catch {} };
 // ---- Alpaca (market data + market calendar only; no Alpaca orders here) ----
 const H = { 'APCA-API-KEY-ID': E.APCA_API_KEY_ID, 'APCA-API-SECRET-KEY': E.APCA_API_SECRET_KEY };
 const api = async (base, path) => { const r = await fetch(base + path, { headers: H }); const t = await r.text(); if (!r.ok) throw new Error(`${r.status} ${path.split('?')[0]}: ${t.slice(0, 200)}`); return t ? JSON.parse(t) : null; };
-const tradingDays = async (today) => (await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`)).map((c) => c.date);
+// Market calendar; also remembers each day's real closing time (half days close at 13:00 ET).
+const closeMins = {};
+const tradingDays = async (today) => (await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`)).map((c) => { const [hh, mm] = String(c.close || '16:00').split(':'); closeMins[c.date] = +hh * 60 + +mm; return c.date; });
+// Trade window relative to the day's close: start 13 min before, last order 1.25 min before (3:47-3:58:45 on a normal day).
+export const tradeWindow = (closeMin = 960) => ({ start: closeMin - 13, end: closeMin - 2, cutoff: closeMin - 1.25 });
+const fmtMin = (m) => `${Math.floor(m / 60)}:${String(Math.floor(m % 60)).padStart(2, '0')}`;
 
 // ---- Robinhood helpers (argument names come from the tools' own schemas) ----
 let toolMap = {};
@@ -111,7 +116,8 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
   if (existsSync(HALT)) { await notify('Dip bot halted: no trades today', readFileSync(HALT, 'utf8'), { priority: 4, tags: 'stop_sign' }); return; }
   const days = await getDays(today);
   if (days.at(-1) !== today && !force) return console.log('market closed today', today);
-  if (!force && (now.min < 15 * 60 + 45 || now.min >= 15 * 60 + 58)) return console.log('outside 3:45-3:58 pm ET window', now.hm);
+  const win = tradeWindow(closeMins[today] ?? 960); log.close_et = fmtMin(win.start + 13);
+  if (!force && (now.min < win.start - 0.5 || now.min >= win.end)) return console.log(`outside ${fmtMin(win.start)}-${fmtMin(win.end)} ET window (close ${log.close_et})`, now.hm);
   if (!force && state.history.some((h) => h.today === today && h.mode === 'live' && h.placed?.length)) return console.log('already traded today', today);
   if (!lock()) return console.log('another run is in progress');
   try {
@@ -142,7 +148,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (problems.length) { writeFileSync(HALT, `Safety check failed on ${today}: ${problems.join('; ')}`); throw new Error('safety check failed: ' + problems.join('; ')); }
     const placed = [], failed = [];
     const place = async (o) => {
-      if (!force && ny().min >= 15 * 60 + 58.75) { failed.push({ ...o, error: 'too close to the close, skipped' }); return; }
+      if (!force && ny().min >= win.cutoff) { failed.push({ ...o, error: 'too close to the close, skipped' }); return; }
       o.refKey = `${E.RH_ACCOUNT}|${today}|${o.symbol}|${o.side}`;
       const b = buildOrderArgs(toolMap.place_equity_order, o, E.RH_ACCOUNT);
       if (!b.ok) { failed.push({ ...o, error: b.error }); return; }

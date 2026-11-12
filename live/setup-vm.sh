@@ -60,7 +60,7 @@ timer() { # name calendar...
     echo "Persistent=false"; echo "AccuracySec=1s"; echo "[Install]"; echo "WantedBy=timers.target"; } > "$U/dip-$name.timer"
 }
 unit health health;  timer health "Mon..Fri 08:45 America/New_York"
-unit trade trade;    timer trade  "Mon..Fri 15:47 America/New_York" "Mon..Fri 15:52 America/New_York"
+unit trade trade;    timer trade  "Mon..Fri 15:47 America/New_York" "Mon..Fri 15:52 America/New_York" "Mon..Fri 12:47 America/New_York" "Mon..Fri 12:52 America/New_York"   # 12:4x only acts on 1 pm half days
 unit verify verify;  timer verify "Mon..Fri 16:35 America/New_York"
 sudo loginctl enable-linger "$USER"
 systemctl --user daemon-reload
