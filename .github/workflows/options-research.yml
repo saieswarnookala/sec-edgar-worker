@@ -1,0 +1,26 @@
+name: Options research
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy
+      - name: Run
+        shell: bash
+        run: |
+          set -o pipefail; python -u scripts/options_research.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+          echo "::notice::$(grep -E '^(calibration|\^PUT|\^BXM)' /tmp/run.log | tail -c 900 | tr "\n" " ")"
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/options_research.json && git commit -qm "options research results" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
