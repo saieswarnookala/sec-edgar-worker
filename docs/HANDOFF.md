@@ -64,6 +64,7 @@ All "realistic" = trading costs included; after tax = federal 24% short-term / 1
 | Insider buying clusters (SEC Form 4, 2007–2026) | Best 13.3% vs SPY 10.8% but −50 to −63% drops; picked on 2007–15 → 12.3% in 2016–26 vs SPY 14.9% | Failed unseen years |
 | Buy on joining S&P 500 / 52-week-high momentum (1998–2026) | Joins 4–8%, 52w high 6–11% vs SPY 9.2% | Below SPY |
 | Buy on removal from S&P 500 | Up to 20% but all from 1998–2011; 2012–26 ≤ SPY | Edge is in the past |
+| ATR swing: buy with a direction filter, sell at k×ATR(14) target, 1–3 day hold (Nov 12, 384 versions, data/atr_swing3.json) | Trend/momentum/down-day filters: lose (0 of 96 momentum versions positive). An earlier 134%/yr result was a daily-bar artifact (limit fill + same-day target); fixed in v3. Dip signal + ATR exit: 11–15%/yr but −47 to −54% drops | Edge comes from the dip signal, not the ATR exit; no better than the current dip rules |
 
 Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, data/short_side.json, data/short_research.json, data/options_research.json, data/india_*.json, data/dip_slots.json, data/dip_curve.csv (daily equity of the live dip strategy).
 
