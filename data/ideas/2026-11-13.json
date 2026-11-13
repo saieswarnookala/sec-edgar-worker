@@ -1,0 +1,1432 @@
+{
+ "date": "2026-11-13",
+ "mode": "digest",
+ "summary": "Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)",
+ "ideas": [
+  {
+   "title": "Show HN: My $300 embroidery machine needed a subscription, so I built my own app",
+   "category": "build",
+   "what": "Popular launch (713 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50470488"
+   ]
+  },
+  {
+   "title": "Show HN: Every satellite that passed over any place this week, and its photos",
+   "category": "build",
+   "what": "Popular launch (490 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50428907"
+   ]
+  },
+  {
+   "title": "Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives",
+   "category": "build",
+   "what": "Popular launch (442 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50443812"
+   ]
+  },
+  {
+   "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
+   "category": "build",
+   "what": "New GitHub project with 31326 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/storytold/craft-anything"
+   ]
+  },
+  {
+   "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
+   "category": "build",
+   "what": "New GitHub project with 23015 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/deepseek-ai/dsh-superagent-prototype"
+   ]
+  },
+  {
+   "title": "zortos293/Lichii: VERY experimental Nintendo Switch 2 emulator",
+   "category": "build",
+   "what": "New GitHub project with 8958 stars in 2 weeks (C++). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/zortos293/Lichii"
+   ]
+  },
+  {
+   "title": "SRTD raises €31.5M seed round to develop cell-selective RNA therapies - European Biotechnology Magazine",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQNHFCdlZSMkJBeHd2Z0VWcml6RGxpYXN6anc2ejlzeXdkZUdvS1o4VUxGa1Z3aXBXdUNieE43VEJXcnRPSjBjeXViS19KN0RVbkdjZERlT0pDbjktRkxna3VTUHJZQU5pWXlTZ2lHZzJjSk03YXFjZnFuRWxCWnFLTXNIeFlDZGZ5VkxoVkZkalByY0dTQkFZUGx1ekZQdDIxVThXbzVRVkY1bW1LaXJKX0hQMl9KUmFu?oc=5"
+   ]
+  },
+  {
+   "title": "Startup Supporting Caregivers Raises $3.5M in Seed Funding - MedCity News",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMilAFBVV95cUxQU3ItYk5WeWhzZng3WjJKTFBaeTZIQW9OdDNkSC03allUMEpHQlBaY1g4SVExSGtJT1dYU3VaTXFUSjNUb0UwWkV4WGkwbTREcVdQQ0tUYjNMUVhxYzBnYzlVeTUxeXV1cG1fdHRrczIyRjFZMUF3VTNiUm1QZzFnc1ZsMWdzOWFUMmRFY0tOTGFfZ1B4?oc=5"
+   ]
+  },
+  {
+   "title": "AI accounting startup Sumary raises $25m seed - Sifted",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMiXEFVX3lxTE8zNG5MeUVZMmVPbkVXaFFIWERHb19ZcDdYWFdDRUxJQUhfWVVuNm5RTEJOVkYyWkNTbk1sNEdOREs0MG9Nd1lYak8weEpHQnFpU0w0emtXZklHX3JW?oc=5"
+   ]
+  },
+  {
+   "title": "MU Micron Technology Inc. (Technology)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 107.5, net margin 22.8%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "LLY Eli Lilly and Company (Health Care)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 65.5, net margin 31.7%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "TXN Texas Instruments Incorporated (Technology)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 56.6, net margin 28.3%. A research lead, not a buy signal.",
+   "evidence": []
+  }
+ ],
+ "errors": {
+  "reddit": "403"
+ },
+ "signals": {
+  "hn": [
+   {
+    "src": "Show HN",
+    "title": "Show HN: Yogurt – Free, private, open-source alternative to Granola",
+    "text": "Hey HN, I’m Eric and I want to share an OSS project that I’ve been building in my free time. Yogurt is a free, MIT licensed desktop app that uses on-device AI models to transcribe, summarize, and chat with your meetings. Here&#x27;s a quick demo video:  https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=BFfbXAwRq98  Similar to Granola, Yogurt runs in the background and does not join your calls. But un",
+    "url": "https://news.ycombinator.com/item?id=50454625",
+    "points": 296,
+    "comments": 113,
+    "score": 10
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: My $300 embroidery machine needed a subscription, so I built my own app",
+    "text": " https:&#x2F;&#x2F;x.com&#x2F;simpsoka&#x2F;status&#x2F;2115254318161182876 ",
+    "url": "https://news.ycombinator.com/item?id=50470488",
+    "points": 713,
+    "comments": 231,
+    "score": 8.07
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: What are you working on? (November 2026)",
+    "text": "What are you working on? What have you been curious about lately?",
+    "url": "https://news.ycombinator.com/item?id=50417407",
+    "points": 301,
+    "comments": 1077,
+    "score": 7.99
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives",
+    "text": "Browsers natively handle a lot of what used to take 50 lines of JS (or a dependency): `CSS.highlights` for text range highlighting without &lt;span&gt;s everywhere, `&lt;dialog&gt;` and showModal() give you backdrops and ideal focus management, `field-sizing` to auto-grow textareas as the user types.. (Something yesterday&#x27;s ftrain post touched on [0]) Models know about some of these by name, ",
+    "url": "https://news.ycombinator.com/item?id=50443812",
+    "points": 442,
+    "comments": 146,
+    "score": 7.46
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Every satellite that passed over any place this week, and its photos",
+    "text": "hey HN, i built this because I&#x27;m a satellite nerd who was bored this past weekend. type in any place and it finds every satellite that passed over it in the last 7 days (SGP4 on the CelesTrak catalog, tracking 17k+ objects and runs in your browser in about half a second), then pulls the real Sentinel-2 &#x2F; Landsat &#x2F; NASA images from those passes. fun fact: all ~17k objects in orbit ar",
+    "url": "https://news.ycombinator.com/item?id=50428907",
+    "points": 490,
+    "comments": 85,
+    "score": 7.32
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Coldframe, a honeypot that poses as a supermarket fridge controller",
+    "text": "I built Coldframe, a honeypot that pretends to be a supermarket refrigeration controller. Inspired by the events on industrial fridge installations in the past weeks, I wanted to see what people would try against a convincing fake. To learn more about this I built a honeypot that resembled perfectly the Danfoss AK-SM 800A and Dixell XWEB interfaces. Both of them are recognized on Shodan as real on",
+    "url": "https://news.ycombinator.com/item?id=50406292",
+    "points": 289,
+    "comments": 70,
+    "score": 6.78
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: I recreated Papers Please but you're deciding which YC startups to fund",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50457230",
+    "points": 241,
+    "comments": 96,
+    "score": 6.75
+   },
+   {
+    "src": "Hacker News",
+    "title": "U.S. October PPI Rises 6.5% YoY, Highest in Nearly Four Years",
+    "text": "U.S. producer prices rose 6.5% YoY in October, the highest since November 2022, below expectations of 6.6% and up from 6.3% previously. PPI increased 0.3% MoM, below the expected 0.4%, while September’s reading was revised up from 1.3% to 1.4%.",
+    "url": "https://news.ycombinator.com/item?id=50484421",
+    "points": 159,
+    "comments": 187,
+    "score": 6.68
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Valencia, Spain in Sim City/Isometric View",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50441518",
+    "points": 256,
+    "comments": 63,
+    "score": 6.63
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: A 15 MB self-hosted Netflix and Spotify for your media server",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50439000",
+    "points": 168,
+    "comments": 138,
+    "score": 6.6
+   },
+   {
+    "src": "Hacker News",
+    "title": "ChatGPT Desktop forwards your SSH agent to remote machines",
+    "text": "The agent running on a remote machine can authenticate using your local SSH credentials. That means it can push to your private repos on GitHub, for example. Proof: https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;codex&#x2F;pull&#x2F;28131#discussion_r3410013180",
+    "url": "https://news.ycombinator.com/item?id=50422628",
+    "points": 220,
+    "comments": 79,
+    "score": 6.59
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Black Ops II statically recompiled to native ARM64 macOS",
+    "text": "I grew up with Black Ops 2 and wanted to see if I could make it work on my 2020 MacBook Pro. So I used Claude Opus 5.5 to create a tool that converts your copy of the game (from Steam) to a native ARM64 Mac app, with almost 60fps in all areas. The whole game is statically recompilated ahead-of-time (AOT) and does not use any emulator whatsoever, be it Wine, Crossover or Rosetta. The best thing is ",
+    "url": "https://news.ycombinator.com/item?id=50449891",
+    "points": 150,
+    "comments": 67,
+    "score": 6.19
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: How did you convince family and friends to join your XMPP/Matrix server?",
+    "text": "I love open-source software and open protocols, but my family and friends primarily communicate through SMS for exactly the reasons in https:&#x2F;&#x2F;xkcd.com&#x2F;2365&#x2F; Whenever XMPP or Matrix threads pop up on HN, several commenters casually mention their &quot;friends and family XMPP (or Matrix) server.&quot; How did you convince friends and family to move away from SMS&#x2F;WhatsApp an",
+    "url": "https://news.ycombinator.com/item?id=50405250",
+    "points": 102,
+    "comments": 97,
+    "score": 6.02
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: DBDelve – Open-Source DB Client Made with Rust and GPUI",
+    "text": "Hi HN, I’m Shayan and a few months ago I started building a DB Client DBDelve with a focus on performance and just making something that feels good to use (in the spirit of Zed, Ghostty, and other tools that just feel pleasant to use). For my workflow I’ve always looked for performance, especially since some time ago I had a really outdated machine and any kind of bloat was really noticeable, I re",
+    "url": "https://news.ycombinator.com/item?id=50427934",
+    "points": 124,
+    "comments": 49,
+    "score": 5.89
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: MeowDisplay Is iPhone Mirroring, but in Reverse",
+    "text": "Hey HN and Cats, thank you for checking this out! Github:\n https:&#x2F;&#x2F;github.com&#x2F;raiseCatError&#x2F;meowdisplay  EDIT 2: I should&#x27;ve mentioned that MeowDisplay started as a fork of OpenDisplay:  https:&#x2F;&#x2F;github.com&#x2F;peetzweg&#x2F;opendisplay \nwhich provided the foundational screen capture, virtual display, encoding and iPhone&#x2F;iPad receivers. I&#x27;ve since taken",
+    "url": "https://news.ycombinator.com/item?id=50429636",
+    "points": 120,
+    "comments": 45,
+    "score": 5.83
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Someone Was Here – Find out who used your Mac while you were away",
+    "text": "Many thanks to my ex for inspiring my new MacOS app, Someone Was Here. It takes a photo of whoever uses your Mac while you&#x27;re away, whether you left it unlocked or they know your password, and sends their photo to your iPhone if the face isn&#x27;t yours. I built Someone Was Here as a menu bar app making use of Apple Vision and a local face recognition run via Core ML. It all runs locally on ",
+    "url": "https://news.ycombinator.com/item?id=50429812",
+    "points": 116,
+    "comments": 48,
+    "score": 5.83
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: AgentRun – open-source, Self-improving Managed Agents",
+    "text": "We (GREP.AI, YC F26) are open-sourcing AgentRun and turning it into a full managed agents platform. Read more about it in this post:  https:&#x2F;&#x2F;agentrun.ai&#x2F;blog&#x2F;introducing-agentrun-run-smarter-ag... . It includes what we originally built for our own agent harness: - Self-improving agents \n- Web-grounded workflows \n- A range of sandboxes and computer environments \n- Thousands of ",
+    "url": "https://news.ycombinator.com/item?id=50471650",
+    "points": 133,
+    "comments": 36,
+    "score": 5.82
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: How do you manage your AI agents' context across clients and projects?",
+    "text": "Hi Guys,\nlike many of you I work with AI agents every day and across several clients.\nThe major time cost for me is to re-explaining context and past decisions, client rules, that we already do. To finish every tools as its own memory. So I’m curious how you actually handle this: 1. When you start a new session, how do you give context to the agent (context came from chat, mail, ticket ...) ? 2. D",
+    "url": "https://news.ycombinator.com/item?id=50403153",
+    "points": 100,
+    "comments": 62,
+    "score": 5.81
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: STE80 Humanizer – de-AI text by writing 80% of the way to ASD-STE100",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50429144",
+    "points": 112,
+    "comments": 43,
+    "score": 5.75
+   },
+   {
+    "src": "Hacker News",
+    "title": "Iran was behind cyber-attack on French supermarket freezers, Paris says",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50430585",
+    "points": 69,
+    "comments": 112,
+    "score": 5.74
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Flide: Make Jev-like decision models up to 9.5x faster",
+    "text": "Decision models need their own inference engine. So we developed Flide, a high-performance and exact inference engine for Jev-like decision models. Flide achieves up to a 9.5x speedup over vLLM and SGLang. It now supports 30+ popular local Jev-like decision models. Start to make your decision immediately: pip install flide",
+    "url": "https://news.ycombinator.com/item?id=50421155",
+    "points": 125,
+    "comments": 30,
+    "score": 5.69
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Aircad – Professional drafting and 3D modeling in the browser",
+    "text": "Aircad is a professional CAD system running in the browser with deep AI integration. It includes professional grade drafting and documentation tools, NURBS-based solid modeling, and a lot more. You can make professional quality design documents with it. It is all integrated behind a scripting API that can do anything you can do in the interface and also perform complex modeling operations efficien",
+    "url": "https://news.ycombinator.com/item?id=50441350",
+    "points": 94,
+    "comments": 44,
+    "score": 5.61
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Do you still enjoy coding in C++?",
+    "text": "In the recent years C++ received a lot of backlash due to its complexity and (perceived) feature creep. However, since C++11 I really enjoyed writing C++ with its strict type system (including const), range-based for loops, smart pointers, and how much you can do with templates. On the other hand, I know that it can be very tricky to write, for instance, a correct iterator, to get handling of rval",
+    "url": "https://news.ycombinator.com/item?id=50423371",
+    "points": 62,
+    "comments": 89,
+    "score": 5.55
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Microsoft/Azure Outage?",
+    "text": "For the past 5 minutes all of our Microsoft Cloud connections are down. Anyone else? The Status page won&#x27;t even load.",
+    "url": "https://news.ycombinator.com/item?id=50471668",
+    "points": 402,
+    "comments": 1,
+    "score": 5.51
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Ghanaian street games you can play in the browser",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50414117",
+    "points": 116,
+    "comments": 22,
+    "score": 5.5
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Klad, a paint app your coding agent can drive (source-available)",
+    "text": "I&#x27;ve been developing applications for a long time and have turned to game development as well lately. One of the things that frustrated me the most was that using AI agents for game development is very annoying in the art department. Your only options right now are to either use an image genAI model and roll the dice every time you want to make an edit, or have your agent draw with something ",
+    "url": "https://news.ycombinator.com/item?id=50454951",
+    "points": 83,
+    "comments": 34,
+    "score": 5.39
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Godbolt-in-a-floating-window for Neovim (C, C++, Rust)",
+    "text": "No internet connection needed. Uses a locally-installed compiler for assembly generation.",
+    "url": "https://news.ycombinator.com/item?id=50453229",
+    "points": 104,
+    "comments": 20,
+    "score": 5.36
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: Pomerado (YC F26) – Turn any website into an MCP for agents",
+    "text": "Hi HN, we’re Alan and Akshay from Pomerado ( https:&#x2F;&#x2F;pomerado.ai&#x2F; ). We connect your agents to any website by turning sites into deterministic, self-healing APIs in minutes, fully self-serve. Agents are no longer limited by their intelligence, but rather by their ability to interact with systems. Airlines, banks, e-commerce, insurance portals, government sites, and legacy portals al",
+    "url": "https://news.ycombinator.com/item?id=50455811",
+    "points": 63,
+    "comments": 48,
+    "score": 5.3
+   },
+   {
+    "src": "Hacker News",
+    "title": "US test reactor cleared for operations",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50483533",
+    "points": 72,
+    "comments": 26,
+    "score": 5.16
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Micron – Oberon with the Power of C",
+    "text": "I have been developing Micron (for &quot;MicroOberon&quot;), a lean, statically typed, modular systems programming language that combines Oberon’s simplicity and explicit module structure with C’s low-level capabilities and interoperability. Micron is not my first langage design. I first built Oberon+, a modernized and unified Oberon, in order to under­\nstand, by implementing it and by porting rea",
+    "url": "https://news.ycombinator.com/item?id=50413266",
+    "points": 68,
+    "comments": 27,
+    "score": 5.12
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: We compressed a 31B video+audio diffusion model to 14B, 6 steps, INT8",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50405263",
+    "points": 84,
+    "comments": 14,
+    "score": 5.03
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Isometric SF – A pixel-art map of the SF Bay Area",
+    "text": "Technical Write-up:  https:&#x2F;&#x2F;www.justinchavez.com&#x2F;blog&#x2F;isometric-sf-how&#x2F;  Hi HN! Showcasing this fun project. I took 1300 square miles of the SF Bay Area from Google Photorealistic 3D Tiles and transformed them into a cohesive pixel map. It&#x27;s really fun to explore and stumble upon various famous landmarks like Apple Park, Palace of Fine Arts, or UC Berkeley. The techn",
+    "url": "https://news.ycombinator.com/item?id=50487228",
+    "points": 62,
+    "comments": 23,
+    "score": 4.98
+   },
+   {
+    "src": "Hacker News",
+    "title": "How do you keep up quality when you vibe-code?",
+    "text": "I&#x27;m having a really hard time working with claude. In the past when I wrote all the code manually, it was always carefully reviewed and architected, with all possible flows carefully mapped out. Now, my code is mostly AI written which has led to things going out of control. Since it&#x27;s easy to add new features and support many user flows, we went ahead and implemented flows that support a",
+    "url": "https://news.ycombinator.com/item?id=50444380",
+    "points": 39,
+    "comments": 39,
+    "score": 4.81
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: JavaScript web apps with WASM layout and GPU rendering in 280 KB",
+    "text": "Over the past year, I have been working to find a better way to write cross-platform apps. The problems I am trying to solve: - Native frameworks only work on a subset of platforms, so a different implementation of the UI needs to be written per target.\n- They are updated at the same pace as the platform itself, which forces the developer to split the user base to be able to use new features, or w",
+    "url": "https://news.ycombinator.com/item?id=50401844",
+    "points": 46,
+    "comments": 23,
+    "score": 4.72
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Kapso – Iterative learning from enterprise data",
+    "text": "Hey HN! We&#x27;re Alireza and Majid building Leeroo ( https:&#x2F;&#x2F;leeroo.com&#x2F; ). Previously we’ve built AI systems for products with millions of users, including at LinkedIn and Meta. We’re now focusing on building AI systems for enterprise data. Today, we&#x27;re open-sourcing Kapso ( https:&#x2F;&#x2F;github.com&#x2F;Leeroo-AI&#x2F;kapso ), an engine that runs experiments, deploys th",
+    "url": "https://news.ycombinator.com/item?id=50471281",
+    "points": 56,
+    "comments": 11,
+    "score": 4.59
+   },
+   {
+    "src": "Hacker News",
+    "title": "Distributed Ray Tracer",
+    "text": "Hey HN, I&#x27;m Julius, I&#x27;m a backend engineer at Hatchet and created this demo to show off some of Hatchet&#x27;s new features, primarily durable streams and serverless endpoints. Those, however, are just background details that made this significantly easier to scale. By distributing the rendering across many different nodes, orchestrated using Hatchet, it makes it possible to render quite",
+    "url": "https://news.ycombinator.com/item?id=50472505",
+    "points": 46,
+    "comments": 14,
+    "score": 4.52
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Claude Code Is Down",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50480909",
+    "points": 37,
+    "comments": 21,
+    "score": 4.5
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Can anyone name anything new that AI has done?",
+    "text": "We&#x27;re 2 years into this. Still looking for something that an AI did all by itself that is actually new. Everything I&#x27;ve seen so far still involves a human sussing out the new thing or the model is just aggregating data that is already there from disconnected sources that never got tied together.",
+    "url": "https://news.ycombinator.com/item?id=50484426",
+    "points": 25,
+    "comments": 44,
+    "score": 4.48
+   },
+   {
+    "src": "Hacker News",
+    "title": "TimeNet: Open-source data infrastructure for Temporal Foundation Models",
+    "text": "Hi HN, Current frontier LLMs show incredible results across text, video, and audio, but don&#x27;t do as well with real-world scenarios like production lines, trading, drilling operations, or demand supply forecasting. They are not capable of comprehending this data, especially given a limited context. Models exist that are able to understand temporal information natively—Temporal Foundation Model",
+    "url": "https://news.ycombinator.com/item?id=50443264",
+    "points": 52,
+    "comments": 9,
+    "score": 4.45
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Recalc – Spreadsheet where cells can be Claude Code or Codex terminals",
+    "text": "I built this because it was useful for me when building evals&#x2F;benchmarks, and I decided to put it up for free for others. The goal was quite simple, make it easy to use a lead claude code &#x2F; codex session in a panel on the side, while allowing every cell to also be a terminal session running claude&#x2F;codex, and make it possible to continue a session in an actual terminal window if I ne",
+    "url": "https://news.ycombinator.com/item?id=50413970",
+    "points": 37,
+    "comments": 16,
+    "score": 4.39
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: A flood of reports of Opus 5.5 being nerfed",
+    "text": "Here are several user reports of Opus 5.5 being nerfed: https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;ClaudeCode&#x2F;comments&#x2F;1xr4urz&#x2F;opus_55_in_the_past_two_weeks&#x2F; https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;ClaudeCode&#x2F;comments&#x2F;1xr9x5y&#x2F;the_nerf_is_real_thank_you_uwum1ha1nho&#x2F; https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;ClaudeCode&#x2F;comments&#x2F;1xqvqip&#x2F",
+    "url": "https://news.ycombinator.com/item?id=50419019",
+    "points": 32,
+    "comments": 17,
+    "score": 4.29
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude OAuth Failures",
+    "text": "Claude has started having serious OAuth errors and hangs, but nothing appears on the Claude Status site yet[0]. It&#x27;s been several minutes now, not sure if its a blip or something more serious. Obv Claude is still reporting the issues with MS O365 connector; but not sure if it&#x27;s related. [0] https:&#x2F;&#x2F;status.claude.com&#x2F;",
+    "url": "https://news.ycombinator.com/item?id=50480936",
+    "points": 27,
+    "comments": 24,
+    "score": 4.29
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: RealtimeVAD – trading false positives for 110ms earlier end-of-speech",
+    "text": "Hey guys. I recently watched the latency reports for my local voice assistant, which show a waveform plus silero probability for voice activity. I noticed silero lags visibly on the speech off signal. There had to be a method to get this signal closer to what I felt is optimal. My idea was to use a 10 ms energy detector with a threshold that adapts to environment or room noise. Which worked amazin",
+    "url": "https://news.ycombinator.com/item?id=50474586",
+    "points": 29,
+    "comments": 7,
+    "score": 3.86
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude AI Is Down",
+    "text": "Claude AI is down according to independent detectors [1]. The official status page ha no incident issue yet. [1] https:&#x2F;&#x2F;downdetector.co.uk&#x2F;status&#x2F;claude-ai&#x2F;\n[2] https:&#x2F;&#x2F;status.claude.com&#x2F;uptime",
+    "url": "https://news.ycombinator.com/item?id=50480941",
+    "points": 27,
+    "comments": 7,
+    "score": 3.8
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: How do you evaluate the skills your AI agents use?",
+    "text": "Do you systematically evaluate agent skills, either before or while using them? If so, what tools or methods do you use? Or do you mostly rely on reading the SKILL.md and trying things out?",
+    "url": "https://news.ycombinator.com/item?id=50426070",
+    "points": 25,
+    "comments": 6,
+    "score": 3.68
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude usage credits purchased after Dec 7 will expire 12 months after purchase",
+    "text": "Just received this via email: &gt; Usage credits purchased on or after December 7 will expire 12 months after the purchase date. Any unused amount after 12 months will be removed from your balance.",
+    "url": "https://news.ycombinator.com/item?id=50399909",
+    "points": 18,
+    "comments": 10,
+    "score": 3.6
+   },
+   {
+    "src": "Hacker News",
+    "title": "I Am at School on Here",
+    "text": "hello guys",
+    "url": "https://news.ycombinator.com/item?id=50443855",
+    "points": 21,
+    "comments": 6,
+    "score": 3.53
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Another GitHub Major Outage",
+    "text": "Have you guys moved to any other self hosted platform? I&#x27;m so tired of this, Github is by far the flakiest service I pay for. Easily.",
+    "url": "https://news.ycombinator.com/item?id=50429551",
+    "points": 18,
+    "comments": 7,
+    "score": 3.46
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Be Careful with Stripe Connect",
+    "text": "TLDR - stripe made it easy for fraudsters to syphon $4,500 through our stripe account and withdraw all of it - and they expect us to cover everything and have offered absolutely zero help. I’ve been building on top of stripe for 15 years and have made about 70 products for clients using stripe. I just had an incident with a project where fraudsters were able to route $4.5k worth of charges through",
+    "url": "https://news.ycombinator.com/item?id=50398646",
+    "points": 18,
+    "comments": 5,
+    "score": 3.34
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: I created a library for correctly using SQLite in Go programs",
+    "text": "Using SQLite in Go is deceptively easy. If you just import the popular github.com&#x2F;mattn&#x2F;go-sqlite3 as the database&#x2F;sql driver implementation and start making queries, things will work great until you start hitting SQLITE_BUSY errors as traffic increases. Then you go down the same path of many gophers before you, finding GitHub and forum posts providing conflicting information on bes",
+    "url": "https://news.ycombinator.com/item?id=50453176",
+    "points": 25,
+    "comments": 2,
+    "score": 3.31
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Aq – an attention queue TUI for Claude Code",
+    "text": "Hi, here&#x27;s a TUI we originally created for internal use. The goal is to be able to control multiple Claude Code sessions running in parallel while being able to review the changes and to understand the design choices the agents make. The key design principles are: - the programmer&#x27;s attention is the bottleneck, so instead of cycling between sessions to find what&#x27;s waiting for user i",
+    "url": "https://news.ycombinator.com/item?id=50452257",
+    "points": 19,
+    "comments": 2,
+    "score": 3.08
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Notion AI chat sessions have been exposed via Fireworks AI hack",
+    "text": "Only an email so far, nothing official I could find. I figure if you didn&#x27;t get this email you are ok. --- We are writing to inform you of a security incident at one of our vendors, Fireworks AI, that may impact you. For the latest on the Fireworks AI incident, see their official updates here. Following an investigation by the Notion security team, we have determined that your workspace, [...",
+    "url": "https://news.ycombinator.com/item?id=50436636",
+    "points": 19,
+    "comments": 1,
+    "score": 2.9
+   }
+  ],
+  "github": [
+   {
+    "src": "GitHub",
+    "title": "storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.",
+    "url": "https://github.com/storytold/craft-anything",
+    "points": 31326,
+    "lang": "Rust",
+    "score": 8.99
+   },
+   {
+    "src": "GitHub",
+    "title": "deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System",
+    "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+    "points": 23015,
+    "lang": "TypeScript",
+    "score": 8.72
+   },
+   {
+    "src": "GitHub",
+    "title": "zortos293/Lichii: VERY experimental Nintendo Switch 2 emulator",
+    "url": "https://github.com/zortos293/Lichii",
+    "points": 8958,
+    "lang": "C++",
+    "score": 7.9
+   },
+   {
+    "src": "GitHub",
+    "title": "Minireel/HGhub: YellowFruit third-party client",
+    "url": "https://github.com/Minireel/HGhub",
+    "points": 8815,
+    "lang": null,
+    "score": 7.89
+   },
+   {
+    "src": "GitHub",
+    "title": "janestreet/agent_skills: Agent skills",
+    "url": "https://github.com/janestreet/agent_skills",
+    "points": 8210,
+    "lang": null,
+    "score": 7.83
+   },
+   {
+    "src": "GitHub",
+    "title": "huamidev/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.",
+    "url": "https://github.com/huamidev/GestaltX",
+    "points": 7267,
+    "lang": "Swift",
+    "score": 7.72
+   },
+   {
+    "src": "GitHub",
+    "title": "Lee-xeo/Claude-Cage: Cage：为 Claude 特化的轻量化虚拟机，彻底杜绝网络泄露。多平台适配，支持多账号管理、远程部署、移动端操控。",
+    "url": "https://github.com/Lee-xeo/Claude-Cage",
+    "points": 5223,
+    "lang": "Go",
+    "score": 7.44
+   },
+   {
+    "src": "GitHub",
+    "title": "KKKKhazix/agent-autoloop: 让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。",
+    "url": "https://github.com/KKKKhazix/agent-autoloop",
+    "points": 5115,
+    "lang": "TypeScript",
+    "score": 7.42
+   },
+   {
+    "src": "GitHub",
+    "title": "expo/exact: Write an app once. It runs natively on the web, macOS, iOS, and Linux, and an AI agent can build it, run it, see it, and test it on every one of them.",
+    "url": "https://github.com/expo/exact",
+    "points": 3910,
+    "lang": "Rust",
+    "score": 7.18
+   },
+   {
+    "src": "GitHub",
+    "title": "tangerineturtle1/NX2navi: ",
+    "url": "https://github.com/tangerineturtle1/NX2navi",
+    "points": 3836,
+    "lang": "C",
+    "score": 7.17
+   },
+   {
+    "src": "GitHub",
+    "title": "Verlintas/NOIR: 手机隐私审计：用 adb 扫出 Android 应用的权限、上报端点与数据流向，并给出可回滚的处置。Desktop Android leak audit: permissions, endpoints, data flows, reversible fixes.",
+    "url": "https://github.com/Verlintas/NOIR",
+    "points": 3347,
+    "lang": "Kotlin",
+    "score": 7.05
+   },
+   {
+    "src": "GitHub",
+    "title": "mromidev/claude-animated-shorts: Free Claude skill: viral animated story shorts (2D characters in a 3D world) with three.js + Remotion",
+    "url": "https://github.com/mromidev/claude-animated-shorts",
+    "points": 3232,
+    "lang": "TypeScript",
+    "score": 7.02
+   },
+   {
+    "src": "GitHub",
+    "title": "shanselman/gputaskman: A GPU task manager for Windows, Linux, and WSL: per-process VRAM, GPU activity, and LLM model/KV-cache insights (Windows AMD and NVIDIA).",
+    "url": "https://github.com/shanselman/gputaskman",
+    "points": 3054,
+    "lang": "Python",
+    "score": 6.97
+   },
+   {
+    "src": "GitHub",
+    "title": "jhaizhou-ops/S2Arm: Run your own Switch games natively on iPhone, iPad and Mac: game code rewritten to ARM64, graphics direct to Metal, one app for the whole library. Bring your own games and keys. 把你",
+    "url": "https://github.com/jhaizhou-ops/S2Arm",
+    "points": 2861,
+    "lang": "C#",
+    "score": 6.91
+   },
+   {
+    "src": "GitHub",
+    "title": "govijr/terminal-mac: Entire MacOS running in your terminal.",
+    "url": "https://github.com/govijr/terminal-mac",
+    "points": 2698,
+    "lang": "Swift",
+    "score": 6.86
+   },
+   {
+    "src": "GitHub",
+    "title": "JenkinWoo/sheeridVerify: ",
+    "url": "https://github.com/JenkinWoo/sheeridVerify",
+    "points": 2594,
+    "lang": "JavaScript",
+    "score": 6.83
+   },
+   {
+    "src": "GitHub",
+    "title": "caru-ini/stack-diagram: Agent skill: describe your stack in a sentence, get an architecture diagram with official logos",
+    "url": "https://github.com/caru-ini/stack-diagram",
+    "points": 2479,
+    "lang": "TypeScript",
+    "score": 6.79
+   },
+   {
+    "src": "GitHub",
+    "title": "sarpstar/cinecode: Films made with code. Short films, long YouTube videos, ads, explainers and music videos: an AI coding agent writes the script, builds every frame in code, designs the sound and han",
+    "url": "https://github.com/sarpstar/cinecode",
+    "points": 2406,
+    "lang": "Python",
+    "score": 6.76
+   },
+   {
+    "src": "GitHub",
+    "title": "jamesondh/chimera-vocal-synth: the ultimate vocal synthesizer - sing, speak, beatbox, and more",
+    "url": "https://github.com/jamesondh/chimera-vocal-synth",
+    "points": 2250,
+    "lang": "Rust",
+    "score": 6.7
+   },
+   {
+    "src": "GitHub",
+    "title": "wquguru/cicada: 知了 Cicada · 任何会议和直播的实时字幕、同声传译、AI 会议纪要，Mac、Windows、Linux、Android 免费开源。Live subtitles, interpreting and meeting notes for any call or stream, on Mac, Windows, Linux and Android.",
+    "url": "https://github.com/wquguru/cicada",
+    "points": 2212,
+    "lang": "Swift",
+    "score": 6.69
+   },
+   {
+    "src": "GitHub",
+    "title": "Leviidev/Henge: Emulate macOS on iOS and iPadOS",
+    "url": "https://github.com/Leviidev/Henge",
+    "points": 2202,
+    "lang": "C",
+    "score": 6.69
+   },
+   {
+    "src": "GitHub",
+    "title": "libracoder/kiri: A small, fast container runtime for macOS, Windows and Linux",
+    "url": "https://github.com/libracoder/kiri",
+    "points": 2117,
+    "lang": "Rust",
+    "score": 6.65
+   },
+   {
+    "src": "GitHub",
+    "title": "IainKay/ram-altman: Monitors your RAM and reports any \"quite terrible\" unused capacity directly to the CEO of OpenAI.",
+    "url": "https://github.com/IainKay/ram-altman",
+    "points": 2100,
+    "lang": "Shell",
+    "score": 6.64
+   },
+   {
+    "src": "GitHub",
+    "title": "DIYgod/pinky: Let AI use your iPhone or Android phone, with you in the loop: any MCP agent from macOS, Windows or Linux, or Pinky itself, right on the phone.",
+    "url": "https://github.com/DIYgod/pinky",
+    "points": 2078,
+    "lang": "Go",
+    "score": 6.64
+   },
+   {
+    "src": "GitHub",
+    "title": "Sandflow-ai/sand3d: 3D modeling in Python, built for LLMs.",
+    "url": "https://github.com/Sandflow-ai/sand3d",
+    "points": 1956,
+    "lang": "HTML",
+    "score": 6.58
+   }
+  ],
+  "news": [
+   {
+    "src": "News",
+    "title": "SRTD raises €31.5M seed round to develop cell-selective RNA therapies - European Biotechnology Magazine",
+    "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQNHFCdlZSMkJBeHd2Z0VWcml6RGxpYXN6anc2ejlzeXdkZUdvS1o4VUxGa1Z3aXBXdUNieE43VEJXcnRPSjBjeXViS19KN0RVbkdjZERlT0pDbjktRkxna3VTUHJZQU5pWXlTZ2lHZzJjSk03YXFjZnFuRWxCWnFLTXNIeFlDZGZ5VkxoVkZkalByY0dTQkFZUGx1ekZQdDIxVThXbzVRVkY1bW1LaXJKX0hQMl9KUmFu?oc=5",
+    "date": "Tue, 10 Nov 2026 16:12:59 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Startup Supporting Caregivers Raises $3.5M in Seed Funding - MedCity News",
+    "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQU3ItYk5WeWhzZng3WjJKTFBaeTZIQW9OdDNkSC03allUMEpHQlBaY1g4SVExSGtJT1dYU3VaTXFUSjNUb0UwWkV4WGkwbTREcVdQQ0tUYjNMUVhxYzBnYzlVeTUxeXV1cG1fdHRrczIyRjFZMUF3VTNiUm1QZzFnc1ZsMWdzOWFUMmRFY0tOTGFfZ1B4?oc=5",
+    "date": "Tue, 10 Nov 2026 00:00:35 GMT"
+   },
+   {
+    "src": "News",
+    "title": "AI accounting startup Sumary raises $25m seed - Sifted",
+    "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE8zNG5MeUVZMmVPbkVXaFFIWERHb19ZcDdYWFdDRUxJQUhfWVVuNm5RTEJOVkYyWkNTbk1sNEdOREs0MG9Nd1lYak8weEpHQnFpU0w0emtXZklHX3JW?oc=5",
+    "date": "Tue, 10 Nov 2026 13:53:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Hypersonica Raises €100M: Europe Startup Funding [2026] - shattered.io",
+    "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNQ0FvU0I0V1Y3V01jN0FTbGlMTGd0SFcwQ1hILUpYeVdadDJiTXNCbDBBZ3lVVVk4MUVyVXNTQ3ZWU1pVZDhqQ0ZOREZvYzhYX2QyeDB2NnhjZ0NaaFB0ZExLbWFPTERvWUhUWS1McGs1RFhHaUpESGctVTROT2c4OGtsOENNVjFv?oc=5",
+    "date": "Fri, 06 Nov 2026 23:33:33 GMT"
+   },
+   {
+    "src": "News",
+    "title": "AI influencer startup Distribution Demon raises $200K pre-seed - Dealroom",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQOUJadDhudUM2UjZ6NmpNNUUzT0kxbUFPbl9JQTVrSTdtOEFkb3ZVMEFZMzJYSlRtM1ZmTHNYZ2I2SEJNQWFRX1hKN3FTaW8wXzFISVJ0MUs3dnJrd1JBMDE3ckktVlFuYkQydGxhU0dXS3RGSVlnenVsbjlocWFTWnVjUnNBc1FCVkcyN3ozdUdjMGlQWXdSbkhWSQ?oc=5",
+    "date": "Thu, 12 Nov 2026 15:51:39 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Gama Raises €15M Seed to Boost Europe’s Solar Array Supply Chain - Payload Space",
+    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNcDB6MkZBd1lFUFYxZXJBOWI4dWVvSm9HaTJFSTRpRHNGSTFsZnA0UDAzSG9xaEI3SktLTWdTSmNXZGJqSHZlOVQwc09JVlQ3VEtkcF9ZTzJLQW96Z2w2SlpJYXV3eGZqZFQ0RnFEUVc2N1VsMklCVGJJNTNXVF9DcmFSbE8zNFk3V25GRFdURnR6RDA?oc=5",
+    "date": "Fri, 13 Nov 2026 06:33:10 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Ridero Raises $2.7M Pre-Seed Round to Push Vehicle Financing - citybiz",
+    "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQZ2EzemxGSGY0S2h2OHNscHZnZVM0b3pjRENZb0doaTQxQnNwVWNTbUFoaWdpanU2dk1YZEczajU2VU1RWGk4VXlsVHpjUzhqZnVkb3FZeEgyMllySTVIX1NUVFMwWWxQZnhzQlUxTnJHZDAxcDRZeHhtTVVDSjkxeVFfaDhxU3NmV2F3aFZCTUxZZ3d0dHZHNmxNV2ZXRm8?oc=5",
+    "date": "Tue, 10 Nov 2026 11:19:57 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Israeli cyber startup Daylight raises $80 million Series B at estimated $400 million valuation - CTech",
+    "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE13Qjh0ckI5NXFyX3RnLTFPUUluS1hMMWJQRnhvaE4wQjQ3V0h3Smc3aklZcTBCWDBpcHR2elhOVldvdWdOZmhiTG9MT1o2TUw3dlhWUUxucE9vdVdsR2dHT3czeWxfYUE?oc=5",
+    "date": "Tue, 10 Nov 2026 12:39:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Alta raises $48 million for its compliance-focused blockchain in Series A round led by Index Ventures - Fortune",
+    "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFBPcWY3V3ZoWXE5YldjbnY3Mk1PT3FCWklqc1dtcGZWUnE5aVlyZ0pqNm9jNjBuenJxVFAxMFJrWFZxZXNhZWZVdEp6ZjZzRjdfaGpJM2o4bzFSQnpfWXU2NUxDeElBUQ?oc=5",
+    "date": "Tue, 10 Nov 2026 14:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Dallas’ Triplemoon Raises $4M to Bring Mental Healthcare to More Pediatric Practices - Dallas Innovates",
+    "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQZ0tIa1BUSkJUUU5Hc0JtdnQwcVhlYnAxYk5MaERvWUh5VUxCajBhSmIwOE9EYklzd0p5eHg3WjhiREdoNm1UWlFaVFVIU0RFaFAxa0RqUV9GOEQ2RWdRbmRKSUVVUzZvWUNFLU9qLW5GaXo5QWlQSnpaV284cXZXRGc5NmhtMUJ5ZXVGOWhLQXliX2liOVZXWkE4dXFPWTI0STFVRUItVXFhalFMZHFJYjF3?oc=5",
+    "date": "Tue, 10 Nov 2026 15:35:42 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Czech startup ValkaAI extends pre-Seed round to €13 million to bring AI personas to live events at scale - EU-Startups",
+    "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPaWVoYXZNSVlXZTlNUVgydEhDTEdnU3F2M1V0X2lrX3hSV0dzLTlJNk5Nb2JTaXhaQVVzMGdJOFNkcHVDbDlJSzlJNjhreEZQUGZEWGVFMV9JTG1PNHlGMmxfSUdzVjR0a0JMNUt0ZzV6djkyVlRxYU1YRGc4MXhycnBKSjdxTlpabC1oVW5WR2pZRTFkT2VBQ0VFbFAwa1hrY2JuUlhFb0RHejFtcDI3ODBIZ28yYUc5ejB3MXdqdDRfbF9uNmNnN04yTnNLNFhaVm9ZNG8ySHo?oc=5",
+    "date": "Fri, 13 Nov 2026 12:12:51 GMT"
+   },
+   {
+    "src": "News",
+    "title": "SA fintech startup Lumepay raises $6m pre-seed round - - Disrupt Africa",
+    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNWUtXazNJUURnUnVUZ1VIUE9qYU1ZWTNsVkMzTXhMcHg1YUsxV2pMQU8xR1RVcFpwMWhVb3ZvejdxeUhNa0xMV3RTNEZGUDNzMWpZRGJrWDBab1g1dzkxZWFfcTR4WVBFWWJua2pmLS0zLU5nR2ZlUVJzSmRnc05jRFVobzVvemNLbjlLdG45Yjc5SGs?oc=5",
+    "date": "Thu, 12 Nov 2026 06:00:22 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Dallas AI Startup 4Minds Raises $15M Series A at $500M Valuation - Dallas Innovates",
+    "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPRi14Z2N2VjJBYzdKbDNDQ3V4QUk1OFBKb1lVa3k3UmRjdlZKbFRNbFZsTmJuT2F0MUE5YmNmeUlxdDJHYVE3WFZIcnVLUVEteXdnS240Uy16aUtGMmFZeGVEbXFLTjZ4amlmdHlnVkZraTRoMkhYbnZFbFlRbUxLdzZkT3dVVnRWa0NsRm1uRkJUYVRndmc?oc=5",
+    "date": "Thu, 12 Nov 2026 17:19:33 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Exclusive: Agentic AI Startup Lumbra Raises $25M Series A - Tectonic Defense",
+    "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOTWgwRng1OFVUZXNxejV2cmlEWjlJcE9XLTNhQ2lDNzBCcUxreUlLdEJNNlEtX19ha0JPeGNJNE4xd3pySEJhVG9NeExpUi1VLWlwZTVOVjNhVnd5TzFadlBDSGNDYlRwb0pHZHpuNnhYSXRBYjViTGNVX2Fic1ZnWXJmNV93T0NGWmpveFVhM1NRdw?oc=5",
+    "date": "Tue, 10 Nov 2026 13:22:04 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Bay Raises $37M Series A to Scale Enterprise AI Agent Security - Unite.AI",
+    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPRkpZc2VvOWRFZUs5b2NNRHRURW8ydzBQbngxYVc3OXVDZ25wQWxMTDJXNjNZM2hFUUZGNlZIYzdRajloYzZ1TGotajg2X0c1T1RLX3pQcmwxTWhqNnNnU2plTEtuMU9PaHJJMjg2ckFSRHBXV0V3MGE4V3VzU3p6NlRralNMN3BHM2Nn?oc=5",
+    "date": "Tue, 10 Nov 2026 23:46:04 GMT"
+   },
+   {
+    "src": "News",
+    "title": "PuppyGraph Raises $10M Series A to Help Enterprises Build AI Agents That Query 3,000 Tables in Subseconds - Yahoo Finance",
+    "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQZlNCS1JSVi1ETXhrRkljMmdqdGlINDJNUE9wd1FGdHE5cFpZamVFUHVSZ200N0UwS2JGM2ltVmx6NnRpQl9uSGRTbGZFXy1WelNLOWJjelBYZ2JUMV84UUFsZ0RSaXRXNHd4QXBjblV4aExKWnNNQ1NtR0VPMUFVZTBTcEk1S0RYNnVNTXo3QW1RX3VDWDQ3QW9pR1NIQQ?oc=5",
+    "date": "Tue, 10 Nov 2026 14:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Mercor raises $750M Series D at $20B valuation to push into enterprise AI - Dealroom",
+    "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPZkl1QjBnWnZUSEFLRjlWT3l3bDQyZHZnQWs5aXkzMXladEJaRDItcl9IR3hQeDBUWlpReVZmTHJFZHhDOTVyT2xOX3lxRHdYdWFyczltcnR0X2VTNGh5N1JJUEk4YzNYM2NMMW1rWDMzUTQyaWtFbUR5ZzVDYkhFLXltYzdmbm14RG9CaGk1OGxldnVjaGJFMHQ0ZDItbkIxRGNPQk9HUXk?oc=5",
+    "date": "Tue, 10 Nov 2026 14:41:07 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Ocient Raises $100M in Series C Funding to Advance Trusted AI Solutions for Petabyte-Scale Environments - AI Insider",
+    "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQaHpNa1VDODBoRHNKSnVCeDhSbG93NXFqRktBSDlWQnBuWUJBS2t4SnNrRGg2aVFQd1pCUlhFdDh0SG5LTTZIWER2ZnZOU2lnbXZNNGZXRHh1R1U1YXNZdUVLdVdTZWRsMG9KTlNJZVZRbGtFNUlScUw2Z3U1SU9OUFV4R1B2RWozbnNDSXh2LUE1X1l3TFFReHViallhd0NkeHA4QTFDbDhkNzRROFMza2xKdHNtY0ZCal85UW1BWDdMc1liQ212SFFIaWs0MHJ6T25JVFA5WQ?oc=5",
+    "date": "Wed, 11 Nov 2026 08:21:50 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Luminal raises $25M Series A to cut AI inference costs beyond Nvidia GPUs - TNGlobal",
+    "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNem9fdGZEN2tPS3QtNTRySC1qb3htazZJZnZUV1UtMTB5RVotTWtfWkdMWU43eUQwdUhBclNZd2ppa1U5ekdnN1hQM2JaNGs3c1N5b3JkaDA4NHFiSEtySGpGQ0JkdFBKcXBKNFZvTXlfTmhWdHMxcGxYRlJ4aGlPakxjXzh3NWg3M0N5bURRbmgwWVJ1Ynk0N01xQ1R4OTI3ZGRDVVp4YVl2TWo4?oc=5",
+    "date": "Thu, 12 Nov 2026 15:32:46 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Nebuly raises $21M Series A to measure the ROI of enterprise AI - The Next Web",
+    "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBEN2ZIYW0xdXFBa2xEZGN0bmFtWmcxNDdIM0dDM3RZeXhJOUI2TWhpbW1FeUxDY1RGS09RbUVSbWdrT3NrUjZUclJPR1ZwZjZwM3J0T3cxYk1KWkl0aDA2NUUxRkZVU0x5ZWxqUDJIRlREQlk?oc=5",
+    "date": "Thu, 12 Nov 2026 05:14:41 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Nebuly raises $21M from Planven to show enterprises what its AI agents are worth - Tech Funding News",
+    "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE55dVlzNVZxQklCNnlfTzJQdEZqbzNROHNURUxHV090UkYzTkt2VUUyYWZXcFQ3UmFfbUE1bFNRYlotc2djX0FtMDQxenBOd2tCQkpNTXJYaEtCOExVcHNjbzVucVd1ZFRkSHM1Q05OZVRieVdLQUFFMw?oc=5",
+    "date": "Thu, 12 Nov 2026 05:08:06 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Charta Health Raises $55M Series B to Expand AI Chart Review - Unite.AI",
+    "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQZEZsYUMyUm1MbmpRSHhVZGxMN2RlMGFGUExHMWRWcVMtN29EYnJfRnJ4alp2VmYxVVdZZmx4SU92ZEtyeDlmWDZ1Ylh2TFFTS2gxWUtReC0tQ09JZkZmMWVvdUktZ29qX2ZNNEsxdmtWV2Y4TldlWU0yYVltT3g0Z0hEZFpUcXgy?oc=5",
+    "date": "Tue, 10 Nov 2026 22:15:03 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Lumbra Raises $25M Series A to Expand Controlled AI Agent Deployments - Unite.AI",
+    "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNQUpqUDRwNjY2TWpFYnVXOTQ1OVdVNG93QVl6WGxMNHE1VnBVUkt3STZ4UThxNFExUUpTVWhzaWlQd3FNV0lMT0s5RHA2US1Ec2ZsOVVWSWJNM0lORUhxVmJJYVFkM1FiZnBBOENCV2hCS1F6MnZVQU02SEMtYkllZFRYZ0FaSlpTMjNzUzRrRWpFVG56?oc=5",
+    "date": "Tue, 10 Nov 2026 22:37:05 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Mirendil Raises $1B Series A to Bring Frontier AI R&amp;D to More Teams - Unite.AI",
+    "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNQUszbXRZb1A0eEh2SVFYWHBhZjVxdEhqOG9zU1BrSHY2Tno2c3F4a29FM3Q1bFF0TVh0ZGp4cnVob25PcXRiZWNsSW0yTFRtTGZ2MTl1ODhOYzJ6SEVzeENFcmxIaFpNTW9McVJKakEzRFhqc1RfTlNXUzRTS3F3WHVyeTRoYWo2M1Y0a0NmVlF0RmdmdkNj?oc=5",
+    "date": "Thu, 12 Nov 2026 17:58:03 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Best tax software for small businesses in 2026 - CNBC",
+    "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9STktSOWJ0Q21ObUNJaGxyeU9QTlNnUUNWQWFST3dMZ3ROMUZSRWlVWDlTQVptME0tWVdCM3JIeEJPcldZNkI5LVl2Y3BlYzROd255MGZhbU9tWTk3ZjhiNEFhM3RFdWxrUXJHekdIOUlrbl90dkHSAXtBVV95cUxNa3hBbUVFeU5sUHJVbkRFODYyOGx0ZEdCem53QlhkbHg2R2JTMXJDbGhLZFlqMEhwZ0MzZlhZY0p3cmpXNUtlaEVTNmxyYmhuaUY4S0t2Qk94Vk1zdVJQMnBtcHZhOUNwVW0zNHhndnVWMmJqWEs2LUVMLWc?oc=5",
+    "date": "Mon, 09 Nov 2026 08:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Rillet Bets A Digital Startup Can Crack Europe’s Accounting Market - Forbes",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPOFRIWVRDX01Td3FqTkwzV2ZWWFNEdlhXTGJyY1BNWllubndCRWloQU50dGp4X0J0eGpnSTZTeVZaUElNNDBESUYxWGtSOE1VLXJVT2QzaXhvaVU1TDhyZGcwRFBhUi1Hc0VfR2VyZEZMQkY0eTBrNmpGUFRwNm9ENldvdjVKUXo1c1lfV0xXeHZHRGZRclBDOGsyVGdGMUo3RmVjWWRQZmEwZy15ZnpjcjA0RGhQT3lVcWpr?oc=5",
+    "date": "Mon, 09 Nov 2026 08:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "11 Reasons Why Tech Startups Fail (and How to Avoid Them) - Oracle NetSuite",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPRHhtSktVeVI0cUNVWE5feHp4RXpTdzVMTUdIQWJkbUlaN2NmQ2plUVFITkZiU3pMbXFIVWR0MTYwOUp3ejlXM2hhVkRiUXpXTDJvWUJqeVUwYnNpb3B0c2FxSXV5NDdDcUVTYmVZWmZjSFhWTjJqX0F2MkpOSFhLQWJwMWlPdEw4RkswSURETlYzSU5oaEl4UF9SMzI?oc=5",
+    "date": "Fri, 13 Nov 2026 12:32:49 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Sage partners with Adyen and Mastercard to deliver business accounts with debit cards for small businesses - Yahoo Finance UK",
+    "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOTzR5YWotMVhMcmlmSEMtVlc4dm5GTHJlYmx5MGpDdzNHVk1raTh4bUpWeGp5cUFydHBzWllHNmlIZmpVZ2lta1QwMEhobjE1UEozbUo2NnN3WXpUZktPdVNnVF82aFVTZGNOZlBidlJlWi1obndsa1dpbVIxNXBnS1dQVXRneVRxOXN0LWxzTU0?oc=5",
+    "date": "Tue, 10 Nov 2026 09:24:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Sage Enlists Mastercard and Adyen to Bring Banking Into Accounting - PYMNTS.com",
+    "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxON244X1NnMEwzQlVXSWVuTEMyTmNVLUZUSXA2SjYzVDJCWld5VzBOdW8yQUctYXZ2YXhhZHRFNmZlNzFPUHlWdm5rY3IzTWY2REtnTWVSQ0tlaHJ6bjJWTHZhSi04OS0zRFVHYlFLWDlNWVZlX2FGOXludTdWSHRZdmJvZ0g4QkNLa1ViZUVkdnVERHAxalRHamJ3?oc=5",
+    "date": "Tue, 10 Nov 2026 14:36:04 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Free Accounting Software Still Requires an Owner’s Judgment - eWeek",
+    "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOUUdyLWY2S0x2Y005UHE4RWpzWmlJNkJBRzZ5Wm5vMVlaV0tiUUhRM2RnZWU2cmZ6SUJDRUlJWHFHQkxOUmdnVV9iMkVUZmg4dE9XMnp3TnhfUVdwVjZnZTJla25RV1ZJUTQxbFFvbG5wVTZZY1NHbDZFOE01a2VBb0hkZlk2dUZWcEZMSXpB?oc=5",
+    "date": "Thu, 12 Nov 2026 15:34:04 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Port explores smaller business spaces at Cashmere Mill District, drawing on Trades District demand - The Leavenworth Echo",
+    "url": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxOVExoajlhYjVWUGw2dVh6YTlDUHpGRHdxcVZ0QmlUX3ZpdV9tbWExRGNXUEJsYk9rdE5pTUhMRzBqWVp3dm8zV1lMLVJGUFVjUVMwOFRCcjQ4bzBrYjhSX0lONFVLQjVkRk9MQVc1VlZYMGdmTTlSVzZOdXBDTnBFRVdJZ00tZkhiMFVFOGNzMzdXMms1bXNtcm9lVFkwVlBidTNDei1Jd2tPM2E3VlZud0pqcmgxeVJBVDdFNVI0b2dFZ2hnVTc0OFRLNzNzby1PbTA0b2pEZnV3QUY0?oc=5",
+    "date": "Thu, 12 Nov 2026 22:36:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Yocale.ai targets beauty and wellness market with AI-powered business management platform - Proactive financial news",
+    "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNeV9LMkpjdnRROExDRVE0SERkdlA1eUhFRW02YmVUcWFlR0gyMkxHQ2RsZE91Vmw0akMtRFFhLVJCeFh0YkRBT2JGdzUtOEZnTnVkU0VTZmE2SEJPZHBYVDRaMDZSb3hrS1Fwb25kdXNoR01vX01NQmlWeUNKbkZjZHhvZ0Y4QjQ2cko1NUR4NkM5SnhxSVlfbVYwN3ZRSDVVTkV6UUhLNVhOWTRNZ2NKSWdqZGxiSFFRZ0pCSHNONXhaNVpNaU5ua0ExVTZ1WlFSbE51ZzdJQ3VydGRRRHNmMEUwTzU4Zw?oc=5",
+    "date": "Thu, 12 Nov 2026 16:50:35 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Accenture vs. Intuit: Does Corporate Consulting or Financial Software Make For a Better Stock Buy in 2026? - The Motley Fool",
+    "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPbEhxbHhOcHZMLUNfYWY3Qi04WEN0Uzgxei1NOFB5MlpaVG5Da0YxcmlTYTJodWRTVEttUUxyU19BMmRuQ25GTk91M2hTaGx1Wm5QSVh0MmRXYlZaZnczM3dGZVlTRVhEYXlaREo3a2hnY1pXNFBER0M2MjdHRDZ1Z21uNWdYcUIzTGhIV0tjazNSdXdFVzlrSGlRaVotb2hBbXJUZ1VYdEJCN2VNa3FxTjRoM2ZfVUp5YWp3QWtpOFJiUjdYOGtxbzF3eVhteEtxRVd1Z2hFLW5PTmZ1dFhHdGluUEhvaUZqcVBmQQ?oc=5",
+    "date": "Tue, 10 Nov 2026 18:50:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "How Big Is the AI Software Market? A Bottom-Up Estimate Puts It Near $144B - AI Insider",
+    "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPelhzd2pGd1BVSWlzSHZGTG1PQjlrbERPZXVoTU9WenpCRTVfQW04TExxeXY3NmJiemhwSmdDbms4QkdFSDZCVUZzbzM2RUkwQ0psVlZQdG9HY3VVQ05LRjV5X19xblZjS3ZJdEc3dmNLd2F4d09oME9aWVd2LVJpbTY5X2s3Vlk0U1dHd2hYeVJrc19ZUmRiQWkxeGFRYnk0U2lhS18zcjhfald2TGxZ?oc=5",
+    "date": "Fri, 13 Nov 2026 09:38:21 GMT"
+   },
+   {
+    "src": "News",
+    "title": "27 Outsourcing Statistics 2026 (New US &amp; Global Data) - DemandSage",
+    "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1KU1VnWTVTVElZWkVmaTB6djVUVFpJX1hkOWh3NXZsS3V6Qjh1Qm1LSEoyUmhQcFZYakgwV1JGSEJXZjJNX2c0Yk9pYS1lVk1qQXBIVVE5OTNXNHJRVjdj?oc=5",
+    "date": "Thu, 12 Nov 2026 11:44:57 GMT"
+   },
+   {
+    "src": "News",
+    "title": "10 Best Online Bookkeeping Services Of 2026 - Forbes",
+    "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNUC1lYlVOTkdxc3JweFM1aEdlUWE4X0psbnVRSldkU2prVnpiMjB2ZEY4MmhUNlRRYlBXWVBVOXdQTjVBNFg5SHpKZFEtWThSOFViYVRXV0VDR2V1YXV0RFctMGlUcDV4UWIzazNkZzhSUUtqamFCMnFyNmZFOEx1UE42RHlVelExTnc?oc=5",
+    "date": "Wed, 11 Nov 2026 12:09:00 GMT"
+   }
+  ],
+  "producthunt": [
+   {
+    "src": "Product Hunt",
+    "title": "StockRip",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Templify AI",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Burnstate",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Gemini 4 Hydrogen",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "qorqbot",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Replicate",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Google Pixel Tag",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Hoverine",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Paxper",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Kairos",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Expo Simulators",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Trainn MCP",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "WHOOP Humans",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "GAtrends",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Filament by Galaxy",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Aven App Agent",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Pocket Studio for Supabase",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Willo",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Claude Meetings",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "de:volt",
+    "url": "",
+    "date": ""
+   }
+  ],
+  "reddit": [],
+  "screener": [
+   {
+    "src": "Screener",
+    "title": "MU Micron Technology Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 1,
+     "symbol": "MU",
+     "name": "Micron Technology Inc.",
+     "sector": "Technology",
+     "industry": "Semiconductors",
+     "price": 811.3,
+     "market_cap": 917923651896,
+     "pe": 107.5,
+     "net_income": 8539000000,
+     "revenue": 37378000000,
+     "net_margin": 0.2284,
+     "sales_growth": 0.4885,
+     "profit_growth": 9.9756,
+     "fy_end": "2025-08-28"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "LLY Eli Lilly and Company",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 2,
+     "symbol": "LLY",
+     "name": "Eli Lilly and Company",
+     "sector": "Health Care",
+     "industry": "Biotechnology: Pharmaceutical Preparations",
+     "price": 1437.52,
+     "market_cap": 1352339796963,
+     "pe": 65.52,
+     "net_income": 20640000000,
+     "revenue": 65179000000,
+     "net_margin": 0.3167,
+     "sales_growth": 0.447,
+     "profit_growth": 0.949,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "TXN Texas Instruments Incorporated",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 3,
+     "symbol": "TXN",
+     "name": "Texas Instruments Incorporated",
+     "sector": "Technology",
+     "industry": "Semiconductors",
+     "price": 309.81,
+     "market_cap": 283095181600,
+     "pe": 56.61,
+     "net_income": 5001000000,
+     "revenue": 17682000000,
+     "net_margin": 0.2828,
+     "sales_growth": 0.1305,
+     "profit_growth": 0.0421,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "KLAC KLA Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 4,
+     "symbol": "KLAC",
+     "name": "KLA Corporation",
+     "sector": "Technology",
+     "industry": "Electronic Components",
+     "price": 161.01,
+     "market_cap": 209789981659,
+     "pe": 51.65,
+     "net_income": 4061643000,
+     "revenue": 12156162000,
+     "net_margin": 0.3341,
+     "sales_growth": 0.2389,
+     "profit_growth": 0.4706,
+     "fy_end": "2025-06-30"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "AAPL Apple Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 5,
+     "symbol": "AAPL",
+     "name": "Apple Inc.",
+     "sector": "Technology",
+     "industry": "Computer Manufacturing",
+     "price": 355.63,
+     "market_cap": 5168079884660,
+     "pe": 46.14,
+     "net_income": 112010000000,
+     "revenue": 416161000000,
+     "net_margin": 0.2692,
+     "sales_growth": 0.0643,
+     "profit_growth": 0.195,
+     "fy_end": "2025-09-27"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "GEV GE Vernova Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 6,
+     "symbol": "GEV",
+     "name": "GE Vernova Inc.",
+     "sector": "Technology",
+     "industry": "Consumer Electronics/Appliances",
+     "price": 808.42,
+     "market_cap": 213970233696,
+     "pe": 43.81,
+     "net_income": 4884000000,
+     "revenue": 38068000000,
+     "net_margin": 0.1283,
+     "sales_growth": 0.0897,
+     "profit_growth": 2.1469,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "GE GE Aerospace",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 7,
+     "symbol": "GE",
+     "name": "GE Aerospace",
+     "sector": "Technology",
+     "industry": "Consumer Electronics/Appliances",
+     "price": 342.66,
+     "market_cap": 354088369250,
+     "pe": 40.68,
+     "net_income": 8704000000,
+     "revenue": 45855000000,
+     "net_margin": 0.1898,
+     "sales_growth": 0.1848,
+     "profit_growth": 0.3276,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "LRCX Lam Research Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 8,
+     "symbol": "LRCX",
+     "name": "Lam Research Corporation",
+     "sector": "Technology",
+     "industry": "Industrial Machinery/Components",
+     "price": 235.88,
+     "market_cap": 294654455480,
+     "pe": 40.56,
+     "net_income": 7265396000,
+     "revenue": 23232690000,
+     "net_margin": 0.3127,
+     "sales_growth": 0.2602,
+     "profit_growth": 0.3559,
+     "fy_end": "2026-06-28"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "RTX RTX Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 9,
+     "symbol": "RTX",
+     "name": "RTX Corporation",
+     "sector": "Industrials",
+     "industry": "Aerospace",
+     "price": 201.335,
+     "market_cap": 271689612732,
+     "pe": 40.36,
+     "net_income": 6732000000,
+     "revenue": 88603000000,
+     "net_margin": 0.076,
+     "sales_growth": 0.0974,
+     "profit_growth": 0.4101,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "DELL Dell Technologies Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 10,
+     "symbol": "DELL",
+     "name": "Dell Technologies Inc.",
+     "sector": "Technology",
+     "industry": "Computer Manufacturing",
+     "price": 373.72,
+     "market_cap": 237615940930,
+     "pe": 40.03,
+     "net_income": 5936000000,
+     "revenue": 113538000000,
+     "net_margin": 0.0523,
+     "sales_growth": 0.188,
+     "profit_growth": 0.2972,
+     "fy_end": "2026-01-30"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "V Visa Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 11,
+     "symbol": "V",
+     "name": "Visa Inc.",
+     "sector": "Consumer Discretionary",
+     "industry": "Business Services",
+     "price": 425.7,
+     "market_cap": 767551200461,
+     "pe": 38.27,
+     "net_income": 20058000000,
+     "revenue": 40000000000,
+     "net_margin": 0.5014,
+     "sales_growth": 0.1134,
+     "profit_growth": 0.016,
+     "fy_end": "2025-09-30"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "MSFT Microsoft Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 12,
+     "symbol": "MSFT",
+     "name": "Microsoft Corporation",
+     "sector": "Technology",
+     "industry": "Computer Software: Prepackaged Software",
+     "price": 521.125,
+     "market_cap": 3869975635911,
+     "pe": 38,
+     "net_income": 101832000000,
+     "revenue": 281724000000,
+     "net_margin": 0.3615,
+     "sales_growth": 0.1493,
+     "profit_growth": 0.1554,
+     "fy_end": "2025-06-30"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "AMZN Amazon.com Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 13,
+     "symbol": "AMZN",
+     "name": "Amazon.com Inc.",
+     "sector": "Consumer Discretionary",
+     "industry": "Catalog/Specialty Distribution",
+     "price": 266.17,
+     "market_cap": 2878133022908,
+     "pe": 37.06,
+     "net_income": 77670000000,
+     "revenue": 716924000000,
+     "net_margin": 0.1083,
+     "sales_growth": 0.1238,
+     "profit_growth": 0.3109,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "NVDA NVIDIA Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 14,
+     "symbol": "NVDA",
+     "name": "NVIDIA Corporation",
+     "sector": "Technology",
+     "industry": "Semiconductors",
+     "price": 173.73,
+     "market_cap": 4186893000000,
+     "pe": 34.87,
+     "net_income": 120067000000,
+     "revenue": 215938000000,
+     "net_margin": 0.556,
+     "sales_growth": 0.6547,
+     "profit_growth": 0.6475,
+     "fy_end": "2026-01-25"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "AMGN Amgen Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 15,
+     "symbol": "AMGN",
+     "name": "Amgen Inc.",
+     "sector": "Health Care",
+     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+     "price": 468.11,
+     "market_cap": 253206077584,
+     "pe": 32.84,
+     "net_income": 7711000000,
+     "revenue": 36751000000,
+     "net_margin": 0.2098,
+     "sales_growth": 0.0995,
+     "profit_growth": 0.8853,
+     "fy_end": "2025-12-31"
+    }
+   }
+  ]
+ }
+}

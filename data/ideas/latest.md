@@ -1,47 +1,47 @@
-# Idea Scout: 2026-11-12
+# Idea Scout: 2026-11-13
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
-## 1. Show HN: Every satellite that passed over any place this week, and its photos
+## 1. Show HN: My $300 embroidery machine needed a subscription, so I built my own app
 
 **Category:** build
 
-- **What:** Popular launch (484 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (713 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **Evidence:** <https://news.ycombinator.com/item?id=50470488>
+
+## 2. Show HN: Every satellite that passed over any place this week, and its photos
+
+**Category:** build
+
+- **What:** Popular launch (490 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50428907>
 
-## 2. Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives
+## 3. Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives
 
 **Category:** build
 
-- **What:** Popular launch (434 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (442 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50443812>
-
-## 3. Show HN: Coldframe, a honeypot that poses as a supermarket fridge controller
-
-**Category:** build
-
-- **What:** Popular launch (289 points). Ideas: a niche version, integrations, or a hosted service around it.
-- **Evidence:** <https://news.ycombinator.com/item?id=50406292>
 
 ## 4. storytold/craft-anything: Craft Anything: understand how any software works, and craft your own.
 
 **Category:** build
 
-- **What:** New GitHub project with 29710 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 31326 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/storytold/craft-anything>
 
 ## 5. deepseek-ai/dsh-superagent-prototype: Towards a More Autonomous Agent System
 
 **Category:** build
 
-- **What:** New GitHub project with 22728 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 23015 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/deepseek-ai/dsh-superagent-prototype>
 
 ## 6. zortos293/Lichii: VERY experimental Nintendo Switch 2 emulator
 
 **Category:** build
 
-- **What:** New GitHub project with 8731 stars in 2 weeks (C++). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 8958 stars in 2 weeks (C++). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/zortos293/Lichii>
 
 ## 7. SRTD raises €31.5M seed round to develop cell-selective RNA therapies - European Biotechnology Magazine
@@ -65,23 +65,23 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 - **What:** Where investors are putting money this week. Look for adjacent problems these customers have.
 - **Evidence:** <https://news.google.com/rss/articles/CBMiXEFVX3lxTE8zNG5MeUVZMmVPbkVXaFFIWERHb19ZcDdYWFdDRUxJQUhfWVVuNm5RTEJOVkYyWkNTbk1sNEdOREs0MG9Nd1lYak8weEpHQnFpU0w0emtXZklHX3JW?oc=5>
 
-## 10. AMD Advanced Micro Devices Inc. (Technology)
+## 10. MU Micron Technology Inc. (Technology)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 192.4, net margin 12.5%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 107.5, net margin 22.8%. A research lead, not a buy signal.
 
-## 11. MU Micron Technology Inc. (Technology)
-
-**Category:** invest
-
-- **What:** From your screener: profitable and growing, P/E 97.1, net margin 22.8%. A research lead, not a buy signal.
-
-## 12. LLY Eli Lilly and Company (Health Care)
+## 11. LLY Eli Lilly and Company (Health Care)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 64.4, net margin 31.7%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 65.5, net margin 31.7%. A research lead, not a buy signal.
+
+## 12. TXN Texas Instruments Incorporated (Technology)
+
+**Category:** invest
+
+- **What:** From your screener: profitable and growing, P/E 56.6, net margin 28.3%. A research lead, not a buy signal.
 
 
 <sub>Sources unavailable this run: reddit (403)</sub>
