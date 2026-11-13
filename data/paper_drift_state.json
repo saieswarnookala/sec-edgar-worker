@@ -500,7 +500,25 @@
    "orders": [
     "SELL 1 SPY (park)"
    ]
+  },
+  {
+   "run": "2026-11-13T19:26:09.551Z",
+   "today": "2026-11-13",
+   "equity": 100352.75,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 0,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 78,
+    "spy_delta": 0,
+    "spy_price": 757.12,
+    "stock_value": 39242
+   },
+   "orders": []
   }
  ],
- "updated": "2026-11-12T11:06:04.786Z"
+ "updated": "2026-11-13T19:26:09.551Z"
 }
