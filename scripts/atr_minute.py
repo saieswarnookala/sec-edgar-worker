@@ -4,7 +4,7 @@
 #   limit buy at yesterday's close - 0.5 ATR; once filled, sell at entry + k ATR if a LATER minute reaches it;
 #   otherwise hold to the close of day `hold` (later days use daily bars: gap above target sells at the open).
 # The same trades are also scored with the old optimistic daily rule (v2) and the strict daily rule (v3) for comparison.
-import os, re, sys, json, time, urllib.request, urllib.parse
+import os, re, sys, json, time, urllib.request, urllib.parse, urllib.error
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import pandas as pd, numpy as np
@@ -53,27 +53,40 @@ KS, HOLDS, LIM = [0.5, 1.0, 1.5], [1, 2, 3], 0.5
 Ro, Rh, Rl, Rc = RO[tick].values, RH[tick].values, RL[tick].values, RC[tick].values
 i0, i1 = int(np.searchsorted(dates.values, np.datetime64(START))), int(np.searchsorted(dates.values, np.datetime64(END)))
 
+BAD = set(); ERRS = []
+def fetch_bars(q):
+    for a in range(6):
+        try:
+            req = urllib.request.Request("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(q),
+                                         headers={"APCA-API-KEY-ID": KEY, "APCA-API-SECRET-KEY": SEC})
+            js = json.load(urllib.request.urlopen(req, timeout=60)); time.sleep(0.32); return js   # stay under 200 requests/min
+        except urllib.error.HTTPError as e:
+            if e.code in (400, 404, 422):
+                body = e.read().decode("utf-8", "ignore")[:200]
+                if len(ERRS) < 20: ERRS.append(f"{e.code} {q['symbols'][:60]} {body}"); print("bad request", e.code, q["symbols"][:60], body, flush=True)
+                return None
+            time.sleep(3 * (a + 1))
+        except Exception:
+            time.sleep(3 * (a + 1))
+    return None
 def bars(day, syms):
-    out = {}
-    q = {"symbols": ",".join(syms), "timeframe": "1Min", "start": f"{day}T08:00:00Z", "end": f"{day}T23:59:00Z",
-         "feed": "sip", "adjustment": "raw", "limit": "10000"}
-    while True:
-        for a in range(6):
-            try:
-                req = urllib.request.Request("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(q),
-                                             headers={"APCA-API-KEY-ID": KEY, "APCA-API-SECRET-KEY": SEC})
-                js = json.load(urllib.request.urlopen(req, timeout=60)); break
-            except Exception as e:
-                if a == 5: raise
-                time.sleep(3 * (a + 1))
-        time.sleep(0.32)                          # stay under 200 requests/min
-        for s, bl in (js.get("bars") or {}).items():
-            for b in bl:
-                t = datetime.fromisoformat(b["t"].replace("Z", "+00:00")).astimezone(NY); mn = t.hour * 60 + t.minute
-                if 570 <= mn < 960: out.setdefault(s, []).append((b["o"], b["h"], b["l"], b["c"]))
-        if not js.get("next_page_token"): return out
-        q["page_token"] = js["next_page_token"]
-
+    syms = [x for x in syms if x not in BAD]; out = {}
+    def run(group):
+        q = {"symbols": ",".join(group), "timeframe": "1Min", "start": f"{day}T08:00:00Z", "end": f"{day}T23:59:00Z",
+             "feed": "sip", "adjustment": "raw", "limit": "10000"}
+        while True:
+            js = fetch_bars(q)
+            if js is None: return False
+            for s, bl in (js.get("bars") or {}).items():
+                for b in bl:
+                    t = datetime.fromisoformat(b["t"].replace("Z", "+00:00")).astimezone(NY); mn = t.hour * 60 + t.minute
+                    if 570 <= mn < 960: out.setdefault(s, []).append((b["o"], b["h"], b["l"], b["c"]))
+            if not js.get("next_page_token"): return True
+            q["page_token"] = js["next_page_token"]
+    if syms and not run(syms):          # a bad symbol spoils the whole request: retry one by one and remember bad ones
+        for x in syms:
+            if x not in out and not run([x]): BAD.add(x)
+    return out
 def later_days(j, t, ent, tg, hold):
     """Days 2..hold on daily raw bars. Returns exit price."""
     for h in range(1, hold):
@@ -136,7 +149,7 @@ def summ(v, sig):
         # rough yearly growth if each trade is 10% of the account (10 slots, slot limits ignored)
         o[f"approx_yearly_{cost * 100:g}%"] = round(100 * float(np.exp(min(len(n) / yrs, 2520) * np.log1p(0.1 * n.mean())) - 1), 1)
     return o
-OUT = {"built": time.strftime("%Y-%m-%d"), "period": f"{dates[i0].date()} to {dates[min(i1, len(dates) - 1)].date()}", "stats": stats,
+OUT = {"bad_symbols": sorted(BAD), "request_errors": ERRS, "built": time.strftime("%Y-%m-%d"), "period": f"{dates[i0].date()} to {dates[min(i1, len(dates) - 1)].date()}", "stats": stats,
        "note": "minute = replayed on 1-min bars (truth); v2_daily = old test (assumed low before high, inflated); v3_daily = strict daily rule", "results": {}}
 for key, r in RES.items():
     OUT["results"][key] = {m: summ(r[m], r["signals"]) for m in ("minute", "v2_daily", "v3_daily")}
