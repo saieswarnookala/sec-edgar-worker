@@ -1,0 +1,373 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.0,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 17.8,
+   "win_rate": 58.4,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.5,
+   "dd": -24.5,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.5,
+    "2008-2009": 19.6,
+    "2010-2015": 4.0,
+    "2016-2020": 13.3,
+    "2021-2026": 34.5
+   },
+   "invested_pct": 16.0,
+   "win_rate": 64.3,
+   "variant": "skip: earnings in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 10.4
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.7,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.6,
+    "2008-2009": 15.0,
+    "2010-2015": 4.3,
+    "2016-2020": 11.0,
+    "2021-2026": 27.3
+   },
+   "invested_pct": 16.1,
+   "win_rate": 58.4,
+   "variant": "skip: earnings in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 10.4
+  },
+  {
+   "cagr": 10.6,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.7,
+    "2008-2009": 23.2,
+    "2010-2015": 4.9,
+    "2016-2020": 11.7,
+    "2021-2026": 22.0
+   },
+   "invested_pct": 2.3,
+   "win_rate": 62.6,
+   "variant": "ONLY earnings in the last 5 days (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 9.9,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.6,
+    "2008-2009": 22.4,
+    "2010-2015": 4.7,
+    "2016-2020": 11.2,
+    "2021-2026": 19.4
+   },
+   "invested_pct": 2.3,
+   "win_rate": 58.8,
+   "variant": "ONLY earnings in the last 5 days (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.8,
+   "dd": -25.5,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.7,
+    "2008-2009": 20.0,
+    "2010-2015": 3.8,
+    "2016-2020": 14.5,
+    "2021-2026": 34.7
+   },
+   "invested_pct": 16.8,
+   "win_rate": 64.4,
+   "variant": "skip: earnings drop >= 5% vs SPY in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 5.2
+  },
+  {
+   "cagr": 14.9,
+   "dd": -26.5,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.7,
+    "2008-2009": 15.7,
+    "2010-2015": 4.1,
+    "2016-2020": 11.6,
+    "2021-2026": 26.6
+   },
+   "invested_pct": 16.8,
+   "win_rate": 58.7,
+   "variant": "skip: earnings drop >= 5% vs SPY in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 5.2
+  },
+  {
+   "cagr": 10.0,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.6,
+    "2008-2009": 25.0,
+    "2010-2015": 4.8,
+    "2016-2020": 9.8,
+    "2021-2026": 20.4
+   },
+   "invested_pct": 1.1,
+   "win_rate": 58.2,
+   "variant": "ONLY earnings drop >= 5% vs SPY in the last 5 days (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 9.8,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.5,
+    "2008-2009": 24.7,
+    "2010-2015": 4.7,
+    "2016-2020": 9.9,
+    "2021-2026": 19.3
+   },
+   "invested_pct": 1.1,
+   "win_rate": 54.0,
+   "variant": "ONLY earnings drop >= 5% vs SPY in the last 5 days (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -25.7,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.1,
+    "2008-2009": 21.2,
+    "2010-2015": 4.6,
+    "2016-2020": 15.6,
+    "2021-2026": 33.9
+   },
+   "invested_pct": 17.2,
+   "win_rate": 64.3,
+   "variant": "skip: earnings due in the next 5 days (during the hold)",
+   "scenario": "ideal",
+   "removed_pct": 3.0
+  },
+  {
+   "cagr": 15.1,
+   "dd": -26.6,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.1,
+    "2008-2009": 16.9,
+    "2010-2015": 4.6,
+    "2016-2020": 12.8,
+    "2021-2026": 26.0
+   },
+   "invested_pct": 17.3,
+   "win_rate": 58.5,
+   "variant": "skip: earnings due in the next 5 days (during the hold)",
+   "scenario": "realistic",
+   "removed_pct": 3.0
+  },
+  {
+   "cagr": 10.3,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 4.2,
+    "2008-2009": 24.2,
+    "2010-2015": 4.4,
+    "2016-2020": 9.6,
+    "2021-2026": 22.3
+   },
+   "invested_pct": 1.0,
+   "win_rate": 58.7,
+   "variant": "ONLY earnings due in the next 5 days (during the hold) (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 10.1,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 4.2,
+    "2008-2009": 23.9,
+    "2010-2015": 4.6,
+    "2016-2020": 9.5,
+    "2021-2026": 20.8
+   },
+   "invested_pct": 1.0,
+   "win_rate": 59.2,
+   "variant": "ONLY earnings due in the next 5 days (during the hold) (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.5,
+   "dd": -25.3,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.1,
+    "2008-2009": 21.6,
+    "2010-2015": 4.1,
+    "2016-2020": 13.7,
+    "2021-2026": 33.3
+   },
+   "invested_pct": 15.3,
+   "win_rate": 64.7,
+   "variant": "skip: earnings in last 5 days OR next 5 days",
+   "scenario": "ideal",
+   "removed_pct": 13.3
+  },
+  {
+   "cagr": 15.1,
+   "dd": -26.2,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.3,
+    "2008-2009": 17.4,
+    "2010-2015": 4.2,
+    "2016-2020": 11.5,
+    "2021-2026": 27.1
+   },
+   "invested_pct": 15.3,
+   "win_rate": 58.6,
+   "variant": "skip: earnings in last 5 days OR next 5 days",
+   "scenario": "realistic",
+   "removed_pct": 13.3
+  }
+ ],
+ "luck": {
+  "skip: earnings in the last 5 days": {
+   "removed_pct": 10.4,
+   "random_skip_realistic": [
+    15.2,
+    14.4,
+    14.5,
+    15.3
+   ]
+  },
+  "skip: earnings drop >= 5% vs SPY in the last 5 days": {
+   "removed_pct": 5.2,
+   "random_skip_realistic": [
+    15.0,
+    14.7,
+    14.8,
+    15.6
+   ]
+  },
+  "skip: earnings due in the next 5 days (during the hold)": {
+   "removed_pct": 3.0,
+   "random_skip_realistic": [
+    15.0,
+    14.8,
+    15.1,
+    14.9
+   ]
+  },
+  "skip: earnings in last 5 days OR next 5 days": {
+   "removed_pct": 13.3,
+   "random_skip_realistic": [
+    14.6,
+    15.3,
+    14.6,
+    15.6
+   ]
+  }
+ },
+ "notes": [
+  "SEC 8-K item 2.02 earnings dates from Aug 2004; earlier years have no earnings data"
+ ],
+ "mode": "ev_earn"
+}
