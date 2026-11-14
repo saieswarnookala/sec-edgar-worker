@@ -1,0 +1,388 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.0,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 17.8,
+   "win_rate": 58.4,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.3,
+   "dd": -23.0,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.3,
+    "2008-2009": 22.2,
+    "2010-2015": 4.2,
+    "2016-2020": 13.1,
+    "2021-2026": 32.5
+   },
+   "invested_pct": 16.9,
+   "win_rate": 64.1,
+   "variant": "skip: any non-earnings 8-K (company news) in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 5.9
+  },
+  {
+   "cagr": 14.6,
+   "dd": -23.6,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.3,
+    "2008-2009": 18.0,
+    "2010-2015": 4.3,
+    "2016-2020": 10.5,
+    "2021-2026": 25.2
+   },
+   "invested_pct": 16.9,
+   "win_rate": 58.2,
+   "variant": "skip: any non-earnings 8-K (company news) in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 5.9
+  },
+  {
+   "cagr": 11.2,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.9,
+    "2008-2009": 26.6,
+    "2010-2015": 4.5,
+    "2016-2020": 12.3,
+    "2021-2026": 23.8
+   },
+   "invested_pct": 1.4,
+   "win_rate": 68.4,
+   "variant": "ONLY any non-earnings 8-K (company news) in the last 5 days (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 10.7,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.9,
+    "2008-2009": 25.8,
+    "2010-2015": 4.3,
+    "2016-2020": 11.8,
+    "2021-2026": 22.1
+   },
+   "invested_pct": 1.4,
+   "win_rate": 66.3,
+   "variant": "ONLY any non-earnings 8-K (company news) in the last 5 days (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.8,
+   "dd": -24.5,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.8,
+    "2008-2009": 20.7,
+    "2010-2015": 4.4,
+    "2016-2020": 14.0,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.4,
+   "win_rate": 64.0,
+   "variant": "skip: executive/director change (5.02) in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 2.3
+  },
+  {
+   "cagr": 14.9,
+   "dd": -24.6,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.7,
+    "2008-2009": 16.7,
+    "2010-2015": 4.6,
+    "2016-2020": 11.2,
+    "2021-2026": 26.2
+   },
+   "invested_pct": 17.4,
+   "win_rate": 58.2,
+   "variant": "skip: executive/director change (5.02) in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 2.3
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.5,
+    "2008-2009": 21.4,
+    "2010-2015": 4.4,
+    "2016-2020": 14.7,
+    "2021-2026": 34.5
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.1,
+   "variant": "skip: bad-news items (bankruptcy, layoffs, write-down, delisting, auditor change, restatement) in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 0.1
+  },
+  {
+   "cagr": 15.0,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.5,
+    "2016-2020": 11.7,
+    "2021-2026": 26.1
+   },
+   "invested_pct": 17.7,
+   "win_rate": 58.4,
+   "variant": "skip: bad-news items (bankruptcy, layoffs, write-down, delisting, auditor change, restatement) in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 0.1
+  },
+  {
+   "cagr": 21.4,
+   "dd": -22.4,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.3,
+    "2008-2009": 22.7,
+    "2010-2015": 4.1,
+    "2016-2020": 13.8,
+    "2021-2026": 32.1
+   },
+   "invested_pct": 17.3,
+   "win_rate": 64.0,
+   "variant": "skip: deals (material agreement, acquisition, other events) in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 3.8
+  },
+  {
+   "cagr": 14.6,
+   "dd": -22.6,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.2,
+    "2008-2009": 18.6,
+    "2010-2015": 4.3,
+    "2016-2020": 11.3,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 17.3,
+   "win_rate": 58.3,
+   "variant": "skip: deals (material agreement, acquisition, other events) in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 3.8
+  },
+  {
+   "cagr": 21.2,
+   "dd": -22.5,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.3,
+    "2008-2009": 22.5,
+    "2010-2015": 4.3,
+    "2016-2020": 11.8,
+    "2021-2026": 32.8
+   },
+   "invested_pct": 15.5,
+   "win_rate": 64.4,
+   "variant": "skip: earnings OR any company news in the last 5 days",
+   "scenario": "ideal",
+   "removed_pct": 14.2
+  },
+  {
+   "cagr": 14.9,
+   "dd": -21.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.4,
+    "2008-2009": 18.6,
+    "2010-2015": 4.6,
+    "2016-2020": 10.0,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 15.5,
+   "win_rate": 58.3,
+   "variant": "skip: earnings OR any company news in the last 5 days",
+   "scenario": "realistic",
+   "removed_pct": 14.2
+  },
+  {
+   "cagr": 11.5,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.9,
+    "2008-2009": 24.2,
+    "2010-2015": 4.7,
+    "2016-2020": 13.7,
+    "2021-2026": 24.9
+   },
+   "invested_pct": 3.2,
+   "win_rate": 63.9,
+   "variant": "ONLY earnings OR any company news in the last 5 days (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 10.5,
+   "dd": -56.2,
+   "per": {
+    "1998-2002": 6.2,
+    "2003-2007": 3.7,
+    "2008-2009": 22.7,
+    "2010-2015": 4.4,
+    "2016-2020": 12.6,
+    "2021-2026": 21.2
+   },
+   "invested_pct": 3.2,
+   "win_rate": 60.8,
+   "variant": "ONLY earnings OR any company news in the last 5 days (check)",
+   "scenario": "realistic"
+  }
+ ],
+ "luck": {
+  "skip: any non-earnings 8-K (company news) in the last 5 days": {
+   "removed_pct": 5.9,
+   "random_skip_realistic": [
+    15.6,
+    14.7,
+    14.6,
+    14.8
+   ]
+  },
+  "skip: executive/director change (5.02) in the last 5 days": {
+   "removed_pct": 2.3,
+   "random_skip_realistic": [
+    14.9,
+    14.8,
+    15.0,
+    15.2
+   ]
+  },
+  "skip: bad-news items (bankruptcy, layoffs, write-down, delisting, auditor change, restatement) in the last 5 days": {
+   "removed_pct": 0.1,
+   "random_skip_realistic": [
+    15.0,
+    14.9,
+    14.9,
+    14.9
+   ]
+  },
+  "skip: deals (material agreement, acquisition, other events) in the last 5 days": {
+   "removed_pct": 3.8,
+   "random_skip_realistic": [
+    15.0,
+    14.9,
+    15.1,
+    15.0
+   ]
+  },
+  "skip: earnings OR any company news in the last 5 days": {
+   "removed_pct": 14.2,
+   "random_skip_realistic": [
+    15.6,
+    14.4,
+    15.1,
+    14.9
+   ]
+  }
+ },
+ "notes": [
+  "all 8-K filings with item numbers from SEC submissions, 2004+",
+  "any non-earnings 8-K (company news): 105580 filings",
+  "executive/director change (5.02): 34607 filings",
+  "bad-news items (bankruptcy, layoffs, write-down, delisting, auditor change, restatement): 2610 filings",
+  "deals (material agreement, acquisition, other events): 67135 filings"
+ ],
+ "mode": "ev_news"
+}
