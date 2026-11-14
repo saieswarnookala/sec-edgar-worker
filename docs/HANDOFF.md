@@ -74,6 +74,11 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - But: WDC alone added ~30 pts of excess; without the top 5 contributors 13.8% (= SPY). Beat SPY only 8 of 16 years; 2019–24 ~12.7%/yr vs SPY ~17.3%; the 2019–26 edge is mostly 2025–26 (+57%, +54%).
 - Verdict: not a replacement for the dip strategy. Maybe later: a small sleeve beside dip, tested as a combo. Doc: docs/BUYBACKS.md; dashboard: Day trading → Buybacks.
 
+### Nov 14 research (Sat)
+- **ATR on 1-minute bars** (data/atr_minute.json, scripts/atr_minute.py, Alpaca SIP 2016-26): the old 134%/yr was fake. Real fill-then-target order: momentum and down-day setups lose on every target/hold (win ~50%, −0.1% per trade before costs). Dip signal + limit 0.5 ATR below close + 1–1.5 ATR target, 2–3 day hold: +0.6–0.9% per trade but only 31% of orders fill (~90 trades/yr) — weaker than the live dip rules. Dropped. (Coverage: 1,353 missing and 5,899 open-price mismatches skipped.)
+- **Event filters on the live dip strategy** (data/dip_filter_ev_*.json, workflow dip-events.yml, SEC 8-K items cache scripts/sec_8k_items.py): skipping earnings (before/during hold), any 8-K company news, one-day shocks, gaps, Fed days, jobs-report eve, witching, Fridays, month-end — all inside the random-skip range (14.4–15.6% vs 14.9%). Skipping dips in a jumpy market HURTS (12.1%). None adopted.
+- **Market volatility** (data/dip_filter_ev_vol.json): buying dips mainly when SPY is jumpy helps a little and broadly — skip-calm 10 of 12 versions ≥ baseline (best 16.4%, −20%); vol-scaled size all 4 versions better (0.5x calm → 1.5x jumpy: 16.1%, −25%). Gain ~+0.5–1.5%/yr, much of it 2008–09. Candidate for the paper dip bot (not built).
+
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
 - SEC 8-K 2.02 earnings times + SIC: scripts/sec_events_sic.py → data/sec_events_sic.json.
