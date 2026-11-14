@@ -4,8 +4,6 @@ completed daily bars to select today's stock. Ambiguous minute bars assume stop 
 """
 import argparse
 import json
-import os
-import time
 import urllib.request
 from pathlib import Path
 
@@ -115,6 +113,8 @@ def collect(shard):
                 "signals": len(picks), "days": len(days), **summarize(proxy.values)}
         (OUT / "daily_proxy.json").write_text(json.dumps(data, indent=2))
         picks.to_csv(OUT / "all_picks.csv.gz", index=False, compression="gzip")
+        pd.DataFrame({"date": [str(d.date()) for d in days]}).to_csv(
+            OUT / "trading_days.csv.gz", index=False, compression="gzip")
     picks["date"] = pd.to_datetime(picks.date)
     picks = picks[(picks.date >= INTRADAY_START) & (picks.date <= END)]
     picks = picks[picks.date.dt.year.mod(3) == shard]
@@ -171,31 +171,37 @@ def collect(shard):
 
 def analyze():
     files = list(Path("parts").rglob("trades_shard_*.csv.gz"))
-    if len(files) < 3:
-        raise RuntimeError("Missing shard artifacts; refuse to report partial performance")
+    if len(files) != 3:
+        raise RuntimeError("Expected exactly 3 shard artifacts; refuse to report partial performance")
     t = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
     t["date"] = pd.to_datetime(t.date)
+    if t.empty:
+        raise RuntimeError("No trades to analyze")
     if t.duplicated(["date", "target_atr"]).any():
         raise RuntimeError("Duplicate day/target, invalid simulation")
-    spy_days = pd.bdate_range("2016-01-04", END)  # cash on non-trading days; use actual pick dates below
-    # Signal-day dataset saved by shard 0: use all eligible trading days, not just days with fills.
-    picks = pd.read_csv(next(Path("parts").rglob("all_picks.csv.gz")))
-    all_dates = sorted(set(picks.loc[picks.date >= "2016-01-04", "date"]))
+    # Include every SPY market session, including no-signal days and missing Alpaca fills.
+    # This avoids artificially annualizing only days on which the strategy traded.
+    calendar = pd.read_csv(next(Path("parts").rglob("trading_days.csv.gz")))
+    all_dates = calendar.loc[(calendar.date >= "2016-01-04") &
+                             (calendar.date <= str(END.date())), "date"].tolist()
     if not all_dates:
-        raise RuntimeError("No eligible trading dates")
-    result = {"method": "Alpaca 1-minute data; next-day signal, entry at 09:35, stop-first ambiguous bars",
+        raise RuntimeError("Empty trading calendar")
+    result = {"method": "Alpaca 1-minute data; prior-close signal, next-session ~09:35 entry, stop-first ambiguous bars",
+              "caution": "Selection/execution are research approximations. Missing minute bars are treated as no-trade, which can bias results. No live trading.",
+              "eligible_days_including_flat": len(all_dates),
               "data_start": str(t.date.min().date()), "data_end": str(t.date.max().date()),
               "targets_atr": TARGETS, "stop_atr": STOP_ATR, "trades_collected": len(t),
               "cost_per_side": COSTS, "variants": []}
     for k in TARGETS:
         tr = t[t.target_atr == k].sort_values("date").copy()
         for cost in COSTS:
-            for mode in ("cash_Tplus1", "margin_max3_per_week"):
+            for mode in ("cash_Tplus1_reinvest_next_day", "illustrative_max3_per_week"):
                 z = tr.copy()
-                if mode == "margin_max3_per_week":
+                if mode == "illustrative_max3_per_week":
                     week = z.date.dt.strftime("%G-%V")
                     z = z[z.groupby(week).cumcount() < 3]
-                # T+1 sale settlement: funds available next trading morning; no overlapping positions.
+                # Illustrative cash account: day trades use settled proceeds no earlier than next session.
+                # Real-world restrictions depend on broker/account type; not compliance advice.
                 returns = pd.Series(0.0, index=all_dates)
                 dates = z.date.dt.strftime("%Y-%m-%d").values
                 returns.loc[dates] = z.gross_ret.values - 2 * cost
