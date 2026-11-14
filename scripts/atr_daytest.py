@@ -57,7 +57,7 @@ def historical_picks():
     valid = ((c > 5) & (c > c.rolling(200, min_periods=200).mean()) &
              (v.rolling(20, min_periods=20).mean() >= 1000000) &
              (mom > 0) & (relative5 > 0) &
-             atr_pct.between(0.005, 0.10))
+             ((atr_pct >= 0.005) & (atr_pct <= 0.10)))
     # Historical membership is evaluated at the signal close, NEVER using 2026 constituents.
     member = pd.DataFrame(False, index=days, columns=tick)
     for row in mem.itertuples(index=False):
