@@ -80,7 +80,7 @@ def main():
     S = ((rl <= -0.10) & above & M).values; R = (-rl).values
     D = len(dates); START = int(np.searchsorted(dates.values, np.datetime64("1998-01-01")))
     LASTC = [None]
-    def sim(park, hold=3, cost=0.0005, entry="close", smart=False, mx=5, trade=True, slots=10, sig=None, cap=None, stop=None):
+    def sim(park, hold=3, cost=0.0005, entry="close", smart=False, mx=5, trade=True, slots=10, sig=None, cap=None, stop=None, wscale=None):
         SS = S if sig is None else sig
         eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []
         for t in range(START, D):
@@ -107,7 +107,7 @@ def main():
                     if cap is not None and GRP[c] is not None and cnt.get(GRP[c], 0) >= cap: continue
                     new.append(c); cnt[GRP[c]] = cnt.get(GRP[c], 0) + 1
                 if new:
-                    w = min(1.0 / slots, max(0.0, 1 - used) / len(new))
+                    w = min((1.0 / slots) * (1.0 if wscale is None else float(wscale[t])), max(0.0, 1 - used) / len(new))
                     for c in new: pos.append([c, 0, w, 1.0]); eq *= 1 - cost * w
             curve[t] = eq
         c = pd.Series(curve[START:], index=dates[START:]); p = c.pct_change().fillna(0); yrs = len(p) / 252
@@ -437,6 +437,18 @@ def main():
             cnt = LIVE.sum(1)
             addf("skip: 20+ stocks dipping the same day (broad selloff)", row(cnt >= 20), only=True)
             addf("skip: SPY down 5%+ over 5 days", row((spy.pct_change(5) <= -0.05).values))
+        elif MODE == "ev_vol":
+            # Follow-up: buy dips mainly when the market is jumpy (Nagel: reversal pays most when volatility is high).
+            sr = spy.pct_change(); row = lambda m: np.repeat(np.asarray(m, bool)[:, None], len(tick), 1)
+            for win in (10, 20, 40):
+                v = sr.rolling(win).std()
+                for q in (0.3, 0.4, 0.5, 0.6):
+                    calm = (v < v.rolling(252).quantile(q)).values
+                    add(f"skip calm market: SPY {win}d volatility below its {int(q * 100)}th percentile of the past year", sig=LIVE & ~row(calm))
+            v = sr.rolling(20).std(); pr = v.rolling(252).rank(pct=True).values; pr = np.nan_to_num(pr, nan=0.5)
+            for lo, hi in ((0.5, 1.5), (0.75, 1.25), (0.5, 2.0)):
+                add(f"size by volatility: {lo}x slot when calmest -> {hi}x when jumpiest (20d)", sig=LIVE, wscale=lo + (hi - lo) * pr)
+            add("size by volatility: 0.5x below median, 1.5x above (20d)", sig=LIVE, wscale=np.where(pr < 0.5, 0.5, 1.5))
         elif MODE == "ev_calendar":
             row = lambda m: np.repeat(np.asarray(m, bool)[:, None], len(tick), 1)
             fomc = set()
