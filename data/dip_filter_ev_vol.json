@@ -1,0 +1,614 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.0,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 17.8,
+   "win_rate": 58.4,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.4,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 45.7,
+    "2003-2007": 9.7,
+    "2008-2009": 28.5,
+    "2010-2015": 4.5,
+    "2016-2020": 17.5,
+    "2021-2026": 38.6
+   },
+   "invested_pct": 12.0,
+   "win_rate": 66.4,
+   "variant": "skip calm market: SPY 10d volatility below its 30th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.0,
+   "dd": -24.8,
+   "per": {
+    "1998-2002": 23.8,
+    "2003-2007": 7.5,
+    "2008-2009": 26.0,
+    "2010-2015": 4.8,
+    "2016-2020": 14.9,
+    "2021-2026": 27.5
+   },
+   "invested_pct": 12.1,
+   "win_rate": 60.1,
+   "variant": "skip calm market: SPY 10d volatility below its 30th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 41.3,
+    "2003-2007": 9.9,
+    "2008-2009": 33.2,
+    "2010-2015": 4.4,
+    "2016-2020": 16.0,
+    "2021-2026": 37.1
+   },
+   "invested_pct": 10.4,
+   "win_rate": 67.1,
+   "variant": "skip calm market: SPY 10d volatility below its 40th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.0,
+   "dd": -25.5,
+   "per": {
+    "1998-2002": 25.0,
+    "2003-2007": 7.1,
+    "2008-2009": 34.2,
+    "2010-2015": 4.4,
+    "2016-2020": 13.7,
+    "2021-2026": 25.6
+   },
+   "invested_pct": 10.4,
+   "win_rate": 60.6,
+   "variant": "skip calm market: SPY 10d volatility below its 40th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.4,
+   "dd": -25.8,
+   "per": {
+    "1998-2002": 34.1,
+    "2003-2007": 9.4,
+    "2008-2009": 27.0,
+    "2010-2015": 4.5,
+    "2016-2020": 15.9,
+    "2021-2026": 34.0
+   },
+   "invested_pct": 8.7,
+   "win_rate": 67.2,
+   "variant": "skip calm market: SPY 10d volatility below its 50th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.5,
+   "dd": -25.5,
+   "per": {
+    "1998-2002": 19.7,
+    "2003-2007": 6.9,
+    "2008-2009": 28.4,
+    "2010-2015": 4.8,
+    "2016-2020": 13.2,
+    "2021-2026": 24.5
+   },
+   "invested_pct": 8.7,
+   "win_rate": 60.4,
+   "variant": "skip calm market: SPY 10d volatility below its 50th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 16.2,
+   "dd": -32.0,
+   "per": {
+    "1998-2002": 24.6,
+    "2003-2007": 8.6,
+    "2008-2009": 27.6,
+    "2010-2015": 3.6,
+    "2016-2020": 14.9,
+    "2021-2026": 27.6
+   },
+   "invested_pct": 7.1,
+   "win_rate": 65.9,
+   "variant": "skip calm market: SPY 10d volatility below its 60th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 12.5,
+   "dd": -33.7,
+   "per": {
+    "1998-2002": 14.4,
+    "2003-2007": 6.6,
+    "2008-2009": 28.9,
+    "2010-2015": 4.1,
+    "2016-2020": 12.3,
+    "2021-2026": 20.5
+   },
+   "invested_pct": 7.1,
+   "win_rate": 58.5,
+   "variant": "skip calm market: SPY 10d volatility below its 60th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.7,
+   "dd": -20.5,
+   "per": {
+    "1998-2002": 45.8,
+    "2003-2007": 11.1,
+    "2008-2009": 28.9,
+    "2010-2015": 4.9,
+    "2016-2020": 16.9,
+    "2021-2026": 33.3
+   },
+   "invested_pct": 11.5,
+   "win_rate": 65.7,
+   "variant": "skip calm market: SPY 20d volatility below its 30th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.5,
+   "dd": -21.6,
+   "per": {
+    "1998-2002": 24.8,
+    "2003-2007": 8.1,
+    "2008-2009": 27.5,
+    "2010-2015": 5.1,
+    "2016-2020": 14.5,
+    "2021-2026": 22.8
+   },
+   "invested_pct": 11.6,
+   "win_rate": 59.4,
+   "variant": "skip calm market: SPY 20d volatility below its 30th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 20.2,
+   "dd": -20.7,
+   "per": {
+    "1998-2002": 40.8,
+    "2003-2007": 10.9,
+    "2008-2009": 26.5,
+    "2010-2015": 5.9,
+    "2016-2020": 16.6,
+    "2021-2026": 29.2
+   },
+   "invested_pct": 9.9,
+   "win_rate": 65.9,
+   "variant": "skip calm market: SPY 20d volatility below its 40th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.4,
+   "dd": -26.2,
+   "per": {
+    "1998-2002": 23.2,
+    "2003-2007": 8.1,
+    "2008-2009": 28.5,
+    "2010-2015": 5.9,
+    "2016-2020": 14.2,
+    "2021-2026": 22.3
+   },
+   "invested_pct": 9.9,
+   "win_rate": 59.7,
+   "variant": "skip calm market: SPY 20d volatility below its 40th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.3,
+   "dd": -20.5,
+   "per": {
+    "1998-2002": 37.1,
+    "2003-2007": 10.5,
+    "2008-2009": 24.9,
+    "2010-2015": 5.0,
+    "2016-2020": 16.0,
+    "2021-2026": 30.0
+   },
+   "invested_pct": 8.2,
+   "win_rate": 66.8,
+   "variant": "skip calm market: SPY 20d volatility below its 50th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.0,
+   "dd": -20.7,
+   "per": {
+    "1998-2002": 21.2,
+    "2003-2007": 7.8,
+    "2008-2009": 27.2,
+    "2010-2015": 5.1,
+    "2016-2020": 13.5,
+    "2021-2026": 24.3
+   },
+   "invested_pct": 8.2,
+   "win_rate": 59.8,
+   "variant": "skip calm market: SPY 20d volatility below its 50th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 18.7,
+   "dd": -19.0,
+   "per": {
+    "1998-2002": 34.8,
+    "2003-2007": 8.5,
+    "2008-2009": 28.6,
+    "2010-2015": 5.1,
+    "2016-2020": 15.8,
+    "2021-2026": 29.4
+   },
+   "invested_pct": 7.0,
+   "win_rate": 67.2,
+   "variant": "skip calm market: SPY 20d volatility below its 60th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.0,
+   "dd": -21.4,
+   "per": {
+    "1998-2002": 21.9,
+    "2003-2007": 6.5,
+    "2008-2009": 29.6,
+    "2010-2015": 5.4,
+    "2016-2020": 13.4,
+    "2021-2026": 23.9
+   },
+   "invested_pct": 7.0,
+   "win_rate": 60.1,
+   "variant": "skip calm market: SPY 20d volatility below its 60th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.3,
+   "dd": -22.6,
+   "per": {
+    "1998-2002": 49.0,
+    "2003-2007": 12.0,
+    "2008-2009": 27.7,
+    "2010-2015": 5.4,
+    "2016-2020": 16.3,
+    "2021-2026": 33.1
+   },
+   "invested_pct": 11.4,
+   "win_rate": 66.8,
+   "variant": "skip calm market: SPY 40d volatility below its 30th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.4,
+   "dd": -20.0,
+   "per": {
+    "1998-2002": 26.8,
+    "2003-2007": 8.5,
+    "2008-2009": 26.2,
+    "2010-2015": 5.6,
+    "2016-2020": 13.3,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 11.5,
+   "win_rate": 59.8,
+   "variant": "skip calm market: SPY 40d volatility below its 30th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 20.9,
+   "dd": -22.5,
+   "per": {
+    "1998-2002": 46.0,
+    "2003-2007": 10.8,
+    "2008-2009": 23.3,
+    "2010-2015": 5.0,
+    "2016-2020": 16.7,
+    "2021-2026": 31.3
+   },
+   "invested_pct": 9.8,
+   "win_rate": 67.0,
+   "variant": "skip calm market: SPY 40d volatility below its 40th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -19.9,
+   "per": {
+    "1998-2002": 25.1,
+    "2003-2007": 7.4,
+    "2008-2009": 23.4,
+    "2010-2015": 5.3,
+    "2016-2020": 14.1,
+    "2021-2026": 26.0
+   },
+   "invested_pct": 9.8,
+   "win_rate": 59.9,
+   "variant": "skip calm market: SPY 40d volatility below its 40th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.3,
+   "dd": -20.1,
+   "per": {
+    "1998-2002": 37.9,
+    "2003-2007": 10.2,
+    "2008-2009": 27.6,
+    "2010-2015": 3.6,
+    "2016-2020": 15.3,
+    "2021-2026": 31.2
+   },
+   "invested_pct": 8.4,
+   "win_rate": 66.7,
+   "variant": "skip calm market: SPY 40d volatility below its 50th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -20.7,
+   "per": {
+    "1998-2002": 19.2,
+    "2003-2007": 7.1,
+    "2008-2009": 28.4,
+    "2010-2015": 3.9,
+    "2016-2020": 13.4,
+    "2021-2026": 27.4
+   },
+   "invested_pct": 8.4,
+   "win_rate": 59.8,
+   "variant": "skip calm market: SPY 40d volatility below its 50th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 18.3,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 29.4,
+    "2003-2007": 9.1,
+    "2008-2009": 29.9,
+    "2010-2015": 4.5,
+    "2016-2020": 13.4,
+    "2021-2026": 33.7
+   },
+   "invested_pct": 6.8,
+   "win_rate": 67.3,
+   "variant": "skip calm market: SPY 40d volatility below its 60th percentile of the past year",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.2,
+   "dd": -26.1,
+   "per": {
+    "1998-2002": 17.7,
+    "2003-2007": 7.0,
+    "2008-2009": 32.2,
+    "2010-2015": 4.7,
+    "2016-2020": 12.5,
+    "2021-2026": 29.4
+   },
+   "invested_pct": 6.9,
+   "win_rate": 60.6,
+   "variant": "skip calm market: SPY 40d volatility below its 60th percentile of the past year",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 23.1,
+   "dd": -26.1,
+   "per": {
+    "1998-2002": 55.3,
+    "2003-2007": 12.9,
+    "2008-2009": 24.5,
+    "2010-2015": 4.7,
+    "2016-2020": 16.1,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 16.4,
+   "win_rate": 64.0,
+   "variant": "size by volatility: 0.5x slot when calmest -> 1.5x when jumpiest (20d)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.1,
+   "dd": -24.7,
+   "per": {
+    "1998-2002": 28.4,
+    "2003-2007": 8.6,
+    "2008-2009": 22.2,
+    "2010-2015": 4.9,
+    "2016-2020": 13.0,
+    "2021-2026": 25.7
+   },
+   "invested_pct": 16.4,
+   "win_rate": 58.4,
+   "variant": "size by volatility: 0.5x slot when calmest -> 1.5x when jumpiest (20d)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.6,
+   "dd": -24.3,
+   "per": {
+    "1998-2002": 54.6,
+    "2003-2007": 12.3,
+    "2008-2009": 23.2,
+    "2010-2015": 4.5,
+    "2016-2020": 15.5,
+    "2021-2026": 34.5
+   },
+   "invested_pct": 17.1,
+   "win_rate": 64.0,
+   "variant": "size by volatility: 0.75x slot when calmest -> 1.25x when jumpiest (20d)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 15.6,
+   "dd": -22.4,
+   "per": {
+    "1998-2002": 27.7,
+    "2003-2007": 8.1,
+    "2008-2009": 19.7,
+    "2010-2015": 4.7,
+    "2016-2020": 12.4,
+    "2021-2026": 25.8
+   },
+   "invested_pct": 17.1,
+   "win_rate": 58.4,
+   "variant": "size by volatility: 0.75x slot when calmest -> 1.25x when jumpiest (20d)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 24.5,
+   "dd": -31.5,
+   "per": {
+    "1998-2002": 62.2,
+    "2003-2007": 15.0,
+    "2008-2009": 22.5,
+    "2010-2015": 4.8,
+    "2016-2020": 16.4,
+    "2021-2026": 35.4
+   },
+   "invested_pct": 19.0,
+   "win_rate": 64.0,
+   "variant": "size by volatility: 0.5x slot when calmest -> 2.0x when jumpiest (20d)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.7,
+   "dd": -28.7,
+   "per": {
+    "1998-2002": 31.0,
+    "2003-2007": 9.5,
+    "2008-2009": 21.5,
+    "2010-2015": 5.2,
+    "2016-2020": 12.7,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 19.0,
+   "win_rate": 58.4,
+   "variant": "size by volatility: 0.5x slot when calmest -> 2.0x when jumpiest (20d)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.8,
+   "dd": -26.0,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 13.6,
+    "2008-2009": 24.5,
+    "2010-2015": 4.5,
+    "2016-2020": 16.1,
+    "2021-2026": 33.9
+   },
+   "invested_pct": 15.4,
+   "win_rate": 64.0,
+   "variant": "size by volatility: 0.5x below median, 1.5x above (20d)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.2,
+   "dd": -25.3,
+   "per": {
+    "1998-2002": 28.2,
+    "2003-2007": 9.1,
+    "2008-2009": 23.3,
+    "2010-2015": 4.9,
+    "2016-2020": 12.6,
+    "2021-2026": 25.7
+   },
+   "invested_pct": 15.4,
+   "win_rate": 58.4,
+   "variant": "size by volatility: 0.5x below median, 1.5x above (20d)",
+   "scenario": "realistic"
+  }
+ ],
+ "luck": {},
+ "notes": [],
+ "mode": "ev_vol"
+}
