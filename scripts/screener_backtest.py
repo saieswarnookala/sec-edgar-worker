@@ -88,12 +88,13 @@ def table(t0, Y):
     return pd.DataFrame(rows).set_index("t")
 
 pr = lambda s: s.rank(pct=True)
-def pick(df, rule, N):
+def pick(df, rule, N, roe=0.12, pemax=40, demax=1.0, sg3=0.05):
     s = df[df.scorable]
+    s = s[~s.index.duplicated()]
     if rule == "old_high_pe":
         q = s[(s.ni > 0) & (s.ni1 > 0) & (s.sg1 >= 0.05) & (s.pg1 > 0) & (s.margin >= 0.03) & (s.pe <= 200)]
         return list(q.sort_values("pe", ascending=False).index[:N])
-    gate = (s.ni > 0) & (s.ni1 > 0) & (s.sg1 >= 0) & (s.sg3 >= 0.05) & (s.roe >= 0.12) & (s.fcf > 0) & (s.ocf >= 0.8 * s.ni) & (s.de.fillna(0) <= 1.0) & (s.pe > 0) & (s.pe <= 40)
+    gate = (s.ni > 0) & (s.ni1 > 0) & (s.sg1 >= 0) & (s.sg3 >= sg3) & (s.roe >= roe) & (s.fcf > 0) & (s.ocf >= 0.8 * s.ni) & (s.de.fillna(0) <= demax) & (s.pe > 0) & (s.pe <= pemax)
     q = s[gate] if not rule.startswith("score_only") else s[(s.ni > 0)]
     if "trend" in rule: q = q[q.trend]
     fy = q.fcf / q.mcap; ey = 1 / q.pe
@@ -104,9 +105,10 @@ def pick(df, rule, N):
            "gate_qvg_trend": ["quality", "value", "growth"], "score_only_qvgm": ["quality", "value", "growth", "mom"]}[rule]
     # each family weighs the same, whatever its number of parts
     sc = sum(sum(p.fillna(0.5) for p in parts[k]) / len(parts[k]) for k in use) / len(use)
-    return list(sc.sort_values(ascending=False).index[:N])
+    order = [t for t in sc.sort_values(ascending=False).index if not (t == 'GOOG' and 'GOOGL' in sc.index) and not (t == 'FOX' and 'FOXA' in sc.index) and not (t == 'NWS' and 'NWSA' in sc.index)]
+    return order[:N]
 
-def run(rule, N=15, trend_cash=False):
+def run(rule, N=15, trend_cash=False, **kw):
     eq = 1.0; curve = []; picks_log = []
     for k in range(len(forms) - 1):
         t0, t1 = forms[k], forms[k + 1]; Y = dates[t0].year - 1
@@ -114,7 +116,7 @@ def run(rule, N=15, trend_cash=False):
         if rule == "spy": names = ["SPY"]
         elif rule == "ew_scorable": names = list(df[df.scorable].index)
         elif rule == "ew_all": names = list(df.index)
-        else: names = pick(df, rule, N)
+        else: names = pick(df, rule, N, **kw)
         picks_log.append({"year": int(dates[t0].year), "n": len(names), "picks": names[:N] if rule not in ("ew_all", "ew_scorable") else None})
         if not names: names = ["SPY"]
         w = 1 / len(names); eq *= 1 - COST
@@ -133,6 +135,16 @@ def stats(c):
     yr = c.resample("YE").last().pct_change().dropna()
     return {"cagr": round(cg(c) * 100, 1), "max_dd": round(float((c / c.cummax() - 1).min()) * 100, 1),
             "2013_2019": round(cg(mid) * 100, 1), "2019_2026": round(cg(late) * 100, 1), "worst_year": round(float(yr.min()) * 100, 1)}
+MODE = os.environ.get("MODE", "full")
+if MODE == "qv":
+    R = {"period": "May 2013 to Oct 2026", "qv_robust": {}}
+    for name, kw in [("qv_top15", {}), ("qv_top10", {"N": 10}), ("qv_top25", {"N": 25}), ("qv_roe10", {"roe": 0.10}), ("qv_roe15", {"roe": 0.15}),
+                     ("qv_pe30", {"pemax": 30}), ("qv_pe60", {"pemax": 60}), ("qv_no_debt_rule", {"demax": 99}), ("qv_de0.5", {"demax": 0.5}), ("qv_sg3_0", {"sg3": 0.0}), ("qv_sg3_10", {"sg3": 0.10})]:
+        N = kw.pop("N", 15); c, lg = run("gate_qv", N, **kw); R["qv_robust"][name] = stats(c); print(name, R["qv_robust"][name], flush=True)
+        if name == "qv_top15": R["picks"] = lg
+    for rule in ["spy", "ew_scorable"]:
+        c, _ = run(rule); R["qv_robust"][rule] = stats(c)
+    json.dump(R, open("data/screener_backtest_qv.json", "w"), indent=1, default=str); sys.exit(0)
 R = {"period": "May 2013 to Oct 2026, rebalanced each May", "results": {}, "picks": {}}
 for rule in ["spy", "ew_all", "ew_scorable", "old_high_pe", "gate_quality", "gate_qv", "gate_qvg", "gate_qvgm", "gate_qvg_trend", "gate_qvgm_trend", "score_only_qvgm"]:
     c, lg = run(rule); R["results"][rule] = stats(c); R["picks"][rule] = lg; print(rule, R["results"][rule], flush=True)

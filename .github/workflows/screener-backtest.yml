@@ -1,6 +1,9 @@
 name: Screener backtest
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      mode:
+        default: full
 permissions:
   contents: write
 jobs:
@@ -21,6 +24,7 @@ jobs:
         shell: bash
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          MODE: ${{ inputs.mode }}
         run: |
           set -o pipefail; python -u scripts/screener_backtest.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
           echo "::notice::$(grep -vE '^frames' /tmp/run.log | tail -c 3000 | tr "\n" " ")"
@@ -28,5 +32,5 @@ jobs:
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/screener_backtest.json && git commit -qm "screener backtest results" || exit 0
+          git add data/screener_backtest*.json && git commit -qm "screener backtest results" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
