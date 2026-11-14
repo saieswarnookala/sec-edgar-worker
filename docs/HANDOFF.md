@@ -92,6 +92,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - GitHub's own schedule was hours late, so a Cloudflare cron in site/src/index.js (TIMERS) dispatches the workflows: drift 11:05 + 12:35 UTC, dip 25 and 40 past 19/20 UTC (= 3:25 / 3:40 pm ET). Bots run at most once a day. Needs repo secret GH_DISPATCH_TOKEN.
 - Known gap: the paper dip bot skips 1 pm half days.
 
+### Volatility-sized dip bot (virtual, from Nov 16) + Paper bots tab (Nov 14)
+- Runs inside the paper dip run (no broker): same signals/exits, slot = 10% × (0.5 calm … 1.5 jumpy) from SPY 20d volatility rank vs past year. State: data/paper_dip_vol_state.json ($10k virtual, fractional, fills at the ~3:45 pm price). Tests in test-paper-dip.mjs.
+- Dashboard tab "Paper bots" (#paper): rules, example, backtest, live status vs SPY, holdings for dip / vol / drift bots + Robinhood bot notes; data/paper_status.json is built in site/build.mjs on every deploy (bot commits to data/** redeploy).
+- /api/timers (signed in) and the tab's health badges show the last Cloudflare timer start per bot (status + error).
+- PROBLEM found Nov 14: no timer dispatches since ~Nov 12 midday (dip bot missed Nov 12 + 13; drift ran only on GitHub's late schedule). Most likely GH_DISPATCH_TOKEN was revoked/expired. Fix: new fine-grained token (this repo, Actions read+write), set repo secret GH_DISPATCH_TOKEN, re-run "Deploy website"; then check the Paper bots tab badges.
+
 ## 6. Live bot: Robinhood (live/, guide live/README.md)
 - Account: Robinhood agentic (MCP) account, LIMITED MARGIN (so sale proceeds are usable the same day), opened Nov 11–12, ~$10 in it. Plan $1,000.
 - Runs on an Oracle Cloud Always Free VM (VM.Standard.A1.Flex, 1 OCPU, 6 GB, Ubuntu 24.04, Chicago, user `ubuntu`, Sai's SSH key). Account upgraded to pay-as-you-go; $1 budget alert set.
