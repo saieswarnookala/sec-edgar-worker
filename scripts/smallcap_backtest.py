@@ -3,7 +3,7 @@ Universe: every SEC filer with a ticker in today's SEC ticker file and Alpaca pr
 by diluted shares x price. WARNING: companies that went bust or were acquired and lost their ticker are missing
 (survivorship bias). To keep the comparison fair the main benchmark is "all liquid stocks in the same size group,
 equal weight", which has the same blind spot; IWM / IJR (real index funds that did hold the losers) are shown too.
-Each May: score with last calendar year's SEC numbers, buy top N equal weight, hold 12 months. 0.30% cost per side.
+Weekly prices. Each May: score with last calendar year's SEC numbers, buy top N equal weight, hold 12 months. 0.30% cost per side.
 Not financial advice."""
 import os, sys, json, time, urllib.request, urllib.parse
 import numpy as np, pandas as pd
@@ -46,24 +46,25 @@ for r in tk.values():
 have = set().union(*[set(F[y]["ni"]) for y in F])
 syms = sorted([t for t, c in cik_of.items() if c in have and t.isascii()]) + ["SPY", "IWM", "IJR", "MDY"]
 print("symbols", len(syms), flush=True)
-def bars(adj):
+def bars(adj, tf):
     C, Vv = {}, {}
     for i in range(0, len(syms), 100):
-        p = {"symbols": ",".join(syms[i:i + 100]), "timeframe": "1Day", "start": "2016-10-01", "end": "2026-11-13", "adjustment": adj, "feed": "sip", "limit": "10000"}
+        p = {"symbols": ",".join(syms[i:i + 100]), "timeframe": tf, "start": "2016-10-01", "end": "2026-11-13", "adjustment": adj, "feed": "sip", "limit": "10000"}
         while True:
             js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p), H) or {}
-            for s, bl in (js.get("bars") or {}).items():
-                for b in bl: C.setdefault(s, {})[b["t"][:10]] = b["c"]; Vv.setdefault(s, {})[b["t"][:10]] = b["v"]
+            for s_, bl in (js.get("bars") or {}).items():
+                for b in bl: C.setdefault(s_, {})[b["t"][:10]] = b["c"]; Vv.setdefault(s_, {})[b["t"][:10]] = b["v"]
             if not js.get("next_page_token"): break
             p["page_token"] = js["next_page_token"]
-        if i % 1000 == 0: print(adj, i, len(C), flush=True)
+        if i % 1000 == 0: print(adj, tf, i, len(C), flush=True)
     return pd.DataFrame(C), pd.DataFrame(Vv)
-A, VOL = bars("all"); RAW, _ = bars("raw")
+# weekly total-return prices are plenty for 12-month holds; daily raw prices are only needed for market caps + liquidity
+A, VOL = bars("all", "1Week"); RAW, _ = bars("raw", "1Week")
 A.index = pd.to_datetime(A.index); RAW.index = pd.to_datetime(RAW.index); VOL.index = pd.to_datetime(VOL.index)
 A = A.sort_index(); RAW = RAW.reindex(A.index).sort_index(); VOL = VOL.reindex(A.index).sort_index()
 dates = A.index; D = len(dates); Af = A.ffill(); Rf = RAW.ffill()
-lastv = {s: (np.where(A[s].notna().values)[0][-1] if A[s].notna().any() else D - 1) for s in A.columns}
-DV = (RAW * VOL).rolling(20, min_periods=10).mean()
+lastv = {s_: (np.where(A[s_].notna().values)[0][-1] if A[s_].notna().any() else D - 1) for s_ in A.columns}
+DV = (RAW * VOL / 5).rolling(4, min_periods=2).mean()   # weekly volume -> average daily dollar volume
 BUCKETS = [("Large+", 10e9, 1e18), ("Mid", 2e9, 10e9), ("Small", 300e6, 2e9), ("Micro", 50e6, 300e6)]
 forms = [int(np.searchsorted(dates.values, np.datetime64(f"{y}-05-01"))) for y in range(2017, 2027)]
 forms = [f for f in forms if f < D - 5] + [D - 1]
@@ -110,11 +111,12 @@ def run(bucket, rule, N=15, **kw):
         log.append({"year": int(dates[t0].year), "universe": len(s), "passed": npass, "picks": names[:N] if rule == "rule" else None})
         if not names: names = ["SPY"]
         w = 1 / len(names); eq *= 1 - COST
-        base = {t: Af[t].iloc[t0] for t in names}
-        for d in range(t0, t1 + 1):
-            v = sum(w * Af[t].iloc[min(d, lastv[t])] / base[t] for t in names)
-            curve.append((dates[d], eq * v))
-        eq *= v * (1 - COST)
+        seg = Af[names].iloc[t0:t1 + 1].copy()
+        for t in names:
+            if lastv[t] < t1: seg.loc[seg.index > dates[lastv[t]], t] = Af[t].iloc[lastv[t]]
+        vals = (seg / seg.iloc[0]).mean(axis=1).values
+        for d, v in zip(seg.index, vals): curve.append((d, eq * v))
+        eq *= vals[-1] * (1 - COST)
     c = pd.Series([x[1] for x in curve], index=[x[0] for x in curve]); c = c[~c.index.duplicated(keep="last")]
     return c, log
 def stats(c):
