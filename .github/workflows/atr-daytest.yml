@@ -1,0 +1,69 @@
+name: Research ATR intraday backtest (branch only)
+on:
+  push:
+    branches:
+      - research/atr-intraday-backtest
+    paths:
+      - .github/workflows/atr-daytest.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: atr-daytest-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  collect:
+    if: github.ref == 'refs/heads/research/atr-intraday-backtest'
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/*.parquet
+          key: sp500data-snapshot-2026-11
+      - run: pip install pandas numpy pyarrow
+      - name: Fetch historical market data and simulate (research only)
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: python -u scripts/atr_daytest.py collect --shard ${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atr-daytest-part-${{ matrix.shard }}
+          path: parts/
+          if-no-files-found: error
+          retention-days: 14
+  analyze:
+    if: github.ref == 'refs/heads/research/atr-intraday-backtest'
+    needs: collect
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy pyarrow
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: atr-daytest-part-*
+          path: parts
+          merge-multiple: false
+      - name: Analyze fills and costs (research only)
+        run: python -u scripts/atr_daytest.py analyze
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atr-daytest-results
+          path: |
+            data/atr_daytest.json
+            data/atr_daytest_daily_proxy.json
+          if-no-files-found: error
+          retention-days: 30
