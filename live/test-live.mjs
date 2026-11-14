@@ -5,7 +5,7 @@ import { mkdtempSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
-import { buildOrderArgs, planToOrders, checkLimits, fitBuys, readPositions, readOrders, readMoney } from './orders.mjs';
+import { buildOrderArgs, planToOrders, checkLimits, fitBuys, readPositions, readOrders, readMoney, formatTradeAlert } from './orders.mjs';
 
 const mode = process.argv[2];
 if (!mode) {
@@ -37,6 +37,12 @@ if (!mode) {
     assert.deepEqual(readPositions({ results: [{ symbol: 'aapl', quantity: '0.5' }, { instrument: { symbol: 'SPY' }, quantity: 2 }] }), { AAPL: 0.5, SPY: 2 });
     assert.equal(readOrders({ orders: [{ id: 'o1', symbol: 'A', side: 'BUY', state: 'filled', average_price: '10.5' }] })[0].avg_price, 10.5);
     assert.deepEqual(readMoney({ portfolio: { total_value: '1000.5', buying_power: { amount: '200' } } }), { equity: 1000.5, buying_power: 200 });
+  });
+  ok('alert: quiet day and a failed order read clearly', () => {
+    const q = formatTradeAlert({ mode: 'live', today: 'D', time: '15:48', signals: [], keep: [{ symbol: 'K' }], orders: [], placed: [], failed: [], skipped: [], park: 'SPY', account: 1000, buyingPower: 5, slots: 10 });
+    assert.match(q.title, /no trades today/); assert.match(q.body, /none today, so no new buys/); assert.match(q.body, /1 kept/);
+    const f = formatTradeAlert({ mode: 'live', today: 'D', time: '15:48', signals: [['X', -0.12], ['Y', -0.11]], keep: [], orders: [{ symbol: 'X', side: 'buy', dollars: 100, why: 'dip -12%' }], placed: [], failed: [{ symbol: 'X', side: 'buy', dollars: 100, error: 'too close to the close, skipped' }], skipped: [], park: null, account: 1000, buyingPower: 900, slots: 1 });
+    assert.match(f.title, /1 order NOT placed/); assert.match(f.body, /NOT PLACED: too close/); assert.match(f.body, /Y -11.0% -> skip: all 1 slots used/); assert.equal(f.priority, 4);
   });
   process.env.SENTINEL_HOME = mkdtempSync(join(tmpdir(), 'live-'));
   const { tradeWindow } = await import('./live-dip.mjs');

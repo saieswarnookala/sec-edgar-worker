@@ -13,10 +13,10 @@
 //     (CLAUDE_BIN, CLAUDE_MCP_SERVER=robinhood); our code still decides the orders and checks each call Claude makes.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, openSync, closeSync, unlinkSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { gatherSignals, decide, PAPER, DATA } from '../scripts/paper-dip.mjs';
+import { gatherSignals, decide, PAPER, DATA, SLOTS } from '../scripts/paper-dip.mjs';
 import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
-import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys } from './orders.mjs';
+import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
 
 // Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
@@ -186,8 +186,8 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     for (const p of placed.filter((x) => x.side === 'buy' && !etfs.includes(x.symbol))) state.positions.push({ symbol: p.symbol, entry_date: today, qty: p.shares ?? +(p.dollars / g.prices[p.symbol]).toFixed(6), dollars: p.dollars, why: p.why });
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
-    const lines = placed.map((p) => `${p.side.toUpperCase()} ${p.symbol} ${p.dollars != null ? '$' + p.dollars.toFixed(2) : p.shares + ' sh'} (${p.why})`);
-    await notify(`Dip bot ${MODE === 'live' ? '' : '(DRY RUN) '}${today}: ${placed.length} orders${failed.length ? `, ${failed.length} FAILED` : ''}`, [...lines, ...failed.map((f) => `FAILED ${f.side} ${f.symbol}: ${f.error}`), `Dips: ${log.signal_list.join(', ') || 'none'} | parking: ${log.park}`].join('\n'), { priority: failed.length ? 4 : MODE === 'live' ? 3 : 2, tags: failed.length ? 'warning' : 'chart_with_upwards_trend' });
+    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park: g.park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
+    await notify(a.title, a.body, { priority: a.priority, tags: a.tags });
   } catch (e) {
     log.error = String(e.message || e);
     const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(log.error);
@@ -217,8 +217,8 @@ async function cmdVerify() {
     const v = { today, filled: fills.length, unfilled: unfilled.map((o) => `${o.side} ${o.symbol} (${o.state})`), strangers: strangers.map((o) => `${o.side} ${o.symbol} ${o.id}`), fills, avg_cost_vs_close_pct: fills.filter((f) => f.vs_close_pct != null).length ? +(fills.filter((f) => f.vs_close_pct != null).reduce((a, f) => a + f.vs_close_pct, 0) / fills.filter((f) => f.vs_close_pct != null).length).toFixed(3) : null, equity: r.money.equity };
     state.verify = [...(state.verify || []), v].slice(-500); saveState(state);
     if (strangers.length) { writeFileSync(HALT, `Orders today that the bot did not place: ${v.strangers.join(', ')}. Check Robinhood, then: node live-dip.mjs resume`); await notify('Dip bot HALTED: unknown orders in the account', v.strangers.join('\n'), { priority: 5, tags: 'rotating_light' }); }
-    else if (unfilled.length) await notify('Dip bot: some orders did not fill', v.unfilled.join('\n'), { priority: 4, tags: 'warning' });
-    else if (h?.placed?.length && MODE === 'live') await notify(`Dip bot ${today}: all ${fills.length} filled`, `Account $${(r.money.equity || 0).toFixed(2)}. Avg cost vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = better than close)`, { priority: 3, tags: 'white_check_mark' });
+    else if (unfilled.length) await notify(`LIVE dip bot ${today}: ${unfilled.length} order(s) NOT filled`, ['Not filled (check Robinhood):', ...v.unfilled, '', ...fills.map((f) => `filled: ${f.side.toUpperCase()} ${f.symbol} @ $${(+f.price).toFixed(2)}`)].join('\n'), { priority: 4, tags: 'warning' });
+    else if (h?.placed?.length && MODE === 'live') await notify(`LIVE dip bot ${today}: all ${fills.length} orders FILLED`, [...fills.map((f) => `${f.side.toUpperCase()} ${f.symbol} filled @ $${(+f.price).toFixed(2)}${f.close ? ` (close $${(+f.close).toFixed(2)})` : ''}`), '', `Account now $${(r.money.equity || 0).toFixed(2)}`, `Avg price vs close: ${v.avg_cost_vs_close_pct ?? 'n/a'}% (negative = we did better than the close)`].join('\n'), { priority: 3, tags: 'white_check_mark' });
     console.log(JSON.stringify(v, null, 1));
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
 }

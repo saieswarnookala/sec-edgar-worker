@@ -120,3 +120,46 @@ export function fitBuys(orders, buyingPower, prices, keep = 0.995) {
   const f = (buyingPower * keep) / tot;
   return orders.map((o) => (o.side !== 'buy' ? o : o.dollars != null ? { ...o, dollars: Math.floor(o.dollars * f * 100) / 100, scaled: +f.toFixed(3) } : { ...o, shares: Math.floor(o.shares * f), scaled: +f.toFixed(3) })).filter((o) => (o.dollars ?? o.shares) > 0);
 }
+
+// ---- phone alert: what was picked, what the bot decided, and what Robinhood accepted ----
+// o = { mode, today, time, signals: [[sym, dip]], keep: [{symbol}], orders (planned), placed, failed, skipped: ['SYM side'],
+//       park, account, buyingPower, slots, heavyVolume: [sym] }
+const usd = (x) => '$' + (+x).toFixed(2);
+export function formatTradeAlert(o) {
+  const live = o.mode === 'live', amt = (x) => (x.dollars != null ? usd(x.dollars) : `${+(+x.shares).toFixed(6)} sh`);
+  const status = (x) => {
+    const p = o.placed.find((y) => y.symbol === x.symbol && y.side === x.side);
+    const cut = p?.scaled ? ` (size cut to ${Math.round(p.scaled * 100)}% to fit buying power)` : '';
+    if (p) return p.dry ? 'DRY RUN, not sent' + cut : `PLACED on Robinhood${p.state ? ', status ' + p.state : ''}${cut}`;
+    const f = o.failed.find((y) => y.symbol === x.symbol && y.side === x.side);
+    if (f) return `NOT PLACED: ${f.error}`;
+    if (o.skipped?.includes(`${x.symbol} ${x.side}`)) return 'not sent again: already placed earlier today';
+    return 'NOT PLACED: dropped (no cash left)';
+  };
+  const planned = [...o.orders, ...o.skipped.map((s) => { const [symbol, side] = s.split(' '); return { symbol, side, why: '' }; })];
+  const sells = planned.filter((x) => x.side === 'sell'), buys = planned.filter((x) => x.side === 'buy');
+  const keepSet = new Set((o.keep || []).map((p) => p.symbol)), bought = new Set(buys.map((b) => b.symbol));
+  const L = [];
+  L.push(`1) STOCKS PICKED (S&P 500, down 10%+ in 5 days, still above 200-day trend)`);
+  if (!o.signals.length) L.push('   none today, so no new buys');
+  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : `skip: all ${o.slots} slots used`}`));
+  if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: slots full`);
+  if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
+  L.push('', '2) ORDERS TRIGGERED');
+  if (!planned.length) L.push('   none: nothing to sell, no new dips, parking already right');
+  for (const x of [...sells, ...buys]) {
+    const why = x.why || '', reason = /parking/.test(why) ? (x.side === 'buy' ? `park spare cash in ${x.symbol} (${why})` : `free cash from parking ETF ${x.symbol} (${why})`) : x.side === 'sell' && /held|bounced/.test(why) ? `exit rule: ${why}` : x.side === 'buy' ? `dip buy: fell ${why.replace(/^dip -?/, '')}` : why;
+    const sent = o.placed.find((y) => y.symbol === x.symbol && y.side === x.side) || x;
+    L.push(`   ${x.side.toUpperCase()} ${x.symbol} ${sent.dollars == null && sent.shares == null ? '' : amt(sent)}`.trimEnd(), `     why: ${reason || 'see earlier run'}`, `     -> ${status(x)}`);
+  }
+  const ok = o.placed.filter((p) => !p.dry).length, bad = o.failed.length;
+  L.push('', '3) RESULT');
+  L.push(live ? `   ${ok} of ${planned.length} orders placed on Robinhood${bad ? `, ${bad} NOT placed` : ''}` : `   DRY RUN: ${planned.length} orders planned, nothing sent to Robinhood`);
+  const newBuys = o.placed.filter((p) => p.side === 'buy' && !/parking/.test(p.why || '')).length;
+  L.push(`   dip stocks held: ${keepSet.size} kept${newBuys ? ` + ${newBuys} new` : ''} (max ${o.slots}) | parking: ${o.park || 'CASH (market below trend)'}`);
+  L.push(`   account ${usd(o.account || 0)} | buying power ${o.buyingPower != null ? usd(o.buyingPower) : 'n/a'} | ${o.today} ${o.time} ET`);
+  if (live && ok) L.push('   fills get confirmed after the close (fill alert comes after 4 pm ET)');
+  const head = live ? (bad ? `${bad} order${bad > 1 ? 's' : ''} NOT placed` : planned.length ? `${ok} order${ok === 1 ? '' : 's'} placed` : 'no trades today') : `${planned.length} orders planned`;
+  const title = `${live ? 'LIVE' : 'DRY RUN'} dip bot ${o.today}: ${head}${bought.size ? ` | buys ${[...bought].join(', ')}` : ''}`;
+  return { title, body: L.join('\n'), priority: bad ? 4 : live ? 3 : 2, tags: bad ? 'warning' : !planned.length ? 'zzz' : 'chart_with_upwards_trend' };
+}
