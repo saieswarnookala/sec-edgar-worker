@@ -1,4 +1,4 @@
-# Sentinel trading project: full handoff (as of Nov 12, 2026)
+# Sentinel trading project: full handoff (as of Nov 14, 2026)
 
 Read this first in any new chat. It holds the decisions, numbers and reasons from ~5 weeks of chats (Oct 6 to Nov 12, 2026).
 Details live in this repo (scripts/, data/, live/), the doc and the dashboard. Not financial or tax advice.
@@ -78,6 +78,14 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - **ATR on 1-minute bars** (data/atr_minute.json, scripts/atr_minute.py, Alpaca SIP 2016-26): the old 134%/yr was fake. Real fill-then-target order: momentum and down-day setups lose on every target/hold (win ~50%, −0.1% per trade before costs). Dip signal + limit 0.5 ATR below close + 1–1.5 ATR target, 2–3 day hold: +0.6–0.9% per trade but only 31% of orders fill (~90 trades/yr) — weaker than the live dip rules. Dropped. (Coverage: 1,353 missing and 5,899 open-price mismatches skipped.)
 - **Event filters on the live dip strategy** (data/dip_filter_ev_*.json, workflow dip-events.yml, SEC 8-K items cache scripts/sec_8k_items.py): skipping earnings (before/during hold), any 8-K company news, one-day shocks, gaps, Fed days, jobs-report eve, witching, Fridays, month-end — all inside the random-skip range (14.4–15.6% vs 14.9%). Skipping dips in a jumpy market HURTS (12.1%). None adopted.
 - **Market volatility** (data/dip_filter_ev_vol.json): buying dips mainly when SPY is jumpy helps a little and broadly — skip-calm 10 of 12 versions ≥ baseline (best 16.4%, −20%); vol-scaled size all 4 versions better (0.5x calm → 1.5x jumpy: 16.1%, −25%). Gain ~+0.5–1.5%/yr, much of it 2008–09. Candidate for the paper dip bot (not built).
+
+### Screener rebuilt: "Quality at a fair price" (Nov 14)
+- Gate: profitable 2 yrs; sales 3Y CAGR >= 5% and 1Y >= 0; ROE >= 12%; FCF > 0; OCF >= 0.8 x net income; debt <= equity; P/E <= 40. Rank = half quality (ROE, net margin, FCF margin) + half value (earnings yield, FCF yield), percentiles within size bucket; top 15 per bucket. scripts/build-screen.mjs (QUALITY); old high-P/E list kept as rows_high_pe.
+- Backtest (scripts/screener_backtest.py, data/screener_backtest*.json; S&P 500 point-in-time, pick each May, hold 12 months, 2013-2026): 15.8%/yr (15.8 / 15.9 halves) vs SPY 14.0%, equal-weight 12.8%, old high-P/E 11.2% (7.8% after 2019). Momentum (11.9%) and 200-day trend filter (10.5%) hurt. 9 of 11 nearby versions beat SPY; no debt limit tested 19.2% but kept the debt rule on purpose.
+- Small/mid/micro test running: scripts/smallcap_backtest.py (weekly Alpaca bars + SEC, survivorship warning) -> data/smallcap_backtest.json; then rerun scripts/make_screener_report.py to add it to the PDF.
+- Screener tab: summary card + backtest table on top, PDF download (site/static-data/screener_rules_report.pdf, built by scripts/make_screener_report.py).
+- Refresh: Cloudflare cron '45 21,23 * * *' dispatches screen.yml daily (GitHub schedule ran 4-6 h late). Cloudflare free plan: 4 of 5 cron triggers used.
+- Discussion brief for Sai's friend: https://claude.ai/artifact/7xSY9Xtx9YuszTaBYVEfUi
 
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
