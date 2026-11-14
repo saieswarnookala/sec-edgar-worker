@@ -1,0 +1,968 @@
+{
+ "bad_symbols": [
+  "BF-B",
+  "BRK-B"
+ ],
+ "request_errors": [
+  "400 ALXN,ATVI,AVGO,BF-B,CSX,DAL,HUM,HWM,LEN,LOW,MLM,MU,NUE,NWSA, {\"message\":\"invalid symbol: BF-B\"}\n",
+  "400 BF-B {\"message\":\"invalid symbol: BF-B\"}\n",
+  "400 A,AIV,BEN,BRK-B,CCI,COO,CPB,FAST,FL,MNST,MOS,NSC,OMC,SBAC,SB {\"message\":\"invalid symbol: BRK-B\"}\n",
+  "400 BRK-B {\"message\":\"invalid symbol: BRK-B\"}\n"
+ ],
+ "built": "2026-11-14",
+ "period": "2016-06-01 to 2026-10-30",
+ "stats": {
+  "days": 2615,
+  "requests_days": 2615,
+  "missing": 1353,
+  "mismatch": 5899
+ },
+ "note": "minute = replayed on 1-min bars (truth); v2_daily = old test (assumed low before high, inflated); v3_daily = strict daily rule",
+ "results": {
+  "momentum (trend + near 20d high) | target 0.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 52.5,
+    "avg_gross": -0.06,
+    "avg_net_0.05%": -0.16,
+    "approx_yearly_0.05%": -12.5,
+    "avg_net_0.15%": -0.36,
+    "approx_yearly_0.15%": -25.8
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 79.9,
+    "avg_gross": 0.797,
+    "avg_net_0.05%": 0.697,
+    "approx_yearly_0.05%": 78.6,
+    "avg_net_0.15%": 0.497,
+    "approx_yearly_0.15%": 51.2
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 48.5,
+    "avg_gross": -0.097,
+    "avg_net_0.05%": -0.197,
+    "approx_yearly_0.05%": -15.1,
+    "avg_net_0.15%": -0.397,
+    "approx_yearly_0.15%": -28.2
+   }
+  },
+  "momentum (trend + near 20d high) | target 0.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 61.6,
+    "avg_gross": -0.033,
+    "avg_net_0.05%": -0.133,
+    "approx_yearly_0.05%": -10.5,
+    "avg_net_0.15%": -0.333,
+    "approx_yearly_0.15%": -24.1
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 83.0,
+    "avg_gross": 0.782,
+    "avg_net_0.05%": 0.682,
+    "approx_yearly_0.05%": 76.4,
+    "avg_net_0.15%": 0.482,
+    "approx_yearly_0.15%": 49.4
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 56.1,
+    "avg_gross": -0.071,
+    "avg_net_0.05%": -0.171,
+    "approx_yearly_0.05%": -13.3,
+    "avg_net_0.15%": -0.371,
+    "approx_yearly_0.15%": -26.6
+   }
+  },
+  "momentum (trend + near 20d high) | target 0.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 67.0,
+    "avg_gross": -0.009,
+    "avg_net_0.05%": -0.109,
+    "approx_yearly_0.05%": -8.6,
+    "avg_net_0.15%": -0.309,
+    "approx_yearly_0.15%": -22.6
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 85.2,
+    "avg_gross": 0.784,
+    "avg_net_0.05%": 0.684,
+    "approx_yearly_0.05%": 76.6,
+    "avg_net_0.15%": 0.484,
+    "approx_yearly_0.15%": 49.5
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 62.4,
+    "avg_gross": -0.037,
+    "avg_net_0.05%": -0.137,
+    "approx_yearly_0.05%": -10.7,
+    "avg_net_0.15%": -0.337,
+    "approx_yearly_0.15%": -24.4
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.0 ATR | hold 1d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 49.0,
+    "avg_gross": -0.077,
+    "avg_net_0.05%": -0.177,
+    "approx_yearly_0.05%": -13.7,
+    "avg_net_0.15%": -0.377,
+    "approx_yearly_0.15%": -26.9
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 53.7,
+    "avg_gross": 0.19,
+    "avg_net_0.05%": 0.09,
+    "approx_yearly_0.05%": 7.8,
+    "avg_net_0.15%": -0.11,
+    "approx_yearly_0.15%": -8.7
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 48.5,
+    "avg_gross": -0.097,
+    "avg_net_0.05%": -0.197,
+    "approx_yearly_0.05%": -15.1,
+    "avg_net_0.15%": -0.397,
+    "approx_yearly_0.15%": -28.2
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.0 ATR | hold 2d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 51.9,
+    "avg_gross": -0.072,
+    "avg_net_0.05%": -0.172,
+    "approx_yearly_0.05%": -13.3,
+    "avg_net_0.15%": -0.372,
+    "approx_yearly_0.15%": -26.5
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 56.2,
+    "avg_gross": 0.2,
+    "avg_net_0.05%": 0.1,
+    "approx_yearly_0.05%": 8.7,
+    "avg_net_0.15%": -0.1,
+    "approx_yearly_0.15%": -8.0
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 51.0,
+    "avg_gross": -0.092,
+    "avg_net_0.05%": -0.192,
+    "approx_yearly_0.05%": -14.7,
+    "avg_net_0.15%": -0.392,
+    "approx_yearly_0.15%": -27.8
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.0 ATR | hold 3d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 54.0,
+    "avg_gross": -0.042,
+    "avg_net_0.05%": -0.142,
+    "approx_yearly_0.05%": -11.1,
+    "avg_net_0.15%": -0.342,
+    "approx_yearly_0.15%": -24.7
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 58.0,
+    "avg_gross": 0.222,
+    "avg_net_0.05%": 0.122,
+    "approx_yearly_0.05%": 10.7,
+    "avg_net_0.15%": -0.078,
+    "approx_yearly_0.15%": -6.3
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 52.9,
+    "avg_gross": -0.059,
+    "avg_net_0.05%": -0.159,
+    "approx_yearly_0.05%": -12.4,
+    "avg_net_0.15%": -0.359,
+    "approx_yearly_0.15%": -25.8
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 48.7,
+    "avg_gross": -0.088,
+    "avg_net_0.05%": -0.188,
+    "approx_yearly_0.05%": -14.4,
+    "avg_net_0.15%": -0.388,
+    "approx_yearly_0.15%": -27.5
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 49.2,
+    "avg_gross": -0.031,
+    "avg_net_0.05%": -0.131,
+    "approx_yearly_0.05%": -10.3,
+    "avg_net_0.15%": -0.331,
+    "approx_yearly_0.15%": -24.1
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 48.5,
+    "avg_gross": -0.097,
+    "avg_net_0.05%": -0.197,
+    "approx_yearly_0.05%": -15.1,
+    "avg_net_0.15%": -0.397,
+    "approx_yearly_0.15%": -28.2
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 50.4,
+    "avg_gross": -0.078,
+    "avg_net_0.05%": -0.178,
+    "approx_yearly_0.05%": -13.7,
+    "avg_net_0.15%": -0.378,
+    "approx_yearly_0.15%": -26.9
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 51.0,
+    "avg_gross": -0.022,
+    "avg_net_0.05%": -0.122,
+    "approx_yearly_0.05%": -9.7,
+    "avg_net_0.15%": -0.322,
+    "approx_yearly_0.15%": -23.5
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 50.3,
+    "avg_gross": -0.089,
+    "avg_net_0.05%": -0.189,
+    "approx_yearly_0.05%": -14.5,
+    "avg_net_0.15%": -0.389,
+    "approx_yearly_0.15%": -27.6
+   }
+  },
+  "momentum (trend + near 20d high) | target 1.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 8633,
+    "fill_rate": 39.0,
+    "trades_per_yr": 829,
+    "win_gross": 50.9,
+    "avg_gross": -0.059,
+    "avg_net_0.05%": -0.159,
+    "approx_yearly_0.05%": -12.4,
+    "avg_net_0.15%": -0.359,
+    "approx_yearly_0.15%": -25.8
+   },
+   "v2_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 51.6,
+    "avg_gross": 0.003,
+    "avg_net_0.05%": -0.097,
+    "approx_yearly_0.05%": -7.8,
+    "avg_net_0.15%": -0.297,
+    "approx_yearly_0.15%": -21.9
+   },
+   "v3_daily": {
+    "trades": 8664,
+    "fill_rate": 39.1,
+    "trades_per_yr": 832,
+    "win_gross": 50.8,
+    "avg_gross": -0.066,
+    "avg_net_0.05%": -0.166,
+    "approx_yearly_0.05%": -12.9,
+    "avg_net_0.15%": -0.366,
+    "approx_yearly_0.15%": -26.3
+   }
+  },
+  "down day (trend + red day) | target 0.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 53.0,
+    "avg_gross": -0.069,
+    "avg_net_0.05%": -0.169,
+    "approx_yearly_0.05%": -12.8,
+    "avg_net_0.15%": -0.369,
+    "approx_yearly_0.15%": -25.9
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 78.6,
+    "avg_gross": 0.768,
+    "avg_net_0.05%": 0.668,
+    "approx_yearly_0.05%": 72.3,
+    "avg_net_0.15%": 0.468,
+    "approx_yearly_0.15%": 46.4
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 49.5,
+    "avg_gross": -0.048,
+    "avg_net_0.05%": -0.148,
+    "approx_yearly_0.05%": -11.3,
+    "avg_net_0.15%": -0.348,
+    "approx_yearly_0.15%": -24.7
+   }
+  },
+  "down day (trend + red day) | target 0.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 61.6,
+    "avg_gross": -0.025,
+    "avg_net_0.05%": -0.125,
+    "approx_yearly_0.05%": -9.6,
+    "avg_net_0.15%": -0.325,
+    "approx_yearly_0.15%": -23.2
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 82.4,
+    "avg_gross": 0.78,
+    "avg_net_0.05%": 0.68,
+    "approx_yearly_0.05%": 74.1,
+    "avg_net_0.15%": 0.48,
+    "approx_yearly_0.15%": 47.9
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 56.4,
+    "avg_gross": 0.016,
+    "avg_net_0.05%": -0.084,
+    "approx_yearly_0.05%": -6.6,
+    "avg_net_0.15%": -0.284,
+    "approx_yearly_0.15%": -20.6
+   }
+  },
+  "down day (trend + red day) | target 0.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 67.2,
+    "avg_gross": 0.003,
+    "avg_net_0.05%": -0.097,
+    "approx_yearly_0.05%": -7.6,
+    "avg_net_0.15%": -0.297,
+    "approx_yearly_0.15%": -21.5
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 84.9,
+    "avg_gross": 0.81,
+    "avg_net_0.05%": 0.71,
+    "approx_yearly_0.05%": 78.3,
+    "avg_net_0.15%": 0.51,
+    "approx_yearly_0.15%": 51.5
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 62.9,
+    "avg_gross": 0.046,
+    "avg_net_0.05%": -0.054,
+    "approx_yearly_0.05%": -4.3,
+    "avg_net_0.15%": -0.254,
+    "approx_yearly_0.15%": -18.7
+   }
+  },
+  "down day (trend + red day) | target 1.0 ATR | hold 1d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 49.9,
+    "avg_gross": -0.043,
+    "avg_net_0.05%": -0.143,
+    "approx_yearly_0.05%": -11.0,
+    "avg_net_0.15%": -0.343,
+    "approx_yearly_0.15%": -24.3
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 53.5,
+    "avg_gross": 0.167,
+    "avg_net_0.05%": 0.067,
+    "approx_yearly_0.05%": 5.6,
+    "avg_net_0.15%": -0.133,
+    "approx_yearly_0.15%": -10.3
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 49.5,
+    "avg_gross": -0.048,
+    "avg_net_0.05%": -0.148,
+    "approx_yearly_0.05%": -11.3,
+    "avg_net_0.15%": -0.348,
+    "approx_yearly_0.15%": -24.7
+   }
+  },
+  "down day (trend + red day) | target 1.0 ATR | hold 2d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 52.8,
+    "avg_gross": 0.021,
+    "avg_net_0.05%": -0.079,
+    "approx_yearly_0.05%": -6.2,
+    "avg_net_0.15%": -0.279,
+    "approx_yearly_0.15%": -20.3
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 56.0,
+    "avg_gross": 0.213,
+    "avg_net_0.05%": 0.113,
+    "approx_yearly_0.05%": 9.7,
+    "avg_net_0.15%": -0.087,
+    "approx_yearly_0.15%": -6.8
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 51.9,
+    "avg_gross": 0.019,
+    "avg_net_0.05%": -0.081,
+    "approx_yearly_0.05%": -6.4,
+    "avg_net_0.15%": -0.281,
+    "approx_yearly_0.15%": -20.5
+   }
+  },
+  "down day (trend + red day) | target 1.0 ATR | hold 3d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 55.2,
+    "avg_gross": 0.053,
+    "avg_net_0.05%": -0.047,
+    "approx_yearly_0.05%": -3.7,
+    "avg_net_0.15%": -0.247,
+    "approx_yearly_0.15%": -18.2
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 58.2,
+    "avg_gross": 0.248,
+    "avg_net_0.05%": 0.148,
+    "approx_yearly_0.05%": 12.8,
+    "avg_net_0.15%": -0.052,
+    "approx_yearly_0.15%": -4.1
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 54.3,
+    "avg_gross": 0.06,
+    "avg_net_0.05%": -0.04,
+    "approx_yearly_0.05%": -3.2,
+    "avg_net_0.15%": -0.24,
+    "approx_yearly_0.15%": -17.8
+   }
+  },
+  "down day (trend + red day) | target 1.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 49.6,
+    "avg_gross": -0.039,
+    "avg_net_0.05%": -0.139,
+    "approx_yearly_0.05%": -10.7,
+    "avg_net_0.15%": -0.339,
+    "approx_yearly_0.15%": -24.1
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 50.0,
+    "avg_gross": -0.007,
+    "avg_net_0.05%": -0.107,
+    "approx_yearly_0.05%": -8.4,
+    "avg_net_0.15%": -0.307,
+    "approx_yearly_0.15%": -22.2
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 49.5,
+    "avg_gross": -0.048,
+    "avg_net_0.05%": -0.148,
+    "approx_yearly_0.05%": -11.3,
+    "avg_net_0.15%": -0.348,
+    "approx_yearly_0.15%": -24.7
+   }
+  },
+  "down day (trend + red day) | target 1.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 51.4,
+    "avg_gross": 0.017,
+    "avg_net_0.05%": -0.083,
+    "approx_yearly_0.05%": -6.5,
+    "avg_net_0.15%": -0.283,
+    "approx_yearly_0.15%": -20.6
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 51.7,
+    "avg_gross": 0.041,
+    "avg_net_0.05%": -0.059,
+    "approx_yearly_0.05%": -4.7,
+    "avg_net_0.15%": -0.259,
+    "approx_yearly_0.15%": -19.0
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 51.3,
+    "avg_gross": 0.014,
+    "avg_net_0.05%": -0.086,
+    "approx_yearly_0.05%": -6.7,
+    "avg_net_0.15%": -0.286,
+    "approx_yearly_0.15%": -20.8
+   }
+  },
+  "down day (trend + red day) | target 1.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 8460,
+    "fill_rate": 37.4,
+    "trades_per_yr": 813,
+    "win_gross": 52.3,
+    "avg_gross": 0.047,
+    "avg_net_0.05%": -0.053,
+    "approx_yearly_0.05%": -4.2,
+    "avg_net_0.15%": -0.253,
+    "approx_yearly_0.15%": -18.6
+   },
+   "v2_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 52.5,
+    "avg_gross": 0.07,
+    "avg_net_0.05%": -0.03,
+    "approx_yearly_0.05%": -2.4,
+    "avg_net_0.15%": -0.23,
+    "approx_yearly_0.15%": -17.1
+   },
+   "v3_daily": {
+    "trades": 8487,
+    "fill_rate": 37.6,
+    "trades_per_yr": 815,
+    "win_gross": 52.1,
+    "avg_gross": 0.046,
+    "avg_net_0.05%": -0.054,
+    "approx_yearly_0.05%": -4.3,
+    "avg_net_0.15%": -0.254,
+    "approx_yearly_0.15%": -18.7
+   }
+  },
+  "dip10 (live dip signal) | target 0.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 53.3,
+    "avg_gross": 0.098,
+    "avg_net_0.05%": -0.002,
+    "approx_yearly_0.05%": -0.0,
+    "avg_net_0.15%": -0.202,
+    "approx_yearly_0.15%": -1.8
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 76.7,
+    "avg_gross": 1.272,
+    "avg_net_0.05%": 1.172,
+    "approx_yearly_0.05%": 11.2,
+    "avg_net_0.15%": 0.972,
+    "approx_yearly_0.15%": 9.2
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 51.2,
+    "avg_gross": 0.192,
+    "avg_net_0.05%": 0.092,
+    "approx_yearly_0.05%": 0.8,
+    "avg_net_0.15%": -0.108,
+    "approx_yearly_0.15%": -1.0
+   }
+  },
+  "dip10 (live dip signal) | target 0.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 66.1,
+    "avg_gross": 0.533,
+    "avg_net_0.05%": 0.433,
+    "approx_yearly_0.05%": 4.0,
+    "avg_net_0.15%": 0.233,
+    "approx_yearly_0.15%": 2.1
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 83.3,
+    "avg_gross": 1.486,
+    "avg_net_0.05%": 1.386,
+    "approx_yearly_0.05%": 13.4,
+    "avg_net_0.15%": 1.186,
+    "approx_yearly_0.15%": 11.4
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 62.0,
+    "avg_gross": 0.726,
+    "avg_net_0.05%": 0.626,
+    "approx_yearly_0.05%": 5.8,
+    "avg_net_0.15%": 0.426,
+    "approx_yearly_0.15%": 3.9
+   }
+  },
+  "dip10 (live dip signal) | target 0.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 70.9,
+    "avg_gross": 0.626,
+    "avg_net_0.05%": 0.526,
+    "approx_yearly_0.05%": 4.9,
+    "avg_net_0.15%": 0.326,
+    "approx_yearly_0.15%": 3.0
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 85.0,
+    "avg_gross": 1.497,
+    "avg_net_0.05%": 1.397,
+    "approx_yearly_0.05%": 13.5,
+    "avg_net_0.15%": 1.197,
+    "approx_yearly_0.15%": 11.5
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 67.8,
+    "avg_gross": 0.848,
+    "avg_net_0.05%": 0.748,
+    "approx_yearly_0.05%": 7.0,
+    "avg_net_0.15%": 0.548,
+    "approx_yearly_0.15%": 5.1
+   }
+  },
+  "dip10 (live dip signal) | target 1.0 ATR | hold 1d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 51.5,
+    "avg_gross": 0.205,
+    "avg_net_0.05%": 0.105,
+    "approx_yearly_0.05%": 1.0,
+    "avg_net_0.15%": -0.095,
+    "approx_yearly_0.15%": -0.9
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 54.1,
+    "avg_gross": 0.492,
+    "avg_net_0.05%": 0.392,
+    "approx_yearly_0.05%": 3.6,
+    "avg_net_0.15%": 0.192,
+    "approx_yearly_0.15%": 1.8
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 51.2,
+    "avg_gross": 0.192,
+    "avg_net_0.05%": 0.092,
+    "approx_yearly_0.05%": 0.8,
+    "avg_net_0.15%": -0.108,
+    "approx_yearly_0.15%": -1.0
+   }
+  },
+  "dip10 (live dip signal) | target 1.0 ATR | hold 2d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 58.3,
+    "avg_gross": 0.747,
+    "avg_net_0.05%": 0.647,
+    "approx_yearly_0.05%": 6.0,
+    "avg_net_0.15%": 0.447,
+    "approx_yearly_0.15%": 4.1
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 60.7,
+    "avg_gross": 0.991,
+    "avg_net_0.05%": 0.891,
+    "approx_yearly_0.05%": 8.4,
+    "avg_net_0.15%": 0.691,
+    "approx_yearly_0.15%": 6.5
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 57.2,
+    "avg_gross": 0.697,
+    "avg_net_0.05%": 0.597,
+    "approx_yearly_0.05%": 5.6,
+    "avg_net_0.15%": 0.397,
+    "approx_yearly_0.15%": 3.7
+   }
+  },
+  "dip10 (live dip signal) | target 1.0 ATR | hold 3d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 60.4,
+    "avg_gross": 0.936,
+    "avg_net_0.05%": 0.836,
+    "approx_yearly_0.05%": 7.9,
+    "avg_net_0.15%": 0.636,
+    "approx_yearly_0.15%": 5.9
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 62.8,
+    "avg_gross": 1.177,
+    "avg_net_0.05%": 1.077,
+    "approx_yearly_0.05%": 10.3,
+    "avg_net_0.15%": 0.877,
+    "approx_yearly_0.15%": 8.3
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 59.7,
+    "avg_gross": 0.895,
+    "avg_net_0.05%": 0.795,
+    "approx_yearly_0.05%": 7.5,
+    "avg_net_0.15%": 0.595,
+    "approx_yearly_0.15%": 5.6
+   }
+  },
+  "dip10 (live dip signal) | target 1.5 ATR | hold 1d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 51.5,
+    "avg_gross": 0.203,
+    "avg_net_0.05%": 0.103,
+    "approx_yearly_0.05%": 0.9,
+    "avg_net_0.15%": -0.097,
+    "approx_yearly_0.15%": -0.9
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 51.4,
+    "avg_gross": 0.225,
+    "avg_net_0.05%": 0.125,
+    "approx_yearly_0.05%": 1.1,
+    "avg_net_0.15%": -0.075,
+    "approx_yearly_0.15%": -0.7
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 51.2,
+    "avg_gross": 0.192,
+    "avg_net_0.05%": 0.092,
+    "approx_yearly_0.05%": 0.8,
+    "avg_net_0.15%": -0.108,
+    "approx_yearly_0.15%": -1.0
+   }
+  },
+  "dip10 (live dip signal) | target 1.5 ATR | hold 2d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 56.8,
+    "avg_gross": 0.705,
+    "avg_net_0.05%": 0.605,
+    "approx_yearly_0.05%": 5.6,
+    "avg_net_0.15%": 0.405,
+    "approx_yearly_0.15%": 3.7
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 56.9,
+    "avg_gross": 0.715,
+    "avg_net_0.05%": 0.615,
+    "approx_yearly_0.05%": 5.7,
+    "avg_net_0.15%": 0.415,
+    "approx_yearly_0.15%": 3.8
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 56.7,
+    "avg_gross": 0.685,
+    "avg_net_0.05%": 0.585,
+    "approx_yearly_0.05%": 5.5,
+    "avg_net_0.15%": 0.385,
+    "approx_yearly_0.15%": 3.6
+   }
+  },
+  "dip10 (live dip signal) | target 1.5 ATR | hold 3d": {
+   "minute": {
+    "trades": 942,
+    "fill_rate": 31.0,
+    "trades_per_yr": 90,
+    "win_gross": 57.1,
+    "avg_gross": 0.926,
+    "avg_net_0.05%": 0.826,
+    "approx_yearly_0.05%": 7.8,
+    "avg_net_0.15%": 0.626,
+    "approx_yearly_0.15%": 5.8
+   },
+   "v2_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 57.5,
+    "avg_gross": 0.942,
+    "avg_net_0.05%": 0.842,
+    "approx_yearly_0.05%": 7.9,
+    "avg_net_0.15%": 0.642,
+    "approx_yearly_0.15%": 6.0
+   },
+   "v3_daily": {
+    "trades": 945,
+    "fill_rate": 31.1,
+    "trades_per_yr": 91,
+    "win_gross": 57.2,
+    "avg_gross": 0.912,
+    "avg_net_0.05%": 0.812,
+    "approx_yearly_0.05%": 7.6,
+    "avg_net_0.15%": 0.612,
+    "approx_yearly_0.15%": 5.7
+   }
+  }
+ }
+}
