@@ -66,7 +66,7 @@ def historical_picks():
         until = row.end if pd.notna(row.end) else pd.Timestamp("2100-01-01")
         member.loc[(days >= row.start) & (days < until), row.ticker] = True
     score = ((0.7 * relative5) + (0.3 * atr_pct)).where(valid & member)
-    best = score.idxmax(axis=1).where(score.notna().any(axis=1))
+    best = score.fillna(-np.inf).idxmax(axis=1).where(score.notna().any(axis=1))
     # Signal after prior CLOSE; trade at NEXT day's 09:35 minute open (daily proxy uses next open).
     picks = []
     for i in range(1, len(days)):
