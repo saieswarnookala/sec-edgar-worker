@@ -1,7 +1,7 @@
 # Dip strategy improvement tests (one mode per run): skip earnings dips, skip high-volume dips, max stocks per industry, dip vs industry peers, stop-loss.
 # Base = current best: dip >=10% vs SPY over 5 days, above 200-day avg, smart exit (close > 5-day avg, max 5 days), 10 slots, Clear Leader parking, cash when SPY < 100-day avg. PIT S&P 500 1998-2026. Research only.
 # Clear Leader monthly positions come from scripts/clear_leader_long.py (same rules); daily returns of the held ETF (or its stand-in) are used day by day.
-import os, json, urllib.request, urllib.parse, time, traceback, sys
+import os, re, json, urllib.request, urllib.parse, time, traceback, sys
 import pandas as pd, numpy as np
 def ydaily(sym):
     for a in range(4):
@@ -372,6 +372,101 @@ def main():
             r = sim(PKN[100], **b, sig=S & ~(vr > 2.0)); r.update(variant="volume < 2x (live strategy)", scenario=tag); G.append(r); cur[tag] = LASTC[0]
             print("curve", tag, r["cagr"], r["dd"], flush=True)
         pd.DataFrame({"ideal": cur["ideal"], "realistic": cur["realistic"]}).rename_axis("date").to_csv("data/dip_curve.csv", float_format="%.6f")
+    elif MODE.startswith("ev_"):
+        # Event filters on the LIVE dip strategy (volume filter on): skip a buy signal when an event happened (or is coming).
+        # Each filter is checked against "skip the same share of signals at random" (luck test, realistic fills).
+        V = VOL[tick]; vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
+        LIVE = S & ~(vr > 2.0); nL = max(int(LIVE.sum()), 1); rng = np.random.default_rng(11)
+        ds = dates.strftime("%Y-%m-%d").values; OUT["luck"] = {}; OUT["notes"] = []
+        add("LIVE strategy (volume filter) = reference", sig=LIVE)
+        def addf(label, X, only=False):
+            X = np.asarray(X, bool) & LIVE; frac = float(X.sum()) / nL
+            add(label, sig=LIVE & ~X); G[-1]["removed_pct"] = G[-2]["removed_pct"] = round(100 * frac, 1)
+            if only: add("ONLY " + label.replace("skip: ", "") + " (check)", sig=X)
+            luck = [sim(PKN[100], **dict(base_kw)["realistic"], sig=LIVE & ~(rng.random(LIVE.shape) < frac))["cagr"] for _ in range(4)]
+            OUT["luck"][label] = {"removed_pct": round(100 * frac, 1), "random_skip_realistic": luck}
+            print("luck", label, round(100 * frac, 1), luck, flush=True)
+        def react(evs):  # trading-day index of the price reaction: releases during/after market hours react the next day
+            out = []
+            for d, mi, *rest in evs:
+                k = int(np.searchsorted(ds, d))
+                if k < D and ds[k] == d and mi >= 570: k += 1
+                if k < D: out.append((k, rest[0] if rest else None))
+            return out
+        def window(rows, a, b):  # mark signal days k+a .. k+b for each event row k
+            X = np.zeros((D, len(tick)), bool)
+            for j, ks in rows.items():
+                for k in ks: X[max(0, k + a):max(0, min(D, k + b + 1)), j] = True
+            return X
+        r1 = Cf[tick].pct_change().sub(spy.pct_change(), axis=0).values
+        if MODE == "ev_earn":
+            ER = {j: [k for k, _ in react((SEC.get(t) or {}).get("events", []))] for j, t in enumerate(tick)}
+            OUT["notes"].append("SEC 8-K item 2.02 earnings dates from Aug 2004; earlier years have no earnings data")
+            addf("skip: earnings in the last 5 days", window(ER, 0, 4), only=True)
+            big = {j: [k for k in ks if k < D and r1[k, j] <= -0.05] for j, ks in ER.items()}
+            addf("skip: earnings drop >= 5% vs SPY in the last 5 days", window(big, 0, 4), only=True)
+            addf("skip: earnings due in the next 5 days (during the hold)", window(ER, -5, -1), only=True)
+            addf("skip: earnings in last 5 days OR next 5 days", window(ER, 0, 4) | window(ER, -5, -1))
+        elif MODE == "ev_news":
+            ITEMS = json.load(open("data/sec_8k_items.json"))["tickers"]
+            OUT["notes"].append("all 8-K filings with item numbers from SEC submissions, 2004+")
+            CAT = {"any non-earnings 8-K (company news)": {"1.01", "1.02", "1.03", "1.05", "2.01", "2.03", "2.04", "2.05", "2.06", "3.01", "3.02", "3.03", "4.01", "4.02", "5.01", "5.02", "5.03", "8.01"},
+                   "executive/director change (5.02)": {"5.02"},
+                   "bad-news items (bankruptcy, layoffs, write-down, delisting, auditor change, restatement)": {"1.03", "2.05", "2.06", "3.01", "4.01", "4.02"},
+                   "deals (material agreement, acquisition, other events)": {"1.01", "2.01", "8.01"}}
+            ER = {j: react([e for e in ITEMS.get(t, []) if "2.02" in e[2].split(",")]) for j, t in enumerate(tick)}
+            ER = {j: [k for k, _ in v] for j, v in ER.items()}
+            for name, its in CAT.items():
+                rows = {j: [k for k, it in react(ITEMS.get(t, [])) if set((it or "").split(",")) & its] for j, t in enumerate(tick)}
+                OUT["notes"].append(f"{name}: {sum(len(v) for v in rows.values())} filings")
+                addf("skip: " + name + " in the last 5 days", window(rows, 0, 4), only=(name.startswith("any")))
+            anyn = {j: [k for k, it in react(ITEMS.get(t, [])) if set((it or "").split(",")) & CAT["any non-earnings 8-K (company news)"]] for j, t in enumerate(tick)}
+            addf("skip: earnings OR any company news in the last 5 days", window(anyn, 0, 4) | window(ER, 0, 4), only=True)
+        elif MODE == "ev_price":
+            rlv = rl.values; mn = pd.DataFrame(r1, index=dates).rolling(5).min().values
+            addf("skip: one day caused >= 70% of the 5-day drop (news-like shock)", (mn <= 0.7 * rlv) & (rlv < 0), only=True)
+            gap = (O[tick] / Cf[tick].shift(1) - 1).rolling(5).min().values
+            addf("skip: an overnight gap down >= 5% in the last 5 days", gap <= -0.05, only=True)
+            addf("skip: dip bigger than 20% vs SPY", rlv <= -0.20)
+            addf("skip: dip bigger than 25% vs SPY", rlv <= -0.25)
+        elif MODE == "ev_market":
+            sr = spy.pct_change(); v20 = sr.rolling(20).std(); hi = (v20 > v20.rolling(252).quantile(0.8)).values; lo = (v20 < v20.rolling(252).quantile(0.5)).values
+            row = lambda m: np.repeat(np.asarray(m, bool)[:, None], len(tick), 1)
+            addf("skip: market very jumpy (SPY 20d volatility in top 20% of past year)", row(hi), only=True)
+            addf("skip: market calm (SPY 20d volatility below past-year median)", row(lo), only=True)
+            cnt = LIVE.sum(1)
+            addf("skip: 20+ stocks dipping the same day (broad selloff)", row(cnt >= 20), only=True)
+            addf("skip: SPY down 5%+ over 5 days", row((spy.pct_change(5) <= -0.05).values))
+        elif MODE == "ev_calendar":
+            row = lambda m: np.repeat(np.asarray(m, bool)[:, None], len(tick), 1)
+            fomc = set()
+            MON = "January|February|March|April|May|June|July|August|September|October|November|December"
+            MI = {m: i + 1 for i, m in enumerate(MON.split("|"))}
+            def get(u):
+                try: return urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 research"}), timeout=60).read().decode("utf-8", "ignore")
+                except Exception as e: print("fomc fetch fail", u, e); return ""
+            for y in range(1998, 2021):
+                h = get(f"https://www.federalreserve.gov/monetarypolicy/fomchistorical{y}.htm"); time.sleep(0.5)
+                for m in re.finditer(rf"({MON})\s+(\d{{1,2}})(?:\s*-\s*(?:({MON})\s+)?(\d{{1,2}}))?\s+(?:FOMC\s+)?Meeting\s*-\s*{y}", h):
+                    mon = MI[m.group(3) or m.group(1)]; day = int(m.group(4) or m.group(2)); fomc.add(f"{y}-{mon:02d}-{day:02d}")
+            h = get("https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm")
+            for blk in re.split(r"(?=\d{4} FOMC Meetings)", h)[1:]:
+                y = int(blk[:4])
+                for m in re.finditer(rf"<strong>({MON})(?:/({MON}))?</strong>\s*</div>\s*<div[^>]*fomc-meeting__date[^>]*>\s*(\d{{1,2}})(?:-(\d{{1,2}}))?", blk):
+                    mon = MI[m.group(2) or m.group(1)]; day = int(m.group(4) or m.group(3)); fomc.add(f"{y}-{mon:02d}-{day:02d}")
+            fomc = {d for d in fomc if "1998-01-01" <= d <= "2026-12-31"}
+            OUT["fomc_dates_found"] = len(fomc); OUT["fomc_sample"] = sorted(fomc)[:3] + sorted(fomc)[-3:]
+            if len(fomc) >= 150:
+                fd = np.isin(ds, sorted(fomc)); prev = np.r_[fd[1:], False]
+                addf("skip: Fed decision day or the day before", row(fd | prev), only=True)
+            else: OUT["notes"].append(f"FOMC filter skipped: only {len(fomc)} dates parsed")
+            dts = pd.DatetimeIndex(dates); fri1 = (dts.weekday == 4) & (dts.day <= 7)
+            addf("skip: day before jobs report (first Friday, approx.)", row(np.r_[fri1[1:], False]))
+            tw = (dts.weekday == 4) & (dts.day >= 15) & (dts.day <= 21) & np.isin(dts.month, [3, 6, 9, 12])
+            addf("skip: triple-witching Friday", row(tw))
+            addf("skip: Friday signals (weekend risk)", row(dts.weekday == 4), only=True)
+            mo = dts.year * 12 + dts.month; last2 = np.r_[mo[2:], [-1, -1]] != mo
+            addf("skip: last 2 trading days of the month", row(last2), only=True)
     elif MODE == "stop":
         for k in (0.08, 0.10, 0.15): add(f"stop-loss at -{int(k*100)}% from buy", stop=k)
     OUT["results"] = G; OUT["mode"] = MODE
