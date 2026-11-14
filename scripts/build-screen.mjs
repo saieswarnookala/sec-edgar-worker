@@ -1,4 +1,5 @@
-// Builds data/screen.json: top 15 "high P/E but profitable + growing" US stocks per market-cap bucket.
+// Builds data/screen.json: top 15 "quality at a fair price" US stocks per market-cap bucket (rules backtested in
+// scripts/screener_backtest.py: quality + value beat SPY and the old high-P/E list, 2013-2026). The old list stays as rows_high_pe.
 // Runs in GitHub Actions (no CPU limits). Prices + market cap: Nasdaq screener. Earnings + sales: SEC XBRL frames.
 // Usage: SEC_USER_AGENT="Name email" node scripts/build-screen.mjs [out=data/screen.json]
 
@@ -12,6 +13,19 @@ export const RULES = {
   min_sales_growth: 0.05,   // sales up at least 5% vs the year before
   min_profit_growth: 0,     // profit up vs the year before
   max_pe: 200,              // drops one-off outliers
+};
+
+// Quality at a fair price (the Screener tab). A stock must pass every gate; survivors are ranked inside their size group.
+export const QUALITY = {
+  per_bucket: 15,
+  min_price: 1,
+  min_sales_g1: 0,          // sales not shrinking last year
+  min_sales_g3: 0.05,       // sales up 5%+ a year over 3 years
+  min_roe: 0.12,            // return on equity 12%+
+  min_ocf_to_ni: 0.8,       // profits backed by real cash (operating cash flow >= 80% of net income)
+  max_de: 1.0,              // debt no more than equity
+  max_pe: 40,
+  // rank = average of quality (ROE, net margin, free-cash-flow margin) and value (earnings yield, free-cash-flow yield)
 };
 
 export const BUCKETS = [
@@ -120,6 +134,12 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     for (const d of (await secGet(FRAME_URL(tag, `CY${year}`)))?.data || []) if (!INT.has(d.cik)) INT.set(d.cik, d.val);
   }
 
+  // 3c) Cash flow for the latest year (free cash flow = operating cash flow - capital spending)
+  const OCF = new Map(), CAPEX = new Map();
+  for (const tag of ['NetCashProvidedByUsedInOperatingActivities', 'NetCashProvidedByUsedInOperatingActivitiesContinuingOperations'])
+    for (const d of (await secGet(FRAME_URL(tag, `CY${year}`)))?.data || []) if (!OCF.has(d.cik)) OCF.set(d.cik, d.val);
+  for (const d of (await secGet(FRAME_URL('PaymentsToAcquirePropertyPlantAndEquipment', `CY${year}`)))?.data || []) if (!CAPEX.has(d.cik)) CAPEX.set(d.cik, d.val);
+
   // 4) Universe: one row per company (largest market cap share class, ties by volume)
   const byCik = new Map();
   for (const r of nrows) {
@@ -188,10 +208,44 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
   }
   universe.sort((a, b) => b.market_cap - a.market_cap);
 
+  // 6) Quality at a fair price
+  const qcand = [];
+  for (const c of byCik.values()) {
+    const ni = NI.get(c.cik)?.val, ni1 = NI1.get(c.cik)?.val, rev = REV.get(c.cik)?.val, rev1 = REV1.get(c.cik)?.val, rev3 = REV3.get(c.cik)?.val;
+    const ocf = OCF.get(c.cik), eq = EQ.get(c.cik)?.val;
+    if ([ni, ni1, rev, rev1, rev3, ocf, eq].some((v) => v == null) || c.price < QUALITY.min_price) continue;
+    if (ni <= 0 || ni1 <= 0 || rev <= 0 || rev1 <= 0 || rev3 <= 0 || eq <= 0) continue;
+    const b = BUCKETS.find((x) => c.market_cap >= x.min && c.market_cap < x.max);
+    if (!b) continue;
+    const debt = debtOf(c.cik, eq), fcf = ocf - (CAPEX.get(c.cik) ?? 0);
+    const q = { ...c, bucket: b.bucket, ni, rev, pe: c.market_cap / ni, roe: ni / eq, net_margin: ni / rev, fcf, fcf_margin: fcf / rev, fcf_yield: fcf / c.market_cap,
+      sales_g1: rev / rev1 - 1, sales_g3: cagr(rev, rev3, 3), profit_g1: ni / ni1 - 1, profit_g3: cagr(ni, niY3.get(c.cik)?.val, 3), de: debt == null ? null : debt / eq };
+    if (q.sales_g1 < QUALITY.min_sales_g1 || !(q.sales_g3 >= QUALITY.min_sales_g3) || q.roe < QUALITY.min_roe || fcf <= 0 || ocf < QUALITY.min_ocf_to_ni * ni) continue;
+    if ((q.de ?? 0) > QUALITY.max_de || q.pe > QUALITY.max_pe) continue;
+    qcand.push(q);
+  }
+  counts.quality_passed = qcand.length;
+  const pctRank = (arr, key) => { const v = arr.map((x) => x[key]).sort((a, b) => a - b); return (x) => (v.length < 2 ? 0.5 : v.filter((y) => y < x[key]).length / (v.length - 1)); };
   const rows = [];
   for (const b of BUCKETS) {
+    const g = qcand.filter((x) => x.bucket === b.bucket);
+    g.forEach((x) => { x.ey = 1 / x.pe; });
+    const r = Object.fromEntries(['roe', 'net_margin', 'fcf_margin', 'ey', 'fcf_yield'].map((k) => [k, pctRank(g, k)]));
+    for (const x of g) {
+      const quality = (r.roe(x) + r.net_margin(x) + r.fcf_margin(x)) / 3, value = (r.ey(x) + r.fcf_yield(x)) / 2;
+      x.score = Math.round(((quality + value) / 2) * 100);
+    }
+    g.sort((x, y) => y.score - x.score || y.roe - x.roe).slice(0, QUALITY.per_bucket).forEach((p, i) => rows.push({
+      bucket: b.bucket, rank: i + 1, symbol: p.symbol, name: p.name, sector: p.sector, industry: p.industry, price: p.price, market_cap: p.market_cap,
+      score: p.score, pe: +p.pe.toFixed(2), roe: r4(p.roe), net_margin: r4(p.net_margin), fcf_yield: r4(p.fcf_yield), sales_g3: r4(p.sales_g3), sales_growth: r4(p.sales_g1),
+      profit_growth: r4(p.profit_g1), profit_g3: r4(p.profit_g3), de: r4(p.de), net_income: p.ni, revenue: p.rev, fy_end: NI.get(p.cik).end,
+    }));
+  }
+
+  const rows_high_pe = [];
+  for (const b of BUCKETS) {
     picks.filter((p) => p.bucket === b.bucket).sort((x, y) => y.pe - x.pe).slice(0, RULES.per_bucket)
-      .forEach((p, i) => rows.push({
+      .forEach((p, i) => rows_high_pe.push({
         bucket: b.bucket, rank: i + 1, symbol: p.symbol, name: p.name, sector: p.sector, industry: p.industry,
         price: p.price, market_cap: p.market_cap, pe: +p.pe.toFixed(2), net_income: p.net_income, revenue: p.revenue,
         net_margin: +p.net_margin.toFixed(4), sales_growth: +p.sales_growth.toFixed(4), profit_growth: +p.profit_growth.toFixed(4), fy_end: p.fy_end,
@@ -202,10 +256,12 @@ export async function build({ fetchFn = fetch, ua, now = new Date() }) {
     universe,
     generated_at: now.toISOString(),
     earnings_year: `CY${year}`,
-    rules: RULES,
+    rules: QUALITY,
+    rules_high_pe: RULES,
     buckets: BUCKETS.map((b) => ({ bucket: b.bucket, min: b.min, max: Number.isFinite(b.max) ? b.max : null })),
     counts,
     rows,
+    rows_high_pe,
   };
 }
 

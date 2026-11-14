@@ -188,7 +188,7 @@ dash.loader('universe', {
 });
 
 dash.loader('screen', {
-  description: 'Turns the daily screen file into one row per stock (bucket, rank, ticker, P/E, market cap, growth, margin) and notes when it was built',
+  description: 'Turns the daily screen file into one row per stock (bucket, rank, ticker, quality score, P/E, ROE, cash-flow yield, growth, margin) and notes when it was built',
   fn: async ({ answer }) => {
     let x = answer;
     if (x && Array.isArray(x.content)) x = x.structuredContent || x.content;
@@ -198,7 +198,7 @@ dash.loader('screen', {
       x = JSON.parse(x);
     }
     if (!x || !Array.isArray(x.rows)) throw new Error('The screen file has no rows yet');
-    const columns = ['bucket', 'rank', 'symbol', 'name', 'sector', 'industry', 'price', 'market_cap', 'pe', 'net_income', 'revenue', 'net_margin', 'sales_growth', 'profit_growth', 'fy_end'];
+    const columns = ['bucket', 'rank', 'symbol', 'name', 'sector', 'industry', 'price', 'market_cap', 'score', 'pe', 'roe', 'fcf_yield', 'sales_g3', 'de', 'net_income', 'revenue', 'net_margin', 'sales_growth', 'profit_growth', 'fy_end'];
     const meta = [x.generated_at ? 'Built ' + x.generated_at.slice(0, 10) : null, x.earnings_year ? 'Earnings ' + x.earnings_year : null].filter(Boolean);
     return { columns, rows: x.rows.map((r) => Object.fromEntries(columns.map((c) => [c, r[c] ?? null]))), meta };
   },
@@ -1219,16 +1219,16 @@ dash.calc('vs_industry', {
 
 <template id="sx-screener-tpl">
   <section class="sx-sec" id="screen-top">
-    <div class="sx-sech"><div><h2>High P/E, still growing</h2><p>The 15 most expensive stocks by P/E in each size group that are profitable and growing. Click a ticker to analyze it.</p></div><p class="sx-scr-asof" data-source="screen">—</p></div>
+    <div class="sx-sech"><div><h2>Quality at a fair price</h2><p>Up to 15 strong, growing, cash-generating companies in each size group that aren’t expensive, best first. Click a ticker to analyze it.</p></div><p class="sx-scr-asof" data-source="screen">—</p></div>
     <div class="sx-rules">
-      <span class="sx-badge">Profitable both years</span><span class="sx-badge">Sales growth ≥ 5%</span><span class="sx-badge">Profit growth &gt; 0%</span><span class="sx-badge">Net margin ≥ 3%</span><span class="sx-badge">P/E ≤ 200</span><span class="sx-badge">Price ≥ $1</span>
+      <span class="sx-badge">Profitable both years</span><span class="sx-badge">Sales growth ≥ 5%/yr over 3 yrs</span><span class="sx-badge">Sales not shrinking</span><span class="sx-badge">ROE ≥ 12%</span><span class="sx-badge">Free cash flow &gt; 0</span><span class="sx-badge">Cash flow ≥ 80% of profit</span><span class="sx-badge">Debt ≤ equity</span><span class="sx-badge">P/E ≤ 40</span><span class="sx-badge">Price ≥ $1</span>
     </div>
     <div class="sx-scr-blocks">
       <div class="sx-card sx-scr-block" id="screen-mega">
         <div class="sx-ch"><h3>Mega cap<span>$200B+</span></h3></div>
         <div class="sx-tablewrap">
           <table class="sx-scr" data-source="screen" data-row-key="symbol" data-bucket="Mega">
-            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="pe">P/E</th><th data-field="market_cap">Mkt cap</th><th data-field="sales_growth">Sales growth</th><th data-field="profit_growth">Profit growth</th><th data-field="net_margin">Net margin</th></tr></thead>
+            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="score" title="0–100: half quality (ROE, net margin, cash-flow margin), half value (earnings and cash-flow yield), vs the others in this size group">Score</th><th data-field="pe">P/E</th><th data-field="roe">ROE</th><th data-field="fcf_yield" title="Free cash flow ÷ market cap">FCF yield</th><th data-field="sales_g3">Sales growth/yr (3Y)</th><th data-field="net_margin">Net margin</th><th data-field="market_cap">Mkt cap</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1237,7 +1237,7 @@ dash.calc('vs_industry', {
         <div class="sx-ch"><h3>Large cap<span>$10B – $200B</span></h3></div>
         <div class="sx-tablewrap">
           <table class="sx-scr" data-source="screen" data-row-key="symbol" data-bucket="Large">
-            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="pe">P/E</th><th data-field="market_cap">Mkt cap</th><th data-field="sales_growth">Sales growth</th><th data-field="profit_growth">Profit growth</th><th data-field="net_margin">Net margin</th></tr></thead>
+            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="score" title="0–100: half quality (ROE, net margin, cash-flow margin), half value (earnings and cash-flow yield), vs the others in this size group">Score</th><th data-field="pe">P/E</th><th data-field="roe">ROE</th><th data-field="fcf_yield" title="Free cash flow ÷ market cap">FCF yield</th><th data-field="sales_g3">Sales growth/yr (3Y)</th><th data-field="net_margin">Net margin</th><th data-field="market_cap">Mkt cap</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1246,7 +1246,7 @@ dash.calc('vs_industry', {
         <div class="sx-ch"><h3>Mid cap<span>$2B – $10B</span></h3></div>
         <div class="sx-tablewrap">
           <table class="sx-scr" data-source="screen" data-row-key="symbol" data-bucket="Mid">
-            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="pe">P/E</th><th data-field="market_cap">Mkt cap</th><th data-field="sales_growth">Sales growth</th><th data-field="profit_growth">Profit growth</th><th data-field="net_margin">Net margin</th></tr></thead>
+            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="score" title="0–100: half quality (ROE, net margin, cash-flow margin), half value (earnings and cash-flow yield), vs the others in this size group">Score</th><th data-field="pe">P/E</th><th data-field="roe">ROE</th><th data-field="fcf_yield" title="Free cash flow ÷ market cap">FCF yield</th><th data-field="sales_g3">Sales growth/yr (3Y)</th><th data-field="net_margin">Net margin</th><th data-field="market_cap">Mkt cap</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1255,7 +1255,7 @@ dash.calc('vs_industry', {
         <div class="sx-ch"><h3>Small cap<span>$300M – $2B</span></h3></div>
         <div class="sx-tablewrap">
           <table class="sx-scr" data-source="screen" data-row-key="symbol" data-bucket="Small">
-            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="pe">P/E</th><th data-field="market_cap">Mkt cap</th><th data-field="sales_growth">Sales growth</th><th data-field="profit_growth">Profit growth</th><th data-field="net_margin">Net margin</th></tr></thead>
+            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="score" title="0–100: half quality (ROE, net margin, cash-flow margin), half value (earnings and cash-flow yield), vs the others in this size group">Score</th><th data-field="pe">P/E</th><th data-field="roe">ROE</th><th data-field="fcf_yield" title="Free cash flow ÷ market cap">FCF yield</th><th data-field="sales_g3">Sales growth/yr (3Y)</th><th data-field="net_margin">Net margin</th><th data-field="market_cap">Mkt cap</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -1264,13 +1264,13 @@ dash.calc('vs_industry', {
         <div class="sx-ch"><h3>Micro cap<span>$50M – $300M</span></h3></div>
         <div class="sx-tablewrap">
           <table class="sx-scr" data-source="screen" data-row-key="symbol" data-bucket="Micro">
-            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="pe">P/E</th><th data-field="market_cap">Mkt cap</th><th data-field="sales_growth">Sales growth</th><th data-field="profit_growth">Profit growth</th><th data-field="net_margin">Net margin</th></tr></thead>
+            <thead><tr><th data-field="rank">#</th><th data-field="symbol">Ticker</th><th data-field="name">Company</th><th data-field="score" title="0–100: half quality (ROE, net margin, cash-flow margin), half value (earnings and cash-flow yield), vs the others in this size group">Score</th><th data-field="pe">P/E</th><th data-field="roe">ROE</th><th data-field="fcf_yield" title="Free cash flow ÷ market cap">FCF yield</th><th data-field="sales_g3">Sales growth/yr (3Y)</th><th data-field="net_margin">Net margin</th><th data-field="market_cap">Mkt cap</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
     </div>
-    <p class="sx-cap">P/E = today’s market cap ÷ net profit for the latest full calendar year in SEC filings; growth compares that year with the one before. Prices and market caps from Nasdaq’s screener, refreshed each weekday after the close. US SEC filers only. Not financial advice.</p>
+    <p class="sx-cap">Why these rules: we backtested candidate rules on S&amp;P 500 stocks, picking 15 each May from the previous year’s SEC numbers and holding a year (May 2013 – Oct 2026). Quality + fair price made 15.8%/yr (15.8% in 2013–19, 15.7% in 2019–26) vs SPY 14.0% and the same stocks equal-weighted 12.8%. The old “highest P/E” list made 11.2%; adding momentum or a 200-day trend filter made it worse. 9 of 11 nearby versions (top 10/25, ROE 10–15%, P/E cap 30–60, other debt and growth limits) also beat SPY; demanding 10%+ sales growth or debt ≤ half of equity did not. Worst drop −36% (SPY −34%): these are stocks, not a safe haven. Small and micro caps weren’t in the test.</p><p class="sx-cap">P/E = today’s market cap ÷ net profit for the latest full calendar year in SEC filings; ROE = that profit ÷ latest equity; free cash flow = operating cash flow − capital spending. Prices and market caps from Nasdaq’s screener, refreshed each weekday after the close. US SEC filers only. A list to research, not a buy list. Not financial advice.</p>
   </section>
 </template>
 
@@ -1794,11 +1794,13 @@ dash.calc('vs_industry', {
         cell(tr, String(r.rank));
         const td = document.createElement('td'); const b = document.createElement('button'); b.type = 'button'; b.className = 'sx-sym'; b.textContent = r.symbol; b.addEventListener('click', () => open(r.symbol)); td.appendChild(b); tr.appendChild(td);
         const nm = cell(tr, r.name || '—'); nm.title = [r.name, r.sector, r.industry].filter(Boolean).join(' · ');
+        cell(tr, r.score == null ? '—' : String(r.score), r.score >= 70 ? 'sx-good' : '');
         cell(tr, pe(r.pe));
-        cell(tr, money(r.market_cap));
-        cell(tr, pct(r.sales_growth), r.sales_growth > 0 ? 'sx-good' : '');
-        cell(tr, pct(r.profit_growth), r.profit_growth > 0 ? 'sx-good' : '');
+        cell(tr, r.roe == null ? '—' : pct(r.roe).replace('+', ''), r.roe >= 0.2 ? 'sx-good' : '');
+        cell(tr, r.fcf_yield == null ? '—' : pct(r.fcf_yield).replace('+', ''));
+        cell(tr, r.sales_g3 == null ? pct(r.sales_growth) : pct(r.sales_g3), (r.sales_g3 ?? r.sales_growth) > 0.1 ? 'sx-good' : '');
         cell(tr, pct(r.net_margin).replace('+', ''));
+        cell(tr, money(r.market_cap));
         tbody.appendChild(tr);
       }
     }

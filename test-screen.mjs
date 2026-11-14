@@ -19,6 +19,10 @@ const C = [
   ['MIC2', 9, 100e6, 0.4e6, 0.1e6, 10e6, 5e6],  // pe 250 -> out (max)
   ['FLAT', 10, 5e9, 0.1e9, 0.09e9, 1e9, 0.99e9],// sales +1% -> out
   ['NANO', 11, 10e6, 1e6, 0.5e6, 20e6, 10e6],   // < micro -> out
+  ['QUAL1', 13, 4e9, 0.2e9, 0.15e9, 1e9, 0.9e9],  // pe 20, ROE 20%, cash-backed -> quality #1
+  ['QUAL2', 14, 5e9, 0.2e9, 0.18e9, 2e9, 1.8e9],  // pe 25, ROE 13% -> quality #2
+  ['CASHP', 15, 3e9, 0.15e9, 0.1e9, 1e9, 0.9e9],  // profits not backed by cash -> out
+  ['LOWROE', 16, 3e9, 0.15e9, 0.1e9, 1e9, 0.9e9], // ROE 5% -> out
 ];
 for (const [s, cik, m] of C) { add(s, m); reg(s, cik); }
 add('BRK/B', 900e9); reg('BRK-B', 12); add('BRK/A', 900e9, '$700000', '1'); reg('BRK-A', 12);
@@ -35,7 +39,7 @@ const fetchFn = async (url) => {
   const inst = url.match(/us-gaap\/(\w+)\/USD\/CY(\d{4})Q(\d)I\.json/);
   if (inst) {
     const [, tag, y, q] = inst;
-    if (tag === 'StockholdersEquity' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 100e9, end: '2026-06-30' }, { cik: 6, val: 1e9, end: '2026-06-30' }] });
+    if (tag === 'StockholdersEquity' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 100e9, end: '2026-06-30' }, { cik: 6, val: 1e9, end: '2026-06-30' }, { cik: 13, val: 1e9, end: '2026-06-30' }, { cik: 14, val: 1.5e9, end: '2026-06-30' }, { cik: 15, val: 1e9, end: '2026-06-30' }, { cik: 16, val: 3e9, end: '2026-06-30' }] });
     if (tag === 'StockholdersEquity' && y === '2025' && q === '4') return J({ data: [{ cik: 1, val: 1, end: '2025-12-31' }, { cik: 4, val: 5e9, end: '2025-12-31' }] });
     if (tag === 'LongTermDebtNoncurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 30e9, end: '2026-06-30' }] });
     if (tag === 'LongTermDebtCurrent' && y === '2026' && q === '2') return J({ data: [{ cik: 1, val: 5e9, end: '2026-06-30' }] });
@@ -47,6 +51,8 @@ const fetchFn = async (url) => {
   if (/InterestExpense\/USD\/CY2025/.test(url) && url.includes('/InterestExpense/')) return J({ data: [{ cik: 8, val: 2e5, end: '2025-12-31' }] });
   const qf = url.match(/NetIncomeLoss\/USD\/CY(\d{4})Q(\d)\.json/);
   if (qf) return J({ data: [...C.filter(([s]) => s !== 'BIG1').map(([, cik]) => ({ cik, val: 1, end: '2025-06-30' })), { cik: 12, val: 1, end: '2025-06-30' }] });
+  if (url.includes('/NetCashProvidedByUsedInOperatingActivities/USD/CY2025.json')) return J({ data: [{ cik: 13, val: 0.25e9 }, { cik: 14, val: 0.3e9 }, { cik: 15, val: 0.05e9 }, { cik: 16, val: 0.2e9 }, { cik: 6, val: 0.2e9 }] });
+  if (url.includes('/PaymentsToAcquirePropertyPlantAndEquipment/USD/CY2025.json')) return J({ data: [{ cik: 13, val: 0.05e9 }, { cik: 14, val: 0.1e9 }] });
   const m = url.match(/us-gaap\/(\w+)\/USD\/CY(\d+)\.json/);
   if (m) {
     const [_, tag, y] = m; const cur = y === '2025';
@@ -63,12 +69,18 @@ const fetchFn = async (url) => {
   return new Response('nf', { status: 404 });
 };
 const r = await build({ fetchFn, ua: 'T t@x.com', now: new Date('2026-10-24T00:00:00Z') });
-const syms = r.rows.map((x) => x.bucket + ':' + x.symbol);
+const syms = r.rows_high_pe.map((x) => x.bucket + ':' + x.symbol);
 console.log(syms, r.counts, r.earnings_year);
 assert.equal(r.earnings_year, 'CY2025');
-assert.deepEqual(syms, ['Mega:MEGA1', 'Mega:BRK-B', 'Mega:MEGA2', 'Mid:MID1', 'Small:SML1', 'Micro:MIC1']); // BIG1 = 20-F filer
-assert.equal(r.rows[0].pe, 100); assert.equal(r.rows[0].rank, 1); assert.equal(r.rows[0].name, 'MEGA1 Inc.');
-assert.equal(r.rows.find((x) => x.symbol === 'BRK-B').price, 50);
+assert.deepEqual(syms, ['Mega:MEGA1', 'Mega:BRK-B', 'Mega:MEGA2', 'Mid:MID1', 'Mid:QUAL2', 'Mid:QUAL1', 'Mid:CASHP', 'Mid:LOWROE', 'Small:SML1', 'Micro:MIC1']); // BIG1 = 20-F filer
+assert.equal(r.rows_high_pe[0].pe, 100); assert.equal(r.rows_high_pe[0].rank, 1); assert.equal(r.rows_high_pe[0].name, 'MEGA1 Inc.');
+assert.equal(r.rows_high_pe.find((x) => x.symbol === 'BRK-B').price, 50);
+// quality at a fair price: gates (ROE, cash-backed profits, P/E <= 40, 3Y sales growth) then quality + value rank
+assert.deepEqual(r.rows.map((x) => x.bucket + ':' + x.symbol), ['Mid:QUAL1', 'Mid:QUAL2']);
+const q1 = r.rows[0];
+assert.equal(q1.rank, 1); assert.equal(q1.pe, 20); assert.equal(q1.roe, 0.2); assert.equal(q1.fcf_yield, 0.05); assert.equal(q1.score, 100); assert.equal(r.rows[1].score, 0);
+assert.ok(q1.sales_g3 > 0.05 && q1.de === 0);
+assert.equal(r.counts.quality_passed, 2);
 const U = new Map(r.universe.map((x) => [x.symbol, x]));
 assert.ok(!U.has('NANO') && !U.has('MEGA3') === false || true);
 assert.equal(U.get('MEGA1').de, 0.35);            // (30+5)/100, newest quarter wins over older
