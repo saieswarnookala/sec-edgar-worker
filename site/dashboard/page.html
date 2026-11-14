@@ -1047,6 +1047,7 @@ dash.calc('vs_industry', {
     <div class="sx-ch"><h3>Paper bots: what is running and how it works</h3></div>
     <p class="sx-cap">Paper = fake money, real prices. Nothing here risks real money; the Robinhood bot is still in a dry run. Results over a few weeks are mostly luck: judge them after ~3 months, next to the backtest numbers. Not financial advice.</p>
     <div class="sx-pb-health" id="pb-health" style="margin-top:10px"><span class="sx-badge">Checking the timers…</span></div>
+    <p class="sx-cap" style="margin-top:8px"><button type="button" class="sx-go" id="pb-test" style="padding:4px 10px">Test timer now</button> <span id="pb-test-out">Starts the dip bot workflow once (admins only). Outside market hours it just checks in and exits: no trades.</span></p>
   </section>
 
   <section class="sx-card" id="pb-dip">
@@ -1857,7 +1858,7 @@ dash.calc('vs_industry', {
       root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = block(el.dataset.bot, st.bots[el.dataset.bot]); });
     } catch (e) { root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = '<p class="sx-cap">Couldn’t load the latest bot data.</p>'; }); }
     const hel = root.querySelector('#pb-health');
-    try {
+    const loadTimers = async () => { try {
       const t = await (await fetch('/api/timers', { credentials: 'same-origin', cache: 'no-store' })).json();
       const item = (name, x) => {
         if (!x) return `<span class="sx-badge">${name}: no timer start recorded in the last 14 days</span>`;
@@ -1865,7 +1866,18 @@ dash.calc('vs_industry', {
         return `<span class="sx-badge ${ok ? 'sx-good' : 'sx-bad'}">${name}: last timer start ${when} — ${ok ? 'OK' : 'FAILED ' + esc(x.status || '') + ' ' + esc(x.error || '')}</span>`;
       };
       hel.innerHTML = item('Dip bots', t['paper-dip.yml']) + item('Drift bot', t['paper-drift.yml']);
-    } catch { hel.innerHTML = '<span class="sx-badge">Timer status unavailable</span>'; }
+    } catch { hel.innerHTML = '<span class="sx-badge">Timer status unavailable</span>'; } };
+    await loadTimers();
+    const tb = root.querySelector('#pb-test'), to = root.querySelector('#pb-test-out');
+    tb.addEventListener('click', async () => {
+      tb.disabled = true; to.textContent = 'Starting…';
+      try {
+        const r = await fetch('/api/admin/timer-test', { method: 'POST', credentials: 'same-origin', headers: { 'X-Sentinel': '1' } }), j = await r.json();
+        if (!r.ok) to.textContent = j.error || ('HTTP ' + r.status);
+        else to.textContent = j.status >= 200 && j.status < 300 ? 'OK: GitHub accepted the start (' + j.status + '). The token works.' : 'FAILED ' + (j.status || '') + ' ' + (j.error || '');
+      } catch (e) { to.textContent = 'Error: ' + e.message; }
+      tb.disabled = false; loadTimers();
+    });
   };
   const show = (name, link = true) => {
     const tab = name; if (name === 'tested') name = 'trading';

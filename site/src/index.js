@@ -63,6 +63,10 @@ export default {
     if (path === '/admin' || path.startsWith('/api/admin/')) {
       if (s.role !== 'admin') return path === '/admin' ? Response.redirect(new URL('/', url).toString(), 302) : json({ error: 'Admins only' }, 403);
       if (path === '/admin') return withHeaders(await asset(env, request, '/admin.html'), { 'cache-control': 'no-store' });
+      if (path === '/api/admin/timer-test' && method === 'POST') {   // start the dip workflow once now (outside market hours it just exits)
+        if (!sameOrigin(request)) return json({ error: 'Bad request' }, 400);
+        return json(await runTimer('25,40 16,17,19,20 * * 1-5', env));
+      }
       if (path === '/api/admin/users' && method === 'GET') return json({ users: await A.listUsers(env), you: s.name, root: A.adminName(env) });
       if (path === '/api/admin/users' && (method === 'POST' || method === 'DELETE')) {
         if (!sameOrigin(request)) return json({ error: 'Bad request' }, 400);
