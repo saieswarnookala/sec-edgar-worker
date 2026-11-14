@@ -1,0 +1,2756 @@
+{
+ "period": "May 2013 to Oct 2026, rebalanced each May",
+ "results": {
+  "spy": {
+   "cagr": 14.0,
+   "max_dd": -33.7,
+   "2013_2019": 12.7,
+   "2019_2026": 15.0,
+   "worst_year": -18.3
+  },
+  "ew_all": {
+   "cagr": 12.2,
+   "max_dd": -38.2,
+   "2013_2019": 11.7,
+   "2019_2026": 12.6,
+   "worst_year": -11.2
+  },
+  "ew_scorable": {
+   "cagr": 12.8,
+   "max_dd": -38.8,
+   "2013_2019": 12.7,
+   "2019_2026": 12.9,
+   "worst_year": -11.9
+  },
+  "old_high_pe": {
+   "cagr": 11.2,
+   "max_dd": -41.0,
+   "2013_2019": 15.6,
+   "2019_2026": 7.8,
+   "worst_year": -30.5
+  },
+  "gate_quality": {
+   "cagr": 14.1,
+   "max_dd": -35.0,
+   "2013_2019": 12.0,
+   "2019_2026": 15.8,
+   "worst_year": -26.6
+  },
+  "gate_qv": {
+   "cagr": 15.8,
+   "max_dd": -36.3,
+   "2013_2019": 15.8,
+   "2019_2026": 15.7,
+   "worst_year": -22.0
+  },
+  "gate_qvg": {
+   "cagr": 13.8,
+   "max_dd": -36.3,
+   "2013_2019": 14.1,
+   "2019_2026": 13.5,
+   "worst_year": -28.0
+  },
+  "gate_qvgm": {
+   "cagr": 11.9,
+   "max_dd": -33.9,
+   "2013_2019": 13.0,
+   "2019_2026": 11.0,
+   "worst_year": -25.5
+  },
+  "gate_qvg_trend": {
+   "cagr": 10.5,
+   "max_dd": -36.0,
+   "2013_2019": 12.8,
+   "2019_2026": 8.7,
+   "worst_year": -21.3
+  },
+  "gate_qvgm_trend": {
+   "cagr": 10.5,
+   "max_dd": -35.6,
+   "2013_2019": 14.4,
+   "2019_2026": 7.4,
+   "worst_year": -21.2
+  },
+  "score_only_qvgm": {
+   "cagr": 15.3,
+   "max_dd": -33.1,
+   "2013_2019": 14.4,
+   "2019_2026": 16.0,
+   "worst_year": -22.1
+  }
+ },
+ "picks": {
+  "spy": [
+   {
+    "year": 2013,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 1,
+    "picks": [
+     "SPY"
+    ]
+   }
+  ],
+  "ew_all": [
+   {
+    "year": 2013,
+    "n": 500,
+    "picks": null
+   },
+   {
+    "year": 2014,
+    "n": 501,
+    "picks": null
+   },
+   {
+    "year": 2015,
+    "n": 502,
+    "picks": null
+   },
+   {
+    "year": 2016,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2017,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2018,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2019,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2020,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2021,
+    "n": 505,
+    "picks": null
+   },
+   {
+    "year": 2022,
+    "n": 504,
+    "picks": null
+   },
+   {
+    "year": 2023,
+    "n": 503,
+    "picks": null
+   },
+   {
+    "year": 2024,
+    "n": 503,
+    "picks": null
+   },
+   {
+    "year": 2025,
+    "n": 503,
+    "picks": null
+   },
+   {
+    "year": 2026,
+    "n": 503,
+    "picks": null
+   }
+  ],
+  "ew_scorable": [
+   {
+    "year": 2013,
+    "n": 306,
+    "picks": null
+   },
+   {
+    "year": 2014,
+    "n": 313,
+    "picks": null
+   },
+   {
+    "year": 2015,
+    "n": 320,
+    "picks": null
+   },
+   {
+    "year": 2016,
+    "n": 338,
+    "picks": null
+   },
+   {
+    "year": 2017,
+    "n": 361,
+    "picks": null
+   },
+   {
+    "year": 2018,
+    "n": 383,
+    "picks": null
+   },
+   {
+    "year": 2019,
+    "n": 387,
+    "picks": null
+   },
+   {
+    "year": 2020,
+    "n": 398,
+    "picks": null
+   },
+   {
+    "year": 2021,
+    "n": 407,
+    "picks": null
+   },
+   {
+    "year": 2022,
+    "n": 427,
+    "picks": null
+   },
+   {
+    "year": 2023,
+    "n": 443,
+    "picks": null
+   },
+   {
+    "year": 2024,
+    "n": 448,
+    "picks": null
+   },
+   {
+    "year": 2025,
+    "n": 451,
+    "picks": null
+   },
+   {
+    "year": 2026,
+    "n": 451,
+    "picks": null
+   }
+  ],
+  "old_high_pe": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "CCI",
+     "BXP",
+     "AMT",
+     "RVTY",
+     "AKAM",
+     "TRIP",
+     "BIIB",
+     "EL",
+     "HSY",
+     "PSA",
+     "LUMN",
+     "URBN",
+     "DOC",
+     "GWW",
+     "CBRE"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "RRC",
+     "META",
+     "TRIP",
+     "GILD",
+     "ESS",
+     "BIIB",
+     "AKAM",
+     "UAA",
+     "SCHW",
+     "WY",
+     "FFIV",
+     "CBRE",
+     "ZTS",
+     "MAR",
+     "PSA"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "CCI",
+     "META",
+     "VMC",
+     "MLM",
+     "TRIP",
+     "AMT",
+     "SWKS",
+     "UAA",
+     "AKAM",
+     "SBUX",
+     "EXPE",
+     "INTU",
+     "MAR",
+     "BIIB",
+     "SCHW"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "META",
+     "ADBE",
+     "REGN",
+     "VMC",
+     "ESS",
+     "FRT",
+     "ILMN",
+     "ULTA",
+     "UAA",
+     "MLM",
+     "PYPL",
+     "PSA",
+     "MDT",
+     "SBUX",
+     "UDR"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "IDXX",
+     "ADBE",
+     "ILMN",
+     "AMT",
+     "WYNN",
+     "REGN",
+     "IT",
+     "WTW",
+     "META",
+     "ULTA",
+     "SNPS",
+     "PYPL",
+     "DLR",
+     "ESS",
+     "FRT"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "EQIX",
+     "ALGN",
+     "IDXX",
+     "ADBE",
+     "CDNS",
+     "PYPL",
+     "INTU",
+     "ILMN",
+     "OKE",
+     "JEF",
+     "ZTS",
+     "AMT",
+     "EXPE",
+     "MSCI",
+     "O"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "IT",
+     "CRM",
+     "EQIX",
+     "DLR",
+     "TFX",
+     "ALGN",
+     "PYPL",
+     "ABT",
+     "CDNS",
+     "IDXX",
+     "O",
+     "ADBE",
+     "ILMN",
+     "EXPE",
+     "INTU"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "EQIX",
+     "MKTX",
+     "PAYC",
+     "PYPL",
+     "ADBE",
+     "RMD",
+     "AMT",
+     "IDXX",
+     "DLR",
+     "MSCI",
+     "INCY",
+     "IT",
+     "INTU",
+     "ILMN",
+     "SNPS"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "AMCR",
+     "GPN",
+     "MPWR",
+     "FISV",
+     "IDXX",
+     "AMZN",
+     "ETSY",
+     "PYPL",
+     "DXCM",
+     "WST",
+     "FTNT",
+     "ROL",
+     "MSCI",
+     "MKTX",
+     "INTU"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "TSLA",
+     "ENPH",
+     "SBAC",
+     "EQIX",
+     "UDR",
+     "PAYC",
+     "NOW",
+     "SEDG",
+     "MPWR",
+     "FTNT",
+     "SNPS",
+     "CDNS",
+     "ILMN",
+     "INTU",
+     "ISRG"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "DXCM",
+     "TYL",
+     "EQIX",
+     "CSGP",
+     "CDNS",
+     "CMG",
+     "SBAC",
+     "PAYC",
+     "INTU",
+     "DIS",
+     "SNPS",
+     "FTNT",
+     "ENPH",
+     "NOW",
+     "ROL"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "WELL",
+     "AXON",
+     "TYL",
+     "DXCM",
+     "CSGP",
+     "NOW",
+     "ISRG",
+     "INTU",
+     "CDNS",
+     "CMG",
+     "NVDA",
+     "EQIX",
+     "FICO",
+     "SNPS",
+     "SMCI"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "AXON",
+     "FICO",
+     "WELL",
+     "AMD",
+     "TYL",
+     "ISRG",
+     "CDNS",
+     "LLY",
+     "TPL",
+     "INTU",
+     "ROL",
+     "NFLX",
+     "EFX",
+     "ADSK",
+     "HWM"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "AMD",
+     "PWR",
+     "TER",
+     "VRT",
+     "ADI",
+     "GLW",
+     "CDNS",
+     "DASH",
+     "EQIX",
+     "KEYS",
+     "MU",
+     "HWM",
+     "TPL",
+     "GEV",
+     "ISRG"
+    ]
+   }
+  ],
+  "gate_quality": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "MA",
+     "AAPL",
+     "GILD",
+     "ORCL",
+     "PAYX",
+     "INTU",
+     "MSFT",
+     "TRIP",
+     "ISRG",
+     "MCD",
+     "FFIV",
+     "BIIB",
+     "STX",
+     "QCOM",
+     "TDC"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "MA",
+     "PAYX",
+     "INTU",
+     "MSFT",
+     "AAPL",
+     "ISRG",
+     "BIIB",
+     "CPRI",
+     "BEN",
+     "MCD",
+     "QCOM",
+     "MCHP",
+     "FFIV",
+     "UNP",
+     "MMM"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "GILD",
+     "INTU",
+     "PAYX",
+     "BIIB",
+     "AAPL",
+     "MSFT",
+     "QCOM",
+     "RRC",
+     "BEN",
+     "FFIV",
+     "CPRI",
+     "MU",
+     "UNP",
+     "PSA",
+     "EOG"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "BIIB",
+     "AAPL",
+     "FFIV",
+     "SWKS",
+     "CPRI",
+     "SBUX",
+     "PSA",
+     "ORLY",
+     "LUV",
+     "FAST",
+     "MCHP",
+     "SNA",
+     "CTSH",
+     "ADI",
+     "MSFT"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "CBOE",
+     "BIIB",
+     "INTU",
+     "SWKS",
+     "FFIV",
+     "NVDA",
+     "LRCX",
+     "SBUX",
+     "PSA",
+     "ADP",
+     "SHW",
+     "AMAT",
+     "ISRG",
+     "HAS",
+     "ROST"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "SWKS",
+     "META",
+     "AMAT",
+     "LRCX",
+     "FFIV",
+     "AAPL",
+     "PSA",
+     "CMCSA",
+     "ADP",
+     "BIIB",
+     "IPGP",
+     "REGN",
+     "SBUX",
+     "ISRG"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "TXN",
+     "NVDA",
+     "MU",
+     "BIIB",
+     "FTNT",
+     "META",
+     "PSA",
+     "CPAY",
+     "BMY",
+     "SCHW",
+     "INTC",
+     "AMAT",
+     "JKHY",
+     "CE",
+     "ADP"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "BIIB",
+     "ANET",
+     "MSFT",
+     "CPAY",
+     "ALGN",
+     "ADP",
+     "INTC",
+     "EXR",
+     "SCHW",
+     "REGN",
+     "FTNT",
+     "CPRT",
+     "META",
+     "ODFL",
+     "DAL"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "VRTX",
+     "LRCX",
+     "TROW",
+     "TER",
+     "INTC",
+     "EXR",
+     "NVDA",
+     "ADP",
+     "META",
+     "AMAT",
+     "FAST",
+     "CPRT",
+     "CHD",
+     "TTWO",
+     "NEM"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "TXN",
+     "REGN",
+     "TROW",
+     "EXR",
+     "MSFT",
+     "NVDA",
+     "KLAC",
+     "META",
+     "PFE",
+     "GL",
+     "MKTX",
+     "TER",
+     "COF",
+     "PSA",
+     "AMAT"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "TXN",
+     "DVN",
+     "OXY",
+     "PAYX",
+     "LRCX",
+     "COP",
+     "MSFT",
+     "FANG",
+     "EXR",
+     "ADBE",
+     "EOG",
+     "PFE",
+     "VRTX",
+     "AMAT",
+     "ODFL"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "ABNB",
+     "ADBE",
+     "AMAT",
+     "ADP",
+     "ORCL",
+     "ACGL",
+     "PSA",
+     "META",
+     "AMP",
+     "FDS",
+     "VRTX",
+     "GOOG",
+     "GOOGL",
+     "DECK",
+     "SNA"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "PAYX",
+     "META",
+     "ADBE",
+     "PSA",
+     "AMP",
+     "QCOM",
+     "MRK",
+     "AMAT",
+     "MSFT",
+     "ABNB",
+     "MKTX",
+     "ADP",
+     "FDS",
+     "GOOG"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "ADBE",
+     "FTNT",
+     "AMP",
+     "NEM",
+     "HOOD",
+     "MSFT",
+     "ABNB",
+     "ADP",
+     "FDS",
+     "RMD",
+     "NFLX",
+     "CBOE",
+     "META",
+     "JNJ",
+     "CME"
+    ]
+   }
+  ],
+  "gate_qv": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "ISRG",
+     "STX",
+     "AFL",
+     "ORLY",
+     "ORCL",
+     "MSFT",
+     "SHW",
+     "FAST",
+     "MPC",
+     "CSCO",
+     "EBAY",
+     "CMCSA",
+     "DHR",
+     "CTAS"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "ISRG",
+     "AAPL",
+     "MCHP",
+     "ORLY",
+     "SHW",
+     "MSFT",
+     "CSCO",
+     "EBAY",
+     "CB",
+     "BEN",
+     "LHX",
+     "TJX",
+     "QCOM",
+     "DOV",
+     "CMCSA"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "GILD",
+     "ORLY",
+     "NVDA",
+     "QCOM",
+     "MU",
+     "RRC",
+     "MCHP",
+     "LRCX",
+     "BEN",
+     "EOG",
+     "MSFT",
+     "FAST",
+     "CMCSA",
+     "AMP"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "ORLY",
+     "CPRI",
+     "FAST",
+     "SWKS",
+     "NVDA",
+     "LUV",
+     "MCHP",
+     "FFIV",
+     "PFG",
+     "BIIB",
+     "TJX",
+     "PGR",
+     "SNA",
+     "CMCSA"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "SHW",
+     "BIIB",
+     "CTAS",
+     "FAST",
+     "ISRG",
+     "PFG",
+     "SWKS",
+     "MCK",
+     "FFIV",
+     "BWA",
+     "FDX",
+     "PSA",
+     "AMZN"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "AAPL",
+     "CMCSA",
+     "SWKS",
+     "PFG",
+     "AMAT",
+     "CTAS",
+     "CINF",
+     "FFIV",
+     "FAST",
+     "BIIB",
+     "LH",
+     "FDX",
+     "PSA"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "MU",
+     "BIIB",
+     "FTNT",
+     "CE",
+     "ANET",
+     "SCHW",
+     "CTAS",
+     "BMY",
+     "PFG",
+     "TXN",
+     "INTC",
+     "CPRT",
+     "AMAT",
+     "EOG"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "ANET",
+     "BIIB",
+     "DAL",
+     "FTNT",
+     "SCHW",
+     "CTAS",
+     "APH",
+     "MTB",
+     "EOG",
+     "INTC",
+     "CPRT",
+     "PGR",
+     "CMG",
+     "COO",
+     "ODFL"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "LRCX",
+     "NVDA",
+     "GRMN",
+     "INTC",
+     "VRTX",
+     "PGR",
+     "TSCO",
+     "APH",
+     "TROW",
+     "CPRT",
+     "NEM",
+     "PHM",
+     "DGX",
+     "FAST",
+     "CBOE"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "KLAC",
+     "NVDA",
+     "COF",
+     "REGN",
+     "TROW",
+     "GL",
+     "RF",
+     "PFE",
+     "CE",
+     "GRMN",
+     "META",
+     "WY",
+     "NUE",
+     "DGX",
+     "CMG"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "DVN",
+     "OXY",
+     "FANG",
+     "COP",
+     "ZION",
+     "COF",
+     "EOG",
+     "PFE",
+     "NUE",
+     "STLD",
+     "HBAN",
+     "LRCX",
+     "WRB",
+     "MOS",
+     "NVR"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "EG",
+     "AMP",
+     "SNA",
+     "PSA",
+     "CB",
+     "ABNB",
+     "DE",
+     "PHM",
+     "HAL",
+     "AMAT",
+     "WRB",
+     "DHI",
+     "PCAR",
+     "LEN"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "AMP",
+     "DVN",
+     "MRK",
+     "QCOM",
+     "AMAT",
+     "COP",
+     "CINF",
+     "PSA",
+     "CB",
+     "WRB",
+     "DAL",
+     "NVR",
+     "DECK",
+     "TRV"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "AMP",
+     "ADBE",
+     "ACGL",
+     "NEM",
+     "FDS",
+     "ALL",
+     "PGR",
+     "CINF",
+     "INCY",
+     "DECK",
+     "PYPL",
+     "TRV",
+     "ADP",
+     "FOX",
+     "REGN"
+    ]
+   }
+  ],
+  "gate_qvg": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "ISRG",
+     "AFL",
+     "MPC",
+     "FFIV",
+     "ORLY",
+     "FAST",
+     "ORCL",
+     "QCOM",
+     "STX",
+     "DHR",
+     "PCAR",
+     "CMCSA",
+     "HAL",
+     "ROK"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "ISRG",
+     "EOG",
+     "EBAY",
+     "QCOM",
+     "CMCSA",
+     "SHW",
+     "PCAR",
+     "ORLY",
+     "FAST",
+     "BEN",
+     "LHX",
+     "MA",
+     "CPRI",
+     "DHR"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "GILD",
+     "AAPL",
+     "MU",
+     "RRC",
+     "LRCX",
+     "QCOM",
+     "EOG",
+     "CPRI",
+     "ORLY",
+     "FAST",
+     "CMCSA",
+     "MCHP",
+     "DRI",
+     "BIIB",
+     "HAL"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "CPRI",
+     "SWKS",
+     "AAPL",
+     "ORLY",
+     "BIIB",
+     "MCHP",
+     "CNC",
+     "PFG",
+     "FFIV",
+     "LUV",
+     "FAST",
+     "CTSH",
+     "MCK",
+     "NVDA",
+     "EXPE"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "BIIB",
+     "SWKS",
+     "MCK",
+     "AMZN",
+     "PFG",
+     "HAS",
+     "SHW",
+     "CTAS",
+     "FFIV",
+     "SBUX",
+     "AMAT",
+     "FDX",
+     "FBIN"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "AMAT",
+     "SWKS",
+     "PFG",
+     "CTAS",
+     "CMCSA",
+     "AAPL",
+     "META",
+     "LH",
+     "FDX",
+     "REGN",
+     "ISRG",
+     "CINF",
+     "FBIN"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "MU",
+     "FTNT",
+     "ANET",
+     "AMZN",
+     "SCHW",
+     "AMAT",
+     "BMY",
+     "CE",
+     "PHM",
+     "CPRT",
+     "NUE",
+     "BIIB",
+     "INTC",
+     "META"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "ANET",
+     "FTNT",
+     "SCHW",
+     "PGR",
+     "AMZN",
+     "CMG",
+     "CPRT",
+     "BIIB",
+     "PCAR",
+     "CTAS",
+     "ODFL",
+     "EOG",
+     "CPAY",
+     "COO",
+     "APH"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "VRTX",
+     "LRCX",
+     "PGR",
+     "NVDA",
+     "TSCO",
+     "INTC",
+     "GRMN",
+     "LEN",
+     "CPRT",
+     "PHM",
+     "TTWO",
+     "TER",
+     "APH",
+     "TROW",
+     "META"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "KLAC",
+     "NVDA",
+     "REGN",
+     "COF",
+     "PFE",
+     "TROW",
+     "CMG",
+     "META",
+     "NUE",
+     "DGX",
+     "WY",
+     "TER",
+     "RF",
+     "GRMN",
+     "TSCO"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "FANG",
+     "COP",
+     "NUE",
+     "PFE",
+     "EOG",
+     "LRCX",
+     "DVN",
+     "OXY",
+     "VLO",
+     "MPC",
+     "CVX",
+     "AMAT",
+     "WRB",
+     "EXPD",
+     "PSX"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "DE",
+     "PCAR",
+     "DHI",
+     "ULTA",
+     "PSA",
+     "WRB",
+     "AMAT",
+     "CB",
+     "AMP",
+     "PHM",
+     "EG",
+     "DECK",
+     "ABNB",
+     "SNA"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "DAL",
+     "DECK",
+     "SLB",
+     "MRK",
+     "PGR",
+     "WRB",
+     "LULU",
+     "AMP",
+     "COP",
+     "NVDA",
+     "META",
+     "PAYC",
+     "RJF",
+     "CB"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "PGR",
+     "INCY",
+     "ADBE",
+     "DECK",
+     "AMP",
+     "NEM",
+     "TRV",
+     "TTD",
+     "RMD",
+     "FTNT",
+     "CINF",
+     "DAL",
+     "PTC",
+     "FDS"
+    ]
+   }
+  ],
+  "gate_qvgm": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "MPC",
+     "AAPL",
+     "AFL",
+     "CMCSA",
+     "STX",
+     "ISRG",
+     "SHW",
+     "EBAY",
+     "HAL",
+     "ORCL",
+     "TRIP",
+     "PCAR",
+     "DHR",
+     "FAST",
+     "MA"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "EOG",
+     "LHX",
+     "CPRI",
+     "PCAR",
+     "QCOM",
+     "HP",
+     "ISRG",
+     "ORLY",
+     "FFIV",
+     "VFC",
+     "MA",
+     "CTSH",
+     "CMCSA",
+     "MCHP"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "GILD",
+     "ORLY",
+     "LRCX",
+     "DRI",
+     "BIIB",
+     "MU",
+     "LUV",
+     "EOG",
+     "QCOM",
+     "RRC",
+     "CTSH",
+     "CMCSA",
+     "INTU",
+     "NKE"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "ORLY",
+     "CPRI",
+     "SWKS",
+     "NVDA",
+     "AAPL",
+     "MCHP",
+     "FAST",
+     "PGR",
+     "SBUX",
+     "CNC",
+     "LUV",
+     "TJX",
+     "PSA",
+     "BIIB",
+     "CTSH"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "SWKS",
+     "PFG",
+     "AMZN",
+     "AMAT",
+     "CTAS",
+     "FFIV",
+     "HAS",
+     "BIIB",
+     "FDX",
+     "SHW",
+     "ISRG",
+     "MCK",
+     "BWA"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "AMAT",
+     "CTAS",
+     "FDX",
+     "ISRG",
+     "SWKS",
+     "AAPL",
+     "LH",
+     "IPGP",
+     "META",
+     "PGR",
+     "PFG",
+     "CBOE",
+     "CNC"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "FTNT",
+     "ANET",
+     "MU",
+     "NVDA",
+     "AMZN",
+     "CPRT",
+     "ISRG",
+     "PGR",
+     "CTAS",
+     "ADI",
+     "CE",
+     "BMY",
+     "NUE",
+     "FAST",
+     "INTC"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "FTNT",
+     "BIIB",
+     "AMZN",
+     "ANET",
+     "PGR",
+     "ODFL",
+     "CPRT",
+     "CMG",
+     "PCAR",
+     "REGN",
+     "INTC",
+     "NEM",
+     "MSFT",
+     "COO",
+     "SCHW"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "LRCX",
+     "NVDA",
+     "LEN",
+     "TSCO",
+     "GRMN",
+     "PHM",
+     "TER",
+     "PGR",
+     "TROW",
+     "CMG",
+     "APH",
+     "VRTX",
+     "CPRT",
+     "TTWO",
+     "META"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "REGN",
+     "KLAC",
+     "PFE",
+     "NUE",
+     "EXR",
+     "RVTY",
+     "CMG",
+     "AMD",
+     "TSCO",
+     "CB",
+     "COF",
+     "DGX",
+     "RJF",
+     "WY"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "FANG",
+     "COP",
+     "MPC",
+     "VLO",
+     "LRCX",
+     "STLD",
+     "ON",
+     "NVR",
+     "PSX",
+     "OXY",
+     "NUE",
+     "EOG",
+     "AMAT",
+     "CVX",
+     "VRTX"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "PCAR",
+     "ACGL",
+     "AMAT",
+     "PHM",
+     "WRB",
+     "DECK",
+     "DHI",
+     "AMP",
+     "META",
+     "LEN",
+     "CB",
+     "DE",
+     "HUBB",
+     "ABNB",
+     "RL"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "PGR",
+     "WRB",
+     "META",
+     "NVDA",
+     "AMP",
+     "TRV",
+     "CB",
+     "PAYC",
+     "PSA",
+     "RJF",
+     "DAL",
+     "BRO",
+     "CINF",
+     "SLB"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "INCY",
+     "ACGL",
+     "NEM",
+     "DAL",
+     "PGR",
+     "CINF",
+     "FSLR",
+     "TRV",
+     "CB",
+     "AMP",
+     "DECK",
+     "GOOG",
+     "GOOGL",
+     "BNY",
+     "EME"
+    ]
+   }
+  ],
+  "gate_qvg_trend": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "AFL",
+     "MPC",
+     "FAST",
+     "ORLY",
+     "ORCL",
+     "STX",
+     "DHR",
+     "CMCSA",
+     "PCAR",
+     "HAL",
+     "ROK",
+     "MA",
+     "VFC",
+     "EBAY",
+     "SHW"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "EOG",
+     "QCOM",
+     "CMCSA",
+     "PCAR",
+     "SHW",
+     "ORLY",
+     "FAST",
+     "BEN",
+     "LHX",
+     "MA",
+     "MCHP",
+     "CPRI",
+     "DHR",
+     "CSCO"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "GILD",
+     "AAPL",
+     "RRC",
+     "LRCX",
+     "EOG",
+     "ORLY",
+     "MCHP",
+     "CMCSA",
+     "DRI",
+     "BIIB",
+     "AME",
+     "MSFT",
+     "CTSH",
+     "FFIV",
+     "BA"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "CPRI",
+     "ORLY",
+     "MCHP",
+     "CNC",
+     "FAST",
+     "LUV",
+     "PGR",
+     "NVDA",
+     "EXPE",
+     "TJX",
+     "UHS",
+     "SNA",
+     "CMCSA",
+     "PSA",
+     "URBN"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "SWKS",
+     "HAS",
+     "PFG",
+     "AMZN",
+     "SHW",
+     "AMAT",
+     "CTAS",
+     "SBUX",
+     "FBIN",
+     "FDX",
+     "ISRG",
+     "LH",
+     "UHS"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "CTAS",
+     "LH",
+     "AAPL",
+     "FDX",
+     "ISRG",
+     "FFIV",
+     "PSA",
+     "CAG",
+     "IPGP",
+     "UNH",
+     "PGR",
+     "CNC",
+     "ROST"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "MU",
+     "FTNT",
+     "ANET",
+     "AMZN",
+     "AMAT",
+     "CE",
+     "CPRT",
+     "PHM",
+     "INTC",
+     "META",
+     "TXN",
+     "MTB",
+     "PGR",
+     "CTAS",
+     "LHX"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "FTNT",
+     "PGR",
+     "CMG",
+     "BIIB",
+     "AMZN",
+     "ODFL",
+     "INTC",
+     "FAST",
+     "LDOS",
+     "REGN",
+     "NEM",
+     "TTWO",
+     "MSFT",
+     "META",
+     "HUM"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "LRCX",
+     "PGR",
+     "NVDA",
+     "TSCO",
+     "GRMN",
+     "LEN",
+     "INTC",
+     "CPRT",
+     "PHM",
+     "TER",
+     "APH",
+     "META",
+     "TROW",
+     "CMG",
+     "DGX"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "REGN",
+     "NUE",
+     "WY",
+     "GL",
+     "CB",
+     "WRB",
+     "PGR",
+     "DG",
+     "ULTA",
+     "MOS",
+     "VRTX",
+     "ELV",
+     "MOH",
+     "ADM",
+     "FMC"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "FANG",
+     "NUE",
+     "LRCX",
+     "CVX",
+     "AMAT",
+     "MPC",
+     "EXPD",
+     "NVR",
+     "STLD",
+     "PSX",
+     "VRTX",
+     "ON",
+     "ODFL",
+     "SWKS",
+     "UPS"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "PCAR",
+     "AMAT",
+     "WRB",
+     "DHI",
+     "CB",
+     "PHM",
+     "AMP",
+     "DECK",
+     "ABNB",
+     "TJX",
+     "LEN",
+     "GOOGL",
+     "BRO",
+     "GOOG"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "PGR",
+     "WRB",
+     "PAYC",
+     "RMD",
+     "CB",
+     "TRV",
+     "APH",
+     "BRO",
+     "CME",
+     "CINF",
+     "ULTA",
+     "MSFT",
+     "ADP",
+     "GWW",
+     "TT"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "ACGL",
+     "INCY",
+     "TRV",
+     "FTNT",
+     "NEM",
+     "DAL",
+     "CINF",
+     "CB",
+     "ALL",
+     "BNY",
+     "ABNB",
+     "AIZ",
+     "FOX",
+     "FOXA",
+     "APO"
+    ]
+   }
+  ],
+  "gate_qvgm_trend": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "MPC",
+     "CMCSA",
+     "AFL",
+     "STX",
+     "SHW",
+     "EBAY",
+     "TRIP",
+     "HAL",
+     "ORCL",
+     "DHR",
+     "PCAR",
+     "FAST",
+     "ADBE",
+     "GILD",
+     "UNP"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "EOG",
+     "CPRI",
+     "LHX",
+     "PCAR",
+     "HP",
+     "QCOM",
+     "ORLY",
+     "FFIV",
+     "VFC",
+     "MA",
+     "CTSH",
+     "MCHP",
+     "CMCSA",
+     "ROK"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "GILD",
+     "ORLY",
+     "LRCX",
+     "DRI",
+     "BIIB",
+     "LUV",
+     "RRC",
+     "EOG",
+     "ROST",
+     "CTSH",
+     "NKE",
+     "INTU",
+     "CMCSA",
+     "MCHP"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "ORLY",
+     "NVDA",
+     "FAST",
+     "PGR",
+     "CPRI",
+     "MCHP",
+     "TJX",
+     "PSA",
+     "LUV",
+     "CNC",
+     "TSN",
+     "EXPE",
+     "UHS",
+     "MSFT",
+     "UNH"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "SWKS",
+     "PFG",
+     "AMAT",
+     "AMZN",
+     "CTAS",
+     "HAS",
+     "ISRG",
+     "FDX",
+     "SHW",
+     "SBUX",
+     "FBIN",
+     "CBOE",
+     "BWA"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "CTAS",
+     "ISRG",
+     "FDX",
+     "IPGP",
+     "LH",
+     "AAPL",
+     "PGR",
+     "CNC",
+     "UNH",
+     "ROP",
+     "CBRE",
+     "FFIV",
+     "JBHT"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "FTNT",
+     "MU",
+     "ANET",
+     "AMZN",
+     "CPRT",
+     "ADI",
+     "PGR",
+     "CTAS",
+     "CE",
+     "FAST",
+     "INTC",
+     "TXN",
+     "CPAY",
+     "PHM",
+     "AMAT"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "BIIB",
+     "FTNT",
+     "ODFL",
+     "NEM",
+     "REGN",
+     "PGR",
+     "AMZN",
+     "CMG",
+     "MSFT",
+     "LDOS",
+     "INTC",
+     "TTWO",
+     "HUM",
+     "DG",
+     "FAST"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "LRCX",
+     "NVDA",
+     "LEN",
+     "TSCO",
+     "GRMN",
+     "TER",
+     "PHM",
+     "PGR",
+     "CMG",
+     "TROW",
+     "APH",
+     "CPRT",
+     "META",
+     "INTC",
+     "FAST"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "REGN",
+     "NUE",
+     "CB",
+     "WRB",
+     "MOS",
+     "WY",
+     "PSA",
+     "ELV",
+     "ADM",
+     "MOH",
+     "ULTA",
+     "GL",
+     "PGR",
+     "VRTX",
+     "UNH"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "FANG",
+     "MPC",
+     "LRCX",
+     "STLD",
+     "ON",
+     "NVR",
+     "NUE",
+     "PSX",
+     "AMAT",
+     "CVX",
+     "VRTX",
+     "EXPD",
+     "MRK",
+     "ODFL",
+     "ULTA"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "PCAR",
+     "AMAT",
+     "ACGL",
+     "DECK",
+     "PHM",
+     "WRB",
+     "DHI",
+     "AMP",
+     "META",
+     "HUBB",
+     "LEN",
+     "CB",
+     "RL",
+     "ABNB",
+     "GOOGL"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "PGR",
+     "WRB",
+     "BRO",
+     "PAYC",
+     "TRV",
+     "CINF",
+     "CB",
+     "CME",
+     "PAYX",
+     "ADP",
+     "RMD",
+     "APH",
+     "CBOE",
+     "TT",
+     "GWW"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "INCY",
+     "NEM",
+     "DAL",
+     "ACGL",
+     "EME",
+     "GOOG",
+     "GOOGL",
+     "BNY",
+     "CINF",
+     "CB",
+     "TRV",
+     "RL",
+     "JNJ",
+     "REGN",
+     "FOXA"
+    ]
+   }
+  ],
+  "score_only_qvgm": [
+   {
+    "year": 2013,
+    "n": 15,
+    "picks": [
+     "MPC",
+     "KR",
+     "CMCSA",
+     "AFL",
+     "SHW",
+     "CAG",
+     "BAX",
+     "AAPL",
+     "MCO",
+     "EBAY",
+     "WDC",
+     "STX",
+     "ISRG",
+     "CVX",
+     "PFE"
+    ]
+   },
+   {
+    "year": 2014,
+    "n": 15,
+    "picks": [
+     "DAL",
+     "AAPL",
+     "KLAC",
+     "EOG",
+     "CMG",
+     "COF",
+     "GRMN",
+     "ORLY",
+     "USB",
+     "VLO",
+     "PCAR",
+     "LHX",
+     "NVDA",
+     "EMN",
+     "PPG"
+    ]
+   },
+   {
+    "year": 2015,
+    "n": 15,
+    "picks": [
+     "AAPL",
+     "GILD",
+     "ORLY",
+     "LRCX",
+     "SHW",
+     "CMG",
+     "ISRG",
+     "FISV",
+     "DRI",
+     "KR",
+     "AMGN",
+     "TSCO",
+     "AIV",
+     "BIIB",
+     "CTAS"
+    ]
+   },
+   {
+    "year": 2016,
+    "n": 15,
+    "picks": [
+     "ORLY",
+     "GILD",
+     "VZ",
+     "NVDA",
+     "KIM",
+     "AIV",
+     "CCI",
+     "DAL",
+     "CINF",
+     "FAST",
+     "FISV",
+     "NEE",
+     "NDAQ",
+     "MCHP",
+     "AAPL"
+    ]
+   },
+   {
+    "year": 2017,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "AAPL",
+     "SWKS",
+     "KLAC",
+     "GLW",
+     "URI",
+     "PFG",
+     "EBAY",
+     "CTAS",
+     "UAL",
+     "AMAT",
+     "AMZN",
+     "AIV",
+     "FFIV"
+    ]
+   },
+   {
+    "year": 2018,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "LRCX",
+     "URI",
+     "CTAS",
+     "AMAT",
+     "MU",
+     "ABBV",
+     "KLAC",
+     "CME",
+     "SHW",
+     "AAPL",
+     "NEE",
+     "NDAQ",
+     "GL",
+     "ISRG"
+    ]
+   },
+   {
+    "year": 2019,
+    "n": 15,
+    "picks": [
+     "FTNT",
+     "KLAC",
+     "ORLY",
+     "ANET",
+     "REGN",
+     "AVGO",
+     "CSX",
+     "MU",
+     "CPRT",
+     "ISRG",
+     "AMZN",
+     "NVDA",
+     "CTAS",
+     "NEE",
+     "PGR"
+    ]
+   },
+   {
+    "year": 2020,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "KLAC",
+     "FTNT",
+     "BIIB",
+     "LRCX",
+     "AMZN",
+     "ODFL",
+     "PGR",
+     "CPRT",
+     "ANET",
+     "NDAQ",
+     "INTC",
+     "LLY",
+     "CINF",
+     "REGN"
+    ]
+   },
+   {
+    "year": 2021,
+    "n": 15,
+    "picks": [
+     "LRCX",
+     "KLAC",
+     "NVDA",
+     "LEN",
+     "PHM",
+     "GRMN",
+     "ALGN",
+     "RF",
+     "TER",
+     "TSCO",
+     "ETSY",
+     "ANET",
+     "KIM",
+     "CE",
+     "FDX"
+    ]
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "picks": [
+     "NVDA",
+     "REGN",
+     "FANG",
+     "KLAC",
+     "PFE",
+     "NUE",
+     "CINF",
+     "ABBV",
+     "DVN",
+     "ORLY",
+     "RVTY",
+     "RJF",
+     "CB",
+     "EXR",
+     "WRB"
+    ]
+   },
+   {
+    "year": 2023,
+    "n": 15,
+    "picks": [
+     "KLAC",
+     "FANG",
+     "COP",
+     "MPC",
+     "MCHP",
+     "ORLY",
+     "VLO",
+     "URI",
+     "LRCX",
+     "EOG",
+     "NFLX",
+     "ON",
+     "NVR",
+     "LEN",
+     "PSX"
+    ]
+   },
+   {
+    "year": 2024,
+    "n": 15,
+    "picks": [
+     "KLAC",
+     "URI",
+     "COF",
+     "AXP",
+     "ACGL",
+     "BLDR",
+     "FANG",
+     "HBAN",
+     "PCAR",
+     "WMB",
+     "PHM",
+     "AMAT",
+     "WRB",
+     "NUE",
+     "NVDA"
+    ]
+   },
+   {
+    "year": 2025,
+    "n": 15,
+    "picks": [
+     "BKNG",
+     "ACGL",
+     "WRB",
+     "VICI",
+     "PGR",
+     "MO",
+     "EXPE",
+     "GL",
+     "FTNT",
+     "HIG",
+     "NEM",
+     "AMP",
+     "META",
+     "GDDY",
+     "NVDA"
+    ]
+   },
+   {
+    "year": 2026,
+    "n": 15,
+    "picks": [
+     "INCY",
+     "DAL",
+     "L",
+     "TPR",
+     "APH",
+     "NEM",
+     "ACGL",
+     "NVDA",
+     "UAL",
+     "NTRS",
+     "EXPE",
+     "BNY",
+     "CFG",
+     "STT",
+     "HIG"
+    ]
+   }
+  ]
+ },
+ "robust_N": {
+  "gate_qvg_top10": {
+   "cagr": 13.6,
+   "max_dd": -36.3,
+   "2013_2019": 13.4,
+   "2019_2026": 13.8,
+   "worst_year": -23.7
+  },
+  "gate_qvg_top25": {
+   "cagr": 13.5,
+   "max_dd": -35.9,
+   "2013_2019": 12.3,
+   "2019_2026": 14.4,
+   "worst_year": -22.3
+  },
+  "gate_qvgm_top10": {
+   "cagr": 12.5,
+   "max_dd": -36.0,
+   "2013_2019": 12.4,
+   "2019_2026": 12.6,
+   "worst_year": -27.9
+  },
+  "gate_qvgm_top25": {
+   "cagr": 12.3,
+   "max_dd": -36.8,
+   "2013_2019": 16.0,
+   "2019_2026": 9.4,
+   "worst_year": -25.7
+  },
+  "gate_qvgm_trend_top10": {
+   "cagr": 9.0,
+   "max_dd": -35.7,
+   "2013_2019": 14.7,
+   "2019_2026": 4.7,
+   "worst_year": -26.9
+  },
+  "gate_qvgm_trend_top25": {
+   "cagr": 11.6,
+   "max_dd": -38.2,
+   "2013_2019": 16.1,
+   "2019_2026": 8.1,
+   "worst_year": -22.0
+  }
+ },
+ "gate_pass_counts": {
+  "2013": 65,
+  "2014": 65,
+  "2015": 54,
+  "2016": 39,
+  "2017": 38,
+  "2018": 45,
+  "2019": 63,
+  "2020": 61,
+  "2021": 39,
+  "2022": 79,
+  "2023": 91,
+  "2024": 74,
+  "2025": 64,
+  "2026": 71
+ }
+}
