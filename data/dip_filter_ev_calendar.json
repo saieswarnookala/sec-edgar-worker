@@ -1,0 +1,423 @@
+{
+ "SPY": {
+  "cagr": 9.2,
+  "dd": -55.2
+ },
+ "clear_leader_info": {
+  "cl": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  },
+  "cl_crash": {
+   "months_monthly_fallback": 0,
+   "months_held": {
+    "SPY": 255,
+    "IEF": 63,
+    "QQQ": 52,
+    "DBC": 23,
+    "GLD": 16,
+    "EEM": 10,
+    "VNQ": 6,
+    "TLT": 3
+   }
+  }
+ },
+ "results": [
+  {
+   "cagr": 21.7,
+   "dd": -23.9,
+   "per": {
+    "1998-2002": 51.1,
+    "2003-2007": 12.3,
+    "2008-2009": 18.4,
+    "2010-2015": 5.5,
+    "2016-2020": 13.9,
+    "2021-2026": 34.2
+   },
+   "invested_pct": 20.7,
+   "win_rate": 63.4,
+   "variant": "baseline (current best)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.5,
+   "dd": -25.9,
+   "per": {
+    "1998-2002": 21.8,
+    "2003-2007": 7.1,
+    "2008-2009": 13.9,
+    "2010-2015": 4.7,
+    "2016-2020": 10.7,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 20.7,
+   "win_rate": 57.6,
+   "variant": "baseline (current best)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.0,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.1,
+    "2003-2007": 11.6,
+    "2008-2009": 21.4,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 34.3
+   },
+   "invested_pct": 17.7,
+   "win_rate": 64.0,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.9,
+   "dd": -25.4,
+   "per": {
+    "1998-2002": 26.6,
+    "2003-2007": 7.5,
+    "2008-2009": 16.8,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 25.9
+   },
+   "invested_pct": 17.8,
+   "win_rate": 58.4,
+   "variant": "LIVE strategy (volume filter) = reference",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 21.1,
+   "dd": -23.4,
+   "per": {
+    "1998-2002": 52.2,
+    "2003-2007": 11.8,
+    "2008-2009": 21.3,
+    "2010-2015": 4.1,
+    "2016-2020": 15.3,
+    "2021-2026": 29.7
+   },
+   "invested_pct": 16.7,
+   "win_rate": 63.9,
+   "variant": "skip: Fed decision day or the day before",
+   "scenario": "ideal",
+   "removed_pct": 7.4
+  },
+  {
+   "cagr": 14.9,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 27.1,
+    "2003-2007": 7.9,
+    "2008-2009": 17.8,
+    "2010-2015": 4.4,
+    "2016-2020": 12.2,
+    "2021-2026": 23.9
+   },
+   "invested_pct": 16.7,
+   "win_rate": 58.4,
+   "variant": "skip: Fed decision day or the day before",
+   "scenario": "realistic",
+   "removed_pct": 7.4
+  },
+  {
+   "cagr": 11.0,
+   "dd": -63.1,
+   "per": {
+    "1998-2002": 4.6,
+    "2003-2007": 4.9,
+    "2008-2009": 25.4,
+    "2010-2015": 4.8,
+    "2016-2020": 10.1,
+    "2021-2026": 25.4
+   },
+   "invested_pct": 1.9,
+   "win_rate": 65.6,
+   "variant": "ONLY Fed decision day or the day before (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 9.7,
+   "dd": -63.2,
+   "per": {
+    "1998-2002": 1.9,
+    "2003-2007": 4.1,
+    "2008-2009": 24.4,
+    "2010-2015": 4.5,
+    "2016-2020": 9.9,
+    "2021-2026": 22.9
+   },
+   "invested_pct": 1.9,
+   "win_rate": 57.0,
+   "variant": "ONLY Fed decision day or the day before (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 22.2,
+   "dd": -24.7,
+   "per": {
+    "1998-2002": 53.9,
+    "2003-2007": 11.6,
+    "2008-2009": 21.2,
+    "2010-2015": 4.4,
+    "2016-2020": 14.6,
+    "2021-2026": 34.9
+   },
+   "invested_pct": 17.3,
+   "win_rate": 63.9,
+   "variant": "skip: day before jobs report (first Friday, approx.)",
+   "scenario": "ideal",
+   "removed_pct": 4.5
+  },
+  {
+   "cagr": 15.5,
+   "dd": -25.8,
+   "per": {
+    "1998-2002": 29.4,
+    "2003-2007": 7.7,
+    "2008-2009": 17.2,
+    "2010-2015": 4.4,
+    "2016-2020": 11.5,
+    "2021-2026": 26.5
+   },
+   "invested_pct": 17.3,
+   "win_rate": 58.4,
+   "variant": "skip: day before jobs report (first Friday, approx.)",
+   "scenario": "realistic",
+   "removed_pct": 4.5
+  },
+  {
+   "cagr": 21.9,
+   "dd": -24.2,
+   "per": {
+    "1998-2002": 53.4,
+    "2003-2007": 12.1,
+    "2008-2009": 21.6,
+    "2010-2015": 4.3,
+    "2016-2020": 14.7,
+    "2021-2026": 33.3
+   },
+   "invested_pct": 17.6,
+   "win_rate": 64.0,
+   "variant": "skip: triple-witching Friday",
+   "scenario": "ideal",
+   "removed_pct": 1.5
+  },
+  {
+   "cagr": 15.3,
+   "dd": -25.3,
+   "per": {
+    "1998-2002": 27.6,
+    "2003-2007": 7.7,
+    "2008-2009": 16.6,
+    "2010-2015": 4.4,
+    "2016-2020": 11.8,
+    "2021-2026": 26.8
+   },
+   "invested_pct": 17.6,
+   "win_rate": 58.5,
+   "variant": "skip: triple-witching Friday",
+   "scenario": "realistic",
+   "removed_pct": 1.5
+  },
+  {
+   "cagr": 21.2,
+   "dd": -20.9,
+   "per": {
+    "1998-2002": 48.9,
+    "2003-2007": 11.7,
+    "2008-2009": 22.9,
+    "2010-2015": 5.3,
+    "2016-2020": 13.9,
+    "2021-2026": 32.0
+   },
+   "invested_pct": 15.9,
+   "win_rate": 64.5,
+   "variant": "skip: Friday signals (weekend risk)",
+   "scenario": "ideal",
+   "removed_pct": 18.7
+  },
+  {
+   "cagr": 14.2,
+   "dd": -23.5,
+   "per": {
+    "1998-2002": 23.1,
+    "2003-2007": 6.9,
+    "2008-2009": 15.2,
+    "2010-2015": 4.9,
+    "2016-2020": 12.1,
+    "2021-2026": 25.1
+   },
+   "invested_pct": 16.0,
+   "win_rate": 58.6,
+   "variant": "skip: Friday signals (weekend risk)",
+   "scenario": "realistic",
+   "removed_pct": 18.7
+  },
+  {
+   "cagr": 15.4,
+   "dd": -32.4,
+   "per": {
+    "1998-2002": 24.9,
+    "2003-2007": 6.1,
+    "2008-2009": 24.0,
+    "2010-2015": 4.5,
+    "2016-2020": 11.7,
+    "2021-2026": 28.7
+   },
+   "invested_pct": 6.1,
+   "win_rate": 66.6,
+   "variant": "ONLY Friday signals (weekend risk) (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 13.6,
+   "dd": -29.5,
+   "per": {
+    "1998-2002": 19.7,
+    "2003-2007": 5.3,
+    "2008-2009": 27.6,
+    "2010-2015": 4.0,
+    "2016-2020": 10.5,
+    "2021-2026": 24.6
+   },
+   "invested_pct": 6.1,
+   "win_rate": 59.9,
+   "variant": "ONLY Friday signals (weekend risk) (check)",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 20.6,
+   "dd": -22.6,
+   "per": {
+    "1998-2002": 49.9,
+    "2003-2007": 10.4,
+    "2008-2009": 19.4,
+    "2010-2015": 4.8,
+    "2016-2020": 14.8,
+    "2021-2026": 30.7
+   },
+   "invested_pct": 16.5,
+   "win_rate": 64.0,
+   "variant": "skip: last 2 trading days of the month",
+   "scenario": "ideal",
+   "removed_pct": 8.4
+  },
+  {
+   "cagr": 15.0,
+   "dd": -21.2,
+   "per": {
+    "1998-2002": 29.0,
+    "2003-2007": 7.0,
+    "2008-2009": 16.1,
+    "2010-2015": 4.9,
+    "2016-2020": 11.9,
+    "2021-2026": 24.2
+   },
+   "invested_pct": 16.5,
+   "win_rate": 58.5,
+   "variant": "skip: last 2 trading days of the month",
+   "scenario": "realistic",
+   "removed_pct": 8.4
+  },
+  {
+   "cagr": 12.0,
+   "dd": -46.7,
+   "per": {
+    "1998-2002": 13.4,
+    "2003-2007": 5.4,
+    "2008-2009": 26.5,
+    "2010-2015": 4.4,
+    "2016-2020": 10.5,
+    "2021-2026": 21.6
+   },
+   "invested_pct": 2.3,
+   "win_rate": 66.1,
+   "variant": "ONLY last 2 trading days of the month (check)",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 9.8,
+   "dd": -56.4,
+   "per": {
+    "1998-2002": 6.0,
+    "2003-2007": 4.0,
+    "2008-2009": 25.3,
+    "2010-2015": 4.5,
+    "2016-2020": 10.2,
+    "2021-2026": 18.7
+   },
+   "invested_pct": 2.3,
+   "win_rate": 57.2,
+   "variant": "ONLY last 2 trading days of the month (check)",
+   "scenario": "realistic"
+  }
+ ],
+ "luck": {
+  "skip: Fed decision day or the day before": {
+   "removed_pct": 7.4,
+   "random_skip_realistic": [
+    15.5,
+    14.8,
+    14.5,
+    15.0
+   ]
+  },
+  "skip: day before jobs report (first Friday, approx.)": {
+   "removed_pct": 4.5,
+   "random_skip_realistic": [
+    15.0,
+    14.7,
+    14.9,
+    15.3
+   ]
+  },
+  "skip: triple-witching Friday": {
+   "removed_pct": 1.5,
+   "random_skip_realistic": [
+    14.9,
+    15.0,
+    14.9,
+    14.9
+   ]
+  },
+  "skip: Friday signals (weekend risk)": {
+   "removed_pct": 18.7,
+   "random_skip_realistic": [
+    14.5,
+    15.2,
+    15.3,
+    15.4
+   ]
+  },
+  "skip: last 2 trading days of the month": {
+   "removed_pct": 8.4,
+   "random_skip_realistic": [
+    15.5,
+    15.0,
+    15.1,
+    15.3
+   ]
+  }
+ },
+ "notes": [],
+ "fomc_dates_found": 227,
+ "fomc_sample": [
+  "1998-02-04",
+  "1998-03-31",
+  "1998-05-19",
+  "2026-09-16",
+  "2026-10-28",
+  "2026-12-09"
+ ],
+ "mode": "ev_calendar"
+}
