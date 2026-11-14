@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -32,6 +32,22 @@ ok('half day: volume curve squeezed into the 9:30-1:00 session', () => {
   assert.equal(sessionMinute(900), 900);
   assert.equal(sessionMinute(780, 780), 960);                        // 1:00 pm close = end of curve; 12:28 on a half day ~ 3:00 on a normal day
   assert.ok(Math.abs(volFraction(sessionMinute(12 * 60 + 28, 780)) - volFraction(15 * 60)) < 0.02);
+});
+ok('vol sizing: calm market -> half size, jumpy -> 1.5x', () => {
+  const calm = [], jumpy = []; let a = 400, b = 400;
+  for (let i = 0; i < 300; i++) { a *= 1 + (i < 250 ? 0.015 : 0.002) * (i % 2 ? 1 : -1); calm.push(a); b *= 1 + (i < 250 ? 0.003 : 0.03) * (i % 2 ? 1 : -1); jumpy.push(b); }
+  const c = volScale(calm), j = volScale(jumpy);
+  assert.ok(c.scale < 0.6 && c.scale >= 0.5, 'calm ' + JSON.stringify(c)); assert.ok(j.scale > 1.4 && j.scale <= 1.5, 'jumpy ' + JSON.stringify(j));
+  assert.equal(volScale([400, 401, 402]).scale, 1);                      // not enough history -> normal size
+});
+ok('vol bot: virtual buy sized by scale, then sells on bounce', () => {
+  const days = ['2026-11-09', '2026-11-10', '2026-11-11'];
+  let r = virtualStep({ vs: undefined, today: '2026-11-10', days, prices: { CCC: 50, QQQ: 500 }, closes: {}, scores: { CCC: -0.15 }, park: 'QQQ', scale: 0.5 });
+  assert.equal(r.vs.positions.length, 1); assert.ok(Math.abs(r.vs.positions[0].qty * 50 - 500) < 1);   // 5% of $10k
+  assert.ok(Object.keys(r.vs.park).includes('QQQ'));
+  const r2 = virtualStep({ vs: r.vs, today: '2026-11-11', days, prices: { CCC: 60, QQQ: 500 }, closes: { CCC: [50, 50, 50, 50] }, scores: {}, park: 'QQQ', scale: 1 });
+  assert.equal(r2.vs.positions.length, 0); assert.equal(r2.vs.trades[0].ret_pct, 20);
+  assert.ok(Math.abs(r2.equity - 10100) < 1, 'equity ' + r2.equity);  // +$100 on the $500 position
 });
 console.log(`\n${n} passed`);
 

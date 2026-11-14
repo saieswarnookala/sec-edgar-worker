@@ -677,6 +677,15 @@ dash.calc('vs_industry', {
 
 /* Growth heat table */
 .sx-tablewrap { overflow-x: auto; }
+.sx-pb { display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+.sx-pb-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 10px; }
+.sx-pb h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+.sx-pb ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; line-height: 1.45; }
+.sx-pb-ex { font-size: 13px; line-height: 1.5; padding: 10px 12px; border-radius: var(--cds-radius); background: color-mix(in srgb, var(--color-fg) 4%, transparent); margin: 0; }
+.sx-pb-health { display: flex; flex-wrap: wrap; gap: 8px; }
+.sx-pb-health .sx-good { color: var(--color-ok); } .sx-pb-health .sx-bad { color: var(--color-bad); font-weight: 600; }
+.sx-pb-chart { width: 100%; height: 120px; display: block; }
+.sx-pb .sx-scr td:first-child, .sx-pb .sx-scr th:first-child { text-align: left; }
 .sx-heat { width: 100%; border-collapse: separate; border-spacing: 4px; font-variant-numeric: tabular-nums; }
 .sx-heat th { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: 500; text-align: center; padding: 4px; }
 .sx-heat th:first-child, .sx-heat td:first-child { text-align: left; }
@@ -815,6 +824,7 @@ dash.calc('vs_industry', {
     <button type="button" class="sx-tab" role="tab" data-tab="stock" aria-selected="true">Stock analysis</button>
     <button type="button" class="sx-tab" role="tab" data-tab="screener" aria-selected="false">Screener</button>
     <button type="button" class="sx-tab" role="tab" data-tab="custom" aria-selected="false">Custom screen</button>
+    <button type="button" class="sx-tab" role="tab" data-tab="paper" aria-selected="false">Paper bots</button>
     <button type="button" class="sx-tab" role="tab" data-tab="trading" aria-selected="false">Day trading</button>
     <button type="button" class="sx-tab" role="tab" data-tab="tested" aria-selected="false">Tested strategies</button>
   </div>
@@ -983,6 +993,7 @@ dash.calc('vs_industry', {
 <div class="sx sx-page sx-off" id="screener" aria-hidden="true" inert></div>
 <div class="sx sx-page sx-off" id="custom" aria-hidden="true" inert></div>
 <div class="sx sx-page sx-off" id="trading" aria-hidden="true" inert></div>
+<div class="sx sx-page sx-off" id="paper" aria-hidden="true" inert></div>
 </div>
 
 <template id="sx-custom-tpl">
@@ -1028,6 +1039,89 @@ dash.calc('vs_industry', {
     </div>
     <p class="sx-cap">Profitable US companies above $50M market cap that file quarterly 10-Q reports (foreign companies filing 20-F annuals are left out). P/E = today’s market cap ÷ net profit for the latest full calendar year in SEC filings. 3Y and 5Y growth are yearly averages (CAGR), shown only when both years were profitable. Debt / equity = borrowings ÷ shareholders’ equity at the latest quarter, leases excluded; companies with unknown debt drop out when a limit is set. Not financial advice.</p>
   </section>
+</template>
+
+<template id="sx-paper-tpl">
+<div class="sx-pb">
+  <section class="sx-card">
+    <div class="sx-ch"><h3>Paper bots: what is running and how it works</h3></div>
+    <p class="sx-cap">Paper = fake money, real prices. Nothing here risks real money; the Robinhood bot is still in a dry run. Results over a few weeks are mostly luck: judge them after ~3 months, next to the backtest numbers. Not financial advice.</p>
+    <div class="sx-pb-health" id="pb-health" style="margin-top:10px"><span class="sx-badge">Checking the timers…</span></div>
+  </section>
+
+  <section class="sx-card" id="pb-dip">
+    <div class="sx-ch"><h3>1. Dip bot ($10k Alpaca paper account)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Started Nov 9, 2026</span><span class="sx-badge">Real paper orders</span><span class="sx-badge">Runs 3:25 + 3:40 pm ET (12:25 on half days)</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it works</h4><ul>
+        <li><b>Buy</b> an S&amp;P 500 stock that is above its 200-day average and fell <b>10%+ more than SPY</b> in the last 5 days.</li>
+        <li><b>Skip</b> it if the drop came on heavy volume (more than 2× normal): that is usually real bad news.</li>
+        <li>Biggest dips first, up to <b>10 stocks</b>, <b>10%</b> of the account each.</li>
+        <li><b>Sell</b> the first day it closes above its 5-day average, or after 5 trading days. No stop-loss.</li>
+        <li><b>Idle money</b> sits in the Clear Leader ETF when SPY is above its 100-day average, otherwise cash (the crash defense).</li>
+      </ul></div>
+      <div><h4>Example</h4><p class="sx-pb-ex">XYZ trades at $100, above its 200-day average. Over 5 days it falls to $88 (−12%) while SPY is flat, on normal volume. At 3:45 pm the bot buys $1,000 of XYZ. Two days later XYZ closes at $93, above its 5-day average, so the bot sells: +5.7%.</p>
+        <h4 style="margin-top:10px">Backtest (1998–2026, realistic fills)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>14.9%</b></div><div class="sx-stat"><span>After tax</span><b>11.9%</b></div><div class="sx-stat"><span>Worst drop</span><b>−25%</b></div><div class="sx-stat"><span>Buys / month</span><b>~14</b></div><div class="sx-stat"><span>SPY per year</span><b>9.2%</b></div></div></div>
+    </div>
+    <div class="pb-live" data-bot="dip"></div>
+  </section>
+
+  <section class="sx-card" id="pb-vol">
+    <div class="sx-ch"><h3>2. Dip bot with volatility sizing ($10k virtual, new Nov 14)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Started Nov 16, 2026</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Same run as bot 1</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it works</h4><ul>
+        <li><b>Same buys and sells</b> as the dip bot (1).</li>
+        <li>Only the <b>size</b> of each buy changes, by how jumpy the market is: SPY’s day-to-day moves over the last 20 days, ranked against the past year.</li>
+        <li>Calmest day of the year → <b>5%</b> per buy · normal → <b>10%</b> · jumpiest → <b>15%</b>.</li>
+        <li>Why: when the market is scared, good stocks get dumped and bounce back hardest. In calm markets a big drop is more often real bad news.</li>
+      </ul></div>
+      <div><h4>Example ($10k account)</h4>
+        <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Market mood</th><th>Rank</th><th>Size</th><th>Per buy</th></tr></thead><tbody>
+          <tr><td>Very calm (quiet summer)</td><td>0%</td><td>0.5×</td><td>$500</td></tr><tr><td>Normal</td><td>50%</td><td>1×</td><td>$1,000</td></tr><tr><td>Very jumpy (March 2020)</td><td>100%</td><td>1.5×</td><td>$1,500</td></tr></tbody></table></div>
+        <h4 style="margin-top:10px">Backtest (1998–2026, realistic fills)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>16.1%</b></div><div class="sx-stat"><span>Worst drop</span><b>−25%</b></div><div class="sx-stat"><span>vs bot 1</span><b>+1.2%/yr</b></div></div>
+        <p class="sx-cap">All 4 sizing versions tested beat the plain dip bot, but a lot of the gain came in 2008–09.</p></div>
+    </div>
+    <div class="pb-live" data-bot="vol"></div>
+  </section>
+
+  <section class="sx-card" id="pb-drift">
+    <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Started Nov 5, 2026</span><span class="sx-badge">Real paper orders</span><span class="sx-badge">Runs before the open (6:05 + 7:35 am ET)</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it works</h4><ul>
+        <li><b>Buy</b> an S&amp;P 500 stock that beat SPY by <b>4–6%+</b> on the day the market reacted to its earnings (SEC filing time decides which day that is).</li>
+        <li>Buy at the <b>next open</b>, hold <b>60 trading days</b> (~3 months), sell at the open.</li>
+        <li>Idle money sits in SPY.</li>
+        <li>Why: after a big earnings surprise, prices keep drifting the same way for weeks.</li>
+      </ul></div>
+      <div><h4>Example</h4><p class="sx-pb-ex">ABC reports earnings after the close. Next day it jumps 9% while SPY is up 1%: an 8-point beat. The bot buys ABC at the following morning’s open and sells it ~3 months later at the open, whatever happens in between.</p>
+        <h4 style="margin-top:10px">Backtest (2004–2026, blend of 9 versions)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>~13%</b></div><div class="sx-stat"><span>After tax</span><b>~10%</b></div><div class="sx-stat"><span>Worst drop</span><b>−51%</b></div></div></div>
+    </div>
+    <div class="pb-live" data-bot="drift"></div>
+  </section>
+
+  <section class="sx-card" id="pb-live">
+    <div class="sx-ch"><h3>4. Robinhood bot (real account, dry run)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Dry run since Nov 12, 2026</span><span class="sx-badge">Oracle Cloud VM</span><span class="sx-badge">3:47 pm ET + 3:52 backup</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it works</h4><ul>
+        <li><b>Same rules</b> as the dip bot (1), on a real Robinhood account (planned $1,000, fractional shares).</li>
+        <li>Plain code picks every order; Robinhood’s official MCP places it. Sells first, then buys sized to real buying power.</li>
+        <li>Safety: max 20% per order, ≤ 25 orders a day, strategy stocks only, halts on unknown orders or a 35% drop from the peak.</li>
+        <li>Phone alerts (ntfy) for plans, fills and problems.</li>
+      </ul></div>
+      <div><h4>Status and next steps</h4><ul>
+        <li>Now: <b>dry run</b>, it decides but sends no orders. Check on the VM with <code>dip status</code>.</li>
+        <li>~Nov 17: confirm the Robinhood login refreshed itself.</li>
+        <li>After a clean week: fund $1,000, switch to live with Robinhood trade approvals on, then hands-off.</li>
+      </ul></div>
+    </div>
+  </section>
+</div>
 </template>
 
 <template id="sx-trading-tpl">
@@ -1667,7 +1761,7 @@ dash.calc('vs_industry', {
 <script>
 (() => {
   const tabs = [...document.querySelectorAll('.sx-tab')];
-  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading') };
+  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading'), paper: document.getElementById('paper') };
   let built = false, cbuilt = false, tbuilt = false, sub = 'overview';
   const money = (v) => (v == null ? '—' : v >= 1e12 ? '$' + (v / 1e12).toFixed(2) + 'T' : v >= 1e9 ? '$' + (v / 1e9).toFixed(1) + 'B' : '$' + (v / 1e6).toFixed(0) + 'M');
   const pct = (v) => (v == null ? '—' : (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%');
@@ -1709,6 +1803,70 @@ dash.calc('vs_industry', {
     }
   };
 
+  let pbuilt = false;
+  const wirePaper = async () => {
+    const root = pages.paper, esc = (x) => String(x ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const money = (v) => (v == null || !isFinite(v) ? '—' : '$' + Math.round(v).toLocaleString('en-US'));
+    const pctTxt = (v) => (v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%');
+    const cls = (v) => (v == null ? '' : v >= 0 ? 'sx-good' : 'sx-bad');
+    const fmtDay = (d) => { if (!d) return '—'; const [y, m, dd] = d.split('-'); return new Date(+y, +m - 1, +dd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); };
+    const tdAgo = (d) => { if (!d) return null; const [y, m, dd] = d.split('-'); let x = new Date(+y, +m - 1, +dd), n = 0; const now = new Date(); while (x < now) { x.setDate(x.getDate() + 1); if (x.getDay() % 6) n++; } return Math.max(0, n - 1); };
+    const chart = (curve) => {
+      const pts = curve.filter((c) => c.eq > 0); if (pts.length < 2) return '<p class="sx-cap">Chart appears after 2+ trading days.</p>';
+      const s0 = pts.find((c) => c.spy > 0)?.spy, W = 600, H = 120, P = 6;
+      const a = pts.map((c) => c.eq / pts[0].eq - 1), b = pts.map((c) => (s0 && c.spy > 0 ? c.spy / s0 - 1 : null));
+      const all = [...a, ...b.filter((v) => v != null), 0], lo = Math.min(...all), hi = Math.max(...all), rng = hi - lo || 0.01;
+      const X = (i) => P + (i * (W - 2 * P)) / (pts.length - 1), Y = (v) => H - P - ((v - lo) * (H - 2 * P)) / rng;
+      const line = (arr) => arr.map((v, i) => (v == null ? '' : `${X(i).toFixed(1)},${Y(v).toFixed(1)}`)).filter(Boolean).join(' ');
+      return `<svg class="sx-pb-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Bot vs SPY since start">
+        <line x1="0" x2="${W}" y1="${Y(0)}" y2="${Y(0)}" stroke="currentColor" stroke-opacity=".15" stroke-dasharray="3 3"/>
+        <polyline points="${line(b)}" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+        <polyline points="${line(a)}" fill="none" stroke="var(--color-ok)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
+        <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
+    };
+    const block = (bot, b) => {
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      const c = b.curve || [], first = c[0], last = c.at(-1);
+      const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
+      let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
+        <div class="sx-stat"><span>Started with</span><b>${money(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${money(last?.eq)}</b></div>
+        <div class="sx-stat"><span>Bot</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>SPY same days</span><b class="${cls(spyRet)}">${pctTxt(spyRet)}</b></div>
+        <div class="sx-stat"><span>Last run</span><b>${fmtDay(b.last?.day)}</b></div>${bot === 'vol' && b.last?.scale != null ? `<div class="sx-stat"><span>Buy size now</span><b>${b.last.scale.toFixed(2)}× (${Math.round(1000 * b.last.scale) / 100}%)</b></div>` : ''}</div>`;
+      h += chart(c);
+      const pos = b.positions || [];
+      if (pos.length) {
+        const rows = pos.map((p) => {
+          if (bot === 'drift') { const age = tdAgo(p.entry_date); return `<tr><td>${esc(p.symbol)}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty}</td><td>${p.reaction_pct != null ? '+' + p.reaction_pct + '%' : '—'}</td><td>≈${Math.max(0, 60 - (age ?? 0))}</td></tr>`; }
+          return `<tr><td>${esc(p.symbol)}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty != null ? +(+p.qty).toFixed(3) : ''}</td><td>${p.dip_pct != null ? p.dip_pct + '%' : '—'}</td><td>${p.size_pct != null ? p.size_pct + '%' : '10%'}</td></tr>`;
+        }).join('');
+        const head = bot === 'drift' ? '<th>Stock</th><th>Bought</th><th>Shares</th><th>Earnings beat</th><th>Trading days left</th>' : '<th>Stock</th><th>Bought</th><th>Shares</th><th>Dip vs SPY</th><th>Size</th>';
+        h += `<h4 style="margin-top:10px">Holding (${pos.length})</h4><div class="sx-tablewrap"><table class="sx-scr"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+      } else h += '<p class="sx-cap" style="margin-top:8px">No stocks held right now.</p>';
+      const L = b.last;
+      if (L) {
+        const what = [...(L.sells || []).map((x) => 'Sold ' + x), ...(L.buys || []).map((x) => 'Bought ' + x)];
+        const ord = L.orders || [];
+        const txt = ord.length ? ord.join(' · ') : what.length ? what.join(' · ') + (L.dry ? ' (decided only, test run)' : '') : 'No trades.';
+        h += `<p class="sx-cap" style="margin-top:8px"><b>Last run (${fmtDay(L.day)}):</b> ${esc(txt)}${L.park ? ' · Idle money: ' + esc(L.park) : ''}</p>`;
+      }
+      if (bot === 'vol' && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      return h;
+    };
+    try {
+      const st = await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json();
+      root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = block(el.dataset.bot, st.bots[el.dataset.bot]); });
+    } catch (e) { root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = '<p class="sx-cap">Couldn’t load the latest bot data.</p>'; }); }
+    const hel = root.querySelector('#pb-health');
+    try {
+      const t = await (await fetch('/api/timers', { credentials: 'same-origin', cache: 'no-store' })).json();
+      const item = (name, x) => {
+        if (!x) return `<span class="sx-badge">${name}: no timer start recorded in the last 14 days</span>`;
+        const ok = x.status >= 200 && x.status < 300, when = new Date(x.at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }) + ' ET';
+        return `<span class="sx-badge ${ok ? 'sx-good' : 'sx-bad'}">${name}: last timer start ${when} — ${ok ? 'OK' : 'FAILED ' + esc(x.status || '') + ' ' + esc(x.error || '')}</span>`;
+      };
+      hel.innerHTML = item('Dip bots', t['paper-dip.yml']) + item('Drift bot', t['paper-drift.yml']);
+    } catch { hel.innerHTML = '<span class="sx-badge">Timer status unavailable</span>'; }
+  };
   const show = (name, link = true) => {
     const tab = name; if (name === 'tested') name = 'trading';
     for (const [k, el] of Object.entries(pages)) {
@@ -1726,6 +1884,11 @@ dash.calc('vs_industry', {
       cbuilt = true;
       pages.custom.appendChild(document.getElementById('sx-custom-tpl').content.cloneNode(true));
       wireCustom();
+    }
+    if (name === 'paper' && !pbuilt) {
+      pbuilt = true;
+      pages.paper.appendChild(document.getElementById('sx-paper-tpl').content.cloneNode(true));
+      wirePaper();
     }
     if (name === 'trading' && !tbuilt) {
       tbuilt = true;
@@ -3024,6 +3187,7 @@ const IN2 = (() => {
 
   if (h === 'screener' || h.startsWith('screen-')) show('screener', false);
   if (h === 'custom' || h.startsWith('custom-')) show('custom', false);
+  if (h === 'paper') show('paper', false);
   if (h === 'trading' || h.startsWith('trading-')) show('trading', false);
   if (h === 'tested' || h.startsWith('tested-')) show('tested', false);
   dash.onData(() => { draw(); drawCustom(); drawTrading(); });

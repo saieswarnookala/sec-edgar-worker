@@ -53,6 +53,11 @@ export default {
     if (path === '/api/me') return json({ name: s.name, role: s.role });
 
     if (path.startsWith('/api/data/')) return withHeaders(await handleData(request, env, ctx, path.slice(10)));
+    if (path === '/api/timers') {   // last time the Cloudflare timer started each bot (shown on the Paper bots tab)
+      const out = {};
+      for (const wf of ['paper-dip.yml', 'paper-drift.yml']) { try { out[wf] = JSON.parse((await env.CACHE.get('timer:last:' + wf)) || 'null'); } catch { out[wf] = null; } }
+      return json(out);
+    }
 
     // ---- admin ----
     if (path === '/admin' || path.startsWith('/api/admin/')) {
@@ -96,14 +101,15 @@ export const TIMERS = {
 export async function runTimer(cron, env, fetchFn = fetch) {
   const t = TIMERS[cron];
   if (!t) return { skipped: cron };
-  if (!env.GH_DISPATCH_TOKEN) return { error: 'GH_DISPATCH_TOKEN secret not set' };
   const [wf, inputs] = t;
+  if (!env.GH_DISPATCH_TOKEN) { const o = { cron, workflow: wf, error: 'GH_DISPATCH_TOKEN secret not set', at: new Date().toISOString() }; try { if (env.CACHE) await env.CACHE.put('timer:last:' + wf, JSON.stringify(o), { expirationTtl: 60 * 60 * 24 * 14 }); } catch {} return o; }
   const r = await fetchFn(`https://api.github.com/repos/saieswarnookala/sec-edgar-worker/actions/workflows/${wf}/dispatches`, {
     method: 'POST',
     headers: { authorization: `token ${env.GH_DISPATCH_TOKEN}`, accept: 'application/vnd.github+json', 'user-agent': 'sentinel-timer', 'content-type': 'application/json' },
     body: JSON.stringify({ ref: 'main', inputs }),
   });
   const out = { cron, workflow: wf, status: r.status, at: new Date().toISOString() };
+  if (r.status >= 300) { try { out.error = (await r.text()).slice(0, 200); } catch {} }
   try { if (env.CACHE) await env.CACHE.put('timer:last:' + wf, JSON.stringify(out), { expirationTtl: 60 * 60 * 24 * 14 }); } catch {}
   return out;
 }

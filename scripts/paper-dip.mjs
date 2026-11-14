@@ -52,10 +52,45 @@ export function parkSymbol({ clPos, spyCloses, spyPx }) {
   const ma = avg([...spyCloses.slice(-(CRASH_MA - 1)), spyPx]);
   return spyPx > ma ? clPos : null; // null = cash
 }
+// ---- Volatility-sized variant (Nov 14 backtest: 16.1%/yr vs 14.9%, same worst drop) ----
+// Slot size = 10% x scale, scale = 0.5 (calmest day of the past year) .. 1.5 (jumpiest), from SPY's 20-day volatility rank.
+export const VOL_WIN = 20, VOL_RANK = 252, VOL_LO = 0.5, VOL_HI = 1.5, VBOT_START = 10000;
+export function volScale(spyCloses, spyPx) {
+  const c = spyPx ? [...spyCloses, spyPx] : [...spyCloses], r = [];
+  for (let i = 1; i < c.length; i++) r.push(c[i] / c[i - 1] - 1);
+  const sd = (a) => { const m = avg(a); return Math.sqrt(a.reduce((x, y) => x + (y - m) ** 2, 0) / (a.length - 1)); };
+  const v = []; for (let i = VOL_WIN; i <= r.length; i++) v.push(sd(r.slice(i - VOL_WIN, i)));
+  if (v.length < 60) return { scale: 1, rank: null, vol_pct: null };
+  const w = v.slice(-VOL_RANK), now = v.at(-1), less = w.filter((x) => x < now).length, eq = w.filter((x) => x === now).length;
+  const rank = (less + (eq + 1) / 2) / w.length;            // same as pandas rank(pct=True)
+  return { scale: +(VOL_LO + (VOL_HI - VOL_LO) * rank).toFixed(3), rank: +rank.toFixed(3), vol_pct: +(now * Math.sqrt(252) * 100).toFixed(1) };
+}
+// Virtual paper portfolio (no broker): same signals and exits as the dip bot, fills at the ~3:45 pm price, fractional shares.
+export function virtualStep({ vs, today, days, prices, closes, scores, park, scale }) {
+  vs = { cash: VBOT_START, positions: [], park: {}, trades: [], ...vs };
+  const px = (s, fb) => prices[s] || fb || 0;
+  const held = Object.fromEntries(vs.positions.map((p) => [p.symbol, p.qty]));
+  const posVal = vs.positions.reduce((a, p) => a + p.qty * px(p.symbol, p.entry_px), 0);
+  const parkVal = Object.entries(vs.park).reduce((a, [s, q]) => a + q * px(s), 0);
+  const equity = vs.cash + posVal + parkVal;
+  const d = decide({ today, days, state: { positions: vs.positions }, held, equity, prices, closes, scores, park, parkHeld: { ...vs.park }, fractional: true, minOrderUsd: 1, weight: WEIGHT * scale });
+  const done = [];
+  for (const t of d.parkTrades.filter((x) => x.side === 'sell')) { vs.cash += t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) - t.qty).toFixed(6); if (vs.park[t.symbol] <= 1e-6) delete vs.park[t.symbol]; done.push(`SELL ${t.symbol} (${t.reason})`); }
+  for (const s of d.sells) {
+    const p = vs.positions.find((x) => x.symbol === s.symbol); vs.cash += s.qty * px(s.symbol);
+    vs.trades.push({ symbol: s.symbol, entry_date: p.entry_date, exit_date: today, ret_pct: +((px(s.symbol) / p.entry_px - 1) * 100).toFixed(2), reason: s.reason });
+    done.push(`SELL ${s.symbol} (${s.reason})`);
+  }
+  vs.positions = vs.positions.filter((p) => !d.sells.some((s) => s.symbol === p.symbol));
+  for (const b of d.buys) { vs.cash -= b.qty * px(b.symbol); vs.positions.push({ symbol: b.symbol, entry_date: today, qty: b.qty, entry_px: px(b.symbol), dip_pct: b.dip_pct, size_pct: +(100 * b.qty * px(b.symbol) / equity).toFixed(1) }); done.push(`BUY $${(b.qty * px(b.symbol)).toFixed(0)} ${b.symbol} (dip ${b.dip_pct}%)`); }
+  for (const t of d.parkTrades.filter((x) => x.side === 'buy')) { vs.cash -= t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) + t.qty).toFixed(6); done.push(`BUY ${t.symbol} (parking)`); }
+  vs.trades = vs.trades.slice(-300);
+  return { vs, equity: +equity.toFixed(2), done };
+}
 // Decide trades. state.positions: [{symbol, entry_date, qty}]; days: trading dates ending with today.
 // fractional: size in fractions of a share (live Robinhood account with ~$100 slots); default whole shares (Alpaca paper).
 export const roundQty = (q, fractional) => fractional ? Math.floor(q * 1e6) / 1e6 : Math.floor(q);
-export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld, fractional = false, minOrderUsd = 1 }) {
+export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld, fractional = false, minOrderUsd = 1, weight = WEIGHT }) {
   const ti = days.indexOf(today), sells = [], keep = [];
   for (const p of state.positions) {
     if (!held[p.symbol]) continue;
@@ -67,7 +102,7 @@ export function decide({ today, days, state, held, equity, prices, closes, score
   const freeFrac = Math.max(0, 1 - keptVal / equity);
   const cands = Object.entries(scores).filter(([s]) => !POOL.includes(s) && !keep.some((p) => p.symbol === s))
     .sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, SLOTS - keep.length));
-  const w = cands.length ? Math.min(WEIGHT, freeFrac / cands.length) : 0, buys = [];
+  const w = cands.length ? Math.min(weight, freeFrac / cands.length) : 0, buys = [];
   for (const [s, ex] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1) }); }
   const stockVal = keptVal + buys.reduce((a, b) => a + b.qty * prices[b.symbol], 0);
   // parking: sell any ETF that isn't today's park target; size the target to the leftover
@@ -93,7 +128,7 @@ export async function gatherSignals({ api, today, days, closeMin = 960 }) {
   const prevDay = days.at(-1) === today ? days.at(-2) : days.at(-1);
   const closes = Object.fromEntries(syms.map((s) => [s, []])), vols = Object.fromEntries(syms.map((s) => [s, []])), etfBars = Object.fromEntries(etfs.map((s) => [s, []]));
   for (let i = 0; i < syms.length; i += 100) {
-    const p = new URLSearchParams({ symbols: syms.slice(i, i + 100).join(','), timeframe: '1Day', start: days.at(-260), end: prevDay + 'T23:59:00Z', adjustment: 'all', feed: 'sip', limit: '10000' });
+    const p = new URLSearchParams({ symbols: syms.slice(i, i + 100).join(','), timeframe: '1Day', start: days.at(-300) ?? days[0], end: prevDay + 'T23:59:00Z', adjustment: 'all', feed: 'sip', limit: '10000' });
     for (;;) { const js = await api(DATA, '/v2/stocks/bars?' + p); for (const [s, bl] of Object.entries(js.bars || {})) for (const b of bl) { closes[s].push(b.c); vols[s].push(b.v); } if (!js.next_page_token) break; p.set('page_token', js.next_page_token); }
   }
   // live prices (IEX feed is real-time on the free plan)
@@ -137,7 +172,7 @@ async function main() {
   const nyParts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date()).map((x) => [x.type, x.value]));
   const today = `${nyParts.year}-${nyParts.month}-${nyParts.day}`, nyMin = +nyParts.hour * 60 + +nyParts.minute;
   const acct = await api(PAPER, '/v2/account'), equity = +acct.equity;
-  const cal = await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 400 * 86400e3).toISOString().slice(0, 10)}&end=${today}`);
+  const cal = await api(PAPER, `/v2/calendar?start=${new Date(Date.now() - 470 * 86400e3).toISOString().slice(0, 10)}&end=${today}`);
   const days = cal.map((c) => c.date);
   const todayCal = cal.find((c) => c.date === today), closeMin = todayCal ? +todayCal.close.slice(0, 2) * 60 + +todayCal.close.slice(3, 5) : 960;
   const file = 'data/paper_dip_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
@@ -166,6 +201,17 @@ async function main() {
     for (const b of d.buys) { try { await order(b.symbol, b.qty, 'buy'); done.push(`BUY ${b.qty} ${b.symbol} (dip ${b.dip_pct}%)`); d.keep.push({ symbol: b.symbol, entry_date: today, qty: b.qty, dip_pct: b.dip_pct }); } catch (e) { done.push(`BUY ${b.symbol} failed: ${e.message}`); } }
     for (const t of d.parkTrades.filter((x) => x.side === 'buy')) { try { await order(t.symbol, t.qty, 'buy'); done.push(`BUY ${t.qty} ${t.symbol} (parking)`); } catch (e) { done.push(`BUY ${t.symbol} failed: ${e.message}`); } }
     state.positions = d.keep.filter(Boolean);
+  }
+  // volatility-sized virtual bot (runs once a day on the real schedule; never places orders)
+  if (!force) {
+    const vfile = 'data/paper_dip_vol_state.json', vst = existsSync(vfile) ? JSON.parse(readFileSync(vfile, 'utf8')) : { history: [] };
+    if (!(vst.history || []).some((h) => h.today === today)) {
+      const vol = volScale(closes.SPY, prices.SPY);
+      const { vs, equity: veq, done: vdone } = virtualStep({ vs: vst.vs, today, days, prices, closes, scores, park, scale: vol.scale });
+      vst.vs = vs; vst.history = [...(vst.history || []), { today, equity: veq, spy: prices.SPY, scale: vol.scale, vol_rank: vol.rank, spy_vol_pct: vol.vol_pct, park: park || 'CASH', orders: vdone }].slice(-400);
+      vst.updated = log.run; writeFileSync(vfile, JSON.stringify(vst, null, 1));
+      log.vol_bot = { scale: vol.scale, equity: veq, orders: vdone.length };
+    }
   }
   log.orders = done; delete state.last_error; state.history = [...(state.history || []), log].slice(-400); state.updated = log.run;
   mkdirSync('data', { recursive: true }); writeFileSync(file, JSON.stringify(state, null, 1));
