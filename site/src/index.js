@@ -101,6 +101,8 @@ export const TIMERS = {
   // dip bot: 3:25 / 3:40 pm ET (19/20 UTC = summer/winter) and 12:25 / 12:40 pm ET for 1 pm half days (16/17 UTC).
   // One cron line (Cloudflare free plan allows 5 cron triggers per account); off-window runs exit at once.
   '25,40 16,17,19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],
+  // Screener refresh: 21:45 UTC (4:45 pm ET winter, 5:45 summer) after the close, backup 23:45 UTC. GitHub's own schedule ran 4-6 h late.
+  '45 21,23 * * 1-5': ['screen.yml', {}],
 };
 export async function runTimer(cron, env, fetchFn = fetch) {
   const t = TIMERS[cron];
