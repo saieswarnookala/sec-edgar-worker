@@ -5,6 +5,7 @@ on:
       - research/atr-intraday-backtest
     paths:
       - .github/workflows/atr-daytest.yml
+      - scripts/atr_daytest.py
   workflow_dispatch: {}
 permissions:
   contents: read
