@@ -748,6 +748,16 @@ dash.calc('vs_industry', {
 .sx-sym:hover { text-decoration-color: currentColor; }
 .sx-scr .sx-none td { text-align: center; color: var(--color-fg-muted); padding: 16px 8px; }
 .sx-rules { display: flex; flex-wrap: wrap; gap: 6px; }
+.sx-scr-why { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 20px; margin: 12px 0 16px; }
+.sx-scr-why h3 { margin: 0 0 8px; font-size: var(--cds-font-size-body); }
+.sx-scr-why ol { margin: 0 0 10px; padding-left: 1.2rem; font-size: var(--cds-font-size-caption); line-height: 1.55; }
+.sx-scr-why table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.sx-scr-why th, .sx-scr-why td { text-align: right; padding: 4px 6px; border-bottom: 1px solid var(--color-border-line); }
+.sx-scr-why th:first-child, .sx-scr-why td:first-child { text-align: left; }
+.sx-scr-why tr.sx-hl td { font-weight: 600; }
+.sx-dl { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: var(--cds-font-size-caption); font-weight: 600; color: var(--color-accent, inherit); text-decoration: none; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 5px 12px; }
+.sx-dl:hover { background: color-mix(in srgb, var(--color-fg) 6%, transparent); }
+@media (max-width: 760px) { .sx-scr-why { grid-template-columns: 1fr; } }
 /* Custom screen */
 .sx-cus-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: var(--cds-gap-md) var(--cds-gap-lg); }
 .sx-f { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
@@ -1223,6 +1233,33 @@ dash.calc('vs_industry', {
     <div class="sx-rules">
       <span class="sx-badge">Profitable both years</span><span class="sx-badge">Sales growth ≥ 5%/yr over 3 yrs</span><span class="sx-badge">Sales not shrinking</span><span class="sx-badge">ROE ≥ 12%</span><span class="sx-badge">Free cash flow &gt; 0</span><span class="sx-badge">Cash flow ≥ 80% of profit</span><span class="sx-badge">Debt ≤ equity</span><span class="sx-badge">P/E ≤ 40</span><span class="sx-badge">Price ≥ $1</span>
     </div>
+    <div class="sx-card sx-scr-why" id="screen-why">
+      <div>
+        <h3>How the list is picked</h3>
+        <ol>
+          <li><b>Gate:</b> a company must pass every rule above — profitable, growing, high return on equity, real free cash flow, modest debt, not expensive.</li>
+          <li><b>Score 0–100:</b> half <b>quality</b> (return on equity, profit margin, cash-flow margin), half <b>value</b> (earnings yield, free-cash-flow yield), compared only with others in the same size group.</li>
+          <li><b>Top 15</b> per size group, highest score first. Refreshed every weekday after the close.</li>
+        </ol>
+        <p class="sx-cap">A list to research, not a buy list. Check each pick in Stock analysis; odd numbers (e.g. a P/E of 2) usually mean a data glitch. Not financial advice.</p>
+        <a class="sx-dl" href="/data/screener_rules_report.pdf" download>⬇ Full findings (PDF)</a>
+      </div>
+      <div>
+        <h3>Why these rules — backtest</h3>
+        <table>
+          <thead><tr><th>S&amp;P 500, May 2013 – Oct 2026</th><th>Per year</th><th>2013–19</th><th>2019–26</th><th>Worst drop</th></tr></thead>
+          <tbody>
+            <tr class="sx-hl"><td>Quality + fair price (this list)</td><td>15.8%</td><td>15.8%</td><td>15.9%</td><td>−36%</td></tr>
+            <tr><td>SPY</td><td>14.0%</td><td>12.7%</td><td>15.0%</td><td>−34%</td></tr>
+            <tr><td>Same stocks, equal weight</td><td>12.8%</td><td>12.7%</td><td>12.9%</td><td>−39%</td></tr>
+            <tr><td>Old “highest P/E” list</td><td>11.2%</td><td>15.6%</td><td>7.8%</td><td>−41%</td></tr>
+            <tr><td>This list + momentum</td><td>11.9%</td><td>13.0%</td><td>11.0%</td><td>−34%</td></tr>
+            <tr><td>This list + above 200-day avg only</td><td>10.5%</td><td>12.8%</td><td>8.7%</td><td>−36%</td></tr>
+          </tbody>
+        </table>
+        <p class="sx-cap" style="margin-top:8px">15 stocks picked each May from last year’s SEC numbers, held a year. 9 of 11 nearby versions of the rules also beat SPY. Mid, small and micro caps: see the PDF.</p>
+      </div>
+    </div>
     <div class="sx-scr-blocks">
       <div class="sx-card sx-scr-block" id="screen-mega">
         <div class="sx-ch"><h3>Mega cap<span>$200B+</span></h3></div>
@@ -1270,7 +1307,7 @@ dash.calc('vs_industry', {
         </div>
       </div>
     </div>
-    <p class="sx-cap">Why these rules: we backtested candidate rules on S&amp;P 500 stocks, picking 15 each May from the previous year’s SEC numbers and holding a year (May 2013 – Oct 2026). Quality + fair price made 15.8%/yr (15.8% in 2013–19, 15.7% in 2019–26) vs SPY 14.0% and the same stocks equal-weighted 12.8%. The old “highest P/E” list made 11.2%; adding momentum or a 200-day trend filter made it worse. 9 of 11 nearby versions (top 10/25, ROE 10–15%, P/E cap 30–60, other debt and growth limits) also beat SPY; demanding 10%+ sales growth or debt ≤ half of equity did not. Worst drop −36% (SPY −34%): these are stocks, not a safe haven. Small and micro caps weren’t in the test.</p><p class="sx-cap">P/E = today’s market cap ÷ net profit for the latest full calendar year in SEC filings; ROE = that profit ÷ latest equity; free cash flow = operating cash flow − capital spending. Prices and market caps from Nasdaq’s screener, refreshed each weekday after the close. US SEC filers only. A list to research, not a buy list. Not financial advice.</p>
+    <p class="sx-cap">P/E = today’s market cap ÷ net profit for the latest full calendar year in SEC filings; ROE = that profit ÷ latest equity; free cash flow = operating cash flow − capital spending. Prices and market caps from Nasdaq’s screener, refreshed each weekday after the close. US SEC filers only. A list to research, not a buy list. Not financial advice.</p>
   </section>
 </template>
 
