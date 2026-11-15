@@ -57,6 +57,7 @@ if U == "sp500":
     C, O, V, MEM = Cdf[tick].values, Odf[tick].values, Vdf[tick].values, M.values
     ev = json.load(open("data/sec_events_sic.json"))["tickers"]
     EVS = {t: [(d, mi) for d, mi, *_ in ev.get(t, {}).get("events", [])] for t in tick}
+    GRP = [((ev.get(t) or {}).get("sic") or "")[:2] or None for t in tick]
     START, SPLIT = "2004-01-01", "2016-01-01"
 else:
     LIST = ("NVDA TSLA AMD COIN PLTR MU SMCI MRNA ROKU SNAP PTON ZM SHOP NFLX META UBER LYFT DKNG RIOT MARA AFRM UPST CVNA "
@@ -105,6 +106,7 @@ else:
         EVS[t] = evs
     print("earnings events", sum(len(v) for v in EVS.values()), flush=True)
     START, SPLIT = "2016-01-01", "2023-01-01"
+    GRP = [None] * len(tick)
 D, N = C.shape; dn = dates.values
 print(U, "days", D, "stocks", N, dates[0].date(), dates[-1].date(), flush=True)
 
@@ -121,6 +123,16 @@ with np.errstate(all="ignore"):
     spy100 = pd.Series(SPYC).rolling(100).mean().values
     r2 = np.vstack([np.full((2, N), np.nan), C[2:] / C[:-2] - 1])
     gap = np.vstack([np.full(N, np.nan), O[1:] / C[:-1] - 1])
+    r5 = np.vstack([np.full((5, N), np.nan), C[5:] / C[:-5] - 1])
+    ind1, ind5 = np.full((D, N), np.nan), np.full((D, N), np.nan)
+    for g in set(x for x in GRP if x):
+        cols = [j for j, x in enumerate(GRP) if x == g]
+        if len(cols) < 4: continue
+        for src, dst in ((r, ind1), (r5, ind5)):
+            sub = np.where(MEM[:, cols], src[:, cols], np.nan)
+            cnt = (~np.isnan(sub)).sum(1, keepdims=True); tot = np.nansum(sub, 1, keepdims=True)
+            loo = (tot - np.nan_to_num(sub)) / np.maximum(cnt - 1, 1)          # industry average excluding the stock itself
+            dst[:, cols] = np.where(cnt >= 4, sub - loo, np.nan)
 EARN = np.zeros((D, N), bool)
 for j, t in enumerate(tick):
     for k in react_idx(dn, EVS.get(t, [])): EARN[k, j] = True
@@ -156,24 +168,27 @@ BASE = {key: np.array([np.nanmean(m[i][ok[i]]) if ok[i].any() else np.nan for i 
 # ---------------- event table ----------------
 period = np.where(dn < np.datetime64(START), -1, np.where(dn < np.datetime64(SPLIT), 0, 1))
 mkt = SPYC > spy100
-cand = ok & (period[:, None] >= 0) & ((r <= -0.03) | (r - spyr[:, None] <= -0.03) | (r2 <= -0.05) | (gap <= -0.03))
+cand = ok & (period[:, None] >= 0) & ((r <= -0.03) | (r - spyr[:, None] <= -0.03) | (r2 <= -0.05) | (gap <= -0.03) | (r5 <= -0.08) | (ind1 <= -0.03) | (ind5 <= -0.05))
 I, J = np.nonzero(cand)
 print("candidate events", len(I), flush=True)
 prev = np.maximum(I - 1, 0)
 E = pd.DataFrame({"i": I, "j": J, "per": period[I], "r1": r[I, J], "rel": r[I, J] - spyr[I], "r2": r2[I, J], "gap": gap[I, J],
-                  "rank": rank[I, J], "rank_prev": rank[prev, J], "vr": vratio[I, J], "vr_prev": vratio[prev, J],
+                  "r5": r5[I, J], "ind1": ind1[I, J], "ind5": ind5[I, J], "rank": rank[I, J], "rank_prev": rank[prev, J], "vr": vratio[I, J], "vr_prev": vratio[prev, J],
                   "up": C[I, J] > ma200[I, J], "up_prev": C[prev, J] > ma200[prev, J], "earn": EARN[I, J] | EARN[prev, J], "earn_today": EARN[I, J],
                   "mkt": mkt[I], "mkt_prev": mkt[prev]})
 for key, m in R.items():
     E["R_" + "_".join(key)] = m[I, J]; E["B_" + "_".join(key)] = BASE[key][I]
 
 TRIG = [("1-day drop", x) for x in (0.03, 0.05, 0.07, 0.10)] + [("drop vs SPY", x) for x in (0.03, 0.05, 0.07, 0.10)] + \
-       [("2-day drop", x) for x in (0.05, 0.08, 0.12)] + [("gap down at open", x) for x in (0.03, 0.05, 0.07)]
+       [("2-day drop", x) for x in (0.05, 0.08, 0.12)] + [("gap down at open", x) for x in (0.03, 0.05, 0.07)] + \
+       ([("5-day drop (dip bot)", x) for x in (0.08, 0.10)] + [("1-day drop vs industry", x) for x in (0.03, 0.05, 0.07)] +
+        [("5-day drop vs industry", x) for x in (0.05, 0.08, 0.10)] if U == "sp500" else [])
 UNIV = [("top 10% most volatile", 0.9), ("top 20% most volatile", 0.8), ("all", 0.0)] if U == "sp500" else [("all", 0.0)]
 results = []
 for tn, x in TRIG:
     g = tn.startswith("gap")
-    base = {"1-day drop": E.r1 <= -x, "drop vs SPY": E.rel <= -x, "2-day drop": E.r2 <= -x, "gap down at open": E.gap <= -x}[tn].values
+    base = {"1-day drop": E.r1 <= -x, "drop vs SPY": E.rel <= -x, "2-day drop": E.r2 <= -x, "gap down at open": E.gap <= -x,
+            "5-day drop (dip bot)": E.r5 <= -x, "1-day drop vs industry": E.ind1 <= -x, "5-day drop vs industry": E.ind5 <= -x}[tn].values
     rk, vr, up, mk = (E.rank_prev, E.vr_prev, E.up_prev, E.mkt_prev) if g else (E["rank"], E.vr, E.up, E.mkt)
     earn = (E.earn_today if g else E.earn).values
     for un, uq in UNIV:
@@ -195,7 +210,8 @@ for tn, x in TRIG:
                                 row = {"trigger": f"{tn} {x * 100:g}%+", "universe": un, "volume": vn, "trend": trn, "earnings": en, "market": mn,
                                        "entry": {"gap": "at the open (gap day)", "close": "that day's close", "open": "next open"}[entry],
                                        "exit": "smart (back above 5-day avg, max 3 days)" if ex == "smart" else f"close of day {ex}", "key": key,
-                                       "sortcol": {"1-day drop": "r1", "drop vs SPY": "rel", "2-day drop": "r2", "gap down at open": "gap"}[tn]}
+                                       "sortcol": {"1-day drop": "r1", "drop vs SPY": "rel", "2-day drop": "r2", "gap down at open": "gap",
+                                                   "5-day drop (dip bot)": "r5", "1-day drop vs industry": "ind1", "5-day drop vs industry": "ind5"}[tn]}
                                 for pn, pv in (("train", 0), ("test", 1)):
                                     s = sel & (E.per.values == pv); rr = raw[s] - 2 * COST; ex_ = rr - bas[s]
                                     yrs = max((period == pv).sum() / 252, 1e-9)
@@ -260,9 +276,19 @@ def money(x, slots=10, size=0.10, park=False):
                    "spy_per_year_pct": round((spy ** (1 / yrs) - 1) * 100, 1)}
     out["days_with_a_position_pct"] = round(100 * held_days / max(1, (period >= 0).sum()), 1)
     return out
-for x in okr[:10] + club[:10]: x["money_10x10pct"] = money(x); x["money_idle_in_spy"] = money(x, park=True)
+focus = []
+for fam in ("5-day drop (dip bot)", "1-day drop vs industry", "5-day drop vs industry"):
+    fx = [x for x in okr if x["trigger"].startswith(fam)]
+    focus += fx[:3]
+    # the dip bot's own filters, same family: uptrend + quiet volume + skip earnings + smart exit at the close
+    focus += [x for x in fx if x["trend"] == "above 200-day avg" and x["volume"].startswith("quiet") and x["earnings"].startswith("skip")
+              and x["entry"] == "that day's close" and x["exit"].startswith("smart") and x["market"] == "any market" and x["universe"] == "all"]
+seen = set()
+for x in okr[:10] + club[:10] + focus:
+    if id(x) in seen: continue
+    seen.add(id(x)); x["money_10x10pct"] = money(x); x["money_idle_in_spy"] = money(x, park=True)
 clean = lambda xs: [{k: v for k, v in x.items() if k not in ("_mask", "sortcol")} for x in xs]
-json.dump({"summary": summary, "top20_by_train": clean(okr[:20]), "one_pct_club": clean(club[:30]), "one_pct_club_count": len(club),
+json.dump({"summary": summary, "focus_new_triggers": clean(focus), "top20_by_train": clean(okr[:20]), "one_pct_club": clean(club[:30]), "one_pct_club_count": len(club),
            "effects": effects, "best_in_test_hindsight": clean(sorted(okr, key=lambda x: -x["test"]["t"])[:10]),
            "all": clean(okr), "note": __doc__}, open(OUT, "w"), indent=1, default=float)
 print(json.dumps(summary, indent=1))
