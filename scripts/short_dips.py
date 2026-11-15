@@ -67,8 +67,9 @@ def get(url, tries=4):
     return None
 
 def parse(b):
-    df = pd.read_csv(io.BytesIO(b), sep="|", dtype=str, quotechar='"')
+    df = pd.read_csv(io.BytesIO(b), sep="|", dtype=str, quoting=3, on_bad_lines="skip", encoding="latin1")   # quoting=3: company names contain stray quotes
     df.columns = [c.strip().strip('"') for c in df.columns]
+    for c in df.columns: df[c] = df[c].str.strip().str.strip('"')
     need = {"symbolCode", "currentShortPositionQuantity", "averageDailyVolumeQuantity"}
     if need - set(df.columns): raise SystemExit(f"FINRA columns changed: missing {need - set(df.columns)}; have {list(df.columns)}")
     dtc_col = next((c for c in df.columns if c.lower().startswith("daystocover")), None)
@@ -77,6 +78,11 @@ def parse(b):
     dtc = pd.to_numeric(df[dtc_col], errors="coerce") if dtc_col else sh / adv.where(adv > 0)
     ok = df.symbolCode.notna() & sh.notna()
     return {"sym": df.symbolCode[ok].str.strip().tolist(), "short": sh[ok].tolist(), "prev": prev[ok].fillna(-1).tolist(), "dtc": dtc[ok].fillna(-1).round(2).tolist()}
+
+def safe_parse(b, d):
+    try: return parse(b)
+    except SystemExit: raise
+    except Exception as e: print("parse failed", d, str(e)[:150], flush=True); return None
 
 def candidates(y, m):
     """Settlement dates are the 15th and last day of the month, moved back to a business day."""
@@ -98,15 +104,16 @@ def load_si():
                 if pd.Timestamp(cands[-1]) > last: continue
                 for d in cands:
                     b = get(f"https://cdn.finra.org/equity/otcmarket/biweekly/shrt{d}.csv"); time.sleep(0.5)
-                    if b and len(b) > 10000: hit = d; r = parse(b); r2cache.save(f"finra/si/{d}.json.gz", r); reports[d] = r; found.add(d); fetched += 1; break
+                    if b and len(b) > 10000 and (r := safe_parse(b, d)) is not None: hit = d; r2cache.save(f"finra/si/{d}.json.gz", r); reports[d] = r; found.add(d); fetched += 1; break
                 checked.add(key)
                 if hit is None: continue
             if hit not in reports:
                 r = r2cache.load(f"finra/si/{hit}.json.gz")
                 if r is None:
                     b = get(f"https://cdn.finra.org/equity/otcmarket/biweekly/shrt{hit}.csv"); time.sleep(0.5)
-                    if not b: continue
-                    r = parse(b); r2cache.save(f"finra/si/{hit}.json.gz", r); fetched += 1
+                    r = safe_parse(b, hit) if b else None
+                    if r is None: continue
+                    r2cache.save(f"finra/si/{hit}.json.gz", r); fetched += 1
                 reports[hit] = r
     r2cache.save("finra/si_index.json.gz", {"found": sorted(found), "checked_periods": sorted(checked)})
     print(f"short interest reports: {len(reports)} ({fetched} downloaded), first {min(reports) if reports else None}, last {max(reports) if reports else None}", flush=True)
