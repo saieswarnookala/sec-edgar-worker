@@ -1,0 +1,38 @@
+name: Dip universe and rule-change test
+on:
+  workflow_dispatch:
+    inputs:
+      universe: { description: 'us_all or sp500', default: 'us_all' }
+      limit: { description: 'smoke test: only this many tickers (0 = all)', default: '0' }
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        if: inputs.universe == 'sp500'
+        with:
+          path: /tmp/*.parquet
+          key: sp500data-snapshot-2026-11
+      - run: pip install pandas pyarrow numpy
+      - name: Run
+        shell: bash
+        env:
+          UNIVERSE: ${{ inputs.universe }}
+          LIMIT: ${{ inputs.limit }}
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: |
+          set -o pipefail; python -u scripts/dip_universe.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/dip_universe_*.json && git commit -qm "dip universe results: ${{ inputs.universe }} limit ${{ inputs.limit }}" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
