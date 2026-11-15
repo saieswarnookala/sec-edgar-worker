@@ -101,6 +101,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Main backtest scripts: scripts/dip_filters.py (modes earnings/volume/sector/peer/stop/combo/tax/both/both2/curve; workflow dip-filters.yml), scripts/india_dip.py (india-dip.yml), scripts/future_leaders*.py, scripts/short_side.py, scripts/short_research.py, scripts/options_research.py (options-research.yml), intraday_*.py.
 - Honest-testing habits used: realistic vs ideal fills, after-tax, robustness grids, random-picks "luck" test, unseen-years (out-of-sample) check, point-in-time universe.
 
+### Before launching any new test or bot (Sai's rule, Nov 14)
+1. Dry run on fake data first: random prices must show no edge; a planted pattern must be found.
+2. Check every ticker returns data before the full run (bad tickers skipped and listed, never a crash).
+3. Smoke run on real data (1 ticker or a short window) before the full GitHub Actions job.
+4. Known traps: Alpaca free plan rejects SIP data newer than ~15 min (end date >= 1 day back, full timestamp); Alpaca rejects a whole 100-symbol batch if one ticker is unknown (filter to /v2/assets, split on 4xx); SEC submissions fields are lists (index them); new workflows can 404 for a few seconds after push.
+
 ## 5. Paper bots (Alpaca paper, GitHub Actions)
 - Dip bot $10k: scripts/paper-dip.mjs, workflow paper-dip.yml, state data/paper_dip_state.json. Market "day" orders 3:00–3:57 pm ET (paper MOC orders never filled). Syncs with broker positions each run. Tests: `node test-paper-dip.mjs`.
 - Drift bot $100k: scripts/paper-drift.mjs (pre-market "day" orders; "opg" orders expired on paper).
