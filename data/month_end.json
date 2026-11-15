@@ -1,0 +1,431 @@
+{
+ "note": "Month-end timing test (Nov 15 2026). Research only, not financial advice.\n1) Turn of the month: average SPY/QQQ/IWM daily return by trading day around month-end (-6..+6), split into\n   1993-2008, 2009-2015, 2016-2026 and the T+1 era (Jun 2024+). Is the -3..+3 window still better than other days?\n2) Pension rebalancing (Harvey, Mazzoleni & Melone 2025 idea): 3 trading days before month-end, if stocks beat bonds\n   month-to-date by a lot, pensions must sell stocks -> next days weaker? Return from that close to the close of the\n   1st trading day of the next month, by stocks-minus-bonds tercile.\n3) Overlays the bots can actually use:\n   a) monthly deposit invested on day -4 (before the window) vs day +1 (first day of month) vs day +4: value after 1 year\n   b) Clear Leader-style monthly rebalance: does trading at the close of day -4 instead of the last day change results?\n      (proxy: hold SPY, switch timing only matters through the window, so measured as SPY return from day -4 to day 0)\nData: Yahoo daily total-return closes. Bonds: IEF (VFITX before 2002).",
+ "first_day": "1993-03-01",
+ "last_day": "2026-11-13",
+ "turn_of_month": {
+  "SPY": {
+   "1993-2008": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -13.9,
+     "-5": -10.3,
+     "-4": 7.0,
+     "-3": 13.6,
+     "-2": 4.8,
+     "-1": 7.7,
+     "0": -0.7,
+     "1": 29.7,
+     "2": 4.3,
+     "3": 0.3,
+     "4": 4.0,
+     "5": 0.7,
+     "6": -12.2
+    },
+    "window_-3_to_+3_bps": 8.5,
+    "other_days_bps": 0.6,
+    "diff_t": 1.92,
+    "share_of_all_gains_pct": 87.0,
+    "days_in_window_pct": 33.0
+   },
+   "2009-2015": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -3.7,
+     "-5": -7.5,
+     "-4": -8.9,
+     "-3": 14.0,
+     "-2": 20.7,
+     "-1": 1.5,
+     "0": -19.7,
+     "1": 17.3,
+     "2": 12.6,
+     "3": 21.3,
+     "4": -4.8,
+     "5": 1.1,
+     "6": 10.8
+    },
+    "window_-3_to_+3_bps": 9.7,
+    "other_days_bps": 4.3,
+    "diff_t": 0.96,
+    "share_of_all_gains_pct": 53.0,
+    "days_in_window_pct": 33.0
+   },
+   "2016-2026": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": 2.3,
+     "-5": 1.7,
+     "-4": 6.3,
+     "-3": 16.3,
+     "-2": -0.5,
+     "-1": 18.2,
+     "0": -0.6,
+     "1": 13.1,
+     "2": 9.3,
+     "3": 6.7,
+     "4": 6.4,
+     "5": 12.7,
+     "6": 5.4
+    },
+    "window_-3_to_+3_bps": 8.9,
+    "other_days_bps": 4.6,
+    "diff_t": 0.98,
+    "share_of_all_gains_pct": 50.0,
+    "days_in_window_pct": 34.0
+   },
+   "T+1 era (Jun 2024+)": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -3.7,
+     "-5": 3.5,
+     "-4": 27.3,
+     "-3": 23.6,
+     "-2": -5.6,
+     "-1": -7.3,
+     "0": 15.9,
+     "1": -15.3,
+     "2": 18.7,
+     "3": 13.0,
+     "4": -28.9,
+     "5": 4.7,
+     "6": 23.3
+    },
+    "window_-3_to_+3_bps": 6.1,
+    "other_days_bps": 7.2,
+    "diff_t": -0.13,
+    "share_of_all_gains_pct": 31.0,
+    "days_in_window_pct": 34.0
+   }
+  },
+  "QQQ": {
+   "1993-2008": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -35.3,
+     "-5": -31.3,
+     "-4": 15.6,
+     "-3": 25.7,
+     "-2": -28.3,
+     "-1": 2.1,
+     "0": 2.9,
+     "1": 25.0,
+     "2": 4.3,
+     "3": 6.8,
+     "4": 11.6,
+     "5": -8.7,
+     "6": -15.8
+    },
+    "window_-3_to_+3_bps": 5.5,
+    "other_days_bps": -2.2,
+    "diff_t": 1.03,
+    "share_of_all_gains_pct": 528.0,
+    "days_in_window_pct": 33.0
+   },
+   "2009-2015": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -7.5,
+     "-5": 2.3,
+     "-4": -3.8,
+     "-3": 16.1,
+     "-2": 22.8,
+     "-1": 0.3,
+     "0": -14.8,
+     "1": 24.3,
+     "2": 15.4,
+     "3": 27.6,
+     "4": -7.3,
+     "5": -5.0,
+     "6": 7.0
+    },
+    "window_-3_to_+3_bps": 13.1,
+    "other_days_bps": 6.4,
+    "diff_t": 1.13,
+    "share_of_all_gains_pct": 51.0,
+    "days_in_window_pct": 33.0
+   },
+   "2016-2026": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": 7.1,
+     "-5": -7.7,
+     "-4": 2.0,
+     "-3": 17.4,
+     "-2": 5.1,
+     "-1": 17.2,
+     "0": 7.6,
+     "1": 16.1,
+     "2": 8.4,
+     "3": 5.4,
+     "4": 7.6,
+     "5": 12.5,
+     "6": 4.9
+    },
+    "window_-3_to_+3_bps": 11.0,
+    "other_days_bps": 6.3,
+    "diff_t": 0.84,
+    "share_of_all_gains_pct": 47.0,
+    "days_in_window_pct": 34.0
+   },
+   "T+1 era (Jun 2024+)": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -18.9,
+     "-5": -5.9,
+     "-4": 28.2,
+     "-3": 35.9,
+     "-2": -1.2,
+     "-1": -18.9,
+     "0": 11.7,
+     "1": -19.6,
+     "2": 30.0,
+     "3": 24.0,
+     "4": -38.5,
+     "5": 8.7,
+     "6": 44.7
+    },
+    "window_-3_to_+3_bps": 8.8,
+    "other_days_bps": 7.3,
+    "diff_t": 0.13,
+    "share_of_all_gains_pct": 38.0,
+    "days_in_window_pct": 34.0
+   }
+  },
+  "IWM": {
+   "1993-2008": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -33.1,
+     "-5": -6.7,
+     "-4": 8.8,
+     "-3": 34.3,
+     "-2": 19.4,
+     "-1": 26.4,
+     "0": 12.7,
+     "1": 23.9,
+     "2": 6.7,
+     "3": -27.6,
+     "4": 8.7,
+     "5": -25.8,
+     "6": -12.8
+    },
+    "window_-3_to_+3_bps": 13.7,
+    "other_days_bps": -3.7,
+    "diff_t": 3.25,
+    "share_of_all_gains_pct": 218.0,
+    "days_in_window_pct": 33.0
+   },
+   "2009-2015": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": -3.6,
+     "-5": -2.4,
+     "-4": -2.6,
+     "-3": 20.8,
+     "-2": 26.3,
+     "-1": 0.1,
+     "0": -26.6,
+     "1": 10.0,
+     "2": 21.0,
+     "3": 23.3,
+     "4": -12.3,
+     "5": -8.6,
+     "6": 7.5
+    },
+    "window_-3_to_+3_bps": 10.7,
+    "other_days_bps": 4.2,
+    "diff_t": 0.87,
+    "share_of_all_gains_pct": 56.0,
+    "days_in_window_pct": 33.0
+   },
+   "2016-2026": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": 2.8,
+     "-5": 3.8,
+     "-4": 13.6,
+     "-3": 17.2,
+     "-2": -3.1,
+     "-1": 20.3,
+     "0": -12.8,
+     "1": 13.4,
+     "2": 8.8,
+     "3": -1.5,
+     "4": 4.0,
+     "5": 15.2,
+     "6": 10.9
+    },
+    "window_-3_to_+3_bps": 6.0,
+    "other_days_bps": 4.2,
+    "diff_t": 0.32,
+    "share_of_all_gains_pct": 42.0,
+    "days_in_window_pct": 34.0
+   },
+   "T+1 era (Jun 2024+)": {
+    "avg_bps_by_day (0=last day, 1=first day)": {
+     "-6": 18.3,
+     "-5": 5.7,
+     "-4": 41.9,
+     "-3": 24.2,
+     "-2": -18.2,
+     "-1": -9.3,
+     "0": -8.3,
+     "1": -34.2,
+     "2": 30.7,
+     "3": 17.5,
+     "4": -28.8,
+     "5": -14.1,
+     "6": 17.5
+    },
+    "window_-3_to_+3_bps": 0.3,
+    "other_days_bps": 9.2,
+    "diff_t": -0.82,
+    "share_of_all_gains_pct": 2.0,
+    "days_in_window_pct": 34.0
+   }
+  }
+ },
+ "pension_rebalancing": {
+  "1993-2008": {
+   "stocks lagged bonds (bottom third)": {
+    "months": 63,
+    "avg_fwd_bps": 90.2,
+    "up_pct": 71.0
+   },
+   "middle": {
+    "months": 63,
+    "avg_fwd_bps": 20.7,
+    "up_pct": 63.0
+   },
+   "stocks beat bonds (top third)": {
+    "months": 63,
+    "avg_fwd_bps": 16.0,
+    "up_pct": 56.0
+   },
+   "corr_gap_vs_fwd": -0.169
+  },
+  "2009-2015": {
+   "stocks lagged bonds (bottom third)": {
+    "months": 28,
+    "avg_fwd_bps": -26.1,
+    "up_pct": 50.0
+   },
+   "middle": {
+    "months": 28,
+    "avg_fwd_bps": 33.6,
+    "up_pct": 64.0
+   },
+   "stocks beat bonds (top third)": {
+    "months": 28,
+    "avg_fwd_bps": 35.1,
+    "up_pct": 68.0
+   },
+   "corr_gap_vs_fwd": 0.079
+  },
+  "2016-2026": {
+   "stocks lagged bonds (bottom third)": {
+    "months": 44,
+    "avg_fwd_bps": 63.3,
+    "up_pct": 61.0
+   },
+   "middle": {
+    "months": 42,
+    "avg_fwd_bps": 19.7,
+    "up_pct": 60.0
+   },
+   "stocks beat bonds (top third)": {
+    "months": 44,
+    "avg_fwd_bps": 8.1,
+    "up_pct": 59.0
+   },
+   "corr_gap_vs_fwd": -0.104
+  },
+  "T+1 era (Jun 2024+)": {
+   "stocks lagged bonds (bottom third)": {
+    "months": 10,
+    "avg_fwd_bps": 27.6,
+    "up_pct": 50.0
+   },
+   "middle": {
+    "months": 9,
+    "avg_fwd_bps": -35.2,
+    "up_pct": 22.0
+   },
+   "stocks beat bonds (top third)": {
+    "months": 10,
+    "avg_fwd_bps": -40.8,
+    "up_pct": 50.0
+   },
+   "corr_gap_vs_fwd": -0.034
+  }
+ },
+ "deposit_timing": {
+  "1993-2008": {
+   "buy on day -4": {
+    "n": 190,
+    "avg_12m_return_pct": 8.66
+   },
+   "buy on day +1": {
+    "n": 189,
+    "avg_12m_return_pct": 8.24
+   },
+   "buy on day +4": {
+    "n": 189,
+    "avg_12m_return_pct": 8.54
+   }
+  },
+  "2009-2015": {
+   "buy on day -4": {
+    "n": 84,
+    "avg_12m_return_pct": 14.92
+   },
+   "buy on day +1": {
+    "n": 84,
+    "avg_12m_return_pct": 15.27
+   },
+   "buy on day +4": {
+    "n": 84,
+    "avg_12m_return_pct": 14.99
+   }
+  },
+  "2016-2026": {
+   "buy on day -4": {
+    "n": 118,
+    "avg_12m_return_pct": 16.22
+   },
+   "buy on day +1": {
+    "n": 119,
+    "avg_12m_return_pct": 16.15
+   },
+   "buy on day +4": {
+    "n": 119,
+    "avg_12m_return_pct": 16.15
+   }
+  },
+  "T+1 era (Jun 2024+)": {
+   "buy on day -4": {
+    "n": 17,
+    "avg_12m_return_pct": 19.02
+   },
+   "buy on day +1": {
+    "n": 18,
+    "avg_12m_return_pct": 19.4
+   },
+   "buy on day +4": {
+    "n": 18,
+    "avg_12m_return_pct": 20.41
+   }
+  }
+ },
+ "last_4_days": {
+  "1993-2008": {
+   "months": 190,
+   "avg_bps_day-4_to_0": 25.8,
+   "any_4_days_avg_bps": 13.0
+  },
+  "2009-2015": {
+   "months": 84,
+   "avg_bps_day-4_to_0": 16.0,
+   "any_4_days_avg_bps": 24.3
+  },
+  "2016-2026": {
+   "months": 131,
+   "avg_bps_day-4_to_0": 33.2,
+   "any_4_days_avg_bps": 24.2
+  },
+  "T+1 era (Jun 2024+)": {
+   "months": 30,
+   "avg_bps_day-4_to_0": 26.3,
+   "any_4_days_avg_bps": 27.2
+  }
+ }
+}
