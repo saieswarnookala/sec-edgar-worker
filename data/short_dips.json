@@ -1,0 +1,909 @@
+{
+ "note": "Short interest as a filter on the dip bot (Nov 15 2026). Research only, not financial advice.\nQuestion: when an S&P 500 stock triggers the live dip rule, does it bounce differently if short sellers hold a lot of it\n(days to cover = shares short / average daily volume) or have been adding to their bets?\nData: FINRA consolidated short interest files (free, twice a month, exchange-listed + OTC), available from ~mid-2019:\nhttps://cdn.finra.org/equity/otcmarket/biweekly/shrtYYYYMMDD.csv (YYYYMMDD = settlement date). A report counts only\n12 calendar days after its settlement date (FINRA publishes ~8 business days later), so there is no look-ahead.\nDip rule = live paper-dip.mjs (10% vs SPY in 5 days, above 200-day avg, price >= $5, volume <= 2x); also bot 6 tuned (8%/150-day/hold 7).\nCache: each file parsed once into R2 (finra/si/<date>.json.gz) + index of settlement dates found (finra/si_index.json.gz).\nModes (env DRY): unset = real data; 'random' = random days-to-cover (should show NO edge); 'planted' = high days-to-cover on the\nbest bounces (MUST show an edge).",
+ "built": "2026-11-15",
+ "dry": null,
+ "start": "2018-01-10",
+ "reports": [
+  "20171229",
+  "20180112",
+  "20180131",
+  "20180215",
+  "20180228",
+  "20180315",
+  "20180329",
+  "20180413",
+  "20180430",
+  "20180515",
+  "20180531",
+  "20180615",
+  "20180629",
+  "20180713",
+  "20180731",
+  "20180815",
+  "20180831",
+  "20180914",
+  "20180928",
+  "20181015",
+  "20181031",
+  "20181115",
+  "20181130",
+  "20181214",
+  "20181231",
+  "20190115",
+  "20190131",
+  "20190215",
+  "20190228",
+  "20190315",
+  "20190329",
+  "20190415",
+  "20190430",
+  "20190515",
+  "20190531",
+  "20190614",
+  "20190628",
+  "20190715",
+  "20190731",
+  "20190815",
+  "20190830",
+  "20190913",
+  "20190930",
+  "20191015",
+  "20191031",
+  "20191115",
+  "20191129",
+  "20191213",
+  "20191231",
+  "20200115",
+  "20200131",
+  "20200214",
+  "20200228",
+  "20200313",
+  "20200331",
+  "20200415",
+  "20200430",
+  "20200515",
+  "20200529",
+  "20200615",
+  "20200630",
+  "20200715",
+  "20200731",
+  "20200814",
+  "20200831",
+  "20200915",
+  "20200930",
+  "20201015",
+  "20201030",
+  "20201113",
+  "20201130",
+  "20201215",
+  "20201231",
+  "20210115",
+  "20210129",
+  "20210212",
+  "20210226",
+  "20210315",
+  "20210331",
+  "20210415",
+  "20210430",
+  "20210514",
+  "20210528",
+  "20210615",
+  "20210630",
+  "20210715",
+  "20210730",
+  "20210813",
+  "20210831",
+  "20210915",
+  "20210930",
+  "20211015",
+  "20211029",
+  "20211115",
+  "20211130",
+  "20211215",
+  "20211231",
+  "20220114",
+  "20220131",
+  "20220215",
+  "20220228",
+  "20220315",
+  "20220331",
+  "20220414",
+  "20220429",
+  "20220513",
+  "20220531",
+  "20220615",
+  "20220630",
+  "20220715",
+  "20220729",
+  "20220815",
+  "20220831",
+  "20220915",
+  "20220930",
+  "20221014",
+  "20221031",
+  "20221115",
+  "20221130",
+  "20221215",
+  "20221230",
+  "20230113",
+  "20230131",
+  "20230215",
+  "20230228",
+  "20230315",
+  "20230331",
+  "20230414",
+  "20230428",
+  "20230515",
+  "20230531",
+  "20230615",
+  "20230630",
+  "20230714",
+  "20230731",
+  "20230815",
+  "20230831",
+  "20230915",
+  "20230929",
+  "20231013",
+  "20231031",
+  "20231115",
+  "20231130",
+  "20231215",
+  "20231229",
+  "20240112",
+  "20240131",
+  "20240215",
+  "20240229",
+  "20240315",
+  "20240328",
+  "20240415",
+  "20240430",
+  "20240515",
+  "20240531",
+  "20240614",
+  "20240628",
+  "20240715",
+  "20240731",
+  "20240815",
+  "20240830",
+  "20240913",
+  "20240930",
+  "20241015",
+  "20241031",
+  "20241115",
+  "20241129",
+  "20241213",
+  "20241231",
+  "20250115",
+  "20250131",
+  "20250214",
+  "20250228",
+  "20250314",
+  "20250331",
+  "20250415",
+  "20250430",
+  "20250515",
+  "20250530",
+  "20250613",
+  "20250630",
+  "20250715",
+  "20250731",
+  "20250815",
+  "20250829",
+  "20250915",
+  "20250930",
+  "20251015",
+  "20251031",
+  "20251114",
+  "20251128",
+  "20251215",
+  "20251231",
+  "20260115",
+  "20260130",
+  "20260213",
+  "20260227",
+  "20260313",
+  "20260331",
+  "20260415",
+  "20260430",
+  "20260515",
+  "20260529",
+  "20260615",
+  "20260630",
+  "20260715",
+  "20260731",
+  "20260814",
+  "20260831",
+  "20260915",
+  "20260930",
+  "20261015"
+ ],
+ "dip_trades": 8719,
+ "groups": {
+  "0.08/150": {
+   "all dips with short data": {
+    "all": {
+     "n": 5818,
+     "avg_trade_pct": 0.76,
+     "win_pct": 67.0,
+     "avg_vs_spy_pct": 0.46
+    },
+    "2019-2022": {
+     "n": 2488,
+     "avg_trade_pct": 0.76,
+     "win_pct": 67.8,
+     "avg_vs_spy_pct": 0.51
+    },
+    "2023-2026": {
+     "n": 3330,
+     "avg_trade_pct": 0.76,
+     "win_pct": 66.4,
+     "avg_vs_spy_pct": 0.42
+    }
+   },
+   "days to cover < 2": {
+    "all": {
+     "n": 1760,
+     "avg_trade_pct": 1.23,
+     "win_pct": 69.6,
+     "avg_vs_spy_pct": 0.82,
+     "diff_vs_rest_pct": 0.67,
+     "t_stat": 4.49
+    },
+    "2019-2022": {
+     "n": 788,
+     "avg_trade_pct": 0.92,
+     "win_pct": 69.9,
+     "avg_vs_spy_pct": 0.43,
+     "diff_vs_rest_pct": 0.23,
+     "t_stat": 1.2
+    },
+    "2023-2026": {
+     "n": 972,
+     "avg_trade_pct": 1.48,
+     "win_pct": 69.3,
+     "avg_vs_spy_pct": 1.14,
+     "diff_vs_rest_pct": 1.02,
+     "t_stat": 4.61
+    }
+   },
+   "days to cover 2-5": {
+    "all": {
+     "n": 3283,
+     "avg_trade_pct": 0.65,
+     "win_pct": 66.6,
+     "avg_vs_spy_pct": 0.4,
+     "diff_vs_rest_pct": -0.25,
+     "t_stat": -1.93
+    },
+    "2019-2022": {
+     "n": 1333,
+     "avg_trade_pct": 0.73,
+     "win_pct": 67.0,
+     "avg_vs_spy_pct": 0.6,
+     "diff_vs_rest_pct": -0.05,
+     "t_stat": -0.27
+    },
+    "2023-2026": {
+     "n": 1950,
+     "avg_trade_pct": 0.59,
+     "win_pct": 66.3,
+     "avg_vs_spy_pct": 0.26,
+     "diff_vs_rest_pct": -0.41,
+     "t_stat": -2.18
+    }
+   },
+   "days to cover >= 5": {
+    "all": {
+     "n": 775,
+     "avg_trade_pct": 0.15,
+     "win_pct": 62.8,
+     "avg_vs_spy_pct": -0.09,
+     "diff_vs_rest_pct": -0.7,
+     "t_stat": -4.09
+    },
+    "2019-2022": {
+     "n": 367,
+     "avg_trade_pct": 0.49,
+     "win_pct": 66.5,
+     "avg_vs_spy_pct": 0.33,
+     "diff_vs_rest_pct": -0.31,
+     "t_stat": -1.27
+    },
+    "2023-2026": {
+     "n": 408,
+     "avg_trade_pct": -0.15,
+     "win_pct": 59.6,
+     "avg_vs_spy_pct": -0.48,
+     "diff_vs_rest_pct": -1.04,
+     "t_stat": -4.37
+    }
+   },
+   "most shorted 20% (dtc >= 4.2)": {
+    "all": {
+     "n": 1167,
+     "avg_trade_pct": 0.17,
+     "win_pct": 63.1,
+     "avg_vs_spy_pct": -0.05,
+     "diff_vs_rest_pct": -0.73,
+     "t_stat": -5.02
+    },
+    "2019-2022": {
+     "n": 536,
+     "avg_trade_pct": 0.39,
+     "win_pct": 65.5,
+     "avg_vs_spy_pct": 0.26,
+     "diff_vs_rest_pct": -0.46,
+     "t_stat": -2.2
+    },
+    "2023-2026": {
+     "n": 631,
+     "avg_trade_pct": -0.01,
+     "win_pct": 61.0,
+     "avg_vs_spy_pct": -0.31,
+     "diff_vs_rest_pct": -0.96,
+     "t_stat": -4.75
+    }
+   },
+   "least shorted 20% (dtc <= 1.6)": {
+    "all": {
+     "n": 1165,
+     "avg_trade_pct": 1.21,
+     "win_pct": 69.8,
+     "avg_vs_spy_pct": 0.81,
+     "diff_vs_rest_pct": 0.57,
+     "t_stat": 3.07
+    },
+    "2019-2022": {
+     "n": 505,
+     "avg_trade_pct": 0.79,
+     "win_pct": 69.1,
+     "avg_vs_spy_pct": 0.26,
+     "diff_vs_rest_pct": 0.04,
+     "t_stat": 0.16
+    },
+    "2023-2026": {
+     "n": 660,
+     "avg_trade_pct": 1.54,
+     "win_pct": 70.3,
+     "avg_vs_spy_pct": 1.23,
+     "diff_vs_rest_pct": 0.97,
+     "t_stat": 3.59
+    }
+   },
+   "shorts added 20%+ last report": {
+    "all": {
+     "n": 384,
+     "avg_trade_pct": 0.83,
+     "win_pct": 70.3,
+     "avg_vs_spy_pct": 0.53,
+     "diff_vs_rest_pct": 0.08,
+     "t_stat": 0.38
+    },
+    "2019-2022": {
+     "n": 193,
+     "avg_trade_pct": 0.74,
+     "win_pct": 71.5,
+     "avg_vs_spy_pct": 0.48,
+     "diff_vs_rest_pct": -0.02,
+     "t_stat": -0.06
+    },
+    "2023-2026": {
+     "n": 191,
+     "avg_trade_pct": 0.93,
+     "win_pct": 69.1,
+     "avg_vs_spy_pct": 0.58,
+     "diff_vs_rest_pct": 0.18,
+     "t_stat": 0.61
+    }
+   },
+   "shorts cut 10%+ last report": {
+    "all": {
+     "n": 1064,
+     "avg_trade_pct": 0.88,
+     "win_pct": 67.5,
+     "avg_vs_spy_pct": 0.6,
+     "diff_vs_rest_pct": 0.15,
+     "t_stat": 0.86
+    },
+    "2019-2022": {
+     "n": 472,
+     "avg_trade_pct": 0.52,
+     "win_pct": 67.4,
+     "avg_vs_spy_pct": 0.39,
+     "diff_vs_rest_pct": -0.29,
+     "t_stat": -1.29
+    },
+    "2023-2026": {
+     "n": 592,
+     "avg_trade_pct": 1.16,
+     "win_pct": 67.6,
+     "avg_vs_spy_pct": 0.78,
+     "diff_vs_rest_pct": 0.49,
+     "t_stat": 1.99
+    }
+   }
+  },
+  "0.10/200": {
+   "all dips with short data": {
+    "all": {
+     "n": 2734,
+     "avg_trade_pct": 1.21,
+     "win_pct": 68.9,
+     "avg_vs_spy_pct": 0.82
+    },
+    "2019-2022": {
+     "n": 1081,
+     "avg_trade_pct": 1.04,
+     "win_pct": 69.0,
+     "avg_vs_spy_pct": 0.64
+    },
+    "2023-2026": {
+     "n": 1653,
+     "avg_trade_pct": 1.32,
+     "win_pct": 68.9,
+     "avg_vs_spy_pct": 0.93
+    }
+   },
+   "days to cover < 2": {
+    "all": {
+     "n": 998,
+     "avg_trade_pct": 1.8,
+     "win_pct": 70.2,
+     "avg_vs_spy_pct": 1.35,
+     "diff_vs_rest_pct": 0.93,
+     "t_stat": 4.17
+    },
+    "2019-2022": {
+     "n": 401,
+     "avg_trade_pct": 1.09,
+     "win_pct": 67.8,
+     "avg_vs_spy_pct": 0.44,
+     "diff_vs_rest_pct": 0.07,
+     "t_stat": 0.24
+    },
+    "2023-2026": {
+     "n": 597,
+     "avg_trade_pct": 2.28,
+     "win_pct": 71.9,
+     "avg_vs_spy_pct": 1.96,
+     "diff_vs_rest_pct": 1.5,
+     "t_stat": 4.85
+    }
+   },
+   "days to cover 2-5": {
+    "all": {
+     "n": 1419,
+     "avg_trade_pct": 1.05,
+     "win_pct": 69.3,
+     "avg_vs_spy_pct": 0.71,
+     "diff_vs_rest_pct": -0.34,
+     "t_stat": -1.64
+    },
+    "2019-2022": {
+     "n": 552,
+     "avg_trade_pct": 1.11,
+     "win_pct": 70.1,
+     "avg_vs_spy_pct": 0.9,
+     "diff_vs_rest_pct": 0.13,
+     "t_stat": 0.43
+    },
+    "2023-2026": {
+     "n": 867,
+     "avg_trade_pct": 1.02,
+     "win_pct": 68.7,
+     "avg_vs_spy_pct": 0.59,
+     "diff_vs_rest_pct": -0.64,
+     "t_stat": -2.29
+    }
+   },
+   "days to cover >= 5": {
+    "all": {
+     "n": 317,
+     "avg_trade_pct": 0.08,
+     "win_pct": 63.4,
+     "avg_vs_spy_pct": -0.39,
+     "diff_vs_rest_pct": -1.28,
+     "t_stat": -4.35
+    },
+    "2019-2022": {
+     "n": 128,
+     "avg_trade_pct": 0.64,
+     "win_pct": 68.0,
+     "avg_vs_spy_pct": 0.13,
+     "diff_vs_rest_pct": -0.46,
+     "t_stat": -1.11
+    },
+    "2023-2026": {
+     "n": 189,
+     "avg_trade_pct": -0.29,
+     "win_pct": 60.3,
+     "avg_vs_spy_pct": -0.73,
+     "diff_vs_rest_pct": -1.83,
+     "t_stat": -4.54
+    }
+   },
+   "most shorted 20% (dtc >= 4.0)": {
+    "all": {
+     "n": 547,
+     "avg_trade_pct": 0.2,
+     "win_pct": 64.0,
+     "avg_vs_spy_pct": -0.06,
+     "diff_vs_rest_pct": -1.26,
+     "t_stat": -5.64
+    },
+    "2019-2022": {
+     "n": 198,
+     "avg_trade_pct": 0.46,
+     "win_pct": 66.2,
+     "avg_vs_spy_pct": 0.33,
+     "diff_vs_rest_pct": -0.72,
+     "t_stat": -2.07
+    },
+    "2023-2026": {
+     "n": 349,
+     "avg_trade_pct": 0.06,
+     "win_pct": 62.8,
+     "avg_vs_spy_pct": -0.28,
+     "diff_vs_rest_pct": -1.6,
+     "t_stat": -5.49
+    }
+   },
+   "least shorted 20% (dtc <= 1.4)": {
+    "all": {
+     "n": 552,
+     "avg_trade_pct": 1.62,
+     "win_pct": 67.9,
+     "avg_vs_spy_pct": 1.28,
+     "diff_vs_rest_pct": 0.51,
+     "t_stat": 1.67
+    },
+    "2019-2022": {
+     "n": 201,
+     "avg_trade_pct": 0.87,
+     "win_pct": 68.2,
+     "avg_vs_spy_pct": 0.34,
+     "diff_vs_rest_pct": -0.22,
+     "t_stat": -0.5
+    },
+    "2023-2026": {
+     "n": 351,
+     "avg_trade_pct": 2.05,
+     "win_pct": 67.8,
+     "avg_vs_spy_pct": 1.82,
+     "diff_vs_rest_pct": 0.92,
+     "t_stat": 2.28
+    }
+   },
+   "shorts added 20%+ last report": {
+    "all": {
+     "n": 179,
+     "avg_trade_pct": 1.72,
+     "win_pct": 71.5,
+     "avg_vs_spy_pct": 1.3,
+     "diff_vs_rest_pct": 0.55,
+     "t_stat": 1.69
+    },
+    "2019-2022": {
+     "n": 99,
+     "avg_trade_pct": 1.2,
+     "win_pct": 67.7,
+     "avg_vs_spy_pct": 0.64,
+     "diff_vs_rest_pct": 0.17,
+     "t_stat": 0.37
+    },
+    "2023-2026": {
+     "n": 80,
+     "avg_trade_pct": 2.37,
+     "win_pct": 76.2,
+     "avg_vs_spy_pct": 2.13,
+     "diff_vs_rest_pct": 1.1,
+     "t_stat": 2.53
+    }
+   },
+   "shorts cut 10%+ last report": {
+    "all": {
+     "n": 539,
+     "avg_trade_pct": 1.35,
+     "win_pct": 70.7,
+     "avg_vs_spy_pct": 0.93,
+     "diff_vs_rest_pct": 0.16,
+     "t_stat": 0.63
+    },
+    "2019-2022": {
+     "n": 212,
+     "avg_trade_pct": 0.61,
+     "win_pct": 69.3,
+     "avg_vs_spy_pct": 0.19,
+     "diff_vs_rest_pct": -0.53,
+     "t_stat": -1.47
+    },
+    "2023-2026": {
+     "n": 327,
+     "avg_trade_pct": 1.82,
+     "win_pct": 71.6,
+     "avg_vs_spy_pct": 1.41,
+     "diff_vs_rest_pct": 0.62,
+     "t_stat": 1.73
+    }
+   }
+  }
+ },
+ "portfolio": {
+  "today | rules as now": {
+   "all": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.0,
+    "trades_per_month": 12.5,
+    "avg_trade_pct": 0.94
+   },
+   "2019-2022": {
+    "per_year_pct": 14.0,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 8.8,
+    "trades_per_month": 9.8,
+    "avg_trade_pct": 0.89
+   },
+   "2023-2026": {
+    "per_year_pct": 35.2,
+    "worst_drop_pct": -15.4,
+    "spy_pct": 21.2,
+    "trades_per_month": 16.1,
+    "avg_trade_pct": 0.98
+   }
+  },
+  "today | skip days-to-cover >= 5": {
+   "all": {
+    "per_year_pct": 24.0,
+    "worst_drop_pct": -16.3,
+    "spy_pct": 14.0,
+    "trades_per_month": 11.4,
+    "avg_trade_pct": 1.07
+   },
+   "2019-2022": {
+    "per_year_pct": 13.4,
+    "worst_drop_pct": -16.3,
+    "spy_pct": 8.8,
+    "trades_per_month": 8.7,
+    "avg_trade_pct": 0.9
+   },
+   "2023-2026": {
+    "per_year_pct": 39.4,
+    "worst_drop_pct": -14.8,
+    "spy_pct": 21.2,
+    "trades_per_month": 14.8,
+    "avg_trade_pct": 1.2
+   }
+  },
+  "today | skip days-to-cover >= 3": {
+   "all": {
+    "per_year_pct": 23.2,
+    "worst_drop_pct": -16.9,
+    "spy_pct": 14.0,
+    "trades_per_month": 8.6,
+    "avg_trade_pct": 1.34
+   },
+   "2019-2022": {
+    "per_year_pct": 11.8,
+    "worst_drop_pct": -16.9,
+    "spy_pct": 8.8,
+    "trades_per_month": 6.8,
+    "avg_trade_pct": 0.97
+   },
+   "2023-2026": {
+    "per_year_pct": 40.1,
+    "worst_drop_pct": -13.8,
+    "spy_pct": 21.2,
+    "trades_per_month": 11.1,
+    "avg_trade_pct": 1.62
+   }
+  },
+  "today | most shorted first": {
+   "all": {
+    "per_year_pct": 22.3,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.0,
+    "trades_per_month": 12.6,
+    "avg_trade_pct": 0.92
+   },
+   "2019-2022": {
+    "per_year_pct": 14.0,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 8.8,
+    "trades_per_month": 9.9,
+    "avg_trade_pct": 0.89
+   },
+   "2023-2026": {
+    "per_year_pct": 34.2,
+    "worst_drop_pct": -15.8,
+    "spy_pct": 21.2,
+    "trades_per_month": 16.2,
+    "avg_trade_pct": 0.94
+   }
+  },
+  "today | least shorted first": {
+   "all": {
+    "per_year_pct": 23.2,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.0,
+    "trades_per_month": 12.5,
+    "avg_trade_pct": 0.97
+   },
+   "2019-2022": {
+    "per_year_pct": 13.1,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 8.8,
+    "trades_per_month": 9.8,
+    "avg_trade_pct": 0.85
+   },
+   "2023-2026": {
+    "per_year_pct": 37.9,
+    "worst_drop_pct": -15.0,
+    "spy_pct": 21.2,
+    "trades_per_month": 16.1,
+    "avg_trade_pct": 1.07
+   }
+  },
+  "today | only days-to-cover >= 3": {
+   "all": {
+    "per_year_pct": 12.4,
+    "worst_drop_pct": -16.0,
+    "spy_pct": 14.0,
+    "trades_per_month": 5.2,
+    "avg_trade_pct": 0.62
+   },
+   "2019-2022": {
+    "per_year_pct": 8.5,
+    "worst_drop_pct": -16.0,
+    "spy_pct": 8.8,
+    "trades_per_month": 3.8,
+    "avg_trade_pct": 0.94
+   },
+   "2023-2026": {
+    "per_year_pct": 17.8,
+    "worst_drop_pct": -9.8,
+    "spy_pct": 21.2,
+    "trades_per_month": 6.9,
+    "avg_trade_pct": 0.39
+   }
+  },
+  "bot6 | rules as now": {
+   "all": {
+    "per_year_pct": 21.0,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 14.0,
+    "trades_per_month": 22.7,
+    "avg_trade_pct": 0.49
+   },
+   "2019-2022": {
+    "per_year_pct": 15.9,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 8.8,
+    "trades_per_month": 19.3,
+    "avg_trade_pct": 0.51
+   },
+   "2023-2026": {
+    "per_year_pct": 28.0,
+    "worst_drop_pct": -18.9,
+    "spy_pct": 21.2,
+    "trades_per_month": 27.1,
+    "avg_trade_pct": 0.47
+   }
+  },
+  "bot6 | skip days-to-cover >= 5": {
+   "all": {
+    "per_year_pct": 22.8,
+    "worst_drop_pct": -18.7,
+    "spy_pct": 14.0,
+    "trades_per_month": 20.5,
+    "avg_trade_pct": 0.61
+   },
+   "2019-2022": {
+    "per_year_pct": 15.7,
+    "worst_drop_pct": -17.7,
+    "spy_pct": 8.8,
+    "trades_per_month": 17.0,
+    "avg_trade_pct": 0.59
+   },
+   "2023-2026": {
+    "per_year_pct": 32.9,
+    "worst_drop_pct": -16.4,
+    "spy_pct": 21.2,
+    "trades_per_month": 25.1,
+    "avg_trade_pct": 0.62
+   }
+  },
+  "bot6 | skip days-to-cover >= 3": {
+   "all": {
+    "per_year_pct": 23.9,
+    "worst_drop_pct": -16.7,
+    "spy_pct": 14.0,
+    "trades_per_month": 15.8,
+    "avg_trade_pct": 0.81
+   },
+   "2019-2022": {
+    "per_year_pct": 16.0,
+    "worst_drop_pct": -16.7,
+    "spy_pct": 8.8,
+    "trades_per_month": 13.5,
+    "avg_trade_pct": 0.78
+   },
+   "2023-2026": {
+    "per_year_pct": 35.1,
+    "worst_drop_pct": -15.7,
+    "spy_pct": 21.2,
+    "trades_per_month": 18.9,
+    "avg_trade_pct": 0.83
+   }
+  },
+  "bot6 | most shorted first": {
+   "all": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -21.9,
+    "spy_pct": 14.0,
+    "trades_per_month": 22.6,
+    "avg_trade_pct": 0.36
+   },
+   "2019-2022": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -20.6,
+    "spy_pct": 8.8,
+    "trades_per_month": 19.3,
+    "avg_trade_pct": 0.47
+   },
+   "2023-2026": {
+    "per_year_pct": 19.9,
+    "worst_drop_pct": -21.9,
+    "spy_pct": 21.2,
+    "trades_per_month": 26.9,
+    "avg_trade_pct": 0.25
+   }
+  },
+  "bot6 | least shorted first": {
+   "all": {
+    "per_year_pct": 22.5,
+    "worst_drop_pct": -20.3,
+    "spy_pct": 14.0,
+    "trades_per_month": 23.0,
+    "avg_trade_pct": 0.53
+   },
+   "2019-2022": {
+    "per_year_pct": 17.6,
+    "worst_drop_pct": -20.3,
+    "spy_pct": 8.8,
+    "trades_per_month": 19.6,
+    "avg_trade_pct": 0.57
+   },
+   "2023-2026": {
+    "per_year_pct": 29.2,
+    "worst_drop_pct": -17.9,
+    "spy_pct": 21.2,
+    "trades_per_month": 27.4,
+    "avg_trade_pct": 0.49
+   }
+  },
+  "bot6 | only days-to-cover >= 3": {
+   "all": {
+    "per_year_pct": 12.5,
+    "worst_drop_pct": -18.0,
+    "spy_pct": 14.0,
+    "trades_per_month": 11.3,
+    "avg_trade_pct": 0.32
+   },
+   "2019-2022": {
+    "per_year_pct": 10.8,
+    "worst_drop_pct": -18.0,
+    "spy_pct": 8.8,
+    "trades_per_month": 9.2,
+    "avg_trade_pct": 0.59
+   },
+   "2023-2026": {
+    "per_year_pct": 14.8,
+    "worst_drop_pct": -16.2,
+    "spy_pct": 21.2,
+    "trades_per_month": 13.9,
+    "avg_trade_pct": 0.09
+   }
+  }
+ }
+}
