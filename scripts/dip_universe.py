@@ -17,10 +17,16 @@ OUT = f"data/dip_universe_{U}{'_smoke' if LIMIT else ''}.json"
 
 if U == "us_all":
     H = {"APCA-API-KEY-ID": os.environ["APCA_API_KEY_ID"], "APCA-API-SECRET-KEY": os.environ["APCA_API_SECRET_KEY"]}
+    RATE = float(os.environ.get("RATE_PER_MIN", "150")); _last = [0.0]
     def get(url):
-        for i in range(6):
+        for i in range(10):
+            w = 60.0 / RATE - (time.time() - _last[0])
+            if w > 0: time.sleep(w)
+            _last[0] = time.time()
             try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=120))
             except urllib.error.HTTPError as e:
+                if e.code == 429:
+                    ra = e.headers.get("Retry-After"); time.sleep(float(ra) if ra and ra.replace(".", "").isdigit() else min(120, 15 * (i + 1))); continue
                 if e.code in (400, 403, 404, 422): print("HTTP", e.code, e.read()[:200], flush=True); return None
                 time.sleep(5 * (i + 1))
             except Exception: time.sleep(3 * (i + 1))
@@ -32,6 +38,14 @@ if U == "us_all":
             s = a["symbol"]
             if a.get("exchange") in ("NYSE", "NASDAQ", "AMEX", "ARCA", "BATS") and re.fullmatch(r"[A-Z]{1,5}", s) and not FUNDWORDS.search(a.get("name") or ""):
                 assets[s] = st
+    SPCHECK = os.environ.get("SP_CHECK") == "1"
+    if SPCHECK:
+        mf = "/tmp/membership_intervals.parquet"
+        if not os.path.exists(mf): urllib.request.urlretrieve("https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/membership_intervals.parquet", mf)
+        memi = pd.read_parquet(mf); memi["start"] = pd.to_datetime(memi.start); memi["end"] = pd.to_datetime(memi.end)
+        memi = memi[(memi.end.isna()) | (memi.end >= "2016-01-01")]
+        assets = {k: v for k, v in assets.items() if k in set(memi.ticker)}
+        OUT = "data/dip_universe_us_all_spcheck.json"
     syms = sorted(assets)
     if LIMIT: syms = [s for s in syms if s in ("SPY",)] + syms[:LIMIT]
     if "SPY" not in syms: syms = ["SPY"] + syms
@@ -61,7 +75,14 @@ if U == "us_all":
     C = np.array([[rows[s].get(d, (np.nan, np.nan))[0] for s in tick] for d in ds], dtype=np.float32).astype(float)
     V = np.array([[rows[s].get(d, (np.nan, np.nan))[1] for s in tick] for d in ds], dtype=np.float32).astype(float)
     SP = np.array([rows["SPY"][d][0] for d in ds]); del rows
-    MEMB = ~np.isnan(C); START = "2016-01-01"; HALVES = (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01"))
+    MEMB = ~np.isnan(C); START = "2016-01-01"
+    if SPCHECK:
+        mm = np.zeros_like(MEMB)
+        for _, m in memi.iterrows():
+            if m.ticker in tick:
+                j = tick.index(m.ticker); a = dates.searchsorted(m.start); b = dates.searchsorted(m.end) if pd.notna(m.end) else len(dates)
+                mm[a:b, j] = True
+        MEMB &= mm; HALVES = (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01"))
 else:
     REL = "https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/"
     for f in ["prices.parquet", "membership_intervals.parquet"]:
@@ -149,11 +170,13 @@ def counts(sig):
 
 out = {"note": __doc__, "universe": U, "period": f"{dates[t0].date()} to {dates[-1].date()}", "stocks": N}
 UNIS = {"large": (0,), "mid": (1,), "small": (2,), "large+mid": (0, 1), "large+mid+small": (0, 1, 2)} if U == "us_all" else {"S&P 500 members": (0, 1, 2, 3)}
+if U == "us_all" and os.environ.get("SP_CHECK") == "1": UNIS = {"S&P 500 members (Alpaca data)": (0, 1, 2, 3)}
 out["universes"] = {}
 for un, sz in UNIS.items():
     s, ex = signal(sizes=sz); out["universes"][un] = {"counts": counts(s), "bot": sim(s, ex)}
     print("UNIVERSE", un, out["universes"][un]["counts"], out["universes"][un]["bot"]["full"], flush=True)
-base_sizes = (0, 1) if U == "us_all" else (0, 1, 2, 3)
+base_sizes = (0, 1) if U == "us_all" and os.environ.get("SP_CHECK") != "1" else (0, 1, 2, 3)
+if os.environ.get("SP_CHECK") == "1": VARS_ONLY_BASE = True
 VARS = [("base (live bot rules)", {}, {})] + \
        [(f"trend: {k}-day avg", {"trend": k}, {}) for k in (100, 150, 250)] + [("trend: none", {"trend": 0}, {})] + \
        [(f"dip: {int(d * 100)}%", {"dip": d}, {}) for d in (0.08, 0.12, 0.15)] + \
@@ -164,7 +187,7 @@ VARS = [("base (live bot rules)", {}, {})] + \
        [("15 slots x 6.7%", {}, {"slots": 15, "w": 1 / 15}), ("20 slots x 5%", {}, {"slots": 20, "w": 0.05})]
 out["variants_universe"] = "large+mid" if U == "us_all" else "S&P 500 members"
 out["variants"] = {}
-for name, sk, mk in VARS:
+for name, sk, mk in (VARS[:1] if os.environ.get("SP_CHECK") == "1" else VARS):
     s, ex = signal(**{"sizes": base_sizes, **sk}); r = sim(s, ex, **mk); r["counts"] = counts(s)
     out["variants"][name] = r
     print("VAR", name, "|", r["full"], "|", {h[0]: r[h[0]]["per_year_pct"] for h in HALVES}, "| sig/mo", r["counts"]["signals_per_month_avg"], flush=True)
