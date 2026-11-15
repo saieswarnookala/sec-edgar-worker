@@ -66,7 +66,7 @@ else:
         for i in range(6):
             try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=120))
             except urllib.error.HTTPError as e:
-                if e.code in (400, 403, 404, 422): return None
+                if e.code in (400, 403, 404, 422): print("HTTP", e.code, e.read()[:300], flush=True); return None
                 time.sleep(5 * (i + 1))
             except Exception: time.sleep(3 * (i + 1))
         return None

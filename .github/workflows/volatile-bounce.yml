@@ -1,6 +1,8 @@
 name: Volatile bounce scenarios
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      universes: { description: 'JSON list', default: '["sp500", "popular"]' }
 permissions:
   contents: write
 jobs:
@@ -10,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        universe: [sp500, popular]
+        universe: ${{ fromJSON(inputs.universes) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
