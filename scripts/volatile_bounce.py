@@ -100,7 +100,7 @@ else:
         for r in pages:
             for i, form in enumerate(r.get("form", [])):
                 if form.startswith("8-K") and "2.02" in (r.get("items", [""] * (i + 1))[i] or ""):
-                    a = datetime.fromisoformat(r["acceptanceDateTime"].replace("Z", "+00:00")).astimezone(NY)
+                    a = datetime.fromisoformat(r["acceptanceDateTime"][i].replace("Z", "+00:00")).astimezone(NY)
                     evs.append((a.strftime("%Y-%m-%d"), a.hour * 60 + a.minute))
         EVS[t] = evs
     print("earnings events", sum(len(v) for v in EVS.values()), flush=True)
