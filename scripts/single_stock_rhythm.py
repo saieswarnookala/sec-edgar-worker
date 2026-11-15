@@ -76,7 +76,10 @@ def first_true(cond, lo, hi):
     idx = c.argmax(1); idx[~c.any(1)] = -1; return idx
 
 CONFIGS = []   # (family, name, list of (day_index, gross_return))
-def add(fam, name, trades): CONFIGS.append((fam, name, trades))
+HOLD = {}     # rule name -> hold in days, for rules compared against "buy on a random day, same hold"
+def add(fam, name, trades, hold=None):
+    CONFIGS.append((fam, name, trades))
+    if hold: HOLD[name] = hold
 
 # A) time-of-day drift: open of bar a -> close of bar b, every day (the pure "rhythm")
 starts = [0, 15, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
@@ -207,6 +210,33 @@ for act in ("follow", "fade"):
                 if lo and d < 0: continue
                 tr.append((i, d * last30[i]))
             add("J yesterday's last 30 min", f"{act} yesterday's last-30-min move (>= {th * 100:g}%) today in the last 30 min{', long only' if lo else ''}", tr)
+# K) Short swings, max 3 days (Sai's limit). Buy at the open (or right after an intraday trigger), sell at the close
+#    of day 1, 2 or 3. Each is also compared with "buy at the open on ANY day, same hold" so a rising stock's drift
+#    doesn't look like skill (excess_bps).
+for k in (1, 2, 3):
+    for g in (0.01, 0.02, 0.03, 0.04):
+        for side in ("down", "up"):
+            hit = (gap <= -g) if side == "down" else (gap >= g)
+            for act in ("bounce", "follow"):
+                d = (1 if side == "down" else -1) * (1 if act == "bounce" else -1)
+                if d < 0: continue   # long only: Robinhood cash-style account, no shorting
+                add("K swing <= 3 days", f"buy at the open after a {g * 100:g}%+ gap {side} ({act}), sell at the close of day {k}",
+                    [(i, CL[i + k - 1] / O[i, 0] - 1) for i in np.flatnonzero(hit) if i + k - 1 < D], hold=k)
+    for x in (0.01, 0.02, 0.03, 0.05):
+        for side in ("down", "up"):
+            hit = (dret <= -x) if side == "down" else (dret >= x)
+            add("K swing <= 3 days", f"buy the next open after a {x * 100:g}%+ {side} day, sell at the close of day {k}",
+                [(i + 1, CL[i + k] / O[i + 1, 0] - 1) for i in np.flatnonzero(hit) if i + k < D], hold=k)
+    for x in (0.02, 0.03, 0.05):
+        sig = first_true(C <= O[:, :1] * (1 - x), 5, 329)
+        tr = [(i, CL[i + k - 1] / O[i, sig[i] + 1] - 1) for i in np.flatnonzero(sig >= 0) if i + k - 1 < D]
+        add("K swing <= 3 days", f"buy when it falls {x * 100:g}% below the open during the day, sell at the close of day {k}", tr, hold=k)
+    lose = (CL / O[:, 0] - 1)
+    for x in (0.02, 0.03, 0.05):
+        add("K swing <= 3 days", f"buy at the close after a {x * 100:g}%+ drop from open to close, sell at the close {k} day(s) later",
+            [(i, CL[i + k] / CL[i] - 1) for i in np.flatnonzero(lose <= -x) if i + k < D], hold=None)
+# baseline: buy at the open on any day, sell at the close of day k
+BASE = {k: np.array([CL[i + k - 1] / O[i, 0] - 1 if i + k - 1 < D else np.nan for i in range(D)]) for k in (1, 2, 3)}
 print("versions tested", len(CONFIGS), flush=True)
 
 # ---------- score ----------
@@ -219,7 +249,13 @@ def stats(tr, mask, cost=COST):
             "per_year_pct": round(float(r.sum() / yrs) * 100, 1), "worst_bps": round(float(r.min()) * 1e4, 0)}
 res = []
 for fam, name, tr in CONFIGS:
-    res.append({"family": fam, "rule": name, "train": stats(tr, train), "test": stats(tr, test), "test_stress": stats(tr, test, STRESS)})
+    row = {"family": fam, "rule": name, "train": stats(tr, train), "test": stats(tr, test), "test_stress": stats(tr, test, STRESS)}
+    if name in HOLD:
+        for per, m in (("train", train), ("test", test)):
+            b = np.nanmean(BASE[HOLD[name]][m]) - 2 * COST
+            row[per]["random_day_bps"] = round(float(b) * 1e4, 1)
+            if "avg_bps" in row[per]: row[per]["excess_bps"] = round(row[per]["avg_bps"] - b * 1e4, 1)
+    res.append(row)
 ok = [r for r in res if r["train"].get("trades", 0) >= 40 and r["test"].get("trades", 0) >= 15]
 ok.sort(key=lambda r: -r["train"]["t"])
 top = ok[:15]
