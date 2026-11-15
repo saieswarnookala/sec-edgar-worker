@@ -1,0 +1,1016 @@
+{
+ "period": "2017-05-01 to 2026-11-09, rebalanced each May",
+ "warning": "Does the \"quality at a fair price\" screener rule work on mid, small and micro caps too?\nUniverse: every SEC filer with a ticker in today's SEC ticker file and Alpaca price history (2016+), sized each May\nby diluted shares x price. WARNING: companies that went bust or were acquired and lost their ticker are missing\n(survivorship bias). To keep the comparison fair the main benchmark is \"all liquid stocks in the same size group,\nequal weight\", which has the same blind spot; IWM / IJR (real index funds that did hold the losers) are shown too.\nWeekly prices. Each May: score with last calendar year's SEC numbers, buy top N equal weight, hold 12 months. 0.30% cost per side.\nNot financial advice.",
+ "buckets": {
+  "Large+": {
+   "rule_top15": {
+    "cagr": 8.6,
+    "max_dd": -38.7,
+    "2017_2021": 10.9,
+    "2021_2026": 7.0
+   },
+   "log": [
+    {
+     "year": 2017,
+     "universe": 348,
+     "passed": 30,
+     "picks": [
+      "BIIB",
+      "LRCX",
+      "SWKS",
+      "PFG",
+      "MCK",
+      "PSA",
+      "CHKP",
+      "HAS",
+      "FDX",
+      "ROST",
+      "CAH",
+      "UHS",
+      "CPAY",
+      "AMAT",
+      "CVS"
+     ]
+    },
+    {
+     "year": 2018,
+     "universe": 404,
+     "passed": 46,
+     "picks": [
+      "CMCSA",
+      "LRCX",
+      "SWKS",
+      "PFG",
+      "CHKP",
+      "AMAT",
+      "JAZZ",
+      "ON",
+      "CINF",
+      "AAPL",
+      "WLK",
+      "FFIV",
+      "BIIB",
+      "PSA",
+      "LH"
+     ]
+    },
+    {
+     "year": 2019,
+     "universe": 403,
+     "passed": 61,
+     "picks": [
+      "MU",
+      "BIIB",
+      "INTC",
+      "CE",
+      "BMY",
+      "SCHW",
+      "NXPI",
+      "TXN",
+      "AMAT",
+      "EOG",
+      "PFG",
+      "MTB",
+      "OXY",
+      "STM",
+      "CHKP"
+     ]
+    },
+    {
+     "year": 2020,
+     "universe": 396,
+     "passed": 56,
+     "picks": [
+      "BIIB",
+      "SCHW",
+      "DAL",
+      "MTB",
+      "ACGLO",
+      "INTC",
+      "EOG",
+      "PGR",
+      "CPAY",
+      "NVR",
+      "NEM",
+      "EMR",
+      "PCAR",
+      "EXR",
+      "ULTA"
+     ]
+    },
+    {
+     "year": 2021,
+     "universe": 565,
+     "passed": 39,
+     "picks": [
+      "INTC",
+      "VRTX",
+      "PGR",
+      "NEM",
+      "TROW",
+      "LRCX",
+      "DGX",
+      "PHM",
+      "CBOE",
+      "WSM",
+      "LEN",
+      "DG",
+      "TER",
+      "CHD",
+      "FDS"
+     ]
+    },
+    {
+     "year": 2022,
+     "universe": 554,
+     "passed": 84,
+     "picks": [
+      "FNF",
+      "REGN",
+      "COF",
+      "ALLY",
+      "TROW",
+      "GL",
+      "RF",
+      "MKL",
+      "PFE",
+      "NUE",
+      "META",
+      "WY",
+      "CE",
+      "DGX",
+      "CB"
+     ]
+    },
+    {
+     "year": 2023,
+     "universe": 547,
+     "passed": 93,
+     "picks": [
+      "DVN",
+      "EXE",
+      "OXY",
+      "FANG",
+      "COP",
+      "COF",
+      "NUE",
+      "HBAN",
+      "EOG",
+      "STLD",
+      "PFE",
+      "DQ",
+      "STM",
+      "MOS",
+      "BLDR"
+     ]
+    },
+    {
+     "year": 2024,
+     "universe": 605,
+     "passed": 88,
+     "picks": [
+      "ACGL",
+      "STM",
+      "EG",
+      "CNA",
+      "AMP",
+      "CHKP",
+      "CB",
+      "ABNB",
+      "SNA",
+      "PSA",
+      "UTHR",
+      "AFG",
+      "PHM",
+      "DE",
+      "HAL"
+     ]
+    },
+    {
+     "year": 2025,
+     "universe": 628,
+     "passed": 90,
+     "picks": [
+      "AMP",
+      "MRK",
+      "DVN",
+      "RNR",
+      "QCOM",
+      "UTHR",
+      "DOCU",
+      "COP",
+      "AMAT",
+      "CINF",
+      "KNSL",
+      "CB",
+      "PSA",
+      "WRB",
+      "MKL"
+     ]
+    },
+    {
+     "year": 2026,
+     "universe": 685,
+     "passed": 97,
+     "picks": [
+      "CHKP",
+      "AMP",
+      "ADBE",
+      "RNR",
+      "ACGL",
+      "EXEL",
+      "NEM",
+      "PGR",
+      "ALL",
+      "INCY",
+      "DECK",
+      "CDE",
+      "PYPL",
+      "CINF",
+      "TRV"
+     ]
+    }
+   ],
+   "all_equal_weight": {
+    "cagr": 12.1,
+    "max_dd": -35.0,
+    "2017_2021": 17.2,
+    "2021_2026": 8.4
+   },
+   "top10": {
+    "cagr": 13.5,
+    "max_dd": -35.0,
+    "2017_2021": 15.3,
+    "2021_2026": 12.2
+   },
+   "top25": {
+    "cagr": 10.6,
+    "max_dd": -36.1,
+    "2017_2021": 14.9,
+    "2021_2026": 7.6
+   },
+   "no_debt_rule": {
+    "cagr": 11.3,
+    "max_dd": -39.4,
+    "2017_2021": 10.9,
+    "2021_2026": 11.6
+   },
+   "roe10": {
+    "cagr": 8.6,
+    "max_dd": -39.6,
+    "2017_2021": 11.3,
+    "2021_2026": 6.7
+   },
+   "pe30": {
+    "cagr": 8.9,
+    "max_dd": -39.0,
+    "2017_2021": 10.0,
+    "2021_2026": 8.0
+   },
+   "sales3y_0": {
+    "cagr": 10.7,
+    "max_dd": -36.7,
+    "2017_2021": 13.5,
+    "2021_2026": 8.7
+   }
+  },
+  "Mid": {
+   "rule_top15": {
+    "cagr": 13.3,
+    "max_dd": -50.4,
+    "2017_2021": 15.6,
+    "2021_2026": 11.6
+   },
+   "log": [
+    {
+     "year": 2017,
+     "universe": 501,
+     "passed": 44,
+     "picks": [
+      "IDCC",
+      "CACC",
+      "YRD",
+      "FHI",
+      "ESNT",
+      "UI",
+      "FFIV",
+      "DLX",
+      "CRUS",
+      "FDS",
+      "AFG",
+      "SEIC",
+      "PRI",
+      "BWA",
+      "ATHM"
+     ]
+    },
+    {
+     "year": 2018,
+     "universe": 520,
+     "passed": 40,
+     "picks": [
+      "ESNT",
+      "CACC",
+      "PRI",
+      "TSEM",
+      "AEIS",
+      "LPX",
+      "YRD",
+      "DLX",
+      "TNET",
+      "PAG",
+      "MKSI",
+      "LOPE",
+      "MMS",
+      "ICLR",
+      "FAF"
+     ]
+    },
+    {
+     "year": 2019,
+     "universe": 548,
+     "passed": 67,
+     "picks": [
+      "EVR",
+      "ESNT",
+      "MTDR",
+      "CACC",
+      "RHP",
+      "SEIC",
+      "PHM",
+      "LGND",
+      "MKSI",
+      "LPX",
+      "AEIS",
+      "BWA",
+      "PRI",
+      "JAZZ",
+      "FHI"
+     ]
+    },
+    {
+     "year": 2020,
+     "universe": 545,
+     "passed": 69,
+     "picks": [
+      "ESNT",
+      "CACC",
+      "RDN",
+      "FHI",
+      "CATY",
+      "ORI",
+      "RNR",
+      "PRI",
+      "JAZZ",
+      "ALK",
+      "TKR",
+      "PHM",
+      "SEIC",
+      "MTZ",
+      "WB"
+     ]
+    },
+    {
+     "year": 2021,
+     "universe": 701,
+     "passed": 40,
+     "picks": [
+      "FHI",
+      "EVR",
+      "EBS",
+      "HLI",
+      "CACC",
+      "EXP",
+      "PRI",
+      "MATX",
+      "FAF",
+      "MGRC",
+      "SFM",
+      "HII",
+      "CORT",
+      "TNET",
+      "CCS"
+     ]
+    },
+    {
+     "year": 2022,
+     "universe": 728,
+     "passed": 93,
+     "picks": [
+      "SBLK",
+      "LPX",
+      "APAM",
+      "EVR",
+      "MATX",
+      "PIPR",
+      "BKU",
+      "ACGLN",
+      "ESNT",
+      "WD",
+      "NTRSO",
+      "ZD",
+      "INMD",
+      "PRI",
+      "AX"
+     ]
+    },
+    {
+     "year": 2023,
+     "universe": 731,
+     "passed": 90,
+     "picks": [
+      "JXN",
+      "AMR",
+      "MGY",
+      "CHRD",
+      "MATX",
+      "SM",
+      "HCC",
+      "MTDR",
+      "OVV",
+      "CALM",
+      "ZION",
+      "VIR",
+      "MRVI",
+      "RRC",
+      "CNR"
+     ]
+    },
+    {
+     "year": 2024,
+     "universe": 769,
+     "passed": 73,
+     "picks": [
+      "NOG",
+      "INSW",
+      "CNR",
+      "CHRD",
+      "LBRT",
+      "NMIH",
+      "ESNT",
+      "CATY",
+      "FBP",
+      "IDCC",
+      "PRI",
+      "LNTH",
+      "TEX",
+      "HP",
+      "KNSL"
+     ]
+    },
+    {
+     "year": 2025,
+     "universe": 735,
+     "passed": 92,
+     "picks": [
+      "CALM",
+      "ACGLN",
+      "CROX",
+      "MTDR",
+      "CASH",
+      "MGY",
+      "TBBK",
+      "NMIH",
+      "MGRC",
+      "HCI",
+      "ESNT",
+      "CFR",
+      "ANF",
+      "MCY",
+      "NXT"
+     ]
+    },
+    {
+     "year": 2026,
+     "universe": 830,
+     "passed": 76,
+     "picks": [
+      "TBBK",
+      "CASH",
+      "KNSL",
+      "NMIH",
+      "DUOL",
+      "VOYA",
+      "DAVE",
+      "QLYS",
+      "FDS",
+      "TDW",
+      "PLMR",
+      "AZZ",
+      "NICE",
+      "PEGA",
+      "MCY"
+     ]
+    }
+   ],
+   "all_equal_weight": {
+    "cagr": 10.5,
+    "max_dd": -40.5,
+    "2017_2021": 14.9,
+    "2021_2026": 7.4
+   },
+   "top10": {
+    "cagr": 9.8,
+    "max_dd": -54.0,
+    "2017_2021": 8.7,
+    "2021_2026": 10.6
+   },
+   "top25": {
+    "cagr": 11.8,
+    "max_dd": -47.2,
+    "2017_2021": 18.8,
+    "2021_2026": 7.0
+   },
+   "no_debt_rule": {
+    "cagr": 11.3,
+    "max_dd": -51.1,
+    "2017_2021": 12.9,
+    "2021_2026": 10.2
+   },
+   "roe10": {
+    "cagr": 10.5,
+    "max_dd": -51.5,
+    "2017_2021": 10.8,
+    "2021_2026": 10.3
+   },
+   "pe30": {
+    "cagr": 12.6,
+    "max_dd": -50.0,
+    "2017_2021": 15.7,
+    "2021_2026": 10.4
+   },
+   "sales3y_0": {
+    "cagr": 11.0,
+    "max_dd": -52.6,
+    "2017_2021": 10.6,
+    "2021_2026": 11.2
+   }
+  },
+  "Small": {
+   "rule_top15": {
+    "cagr": 8.6,
+    "max_dd": -57.5,
+    "2017_2021": 10.2,
+    "2021_2026": 7.5
+   },
+   "log": [
+    {
+     "year": 2017,
+     "universe": 517,
+     "passed": 16,
+     "picks": [
+      "NOAH",
+      "UVE",
+      "GBX",
+      "SWBI",
+      "MYGN",
+      "CNS",
+      "MMI",
+      "ONTO",
+      "BBSI",
+      "CSTE",
+      "AMN",
+      "HCKT",
+      "APOG",
+      "FIX",
+      "FOXF"
+     ]
+    },
+    {
+     "year": 2018,
+     "universe": 518,
+     "passed": 21,
+     "picks": [
+      "EVC",
+      "UVE",
+      "NVMI",
+      "NOAH",
+      "KLIC",
+      "BBSI",
+      "WHG",
+      "AAOI",
+      "VSEC",
+      "PRSU",
+      "APOG",
+      "WGO",
+      "SRI",
+      "PATK",
+      "MMI"
+     ]
+    },
+    {
+     "year": 2019,
+     "universe": 546,
+     "passed": 31,
+     "picks": [
+      "RMR",
+      "TUSK",
+      "GPOR",
+      "UVE",
+      "WSFS",
+      "PETS",
+      "FF",
+      "NOAH",
+      "ICHR",
+      "NMIH",
+      "VCTR",
+      "MMI",
+      "BBSI",
+      "CVLG",
+      "NSIT"
+     ]
+    },
+    {
+     "year": 2020,
+     "universe": 638,
+     "passed": 36,
+     "picks": [
+      "MUR",
+      "WD",
+      "RMR",
+      "NMIH",
+      "NMRK",
+      "MGRC",
+      "WNC",
+      "BOOM",
+      "MEI",
+      "CORT",
+      "MBUU",
+      "AIN",
+      "ZUMZ",
+      "ATI",
+      "EBF"
+     ]
+    },
+    {
+     "year": 2021,
+     "universe": 677,
+     "passed": 20,
+     "picks": [
+      "ATLC",
+      "CHRS",
+      "SPWH",
+      "NMIH",
+      "TBCH",
+      "STC",
+      "SNEX",
+      "HZO",
+      "SGC",
+      "INFU",
+      "MEI",
+      "PRIM",
+      "HCI",
+      "GIC",
+      "JOUT"
+     ]
+    },
+    {
+     "year": 2022,
+     "universe": 835,
+     "passed": 53,
+     "picks": [
+      "FLGT",
+      "VRTS",
+      "BANC",
+      "ATLC",
+      "BKE",
+      "OPY",
+      "YALA",
+      "PRDO",
+      "RGR",
+      "NMIH",
+      "HZO",
+      "STC",
+      "CAC",
+      "CPF",
+      "SHOE"
+     ]
+    },
+    {
+     "year": 2023,
+     "universe": 834,
+     "passed": 55,
+     "picks": [
+      "DAC",
+      "SBLK",
+      "PDD",
+      "ATLC",
+      "DCOM",
+      "CPF",
+      "CARE",
+      "LPG",
+      "BXC",
+      "HPK",
+      "METC",
+      "PGC",
+      "CAC",
+      "CASH",
+      "RYZ"
+     ]
+    },
+    {
+     "year": 2024,
+     "universe": 836,
+     "passed": 39,
+     "picks": [
+      "LPG",
+      "REPX",
+      "TEN",
+      "TH",
+      "YALA",
+      "INMD",
+      "CASH",
+      "PERI",
+      "QCRH",
+      "TBBK",
+      "WNC",
+      "GNE",
+      "ITRN",
+      "HRMY",
+      "CARS"
+     ]
+    },
+    {
+     "year": 2025,
+     "universe": 892,
+     "passed": 34,
+     "picks": [
+      "ESEA",
+      "ACIC",
+      "ASC",
+      "DAC",
+      "PNRG",
+      "REPX",
+      "GCT",
+      "ATLC",
+      "IGIC",
+      "YALA",
+      "AMPH",
+      "COLL",
+      "HRMY",
+      "ITRN",
+      "HY"
+     ]
+    },
+    {
+     "year": 2026,
+     "universe": 961,
+     "passed": 42,
+     "picks": [
+      "ESEA",
+      "HCI",
+      "HRTG",
+      "UVE",
+      "NRIM",
+      "ATLCZ",
+      "SKWD",
+      "XYF",
+      "EVER",
+      "LPG",
+      "UPWK",
+      "NUTX",
+      "HRMY",
+      "ORRF",
+      "YELP"
+     ]
+    }
+   ],
+   "all_equal_weight": {
+    "cagr": 11.3,
+    "max_dd": -43.5,
+    "2017_2021": 19.7,
+    "2021_2026": 5.6
+   },
+   "top10": {
+    "cagr": 11.8,
+    "max_dd": -61.9,
+    "2017_2021": 9.3,
+    "2021_2026": 13.5
+   },
+   "top25": {
+    "cagr": 9.9,
+    "max_dd": -50.7,
+    "2017_2021": 17.7,
+    "2021_2026": 4.5
+   },
+   "no_debt_rule": {
+    "cagr": 11.6,
+    "max_dd": -57.1,
+    "2017_2021": 11.4,
+    "2021_2026": 11.8
+   },
+   "roe10": {
+    "cagr": 9.7,
+    "max_dd": -57.6,
+    "2017_2021": 8.9,
+    "2021_2026": 10.3
+   },
+   "pe30": {
+    "cagr": 9.4,
+    "max_dd": -56.9,
+    "2017_2021": 11.3,
+    "2021_2026": 8.0
+   },
+   "sales3y_0": {
+    "cagr": 11.5,
+    "max_dd": -53.6,
+    "2017_2021": 14.7,
+    "2021_2026": 9.3
+   }
+  },
+  "Micro": {
+   "rule_top15": {
+    "cagr": 17.3,
+    "max_dd": -45.5,
+    "2017_2021": 26.3,
+    "2021_2026": 11.2
+   },
+   "log": [
+    {
+     "year": 2017,
+     "universe": 92,
+     "passed": 3,
+     "picks": [
+      "KINS",
+      "CLFD",
+      "MHH"
+     ]
+    },
+    {
+     "year": 2018,
+     "universe": 72,
+     "passed": 0,
+     "picks": []
+    },
+    {
+     "year": 2019,
+     "universe": 85,
+     "passed": 3,
+     "picks": [
+      "EPM",
+      "SPWH",
+      "RICK"
+     ]
+    },
+    {
+     "year": 2020,
+     "universe": 165,
+     "passed": 7,
+     "picks": [
+      "ARQ",
+      "EPM",
+      "NC",
+      "RICK",
+      "MHH",
+      "IRMD",
+      "TRNS"
+     ]
+    },
+    {
+     "year": 2021,
+     "universe": 196,
+     "passed": 6,
+     "picks": [
+      "LAKE",
+      "SAMG",
+      "LFVN",
+      "GNE",
+      "PDEX",
+      "NGVC"
+     ]
+    },
+    {
+     "year": 2022,
+     "universe": 231,
+     "passed": 6,
+     "picks": [
+      "FSBW",
+      "PANL",
+      "ORRF",
+      "SAMG",
+      "EPSN",
+      "JYNT"
+     ]
+    },
+    {
+     "year": 2023,
+     "universe": 232,
+     "passed": 4,
+     "picks": [
+      "EPSN",
+      "NWFL",
+      "RCMT",
+      "NC"
+     ]
+    },
+    {
+     "year": 2024,
+     "universe": 261,
+     "passed": 10,
+     "picks": [
+      "ESEA",
+      "IMPP",
+      "EPM",
+      "ORRF",
+      "TZOO",
+      "VIRC",
+      "MRAM",
+      "CLMB",
+      "RDVT",
+      "MAMA"
+     ]
+    },
+    {
+     "year": 2025,
+     "universe": 288,
+     "passed": 5,
+     "picks": [
+      "FC",
+      "IDR",
+      "KEQU",
+      "CRNT",
+      "MPTI"
+     ]
+    },
+    {
+     "year": 2026,
+     "universe": 354,
+     "passed": 5,
+     "picks": [
+      "KINS",
+      "ESP",
+      "TRAK",
+      "ELMD",
+      "MPTI"
+     ]
+    }
+   ],
+   "all_equal_weight": {
+    "cagr": 14.7,
+    "max_dd": -46.3,
+    "2017_2021": 20.9,
+    "2021_2026": 10.4
+   },
+   "top10": {
+    "cagr": 17.3,
+    "max_dd": -45.5,
+    "2017_2021": 26.3,
+    "2021_2026": 11.2
+   },
+   "top25": {
+    "cagr": 17.3,
+    "max_dd": -45.5,
+    "2017_2021": 26.3,
+    "2021_2026": 11.2
+   },
+   "no_debt_rule": {
+    "cagr": 21.8,
+    "max_dd": -51.9,
+    "2017_2021": 42.3,
+    "2021_2026": 8.8
+   },
+   "roe10": {
+    "cagr": 15.2,
+    "max_dd": -53.4,
+    "2017_2021": 20.4,
+    "2021_2026": 11.6
+   },
+   "pe30": {
+    "cagr": 18.2,
+    "max_dd": -45.5,
+    "2017_2021": 26.3,
+    "2021_2026": 12.7
+   },
+   "sales3y_0": {
+    "cagr": 18.7,
+    "max_dd": -44.1,
+    "2017_2021": 25.5,
+    "2021_2026": 13.9
+   }
+  }
+ },
+ "SPY": {
+  "cagr": 13.9,
+  "max_dd": -31.7,
+  "2017_2021": 16.5,
+  "2021_2026": 12.0
+ },
+ "IWM": {
+  "cagr": 8.3,
+  "max_dd": -40.8,
+  "2017_2021": 13.6,
+  "2021_2026": 4.5
+ },
+ "IJR": {
+  "cagr": 8.6,
+  "max_dd": -43.9,
+  "2017_2021": 13.7,
+  "2021_2026": 5.1
+ },
+ "MDY": {
+  "cagr": 9.0,
+  "max_dd": -39.7,
+  "2017_2021": 13.2,
+  "2021_2026": 6.0
+ }
+}
