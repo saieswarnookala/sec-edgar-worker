@@ -34,17 +34,40 @@ def get(url):
     raise RuntimeError("Alpaca unreachable")
 
 # ---------- data: minute bars -> per-day 390-minute arrays ----------
-p = {"timeframe": "1Min", "start": "2016-01-01", "end": datetime.utcnow().strftime("%Y-%m-%dT00:00:00Z"), "adjustment": "split", "feed": "sip", "limit": "10000"}
-rows = {}
-while True:
-    js = get(f"https://data.alpaca.markets/v2/stocks/{SYM}/bars?" + urllib.parse.urlencode(p))
-    for b in js.get("bars") or []:
-        t = datetime.fromisoformat(b["t"].replace("Z", "+00:00")).astimezone(NY)
-        m = t.hour * 60 + t.minute - 570
-        if 0 <= m < 390: rows.setdefault(t.strftime("%Y-%m-%d"), {})[m] = (b["o"], b["h"], b["l"], b["c"], b["v"])
-    if not js.get("next_page_token"): break
-    p["page_token"] = js["next_page_token"]
-    if len(rows) % 250 < 2: print("days so far", len(rows), flush=True)
+# Cached in Cloudflare R2 (scripts/r2cache.py): reuse saved bars, download only the new days. If a split happened since
+# the cache was saved (an overlapping day's close differs), the cache is dropped and the full history is downloaded again.
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import r2cache
+from datetime import timedelta
+END = datetime.utcnow().strftime("%Y-%m-%dT00:00:00Z")
+def download(start):
+    p = {"timeframe": "1Min", "start": start, "end": END, "adjustment": "split", "feed": "sip", "limit": "10000"}
+    out = {}
+    while True:
+        js = get(f"https://data.alpaca.markets/v2/stocks/{SYM}/bars?" + urllib.parse.urlencode(p))
+        for b in js.get("bars") or []:
+            t = datetime.fromisoformat(b["t"].replace("Z", "+00:00")).astimezone(NY)
+            m = t.hour * 60 + t.minute - 570
+            if 0 <= m < 390: out.setdefault(t.strftime("%Y-%m-%d"), {})[m] = (b["o"], b["h"], b["l"], b["c"], b["v"])
+        if not js.get("next_page_token"): return out
+        p["page_token"] = js["next_page_token"]
+        if len(out) % 250 < 2: print("days so far", len(out), flush=True)
+KEY = f"minute/{SYM}.json.gz"
+cached = r2cache.load(KEY)
+rows = {d: {int(m): tuple(v) for m, v in day.items()} for d, day in (cached or {}).get("rows", {}).items()}
+if rows:
+    last = max(rows); start = (datetime.fromisoformat(last) - timedelta(days=7)).strftime("%Y-%m-%dT00:00:00Z")
+    new = download(start)
+    common = [d for d in new if d in rows and new[d] and rows[d]]
+    def close(day): return day[max(day)][3]
+    if any(abs(close(new[d]) / close(rows[d]) - 1) > 0.005 for d in common):
+        print("r2cache: prices changed (split?), downloading full history again", flush=True); rows = download("2016-01-01"); fresh = True
+    else:
+        fresh = any(d not in rows for d in new); rows.update(new)
+    print(f"r2cache: {len(rows)} days ({len(new)} fetched)", flush=True)
+else:
+    rows = download("2016-01-01"); fresh = True
+if fresh and rows: r2cache.save(KEY, {"symbol": SYM, "adjustment": "split", "saved": END, "rows": {d: {str(m): list(v) for m, v in day.items()} for d, day in rows.items()}})
 dates = sorted(d for d, v in rows.items() if len(v) >= 180)
 if len(dates) < 500 or not any(d <= "2022-12-31" for d in dates[250:251] or [""]):
     print(f"SKIP {SYM}: only {len(dates)} full days (need 500+ with 1+ year before 2023)", flush=True); raise SystemExit(3)

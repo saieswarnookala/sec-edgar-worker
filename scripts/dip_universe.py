@@ -51,22 +51,47 @@ if U == "us_all":
     if "SPY" not in syms: syms = ["SPY"] + syms
     print("assets kept", len(syms), "inactive", sum(v == "inactive" for v in assets.values()), flush=True)
     end = (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=2)).strftime("%Y-%m-%dT00:00:00Z")
-    rows = {}
-    def fetch(batch):
-        p = {"symbols": ",".join(batch), "timeframe": "1Day", "start": "2015-01-01", "end": end, "adjustment": "all", "feed": "sip", "limit": "10000"}
+    # Cached in Cloudflare R2 (scripts/r2cache.py): reuse saved daily bars and download only recent days. Prices adjusted
+    # for dividends/splits change after each payout, so any stock whose overlapping closes differ is re-downloaded in full.
+    import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import r2cache
+    KEY = "daily/us_all_adj_all.json.gz"
+    cache = r2cache.load(KEY) or {}
+    allrows = {s_: {d: tuple(v) for d, v in dd.items()} for s_, dd in cache.get("rows", {}).items()}
+    def fetch(batch, start, into):
+        p = {"symbols": ",".join(batch), "timeframe": "1Day", "start": start, "end": end, "adjustment": "all", "feed": "sip", "limit": "10000"}
         while True:
             js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p))
             if js is None:
-                if len(batch) > 1: h = len(batch) // 2; fetch(batch[:h]); fetch(batch[h:])
+                if len(batch) > 1: h = len(batch) // 2; fetch(batch[:h], start, into); fetch(batch[h:], start, into)
                 return
             for s_, bl in (js.get("bars") or {}).items():
-                d = rows.setdefault(s_, {})
+                d = into.setdefault(s_, {})
                 for b in bl: d[b["t"][:10]] = (b["c"], b["v"])
             if not js.get("next_page_token"): return
             p["page_token"] = js["next_page_token"]
-    for i in range(0, len(syms), 100):
-        fetch(syms[i:i + 100])
-        if i % 1000 == 0: print("fetched", i, len(rows), flush=True)
+    have = [s_ for s_ in syms if s_ in allrows and allrows[s_]]
+    full = [s_ for s_ in syms if s_ not in allrows or not allrows[s_]]
+    changed = False
+    if have:
+        last = max(max(allrows[s_]) for s_ in have)
+        start = (pd.Timestamp(last) - pd.Timedelta(days=10)).strftime("%Y-%m-%dT00:00:00Z")
+        recent = {}
+        for i in range(0, len(have), 100): fetch(have[i:i + 100], start, recent)
+        for s_ in have:
+            nd = recent.get(s_, {}); od = allrows[s_]
+            common = [d for d in nd if d in od]
+            if any(abs(nd[d][0] / od[d][0] - 1) > 0.003 for d in common if od[d][0]): full.append(s_)      # adjusted history changed
+            elif nd: changed |= any(d not in od for d in nd); od.update(nd)
+        print("r2cache: cached", len(have), "stocks; re-downloading", len(full), "(new or price history changed)", flush=True)
+    if full:
+        fresh = {}
+        for i in range(0, len(full), 100):
+            fetch(full[i:i + 100], "2015-01-01", fresh)
+            if i % 1000 == 0: print("fetched", i, "of", len(full), flush=True)
+        allrows.update(fresh); changed = True
+    if changed: r2cache.save(KEY, {"adjustment": "all", "saved": end, "rows": {s_: {d: list(v) for d, v in dd.items()} for s_, dd in allrows.items()}})
+    rows = {s_: allrows[s_] for s_ in syms if s_ in allrows and allrows[s_]}
     print("symbols with data", len(rows), "of", len(syms), flush=True)
     if "SPY" not in rows: raise SystemExit("SPY has no data")
     if len(rows) < 0.5 * len(syms): raise SystemExit(f"only {len(rows)} of {len(syms)} symbols returned data, stopping")
@@ -82,7 +107,8 @@ if U == "us_all":
             if m.ticker in tick:
                 j = tick.index(m.ticker); a = dates.searchsorted(m.start); b = dates.searchsorted(m.end) if pd.notna(m.end) else len(dates)
                 mm[a:b, j] = True
-        MEMB &= mm; HALVES = (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01"))
+        MEMB &= mm
+    HALVES = (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01"))
 else:
     REL = "https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/"
     for f in ["prices.parquet", "membership_intervals.parquet"]:

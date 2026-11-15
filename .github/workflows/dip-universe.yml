@@ -22,7 +22,7 @@ jobs:
         with:
           path: /tmp/*.parquet
           key: sp500data-snapshot-2026-11
-      - run: pip install pandas pyarrow numpy
+      - run: pip install pandas pyarrow numpy boto3
       - name: Run
         shell: bash
         env:
@@ -32,6 +32,9 @@ jobs:
           RATE_PER_MIN: ${{ inputs.rate }}
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           set -o pipefail; python -u scripts/dip_universe.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit

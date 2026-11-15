@@ -14,13 +14,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install numpy
+      - run: pip install numpy boto3
       - name: Run
         shell: bash
         env:
           SYMBOL: ${{ inputs.symbol }}
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           set -o pipefail; python -u scripts/single_stock_rhythm.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit
