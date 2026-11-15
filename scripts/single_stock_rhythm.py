@@ -17,10 +17,17 @@ TRAIN_END, TEST_START = "2022-12-31", "2023-01-01"
 COST, STRESS = 0.0002, 0.0005
 NY = ZoneInfo("America/New_York")
 
+RATE = float(os.environ.get("RATE_PER_MIN", "150"))   # Alpaca free data plan: ~200 requests/min for the whole account
+_last = [0.0]
 def get(url):
-    for i in range(6):
+    for i in range(10):
+        wait = 60.0 / RATE - (time.time() - _last[0])          # pace requests so parallel jobs stay under the account limit
+        if wait > 0: time.sleep(wait)
+        _last[0] = time.time()
         try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=120))
         except urllib.error.HTTPError as e:
+            if e.code == 429:                                    # too many requests: wait as long as Alpaca asks, then retry
+                ra = e.headers.get("Retry-After"); time.sleep(float(ra) if ra and ra.replace(".", "").isdigit() else min(120, 15 * (i + 1))); continue
             if e.code in (400, 403, 404, 422): raise
             time.sleep(min(60, 5 * (i + 1)))
         except Exception: time.sleep(3 * (i + 1))
@@ -39,6 +46,8 @@ while True:
     p["page_token"] = js["next_page_token"]
     if len(rows) % 250 < 2: print("days so far", len(rows), flush=True)
 dates = sorted(d for d, v in rows.items() if len(v) >= 180)
+if len(dates) < 500 or not any(d <= "2022-12-31" for d in dates[250:251] or [""]):
+    print(f"SKIP {SYM}: only {len(dates)} full days (need 500+ with 1+ year before 2023)", flush=True); raise SystemExit(3)
 D = len(dates); print(SYM, "days", D, dates[0], dates[-1], flush=True)
 O, Hh, L, C, V = (np.full((D, 390), np.nan) for _ in range(5)); last = np.zeros(D, int)
 for i, d in enumerate(dates):

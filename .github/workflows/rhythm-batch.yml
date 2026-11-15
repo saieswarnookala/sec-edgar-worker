@@ -1,0 +1,61 @@
+name: Rhythm test on 100 non-S&P stocks
+on:
+  workflow_dispatch:
+    inputs:
+      n_pick: { description: 'how many stocks', default: '100' }
+permissions:
+  contents: write
+jobs:
+  pick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      batches: ${{ steps.p.outputs.batches }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pandas pyarrow numpy
+      - id: p
+        shell: bash
+        env:
+          N_PICK: ${{ inputs.n_pick }}
+          RATE_PER_MIN: '150'
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: |
+          set -o pipefail; python -u scripts/pick_rhythm_universe.py 2>&1 | tee /tmp/pick.log
+          echo "batches=$(python -c "import json;print(json.dumps(json.load(open('data/rhythm_universe.json'))['batches']))")" >> "$GITHUB_OUTPUT"
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/rhythm_universe.json && git commit -qm "rhythm universe: top non-S&P stocks by 2022 dollar volume" || true
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && break; sleep 7; done
+  run:
+    needs: pick
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        batch: ${{ fromJSON(needs.pick.outputs.batches) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install numpy
+      - name: Run batch
+        shell: bash
+        env:
+          SYMBOLS: ${{ matrix.batch }}
+          BATCH: ${{ strategy.job-index }}
+          RATE_PER_MIN: '15'
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+        run: python -u scripts/rhythm_batch.py
+      - name: Commit
+        if: always()
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/rhythm_*.json && git commit -qm "rhythm batch ${{ strategy.job-index }}: ${{ matrix.batch }}" || exit 0
+          for i in $(seq 1 12); do git pull --rebase --autostash -X theirs && git push && exit 0; sleep $((RANDOM % 20 + 5)); done; exit 1
