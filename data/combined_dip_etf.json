@@ -1,0 +1,617 @@
+{
+ "note": "Combined test (Nov 14 2026): today's dip bot + the ETF dip rule sharing the same 10 slots. Research only, not financial advice.\nStock rule = live paper-dip.mjs: point-in-time S&P 500 member, price >= $5, above 200-day avg, 5-day return at least 10% worse\nthan SPY's, volume over the drop <= 2x normal; biggest drop first. Sell when the close is back above the 5-day avg (after\n>= 1 day) or after 5 days. ETF rule: 29 index/sector/country ETFs, 5-day drop >= 5% (or 3-day >= 3%), above 200-day avg,\nsame sell rule, max hold 5 or 10 days. Stocks get slots first; ETFs fill what's left (or ETFs only when no stock dip).\nEach trade = 10% of the account, bought at the close (the live bot trades just before the close).\nIdle money: SPY when SPY is above its 100-day avg, else cash (the bot's crash rule; the live bot parks in its Clear Leader ETF).\nCosts per side: stocks 0.05%, ETFs 0.02% (stress: 0.15% / 0.05%).",
+ "results": {
+  "A. today's dip bot (stocks only)": {
+   "1999-2026": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -26.7,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.4,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 64.9,
+    "stock_avg_trade_pct": 0.85,
+    "etf_avg_trade_pct": null
+   },
+   "1999-2012": {
+    "per_year_pct": 12.1,
+    "worst_drop_pct": -26.7,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.8,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 64.8,
+    "stock_avg_trade_pct": 0.87,
+    "etf_avg_trade_pct": null
+   },
+   "2013-2026": {
+    "per_year_pct": 17.6,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 64.9,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": null
+   },
+   "2008": {
+    "per_year_pct": -2.9,
+    "worst_drop_pct": -19.4,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.7,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 63.8,
+    "stock_avg_trade_pct": 0.13,
+    "etf_avg_trade_pct": null
+   },
+   "2020": {
+    "per_year_pct": 60.5,
+    "worst_drop_pct": -9.3,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 72.6,
+    "stock_avg_trade_pct": 1.94,
+    "etf_avg_trade_pct": null
+   },
+   "2022": {
+    "per_year_pct": 1.1,
+    "worst_drop_pct": -10.0,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 70.8,
+    "stock_avg_trade_pct": 1.66,
+    "etf_avg_trade_pct": null
+   }
+  },
+  "B. + ETF 5-day 5% dips fill free slots, hold<=5": {
+   "1999-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -22.5,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.2,
+    "etf_trades_per_month": 2.5,
+    "win_pct": 66.2,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": 0.77
+   },
+   "1999-2012": {
+    "per_year_pct": 14.2,
+    "worst_drop_pct": -22.5,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.6,
+    "etf_trades_per_month": 3.0,
+    "win_pct": 66.1,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": 0.77
+   },
+   "2013-2026": {
+    "per_year_pct": 19.3,
+    "worst_drop_pct": -15.7,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.8,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 66.4,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": 0.78
+   },
+   "2008": {
+    "per_year_pct": -2.0,
+    "worst_drop_pct": -19.4,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.5,
+    "etf_trades_per_month": 1.7,
+    "win_pct": 61.0,
+    "stock_avg_trade_pct": 0.12,
+    "etf_avg_trade_pct": 0.68
+   },
+   "2020": {
+    "per_year_pct": 63.4,
+    "worst_drop_pct": -10.7,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 4.1,
+    "win_pct": 71.4,
+    "stock_avg_trade_pct": 1.94,
+    "etf_avg_trade_pct": 0.82
+   },
+   "2022": {
+    "per_year_pct": -1.7,
+    "worst_drop_pct": -10.7,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 2.2,
+    "win_pct": 68.2,
+    "stock_avg_trade_pct": 1.61,
+    "etf_avg_trade_pct": -0.77
+   }
+  },
+  "C. + ETF 5-day 5% dips fill free slots, hold<=10": {
+   "1999-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -22.4,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.2,
+    "etf_trades_per_month": 2.5,
+    "win_pct": 66.4,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": 0.89
+   },
+   "1999-2012": {
+    "per_year_pct": 14.6,
+    "worst_drop_pct": -22.4,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.6,
+    "etf_trades_per_month": 2.9,
+    "win_pct": 66.3,
+    "stock_avg_trade_pct": 0.82,
+    "etf_avg_trade_pct": 0.88
+   },
+   "2013-2026": {
+    "per_year_pct": 19.5,
+    "worst_drop_pct": -15.5,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.8,
+    "etf_trades_per_month": 2.0,
+    "win_pct": 66.6,
+    "stock_avg_trade_pct": 0.83,
+    "etf_avg_trade_pct": 0.9
+   },
+   "2008": {
+    "per_year_pct": -1.8,
+    "worst_drop_pct": -19.4,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.5,
+    "etf_trades_per_month": 1.7,
+    "win_pct": 60.7,
+    "stock_avg_trade_pct": 0.11,
+    "etf_avg_trade_pct": 0.75
+   },
+   "2020": {
+    "per_year_pct": 64.2,
+    "worst_drop_pct": -10.5,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 3.9,
+    "win_pct": 72.5,
+    "stock_avg_trade_pct": 1.94,
+    "etf_avg_trade_pct": 1.04
+   },
+   "2022": {
+    "per_year_pct": -0.5,
+    "worst_drop_pct": -9.7,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.7,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 69.0,
+    "stock_avg_trade_pct": 1.72,
+    "etf_avg_trade_pct": -0.62
+   }
+  },
+  "D. + ETF 5-day 5% dips only on days with no stock dip": {
+   "1999-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -23.4,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.3,
+    "etf_trades_per_month": 1.8,
+    "win_pct": 66.5,
+    "stock_avg_trade_pct": 0.84,
+    "etf_avg_trade_pct": 1.02
+   },
+   "1999-2012": {
+    "per_year_pct": 14.6,
+    "worst_drop_pct": -23.4,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.7,
+    "etf_trades_per_month": 2.0,
+    "win_pct": 66.7,
+    "stock_avg_trade_pct": 0.86,
+    "etf_avg_trade_pct": 1.03
+   },
+   "2013-2026": {
+    "per_year_pct": 19.0,
+    "worst_drop_pct": -15.4,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 1.5,
+    "win_pct": 66.3,
+    "stock_avg_trade_pct": 0.81,
+    "etf_avg_trade_pct": 1.0
+   },
+   "2008": {
+    "per_year_pct": -2.3,
+    "worst_drop_pct": -19.4,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.6,
+    "etf_trades_per_month": 1.2,
+    "win_pct": 62.2,
+    "stock_avg_trade_pct": 0.12,
+    "etf_avg_trade_pct": 0.65
+   },
+   "2020": {
+    "per_year_pct": 64.6,
+    "worst_drop_pct": -10.5,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 3.4,
+    "win_pct": 71.7,
+    "stock_avg_trade_pct": 1.94,
+    "etf_avg_trade_pct": 0.97
+   },
+   "2022": {
+    "per_year_pct": -0.5,
+    "worst_drop_pct": -10.0,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.7,
+    "etf_trades_per_month": 1.8,
+    "win_pct": 69.0,
+    "stock_avg_trade_pct": 1.72,
+    "etf_avg_trade_pct": -0.73
+   }
+  },
+  "E. + ETF 3-day 3% dips fill free slots, hold<=10": {
+   "1999-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -24.1,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.0,
+    "etf_trades_per_month": 6.3,
+    "win_pct": 66.7,
+    "stock_avg_trade_pct": 0.82,
+    "etf_avg_trade_pct": 0.51
+   },
+   "1999-2012": {
+    "per_year_pct": 14.4,
+    "worst_drop_pct": -24.1,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.4,
+    "etf_trades_per_month": 6.9,
+    "win_pct": 66.5,
+    "stock_avg_trade_pct": 0.85,
+    "etf_avg_trade_pct": 0.49
+   },
+   "2013-2026": {
+    "per_year_pct": 19.2,
+    "worst_drop_pct": -15.7,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.5,
+    "etf_trades_per_month": 5.6,
+    "win_pct": 67.0,
+    "stock_avg_trade_pct": 0.78,
+    "etf_avg_trade_pct": 0.53
+   },
+   "2008": {
+    "per_year_pct": -3.5,
+    "worst_drop_pct": -19.3,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.5,
+    "etf_trades_per_month": 4.3,
+    "win_pct": 62.6,
+    "stock_avg_trade_pct": 0.16,
+    "etf_avg_trade_pct": 0.02
+   },
+   "2020": {
+    "per_year_pct": 56.5,
+    "worst_drop_pct": -12.4,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.5,
+    "etf_trades_per_month": 7.3,
+    "win_pct": 71.3,
+    "stock_avg_trade_pct": 1.94,
+    "etf_avg_trade_pct": 0.15
+   },
+   "2022": {
+    "per_year_pct": -4.2,
+    "worst_drop_pct": -12.5,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.3,
+    "etf_trades_per_month": 5.8,
+    "win_pct": 64.9,
+    "stock_avg_trade_pct": 1.61,
+    "etf_avg_trade_pct": -0.52
+   }
+  },
+  "F. B with 12 slots of 8.3%": {
+   "1999-2026": {
+    "per_year_pct": 15.9,
+    "worst_drop_pct": -23.4,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.5,
+    "etf_trades_per_month": 2.6,
+    "win_pct": 66.7,
+    "stock_avg_trade_pct": 0.86,
+    "etf_avg_trade_pct": 0.89
+   },
+   "1999-2012": {
+    "per_year_pct": 12.9,
+    "worst_drop_pct": -23.4,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.9,
+    "etf_trades_per_month": 3.1,
+    "win_pct": 66.5,
+    "stock_avg_trade_pct": 0.84,
+    "etf_avg_trade_pct": 0.88
+   },
+   "2013-2026": {
+    "per_year_pct": 18.8,
+    "worst_drop_pct": -14.6,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 9.2,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 66.9,
+    "stock_avg_trade_pct": 0.88,
+    "etf_avg_trade_pct": 0.91
+   },
+   "2008": {
+    "per_year_pct": -1.5,
+    "worst_drop_pct": -16.5,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.8,
+    "etf_trades_per_month": 1.7,
+    "win_pct": 61.1,
+    "stock_avg_trade_pct": 0.17,
+    "etf_avg_trade_pct": 0.75
+   },
+   "2020": {
+    "per_year_pct": 57.8,
+    "worst_drop_pct": -11.0,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 14.1,
+    "etf_trades_per_month": 4.3,
+    "win_pct": 73.0,
+    "stock_avg_trade_pct": 2.01,
+    "etf_avg_trade_pct": 0.93
+   },
+   "2022": {
+    "per_year_pct": -3.7,
+    "worst_drop_pct": -9.6,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 9.0,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 68.4,
+    "stock_avg_trade_pct": 1.61,
+    "etf_avg_trade_pct": -0.62
+   }
+  },
+  "G. ETF dips only (no stocks)": {
+   "1999-2026": {
+    "per_year_pct": 8.4,
+    "worst_drop_pct": -40.0,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 2.9,
+    "win_pct": 74.0,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": 0.99
+   },
+   "1999-2012": {
+    "per_year_pct": 4.2,
+    "worst_drop_pct": -40.0,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 3.4,
+    "win_pct": 72.5,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": 0.93
+   },
+   "2013-2026": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -19.0,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 2.4,
+    "win_pct": 76.2,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": 1.06
+   },
+   "2008": {
+    "per_year_pct": -2.4,
+    "worst_drop_pct": -7.6,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 1.7,
+    "win_pct": 50.0,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": 0.75
+   },
+   "2020": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -10.8,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 4.2,
+    "win_pct": 72.5,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": 1.0
+   },
+   "2022": {
+    "per_year_pct": -18.6,
+    "worst_drop_pct": -18.6,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 0.0,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 60.0,
+    "stock_avg_trade_pct": null,
+    "etf_avg_trade_pct": -0.62
+   }
+  },
+  "A. stress costs": {
+   "1999-2026": {
+    "per_year_pct": 12.3,
+    "worst_drop_pct": -29.9,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.4,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 63.3,
+    "stock_avg_trade_pct": 0.65,
+    "etf_avg_trade_pct": null
+   },
+   "1999-2012": {
+    "per_year_pct": 9.5,
+    "worst_drop_pct": -29.9,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.8,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 63.5,
+    "stock_avg_trade_pct": 0.67,
+    "etf_avg_trade_pct": null
+   },
+   "2013-2026": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -18.5,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 63.2,
+    "stock_avg_trade_pct": 0.63,
+    "etf_avg_trade_pct": null
+   },
+   "2008": {
+    "per_year_pct": -4.9,
+    "worst_drop_pct": -19.9,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.7,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 63.8,
+    "stock_avg_trade_pct": -0.07,
+    "etf_avg_trade_pct": null
+   },
+   "2020": {
+    "per_year_pct": 55.4,
+    "worst_drop_pct": -9.3,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 70.1,
+    "stock_avg_trade_pct": 1.74,
+    "etf_avg_trade_pct": null
+   },
+   "2022": {
+    "per_year_pct": -0.9,
+    "worst_drop_pct": -10.0,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.9,
+    "etf_trades_per_month": 0.0,
+    "win_pct": 70.8,
+    "stock_avg_trade_pct": 1.46,
+    "etf_avg_trade_pct": null
+   }
+  },
+  "C. stress costs": {
+   "1999-2026": {
+    "per_year_pct": 14.4,
+    "worst_drop_pct": -26.0,
+    "spy_pct": 8.6,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.2,
+    "etf_trades_per_month": 2.5,
+    "win_pct": 65.0,
+    "stock_avg_trade_pct": 0.63,
+    "etf_avg_trade_pct": 0.83
+   },
+   "1999-2012": {
+    "per_year_pct": 11.7,
+    "worst_drop_pct": -26.0,
+    "spy_pct": 2.9,
+    "spy_worst_drop_pct": -55.2,
+    "stock_trades_per_month": 9.6,
+    "etf_trades_per_month": 2.9,
+    "win_pct": 65.1,
+    "stock_avg_trade_pct": 0.62,
+    "etf_avg_trade_pct": 0.82
+   },
+   "2013-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -15.8,
+    "spy_pct": 14.6,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 8.8,
+    "etf_trades_per_month": 2.0,
+    "win_pct": 64.9,
+    "stock_avg_trade_pct": 0.63,
+    "etf_avg_trade_pct": 0.84
+   },
+   "2008": {
+    "per_year_pct": -3.9,
+    "worst_drop_pct": -19.9,
+    "spy_pct": -36.2,
+    "spy_worst_drop_pct": -47.1,
+    "stock_trades_per_month": 8.5,
+    "etf_trades_per_month": 1.7,
+    "win_pct": 60.7,
+    "stock_avg_trade_pct": -0.09,
+    "etf_avg_trade_pct": 0.69
+   },
+   "2020": {
+    "per_year_pct": 58.4,
+    "worst_drop_pct": -10.6,
+    "spy_pct": 17.3,
+    "spy_worst_drop_pct": -33.7,
+    "stock_trades_per_month": 13.6,
+    "etf_trades_per_month": 3.9,
+    "win_pct": 70.6,
+    "stock_avg_trade_pct": 1.74,
+    "etf_avg_trade_pct": 0.98
+   },
+   "2022": {
+    "per_year_pct": -2.6,
+    "worst_drop_pct": -9.9,
+    "spy_pct": -18.6,
+    "spy_worst_drop_pct": -24.5,
+    "stock_trades_per_month": 8.7,
+    "etf_trades_per_month": 2.1,
+    "win_pct": 69.0,
+    "stock_avg_trade_pct": 1.52,
+    "etf_avg_trade_pct": -0.68
+   }
+  }
+ }
+}
