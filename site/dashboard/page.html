@@ -1120,6 +1120,23 @@ dash.calc('vs_industry', {
     <div class="pb-live" data-bot="etf"></div>
   </section>
 
+  <section class="sx-card" id="pb-tuned">
+    <div class="sx-ch"><h3>6. Tuned dip + ETF dips ($10k virtual, new Nov 15)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Starts next trading day</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Not connected to Robinhood</span><span class="sx-badge">Same run as bot 1</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it differs from bot 5</h4><ul>
+        <li>Buys stocks that fell <b>8%</b> more than SPY in 5 days (bot 5: 10%).</li>
+        <li>Uptrend = above the <b>150-day</b> average (bot 5: 200-day).</li>
+        <li>Holds a stock up to <b>7 days</b> if it hasn't bounced (bot 5: 5).</li>
+        <li>Same ETF dips, same volume filter, same sell rule, same 10 slots × 10%.</li>
+      </ul></div>
+      <div><h4>Backtest (S&amp;P 500 point-in-time, 1999–2026)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>20.9%</b></div><div class="sx-stat"><span>Worst drop</span><b>−19%</b></div><div class="sx-stat"><span>Trades/month</span><b>~20</b></div><div class="sx-stat"><span>Bot 5 (same test)</span><b>17.2%</b></div></div>
+        <p class="sx-cap">Better than today's rules in both 1999–2012 (21.5% vs 14.6%) and 2013–2026 (20.0% vs 19.5%). Caveats: the settings were chosen after seeing the full history; with 3× trading costs its 2013–2026 edge disappears (15.1% vs 16.9%) because it trades twice as often; 2022 was worse (−11% vs −0.5%). That's why it's paper only.</p></div>
+    </div>
+    <div class="pb-live" data-bot="tuned"></div>
+  </section>
+
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Started Nov 5, 2026</span><span class="sx-badge">Real paper orders</span><span class="sx-badge">Runs before the open (6:05 + 7:35 am ET)</span></div>
@@ -1913,7 +1930,7 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
     };
     const block = (bot, b) => {
-      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
       let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
@@ -1938,8 +1955,9 @@ dash.calc('vs_industry', {
         const txt = ord.length ? ord.join(' · ') : what.length ? what.join(' · ') + (L.dry ? ' (decided only, test run)' : '') : 'No trades.';
         h += `<p class="sx-cap" style="margin-top:8px"><b>Last run (${fmtDay(L.day)}):</b> ${esc(txt)}${L.park ? ' · Idle money: ' + esc(L.park) : ''}</p>`;
       }
+      if (bot === 'tuned' && b.last) h += `<p class="sx-cap"><b>Stock dips today (8% rule):</b> ${b.last.stock_signals ?? 0} · <b>ETFs dipping:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'etf' && b.last) h += `<p class="sx-cap"><b>ETFs dipping today:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
-      if ((bot === 'vol' || bot === 'etf') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
       return h;
     };
     try {

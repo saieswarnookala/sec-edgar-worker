@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -77,6 +77,19 @@ ok('etf virtual bot keeps the ETF tag across days', () => {
   assert.equal(r.vs.positions[0].kind, 'etf');
   const r2 = virtualStep({ vs: r.vs, today: '2026-11-11', days, prices: { E1: 99, QQQ: 500 }, closes: { E1: [100, 100, 100, 100] }, scores: {}, park: 'QQQ', scale: 1 });
   assert.equal(r2.vs.positions.length, 1, 'ETF still held (below its 5-day avg, day 1 of 10)');
+});
+ok('tuned dip: 8% drop with 150-day trend qualifies where the 10%/200-day rule does not', () => {
+  const closes = [...Array(60).fill(60), ...Array(145).fill(70), ...Array(5).fill(100)], spy = Array(210).fill(500);
+  assert.equal(dipScore(closes, 91, spy, 500), null);                       // 9% dip: too small for the live rule
+  assert.ok(dipScore(closes, 91, spy, 500, TUNED) <= -0.08);                 // but fine for the tuned rule
+  assert.equal(dipScore([...Array(100).fill(200), ...Array(110).fill(100)], 91, spy, 500, TUNED), null);   // below its 150-day avg
+});
+ok('tuned dip: stocks held up to 7 days', () => {
+  const days = Array.from({ length: 12 }, (_, i) => `2026-11-${String(i + 1).padStart(2, '0')}`);
+  const st = { positions: [{ symbol: 'S1', entry_date: days[0], qty: 1 }] }, args = { days, state: st, held: { S1: 1 }, equity: 10000, prices: { S1: 90, QQQ: 500 }, closes: { S1: [100, 100, 100, 100] }, scores: {}, park: 'QQQ', parkHeld: {} };
+  assert.equal(decide({ ...args, today: days[6], stockMaxHold: TUNED.maxHold }).sells.length, 0);
+  assert.match(decide({ ...args, today: days[7], stockMaxHold: TUNED.maxHold }).sells[0].reason, /max 7/);
+  assert.match(decide({ ...args, today: days[6] }).sells[0].reason, /max 5/);   // live bot unchanged
 });
 console.log(`\n${n} passed`);
 
