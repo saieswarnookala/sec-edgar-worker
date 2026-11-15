@@ -1,0 +1,458 @@
+{
+ "note": "Insider buying as a filter on the dip bot (Nov 15 2026). Research only, not financial advice.\nQuestion: when an S&P 500 stock triggers the live dip rule, does it bounce better if company officers/directors recently\nbought shares with their own money on the open market (SEC Form 4, code P)?\nDip rule = live paper-dip.mjs: point-in-time S&P 500 member, price >= $5, above 200-day avg, 5-day return >= 10% worse than SPY,\nvolume over the drop <= 2x normal. Buy at the close, sell when the close is back above the 5-day avg (after >= 1 day) or after 5 days.\nInsider data: SEC \"Insider Transactions Data Sets\" (quarterly Form 3/4/5 tables, 2006q1+). A filing counts from the first trading day\nAFTER its filing date (Form 4s often arrive after the close), so there is no look-ahead.\nMatching: issuer CIK -> price ticker (data/sec_events_sic.json), else the filing's trading symbol if that ticker has prices that day.\nParsed quarters are cached in R2 (sec/form4/<quarter>.json.gz) so re-runs don't re-download.\nModes (env DRY): unset = real SEC data; 'random' = fake insider buys on random days (should show NO edge);\n'planted' = fake buys placed before the dips that bounced most (MUST show a big edge) -> proves the plumbing works.\nQUARTERS env (e.g. '2024q1,2024q2') limits the download for a smoke run.",
+ "built": "2026-11-15",
+ "dry": null,
+ "quarters": [
+  "2024q1",
+  "2026q2"
+ ],
+ "dip_trades": 3943,
+ "share_with_insider_data": 0.821,
+ "groups": {
+  "2006-2026": {
+   "all dips (issuer has insider data)": {
+    "n": 3239,
+    "avg_trade_pct": 1.13,
+    "win_pct": 68.0,
+    "avg_vs_spy_pct": 0.82,
+    "next_21d_vs_spy_pct": 1.45,
+    "next_63d_vs_spy_pct": 3.38,
+    "diff_vs_no_buy_pct": -0.01,
+    "t_stat": -0.07
+   },
+   "no insider buy in prior 6 months": {
+    "n": 3180,
+    "avg_trade_pct": 1.14,
+    "win_pct": 68.0,
+    "avg_vs_spy_pct": 0.84,
+    "next_21d_vs_spy_pct": 1.54,
+    "next_63d_vs_spy_pct": 3.63
+   },
+   "insider buy in prior 1 month": {
+    "n": 3,
+    "avg_trade_pct": -2.36,
+    "win_pct": 0.0,
+    "avg_vs_spy_pct": -3.8,
+    "next_21d_vs_spy_pct": 0.32,
+    "next_63d_vs_spy_pct": -18.35,
+    "diff_vs_no_buy_pct": -3.49,
+    "t_stat": -2.26
+   },
+   "insider buy in prior 3 months": {
+    "n": 37,
+    "avg_trade_pct": 2.03,
+    "win_pct": 73.0,
+    "avg_vs_spy_pct": 1.4,
+    "next_21d_vs_spy_pct": -1.12,
+    "next_63d_vs_spy_pct": -9.34,
+    "diff_vs_no_buy_pct": 0.89,
+    "t_stat": 1.43
+   },
+   "insider buy in prior 6 months": {
+    "n": 59,
+    "avg_trade_pct": 0.59,
+    "win_pct": 66.1,
+    "avg_vs_spy_pct": 0.1,
+    "next_21d_vs_spy_pct": -3.23,
+    "next_63d_vs_spy_pct": -15.91,
+    "diff_vs_no_buy_pct": -0.54,
+    "t_stat": -0.7
+   },
+   "insider bought INTO the drop (last 7 days)": {
+    "n": 2,
+    "avg_trade_pct": -0.83,
+    "win_pct": 0.0,
+    "avg_vs_spy_pct": -3.31,
+    "next_21d_vs_spy_pct": -1.71,
+    "next_63d_vs_spy_pct": -33.11,
+    "diff_vs_no_buy_pct": -1.96,
+    "t_stat": -5.86
+   },
+   "2+ insiders bought in prior 3 months": {
+    "n": 4,
+    "avg_trade_pct": 1.75,
+    "win_pct": 75.0,
+    "avg_vs_spy_pct": 1.32,
+    "next_21d_vs_spy_pct": 6.81,
+    "next_63d_vs_spy_pct": NaN,
+    "diff_vs_no_buy_pct": 0.62,
+    "t_stat": 0.35
+   },
+   "insiders bought >= $100k in prior 3 months": {
+    "n": 29,
+    "avg_trade_pct": 2.48,
+    "win_pct": 72.4,
+    "avg_vs_spy_pct": 1.88,
+    "next_21d_vs_spy_pct": -0.79,
+    "next_63d_vs_spy_pct": -13.6,
+    "diff_vs_no_buy_pct": 1.35,
+    "t_stat": 1.88
+   },
+   "insider sales in prior 3 months": {
+    "n": 515,
+    "avg_trade_pct": 2.92,
+    "win_pct": 74.2,
+    "avg_vs_spy_pct": 2.37,
+    "next_21d_vs_spy_pct": 2.3,
+    "next_63d_vs_spy_pct": 1.18,
+    "diff_vs_no_buy_pct": 1.78,
+    "t_stat": 6.5
+   },
+   "no insider sales in prior 3 months": {
+    "n": 2724,
+    "avg_trade_pct": 0.79,
+    "win_pct": 66.8,
+    "avg_vs_spy_pct": 0.53,
+    "next_21d_vs_spy_pct": 1.28,
+    "next_63d_vs_spy_pct": 3.72,
+    "diff_vs_no_buy_pct": -0.35,
+    "t_stat": -2.54
+   },
+   "3+ insiders sold in prior 3 months": {
+    "n": 328,
+    "avg_trade_pct": 3.75,
+    "win_pct": 77.1,
+    "avg_vs_spy_pct": 3.26,
+    "next_21d_vs_spy_pct": 3.18,
+    "next_63d_vs_spy_pct": 3.73,
+    "diff_vs_no_buy_pct": 2.62,
+    "t_stat": 7.32
+   }
+  },
+  "2006-2015": {
+   "all dips (issuer has insider data)": {
+    "n": 605,
+    "avg_trade_pct": 0.52,
+    "win_pct": 63.3,
+    "avg_vs_spy_pct": 0.5,
+    "next_21d_vs_spy_pct": 1.29,
+    "next_63d_vs_spy_pct": 6.05,
+    "diff_vs_no_buy_pct": 0.0,
+    "t_stat": 0.0
+   },
+   "no insider buy in prior 6 months": {
+    "n": 605,
+    "avg_trade_pct": 0.52,
+    "win_pct": 63.3,
+    "avg_vs_spy_pct": 0.5,
+    "next_21d_vs_spy_pct": 1.29,
+    "next_63d_vs_spy_pct": 6.05
+   },
+   "insider buy in prior 1 month": {
+    "n": 0
+   },
+   "insider buy in prior 3 months": {
+    "n": 0
+   },
+   "insider buy in prior 6 months": {
+    "n": 0
+   },
+   "insider bought INTO the drop (last 7 days)": {
+    "n": 0
+   },
+   "2+ insiders bought in prior 3 months": {
+    "n": 0
+   },
+   "insiders bought >= $100k in prior 3 months": {
+    "n": 0
+   },
+   "insider sales in prior 3 months": {
+    "n": 0
+   },
+   "no insider sales in prior 3 months": {
+    "n": 605,
+    "avg_trade_pct": 0.52,
+    "win_pct": 63.3,
+    "avg_vs_spy_pct": 0.5,
+    "next_21d_vs_spy_pct": 1.29,
+    "next_63d_vs_spy_pct": 6.05,
+    "diff_vs_no_buy_pct": 0.0,
+    "t_stat": 0.0
+   },
+   "3+ insiders sold in prior 3 months": {
+    "n": 0
+   }
+  },
+  "2016-2026": {
+   "all dips (issuer has insider data)": {
+    "n": 2634,
+    "avg_trade_pct": 1.27,
+    "win_pct": 69.1,
+    "avg_vs_spy_pct": 0.9,
+    "next_21d_vs_spy_pct": 1.49,
+    "next_63d_vs_spy_pct": 2.69,
+    "diff_vs_no_buy_pct": -0.02,
+    "t_stat": -0.11
+   },
+   "no insider buy in prior 6 months": {
+    "n": 2575,
+    "avg_trade_pct": 1.28,
+    "win_pct": 69.1,
+    "avg_vs_spy_pct": 0.92,
+    "next_21d_vs_spy_pct": 1.6,
+    "next_63d_vs_spy_pct": 2.99
+   },
+   "insider buy in prior 1 month": {
+    "n": 3,
+    "avg_trade_pct": -2.36,
+    "win_pct": 0.0,
+    "avg_vs_spy_pct": -3.8,
+    "next_21d_vs_spy_pct": 0.32,
+    "next_63d_vs_spy_pct": -18.35,
+    "diff_vs_no_buy_pct": -3.64,
+    "t_stat": -2.36
+   },
+   "insider buy in prior 3 months": {
+    "n": 37,
+    "avg_trade_pct": 2.03,
+    "win_pct": 73.0,
+    "avg_vs_spy_pct": 1.4,
+    "next_21d_vs_spy_pct": -1.12,
+    "next_63d_vs_spy_pct": -9.34,
+    "diff_vs_no_buy_pct": 0.75,
+    "t_stat": 1.19
+   },
+   "insider buy in prior 6 months": {
+    "n": 59,
+    "avg_trade_pct": 0.59,
+    "win_pct": 66.1,
+    "avg_vs_spy_pct": 0.1,
+    "next_21d_vs_spy_pct": -3.23,
+    "next_63d_vs_spy_pct": -15.91,
+    "diff_vs_no_buy_pct": -0.69,
+    "t_stat": -0.88
+   },
+   "insider bought INTO the drop (last 7 days)": {
+    "n": 2,
+    "avg_trade_pct": -0.83,
+    "win_pct": 0.0,
+    "avg_vs_spy_pct": -3.31,
+    "next_21d_vs_spy_pct": -1.71,
+    "next_63d_vs_spy_pct": -33.11,
+    "diff_vs_no_buy_pct": -2.11,
+    "t_stat": -6.25
+   },
+   "2+ insiders bought in prior 3 months": {
+    "n": 4,
+    "avg_trade_pct": 1.75,
+    "win_pct": 75.0,
+    "avg_vs_spy_pct": 1.32,
+    "next_21d_vs_spy_pct": 6.81,
+    "next_63d_vs_spy_pct": NaN,
+    "diff_vs_no_buy_pct": 0.47,
+    "t_stat": 0.26
+   },
+   "insiders bought >= $100k in prior 3 months": {
+    "n": 29,
+    "avg_trade_pct": 2.48,
+    "win_pct": 72.4,
+    "avg_vs_spy_pct": 1.88,
+    "next_21d_vs_spy_pct": -0.79,
+    "next_63d_vs_spy_pct": -13.6,
+    "diff_vs_no_buy_pct": 1.2,
+    "t_stat": 1.68
+   },
+   "insider sales in prior 3 months": {
+    "n": 515,
+    "avg_trade_pct": 2.92,
+    "win_pct": 74.2,
+    "avg_vs_spy_pct": 2.37,
+    "next_21d_vs_spy_pct": 2.3,
+    "next_63d_vs_spy_pct": 1.18,
+    "diff_vs_no_buy_pct": 1.63,
+    "t_stat": 5.92
+   },
+   "no insider sales in prior 3 months": {
+    "n": 2119,
+    "avg_trade_pct": 0.86,
+    "win_pct": 67.8,
+    "avg_vs_spy_pct": 0.54,
+    "next_21d_vs_spy_pct": 1.28,
+    "next_63d_vs_spy_pct": 3.0,
+    "diff_vs_no_buy_pct": -0.42,
+    "t_stat": -2.82
+   },
+   "3+ insiders sold in prior 3 months": {
+    "n": 328,
+    "avg_trade_pct": 3.75,
+    "win_pct": 77.1,
+    "avg_vs_spy_pct": 3.26,
+    "next_21d_vs_spy_pct": 3.18,
+    "next_63d_vs_spy_pct": 3.73,
+    "diff_vs_no_buy_pct": 2.47,
+    "t_stat": 6.87
+   }
+  }
+ },
+ "by_year_3m_buy_vs_none": {
+  "2024": {
+   "insider_n": 16,
+   "insider_avg": 4.33,
+   "no_buy_avg": 0.16
+  },
+  "2026": {
+   "insider_n": 21,
+   "insider_avg": 0.27,
+   "no_buy_avg": 2.02
+  }
+ },
+ "years_insider_dips_beat": "1 of 2",
+ "portfolio": {
+  "today's rules": {
+   "2006-2026": {
+    "per_year_pct": 14.3,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 11.2,
+    "trades_per_month": 8.0,
+    "avg_trade_pct": 0.68,
+    "win_pct": 63.6
+   },
+   "2006-2015": {
+    "per_year_pct": 7.3,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 7.2,
+    "trades_per_month": 4.8,
+    "avg_trade_pct": 0.22,
+    "win_pct": 59.7
+   },
+   "2016-2026": {
+    "per_year_pct": 20.9,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.9,
+    "trades_per_month": 10.8,
+    "avg_trade_pct": 0.86,
+    "win_pct": 65.1
+   }
+  },
+  "insider buyers get slots first": {
+   "2006-2026": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 11.2,
+    "trades_per_month": 8.0,
+    "avg_trade_pct": 0.67,
+    "win_pct": 63.4
+   },
+   "2006-2015": {
+    "per_year_pct": 7.3,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 7.2,
+    "trades_per_month": 4.8,
+    "avg_trade_pct": 0.22,
+    "win_pct": 59.7
+   },
+   "2016-2026": {
+    "per_year_pct": 20.6,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.9,
+    "trades_per_month": 10.8,
+    "avg_trade_pct": 0.85,
+    "win_pct": 64.9
+   }
+  },
+  "only dips with an insider buy (3 months)": {
+   "2006-2026": {
+    "per_year_pct": 8.9,
+    "worst_drop_pct": -18.6,
+    "spy_pct": 11.2,
+    "trades_per_month": 0.1,
+    "avg_trade_pct": 1.31,
+    "win_pct": 60.9
+   },
+   "2006-2015": {
+    "per_year_pct": 6.5,
+    "worst_drop_pct": -18.6,
+    "spy_pct": 7.2,
+    "trades_per_month": 0.0,
+    "avg_trade_pct": null,
+    "win_pct": null
+   },
+   "2016-2026": {
+    "per_year_pct": 11.3,
+    "worst_drop_pct": -17.7,
+    "spy_pct": 14.9,
+    "trades_per_month": 0.2,
+    "avg_trade_pct": 1.31,
+    "win_pct": 60.9
+   }
+  },
+  "skip dips where 3+ insiders sold": {
+   "2006-2026": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 11.2,
+    "trades_per_month": 7.6,
+    "avg_trade_pct": 0.56,
+    "win_pct": 63.3
+   },
+   "2006-2015": {
+    "per_year_pct": 7.3,
+    "worst_drop_pct": -19.4,
+    "spy_pct": 7.2,
+    "trades_per_month": 4.8,
+    "avg_trade_pct": 0.22,
+    "win_pct": 59.7
+   },
+   "2016-2026": {
+    "per_year_pct": 18.1,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.9,
+    "trades_per_month": 10.1,
+    "avg_trade_pct": 0.71,
+    "win_pct": 64.8
+   }
+  },
+  "bot 6 tuned (8%/150-day/hold 7)": {
+   "2006-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 11.2,
+    "trades_per_month": 16.2,
+    "avg_trade_pct": 0.52,
+    "win_pct": 64.0
+   },
+   "2006-2015": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -18.4,
+    "spy_pct": 7.2,
+    "trades_per_month": 12.1,
+    "avg_trade_pct": 0.54,
+    "win_pct": 63.8
+   },
+   "2016-2026": {
+    "per_year_pct": 21.1,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 14.9,
+    "trades_per_month": 19.9,
+    "avg_trade_pct": 0.52,
+    "win_pct": 64.0
+   }
+  },
+  "bot 6 tuned + insider buyers first": {
+   "2006-2026": {
+    "per_year_pct": 17.3,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 11.2,
+    "trades_per_month": 16.2,
+    "avg_trade_pct": 0.53,
+    "win_pct": 64.0
+   },
+   "2006-2015": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -18.4,
+    "spy_pct": 7.2,
+    "trades_per_month": 12.1,
+    "avg_trade_pct": 0.54,
+    "win_pct": 63.8
+   },
+   "2016-2026": {
+    "per_year_pct": 21.5,
+    "worst_drop_pct": -20.4,
+    "spy_pct": 14.9,
+    "trades_per_month": 19.9,
+    "avg_trade_pct": 0.53,
+    "win_pct": 64.1
+   }
+  }
+ }
+}
