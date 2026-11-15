@@ -197,6 +197,7 @@ if not DRY:
         out = {}
         for name, a, b in (("all", str(dn[t0])[:10], "2100-01-01"), ("2019-2022", str(dn[t0])[:10], "2023-01-01"), ("2023-2026", "2023-01-01", "2100-01-01")):
             idx = np.flatnonzero((dn >= np.datetime64(a)) & (dn < np.datetime64(b)) & (np.arange(D) >= t0))
+            if len(idx) < 30: continue
             cv = curve[idx] / curve[idx[0]]; y = len(idx) / 252; s = SP[idx] / SP[idx[0]]; tr = [x[1] for x in trades if a <= str(dn[x[0]])[:10] < b]
             out[name] = {"per_year_pct": round((cv[-1] ** (1 / y) - 1) * 100, 1), "worst_drop_pct": round(float((cv / np.maximum.accumulate(cv) - 1).min()) * 100, 1),
                          "spy_pct": round((s[-1] ** (1 / y) - 1) * 100, 1), "trades_per_month": round(len(tr) / (y * 12), 1), "avg_trade_pct": round(float(np.mean(tr)) * 100, 2) if tr else None}
@@ -205,7 +206,7 @@ if not DRY:
         for name, kw in (("rules as now", {}), ("skip days-to-cover >= 5", {"mode": "skip high dtc"}), ("skip days-to-cover >= 3", {"mode": "skip high dtc", "cut": 3.0}),
                          ("most shorted first", {"mode": "high dtc first"}), ("least shorted first", {"mode": "low dtc first"}), ("only days-to-cover >= 3", {"mode": "only high dtc", "cut": 3.0})):
             a = PORT[f"{tag} | {name}"] = sim(**kw0, **kw)
-            print(f"PORTFOLIO {tag} | {name:28s} {a['all']['per_year_pct']}%/yr worst {a['all']['worst_drop_pct']} (SPY {a['all']['spy_pct']}) | early {a['2019-2022']['per_year_pct']} late {a['2023-2026']['per_year_pct']} | tr/mo {a['all']['trades_per_month']} avg {a['all']['avg_trade_pct']}", flush=True)
+            print(f"PORTFOLIO {tag} | {name:28s} {a['all']['per_year_pct']}%/yr worst {a['all']['worst_drop_pct']} (SPY {a['all']['spy_pct']}) | early {a.get('2019-2022', {}).get('per_year_pct')} late {a.get('2023-2026', {}).get('per_year_pct')} | tr/mo {a['all']['trades_per_month']} avg {a['all']['avg_trade_pct']}", flush=True)
 
 json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "start": str(dn[t0])[:10],
            "reports": sorted(reports) if reports else None, "dip_trades": int(len(X)), "groups": res, "portfolio": PORT}, open(OUT, "w"), indent=1, default=float)
