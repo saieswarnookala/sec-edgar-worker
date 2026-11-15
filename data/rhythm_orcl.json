@@ -6,15 +6,15 @@
   "last": "2026-11-13",
   "train": "2016-01-04 to 2022-12-31",
   "test": "2023-01-01 to 2026-11-13",
-  "versions": 740,
-  "versions_scored": 698,
+  "versions": 806,
+  "versions_scored": 731,
   "cost_per_side_pct": 0.02,
-  "train_t_over_2": 17,
-  "expected_by_luck_t_over_2": 16.1,
+  "train_t_over_2": 21,
+  "expected_by_luck_t_over_2": 16.8,
   "test_t_over_2": 8,
   "top15_train_still_positive_in_test": 0,
   "top15_train_t_over_2_in_test": 0,
-  "rank_corr_train_vs_test": -0.33,
+  "rank_corr_train_vs_test": -0.373,
   "buy_hold": {
    "train": 127.5,
    "test": 52.0
@@ -446,6 +446,34 @@
    }
   },
   {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 3 day(s) later",
+   "train": {
+    "trades": 85,
+    "avg_bps": 100.6,
+    "win_pct": 58.8,
+    "t": 2.4,
+    "per_year_pct": 12.2,
+    "worst_bps": -632.0
+   },
+   "test": {
+    "trades": 134,
+    "avg_bps": -66.1,
+    "win_pct": 44.8,
+    "t": -1.23,
+    "per_year_pct": -23.0,
+    "worst_bps": -1481.0
+   },
+   "test_stress": {
+    "trades": 134,
+    "avg_bps": -72.1,
+    "win_pct": 44.0,
+    "t": -1.34,
+    "per_year_pct": -25.1,
+    "worst_bps": -1487.0
+   }
+  },
+  {
    "family": "E after a big day",
    "rule": "bet on a bounce after a 1%+ down day, hold 2 day(s)",
    "train": {
@@ -499,34 +527,6 @@
     "t": -0.71,
     "per_year_pct": -21.8,
     "worst_bps": -1992.0
-   }
-  },
-  {
-   "family": "D opening gap",
-   "rule": "fade a 1%+ gap down, exit 60 min",
-   "train": {
-    "trades": 139,
-    "avg_bps": 28.2,
-    "win_pct": 60.4,
-    "t": 2.25,
-    "per_year_pct": 5.6,
-    "worst_bps": -304.0
-   },
-   "test": {
-    "trades": 152,
-    "avg_bps": -26.1,
-    "win_pct": 43.4,
-    "t": -1.65,
-    "per_year_pct": -10.3,
-    "worst_bps": -525.0
-   },
-   "test_stress": {
-    "trades": 152,
-    "avg_bps": -32.1,
-    "win_pct": 42.8,
-    "t": -2.03,
-    "per_year_pct": -12.7,
-    "worst_bps": -531.0
    }
   }
  ],
@@ -1459,6 +1459,75 @@
       "t": -1.07,
       "per_year_pct": -2.8,
       "worst_bps": -282.0
+     }
+    }
+   ]
+  },
+  "K swing <= 3 days": {
+   "versions": 33,
+   "train_pos": 30,
+   "test_pos": 7,
+   "train_t_over_2": 4,
+   "top3_by_train": [
+    {
+     "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 3 day(s) later",
+     "train": {
+      "trades": 85,
+      "avg_bps": 100.6,
+      "win_pct": 58.8,
+      "t": 2.4,
+      "per_year_pct": 12.2,
+      "worst_bps": -632.0
+     },
+     "test": {
+      "trades": 134,
+      "avg_bps": -66.1,
+      "win_pct": 44.8,
+      "t": -1.23,
+      "per_year_pct": -23.0,
+      "worst_bps": -1481.0
+     }
+    },
+    {
+     "rule": "buy the next open after a 1%+ down day, sell at the close of day 2",
+     "train": {
+      "trades": 293,
+      "avg_bps": 37.8,
+      "win_pct": 55.6,
+      "t": 2.38,
+      "per_year_pct": 15.8,
+      "worst_bps": -742.0,
+      "random_day_bps": 8.3,
+      "excess_bps": 29.5
+     },
+     "test": {
+      "trades": 274,
+      "avg_bps": -11.3,
+      "win_pct": 47.4,
+      "t": -0.48,
+      "per_year_pct": -8.0,
+      "worst_bps": -1198.0,
+      "random_day_bps": 0.4,
+      "excess_bps": -11.7
+     }
+    },
+    {
+     "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 2 day(s) later",
+     "train": {
+      "trades": 85,
+      "avg_bps": 73.7,
+      "win_pct": 62.4,
+      "t": 2.36,
+      "per_year_pct": 9.0,
+      "worst_bps": -760.0
+     },
+     "test": {
+      "trades": 134,
+      "avg_bps": -36.7,
+      "win_pct": 47.0,
+      "t": -0.87,
+      "per_year_pct": -12.8,
+      "worst_bps": -1469.0
      }
     }
    ]
@@ -22183,6 +22252,2082 @@
     "t": -0.52,
     "per_year_pct": -0.7,
     "worst_bps": -181.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap down (bounce), sell at the close of day 1",
+   "train": {
+    "trades": 139,
+    "avg_bps": 22.1,
+    "win_pct": 56.8,
+    "t": 1.33,
+    "per_year_pct": 4.4,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 19.9
+   },
+   "test": {
+    "trades": 152,
+    "avg_bps": -42.4,
+    "win_pct": 42.1,
+    "t": -2.06,
+    "per_year_pct": -16.7,
+    "worst_bps": -693.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -34.0
+   },
+   "test_stress": {
+    "trades": 152,
+    "avg_bps": -48.4,
+    "win_pct": 42.1,
+    "t": -2.35,
+    "per_year_pct": -19.1,
+    "worst_bps": -699.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap up (follow), sell at the close of day 1",
+   "train": {
+    "trades": 109,
+    "avg_bps": 19.3,
+    "win_pct": 54.1,
+    "t": 0.89,
+    "per_year_pct": 3.0,
+    "worst_bps": -617.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 17.1
+   },
+   "test": {
+    "trades": 167,
+    "avg_bps": -15.0,
+    "win_pct": 45.5,
+    "t": -0.66,
+    "per_year_pct": -6.5,
+    "worst_bps": -890.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -6.6
+   },
+   "test_stress": {
+    "trades": 167,
+    "avg_bps": -21.0,
+    "win_pct": 45.5,
+    "t": -0.92,
+    "per_year_pct": -9.1,
+    "worst_bps": -896.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap down (bounce), sell at the close of day 1",
+   "train": {
+    "trades": 37,
+    "avg_bps": 14.3,
+    "win_pct": 43.2,
+    "t": 0.32,
+    "per_year_pct": 0.8,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 12.1
+   },
+   "test": {
+    "trades": 56,
+    "avg_bps": -39.3,
+    "win_pct": 44.6,
+    "t": -0.93,
+    "per_year_pct": -5.7,
+    "worst_bps": -693.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -30.9
+   },
+   "test_stress": {
+    "trades": 56,
+    "avg_bps": -45.3,
+    "win_pct": 44.6,
+    "t": -1.07,
+    "per_year_pct": -6.6,
+    "worst_bps": -699.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap up (follow), sell at the close of day 1",
+   "train": {
+    "trades": 30,
+    "avg_bps": 16.4,
+    "win_pct": 50.0,
+    "t": 0.27,
+    "per_year_pct": 0.7,
+    "worst_bps": -617.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 14.2
+   },
+   "test": {
+    "trades": 78,
+    "avg_bps": -65.0,
+    "win_pct": 39.7,
+    "t": -1.77,
+    "per_year_pct": -13.2,
+    "worst_bps": -890.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -56.6
+   },
+   "test_stress": {
+    "trades": 78,
+    "avg_bps": -71.0,
+    "win_pct": 39.7,
+    "t": -1.93,
+    "per_year_pct": -14.4,
+    "worst_bps": -896.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap down (bounce), sell at the close of day 1",
+   "train": {
+    "trades": 20,
+    "avg_bps": 6.3,
+    "win_pct": 35.0,
+    "t": 0.1,
+    "per_year_pct": 0.2,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 4.1
+   },
+   "test": {
+    "trades": 29,
+    "avg_bps": 61.1,
+    "win_pct": 58.6,
+    "t": 1.07,
+    "per_year_pct": 4.6,
+    "worst_bps": -633.0,
+    "random_day_bps": -8.4,
+    "excess_bps": 69.5
+   },
+   "test_stress": {
+    "trades": 29,
+    "avg_bps": 55.1,
+    "win_pct": 58.6,
+    "t": 0.97,
+    "per_year_pct": 4.1,
+    "worst_bps": -639.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap up (follow), sell at the close of day 1",
+   "train": {
+    "trades": 14,
+    "avg_bps": -89.3,
+    "win_pct": 28.6,
+    "t": -0.86,
+    "per_year_pct": -1.8,
+    "worst_bps": -617.0,
+    "random_day_bps": 2.2,
+    "excess_bps": -91.5
+   },
+   "test": {
+    "trades": 41,
+    "avg_bps": -94.8,
+    "win_pct": 39.0,
+    "t": -1.82,
+    "per_year_pct": -10.1,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -86.4
+   },
+   "test_stress": {
+    "trades": 41,
+    "avg_bps": -100.8,
+    "win_pct": 39.0,
+    "t": -1.93,
+    "per_year_pct": -10.7,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap down (bounce), sell at the close of day 1",
+   "train": {
+    "trades": 10,
+    "avg_bps": -2.4,
+    "win_pct": 40.0,
+    "t": -0.02,
+    "per_year_pct": -0.0,
+    "worst_bps": -397.0,
+    "random_day_bps": 2.2,
+    "excess_bps": -4.6
+   },
+   "test": {
+    "trades": 16,
+    "avg_bps": 66.8,
+    "win_pct": 56.2,
+    "t": 0.84,
+    "per_year_pct": 2.8,
+    "worst_bps": -633.0,
+    "random_day_bps": -8.4,
+    "excess_bps": 75.2
+   },
+   "test_stress": {
+    "trades": 16,
+    "avg_bps": 60.8,
+    "win_pct": 56.2,
+    "t": 0.76,
+    "per_year_pct": 2.5,
+    "worst_bps": -639.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap up (follow), sell at the close of day 1",
+   "train": {
+    "trades": 11,
+    "avg_bps": -171.0,
+    "win_pct": 18.2,
+    "t": -1.49,
+    "per_year_pct": -2.7,
+    "worst_bps": -617.0,
+    "random_day_bps": 2.2,
+    "excess_bps": -173.2
+   },
+   "test": {
+    "trades": 26,
+    "avg_bps": -107.7,
+    "win_pct": 46.2,
+    "t": -1.51,
+    "per_year_pct": -7.3,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -99.3
+   },
+   "test_stress": {
+    "trades": 26,
+    "avg_bps": -113.7,
+    "win_pct": 46.2,
+    "t": -1.6,
+    "per_year_pct": -7.7,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ down day, sell at the close of day 1",
+   "train": {
+    "trades": 293,
+    "avg_bps": 16.4,
+    "win_pct": 57.0,
+    "t": 1.62,
+    "per_year_pct": 6.9,
+    "worst_bps": -497.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 14.2
+   },
+   "test": {
+    "trades": 274,
+    "avg_bps": -12.6,
+    "win_pct": 49.3,
+    "t": -0.84,
+    "per_year_pct": -8.9,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -4.2
+   },
+   "test_stress": {
+    "trades": 274,
+    "avg_bps": -18.6,
+    "win_pct": 48.5,
+    "t": -1.24,
+    "per_year_pct": -13.2,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ up day, sell at the close of day 1",
+   "train": {
+    "trades": 344,
+    "avg_bps": 2.6,
+    "win_pct": 51.2,
+    "t": 0.34,
+    "per_year_pct": 1.3,
+    "worst_bps": -550.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 0.4
+   },
+   "test": {
+    "trades": 291,
+    "avg_bps": -12.9,
+    "win_pct": 48.8,
+    "t": -0.92,
+    "per_year_pct": -9.7,
+    "worst_bps": -890.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -4.5
+   },
+   "test_stress": {
+    "trades": 291,
+    "avg_bps": -18.9,
+    "win_pct": 48.1,
+    "t": -1.35,
+    "per_year_pct": -14.3,
+    "worst_bps": -896.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ down day, sell at the close of day 1",
+   "train": {
+    "trades": 119,
+    "avg_bps": 14.3,
+    "win_pct": 51.3,
+    "t": 0.73,
+    "per_year_pct": 2.4,
+    "worst_bps": -497.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 12.1
+   },
+   "test": {
+    "trades": 152,
+    "avg_bps": -5.0,
+    "win_pct": 53.3,
+    "t": -0.22,
+    "per_year_pct": -2.0,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": 3.4
+   },
+   "test_stress": {
+    "trades": 152,
+    "avg_bps": -11.0,
+    "win_pct": 53.3,
+    "t": -0.48,
+    "per_year_pct": -4.3,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ up day, sell at the close of day 1",
+   "train": {
+    "trades": 129,
+    "avg_bps": 19.3,
+    "win_pct": 56.6,
+    "t": 1.32,
+    "per_year_pct": 3.6,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 17.1
+   },
+   "test": {
+    "trades": 168,
+    "avg_bps": -21.3,
+    "win_pct": 47.0,
+    "t": -1.0,
+    "per_year_pct": -9.3,
+    "worst_bps": -890.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -12.9
+   },
+   "test_stress": {
+    "trades": 168,
+    "avg_bps": -27.3,
+    "win_pct": 46.4,
+    "t": -1.28,
+    "per_year_pct": -11.9,
+    "worst_bps": -896.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ down day, sell at the close of day 1",
+   "train": {
+    "trades": 59,
+    "avg_bps": 32.4,
+    "win_pct": 47.5,
+    "t": 0.96,
+    "per_year_pct": 2.7,
+    "worst_bps": -497.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 30.2
+   },
+   "test": {
+    "trades": 94,
+    "avg_bps": -28.1,
+    "win_pct": 47.9,
+    "t": -0.93,
+    "per_year_pct": -6.9,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -19.7
+   },
+   "test_stress": {
+    "trades": 94,
+    "avg_bps": -34.1,
+    "win_pct": 47.9,
+    "t": -1.13,
+    "per_year_pct": -8.3,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ up day, sell at the close of day 1",
+   "train": {
+    "trades": 41,
+    "avg_bps": 12.3,
+    "win_pct": 53.7,
+    "t": 0.36,
+    "per_year_pct": 0.7,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 10.1
+   },
+   "test": {
+    "trades": 91,
+    "avg_bps": 1.1,
+    "win_pct": 44.0,
+    "t": 0.03,
+    "per_year_pct": 0.3,
+    "worst_bps": -688.0,
+    "random_day_bps": -8.4,
+    "excess_bps": 9.5
+   },
+   "test_stress": {
+    "trades": 91,
+    "avg_bps": -4.9,
+    "win_pct": 44.0,
+    "t": -0.15,
+    "per_year_pct": -1.2,
+    "worst_bps": -694.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ down day, sell at the close of day 1",
+   "train": {
+    "trades": 14,
+    "avg_bps": 58.9,
+    "win_pct": 42.9,
+    "t": 0.61,
+    "per_year_pct": 1.2,
+    "worst_bps": -497.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 56.7
+   },
+   "test": {
+    "trades": 39,
+    "avg_bps": -51.4,
+    "win_pct": 51.3,
+    "t": -0.9,
+    "per_year_pct": -5.2,
+    "worst_bps": -865.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -43.0
+   },
+   "test_stress": {
+    "trades": 39,
+    "avg_bps": -57.4,
+    "win_pct": 51.3,
+    "t": -1.01,
+    "per_year_pct": -5.8,
+    "worst_bps": -871.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ up day, sell at the close of day 1",
+   "train": {
+    "trades": 13,
+    "avg_bps": 26.9,
+    "win_pct": 61.5,
+    "t": 0.32,
+    "per_year_pct": 0.5,
+    "worst_bps": -448.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 24.7
+   },
+   "test": {
+    "trades": 34,
+    "avg_bps": -17.1,
+    "win_pct": 38.2,
+    "t": -0.29,
+    "per_year_pct": -1.5,
+    "worst_bps": -688.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -8.7
+   },
+   "test_stress": {
+    "trades": 34,
+    "avg_bps": -23.1,
+    "win_pct": 38.2,
+    "t": -0.39,
+    "per_year_pct": -2.0,
+    "worst_bps": -694.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 2% below the open during the day, sell at the close of day 1",
+   "train": {
+    "trades": 129,
+    "avg_bps": 14.5,
+    "win_pct": 53.5,
+    "t": 0.83,
+    "per_year_pct": 2.7,
+    "worst_bps": -410.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 12.3
+   },
+   "test": {
+    "trades": 218,
+    "avg_bps": -36.4,
+    "win_pct": 43.1,
+    "t": -2.93,
+    "per_year_pct": -20.6,
+    "worst_bps": -689.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -28.0
+   },
+   "test_stress": {
+    "trades": 218,
+    "avg_bps": -42.4,
+    "win_pct": 40.4,
+    "t": -3.42,
+    "per_year_pct": -24.0,
+    "worst_bps": -695.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 3% below the open during the day, sell at the close of day 1",
+   "train": {
+    "trades": 41,
+    "avg_bps": 12.9,
+    "win_pct": 46.3,
+    "t": 0.36,
+    "per_year_pct": 0.8,
+    "worst_bps": -326.0,
+    "random_day_bps": 2.2,
+    "excess_bps": 10.7
+   },
+   "test": {
+    "trades": 125,
+    "avg_bps": -16.4,
+    "win_pct": 47.2,
+    "t": -0.97,
+    "per_year_pct": -5.3,
+    "worst_bps": -584.0,
+    "random_day_bps": -8.4,
+    "excess_bps": -8.0
+   },
+   "test_stress": {
+    "trades": 125,
+    "avg_bps": -22.4,
+    "win_pct": 44.8,
+    "t": -1.33,
+    "per_year_pct": -7.3,
+    "worst_bps": -590.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 5% below the open during the day, sell at the close of day 1",
+   "train": {
+    "trades": 4,
+    "avg_bps": -16.4,
+    "win_pct": 50.0,
+    "t": -0.44,
+    "per_year_pct": -0.1,
+    "worst_bps": -120.0,
+    "random_day_bps": 2.2,
+    "excess_bps": -18.6
+   },
+   "test": {
+    "trades": 37,
+    "avg_bps": 23.8,
+    "win_pct": 56.8,
+    "t": 0.77,
+    "per_year_pct": 2.3,
+    "worst_bps": -405.0,
+    "random_day_bps": -8.4,
+    "excess_bps": 32.2
+   },
+   "test_stress": {
+    "trades": 37,
+    "avg_bps": 17.8,
+    "win_pct": 56.8,
+    "t": 0.58,
+    "per_year_pct": 1.7,
+    "worst_bps": -411.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 1 day(s) later",
+   "train": {
+    "trades": 85,
+    "avg_bps": 72.2,
+    "win_pct": 54.1,
+    "t": 1.87,
+    "per_year_pct": 8.8,
+    "worst_bps": -1108.0
+   },
+   "test": {
+    "trades": 134,
+    "avg_bps": -14.4,
+    "win_pct": 51.5,
+    "t": -0.47,
+    "per_year_pct": -5.0,
+    "worst_bps": -1388.0
+   },
+   "test_stress": {
+    "trades": 134,
+    "avg_bps": -20.4,
+    "win_pct": 51.5,
+    "t": -0.66,
+    "per_year_pct": -7.1,
+    "worst_bps": -1394.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 3%+ drop from open to close, sell at the close 1 day(s) later",
+   "train": {
+    "trades": 25,
+    "avg_bps": 96.8,
+    "win_pct": 60.0,
+    "t": 0.96,
+    "per_year_pct": 3.5,
+    "worst_bps": -1108.0
+   },
+   "test": {
+    "trades": 75,
+    "avg_bps": 2.6,
+    "win_pct": 53.3,
+    "t": 0.06,
+    "per_year_pct": 0.5,
+    "worst_bps": -701.0
+   },
+   "test_stress": {
+    "trades": 75,
+    "avg_bps": -3.4,
+    "win_pct": 53.3,
+    "t": -0.09,
+    "per_year_pct": -0.7,
+    "worst_bps": -707.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 5%+ drop from open to close, sell at the close 1 day(s) later",
+   "train": {
+    "trades": 3,
+    "avg_bps": 217.2,
+    "win_pct": 100.0,
+    "t": 2.03,
+    "per_year_pct": 0.9,
+    "worst_bps": 77.0
+   },
+   "test": {
+    "trades": 19,
+    "avg_bps": 143.4,
+    "win_pct": 68.4,
+    "t": 1.4,
+    "per_year_pct": 7.1,
+    "worst_bps": -569.0
+   },
+   "test_stress": {
+    "trades": 19,
+    "avg_bps": 137.4,
+    "win_pct": 68.4,
+    "t": 1.34,
+    "per_year_pct": 6.8,
+    "worst_bps": -575.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap down (bounce), sell at the close of day 2",
+   "train": {
+    "trades": 139,
+    "avg_bps": 33.8,
+    "win_pct": 51.8,
+    "t": 1.15,
+    "per_year_pct": 6.7,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 25.5
+   },
+   "test": {
+    "trades": 152,
+    "avg_bps": -92.9,
+    "win_pct": 41.4,
+    "t": -3.22,
+    "per_year_pct": -36.7,
+    "worst_bps": -1089.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -93.3
+   },
+   "test_stress": {
+    "trades": 152,
+    "avg_bps": -98.9,
+    "win_pct": 40.8,
+    "t": -3.42,
+    "per_year_pct": -39.0,
+    "worst_bps": -1095.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap up (follow), sell at the close of day 2",
+   "train": {
+    "trades": 109,
+    "avg_bps": -23.5,
+    "win_pct": 46.8,
+    "t": -0.9,
+    "per_year_pct": -3.7,
+    "worst_bps": -830.0,
+    "random_day_bps": 8.3,
+    "excess_bps": -31.8
+   },
+   "test": {
+    "trades": 167,
+    "avg_bps": 28.9,
+    "win_pct": 53.9,
+    "t": 0.77,
+    "per_year_pct": 12.5,
+    "worst_bps": -1613.0,
+    "random_day_bps": 0.4,
+    "excess_bps": 28.5
+   },
+   "test_stress": {
+    "trades": 167,
+    "avg_bps": 22.9,
+    "win_pct": 53.3,
+    "t": 0.61,
+    "per_year_pct": 9.9,
+    "worst_bps": -1619.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap down (bounce), sell at the close of day 2",
+   "train": {
+    "trades": 37,
+    "avg_bps": 79.8,
+    "win_pct": 48.6,
+    "t": 0.91,
+    "per_year_pct": 4.2,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 71.5
+   },
+   "test": {
+    "trades": 56,
+    "avg_bps": -113.3,
+    "win_pct": 42.9,
+    "t": -2.01,
+    "per_year_pct": -16.5,
+    "worst_bps": -1089.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -113.7
+   },
+   "test_stress": {
+    "trades": 56,
+    "avg_bps": -119.3,
+    "win_pct": 42.9,
+    "t": -2.12,
+    "per_year_pct": -17.3,
+    "worst_bps": -1095.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap up (follow), sell at the close of day 2",
+   "train": {
+    "trades": 30,
+    "avg_bps": -45.6,
+    "win_pct": 50.0,
+    "t": -0.75,
+    "per_year_pct": -2.0,
+    "worst_bps": -577.0,
+    "random_day_bps": 8.3,
+    "excess_bps": -53.9
+   },
+   "test": {
+    "trades": 78,
+    "avg_bps": -8.5,
+    "win_pct": 47.4,
+    "t": -0.15,
+    "per_year_pct": -1.7,
+    "worst_bps": -1405.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -8.9
+   },
+   "test_stress": {
+    "trades": 78,
+    "avg_bps": -14.5,
+    "win_pct": 46.2,
+    "t": -0.25,
+    "per_year_pct": -2.9,
+    "worst_bps": -1411.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap down (bounce), sell at the close of day 2",
+   "train": {
+    "trades": 20,
+    "avg_bps": 90.8,
+    "win_pct": 45.0,
+    "t": 0.62,
+    "per_year_pct": 2.6,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 82.5
+   },
+   "test": {
+    "trades": 29,
+    "avg_bps": -29.2,
+    "win_pct": 55.2,
+    "t": -0.37,
+    "per_year_pct": -2.2,
+    "worst_bps": -1089.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -29.6
+   },
+   "test_stress": {
+    "trades": 29,
+    "avg_bps": -35.2,
+    "win_pct": 55.2,
+    "t": -0.44,
+    "per_year_pct": -2.7,
+    "worst_bps": -1095.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap up (follow), sell at the close of day 2",
+   "train": {
+    "trades": 14,
+    "avg_bps": -211.0,
+    "win_pct": 28.6,
+    "t": -3.91,
+    "per_year_pct": -4.2,
+    "worst_bps": -577.0,
+    "random_day_bps": 8.3,
+    "excess_bps": -219.3
+   },
+   "test": {
+    "trades": 41,
+    "avg_bps": 15.2,
+    "win_pct": 56.1,
+    "t": 0.2,
+    "per_year_pct": 1.6,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": 14.8
+   },
+   "test_stress": {
+    "trades": 41,
+    "avg_bps": 9.2,
+    "win_pct": 53.7,
+    "t": 0.12,
+    "per_year_pct": 1.0,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap down (bounce), sell at the close of day 2",
+   "train": {
+    "trades": 10,
+    "avg_bps": 250.9,
+    "win_pct": 50.0,
+    "t": 1.13,
+    "per_year_pct": 3.6,
+    "worst_bps": -620.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 242.6
+   },
+   "test": {
+    "trades": 16,
+    "avg_bps": -60.7,
+    "win_pct": 50.0,
+    "t": -0.58,
+    "per_year_pct": -2.5,
+    "worst_bps": -1089.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -61.1
+   },
+   "test_stress": {
+    "trades": 16,
+    "avg_bps": -66.7,
+    "win_pct": 50.0,
+    "t": -0.64,
+    "per_year_pct": -2.8,
+    "worst_bps": -1095.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap up (follow), sell at the close of day 2",
+   "train": {
+    "trades": 11,
+    "avg_bps": -230.8,
+    "win_pct": 18.2,
+    "t": -5.18,
+    "per_year_pct": -3.6,
+    "worst_bps": -391.0,
+    "random_day_bps": 8.3,
+    "excess_bps": -239.1
+   },
+   "test": {
+    "trades": 26,
+    "avg_bps": 32.4,
+    "win_pct": 57.7,
+    "t": 0.33,
+    "per_year_pct": 2.2,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": 32.0
+   },
+   "test_stress": {
+    "trades": 26,
+    "avg_bps": 26.4,
+    "win_pct": 53.8,
+    "t": 0.27,
+    "per_year_pct": 1.8,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ down day, sell at the close of day 2",
+   "train": {
+    "trades": 293,
+    "avg_bps": 37.8,
+    "win_pct": 55.6,
+    "t": 2.38,
+    "per_year_pct": 15.8,
+    "worst_bps": -742.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 29.5
+   },
+   "test": {
+    "trades": 274,
+    "avg_bps": -11.3,
+    "win_pct": 47.4,
+    "t": -0.48,
+    "per_year_pct": -8.0,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -11.7
+   },
+   "test_stress": {
+    "trades": 274,
+    "avg_bps": -17.3,
+    "win_pct": 46.7,
+    "t": -0.73,
+    "per_year_pct": -12.3,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ up day, sell at the close of day 2",
+   "train": {
+    "trades": 344,
+    "avg_bps": 11.5,
+    "win_pct": 55.8,
+    "t": 0.93,
+    "per_year_pct": 5.7,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 3.2
+   },
+   "test": {
+    "trades": 291,
+    "avg_bps": -19.7,
+    "win_pct": 49.5,
+    "t": -0.8,
+    "per_year_pct": -14.9,
+    "worst_bps": -1613.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -20.1
+   },
+   "test_stress": {
+    "trades": 291,
+    "avg_bps": -25.7,
+    "win_pct": 48.5,
+    "t": -1.05,
+    "per_year_pct": -19.4,
+    "worst_bps": -1619.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ down day, sell at the close of day 2",
+   "train": {
+    "trades": 119,
+    "avg_bps": 24.4,
+    "win_pct": 53.8,
+    "t": 0.89,
+    "per_year_pct": 4.2,
+    "worst_bps": -594.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 16.1
+   },
+   "test": {
+    "trades": 152,
+    "avg_bps": -28.5,
+    "win_pct": 50.0,
+    "t": -0.87,
+    "per_year_pct": -11.2,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -28.9
+   },
+   "test_stress": {
+    "trades": 152,
+    "avg_bps": -34.5,
+    "win_pct": 48.7,
+    "t": -1.05,
+    "per_year_pct": -13.6,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ up day, sell at the close of day 2",
+   "train": {
+    "trades": 129,
+    "avg_bps": 19.6,
+    "win_pct": 56.6,
+    "t": 0.78,
+    "per_year_pct": 3.6,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 11.3
+   },
+   "test": {
+    "trades": 168,
+    "avg_bps": -0.5,
+    "win_pct": 50.0,
+    "t": -0.01,
+    "per_year_pct": -0.2,
+    "worst_bps": -1405.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -0.9
+   },
+   "test_stress": {
+    "trades": 168,
+    "avg_bps": -6.5,
+    "win_pct": 49.4,
+    "t": -0.17,
+    "per_year_pct": -2.8,
+    "worst_bps": -1411.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ down day, sell at the close of day 2",
+   "train": {
+    "trades": 59,
+    "avg_bps": 13.4,
+    "win_pct": 42.4,
+    "t": 0.29,
+    "per_year_pct": 1.1,
+    "worst_bps": -594.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 5.1
+   },
+   "test": {
+    "trades": 94,
+    "avg_bps": -30.9,
+    "win_pct": 48.9,
+    "t": -0.69,
+    "per_year_pct": -7.5,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -31.3
+   },
+   "test_stress": {
+    "trades": 94,
+    "avg_bps": -36.9,
+    "win_pct": 46.8,
+    "t": -0.82,
+    "per_year_pct": -9.0,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ up day, sell at the close of day 2",
+   "train": {
+    "trades": 41,
+    "avg_bps": -6.1,
+    "win_pct": 51.2,
+    "t": -0.1,
+    "per_year_pct": -0.4,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": -14.4
+   },
+   "test": {
+    "trades": 91,
+    "avg_bps": 14.6,
+    "win_pct": 49.5,
+    "t": 0.32,
+    "per_year_pct": 3.5,
+    "worst_bps": -1160.0,
+    "random_day_bps": 0.4,
+    "excess_bps": 14.2
+   },
+   "test_stress": {
+    "trades": 91,
+    "avg_bps": 8.6,
+    "win_pct": 49.5,
+    "t": 0.19,
+    "per_year_pct": 2.0,
+    "worst_bps": -1166.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ down day, sell at the close of day 2",
+   "train": {
+    "trades": 14,
+    "avg_bps": 88.8,
+    "win_pct": 42.9,
+    "t": 0.57,
+    "per_year_pct": 1.8,
+    "worst_bps": -512.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 80.5
+   },
+   "test": {
+    "trades": 39,
+    "avg_bps": -38.9,
+    "win_pct": 51.3,
+    "t": -0.56,
+    "per_year_pct": -3.9,
+    "worst_bps": -1198.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -39.3
+   },
+   "test_stress": {
+    "trades": 39,
+    "avg_bps": -44.9,
+    "win_pct": 46.2,
+    "t": -0.65,
+    "per_year_pct": -4.5,
+    "worst_bps": -1204.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ up day, sell at the close of day 2",
+   "train": {
+    "trades": 13,
+    "avg_bps": 55.0,
+    "win_pct": 61.5,
+    "t": 0.34,
+    "per_year_pct": 1.0,
+    "worst_bps": -1504.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 46.7
+   },
+   "test": {
+    "trades": 34,
+    "avg_bps": -28.9,
+    "win_pct": 38.2,
+    "t": -0.31,
+    "per_year_pct": -2.6,
+    "worst_bps": -1160.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -29.3
+   },
+   "test_stress": {
+    "trades": 34,
+    "avg_bps": -34.9,
+    "win_pct": 38.2,
+    "t": -0.38,
+    "per_year_pct": -3.1,
+    "worst_bps": -1166.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 2% below the open during the day, sell at the close of day 2",
+   "train": {
+    "trades": 129,
+    "avg_bps": 33.4,
+    "win_pct": 58.9,
+    "t": 1.19,
+    "per_year_pct": 6.2,
+    "worst_bps": -1331.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 25.1
+   },
+   "test": {
+    "trades": 217,
+    "avg_bps": -11.1,
+    "win_pct": 47.0,
+    "t": -0.35,
+    "per_year_pct": -6.2,
+    "worst_bps": -1434.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -11.5
+   },
+   "test_stress": {
+    "trades": 217,
+    "avg_bps": -17.1,
+    "win_pct": 46.1,
+    "t": -0.55,
+    "per_year_pct": -9.6,
+    "worst_bps": -1440.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 3% below the open during the day, sell at the close of day 2",
+   "train": {
+    "trades": 41,
+    "avg_bps": 9.6,
+    "win_pct": 48.8,
+    "t": 0.18,
+    "per_year_pct": 0.6,
+    "worst_bps": -1238.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 1.3
+   },
+   "test": {
+    "trades": 124,
+    "avg_bps": -30.1,
+    "win_pct": 45.2,
+    "t": -0.81,
+    "per_year_pct": -9.7,
+    "worst_bps": -1354.0,
+    "random_day_bps": 0.4,
+    "excess_bps": -30.5
+   },
+   "test_stress": {
+    "trades": 124,
+    "avg_bps": -36.1,
+    "win_pct": 44.4,
+    "t": -0.98,
+    "per_year_pct": -11.6,
+    "worst_bps": -1360.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 5% below the open during the day, sell at the close of day 2",
+   "train": {
+    "trades": 4,
+    "avg_bps": 93.3,
+    "win_pct": 75.0,
+    "t": 0.77,
+    "per_year_pct": 0.5,
+    "worst_bps": -254.0,
+    "random_day_bps": 8.3,
+    "excess_bps": 85.0
+   },
+   "test": {
+    "trades": 37,
+    "avg_bps": 87.8,
+    "win_pct": 70.3,
+    "t": 1.31,
+    "per_year_pct": 8.4,
+    "worst_bps": -947.0,
+    "random_day_bps": 0.4,
+    "excess_bps": 87.4
+   },
+   "test_stress": {
+    "trades": 37,
+    "avg_bps": 81.8,
+    "win_pct": 70.3,
+    "t": 1.22,
+    "per_year_pct": 7.9,
+    "worst_bps": -953.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 2 day(s) later",
+   "train": {
+    "trades": 85,
+    "avg_bps": 73.7,
+    "win_pct": 62.4,
+    "t": 2.36,
+    "per_year_pct": 9.0,
+    "worst_bps": -760.0
+   },
+   "test": {
+    "trades": 134,
+    "avg_bps": -36.7,
+    "win_pct": 47.0,
+    "t": -0.87,
+    "per_year_pct": -12.8,
+    "worst_bps": -1469.0
+   },
+   "test_stress": {
+    "trades": 134,
+    "avg_bps": -42.7,
+    "win_pct": 47.0,
+    "t": -1.01,
+    "per_year_pct": -14.9,
+    "worst_bps": -1475.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 3%+ drop from open to close, sell at the close 2 day(s) later",
+   "train": {
+    "trades": 25,
+    "avg_bps": 90.9,
+    "win_pct": 60.0,
+    "t": 1.51,
+    "per_year_pct": 3.3,
+    "worst_bps": -464.0
+   },
+   "test": {
+    "trades": 75,
+    "avg_bps": -49.4,
+    "win_pct": 41.3,
+    "t": -0.83,
+    "per_year_pct": -9.6,
+    "worst_bps": -1469.0
+   },
+   "test_stress": {
+    "trades": 75,
+    "avg_bps": -55.4,
+    "win_pct": 41.3,
+    "t": -0.93,
+    "per_year_pct": -10.8,
+    "worst_bps": -1475.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 5%+ drop from open to close, sell at the close 2 day(s) later",
+   "train": {
+    "trades": 3,
+    "avg_bps": 308.1,
+    "win_pct": 66.7,
+    "t": 1.42,
+    "per_year_pct": 1.3,
+    "worst_bps": -66.0
+   },
+   "test": {
+    "trades": 19,
+    "avg_bps": 122.9,
+    "win_pct": 57.9,
+    "t": 0.96,
+    "per_year_pct": 6.1,
+    "worst_bps": -843.0
+   },
+   "test_stress": {
+    "trades": 19,
+    "avg_bps": 116.9,
+    "win_pct": 57.9,
+    "t": 0.92,
+    "per_year_pct": 5.8,
+    "worst_bps": -849.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap down (bounce), sell at the close of day 3",
+   "train": {
+    "trades": 139,
+    "avg_bps": 51.6,
+    "win_pct": 56.1,
+    "t": 1.92,
+    "per_year_pct": 10.3,
+    "worst_bps": -774.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 37.4
+   },
+   "test": {
+    "trades": 151,
+    "avg_bps": -89.8,
+    "win_pct": 39.7,
+    "t": -2.19,
+    "per_year_pct": -35.2,
+    "worst_bps": -1383.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -98.8
+   },
+   "test_stress": {
+    "trades": 151,
+    "avg_bps": -95.8,
+    "win_pct": 39.7,
+    "t": -2.34,
+    "per_year_pct": -37.5,
+    "worst_bps": -1389.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 1%+ gap up (follow), sell at the close of day 3",
+   "train": {
+    "trades": 109,
+    "avg_bps": -12.4,
+    "win_pct": 47.7,
+    "t": -0.36,
+    "per_year_pct": -1.9,
+    "worst_bps": -1618.0,
+    "random_day_bps": 14.2,
+    "excess_bps": -26.6
+   },
+   "test": {
+    "trades": 167,
+    "avg_bps": 58.1,
+    "win_pct": 49.7,
+    "t": 1.13,
+    "per_year_pct": 25.2,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 49.1
+   },
+   "test_stress": {
+    "trades": 167,
+    "avg_bps": 52.1,
+    "win_pct": 49.1,
+    "t": 1.01,
+    "per_year_pct": 22.6,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap down (bounce), sell at the close of day 3",
+   "train": {
+    "trades": 37,
+    "avg_bps": 73.1,
+    "win_pct": 48.6,
+    "t": 1.08,
+    "per_year_pct": 3.9,
+    "worst_bps": -674.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 58.9
+   },
+   "test": {
+    "trades": 55,
+    "avg_bps": -93.4,
+    "win_pct": 38.2,
+    "t": -1.29,
+    "per_year_pct": -13.3,
+    "worst_bps": -1038.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -102.4
+   },
+   "test_stress": {
+    "trades": 55,
+    "avg_bps": -99.4,
+    "win_pct": 38.2,
+    "t": -1.37,
+    "per_year_pct": -14.2,
+    "worst_bps": -1044.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 2%+ gap up (follow), sell at the close of day 3",
+   "train": {
+    "trades": 30,
+    "avg_bps": -18.6,
+    "win_pct": 50.0,
+    "t": -0.21,
+    "per_year_pct": -0.8,
+    "worst_bps": -1618.0,
+    "random_day_bps": 14.2,
+    "excess_bps": -32.8
+   },
+   "test": {
+    "trades": 78,
+    "avg_bps": 22.5,
+    "win_pct": 44.9,
+    "t": 0.27,
+    "per_year_pct": 4.6,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 13.5
+   },
+   "test_stress": {
+    "trades": 78,
+    "avg_bps": 16.5,
+    "win_pct": 44.9,
+    "t": 0.2,
+    "per_year_pct": 3.4,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap down (bounce), sell at the close of day 3",
+   "train": {
+    "trades": 20,
+    "avg_bps": 79.7,
+    "win_pct": 50.0,
+    "t": 0.82,
+    "per_year_pct": 2.3,
+    "worst_bps": -636.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 65.5
+   },
+   "test": {
+    "trades": 28,
+    "avg_bps": -23.4,
+    "win_pct": 42.9,
+    "t": -0.22,
+    "per_year_pct": -1.7,
+    "worst_bps": -873.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -32.4
+   },
+   "test_stress": {
+    "trades": 28,
+    "avg_bps": -29.4,
+    "win_pct": 42.9,
+    "t": -0.28,
+    "per_year_pct": -2.1,
+    "worst_bps": -879.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 3%+ gap up (follow), sell at the close of day 3",
+   "train": {
+    "trades": 14,
+    "avg_bps": -201.8,
+    "win_pct": 28.6,
+    "t": -1.25,
+    "per_year_pct": -4.0,
+    "worst_bps": -1618.0,
+    "random_day_bps": 14.2,
+    "excess_bps": -216.0
+   },
+   "test": {
+    "trades": 41,
+    "avg_bps": 82.2,
+    "win_pct": 53.7,
+    "t": 0.62,
+    "per_year_pct": 8.7,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 73.2
+   },
+   "test_stress": {
+    "trades": 41,
+    "avg_bps": 76.2,
+    "win_pct": 53.7,
+    "t": 0.57,
+    "per_year_pct": 8.1,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap down (bounce), sell at the close of day 3",
+   "train": {
+    "trades": 10,
+    "avg_bps": 45.8,
+    "win_pct": 50.0,
+    "t": 0.28,
+    "per_year_pct": 0.7,
+    "worst_bps": -636.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 31.6
+   },
+   "test": {
+    "trades": 16,
+    "avg_bps": 19.4,
+    "win_pct": 43.8,
+    "t": 0.13,
+    "per_year_pct": 0.8,
+    "worst_bps": -873.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 10.4
+   },
+   "test_stress": {
+    "trades": 16,
+    "avg_bps": 13.4,
+    "win_pct": 43.8,
+    "t": 0.09,
+    "per_year_pct": 0.6,
+    "worst_bps": -879.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the open after a 4%+ gap up (follow), sell at the close of day 3",
+   "train": {
+    "trades": 11,
+    "avg_bps": -199.4,
+    "win_pct": 27.3,
+    "t": -1.95,
+    "per_year_pct": -3.1,
+    "worst_bps": -573.0,
+    "random_day_bps": 14.2,
+    "excess_bps": -213.6
+   },
+   "test": {
+    "trades": 26,
+    "avg_bps": 21.0,
+    "win_pct": 57.7,
+    "t": 0.16,
+    "per_year_pct": 1.4,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 12.0
+   },
+   "test_stress": {
+    "trades": 26,
+    "avg_bps": 15.0,
+    "win_pct": 57.7,
+    "t": 0.12,
+    "per_year_pct": 1.0,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ down day, sell at the close of day 3",
+   "train": {
+    "trades": 293,
+    "avg_bps": 40.0,
+    "win_pct": 56.0,
+    "t": 2.23,
+    "per_year_pct": 16.8,
+    "worst_bps": -1618.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 25.8
+   },
+   "test": {
+    "trades": 274,
+    "avg_bps": 4.1,
+    "win_pct": 48.2,
+    "t": 0.13,
+    "per_year_pct": 2.9,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -4.9
+   },
+   "test_stress": {
+    "trades": 274,
+    "avg_bps": -1.9,
+    "win_pct": 48.2,
+    "t": -0.06,
+    "per_year_pct": -1.3,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 1%+ up day, sell at the close of day 3",
+   "train": {
+    "trades": 344,
+    "avg_bps": 16.7,
+    "win_pct": 54.9,
+    "t": 1.11,
+    "per_year_pct": 8.3,
+    "worst_bps": -1185.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 2.5
+   },
+   "test": {
+    "trades": 290,
+    "avg_bps": -4.4,
+    "win_pct": 52.4,
+    "t": -0.14,
+    "per_year_pct": -3.3,
+    "worst_bps": -1740.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -13.4
+   },
+   "test_stress": {
+    "trades": 290,
+    "avg_bps": -10.4,
+    "win_pct": 51.7,
+    "t": -0.33,
+    "per_year_pct": -7.8,
+    "worst_bps": -1746.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ down day, sell at the close of day 3",
+   "train": {
+    "trades": 119,
+    "avg_bps": 48.3,
+    "win_pct": 60.5,
+    "t": 1.54,
+    "per_year_pct": 8.2,
+    "worst_bps": -1618.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 34.1
+   },
+   "test": {
+    "trades": 152,
+    "avg_bps": -21.7,
+    "win_pct": 48.7,
+    "t": -0.5,
+    "per_year_pct": -8.6,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -30.7
+   },
+   "test_stress": {
+    "trades": 152,
+    "avg_bps": -27.7,
+    "win_pct": 48.7,
+    "t": -0.64,
+    "per_year_pct": -10.9,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 2%+ up day, sell at the close of day 3",
+   "train": {
+    "trades": 129,
+    "avg_bps": 27.7,
+    "win_pct": 56.6,
+    "t": 1.0,
+    "per_year_pct": 5.1,
+    "worst_bps": -1185.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 13.5
+   },
+   "test": {
+    "trades": 167,
+    "avg_bps": 2.5,
+    "win_pct": 52.7,
+    "t": 0.05,
+    "per_year_pct": 1.1,
+    "worst_bps": -1740.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -6.5
+   },
+   "test_stress": {
+    "trades": 167,
+    "avg_bps": -3.5,
+    "win_pct": 51.5,
+    "t": -0.07,
+    "per_year_pct": -1.5,
+    "worst_bps": -1746.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ down day, sell at the close of day 3",
+   "train": {
+    "trades": 59,
+    "avg_bps": 75.2,
+    "win_pct": 57.6,
+    "t": 1.65,
+    "per_year_pct": 6.4,
+    "worst_bps": -685.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 61.0
+   },
+   "test": {
+    "trades": 94,
+    "avg_bps": -15.4,
+    "win_pct": 44.7,
+    "t": -0.26,
+    "per_year_pct": -3.8,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -24.4
+   },
+   "test_stress": {
+    "trades": 94,
+    "avg_bps": -21.4,
+    "win_pct": 44.7,
+    "t": -0.36,
+    "per_year_pct": -5.2,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 3%+ up day, sell at the close of day 3",
+   "train": {
+    "trades": 41,
+    "avg_bps": 8.7,
+    "win_pct": 61.0,
+    "t": 0.14,
+    "per_year_pct": 0.5,
+    "worst_bps": -1185.0,
+    "random_day_bps": 14.2,
+    "excess_bps": -5.5
+   },
+   "test": {
+    "trades": 90,
+    "avg_bps": 5.3,
+    "win_pct": 51.1,
+    "t": 0.07,
+    "per_year_pct": 1.2,
+    "worst_bps": -1740.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -3.7
+   },
+   "test_stress": {
+    "trades": 90,
+    "avg_bps": -0.7,
+    "win_pct": 50.0,
+    "t": -0.01,
+    "per_year_pct": -0.2,
+    "worst_bps": -1746.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ down day, sell at the close of day 3",
+   "train": {
+    "trades": 14,
+    "avg_bps": 80.8,
+    "win_pct": 57.1,
+    "t": 0.72,
+    "per_year_pct": 1.6,
+    "worst_bps": -685.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 66.6
+   },
+   "test": {
+    "trades": 39,
+    "avg_bps": -2.5,
+    "win_pct": 48.7,
+    "t": -0.02,
+    "per_year_pct": -0.2,
+    "worst_bps": -1465.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -11.5
+   },
+   "test_stress": {
+    "trades": 39,
+    "avg_bps": -8.5,
+    "win_pct": 48.7,
+    "t": -0.08,
+    "per_year_pct": -0.9,
+    "worst_bps": -1471.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy the next open after a 5%+ up day, sell at the close of day 3",
+   "train": {
+    "trades": 13,
+    "avg_bps": 184.7,
+    "win_pct": 69.2,
+    "t": 1.73,
+    "per_year_pct": 3.4,
+    "worst_bps": -393.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 170.5
+   },
+   "test": {
+    "trades": 33,
+    "avg_bps": -50.6,
+    "win_pct": 42.4,
+    "t": -0.44,
+    "per_year_pct": -4.3,
+    "worst_bps": -1740.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -59.6
+   },
+   "test_stress": {
+    "trades": 33,
+    "avg_bps": -56.6,
+    "win_pct": 42.4,
+    "t": -0.49,
+    "per_year_pct": -4.8,
+    "worst_bps": -1746.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 2% below the open during the day, sell at the close of day 3",
+   "train": {
+    "trades": 129,
+    "avg_bps": 54.9,
+    "win_pct": 51.2,
+    "t": 1.67,
+    "per_year_pct": 10.1,
+    "worst_bps": -1425.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 40.7
+   },
+   "test": {
+    "trades": 217,
+    "avg_bps": -20.8,
+    "win_pct": 48.4,
+    "t": -0.54,
+    "per_year_pct": -11.7,
+    "worst_bps": -1546.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -29.8
+   },
+   "test_stress": {
+    "trades": 217,
+    "avg_bps": -26.8,
+    "win_pct": 47.5,
+    "t": -0.7,
+    "per_year_pct": -15.1,
+    "worst_bps": -1552.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 3% below the open during the day, sell at the close of day 3",
+   "train": {
+    "trades": 41,
+    "avg_bps": 28.0,
+    "win_pct": 43.9,
+    "t": 0.59,
+    "per_year_pct": 1.6,
+    "worst_bps": -614.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 13.8
+   },
+   "test": {
+    "trades": 124,
+    "avg_bps": -37.2,
+    "win_pct": 46.0,
+    "t": -0.74,
+    "per_year_pct": -12.0,
+    "worst_bps": -1473.0,
+    "random_day_bps": 9.0,
+    "excess_bps": -46.2
+   },
+   "test_stress": {
+    "trades": 124,
+    "avg_bps": -43.2,
+    "win_pct": 46.0,
+    "t": -0.86,
+    "per_year_pct": -13.9,
+    "worst_bps": -1479.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy when it falls 5% below the open during the day, sell at the close of day 3",
+   "train": {
+    "trades": 4,
+    "avg_bps": 44.6,
+    "win_pct": 50.0,
+    "t": 0.21,
+    "per_year_pct": 0.3,
+    "worst_bps": -447.0,
+    "random_day_bps": 14.2,
+    "excess_bps": 30.4
+   },
+   "test": {
+    "trades": 37,
+    "avg_bps": 17.5,
+    "win_pct": 56.8,
+    "t": 0.19,
+    "per_year_pct": 1.7,
+    "worst_bps": -1298.0,
+    "random_day_bps": 9.0,
+    "excess_bps": 8.5
+   },
+   "test_stress": {
+    "trades": 37,
+    "avg_bps": 11.5,
+    "win_pct": 56.8,
+    "t": 0.13,
+    "per_year_pct": 1.1,
+    "worst_bps": -1304.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 2%+ drop from open to close, sell at the close 3 day(s) later",
+   "train": {
+    "trades": 85,
+    "avg_bps": 100.6,
+    "win_pct": 58.8,
+    "t": 2.4,
+    "per_year_pct": 12.2,
+    "worst_bps": -632.0
+   },
+   "test": {
+    "trades": 134,
+    "avg_bps": -66.1,
+    "win_pct": 44.8,
+    "t": -1.23,
+    "per_year_pct": -23.0,
+    "worst_bps": -1481.0
+   },
+   "test_stress": {
+    "trades": 134,
+    "avg_bps": -72.1,
+    "win_pct": 44.0,
+    "t": -1.34,
+    "per_year_pct": -25.1,
+    "worst_bps": -1487.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 3%+ drop from open to close, sell at the close 3 day(s) later",
+   "train": {
+    "trades": 25,
+    "avg_bps": 75.1,
+    "win_pct": 48.0,
+    "t": 0.78,
+    "per_year_pct": 2.7,
+    "worst_bps": -451.0
+   },
+   "test": {
+    "trades": 75,
+    "avg_bps": -34.9,
+    "win_pct": 46.7,
+    "t": -0.46,
+    "per_year_pct": -6.8,
+    "worst_bps": -1481.0
+   },
+   "test_stress": {
+    "trades": 75,
+    "avg_bps": -40.9,
+    "win_pct": 45.3,
+    "t": -0.53,
+    "per_year_pct": -8.0,
+    "worst_bps": -1487.0
+   }
+  },
+  {
+   "family": "K swing <= 3 days",
+   "rule": "buy at the close after a 5%+ drop from open to close, sell at the close 3 day(s) later",
+   "train": {
+    "trades": 3,
+    "avg_bps": 227.4,
+    "win_pct": 66.7,
+    "t": 1.08,
+    "per_year_pct": 1.0,
+    "worst_bps": -133.0
+   },
+   "test": {
+    "trades": 19,
+    "avg_bps": 80.5,
+    "win_pct": 57.9,
+    "t": 0.51,
+    "per_year_pct": 4.0,
+    "worst_bps": -1481.0
+   },
+   "test_stress": {
+    "trades": 19,
+    "avg_bps": 74.5,
+    "win_pct": 57.9,
+    "t": 0.47,
+    "per_year_pct": 3.7,
+    "worst_bps": -1487.0
    }
   }
  ],
