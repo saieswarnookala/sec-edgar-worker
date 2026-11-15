@@ -258,23 +258,23 @@ for pn, (m, sgn) in candle_pats(Od, Hd, Ld, CL, sh1(Od), sh1(CL), sh1(Hd), sh1(L
     for k in (1, 2, 3):
         add("L candles (daily)", f"buy the next open after a daily {pn}, sell at the close of day {k}" + (" [pattern says down]" if sgn < 0 else ""),
             [(i + 1, CL[i + k] / O[i + 1, 0] - 1) for i in np.flatnonzero(m) if i + k < D], hold=k)
-for bm, fam in ((30, "M candles (30-min)"), (15, "N candles (15-min)")):
+for bm, fam, exits in ((30, "M candles (30-min)", (("1 bar", 1), ("2 bars", 2), ("close", None))),
+                       (15, "N candles (15-min)", (("1 bar", 1), ("2 bars", 2), ("close", None))),
+                       (5, "O candles (5-min)", (("1 bar", 1), ("3 bars", 3), ("close", None))),
+                       (1, "P candles (1-min)", (("1 bar", 1), ("5 bars", 5), ("close", None)))):
     nb = 390 // bm
-    bo = np.stack([O[:, b * bm] for b in range(nb)], 1); bc = np.stack([C[:, b * bm + bm - 1] for b in range(nb)], 1)
-    bh = np.stack([Hh[:, b * bm:(b + 1) * bm].max(1) for b in range(nb)], 1); bl = np.stack([L[:, b * bm:(b + 1) * bm].min(1) for b in range(nb)], 1)
+    bo = O[:, 0::bm][:, :nb]; bc = C[:, bm - 1::bm][:, :nb]
+    bh = Hh.reshape(D, nb, bm).max(2); bl = L.reshape(D, nb, bm).min(2)
     prev = lambda x: np.hstack([np.full((D, 1), np.nan), x[:, :-1]])
-    pats = candle_pats(bo, bh, bl, bc, prev(bo), prev(bc), prev(bh), prev(bl))
-    pats = {k: (v[0], v[1]) for k, v in pats.items()}
-    for pn, (m, sgn) in pats.items():
+    for pn, (m, sgn) in candle_pats(bo, bh, bl, bc, prev(bo), prev(bc), prev(bh), prev(bl)).items():
         m = m.copy(); m[:, 0] = False; m[:, nb - 1] = False          # need a previous bar and a next bar
         I, J = np.nonzero(m & full[:, None])
-        for ex in ("1 bar", "2 bars", "close"):
-            tr = []
-            for i, j in zip(I, J):
-                e = (j + 1) * bm; xb = {"1 bar": j + 1, "2 bars": j + 2, "close": nb - 1}[ex]
-                if xb >= nb: continue
-                tr.append((i, sgn * (C[i, xb * bm + bm - 1] / O[i, e] - 1)))
-            add(fam, f"{'buy' if sgn > 0 else 'short'} the next {bm}-min bar after a {pn}, exit after {ex}", tr)
+        for ex, kb in exits:
+            xb = np.full(len(J), nb - 1) if kb is None else J + kb
+            ok_ = xb < nb
+            Ii, Jj, Xb = I[ok_], J[ok_], xb[ok_]
+            r = sgn * (bc[Ii, Xb] / bo[Ii, Jj + 1] - 1)
+            add(fam, f"{'buy' if sgn > 0 else 'short'} the next {bm}-min bar after a {pn}, exit after {ex}", list(zip(Ii.tolist(), r.tolist())))
 print("versions tested", len(CONFIGS), flush=True)
 
 # ---------- score ----------
