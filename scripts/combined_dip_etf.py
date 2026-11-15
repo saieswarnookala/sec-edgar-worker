@@ -15,13 +15,13 @@ for f in ["prices.parquet", "membership_intervals.parquet"]:
         for i in range(6):
             try: urllib.request.urlretrieve(REL + f, "/tmp/" + f); break
             except Exception as e: print("retry", e, flush=True); time.sleep(20 * (i + 1))
-px = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "close", "adj_close", "volume"])
+px = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "close", "high", "low", "adj_close", "volume"])
 px["date"] = pd.to_datetime(px.date); px = px[px.date >= "1997-06-01"]
 mem = pd.read_parquet("/tmp/membership_intervals.parquet"); mem["start"] = pd.to_datetime(mem.start); mem["end"] = pd.to_datetime(mem.end)
 px = px[px.ticker.isin(set(mem.ticker) | {"SPY"})]
 dates = pd.DatetimeIndex(sorted(px[px.ticker == "SPY"].date.unique())); ALLT = sorted(px.ticker.unique())
 P = lambda v: px.pivot_table(index="date", columns="ticker", values=v, dropna=False).reindex(index=dates, columns=ALLT)
-A, RAW, VOL = P("adj_close"), P("close"), P("volume"); del px
+A, RAW, VOL, HI, LO = P("adj_close"), P("close"), P("volume"), P("high"), P("low"); del px
 tick = [t for t in ALLT if t != "SPY"]
 M = pd.DataFrame(False, index=dates, columns=tick)
 for _, m in mem.iterrows():
@@ -35,6 +35,8 @@ ex5 = (Cs / Cs.shift(5) - 1).sub(spy / spy.shift(5) - 1, axis=0)
 vr = VOL[tick].rolling(5).mean() / VOL[tick].shift(5).rolling(50).mean()
 sigS = M & (Cs > Cs.rolling(200).mean()) & (ex5 <= -0.10) & (RAW[tick] >= 5) & (vr <= 2.0)
 ma5S = Cs.rolling(5).mean()
+CLV = ((RAW[tick] - LO[tick]) / (HI[tick] - LO[tick])).where(HI[tick] > LO[tick])   # where the close sits in the day's range (0 = at the low)
+CLVv = CLV.values
 print("stocks", len(tick), dates[0].date(), dates[-1].date(), "stock signals", int(sigS.values.sum()), flush=True)
 
 ETFS = ["SPY", "QQQ", "IWM", "DIA", "MDY", "XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "XLRE", "XLC",
@@ -68,7 +70,7 @@ SP = spy.values; spyr = np.r_[0, SP[1:] / SP[:-1] - 1]
 park_on = np.r_[False, (spy > spy.rolling(100).mean()).values[:-1]]   # decided at yesterday's close
 dn = dates.values; START = np.datetime64("1999-01-01")
 
-def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=0.0002, stocks=True):
+def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=0.0002, stocks=True, clv_max=None, rank="drop"):
     if etf_rule: E_SIG, E_RK = sigE[etf_rule].values, rankE[etf_rule].values
     pos, eq, curve, trades = [], 1.0, np.ones(len(dates)), []
     t0 = int(np.searchsorted(dn, START))
@@ -91,8 +93,8 @@ def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=
         held = {(p["k"], p["j"]) for p in pos}
         free = slots - len(pos)
         if free > 0 and stocks:
-            c = [j for j in np.flatnonzero(S_SIG[t]) if ("S", j) not in held]
-            c.sort(key=lambda j: S_RK[t, j])
+            c = [j for j in np.flatnonzero(S_SIG[t]) if ("S", j) not in held and (clv_max is None or (CLVv[t, j] == CLVv[t, j] and CLVv[t, j] < clv_max))]
+            c.sort(key=(lambda j: S_RK[t, j]) if rank == "drop" else (lambda j: (CLVv[t, j] if CLVv[t, j] == CLVv[t, j] else 1, S_RK[t, j])))
             for j in c[:free]: pos.append({"k": "S", "j": j, "d": t, "px": S_C[t, j]})
             nstock_today = len(c)
         else: nstock_today = 0
@@ -129,6 +131,11 @@ V = [("A. today's dip bot (stocks only)", dict()),
      ("A. stress costs", dict(cs=0.0015, ce=0.0005)),
      ("C. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0015, ce=0.0005)),
      ("A. ideal (no costs)", dict(cs=0.0, ce=0.0)),
+     ("H. A + only dips that closed in the bottom half of the day", dict(clv_max=0.5)),
+     ("I. A + dips that closed nearest the low get slots first", dict(rank="clv")),
+     ("J. C + only dips that closed in the bottom half", dict(etf_rule="5-day drop 5%+", etf_hold=10, clv_max=0.5)),
+     ("K. C + closed-nearest-the-low first", dict(etf_rule="5-day drop 5%+", etf_hold=10, rank="clv")),
+     ("J. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, clv_max=0.5, cs=0.0015, ce=0.0005)),
      ("C. ideal (no costs)", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0, ce=0.0))]
 res = {}
 for name, kw in V:
