@@ -33,7 +33,10 @@ M &= valid & valid.shift(-1, fill_value=False)
 Cs = A[tick].ffill(); spy = A["SPY"].ffill()
 ex5 = (Cs / Cs.shift(5) - 1).sub(spy / spy.shift(5) - 1, axis=0)
 vr = VOL[tick].rolling(5).mean() / VOL[tick].shift(5).rolling(50).mean()
-sigS = M & (Cs > Cs.rolling(200).mean()) & (ex5 <= -0.10) & (RAW[tick] >= 5) & (vr <= 2.0)
+base_ok = M & (RAW[tick] >= 5) & (vr <= 2.0)
+TREND = {k: Cs > Cs.rolling(k).mean() for k in (150, 200)}
+SIGV = {(d, k): (base_ok & TREND[k] & (ex5 <= -d)).values for d in (0.08, 0.10) for k in (150, 200)}
+sigS = base_ok & TREND[200] & (ex5 <= -0.10)
 ma5S = Cs.rolling(5).mean()
 CLV = ((RAW[tick] - LO[tick]) / (HI[tick] - LO[tick])).where(HI[tick] > LO[tick])   # where the close sits in the day's range (0 = at the low)
 CLVv = CLV.values
@@ -70,7 +73,8 @@ SP = spy.values; spyr = np.r_[0, SP[1:] / SP[:-1] - 1]
 park_on = np.r_[False, (spy > spy.rolling(100).mean()).values[:-1]]   # decided at yesterday's close
 dn = dates.values; START = np.datetime64("1999-01-01")
 
-def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=0.0002, stocks=True, clv_max=None, rank="drop"):
+def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=0.0002, stocks=True, clv_max=None, rank="drop", dip=0.10, trend=200, stock_hold=5):
+    S_SIG = SIGV[(dip, trend)]
     if etf_rule: E_SIG, E_RK = sigE[etf_rule].values, rankE[etf_rule].values
     pos, eq, curve, trades = [], 1.0, np.ones(len(dates)), []
     t0 = int(np.searchsorted(dn, START))
@@ -84,7 +88,7 @@ def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=
         keep = []
         for p in pos:
             Cx, Mx = (S_C, S_M5) if p["k"] == "S" else (E_C, E_M5)
-            age = t - p["d"]; mh = 5 if p["k"] == "S" else etf_hold
+            age = t - p["d"]; mh = stock_hold if p["k"] == "S" else etf_hold
             if age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh):
                 c = cs if p["k"] == "S" else ce; eq *= 1 - w * 2 * c
                 trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))
@@ -121,26 +125,22 @@ def sim(etf_rule=None, etf_hold=5, mode="fill", slots=10, w=0.10, cs=0.0005, ce=
                      "etf_avg_trade_pct": round(float(np.mean([x[2] for x in et])) * 100, 2) if et else None}
     return out
 
-V = [("A. today's dip bot (stocks only)", dict()),
-     ("B. + ETF 5-day 5% dips fill free slots, hold<=5", dict(etf_rule="5-day drop 5%+", etf_hold=5)),
-     ("C. + ETF 5-day 5% dips fill free slots, hold<=10", dict(etf_rule="5-day drop 5%+", etf_hold=10)),
-     ("D. + ETF 5-day 5% dips only on days with no stock dip", dict(etf_rule="5-day drop 5%+", etf_hold=10, mode="no-stock-days")),
-     ("E. + ETF 3-day 3% dips fill free slots, hold<=10", dict(etf_rule="3-day drop 3%+", etf_hold=10)),
-     ("F. B with 12 slots of 8.3%", dict(etf_rule="5-day drop 5%+", etf_hold=10, slots=12, w=1 / 12)),
-     ("G. ETF dips only (no stocks)", dict(etf_rule="5-day drop 5%+", etf_hold=10, stocks=False)),
-     ("A. stress costs", dict(cs=0.0015, ce=0.0005)),
-     ("C. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0015, ce=0.0005)),
-     ("A. ideal (no costs)", dict(cs=0.0, ce=0.0)),
-     ("H. A + only dips that closed in the bottom half of the day", dict(clv_max=0.5)),
-     ("I. A + dips that closed nearest the low get slots first", dict(rank="clv")),
-     ("J. C + only dips that closed in the bottom half", dict(etf_rule="5-day drop 5%+", etf_hold=10, clv_max=0.5)),
-     ("K. C + closed-nearest-the-low first", dict(etf_rule="5-day drop 5%+", etf_hold=10, rank="clv")),
-     ("J. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, clv_max=0.5, cs=0.0015, ce=0.0005)),
-     ("C. ideal (no costs)", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0, ce=0.0))]
+V = []
+E5 = dict(etf_rule="5-day drop 5%+", etf_hold=10)
+for etf in (False, True):
+    for dip in (0.10, 0.08):
+        for trend in (200, 150):
+            for hold in (5, 7):
+                name = f"{'+ETF ' if etf else ''}dip {int(dip*100)}% / {trend}-day / hold {hold}"
+                V.append((name, dict(dip=dip, trend=trend, stock_hold=hold, **(E5 if etf else {}))))
+V += [("STRESS today's rules", dict(cs=0.0015, ce=0.0005)),
+      ("STRESS dip 8% / 150-day / hold 7", dict(dip=0.08, trend=150, stock_hold=7, cs=0.0015, ce=0.0005)),
+      ("STRESS +ETF dip 8% / 150-day / hold 7", dict(dip=0.08, trend=150, stock_hold=7, cs=0.0015, ce=0.0005, **E5)),
+      ("STRESS +ETF today's rules", dict(cs=0.0015, ce=0.0005, **E5))]
 res = {}
 for name, kw in V:
     res[name] = sim(**kw); a = res[name]
     print(name, "|", a["1999-2026"]["per_year_pct"], a["1999-2026"]["worst_drop_pct"], "| early", a["1999-2012"]["per_year_pct"], "late", a["2013-2026"]["per_year_pct"],
           "| 2008", a["2008"]["per_year_pct"], "2020", a["2020"]["per_year_pct"], "2022", a["2022"]["per_year_pct"],
           "| trades/mo", a["1999-2026"]["stock_trades_per_month"], "+", a["1999-2026"]["etf_trades_per_month"], "win", a["1999-2026"]["win_pct"], flush=True)
-json.dump({"note": __doc__, "results": res}, open("data/combined_dip_etf.json", "w"), indent=1)
+json.dump({"note": __doc__, "results": res}, open("data/combined_dip_tuned.json", "w"), indent=1)
