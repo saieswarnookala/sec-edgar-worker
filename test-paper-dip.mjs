@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -48,6 +48,35 @@ ok('vol bot: virtual buy sized by scale, then sells on bounce', () => {
   const r2 = virtualStep({ vs: r.vs, today: '2026-11-11', days, prices: { CCC: 60, QQQ: 500 }, closes: { CCC: [50, 50, 50, 50] }, scores: {}, park: 'QQQ', scale: 1 });
   assert.equal(r2.vs.positions.length, 0); assert.equal(r2.vs.trades[0].ret_pct, 20);
   assert.ok(Math.abs(r2.equity - 10100) < 1, 'equity ' + r2.equity);  // +$100 on the $500 position
+});
+ok('etf dip: uptrend ETF down 6% over 5 days qualifies; 4% does not; downtrend skipped', () => {
+  const c = [...Array(200).fill(80), ...Array(10).fill(100)];
+  assert.ok(etfDipScore(c, 94) <= -0.05); assert.equal(etfDipScore(c, 96), null);
+  assert.equal(etfDipScore([...Array(200).fill(150), ...Array(10).fill(100)], 94), null);
+});
+ok('etf sleeve: stocks get slots first, ETFs fill the rest; none without etfScores (live bot unchanged)', () => {
+  const days = ['2026-11-09', '2026-11-10'], prices = { S1: 50, E1: 100, E2: 200, QQQ: 500 };
+  const st = { positions: Array.from({ length: 8 }, (_, i) => ({ symbol: 'K' + i, entry_date: '2026-11-10', qty: 1 })) };
+  const held = Object.fromEntries(st.positions.map((p) => [p.symbol, 1])); for (let i = 0; i < 8; i++) prices['K' + i] = 1000;
+  const d = decide({ today: '2026-11-10', days, state: st, held, equity: 10000, prices, closes: {}, scores: { S1: -0.12 }, park: 'QQQ', parkHeld: {}, etfScores: { E1: -0.06, E2: -0.09 } });
+  assert.deepEqual(d.buys.map((b) => b.symbol + ':' + (b.kind || 'stock')), ['S1:stock', 'E2:etf']);   // 2 free slots: stock first, then the bigger ETF dip
+  const d0 = decide({ today: '2026-11-10', days, state: st, held, equity: 10000, prices, closes: {}, scores: { S1: -0.12 }, park: 'QQQ', parkHeld: {} });
+  assert.deepEqual(d0.buys.map((b) => b.symbol), ['S1']);
+});
+ok('etf sleeve: ETF held up to 10 days, stock only 5', () => {
+  const days = Array.from({ length: 12 }, (_, i) => `2026-11-${String(i + 1).padStart(2, '0')}`);
+  const st = { positions: [{ symbol: 'E1', kind: 'etf', entry_date: days[0], qty: 1 }, { symbol: 'S1', entry_date: days[0], qty: 1 }] };
+  const d = decide({ today: days[6], days, state: st, held: { E1: 1, S1: 1 }, equity: 10000, prices: { E1: 90, S1: 90, QQQ: 500 }, closes: { E1: [100, 100, 100, 100], S1: [100, 100, 100, 100] }, scores: {}, park: 'QQQ', parkHeld: {} });
+  assert.deepEqual(d.sells.map((x) => x.symbol), ['S1']); assert.equal(ETF_MAX_HOLD, 10);
+  const d2 = decide({ today: days[10], days, state: st, held: { E1: 1 }, equity: 10000, prices: { E1: 90, QQQ: 500 }, closes: { E1: [100, 100, 100, 100] }, scores: {}, park: 'QQQ', parkHeld: {} });
+  assert.match(d2.sells[0].reason, /max 10/);
+});
+ok('etf virtual bot keeps the ETF tag across days', () => {
+  const days = ['2026-11-09', '2026-11-10', '2026-11-11'];
+  const r = virtualStep({ vs: undefined, today: '2026-11-10', days, prices: { E1: 100, QQQ: 500 }, closes: {}, scores: {}, park: 'QQQ', scale: 1, etfScores: { E1: -0.07 } });
+  assert.equal(r.vs.positions[0].kind, 'etf');
+  const r2 = virtualStep({ vs: r.vs, today: '2026-11-11', days, prices: { E1: 99, QQQ: 500 }, closes: { E1: [100, 100, 100, 100] }, scores: {}, park: 'QQQ', scale: 1 });
+  assert.equal(r2.vs.positions.length, 1, 'ETF still held (below its 5-day avg, day 1 of 10)');
 });
 console.log(`\n${n} passed`);
 

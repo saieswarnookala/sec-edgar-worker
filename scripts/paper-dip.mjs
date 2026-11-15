@@ -43,14 +43,26 @@ export function volumeRatio(vols, todayEst) {
   const recent = todayEst > 0 ? [...vols.slice(-4), todayEst] : vols.slice(-5), base = vols.slice(-54, -4);
   const b = avg(base); return b > 0 ? avg(recent) / b : null;
 }
-export function shouldExit({ age, closes, px }) {
-  if (age >= MAX_HOLD) return `held ${age} days (max ${MAX_HOLD})`;
+export function shouldExit({ age, closes, px, maxHold = MAX_HOLD }) {
+  if (age >= maxHold) return `held ${age} days (max ${maxHold})`;
   if (age >= 1 && px > avg([...closes.slice(-(EXIT_MA - 1)), px])) return `bounced above ${EXIT_MA}-day average`;
   return null;
 }
 export function parkSymbol({ clPos, spyCloses, spyPx }) {
   const ma = avg([...spyCloses.slice(-(CRASH_MA - 1)), spyPx]);
   return spyPx > ma ? clPos : null; // null = cash
+}
+// ---- ETF dip sleeve (Nov 14 combined backtest 1999-2026: 17.1%/yr, worst -22% vs 14.9%, -27% for stocks only) ----
+// When slots are still free after the stock dips, buy ETFs down 5%+ over 5 days that are above their 200-day average.
+// Same sell rule (close back above the 5-day average), held at most 10 days. Virtual bot only for now.
+export const ETF_DIP_LIST = ['SPY', 'QQQ', 'IWM', 'DIA', 'MDY', 'XLB', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLU', 'XLV', 'XLY', 'XLRE', 'XLC',
+  'EFA', 'EEM', 'EWJ', 'EWG', 'EWU', 'EWC', 'EWA', 'EWZ', 'EWH', 'EWT', 'EWY', 'INDA', 'FXI'];
+export const ETF_DIP = 0.05, ETF_LOOKBACK = 5, ETF_MAX_HOLD = 10;
+export function etfDipScore(closes, px) {
+  if (!(px > 0) || closes.length < TREND) return null;
+  if (!(px > avg([...closes.slice(-(TREND - 1)), px]))) return null;
+  const r = px / closes.at(-ETF_LOOKBACK) - 1;
+  return r <= -ETF_DIP ? r : null;
 }
 // ---- Volatility-sized variant (Nov 14 backtest: 16.1%/yr vs 14.9%, same worst drop) ----
 // Slot size = 10% x scale, scale = 0.5 (calmest day of the past year) .. 1.5 (jumpiest), from SPY's 20-day volatility rank.
@@ -66,23 +78,23 @@ export function volScale(spyCloses, spyPx) {
   return { scale: +(VOL_LO + (VOL_HI - VOL_LO) * rank).toFixed(3), rank: +rank.toFixed(3), vol_pct: +(now * Math.sqrt(252) * 100).toFixed(1) };
 }
 // Virtual paper portfolio (no broker): same signals and exits as the dip bot, fills at the ~3:45 pm price, fractional shares.
-export function virtualStep({ vs, today, days, prices, closes, scores, park, scale }) {
+export function virtualStep({ vs, today, days, prices, closes, scores, park, scale, etfScores = {} }) {
   vs = { cash: VBOT_START, positions: [], park: {}, trades: [], ...vs };
   const px = (s, fb) => prices[s] || fb || 0;
   const held = Object.fromEntries(vs.positions.map((p) => [p.symbol, p.qty]));
   const posVal = vs.positions.reduce((a, p) => a + p.qty * px(p.symbol, p.entry_px), 0);
   const parkVal = Object.entries(vs.park).reduce((a, [s, q]) => a + q * px(s), 0);
   const equity = vs.cash + posVal + parkVal;
-  const d = decide({ today, days, state: { positions: vs.positions }, held, equity, prices, closes, scores, park, parkHeld: { ...vs.park }, fractional: true, minOrderUsd: 1, weight: WEIGHT * scale });
+  const d = decide({ today, days, state: { positions: vs.positions }, held, equity, prices, closes, scores, park, parkHeld: { ...vs.park }, fractional: true, minOrderUsd: 1, weight: WEIGHT * scale, etfScores });
   const done = [];
   for (const t of d.parkTrades.filter((x) => x.side === 'sell')) { vs.cash += t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) - t.qty).toFixed(6); if (vs.park[t.symbol] <= 1e-6) delete vs.park[t.symbol]; done.push(`SELL ${t.symbol} (${t.reason})`); }
   for (const s of d.sells) {
     const p = vs.positions.find((x) => x.symbol === s.symbol); vs.cash += s.qty * px(s.symbol);
-    vs.trades.push({ symbol: s.symbol, entry_date: p.entry_date, exit_date: today, ret_pct: +((px(s.symbol) / p.entry_px - 1) * 100).toFixed(2), reason: s.reason });
+    vs.trades.push({ symbol: s.symbol, kind: p.kind || 'stock', entry_date: p.entry_date, exit_date: today, ret_pct: +((px(s.symbol) / p.entry_px - 1) * 100).toFixed(2), reason: s.reason });
     done.push(`SELL ${s.symbol} (${s.reason})`);
   }
   vs.positions = vs.positions.filter((p) => !d.sells.some((s) => s.symbol === p.symbol));
-  for (const b of d.buys) { vs.cash -= b.qty * px(b.symbol); vs.positions.push({ symbol: b.symbol, entry_date: today, qty: b.qty, entry_px: px(b.symbol), dip_pct: b.dip_pct, size_pct: +(100 * b.qty * px(b.symbol) / equity).toFixed(1) }); done.push(`BUY $${(b.qty * px(b.symbol)).toFixed(0)} ${b.symbol} (dip ${b.dip_pct}%)`); }
+  for (const b of d.buys) { vs.cash -= b.qty * px(b.symbol); vs.positions.push({ symbol: b.symbol, ...(b.kind ? { kind: b.kind } : {}), entry_date: today, qty: b.qty, entry_px: px(b.symbol), dip_pct: b.dip_pct, size_pct: +(100 * b.qty * px(b.symbol) / equity).toFixed(1) }); done.push(`BUY $${(b.qty * px(b.symbol)).toFixed(0)} ${b.symbol}${b.kind === 'etf' ? ' ETF' : ''} (dip ${b.dip_pct}%)`); }
   for (const t of d.parkTrades.filter((x) => x.side === 'buy')) { vs.cash -= t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) + t.qty).toFixed(6); done.push(`BUY ${t.symbol} (parking)`); }
   vs.trades = vs.trades.slice(-300);
   return { vs, equity: +equity.toFixed(2), done };
@@ -90,20 +102,24 @@ export function virtualStep({ vs, today, days, prices, closes, scores, park, sca
 // Decide trades. state.positions: [{symbol, entry_date, qty}]; days: trading dates ending with today.
 // fractional: size in fractions of a share (live Robinhood account with ~$100 slots); default whole shares (Alpaca paper).
 export const roundQty = (q, fractional) => fractional ? Math.floor(q * 1e6) / 1e6 : Math.floor(q);
-export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld, fractional = false, minOrderUsd = 1, weight = WEIGHT }) {
+export function decide({ today, days, state, held, equity, prices, closes, scores, park, parkHeld, fractional = false, minOrderUsd = 1, weight = WEIGHT, etfScores = {} }) {
   const ti = days.indexOf(today), sells = [], keep = [];
   for (const p of state.positions) {
     if (!held[p.symbol]) continue;
     const ei = days.indexOf(p.entry_date), age = ei >= 0 ? ti - ei : MAX_HOLD;
-    const why = prices[p.symbol] ? shouldExit({ age, closes: closes[p.symbol] || [], px: prices[p.symbol] }) : null;
+    const why = prices[p.symbol] ? shouldExit({ age, closes: closes[p.symbol] || [], px: prices[p.symbol], maxHold: p.kind === 'etf' ? ETF_MAX_HOLD : MAX_HOLD }) : null;
     if (why) sells.push({ symbol: p.symbol, qty: held[p.symbol], reason: why }); else keep.push(p);
   }
   const keptVal = keep.reduce((a, p) => a + held[p.symbol] * (prices[p.symbol] || 0), 0);
   const freeFrac = Math.max(0, 1 - keptVal / equity);
   const cands = Object.entries(scores).filter(([s]) => !POOL.includes(s) && !keep.some((p) => p.symbol === s))
     .sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, SLOTS - keep.length));
+  // ETF dips fill whatever slots the stock dips left (stocks always come first)
+  const etfC = Object.entries(etfScores).filter(([s]) => prices[s] && !keep.some((p) => p.symbol === s) && !cands.some(([c]) => c === s))
+    .sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, SLOTS - keep.length - cands.length)).map(([s, r]) => [s, r, 'etf']);
+  cands.push(...etfC);
   const w = cands.length ? Math.min(weight, freeFrac / cands.length) : 0, buys = [];
-  for (const [s, ex] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1) }); }
+  for (const [s, ex, kind] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1), ...(kind ? { kind } : {}) }); }
   const stockVal = keptVal + buys.reduce((a, b) => a + b.qty * prices[b.symbol], 0);
   // parking: sell any ETF that isn't today's park target; size the target to the leftover
   const parkTrades = [];
@@ -123,7 +139,7 @@ export async function gatherSignals({ api, today, days, closeMin = 960 }) {
   const wiki = await (await fetch('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies', { headers: { 'User-Agent': 'sec-edgar-worker paper-dip/1.0' } })).text();
   const members = [...new Set(parseSp500Html(wiki).map((m) => m.symbol))];
   const etfs = [...POOL, 'BIL'];
-  const syms = [...new Set([...members, ...etfs])];
+  const syms = [...new Set([...members, ...etfs, ...ETF_DIP_LIST])];
   // prior daily closes (exclude today)
   const prevDay = days.at(-1) === today ? days.at(-2) : days.at(-1);
   const closes = Object.fromEntries(syms.map((s) => [s, []])), vols = Object.fromEntries(syms.map((s) => [s, []])), etfBars = Object.fromEntries(etfs.map((s) => [s, []]));
@@ -161,7 +177,9 @@ export async function gatherSignals({ api, today, days, closeMin = 960 }) {
     volInfo[s] = { ratio: r == null ? null : +r.toFixed(2), today_est: est ? Math.round(est) : null };
     if (r != null && r > VOL_MAX) { out.skipped_heavy_volume = [...(out.skipped_heavy_volume || []), `${s} (${r.toFixed(1)}x)`]; delete scores[s]; }
   }
-  return { ...out, members, etfs, closes, prices, scores, park, clPos, clWhy: cl?.now?.why, volInfo };
+  const etfScores = {};
+  for (const s of ETF_DIP_LIST) { const sc = etfDipScore(closes[s] || [], prices[s]); if (sc != null) etfScores[s] = sc; }
+  return { ...out, members, etfs, closes, prices, scores, etfScores, park, clPos, clWhy: cl?.now?.why, volInfo };
 }
 
 async function main() {
@@ -211,6 +229,16 @@ async function main() {
       vst.vs = vs; vst.history = [...(vst.history || []), { today, equity: veq, spy: prices.SPY, scale: vol.scale, vol_rank: vol.rank, spy_vol_pct: vol.vol_pct, park: park || 'CASH', orders: vdone }].slice(-400);
       vst.updated = log.run; writeFileSync(vfile, JSON.stringify(vst, null, 1));
       log.vol_bot = { scale: vol.scale, equity: veq, orders: vdone.length };
+    }
+    // ETF-dip virtual bot + an identical virtual twin WITHOUT ETFs (same prices and fills, so the comparison is fair)
+    const efile = 'data/paper_dip_etf_state.json', est = existsSync(efile) ? JSON.parse(readFileSync(efile, 'utf8')) : { history: [] };
+    if (!(est.history || []).some((h) => h.today === today)) {
+      const e = virtualStep({ vs: est.vs, today, days, prices, closes, scores, park, scale: 1, etfScores: g.etfScores || {} });
+      const tw = virtualStep({ vs: est.twin, today, days, prices, closes, scores, park, scale: 1 });
+      est.vs = e.vs; est.twin = tw.vs;
+      est.history = [...(est.history || []), { today, equity: e.equity, twin_equity: tw.equity, spy: prices.SPY, park: park || 'CASH', etf_signals: g.etfScores || {}, orders: e.done }].slice(-400);
+      est.updated = log.run; writeFileSync(efile, JSON.stringify(est, null, 1));
+      log.etf_bot = { equity: e.equity, twin_equity: tw.equity, etf_signals: Object.keys(g.etfScores || {}).length, orders: e.done.length };
     }
   }
   log.orders = done; delete state.last_error; state.history = [...(state.history || []), log].slice(-400); state.updated = log.run;

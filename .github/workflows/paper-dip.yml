@@ -38,7 +38,7 @@ jobs:
         run: |
           git config user.name "strategies-bot"
           git config user.email "strategies-bot@users.noreply.github.com"
-          for f in data/paper_dip_state.json data/paper_dip_vol_state.json; do [ -f "$f" ] && git add "$f"; done; true
+          for f in data/paper_dip_state.json data/paper_dip_vol_state.json data/paper_dip_etf_state.json; do [ -f "$f" ] && git add "$f"; done; true
           git diff --cached --quiet && exit 0
           git commit -m "paper dip: $(date -u +%F)"
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done

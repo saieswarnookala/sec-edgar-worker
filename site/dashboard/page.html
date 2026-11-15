@@ -1098,6 +1098,24 @@ dash.calc('vs_industry', {
     <div class="pb-live" data-bot="vol"></div>
   </section>
 
+  <section class="sx-card" id="pb-etf">
+    <div class="sx-ch"><h3>5. Dip bot + ETF dips ($10k virtual, new Nov 14)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Starts next trading day</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Not connected to Robinhood</span><span class="sx-badge">Same run as bot 1</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>How it works</h4><ul>
+        <li><b>Same stock dips</b> as the dip bot (1), and they always get slots first.</li>
+        <li>If slots are still free, it also buys <b>ETFs down 5%+ over 5 days</b> that are above their 200-day average (29 index, sector and country ETFs: SPY, QQQ, XLK, XLE, Japan, India, Brazil…).</li>
+        <li>Same sell rule (back above the 5-day average); ETFs can be held up to <b>10 days</b>.</li>
+        <li>A hidden <b>twin without ETFs</b> runs on the exact same prices, so the comparison below is apples to apples.</li>
+      </ul></div>
+      <div><h4>Example</h4><p class="sx-pb-ex">Only 7 stock dips today, so 3 slots are free. Japan's ETF (EWJ) fell 6% this week but is still above its 200-day average. The bot buys $1,000 of EWJ at 3:45 pm and sells when it closes back above its 5-day average.</p>
+        <h4 style="margin-top:10px">Backtest (1999–2026, combined)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>17.1%</b></div><div class="sx-stat"><span>Worst drop</span><b>−22%</b></div><div class="sx-stat"><span>vs stocks only</span><b>+2.2%/yr</b></div><div class="sx-stat"><span>Extra trades</span><b>~2.5/mo</b></div></div>
+        <p class="sx-cap">Better in both halves (1999–2012 and 2013–2026) and with higher costs. Slightly worse in 2022, when everything fell together.</p></div>
+    </div>
+    <div class="pb-live" data-bot="etf"></div>
+  </section>
+
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Started Nov 5, 2026</span><span class="sx-badge">Real paper orders</span><span class="sx-badge">Runs before the open (6:05 + 7:35 am ET)</span></div>
@@ -1866,19 +1884,20 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
     };
     const block = (bot, b) => {
-      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
       let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
         <div class="sx-stat"><span>Started with</span><b>${money(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${money(last?.eq)}</b></div>
         <div class="sx-stat"><span>Bot</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>SPY same days</span><b class="${cls(spyRet)}">${pctTxt(spyRet)}</b></div>
+        ${bot === 'etf' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>Twin without ETFs</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
         <div class="sx-stat"><span>Last run</span><b>${fmtDay(b.last?.day)}</b></div>${bot === 'vol' && b.last?.scale != null ? `<div class="sx-stat"><span>Buy size now</span><b>${b.last.scale.toFixed(2)}× (${Math.round(1000 * b.last.scale) / 100}%)</b></div>` : ''}</div>`;
       h += chart(c);
       const pos = b.positions || [];
       if (pos.length) {
         const rows = pos.map((p) => {
-          if (bot === 'drift') { const age = tdAgo(p.entry_date); return `<tr><td>${esc(p.symbol)}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty}</td><td>${p.reaction_pct != null ? '+' + p.reaction_pct + '%' : '—'}</td><td>≈${Math.max(0, 60 - (age ?? 0))}</td></tr>`; }
-          return `<tr><td>${esc(p.symbol)}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty != null ? +(+p.qty).toFixed(3) : ''}</td><td>${p.dip_pct != null ? p.dip_pct + '%' : '—'}</td><td>${p.size_pct != null ? p.size_pct + '%' : '10%'}</td></tr>`;
+          if (bot === 'drift') { const age = tdAgo(p.entry_date); return `<tr><td>${esc(p.symbol)}${p.kind === 'etf' ? ' <span class="sx-badge">ETF</span>' : ''}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty}</td><td>${p.reaction_pct != null ? '+' + p.reaction_pct + '%' : '—'}</td><td>≈${Math.max(0, 60 - (age ?? 0))}</td></tr>`; }
+          return `<tr><td>${esc(p.symbol)}${p.kind === 'etf' ? ' <span class="sx-badge">ETF</span>' : ''}</td><td>${fmtDay(p.entry_date)}</td><td>${p.qty != null ? +(+p.qty).toFixed(3) : ''}</td><td>${p.dip_pct != null ? p.dip_pct + '%' : '—'}</td><td>${p.size_pct != null ? p.size_pct + '%' : '10%'}</td></tr>`;
         }).join('');
         const head = bot === 'drift' ? '<th>Stock</th><th>Bought</th><th>Shares</th><th>Earnings beat</th><th>Trading days left</th>' : '<th>Stock</th><th>Bought</th><th>Shares</th><th>Dip vs SPY</th><th>Size</th>';
         h += `<h4 style="margin-top:10px">Holding (${pos.length})</h4><div class="sx-tablewrap"><table class="sx-scr"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
@@ -1890,7 +1909,8 @@ dash.calc('vs_industry', {
         const txt = ord.length ? ord.join(' · ') : what.length ? what.join(' · ') + (L.dry ? ' (decided only, test run)' : '') : 'No trades.';
         h += `<p class="sx-cap" style="margin-top:8px"><b>Last run (${fmtDay(L.day)}):</b> ${esc(txt)}${L.park ? ' · Idle money: ' + esc(L.park) : ''}</p>`;
       }
-      if (bot === 'vol' && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      if (bot === 'etf' && b.last) h += `<p class="sx-cap"><b>ETFs dipping today:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
+      if ((bot === 'vol' || bot === 'etf') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
       return h;
     };
     try {
