@@ -1,0 +1,761 @@
+{
+ "note": "Dip bot on a wider universe + small rule changes (Nov 15 2026). Research only, not financial advice.\nUNIVERSE=us_all: every US common stock Alpaca has daily bars for (active AND delisted), 2016-2026. Each day stocks are\n  sized by 20-day average dollar volume among those priced >= $5: top 500 = \"large\", 501-1500 = \"mid\", 1501-3000 = \"small\".\n  (No point-in-time index lists outside the S&P 500, so size comes from trading volume; ETFs/funds removed by name.)\nUNIVERSE=sp500: point-in-time S&P 500 members 1999-2026 (incl. companies that later left or failed).\nBase rule = the live dip bot: 5-day return >= 10% worse than SPY, above the 200-day average, volume over the drop <= 2x\nnormal, price >= $5, at least $5M traded a day; biggest drop first; buy at the close; sell when the close is back above\nthe 5-day average (after >= 1 day) or after 5 days. 10 slots x 10%. Idle money in SPY when SPY is above its 100-day\naverage, else cash. Cost per side by liquidity: >= $100M/day 0.05%, $20-100M 0.10%, below 0.20%.\nThen one change at a time: trend average 100/150/250/none, dip 8/12/15%, lookback 3/7/10 days, volume cap 1.5/3/none,\nsell average 3/10 days, max hold 3/7/10, slots 15/20 (smaller each).",
+ "universe": "sp500",
+ "period": "1999-01-04 to 2026-10-30",
+ "stocks": 1279,
+ "universes": {
+  "S&P 500 members": {
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   },
+   "bot": {
+    "full": {
+     "per_year_pct": 14.1,
+     "worst_drop_pct": -28.4,
+     "spy_per_year_pct": 8.6,
+     "trades_per_month": 9.2,
+     "win_pct": 64.6,
+     "avg_trade_pct": 0.81
+    },
+    "1999-2012": {
+     "per_year_pct": 10.7,
+     "worst_drop_pct": -28.4,
+     "spy_per_year_pct": 2.9,
+     "trades_per_month": 9.4,
+     "win_pct": 64.3,
+     "avg_trade_pct": 0.8
+    },
+    "2013-2026": {
+     "per_year_pct": 17.5,
+     "worst_drop_pct": -17.1,
+     "spy_per_year_pct": 14.6,
+     "trades_per_month": 8.9,
+     "win_pct": 64.9,
+     "avg_trade_pct": 0.82
+    }
+   }
+  }
+ },
+ "variants_universe": "S&P 500 members",
+ "variants": {
+  "base (live bot rules)": {
+   "full": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -28.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 9.2,
+    "win_pct": 64.6,
+    "avg_trade_pct": 0.81
+   },
+   "1999-2012": {
+    "per_year_pct": 10.7,
+    "worst_drop_pct": -28.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 9.4,
+    "win_pct": 64.3,
+    "avg_trade_pct": 0.8
+   },
+   "2013-2026": {
+    "per_year_pct": 17.5,
+    "worst_drop_pct": -17.1,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 8.9,
+    "win_pct": 64.9,
+    "avg_trade_pct": 0.82
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "trend: 100-day avg": {
+   "full": {
+    "per_year_pct": 12.7,
+    "worst_drop_pct": -29.5,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 7.6,
+    "win_pct": 64.0,
+    "avg_trade_pct": 0.85
+   },
+   "1999-2012": {
+    "per_year_pct": 8.3,
+    "worst_drop_pct": -29.5,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 8.3,
+    "win_pct": 61.8,
+    "avg_trade_pct": 0.7
+   },
+   "2013-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -16.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 6.9,
+    "win_pct": 66.7,
+    "avg_trade_pct": 1.02
+   },
+   "counts": {
+    "signals_per_month_avg": 14.1,
+    "median": 5.0,
+    "busiest_month": 217,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 7.8,
+    "months_with_zero": 45
+   }
+  },
+  "trend: 150-day avg": {
+   "full": {
+    "per_year_pct": 14.8,
+    "worst_drop_pct": -22.9,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 8.7,
+    "win_pct": 64.3,
+    "avg_trade_pct": 0.91
+   },
+   "1999-2012": {
+    "per_year_pct": 12.0,
+    "worst_drop_pct": -22.9,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 9.2,
+    "win_pct": 64.3,
+    "avg_trade_pct": 0.95
+   },
+   "2013-2026": {
+    "per_year_pct": 17.4,
+    "worst_drop_pct": -16.8,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 8.3,
+    "win_pct": 64.4,
+    "avg_trade_pct": 0.86
+   },
+   "counts": {
+    "signals_per_month_avg": 16.7,
+    "median": 8.0,
+    "busiest_month": 189,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 8.8,
+    "months_with_zero": 23
+   }
+  },
+  "trend: 250-day avg": {
+   "full": {
+    "per_year_pct": 14.2,
+    "worst_drop_pct": -31.0,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 9.6,
+    "win_pct": 63.8,
+    "avg_trade_pct": 0.77
+   },
+   "1999-2012": {
+    "per_year_pct": 11.5,
+    "worst_drop_pct": -31.0,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 9.5,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.79
+   },
+   "2013-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -17.5,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 9.6,
+    "win_pct": 64.0,
+    "avg_trade_pct": 0.74
+   },
+   "counts": {
+    "signals_per_month_avg": 19.0,
+    "median": 9.0,
+    "busiest_month": 209,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.7,
+    "months_with_zero": 17
+   }
+  },
+  "trend: none": {
+   "full": {
+    "per_year_pct": 11.9,
+    "worst_drop_pct": -72.6,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 27.4,
+    "win_pct": 60.4,
+    "avg_trade_pct": 0.32
+   },
+   "1999-2012": {
+    "per_year_pct": 12.0,
+    "worst_drop_pct": -72.6,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 30.0,
+    "win_pct": 60.4,
+    "avg_trade_pct": 0.36
+   },
+   "2013-2026": {
+    "per_year_pct": 11.6,
+    "worst_drop_pct": -68.9,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 24.8,
+    "win_pct": 60.2,
+    "avg_trade_pct": 0.27
+   },
+   "counts": {
+    "signals_per_month_avg": 85.5,
+    "median": 46.0,
+    "busiest_month": 1112,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 36.3,
+    "months_with_zero": 3
+   }
+  },
+  "dip: 8%": {
+   "full": {
+    "per_year_pct": 17.4,
+    "worst_drop_pct": -21.5,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 19.2,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.54
+   },
+   "1999-2012": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -20.2,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 19.5,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.6
+   },
+   "2013-2026": {
+    "per_year_pct": 17.8,
+    "worst_drop_pct": -21.5,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 18.9,
+    "win_pct": 63.3,
+    "avg_trade_pct": 0.47
+   },
+   "counts": {
+    "signals_per_month_avg": 43.4,
+    "median": 26.0,
+    "busiest_month": 349,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 20.7,
+    "months_with_zero": 1
+   }
+  },
+  "dip: 12%": {
+   "full": {
+    "per_year_pct": 13.2,
+    "worst_drop_pct": -30.5,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 4.4,
+    "win_pct": 67.3,
+    "avg_trade_pct": 1.48
+   },
+   "1999-2012": {
+    "per_year_pct": 9.7,
+    "worst_drop_pct": -30.5,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 4.4,
+    "win_pct": 66.9,
+    "avg_trade_pct": 1.56
+   },
+   "2013-2026": {
+    "per_year_pct": 16.6,
+    "worst_drop_pct": -15.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 4.3,
+    "win_pct": 67.7,
+    "avg_trade_pct": 1.4
+   },
+   "counts": {
+    "signals_per_month_avg": 7.7,
+    "median": 3.0,
+    "busiest_month": 147,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 4.2,
+    "months_with_zero": 80
+   }
+  },
+  "dip: 15%": {
+   "full": {
+    "per_year_pct": 9.4,
+    "worst_drop_pct": -32.3,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 1.4,
+    "win_pct": 71.7,
+    "avg_trade_pct": 2.53
+   },
+   "1999-2012": {
+    "per_year_pct": 4.7,
+    "worst_drop_pct": -32.3,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 1.5,
+    "win_pct": 71.0,
+    "avg_trade_pct": 2.4
+   },
+   "2013-2026": {
+    "per_year_pct": 14.2,
+    "worst_drop_pct": -15.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 1.4,
+    "win_pct": 72.5,
+    "avg_trade_pct": 2.66
+   },
+   "counts": {
+    "signals_per_month_avg": 2.3,
+    "median": 0.0,
+    "busiest_month": 90,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 1.3,
+    "months_with_zero": 198
+   }
+  },
+  "lookback: 3 days": {
+   "full": {
+    "per_year_pct": 13.2,
+    "worst_drop_pct": -24.3,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 4.4,
+    "win_pct": 65.7,
+    "avg_trade_pct": 1.53
+   },
+   "1999-2012": {
+    "per_year_pct": 11.1,
+    "worst_drop_pct": -24.3,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 4.5,
+    "win_pct": 67.1,
+    "avg_trade_pct": 1.77
+   },
+   "2013-2026": {
+    "per_year_pct": 15.3,
+    "worst_drop_pct": -20.7,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 4.2,
+    "win_pct": 64.3,
+    "avg_trade_pct": 1.27
+   },
+   "counts": {
+    "signals_per_month_avg": 6.8,
+    "median": 2.0,
+    "busiest_month": 122,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 4.5,
+    "months_with_zero": 87
+   }
+  },
+  "lookback: 7 days": {
+   "full": {
+    "per_year_pct": 14.8,
+    "worst_drop_pct": -18.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 14.6,
+    "win_pct": 63.7,
+    "avg_trade_pct": 0.58
+   },
+   "1999-2012": {
+    "per_year_pct": 15.4,
+    "worst_drop_pct": -18.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 14.3,
+    "win_pct": 65.0,
+    "avg_trade_pct": 0.79
+   },
+   "2013-2026": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -18.3,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 14.9,
+    "win_pct": 62.4,
+    "avg_trade_pct": 0.37
+   },
+   "counts": {
+    "signals_per_month_avg": 30.5,
+    "median": 16.0,
+    "busiest_month": 304,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 13.2,
+    "months_with_zero": 12
+   }
+  },
+  "lookback: 10 days": {
+   "full": {
+    "per_year_pct": 13.7,
+    "worst_drop_pct": -31.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 23.6,
+    "win_pct": 61.6,
+    "avg_trade_pct": 0.32
+   },
+   "1999-2012": {
+    "per_year_pct": 13.7,
+    "worst_drop_pct": -31.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 22.7,
+    "win_pct": 62.4,
+    "avg_trade_pct": 0.43
+   },
+   "2013-2026": {
+    "per_year_pct": 13.4,
+    "worst_drop_pct": -27.9,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 24.5,
+    "win_pct": 60.8,
+    "avg_trade_pct": 0.22
+   },
+   "counts": {
+    "signals_per_month_avg": 52.1,
+    "median": 30.0,
+    "busiest_month": 490,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 18.4,
+    "months_with_zero": 2
+   }
+  },
+  "volume cap: 1.5x": {
+   "full": {
+    "per_year_pct": 13.3,
+    "worst_drop_pct": -29.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 7.1,
+    "win_pct": 65.8,
+    "avg_trade_pct": 0.94
+   },
+   "1999-2012": {
+    "per_year_pct": 10.1,
+    "worst_drop_pct": -29.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 7.3,
+    "win_pct": 65.2,
+    "avg_trade_pct": 0.94
+   },
+   "2013-2026": {
+    "per_year_pct": 16.5,
+    "worst_drop_pct": -16.5,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 6.9,
+    "win_pct": 66.5,
+    "avg_trade_pct": 0.94
+   },
+   "counts": {
+    "signals_per_month_avg": 13.0,
+    "median": 5.0,
+    "busiest_month": 183,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 7.2,
+    "months_with_zero": 44
+   }
+  },
+  "volume cap: 3.0x": {
+   "full": {
+    "per_year_pct": 13.9,
+    "worst_drop_pct": -30.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 10.6,
+    "win_pct": 63.7,
+    "avg_trade_pct": 0.7
+   },
+   "1999-2012": {
+    "per_year_pct": 10.8,
+    "worst_drop_pct": -30.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 10.8,
+    "win_pct": 63.8,
+    "avg_trade_pct": 0.7
+   },
+   "2013-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -18.1,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 10.5,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.7
+   },
+   "counts": {
+    "signals_per_month_avg": 21.8,
+    "median": 12.0,
+    "busiest_month": 214,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 10.7,
+    "months_with_zero": 9
+   }
+  },
+  "volume cap: none": {
+   "full": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -29.2,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 11.1,
+    "win_pct": 63.7,
+    "avg_trade_pct": 0.71
+   },
+   "1999-2012": {
+    "per_year_pct": 11.7,
+    "worst_drop_pct": -29.2,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 11.3,
+    "win_pct": 63.8,
+    "avg_trade_pct": 0.72
+   },
+   "2013-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -17.9,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 11.0,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.7
+   },
+   "counts": {
+    "signals_per_month_avg": 23.3,
+    "median": 13.0,
+    "busiest_month": 214,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 11.1,
+    "months_with_zero": 6
+   }
+  },
+  "sell above 3-day avg": {
+   "full": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -29.5,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 10.7,
+    "win_pct": 65.9,
+    "avg_trade_pct": 0.69
+   },
+   "1999-2012": {
+    "per_year_pct": 11.0,
+    "worst_drop_pct": -29.5,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 10.9,
+    "win_pct": 65.4,
+    "avg_trade_pct": 0.72
+   },
+   "2013-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -16.7,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 10.5,
+    "win_pct": 66.4,
+    "avg_trade_pct": 0.65
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "sell above 10-day avg": {
+   "full": {
+    "per_year_pct": 13.0,
+    "worst_drop_pct": -36.9,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 8.4,
+    "win_pct": 55.9,
+    "avg_trade_pct": 0.8
+   },
+   "1999-2012": {
+    "per_year_pct": 9.1,
+    "worst_drop_pct": -36.9,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 8.7,
+    "win_pct": 55.0,
+    "avg_trade_pct": 0.72
+   },
+   "2013-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -16.0,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 8.0,
+    "win_pct": 56.9,
+    "avg_trade_pct": 0.89
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "max hold 3 days": {
+   "full": {
+    "per_year_pct": 13.3,
+    "worst_drop_pct": -30.4,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 10.5,
+    "win_pct": 59.4,
+    "avg_trade_pct": 0.65
+   },
+   "1999-2012": {
+    "per_year_pct": 9.8,
+    "worst_drop_pct": -30.4,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 10.7,
+    "win_pct": 58.6,
+    "avg_trade_pct": 0.64
+   },
+   "2013-2026": {
+    "per_year_pct": 16.7,
+    "worst_drop_pct": -20.9,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 10.2,
+    "win_pct": 60.3,
+    "avg_trade_pct": 0.67
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "max hold 7 days": {
+   "full": {
+    "per_year_pct": 15.3,
+    "worst_drop_pct": -22.8,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 9.0,
+    "win_pct": 65.7,
+    "avg_trade_pct": 0.91
+   },
+   "1999-2012": {
+    "per_year_pct": 13.2,
+    "worst_drop_pct": -22.8,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 9.3,
+    "win_pct": 65.2,
+    "avg_trade_pct": 0.98
+   },
+   "2013-2026": {
+    "per_year_pct": 17.4,
+    "worst_drop_pct": -17.3,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 8.8,
+    "win_pct": 66.2,
+    "avg_trade_pct": 0.83
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "max hold 10 days": {
+   "full": {
+    "per_year_pct": 15.5,
+    "worst_drop_pct": -21.9,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 8.9,
+    "win_pct": 65.6,
+    "avg_trade_pct": 0.93
+   },
+   "1999-2012": {
+    "per_year_pct": 13.8,
+    "worst_drop_pct": -21.9,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 9.1,
+    "win_pct": 65.1,
+    "avg_trade_pct": 1.02
+   },
+   "2013-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -16.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 8.6,
+    "win_pct": 66.2,
+    "avg_trade_pct": 0.82
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "15 slots x 6.7%": {
+   "full": {
+    "per_year_pct": 12.5,
+    "worst_drop_pct": -27.1,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 9.8,
+    "win_pct": 65.2,
+    "avg_trade_pct": 0.93
+   },
+   "1999-2012": {
+    "per_year_pct": 8.8,
+    "worst_drop_pct": -27.1,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 10.0,
+    "win_pct": 64.9,
+    "avg_trade_pct": 0.92
+   },
+   "2013-2026": {
+    "per_year_pct": 16.2,
+    "worst_drop_pct": -16.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 9.6,
+    "win_pct": 65.4,
+    "avg_trade_pct": 0.94
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  },
+  "20 slots x 5%": {
+   "full": {
+    "per_year_pct": 11.0,
+    "worst_drop_pct": -27.9,
+    "spy_per_year_pct": 8.6,
+    "trades_per_month": 10.1,
+    "win_pct": 65.5,
+    "avg_trade_pct": 0.96
+   },
+   "1999-2012": {
+    "per_year_pct": 7.0,
+    "worst_drop_pct": -27.9,
+    "spy_per_year_pct": 2.9,
+    "trades_per_month": 10.3,
+    "win_pct": 65.1,
+    "avg_trade_pct": 0.93
+   },
+   "2013-2026": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -16.1,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 10.0,
+    "win_pct": 65.9,
+    "avg_trade_pct": 0.99
+   },
+   "counts": {
+    "signals_per_month_avg": 18.0,
+    "median": 9.0,
+    "busiest_month": 208,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 9.4,
+    "months_with_zero": 21
+   }
+  }
+ }
+}
