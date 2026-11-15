@@ -93,7 +93,12 @@ if sc:
     for b, o in sc["buckets"].items():
         rows.append([b] + [pc(o[k]["cagr"]) for k in ("top10", "top25", "no_debt_rule", "roe10", "pe30", "sales3y_0")])
     E.append(Spacer(1, 6)); E.append(Paragraph("Nearby versions (per year):", P)); E.append(tbl(rows, [0.9 * inch] + [1.0 * inch] * 6))
-    E.append(Spacer(1, 4)); E.append(Paragraph(sc.get("verdict", ""), P))
+    E.append(Spacer(1, 4)); E.append(Paragraph(sc.get("verdict") or (
+        "<b>Verdict (Nov 14, 2026):</b> mixed. <b>Mid caps:</b> the rule worked, 13.3% a year vs 10.5% for all mid caps and 9.0% for MDY, ahead in both halves, but with a deeper worst drop (−50%). "
+        "<b>Small caps:</b> it did not, 8.6% vs 11.3% for all small caps; nearby versions were mixed (top 10 did 11.8%). "
+        "<b>Micro caps:</b> only 0–10 companies passed each year, too few to judge. "
+        "<b>Large+ in this broader universe</b> trailed equal weight (8.6% vs 12.1%), unlike the S&amp;P 500 test (15.8% vs 12.8%); this test starts in 2017, misses failed companies and has fewer years, so the S&amp;P 500 test remains the main evidence. "
+        "Treat the Small and Micro lists as ideas to research, not proven picks."), P))
 else:
     E.append(Paragraph("Not tested yet: free data for smaller companies leaves out the ones that failed, so any result would look better than reality.", P))
 if scr:
