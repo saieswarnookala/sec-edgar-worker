@@ -102,6 +102,42 @@ export function virtualStep({ vs, today, days, prices, closes, scores, park, sca
   vs.trades = vs.trades.slice(-300);
   return { vs, equity: +equity.toFixed(2), done };
 }
+// ---- Bot 7 "dip + drift 6+4" (virtual, from Nov 16; backtest 2004-2026: 15.8%/yr, worst -24%) ----
+// One $10k account: up to 6 dip slots (today's dip rules) + up to 4 earnings-drift slots (stock beat SPY by >= 5% on its
+// earnings reaction day -> buy, hold 60 trading days), 10% each. Drift signals come from the morning drift run
+// (data/paper_drift_signals.json); this afternoon run fills them at the ~3:45 pm price (backtest bought at the open).
+// Idle money parks like the dip bot (Clear Leader ETF, cash when SPY < 100-day avg). Fractional shares, no broker.
+export const MIX = { dipSlots: 6, driftSlots: 4, weight: 0.10, driftHold: 60, start: 10000 };
+export function mixStep({ vs, today, days, prices, closes, scores, park, driftSignals = [] }) {
+  vs = { cash: MIX.start, positions: [], park: {}, trades: [], ...vs };
+  const px = (s, fb) => prices[s] || fb || 0, ti = days.indexOf(today), done = [];
+  const equity = vs.cash + vs.positions.reduce((a, p) => a + p.qty * px(p.symbol, p.entry_px), 0) + Object.entries(vs.park).reduce((a, [s, q]) => a + q * px(s), 0);
+  // 1) exits
+  const keep = [];
+  for (const p of vs.positions) {
+    const ei = days.indexOf(p.entry_date), age = ei >= 0 ? ti - ei : 999;
+    const why = !prices[p.symbol] ? null : p.kind === 'drift' ? (age >= MIX.driftHold ? `held ${age} days (drift max ${MIX.driftHold})` : null)
+      : shouldExit({ age, closes: closes[p.symbol] || [], px: prices[p.symbol] });
+    if (why) { vs.cash += p.qty * px(p.symbol); vs.trades.push({ symbol: p.symbol, kind: p.kind, entry_date: p.entry_date, exit_date: today, ret_pct: +((px(p.symbol) / p.entry_px - 1) * 100).toFixed(2), reason: why }); done.push(`SELL ${p.symbol} ${p.kind} (${why})`); }
+    else keep.push(p);
+  }
+  vs.positions = keep;
+  // 2) empty the parking, re-size it at the end
+  for (const [s, q] of Object.entries(vs.park)) { if (!px(s)) continue; vs.cash += q * px(s); delete vs.park[s]; }
+  const heldSyms = new Set(vs.positions.map((p) => p.symbol)), size = MIX.weight * equity, buys = [];
+  const nDrift = vs.positions.filter((p) => p.kind === 'drift').length, nDip = vs.positions.length - nDrift;
+  for (const s of [...driftSignals].sort((a, b) => b.r - a.r).filter((x) => prices[x.symbol] && !heldSyms.has(x.symbol)).slice(0, Math.max(0, MIX.driftSlots - nDrift))) { buys.push({ symbol: s.symbol, kind: 'drift', info: `reaction +${(s.r * 100).toFixed(1)}% vs SPY` }); heldSyms.add(s.symbol); }
+  for (const [s, ex] of Object.entries(scores).filter(([s]) => prices[s] && !heldSyms.has(s) && !POOL.includes(s)).sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, MIX.dipSlots - nDip))) { buys.push({ symbol: s, kind: 'dip', info: `dip ${(ex * 100).toFixed(1)}%` }); heldSyms.add(s); }
+  for (const b of buys) {
+    const usd = Math.min(size, vs.cash); if (usd < 1) break;
+    const qty = Math.floor((usd / px(b.symbol)) * 1e6) / 1e6; vs.cash -= qty * px(b.symbol);
+    vs.positions.push({ symbol: b.symbol, kind: b.kind, entry_date: today, qty, entry_px: px(b.symbol), info: b.info }); done.push(`BUY $${(qty * px(b.symbol)).toFixed(0)} ${b.symbol} ${b.kind} (${b.info})`);
+  }
+  // 3) park the rest (keep a 2% cash buffer)
+  if (park && px(park)) { const usd = Math.max(0, vs.cash - BUFFER * equity); if (usd >= 1) { const q = Math.floor((usd / px(park)) * 1e6) / 1e6; vs.park[park] = q; vs.cash -= q * px(park); } }
+  vs.trades = vs.trades.slice(-300);
+  return { vs, equity: +equity.toFixed(2), done };
+}
 // Decide trades. state.positions: [{symbol, entry_date, qty}]; days: trading dates ending with today.
 // fractional: size in fractions of a share (live Robinhood account with ~$100 slots); default whole shares (Alpaca paper).
 export const roundQty = (q, fractional) => fractional ? Math.floor(q * 1e6) / 1e6 : Math.floor(q);
@@ -246,6 +282,17 @@ async function main() {
       est.history = [...(est.history || []), { today, equity: e.equity, twin_equity: tw.equity, spy: prices.SPY, park: park || 'CASH', etf_signals: g.etfScores || {}, orders: e.done }].slice(-400);
       est.updated = log.run; writeFileSync(efile, JSON.stringify(est, null, 1));
       log.etf_bot = { equity: e.equity, twin_equity: tw.equity, etf_signals: Object.keys(g.etfScores || {}).length, orders: e.done.length };
+    }
+    // Bot 7 "dip + drift 6+4" (virtual): drift signals from this morning's drift run
+    const mfile = 'data/paper_mix_state.json', mst = existsSync(mfile) ? JSON.parse(readFileSync(mfile, 'utf8')) : { history: [] };
+    if (!(mst.history || []).some((h) => h.today === today)) {
+      const dsf = 'data/paper_drift_signals.json', ds = existsSync(dsf) ? JSON.parse(readFileSync(dsf, 'utf8')) : {};
+      const driftSignals = ds.date === today ? (ds.signals || []) : [];
+      const m = mixStep({ vs: mst.vs, today, days, prices, closes, scores, park, driftSignals });
+      mst.vs = m.vs;
+      mst.history = [...(mst.history || []), { today, equity: m.equity, spy: prices.SPY, park: park || 'CASH', dip_signals: Object.keys(scores).length, drift_signals: driftSignals.map((x) => x.symbol), drift_signals_found: ds.date === today, orders: m.done }].slice(-400);
+      mst.updated = log.run; writeFileSync(mfile, JSON.stringify(mst, null, 1));
+      log.mix_bot = { equity: m.equity, drift_signals: driftSignals.length, orders: m.done.length };
     }
     // Bot 6 "tuned dip": 8% dips, 150-day trend, hold up to 7 days, + ETF dips (virtual, no broker)
     const tfile = 'data/paper_dip_tuned_state.json', tst = existsSync(tfile) ? JSON.parse(readFileSync(tfile, 'utf8')) : { history: [] };

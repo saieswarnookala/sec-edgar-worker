@@ -28,7 +28,7 @@ All "realistic" = trading costs included; after tax = federal 24% short-term / 1
 | Strategy | Before tax | After tax | Worst drop | Status |
 | --- | --- | --- | --- | --- |
 | **US dip + volume filter + Clear Leader parking** (1998–2026) | 14.9% (ideal fills 22.0%) | 11.9% (ideal 17.6%) | −25 to −28% | Paper bot ($10k) + live Robinhood dry run |
-| **Dip + drift 6+4 mix**, one account (2004–2026) | 15.8% (ideal 19.1%) | 12.3% | −24% | Recommended, not built |
+| **Dip + drift 6+4 mix**, one account (2004–2026) | 15.8% (ideal 19.1%) | 12.3% | −24% | Virtual paper bot 7 (from Nov 16) |
 | Earnings drift, blend of 9 | ~13% | ~10% (est.) | −51% | Paper bot ($100k) |
 | Clear Leader v2.0 | 13.6% | untested | −43% | Used only to choose where idle dip money parks |
 | India dip + Nifty trend, balanced (50% liquid fund + 50% gold when gold > 100d) | 15.0% | ~12% | −19% | Not traded; needs NRI/PIS/US-tax advice |
@@ -121,6 +121,9 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Dashboard tab "Paper bots" (#paper): rules, example, backtest, live status vs SPY, holdings for dip / vol / drift bots + Robinhood bot notes; data/paper_status.json is built in site/build.mjs on every deploy (bot commits to data/** redeploy).
 - /api/timers (signed in) and the tab's health badges show the last Cloudflare timer start per bot (status + error).
 - PROBLEM found Nov 14: no timer dispatches since ~Nov 12 midday (dip bot missed Nov 12 + 13; drift ran only on GitHub's late schedule). Most likely GH_DISPATCH_TOKEN was revoked/expired. Fix: new fine-grained token (this repo, Actions read+write), set repo secret GH_DISPATCH_TOKEN, re-run "Deploy website"; then check the Paper bots tab badges.
+
+### Bot 7: dip + drift 6+4 (virtual, from Nov 16)
+- mixStep in scripts/paper-dip.mjs (MIX), state data/paper_mix_state.json, runs in the 3:45 pm dip run. 6 dip slots (today's rules, smart exit) + 4 drift slots (hold 60 trading days), 10% each, Clear Leader/cash parking, fractional, $10k. Drift signals: the morning paper-drift run writes data/paper_drift_signals.json; bot 7 fills them at the ~3:45 pm price (backtest: open). Dashboard card 7. Test in test-paper-dip.mjs.
 
 ## 6. Live bot: Robinhood (live/, guide live/README.md)
 - Account: Robinhood agentic (MCP) account, LIMITED MARGIN (so sale proceeds are usable the same day), opened Nov 11–12, ~$10 in it. Plan $1,000.

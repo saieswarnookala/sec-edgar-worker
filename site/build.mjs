@@ -31,11 +31,13 @@ const lastRun = (hist) => { const h = (hist || []).at(-1); if (!h) return null; 
 const dipS = readJ('data/paper_dip_state.json'), volS = readJ('data/paper_dip_vol_state.json'), drS = readJ('data/paper_drift_state.json');
 const etfS = readJ('data/paper_dip_etf_state.json');
 const tunS = readJ('data/paper_dip_tuned_state.json');
+const mixS = readJ('data/paper_mix_state.json');
 const status = { built: new Date().toISOString(), bots: {
   dip: dipS && { start: 10000, curve: byDay(dipS.history, (h) => h.equity, (h) => h.spy), positions: dipS.positions || [], last: lastRun(dipS.history), updated: dipS.updated },
   vol: volS && { start: 10000, curve: byDay(volS.history, (h) => h.equity, (h) => h.spy), positions: (volS.vs || {}).positions || [], cash: (volS.vs || {}).cash, park: (volS.vs || {}).park || {}, trades: ((volS.vs || {}).trades || []).slice(-15), last: (() => { const h = (volS.history || []).at(-1); return h && { day: h.today, orders: h.orders || [], scale: h.scale, vol_rank: h.vol_rank, spy_vol_pct: h.spy_vol_pct, park: h.park }; })(), updated: volS.updated },
   etf: etfS && { start: 10000, curve: byDay(etfS.history, (h) => h.equity, (h) => h.spy), twin: byDay(etfS.history, (h) => h.twin_equity, (h) => h.spy), positions: (etfS.vs || {}).positions || [], trades: ((etfS.vs || {}).trades || []).slice(-15), twin_trades: ((etfS.twin || {}).trades || []).length, last: (() => { const h = (etfS.history || []).at(-1); return h && { day: h.today, orders: h.orders || [], park: h.park, etf_signals: Object.keys(h.etf_signals || {}) }; })(), updated: etfS.updated },
   tuned: tunS && { start: 10000, curve: byDay(tunS.history, (h) => h.equity, (h) => h.spy), positions: (tunS.vs || {}).positions || [], trades: ((tunS.vs || {}).trades || []).slice(-15), last: (() => { const h = (tunS.history || []).at(-1); return h && { day: h.today, orders: h.orders || [], park: h.park, etf_signals: h.etf_signals || [], stock_signals: h.stock_signals }; })(), updated: tunS.updated },
+  mix: mixS && { start: 10000, curve: byDay(mixS.history, (h) => h.equity, (h) => h.spy), positions: (mixS.vs || {}).positions || [], trades: ((mixS.vs || {}).trades || []).slice(-15), last: (() => { const h = (mixS.history || []).at(-1); return h && { day: h.today, orders: h.orders || [], park: h.park, dip_signals: h.dip_signals, drift_signals: h.drift_signals || [], drift_found: h.drift_signals_found }; })(), updated: mixS.updated },
   drift: drS && { start: 100000, curve: byDay(drS.history, (h) => h.equity, (h) => h.park && h.park.spy_price), positions: drS.positions || [], last: lastRun(drS.history), updated: drS.updated },
 } };
 writeFileSync('site/public/data/paper_status.json', JSON.stringify(status));

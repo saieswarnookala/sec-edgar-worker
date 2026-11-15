@@ -66,6 +66,8 @@ async function main() {
   const ret = (s) => { const a = (bars[s] || []).filter((b) => b.t.slice(0, 10) <= prev); return a.length >= 2 && a.at(-1).t.slice(0, 10) === prev ? a.at(-1).c / a.at(-2).c - 1 : null; };
   const spy = ret('SPY'), signals = [], prices = {};
   for (const s of cands.filter((x) => x !== PARK)) { const r = ret(s); const c = (bars[s] || []).at(-1)?.c; if (r != null && spy != null && c >= 5 && r - spy >= THR) { signals.push({ symbol: s, r: r - spy }); prices[s] = c; } }
+  // for virtual bot 7 (dip + drift 6+4), filled by the afternoon dip run
+  mkdirSync('data', { recursive: true }); writeFileSync('data/paper_drift_signals.json', JSON.stringify({ date: today, run: log.run, signals }, null, 1));
   const posList = await api(PAPER, '/v2/positions'), held = Object.fromEntries(posList.map((x) => [x.symbol, +x.qty]));
   const file = 'data/paper_drift_state.json', state = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { positions: [], history: [] };
   const d = decide({ today, days, state, held, signals, equity: +acct.equity, prices });

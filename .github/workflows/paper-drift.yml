@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "strategies-bot"
           git config user.email "strategies-bot@users.noreply.github.com"
-          git add data/paper_drift_state.json 2>/dev/null || true
+          git add data/paper_drift_state.json data/paper_drift_signals.json 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "paper drift: $(date -u +%F)"
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done

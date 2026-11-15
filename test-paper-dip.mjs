@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -114,5 +114,29 @@ console.log(`\n${n} passed`);
   if (!pk || pk.side !== 'buy' || Math.abs(pk.qty * 500 - 780) > 0.01) throw new Error('fractional parking ' + JSON.stringify(d.parkTrades));
   const whole = decide({ today: '2026-11-09', days, equity: 1000, state: { positions: [] }, held: {}, prices: { BIG: 600, QQQ: 500 }, closes: {}, scores: { BIG: -0.15 }, park: 'QQQ', parkHeld: {} });
   if (whole.buys.length) throw new Error('whole shares should skip a $600 stock in a $100 slot');
-  console.log('ok   fractional sizing for small live account');
+  ok('mix bot 7: 4 drift + 6 dip slots, drift held 60 days, dip smart exit, parking', () => {
+  const days = Array.from({ length: 70 }, (_, i) => `d${String(i).padStart(2, '0')}`);
+  const prices = { SPY: 500, QQQ: 400 }, scores = {}, drift = [];
+  for (let i = 0; i < 8; i++) { prices['D' + i] = 50; scores['D' + i] = -0.10 - i / 100; prices['E' + i] = 20; drift.push({ symbol: 'E' + i, r: 0.05 + i / 100 }); }
+  let r = mixStep({ vs: undefined, today: days[0], days, prices, closes: {}, scores, park: 'QQQ', driftSignals: drift });
+  const k = (kind) => r.vs.positions.filter((p) => p.kind === kind);
+  assert.equal(k('drift').length, MIX.driftSlots); assert.equal(k('dip').length, MIX.dipSlots);
+  assert.deepEqual(k('drift').map((p) => p.symbol), ['E7', 'E6', 'E5', 'E4']);          // biggest reactions first
+  assert.deepEqual(k('dip').map((p) => p.symbol), ['D7', 'D6', 'D5', 'D4', 'D3', 'D2']); // biggest dips first
+  assert.equal(r.equity, 10000); assert.equal(r.vs.park.QQQ, undefined);                  // 100% invested -> nothing parked
+  // day 1: dips bounce above their 5-day average -> sold; drift kept; freed money parked
+  const p1 = { ...prices }; for (let i = 0; i < 8; i++) p1['D' + i] = 60;
+  const closes = Object.fromEntries(Object.keys(p1).map((s) => [s, [50, 50, 50, 50]]));
+  r = mixStep({ vs: r.vs, today: days[1], days, prices: p1, closes, scores: {}, park: 'QQQ', driftSignals: [] });
+  assert.equal(r.vs.positions.length, 4); assert.ok(r.vs.park.QQQ > 0); assert.ok(r.equity > 10000);
+  assert.equal(r.vs.trades.filter((t) => t.kind === 'dip' && t.ret_pct === 20).length, 6);
+  // day 60: drift positions sold after 60 trading days
+  r = mixStep({ vs: r.vs, today: days[59], days, prices: p1, closes, scores: {}, park: null, driftSignals: [] });
+  assert.equal(r.vs.positions.length, 4);
+  r = mixStep({ vs: r.vs, today: days[60], days, prices: p1, closes, scores: {}, park: null, driftSignals: [] });
+  assert.equal(r.vs.positions.length, 0); assert.ok(/drift max 60/.test(r.done.join(' ')));
+  assert.equal(Object.keys(r.vs.park).length, 0);                                           // park null = cash
+  assert.ok(Math.abs(r.vs.cash - r.equity) < 0.01);
+});
+console.log('ok   fractional sizing for small live account');
 }
