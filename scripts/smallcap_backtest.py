@@ -15,7 +15,7 @@ def get(url, headers):
     for i in range(6):
         try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=120))
         except urllib.error.HTTPError as e:
-            if e.code == 404: return None
+            if e.code in (400, 403, 404, 422): return None   # bad request: retrying won't help
             time.sleep(min(60, 5 * (i + 1)) if e.code == 429 else 3 * (i + 1))
         except Exception: time.sleep(3 * (i + 1))
     return None
@@ -46,17 +46,32 @@ for r in tk.values():
 have = set().union(*[set(F[y]["ni"]) for y in F])
 syms = sorted([t for t, c in cik_of.items() if c in have and t.isascii()]) + ["SPY", "IWM", "IJR", "MDY"]
 print("symbols", len(syms), flush=True)
+# keep only tickers Alpaca knows (one unknown ticker makes Alpaca reject a whole 100-symbol batch)
+known = set()
+for st in ("active", "inactive"):
+    for a in get("https://paper-api.alpaca.markets/v2/assets?" + urllib.parse.urlencode({"status": st, "asset_class": "us_equity"}), H) or []:
+        known.add(a["symbol"])
+print("alpaca assets", len(known), flush=True)
+if known: syms = [t for t in syms if t in known]
+print("symbols after alpaca filter", len(syms), flush=True)
+def fetch(batch, adj, tf, C, Vv):
+    p = {"symbols": ",".join(batch), "timeframe": tf, "start": "2016-10-01", "end": "2026-11-13", "adjustment": adj, "feed": "sip", "limit": "10000"}
+    while True:
+        js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p), H)
+        if js is None:   # rejected: split the batch so one bad ticker can't sink the rest
+            if len(batch) > 1: h = len(batch) // 2; fetch(batch[:h], adj, tf, C, Vv); fetch(batch[h:], adj, tf, C, Vv)
+            return
+        for s_, bl in (js.get("bars") or {}).items():
+            for b in bl: C.setdefault(s_, {})[b["t"][:10]] = b["c"]; Vv.setdefault(s_, {})[b["t"][:10]] = b["v"]
+        if not js.get("next_page_token"): return
+        p["page_token"] = js["next_page_token"]
 def bars(adj, tf):
     C, Vv = {}, {}
     for i in range(0, len(syms), 100):
-        p = {"symbols": ",".join(syms[i:i + 100]), "timeframe": tf, "start": "2016-10-01", "end": "2026-11-13", "adjustment": adj, "feed": "sip", "limit": "10000"}
-        while True:
-            js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p), H) or {}
-            for s_, bl in (js.get("bars") or {}).items():
-                for b in bl: C.setdefault(s_, {})[b["t"][:10]] = b["c"]; Vv.setdefault(s_, {})[b["t"][:10]] = b["v"]
-            if not js.get("next_page_token"): break
-            p["page_token"] = js["next_page_token"]
+        fetch(syms[i:i + 100], adj, tf, C, Vv)
         if i % 1000 == 0: print(adj, tf, i, len(C), flush=True)
+    print(adj, tf, "done", len(C), "of", len(syms), flush=True)
+    if len(C) < 0.5 * len(syms): raise SystemExit(f"only got prices for {len(C)} of {len(syms)} symbols, stopping")
     return pd.DataFrame(C), pd.DataFrame(Vv)
 # weekly total-return prices are plenty for 12-month holds; daily raw prices are only needed for market caps + liquidity
 A, VOL = bars("all", "1Week"); RAW, _ = bars("raw", "1Week")
