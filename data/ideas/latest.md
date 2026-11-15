@@ -1,4 +1,4 @@
-# Idea Scout: 2026-11-14
+# Idea Scout: 2026-11-15
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
@@ -6,43 +6,43 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 
 **Category:** build
 
-- **What:** Popular launch (734 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (740 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50470488>
 
 ## 2. Show HN: Every satellite that passed over any place this week, and its photos
 
 **Category:** build
 
-- **What:** Popular launch (491 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (494 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50428907>
 
 ## 3. Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives
 
 **Category:** build
 
-- **What:** Popular launch (443 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (447 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50443812>
 
-## 4. Minireel/HGhub: YellowFruit third-party client
+## 4. FrigadeHQ/yogurt: Private AI meeting notes that stay on your computer. A free, open-source alternative to Granola for Mac, Windows and Linux.
 
 **Category:** build
 
-- **What:** New GitHub project with 8850 stars in 2 weeks. Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 1608 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/FrigadeHQ/yogurt>
+
+## 5. Minireel/HGhub: Plug-in media player
+
+**Category:** build
+
+- **What:** New GitHub project with 8975 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/Minireel/HGhub>
 
-## 5. janestreet/agent_skills: Agent skills
+## 6. janestreet/agent_skills: Agent skills
 
 **Category:** build
 
-- **What:** New GitHub project with 8544 stars in 2 weeks. Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 8906 stars in 2 weeks. Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/janestreet/agent_skills>
-
-## 6. huamidev/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.
-
-**Category:** build
-
-- **What:** New GitHub project with 7538 stars in 2 weeks (Swift). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/huamidev/GestaltX>
 
 ## 7. This Startup Raised $1 Billion to Build AI Faster and With Fewer Humans - WSJ
 
