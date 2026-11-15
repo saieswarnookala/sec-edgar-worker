@@ -87,6 +87,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Refresh: Cloudflare cron '45 21,23 * * *' dispatches screen.yml daily (GitHub schedule ran 4-6 h late). Cloudflare free plan: 4 of 5 cron triggers used.
 - Discussion brief for Sai's friend: https://claude.ai/artifact/7xSY9Xtx9YuszTaBYVEfUi
 
+### Rhythm and volatile-bounce research (Nov 14) - nothing new to trade
+- Single-stock rhythm test (scripts/single_stock_rhythm.py, workflow rhythm-test.yml, data/rhythm_<sym>.json): ~800 intraday/1-3 day rules per stock incl. research ideas (same half-hour persistence HKS 2010, first->last half-hour Gao et al. 2018, yesterday's last 30 min). ORCL, NVDA, TSLA, AMD, PLTR, COIN: intraday rhythms did not survive 2023-26; only "buy after a 3%+ down day, hold 1 day" stayed positive vs a random day on 5 of 6 stocks (~+0.3-0.4%/trade).
+- Volatile bounce (scripts/volatile_bounce.py, workflow volatile-bounce.yml, data/volatile_bounce_{sp500,popular}.json): ~10k scenarios on point-in-time S&P 500 (2004-26) + 45 popular names (2016-26, hindsight-biased). Filters help a little (quiet volume, 200-day uptrend, skip earnings drops, 3-day/smart exit ~+0.1%/trade each) = same as the dip bot. Picking the best version on train didn't predict test (rank corr ~0). 1%/trade versions trade too rarely; none beat SPY as a strategy on the unbiased list. Popular-list "gap down 7%+, hold 2 days" looked great but is ~0 on the S&P list -> hindsight. Conclusion: keep the dip bot; no new bot.
+
 ## 4. Data and research setup
 - Survivorship-free S&P 500: release snapshot-2026-11 of github.com/Johnbrick123/sp500-data (prices.parquet incl. delisted, membership_intervals.parquet). Cached in workflows.
 - SEC 8-K 2.02 earnings times + SIC: scripts/sec_events_sic.py → data/sec_events_sic.json.
