@@ -1,5 +1,5 @@
 """Tiny R2 (Cloudflare S3-compatible) cache for downloaded market data.
-- Needs secrets R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY; without them every call is a no-op (tests still run).
+- Needs secrets R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY and the account id (R2_ACCOUNT_ID or the existing CLOUDFLARE_ACCOUNT_ID); without them every call is a no-op (tests still run).
 - Objects are gzip-compressed JSON in bucket R2_BUCKET (default sentinel-data).
 - Size guard: refuses to save once the bucket would exceed R2_MAX_GB (default 9 GB), so it stays in the free 10 GB.
 - Never raises: any R2 problem is printed and the caller just downloads from Alpaca as before."""
@@ -12,7 +12,8 @@ _c = [None, False]
 def client():
     if _c[1]: return _c[0]
     _c[1] = True
-    acct, kid, sec = os.environ.get("R2_ACCOUNT_ID"), os.environ.get("R2_ACCESS_KEY_ID"), os.environ.get("R2_SECRET_ACCESS_KEY")
+    acct = os.environ.get("R2_ACCOUNT_ID") or os.environ.get("CLOUDFLARE_ACCOUNT_ID")   # same account id the site deploy uses
+    kid, sec = os.environ.get("R2_ACCESS_KEY_ID"), os.environ.get("R2_SECRET_ACCESS_KEY")
     if not (acct and kid and sec): print("r2cache: no R2 secrets, cache off", flush=True); return None
     try:
         import boto3
