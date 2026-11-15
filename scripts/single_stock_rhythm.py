@@ -237,6 +237,44 @@ for k in (1, 2, 3):
             [(i, CL[i + k] / CL[i] - 1) for i in np.flatnonzero(lose <= -x) if i + k < D], hold=None)
 # baseline: buy at the open on any day, sell at the close of day k
 BASE = {k: np.array([CL[i + k - 1] / O[i, 0] - 1 if i + k - 1 < D else np.nan for i in range(D)]) for k in (1, 2, 3)}
+# L/M/N) Candlestick patterns on this stock alone (Nov 14): daily candles (buy the next open, hold 1-3 days, long only,
+#    compared with buying on a random day), and 30-min / 15-min candles inside the day (enter the next bar's open,
+#    exit after 1 bar, 2 bars or at the close; bullish patterns long, bearish patterns short).
+def candle_pats(o, h, l, c, po, pc, ph, pl):
+    rg = h - l; body = np.abs(c - o); us = h - np.maximum(o, c); ls = np.minimum(o, c) - l
+    with np.errstate(all="ignore"): clv = (c - l) / rg
+    v = rg > 0
+    return {"hammer (long lower tail)": (v & (ls >= 2 * body) & (us <= 0.3 * rg), 1),
+            "shooting star (long upper tail)": (v & (us >= 2 * body) & (ls <= 0.3 * rg), -1),
+            "bullish engulfing": (v & (c > o) & (pc < po) & (o <= pc) & (c >= po), 1),
+            "bearish engulfing": (v & (c < o) & (pc > po) & (o >= pc) & (c <= po), -1),
+            "doji": (v & (body <= 0.1 * rg), 1),
+            "strong close (top 20% of bar)": (v & (clv >= 0.8), 1),
+            "weak close (bottom 20% of bar)": (v & (clv <= 0.2), -1),
+            "inside bar": (v & (h < ph) & (l > pl), 1)}
+Hd = np.array([Hh[i, :last[i] + 1].max() for i in range(D)]); Ld = np.array([L[i, :last[i] + 1].min() for i in range(D)]); Od = O[:, 0]
+sh1 = lambda x: np.r_[np.nan, x[:-1]]
+for pn, (m, sgn) in candle_pats(Od, Hd, Ld, CL, sh1(Od), sh1(CL), sh1(Hd), sh1(Ld)).items():
+    for k in (1, 2, 3):
+        add("L candles (daily)", f"buy the next open after a daily {pn}, sell at the close of day {k}" + (" [pattern says down]" if sgn < 0 else ""),
+            [(i + 1, CL[i + k] / O[i + 1, 0] - 1) for i in np.flatnonzero(m) if i + k < D], hold=k)
+for bm, fam in ((30, "M candles (30-min)"), (15, "N candles (15-min)")):
+    nb = 390 // bm
+    bo = np.stack([O[:, b * bm] for b in range(nb)], 1); bc = np.stack([C[:, b * bm + bm - 1] for b in range(nb)], 1)
+    bh = np.stack([Hh[:, b * bm:(b + 1) * bm].max(1) for b in range(nb)], 1); bl = np.stack([L[:, b * bm:(b + 1) * bm].min(1) for b in range(nb)], 1)
+    prev = lambda x: np.hstack([np.full((D, 1), np.nan), x[:, :-1]])
+    pats = candle_pats(bo, bh, bl, bc, prev(bo), prev(bc), prev(bh), prev(bl))
+    pats = {k: (v[0], v[1]) for k, v in pats.items()}
+    for pn, (m, sgn) in pats.items():
+        m = m.copy(); m[:, 0] = False; m[:, nb - 1] = False          # need a previous bar and a next bar
+        I, J = np.nonzero(m & full[:, None])
+        for ex in ("1 bar", "2 bars", "close"):
+            tr = []
+            for i, j in zip(I, J):
+                e = (j + 1) * bm; xb = {"1 bar": j + 1, "2 bars": j + 2, "close": nb - 1}[ex]
+                if xb >= nb: continue
+                tr.append((i, sgn * (C[i, xb * bm + bm - 1] / O[i, e] - 1)))
+            add(fam, f"{'buy' if sgn > 0 else 'short'} the next {bm}-min bar after a {pn}, exit after {ex}", tr)
 print("versions tested", len(CONFIGS), flush=True)
 
 # ---------- score ----------
