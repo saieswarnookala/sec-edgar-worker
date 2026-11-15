@@ -6,11 +6,11 @@
   "last": "2026-11-13",
   "train": "2016-01-04 to 2022-12-31",
   "test": "2023-01-01 to 2026-11-13",
-  "versions": 878,
-  "versions_scored": 878,
+  "versions": 926,
+  "versions_scored": 926,
   "cost_per_side_pct": 0.02,
-  "train_t_over_2": 51,
-  "expected_by_luck_t_over_2": 20.2,
+  "train_t_over_2": 52,
+  "expected_by_luck_t_over_2": 21.3,
   "test_t_over_2": 14,
   "top15_train_still_positive_in_test": 11,
   "top15_train_t_over_2_in_test": 0,
@@ -1771,6 +1771,136 @@
       "t": 0.11,
       "per_year_pct": 1.5,
       "worst_bps": -1084.0
+     }
+    }
+   ]
+  },
+  "O candles (5-min)": {
+   "versions": 24,
+   "train_pos": 3,
+   "test_pos": 2,
+   "train_t_over_2": 1,
+   "top3_by_train": [
+    {
+     "rule": "buy the next 5-min bar after a strong close (top 20% of bar), exit after close",
+     "train": {
+      "trades": 29588,
+      "avg_bps": 1.9,
+      "win_pct": 49.7,
+      "t": 2.05,
+      "per_year_pct": 81.4,
+      "worst_bps": -1580.0
+     },
+     "test": {
+      "trades": 17106,
+      "avg_bps": 1.1,
+      "win_pct": 50.2,
+      "t": 0.96,
+      "per_year_pct": 49.8,
+      "worst_bps": -1175.0
+     }
+    },
+    {
+     "rule": "buy the next 5-min bar after a hammer (long lower tail), exit after close",
+     "train": {
+      "trades": 12260,
+      "avg_bps": 1.2,
+      "win_pct": 49.8,
+      "t": 0.83,
+      "per_year_pct": 21.3,
+      "worst_bps": -1531.0
+     },
+     "test": {
+      "trades": 7289,
+      "avg_bps": 0.3,
+      "win_pct": 49.9,
+      "t": 0.19,
+      "per_year_pct": 6.1,
+      "worst_bps": -1147.0
+     }
+    },
+    {
+     "rule": "buy the next 5-min bar after a bullish engulfing, exit after close",
+     "train": {
+      "trades": 10156,
+      "avg_bps": 0.9,
+      "win_pct": 49.8,
+      "t": 0.55,
+      "per_year_pct": 12.4,
+      "worst_bps": -1537.0
+     },
+     "test": {
+      "trades": 4944,
+      "avg_bps": -0.7,
+      "win_pct": 49.1,
+      "t": -0.32,
+      "per_year_pct": -8.8,
+      "worst_bps": -1175.0
+     }
+    }
+   ]
+  },
+  "P candles (1-min)": {
+   "versions": 24,
+   "train_pos": 2,
+   "test_pos": 1,
+   "train_t_over_2": 0,
+   "top3_by_train": [
+    {
+     "rule": "buy the next 1-min bar after a strong close (top 20% of bar), exit after close",
+     "train": {
+      "trades": 180414,
+      "avg_bps": 0.4,
+      "win_pct": 49.4,
+      "t": 1.14,
+      "per_year_pct": 107.1,
+      "worst_bps": -1666.0
+     },
+     "test": {
+      "trades": 84459,
+      "avg_bps": -0.7,
+      "win_pct": 49.5,
+      "t": -1.41,
+      "per_year_pct": -163.4,
+      "worst_bps": -1169.0
+     }
+    },
+    {
+     "rule": "buy the next 1-min bar after a bullish engulfing, exit after close",
+     "train": {
+      "trades": 41988,
+      "avg_bps": 0.4,
+      "win_pct": 49.5,
+      "t": 0.48,
+      "per_year_pct": 23.1,
+      "worst_bps": -1531.0
+     },
+     "test": {
+      "trades": 23963,
+      "avg_bps": -1.4,
+      "win_pct": 49.6,
+      "t": -1.38,
+      "per_year_pct": -85.2,
+      "worst_bps": -1155.0
+     }
+    },
+    {
+     "rule": "buy the next 1-min bar after a doji, exit after close",
+     "train": {
+      "trades": 125764,
+      "avg_bps": -0.1,
+      "win_pct": 49.5,
+      "t": -0.16,
+      "per_year_pct": -11.2,
+      "worst_bps": -1562.0
+     },
+     "test": {
+      "trades": 37508,
+      "avg_bps": -0.3,
+      "win_pct": 49.4,
+      "t": -0.38,
+      "per_year_pct": -29.1,
+      "worst_bps": -1147.0
      }
     }
    ]
@@ -26683,6 +26813,1350 @@
     "t": -4.04,
     "per_year_pct": -90.0,
     "worst_bps": -1147.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a hammer (long lower tail), exit after 1 bar",
+   "train": {
+    "trades": 12260,
+    "avg_bps": -3.8,
+    "win_pct": 42.4,
+    "t": -13.79,
+    "per_year_pct": -67.3,
+    "worst_bps": -325.0
+   },
+   "test": {
+    "trades": 7289,
+    "avg_bps": -3.7,
+    "win_pct": 42.1,
+    "t": -11.39,
+    "per_year_pct": -69.6,
+    "worst_bps": -206.0
+   },
+   "test_stress": {
+    "trades": 7289,
+    "avg_bps": -9.7,
+    "win_pct": 31.1,
+    "t": -29.98,
+    "per_year_pct": -183.1,
+    "worst_bps": -212.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a hammer (long lower tail), exit after 3 bars",
+   "train": {
+    "trades": 11953,
+    "avg_bps": -3.0,
+    "win_pct": 46.0,
+    "t": -6.37,
+    "per_year_pct": -51.8,
+    "worst_bps": -759.0
+   },
+   "test": {
+    "trades": 7080,
+    "avg_bps": -3.8,
+    "win_pct": 46.5,
+    "t": -6.93,
+    "per_year_pct": -69.4,
+    "worst_bps": -433.0
+   },
+   "test_stress": {
+    "trades": 7080,
+    "avg_bps": -9.8,
+    "win_pct": 39.5,
+    "t": -17.94,
+    "per_year_pct": -179.6,
+    "worst_bps": -439.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a hammer (long lower tail), exit after close",
+   "train": {
+    "trades": 12260,
+    "avg_bps": 1.2,
+    "win_pct": 49.8,
+    "t": 0.83,
+    "per_year_pct": 21.3,
+    "worst_bps": -1531.0
+   },
+   "test": {
+    "trades": 7289,
+    "avg_bps": 0.3,
+    "win_pct": 49.9,
+    "t": 0.19,
+    "per_year_pct": 6.1,
+    "worst_bps": -1147.0
+   },
+   "test_stress": {
+    "trades": 7289,
+    "avg_bps": -5.7,
+    "win_pct": 47.3,
+    "t": -3.33,
+    "per_year_pct": -107.4,
+    "worst_bps": -1153.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a shooting star (long upper tail), exit after 1 bar",
+   "train": {
+    "trades": 11740,
+    "avg_bps": -3.8,
+    "win_pct": 43.2,
+    "t": -13.33,
+    "per_year_pct": -63.6,
+    "worst_bps": -317.0
+   },
+   "test": {
+    "trades": 6352,
+    "avg_bps": -3.6,
+    "win_pct": 41.3,
+    "t": -10.52,
+    "per_year_pct": -59.3,
+    "worst_bps": -212.0
+   },
+   "test_stress": {
+    "trades": 6352,
+    "avg_bps": -9.6,
+    "win_pct": 30.6,
+    "t": -28.04,
+    "per_year_pct": -158.3,
+    "worst_bps": -218.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a shooting star (long upper tail), exit after 3 bars",
+   "train": {
+    "trades": 11439,
+    "avg_bps": -3.4,
+    "win_pct": 46.6,
+    "t": -7.01,
+    "per_year_pct": -56.1,
+    "worst_bps": -628.0
+   },
+   "test": {
+    "trades": 6211,
+    "avg_bps": -4.0,
+    "win_pct": 44.0,
+    "t": -6.84,
+    "per_year_pct": -64.9,
+    "worst_bps": -438.0
+   },
+   "test_stress": {
+    "trades": 6211,
+    "avg_bps": -10.0,
+    "win_pct": 37.4,
+    "t": -17.03,
+    "per_year_pct": -161.6,
+    "worst_bps": -444.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a shooting star (long upper tail), exit after close",
+   "train": {
+    "trades": 11740,
+    "avg_bps": -7.1,
+    "win_pct": 47.2,
+    "t": -4.8,
+    "per_year_pct": -118.5,
+    "worst_bps": -1194.0
+   },
+   "test": {
+    "trades": 6352,
+    "avg_bps": -4.4,
+    "win_pct": 48.3,
+    "t": -2.31,
+    "per_year_pct": -72.2,
+    "worst_bps": -1850.0
+   },
+   "test_stress": {
+    "trades": 6352,
+    "avg_bps": -10.4,
+    "win_pct": 45.8,
+    "t": -5.47,
+    "per_year_pct": -171.1,
+    "worst_bps": -1856.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a bullish engulfing, exit after 1 bar",
+   "train": {
+    "trades": 10156,
+    "avg_bps": -3.7,
+    "win_pct": 42.4,
+    "t": -12.56,
+    "per_year_pct": -54.1,
+    "worst_bps": -405.0
+   },
+   "test": {
+    "trades": 4944,
+    "avg_bps": -3.9,
+    "win_pct": 41.8,
+    "t": -10.25,
+    "per_year_pct": -49.9,
+    "worst_bps": -200.0
+   },
+   "test_stress": {
+    "trades": 4944,
+    "avg_bps": -9.9,
+    "win_pct": 29.8,
+    "t": -26.06,
+    "per_year_pct": -126.9,
+    "worst_bps": -206.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a bullish engulfing, exit after 3 bars",
+   "train": {
+    "trades": 9882,
+    "avg_bps": -4.1,
+    "win_pct": 45.4,
+    "t": -8.4,
+    "per_year_pct": -58.0,
+    "worst_bps": -496.0
+   },
+   "test": {
+    "trades": 4793,
+    "avg_bps": -4.6,
+    "win_pct": 46.1,
+    "t": -6.84,
+    "per_year_pct": -56.7,
+    "worst_bps": -670.0
+   },
+   "test_stress": {
+    "trades": 4793,
+    "avg_bps": -10.6,
+    "win_pct": 39.4,
+    "t": -15.84,
+    "per_year_pct": -131.4,
+    "worst_bps": -676.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a bullish engulfing, exit after close",
+   "train": {
+    "trades": 10156,
+    "avg_bps": 0.9,
+    "win_pct": 49.8,
+    "t": 0.55,
+    "per_year_pct": 12.4,
+    "worst_bps": -1537.0
+   },
+   "test": {
+    "trades": 4944,
+    "avg_bps": -0.7,
+    "win_pct": 49.1,
+    "t": -0.32,
+    "per_year_pct": -8.8,
+    "worst_bps": -1175.0
+   },
+   "test_stress": {
+    "trades": 4944,
+    "avg_bps": -6.7,
+    "win_pct": 46.4,
+    "t": -3.15,
+    "per_year_pct": -85.8,
+    "worst_bps": -1181.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a bearish engulfing, exit after 1 bar",
+   "train": {
+    "trades": 10061,
+    "avg_bps": -3.2,
+    "win_pct": 43.0,
+    "t": -10.86,
+    "per_year_pct": -46.1,
+    "worst_bps": -473.0
+   },
+   "test": {
+    "trades": 4689,
+    "avg_bps": -3.7,
+    "win_pct": 41.5,
+    "t": -9.2,
+    "per_year_pct": -45.3,
+    "worst_bps": -319.0
+   },
+   "test_stress": {
+    "trades": 4689,
+    "avg_bps": -9.7,
+    "win_pct": 30.3,
+    "t": -24.01,
+    "per_year_pct": -118.3,
+    "worst_bps": -325.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a bearish engulfing, exit after 3 bars",
+   "train": {
+    "trades": 9809,
+    "avg_bps": -4.3,
+    "win_pct": 45.3,
+    "t": -8.74,
+    "per_year_pct": -60.8,
+    "worst_bps": -447.0
+   },
+   "test": {
+    "trades": 4576,
+    "avg_bps": -3.7,
+    "win_pct": 44.7,
+    "t": -5.34,
+    "per_year_pct": -44.0,
+    "worst_bps": -372.0
+   },
+   "test_stress": {
+    "trades": 4576,
+    "avg_bps": -9.7,
+    "win_pct": 37.5,
+    "t": -13.98,
+    "per_year_pct": -115.3,
+    "worst_bps": -378.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a bearish engulfing, exit after close",
+   "train": {
+    "trades": 10061,
+    "avg_bps": -7.6,
+    "win_pct": 46.3,
+    "t": -4.92,
+    "per_year_pct": -108.8,
+    "worst_bps": -1178.0
+   },
+   "test": {
+    "trades": 4689,
+    "avg_bps": -5.1,
+    "win_pct": 46.5,
+    "t": -2.42,
+    "per_year_pct": -61.5,
+    "worst_bps": -1743.0
+   },
+   "test_stress": {
+    "trades": 4689,
+    "avg_bps": -11.1,
+    "win_pct": 43.8,
+    "t": -5.3,
+    "per_year_pct": -134.5,
+    "worst_bps": -1749.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a doji, exit after 1 bar",
+   "train": {
+    "trades": 16653,
+    "avg_bps": -4.3,
+    "win_pct": 41.0,
+    "t": -20.53,
+    "per_year_pct": -101.7,
+    "worst_bps": -313.0
+   },
+   "test": {
+    "trades": 7616,
+    "avg_bps": -3.9,
+    "win_pct": 42.6,
+    "t": -11.87,
+    "per_year_pct": -76.7,
+    "worst_bps": -221.0
+   },
+   "test_stress": {
+    "trades": 7616,
+    "avg_bps": -9.9,
+    "win_pct": 31.5,
+    "t": -30.2,
+    "per_year_pct": -195.3,
+    "worst_bps": -227.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a doji, exit after 3 bars",
+   "train": {
+    "trades": 16209,
+    "avg_bps": -4.3,
+    "win_pct": 44.7,
+    "t": -12.16,
+    "per_year_pct": -99.1,
+    "worst_bps": -597.0
+   },
+   "test": {
+    "trades": 7422,
+    "avg_bps": -4.1,
+    "win_pct": 45.9,
+    "t": -7.67,
+    "per_year_pct": -79.1,
+    "worst_bps": -433.0
+   },
+   "test_stress": {
+    "trades": 7422,
+    "avg_bps": -10.1,
+    "win_pct": 39.4,
+    "t": -18.88,
+    "per_year_pct": -194.7,
+    "worst_bps": -439.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a doji, exit after close",
+   "train": {
+    "trades": 16653,
+    "avg_bps": -1.0,
+    "win_pct": 49.1,
+    "t": -0.93,
+    "per_year_pct": -24.4,
+    "worst_bps": -1471.0
+   },
+   "test": {
+    "trades": 7616,
+    "avg_bps": -4.0,
+    "win_pct": 48.6,
+    "t": -2.31,
+    "per_year_pct": -78.4,
+    "worst_bps": -1132.0
+   },
+   "test_stress": {
+    "trades": 7616,
+    "avg_bps": -10.0,
+    "win_pct": 46.2,
+    "t": -5.81,
+    "per_year_pct": -197.0,
+    "worst_bps": -1138.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a strong close (top 20% of bar), exit after 1 bar",
+   "train": {
+    "trades": 29588,
+    "avg_bps": -4.4,
+    "win_pct": 41.1,
+    "t": -24.5,
+    "per_year_pct": -185.1,
+    "worst_bps": -402.0
+   },
+   "test": {
+    "trades": 17106,
+    "avg_bps": -3.6,
+    "win_pct": 42.1,
+    "t": -17.42,
+    "per_year_pct": -157.6,
+    "worst_bps": -200.0
+   },
+   "test_stress": {
+    "trades": 17106,
+    "avg_bps": -9.6,
+    "win_pct": 30.8,
+    "t": -46.86,
+    "per_year_pct": -424.0,
+    "worst_bps": -206.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a strong close (top 20% of bar), exit after 3 bars",
+   "train": {
+    "trades": 28779,
+    "avg_bps": -4.3,
+    "win_pct": 44.5,
+    "t": -14.1,
+    "per_year_pct": -177.8,
+    "worst_bps": -902.0
+   },
+   "test": {
+    "trades": 16555,
+    "avg_bps": -3.2,
+    "win_pct": 46.9,
+    "t": -9.03,
+    "per_year_pct": -139.4,
+    "worst_bps": -385.0
+   },
+   "test_stress": {
+    "trades": 16555,
+    "avg_bps": -9.2,
+    "win_pct": 39.7,
+    "t": -25.73,
+    "per_year_pct": -397.2,
+    "worst_bps": -391.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a strong close (top 20% of bar), exit after close",
+   "train": {
+    "trades": 29588,
+    "avg_bps": 1.9,
+    "win_pct": 49.7,
+    "t": 2.05,
+    "per_year_pct": 81.4,
+    "worst_bps": -1580.0
+   },
+   "test": {
+    "trades": 17106,
+    "avg_bps": 1.1,
+    "win_pct": 50.2,
+    "t": 0.96,
+    "per_year_pct": 49.8,
+    "worst_bps": -1175.0
+   },
+   "test_stress": {
+    "trades": 17106,
+    "avg_bps": -4.9,
+    "win_pct": 47.4,
+    "t": -4.19,
+    "per_year_pct": -216.5,
+    "worst_bps": -1181.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a weak close (bottom 20% of bar), exit after 1 bar",
+   "train": {
+    "trades": 28917,
+    "avg_bps": -4.6,
+    "win_pct": 40.9,
+    "t": -24.43,
+    "per_year_pct": -190.6,
+    "worst_bps": -473.0
+   },
+   "test": {
+    "trades": 15359,
+    "avg_bps": -4.2,
+    "win_pct": 41.0,
+    "t": -18.07,
+    "per_year_pct": -167.9,
+    "worst_bps": -452.0
+   },
+   "test_stress": {
+    "trades": 15359,
+    "avg_bps": -10.2,
+    "win_pct": 30.6,
+    "t": -43.83,
+    "per_year_pct": -407.0,
+    "worst_bps": -458.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a weak close (bottom 20% of bar), exit after 3 bars",
+   "train": {
+    "trades": 28170,
+    "avg_bps": -4.8,
+    "win_pct": 44.6,
+    "t": -15.36,
+    "per_year_pct": -191.8,
+    "worst_bps": -851.0
+   },
+   "test": {
+    "trades": 15000,
+    "avg_bps": -4.3,
+    "win_pct": 43.9,
+    "t": -10.84,
+    "per_year_pct": -168.9,
+    "worst_bps": -563.0
+   },
+   "test_stress": {
+    "trades": 15000,
+    "avg_bps": -10.3,
+    "win_pct": 37.4,
+    "t": -25.83,
+    "per_year_pct": -402.5,
+    "worst_bps": -569.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "short the next 5-min bar after a weak close (bottom 20% of bar), exit after close",
+   "train": {
+    "trades": 28917,
+    "avg_bps": -5.9,
+    "win_pct": 47.0,
+    "t": -6.18,
+    "per_year_pct": -243.5,
+    "worst_bps": -1714.0
+   },
+   "test": {
+    "trades": 15359,
+    "avg_bps": -6.9,
+    "win_pct": 46.1,
+    "t": -5.53,
+    "per_year_pct": -274.5,
+    "worst_bps": -1994.0
+   },
+   "test_stress": {
+    "trades": 15359,
+    "avg_bps": -12.9,
+    "win_pct": 43.8,
+    "t": -10.36,
+    "per_year_pct": -513.6,
+    "worst_bps": -2000.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a inside bar, exit after 1 bar",
+   "train": {
+    "trades": 13656,
+    "avg_bps": -4.1,
+    "win_pct": 43.6,
+    "t": -13.24,
+    "per_year_pct": -80.6,
+    "worst_bps": -501.0
+   },
+   "test": {
+    "trades": 9191,
+    "avg_bps": -4.3,
+    "win_pct": 41.9,
+    "t": -14.34,
+    "per_year_pct": -103.1,
+    "worst_bps": -227.0
+   },
+   "test_stress": {
+    "trades": 9191,
+    "avg_bps": -10.3,
+    "win_pct": 30.7,
+    "t": -34.25,
+    "per_year_pct": -246.2,
+    "worst_bps": -233.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a inside bar, exit after 3 bars",
+   "train": {
+    "trades": 13386,
+    "avg_bps": -4.2,
+    "win_pct": 46.4,
+    "t": -8.24,
+    "per_year_pct": -81.1,
+    "worst_bps": -902.0
+   },
+   "test": {
+    "trades": 9052,
+    "avg_bps": -4.9,
+    "win_pct": 45.3,
+    "t": -9.59,
+    "per_year_pct": -115.3,
+    "worst_bps": -382.0
+   },
+   "test_stress": {
+    "trades": 9052,
+    "avg_bps": -10.9,
+    "win_pct": 38.5,
+    "t": -21.32,
+    "per_year_pct": -256.3,
+    "worst_bps": -388.0
+   }
+  },
+  {
+   "family": "O candles (5-min)",
+   "rule": "buy the next 5-min bar after a inside bar, exit after close",
+   "train": {
+    "trades": 13656,
+    "avg_bps": -2.5,
+    "win_pct": 49.3,
+    "t": -1.62,
+    "per_year_pct": -48.4,
+    "worst_bps": -1532.0
+   },
+   "test": {
+    "trades": 9191,
+    "avg_bps": -2.4,
+    "win_pct": 48.9,
+    "t": -1.45,
+    "per_year_pct": -56.4,
+    "worst_bps": -1132.0
+   },
+   "test_stress": {
+    "trades": 9191,
+    "avg_bps": -8.4,
+    "win_pct": 46.1,
+    "t": -5.11,
+    "per_year_pct": -199.6,
+    "worst_bps": -1138.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a hammer (long lower tail), exit after 1 bar",
+   "train": {
+    "trades": 69070,
+    "avg_bps": -3.9,
+    "win_pct": 33.4,
+    "t": -74.45,
+    "per_year_pct": -381.6,
+    "worst_bps": -231.0
+   },
+   "test": {
+    "trades": 36030,
+    "avg_bps": -3.7,
+    "win_pct": 32.5,
+    "t": -55.73,
+    "per_year_pct": -350.0,
+    "worst_bps": -135.0
+   },
+   "test_stress": {
+    "trades": 36030,
+    "avg_bps": -9.7,
+    "win_pct": 15.6,
+    "t": -145.06,
+    "per_year_pct": -911.1,
+    "worst_bps": -141.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a hammer (long lower tail), exit after 5 bars",
+   "train": {
+    "trades": 68247,
+    "avg_bps": -3.7,
+    "win_pct": 42.4,
+    "t": -32.2,
+    "per_year_pct": -363.5,
+    "worst_bps": -421.0
+   },
+   "test": {
+    "trades": 35599,
+    "avg_bps": -3.5,
+    "win_pct": 42.7,
+    "t": -23.08,
+    "per_year_pct": -319.6,
+    "worst_bps": -295.0
+   },
+   "test_stress": {
+    "trades": 35599,
+    "avg_bps": -9.5,
+    "win_pct": 31.4,
+    "t": -63.11,
+    "per_year_pct": -873.9,
+    "worst_bps": -301.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a hammer (long lower tail), exit after close",
+   "train": {
+    "trades": 69070,
+    "avg_bps": -0.6,
+    "win_pct": 49.3,
+    "t": -0.96,
+    "per_year_pct": -57.4,
+    "worst_bps": -1557.0
+   },
+   "test": {
+    "trades": 36030,
+    "avg_bps": 0.3,
+    "win_pct": 49.9,
+    "t": 0.33,
+    "per_year_pct": 25.4,
+    "worst_bps": -1147.0
+   },
+   "test_stress": {
+    "trades": 36030,
+    "avg_bps": -5.7,
+    "win_pct": 47.0,
+    "t": -7.03,
+    "per_year_pct": -535.6,
+    "worst_bps": -1153.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a shooting star (long upper tail), exit after 1 bar",
+   "train": {
+    "trades": 68266,
+    "avg_bps": -3.6,
+    "win_pct": 34.6,
+    "t": -66.53,
+    "per_year_pct": -347.2,
+    "worst_bps": -262.0
+   },
+   "test": {
+    "trades": 34149,
+    "avg_bps": -3.9,
+    "win_pct": 31.5,
+    "t": -56.67,
+    "per_year_pct": -345.7,
+    "worst_bps": -178.0
+   },
+   "test_stress": {
+    "trades": 34149,
+    "avg_bps": -9.9,
+    "win_pct": 15.5,
+    "t": -143.85,
+    "per_year_pct": -877.4,
+    "worst_bps": -184.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a shooting star (long upper tail), exit after 5 bars",
+   "train": {
+    "trades": 67565,
+    "avg_bps": -3.5,
+    "win_pct": 43.3,
+    "t": -29.52,
+    "per_year_pct": -337.6,
+    "worst_bps": -711.0
+   },
+   "test": {
+    "trades": 33795,
+    "avg_bps": -4.0,
+    "win_pct": 40.8,
+    "t": -25.73,
+    "per_year_pct": -348.0,
+    "worst_bps": -291.0
+   },
+   "test_stress": {
+    "trades": 33795,
+    "avg_bps": -10.0,
+    "win_pct": 30.3,
+    "t": -64.64,
+    "per_year_pct": -874.2,
+    "worst_bps": -297.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a shooting star (long upper tail), exit after close",
+   "train": {
+    "trades": 68266,
+    "avg_bps": -7.2,
+    "win_pct": 46.9,
+    "t": -12.0,
+    "per_year_pct": -702.4,
+    "worst_bps": -1835.0
+   },
+   "test": {
+    "trades": 34149,
+    "avg_bps": -6.4,
+    "win_pct": 46.7,
+    "t": -7.74,
+    "per_year_pct": -563.6,
+    "worst_bps": -1922.0
+   },
+   "test_stress": {
+    "trades": 34149,
+    "avg_bps": -12.4,
+    "win_pct": 43.8,
+    "t": -15.04,
+    "per_year_pct": -1095.4,
+    "worst_bps": -1928.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a bullish engulfing, exit after 1 bar",
+   "train": {
+    "trades": 41988,
+    "avg_bps": -3.5,
+    "win_pct": 35.7,
+    "t": -47.67,
+    "per_year_pct": -208.5,
+    "worst_bps": -291.0
+   },
+   "test": {
+    "trades": 23963,
+    "avg_bps": -3.8,
+    "win_pct": 32.8,
+    "t": -45.67,
+    "per_year_pct": -236.5,
+    "worst_bps": -206.0
+   },
+   "test_stress": {
+    "trades": 23963,
+    "avg_bps": -9.8,
+    "win_pct": 15.5,
+    "t": -117.74,
+    "per_year_pct": -609.6,
+    "worst_bps": -212.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a bullish engulfing, exit after 5 bars",
+   "train": {
+    "trades": 41542,
+    "avg_bps": -3.9,
+    "win_pct": 42.6,
+    "t": -24.99,
+    "per_year_pct": -232.0,
+    "worst_bps": -501.0
+   },
+   "test": {
+    "trades": 23754,
+    "avg_bps": -3.8,
+    "win_pct": 42.3,
+    "t": -20.29,
+    "per_year_pct": -232.7,
+    "worst_bps": -234.0
+   },
+   "test_stress": {
+    "trades": 23754,
+    "avg_bps": -9.8,
+    "win_pct": 31.2,
+    "t": -52.54,
+    "per_year_pct": -602.6,
+    "worst_bps": -240.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a bullish engulfing, exit after close",
+   "train": {
+    "trades": 41988,
+    "avg_bps": 0.4,
+    "win_pct": 49.5,
+    "t": 0.48,
+    "per_year_pct": 23.1,
+    "worst_bps": -1531.0
+   },
+   "test": {
+    "trades": 23963,
+    "avg_bps": -1.4,
+    "win_pct": 49.6,
+    "t": -1.38,
+    "per_year_pct": -85.2,
+    "worst_bps": -1155.0
+   },
+   "test_stress": {
+    "trades": 23963,
+    "avg_bps": -7.4,
+    "win_pct": 46.8,
+    "t": -7.44,
+    "per_year_pct": -458.4,
+    "worst_bps": -1161.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a bearish engulfing, exit after 1 bar",
+   "train": {
+    "trades": 43020,
+    "avg_bps": -3.5,
+    "win_pct": 35.8,
+    "t": -48.58,
+    "per_year_pct": -213.7,
+    "worst_bps": -142.0
+   },
+   "test": {
+    "trades": 23474,
+    "avg_bps": -3.7,
+    "win_pct": 32.6,
+    "t": -43.76,
+    "per_year_pct": -227.3,
+    "worst_bps": -141.0
+   },
+   "test_stress": {
+    "trades": 23474,
+    "avg_bps": -9.7,
+    "win_pct": 16.0,
+    "t": -114.13,
+    "per_year_pct": -592.8,
+    "worst_bps": -147.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a bearish engulfing, exit after 5 bars",
+   "train": {
+    "trades": 42494,
+    "avg_bps": -3.8,
+    "win_pct": 43.3,
+    "t": -24.86,
+    "per_year_pct": -232.0,
+    "worst_bps": -430.0
+   },
+   "test": {
+    "trades": 23245,
+    "avg_bps": -4.2,
+    "win_pct": 40.9,
+    "t": -21.94,
+    "per_year_pct": -252.5,
+    "worst_bps": -366.0
+   },
+   "test_stress": {
+    "trades": 23245,
+    "avg_bps": -10.2,
+    "win_pct": 30.5,
+    "t": -53.39,
+    "per_year_pct": -614.5,
+    "worst_bps": -372.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a bearish engulfing, exit after close",
+   "train": {
+    "trades": 43020,
+    "avg_bps": -7.7,
+    "win_pct": 46.8,
+    "t": -9.88,
+    "per_year_pct": -476.8,
+    "worst_bps": -1714.0
+   },
+   "test": {
+    "trades": 23474,
+    "avg_bps": -6.4,
+    "win_pct": 46.7,
+    "t": -6.5,
+    "per_year_pct": -392.4,
+    "worst_bps": -1947.0
+   },
+   "test_stress": {
+    "trades": 23474,
+    "avg_bps": -12.4,
+    "win_pct": 44.0,
+    "t": -12.55,
+    "per_year_pct": -757.9,
+    "worst_bps": -1953.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a doji, exit after 1 bar",
+   "train": {
+    "trades": 125764,
+    "avg_bps": -4.1,
+    "win_pct": 32.7,
+    "t": -124.4,
+    "per_year_pct": -734.9,
+    "worst_bps": -238.0
+   },
+   "test": {
+    "trades": 37508,
+    "avg_bps": -4.0,
+    "win_pct": 32.0,
+    "t": -60.21,
+    "per_year_pct": -389.1,
+    "worst_bps": -242.0
+   },
+   "test_stress": {
+    "trades": 37508,
+    "avg_bps": -10.0,
+    "win_pct": 14.9,
+    "t": -150.6,
+    "per_year_pct": -973.2,
+    "worst_bps": -248.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a doji, exit after 5 bars",
+   "train": {
+    "trades": 124184,
+    "avg_bps": -3.9,
+    "win_pct": 42.0,
+    "t": -53.52,
+    "per_year_pct": -697.3,
+    "worst_bps": -566.0
+   },
+   "test": {
+    "trades": 37124,
+    "avg_bps": -4.0,
+    "win_pct": 41.8,
+    "t": -26.94,
+    "per_year_pct": -387.7,
+    "worst_bps": -384.0
+   },
+   "test_stress": {
+    "trades": 37124,
+    "avg_bps": -10.0,
+    "win_pct": 30.5,
+    "t": -67.12,
+    "per_year_pct": -965.8,
+    "worst_bps": -390.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a doji, exit after close",
+   "train": {
+    "trades": 125764,
+    "avg_bps": -0.1,
+    "win_pct": 49.5,
+    "t": -0.16,
+    "per_year_pct": -11.2,
+    "worst_bps": -1562.0
+   },
+   "test": {
+    "trades": 37508,
+    "avg_bps": -0.3,
+    "win_pct": 49.4,
+    "t": -0.38,
+    "per_year_pct": -29.1,
+    "worst_bps": -1147.0
+   },
+   "test_stress": {
+    "trades": 37508,
+    "avg_bps": -6.3,
+    "win_pct": 46.5,
+    "t": -7.96,
+    "per_year_pct": -613.2,
+    "worst_bps": -1153.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a strong close (top 20% of bar), exit after 1 bar",
+   "train": {
+    "trades": 180414,
+    "avg_bps": -3.8,
+    "win_pct": 33.9,
+    "t": -117.59,
+    "per_year_pct": -976.3,
+    "worst_bps": -291.0
+   },
+   "test": {
+    "trades": 84459,
+    "avg_bps": -3.8,
+    "win_pct": 32.7,
+    "t": -85.21,
+    "per_year_pct": -829.9,
+    "worst_bps": -206.0
+   },
+   "test_stress": {
+    "trades": 84459,
+    "avg_bps": -9.8,
+    "win_pct": 16.0,
+    "t": -220.24,
+    "per_year_pct": -2145.0,
+    "worst_bps": -212.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a strong close (top 20% of bar), exit after 5 bars",
+   "train": {
+    "trades": 178422,
+    "avg_bps": -3.9,
+    "win_pct": 41.9,
+    "t": -55.18,
+    "per_year_pct": -989.3,
+    "worst_bps": -474.0
+   },
+   "test": {
+    "trades": 83581,
+    "avg_bps": -3.6,
+    "win_pct": 42.5,
+    "t": -36.52,
+    "per_year_pct": -785.7,
+    "worst_bps": -468.0
+   },
+   "test_stress": {
+    "trades": 83581,
+    "avg_bps": -9.6,
+    "win_pct": 31.4,
+    "t": -97.02,
+    "per_year_pct": -2087.2,
+    "worst_bps": -474.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a strong close (top 20% of bar), exit after close",
+   "train": {
+    "trades": 180414,
+    "avg_bps": 0.4,
+    "win_pct": 49.4,
+    "t": 1.14,
+    "per_year_pct": 107.1,
+    "worst_bps": -1666.0
+   },
+   "test": {
+    "trades": 84459,
+    "avg_bps": -0.7,
+    "win_pct": 49.5,
+    "t": -1.41,
+    "per_year_pct": -163.4,
+    "worst_bps": -1169.0
+   },
+   "test_stress": {
+    "trades": 84459,
+    "avg_bps": -6.7,
+    "win_pct": 46.7,
+    "t": -12.8,
+    "per_year_pct": -1478.6,
+    "worst_bps": -1175.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a weak close (bottom 20% of bar), exit after 1 bar",
+   "train": {
+    "trades": 180046,
+    "avg_bps": -3.8,
+    "win_pct": 34.3,
+    "t": -115.23,
+    "per_year_pct": -979.4,
+    "worst_bps": -285.0
+   },
+   "test": {
+    "trades": 80150,
+    "avg_bps": -3.9,
+    "win_pct": 32.6,
+    "t": -80.79,
+    "per_year_pct": -806.5,
+    "worst_bps": -305.0
+   },
+   "test_stress": {
+    "trades": 80150,
+    "avg_bps": -9.9,
+    "win_pct": 16.7,
+    "t": -205.8,
+    "per_year_pct": -2054.6,
+    "worst_bps": -311.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a weak close (bottom 20% of bar), exit after 5 bars",
+   "train": {
+    "trades": 178235,
+    "avg_bps": -4.0,
+    "win_pct": 42.2,
+    "t": -56.49,
+    "per_year_pct": -1031.2,
+    "worst_bps": -711.0
+   },
+   "test": {
+    "trades": 79349,
+    "avg_bps": -4.0,
+    "win_pct": 41.2,
+    "t": -37.64,
+    "per_year_pct": -817.5,
+    "worst_bps": -688.0
+   },
+   "test_stress": {
+    "trades": 79349,
+    "avg_bps": -10.0,
+    "win_pct": 30.9,
+    "t": -94.52,
+    "per_year_pct": -2053.1,
+    "worst_bps": -694.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "short the next 1-min bar after a weak close (bottom 20% of bar), exit after close",
+   "train": {
+    "trades": 180046,
+    "avg_bps": -6.9,
+    "win_pct": 47.0,
+    "t": -18.97,
+    "per_year_pct": -1778.8,
+    "worst_bps": -1835.0
+   },
+   "test": {
+    "trades": 80150,
+    "avg_bps": -5.1,
+    "win_pct": 46.8,
+    "t": -9.49,
+    "per_year_pct": -1065.2,
+    "worst_bps": -2016.0
+   },
+   "test_stress": {
+    "trades": 80150,
+    "avg_bps": -11.1,
+    "win_pct": 44.2,
+    "t": -20.6,
+    "per_year_pct": -2313.3,
+    "worst_bps": -2022.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a inside bar, exit after 1 bar",
+   "train": {
+    "trades": 53988,
+    "avg_bps": -4.2,
+    "win_pct": 35.5,
+    "t": -56.89,
+    "per_year_pct": -322.6,
+    "worst_bps": -249.0
+   },
+   "test": {
+    "trades": 49802,
+    "avg_bps": -4.0,
+    "win_pct": 31.9,
+    "t": -68.44,
+    "per_year_pct": -513.0,
+    "worst_bps": -145.0
+   },
+   "test_stress": {
+    "trades": 49802,
+    "avg_bps": -10.0,
+    "win_pct": 14.8,
+    "t": -171.88,
+    "per_year_pct": -1288.5,
+    "worst_bps": -151.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a inside bar, exit after 5 bars",
+   "train": {
+    "trades": 53371,
+    "avg_bps": -4.2,
+    "win_pct": 42.9,
+    "t": -26.02,
+    "per_year_pct": -321.3,
+    "worst_bps": -432.0
+   },
+   "test": {
+    "trades": 49009,
+    "avg_bps": -3.8,
+    "win_pct": 42.2,
+    "t": -29.15,
+    "per_year_pct": -487.9,
+    "worst_bps": -483.0
+   },
+   "test_stress": {
+    "trades": 49009,
+    "avg_bps": -9.8,
+    "win_pct": 31.1,
+    "t": -74.75,
+    "per_year_pct": -1251.1,
+    "worst_bps": -489.0
+   }
+  },
+  {
+   "family": "P candles (1-min)",
+   "rule": "buy the next 1-min bar after a inside bar, exit after close",
+   "train": {
+    "trades": 53988,
+    "avg_bps": -2.4,
+    "win_pct": 49.2,
+    "t": -2.93,
+    "per_year_pct": -183.8,
+    "worst_bps": -1550.0
+   },
+   "test": {
+    "trades": 49802,
+    "avg_bps": -1.2,
+    "win_pct": 49.6,
+    "t": -1.76,
+    "per_year_pct": -154.7,
+    "worst_bps": -1160.0
+   },
+   "test_stress": {
+    "trades": 49802,
+    "avg_bps": -7.2,
+    "win_pct": 46.7,
+    "t": -10.6,
+    "per_year_pct": -930.2,
+    "worst_bps": -1166.0
    }
   }
  ],
