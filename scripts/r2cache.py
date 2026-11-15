@@ -14,7 +14,9 @@ def client():
     _c[1] = True
     acct = os.environ.get("R2_ACCOUNT_ID") or os.environ.get("CLOUDFLARE_ACCOUNT_ID")   # same account id the site deploy uses
     kid, sec = os.environ.get("R2_ACCESS_KEY_ID"), os.environ.get("R2_SECRET_ACCESS_KEY")
-    if not (acct and kid and sec): print("r2cache: no R2 secrets, cache off", flush=True); return None
+    if not (acct and kid and sec):
+        missing = [n for n, v in (("account id (R2_ACCOUNT_ID or CLOUDFLARE_ACCOUNT_ID)", acct), ("R2_ACCESS_KEY_ID", kid), ("R2_SECRET_ACCESS_KEY", sec)) if not v]
+        print("r2cache: cache off, missing:", ", ".join(missing), flush=True); return None
     try:
         import boto3
         _c[0] = boto3.client("s3", endpoint_url=f"https://{acct}.r2.cloudflarestorage.com", aws_access_key_id=kid, aws_secret_access_key=sec, region_name="auto")
