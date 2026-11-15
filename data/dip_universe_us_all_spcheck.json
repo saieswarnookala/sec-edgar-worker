@@ -1,0 +1,81 @@
+{
+ "note": "Dip bot on a wider universe + small rule changes (Nov 15 2026). Research only, not financial advice.\nUNIVERSE=us_all: every US common stock Alpaca has daily bars for (active AND delisted), 2016-2026. Each day stocks are\n  sized by 20-day average dollar volume among those priced >= $5: top 500 = \"large\", 501-1500 = \"mid\", 1501-3000 = \"small\".\n  (No point-in-time index lists outside the S&P 500, so size comes from trading volume; ETFs/funds removed by name.)\nUNIVERSE=sp500: point-in-time S&P 500 members 1999-2026 (incl. companies that later left or failed).\nBase rule = the live dip bot: 5-day return >= 10% worse than SPY, above the 200-day average, volume over the drop <= 2x\nnormal, price >= $5, at least $5M traded a day; biggest drop first; buy at the close; sell when the close is back above\nthe 5-day average (after >= 1 day) or after 5 days. 10 slots x 10%. Idle money in SPY when SPY is above its 100-day\naverage, else cash. Cost per side by liquidity: >= $100M/day 0.05%, $20-100M 0.10%, below 0.20%.\nThen one change at a time: trend average 100/150/250/none, dip 8/12/15%, lookback 3/7/10 days, volume cap 1.5/3/none,\nsell average 3/10 days, max hold 3/7/10, slots 15/20 (smaller each).",
+ "universe": "us_all",
+ "period": "2016-01-04 to 2026-11-12",
+ "stocks": 603,
+ "universes": {
+  "S&P 500 members (Alpaca data)": {
+   "counts": {
+    "signals_per_month_avg": 21.0,
+    "median": 11.0,
+    "busiest_month": 185,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 10.4,
+    "months_with_zero": 11
+   },
+   "bot": {
+    "full": {
+     "per_year_pct": 18.5,
+     "worst_drop_pct": -24.4,
+     "spy_per_year_pct": 14.7,
+     "trades_per_month": 10.1,
+     "win_pct": 64.6,
+     "avg_trade_pct": 0.79
+    },
+    "2016-2020": {
+     "per_year_pct": 14.5,
+     "worst_drop_pct": -17.0,
+     "spy_per_year_pct": 15.2,
+     "trades_per_month": 5.0,
+     "win_pct": 65.3,
+     "avg_trade_pct": 0.75
+    },
+    "2021-2026": {
+     "per_year_pct": 22.4,
+     "worst_drop_pct": -24.4,
+     "spy_per_year_pct": 14.6,
+     "trades_per_month": 14.5,
+     "win_pct": 64.4,
+     "avg_trade_pct": 0.79
+    }
+   }
+  }
+ },
+ "variants_universe": "large+mid",
+ "variants": {
+  "base (live bot rules)": {
+   "full": {
+    "per_year_pct": 18.5,
+    "worst_drop_pct": -24.4,
+    "spy_per_year_pct": 14.7,
+    "trades_per_month": 10.1,
+    "win_pct": 64.6,
+    "avg_trade_pct": 0.79
+   },
+   "2016-2020": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -17.0,
+    "spy_per_year_pct": 15.2,
+    "trades_per_month": 5.0,
+    "win_pct": 65.3,
+    "avg_trade_pct": 0.75
+   },
+   "2021-2026": {
+    "per_year_pct": 22.4,
+    "worst_drop_pct": -24.4,
+    "spy_per_year_pct": 14.6,
+    "trades_per_month": 14.5,
+    "win_pct": 64.4,
+    "avg_trade_pct": 0.79
+   },
+   "counts": {
+    "signals_per_month_avg": 21.0,
+    "median": 11.0,
+    "busiest_month": 185,
+    "quietest_month": 0,
+    "different_stocks_per_month_avg": 10.4,
+    "months_with_zero": 11
+   }
+  }
+ }
+}
