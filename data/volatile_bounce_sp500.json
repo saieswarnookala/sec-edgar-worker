@@ -45,13 +45,27 @@
    "money_10x10pct": {
     "trades_taken": 14337,
     "train": {
-     "per_year_pct": -30.6,
-     "worst_drop_pct": -99.5,
+     "per_year_pct": 31.5,
+     "worst_drop_pct": -38.0,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -35.1,
-     "worst_drop_pct": -99.1,
+     "per_year_pct": 5.3,
+     "worst_drop_pct": -32.4,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 73.5
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 14337,
+    "train": {
+     "per_year_pct": 38.5,
+     "worst_drop_pct": -47.7,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.0,
+     "worst_drop_pct": -42.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 73.5
@@ -88,13 +102,27 @@
    "money_10x10pct": {
     "trades_taken": 12211,
     "train": {
-     "per_year_pct": -28.2,
-     "worst_drop_pct": -99.0,
+     "per_year_pct": 20.3,
+     "worst_drop_pct": -42.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -30.0,
-     "worst_drop_pct": -98.0,
+     "per_year_pct": 9.3,
+     "worst_drop_pct": -49.5,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 90.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 12211,
+    "train": {
+     "per_year_pct": 26.6,
+     "worst_drop_pct": -44.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 19.4,
+     "worst_drop_pct": -53.1,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 90.1
@@ -129,15 +157,29 @@
     "stress_avg_bps": 7.2
    },
    "money_10x10pct": {
-    "trades_taken": 6651,
+    "trades_taken": 6655,
     "train": {
-     "per_year_pct": 13.5,
-     "worst_drop_pct": -47.9,
+     "per_year_pct": 16.3,
+     "worst_drop_pct": -47.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 4.0,
-     "worst_drop_pct": -64.1,
+     "per_year_pct": 3.3,
+     "worst_drop_pct": -66.2,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 80.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 6655,
+    "train": {
+     "per_year_pct": 23.9,
+     "worst_drop_pct": -48.0,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.1,
+     "worst_drop_pct": -59.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 80.2
@@ -174,13 +216,27 @@
    "money_10x10pct": {
     "trades_taken": 2943,
     "train": {
-     "per_year_pct": 21.0,
-     "worst_drop_pct": -41.4,
+     "per_year_pct": 24.3,
+     "worst_drop_pct": -42.3,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -3.9,
-     "worst_drop_pct": -65.5,
+     "per_year_pct": -4.1,
+     "worst_drop_pct": -64.8,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 54.4
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 2943,
+    "train": {
+     "per_year_pct": 29.7,
+     "worst_drop_pct": -45.4,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.1,
+     "worst_drop_pct": -60.8,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 54.4
@@ -217,13 +273,27 @@
    "money_10x10pct": {
     "trades_taken": 16596,
     "train": {
-     "per_year_pct": -35.2,
-     "worst_drop_pct": -99.7,
+     "per_year_pct": 25.4,
+     "worst_drop_pct": -43.9,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -40.9,
-     "worst_drop_pct": -99.7,
+     "per_year_pct": 2.3,
+     "worst_drop_pct": -43.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 77.0
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 16596,
+    "train": {
+     "per_year_pct": 32.3,
+     "worst_drop_pct": -53.4,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 11.3,
+     "worst_drop_pct": -43.4,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 77.0
@@ -258,15 +328,29 @@
     "stress_avg_bps": 13.7
    },
    "money_10x10pct": {
-    "trades_taken": 5913,
+    "trades_taken": 5914,
     "train": {
-     "per_year_pct": 13.8,
-     "worst_drop_pct": -44.6,
+     "per_year_pct": 17.7,
+     "worst_drop_pct": -44.9,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 4.9,
-     "worst_drop_pct": -62.5,
+     "per_year_pct": 4.7,
+     "worst_drop_pct": -63.3,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 76.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 5914,
+    "train": {
+     "per_year_pct": 26.0,
+     "worst_drop_pct": -49.0,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.7,
+     "worst_drop_pct": -58.7,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 76.3
@@ -303,13 +387,27 @@
    "money_10x10pct": {
     "trades_taken": 13220,
     "train": {
-     "per_year_pct": -29.8,
-     "worst_drop_pct": -99.4,
+     "per_year_pct": 23.0,
+     "worst_drop_pct": -40.6,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -30.3,
-     "worst_drop_pct": -98.0,
+     "per_year_pct": 7.6,
+     "worst_drop_pct": -31.2,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 70.4
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 13220,
+    "train": {
+     "per_year_pct": 29.6,
+     "worst_drop_pct": -57.7,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 18.8,
+     "worst_drop_pct": -42.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 70.4
@@ -346,13 +444,27 @@
    "money_10x10pct": {
     "trades_taken": 2413,
     "train": {
-     "per_year_pct": 18.5,
-     "worst_drop_pct": -45.9,
+     "per_year_pct": 22.6,
+     "worst_drop_pct": -39.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -3.6,
-     "worst_drop_pct": -63.5,
+     "per_year_pct": -3.7,
+     "worst_drop_pct": -62.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 47.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 2413,
+    "train": {
+     "per_year_pct": 28.5,
+     "worst_drop_pct": -44.8,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 10.5,
+     "worst_drop_pct": -60.4,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 47.2
@@ -387,15 +499,29 @@
     "stress_avg_bps": -58.1
    },
    "money_10x10pct": {
-    "trades_taken": 13597,
+    "trades_taken": 13598,
     "train": {
-     "per_year_pct": -33.2,
-     "worst_drop_pct": -99.5,
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -45.0,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -39.3,
-     "worst_drop_pct": -99.6,
+     "per_year_pct": 5.9,
+     "worst_drop_pct": -57.4,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 91.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 13598,
+    "train": {
+     "per_year_pct": 19.3,
+     "worst_drop_pct": -47.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.1,
+     "worst_drop_pct": -52.0,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 91.6
@@ -432,13 +558,27 @@
    "money_10x10pct": {
     "trades_taken": 12211,
     "train": {
-     "per_year_pct": -27.4,
-     "worst_drop_pct": -98.8,
+     "per_year_pct": 23.0,
+     "worst_drop_pct": -45.6,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -27.9,
-     "worst_drop_pct": -97.6,
+     "per_year_pct": 12.1,
+     "worst_drop_pct": -51.5,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 90.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 12211,
+    "train": {
+     "per_year_pct": 29.4,
+     "worst_drop_pct": -47.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 22.4,
+     "worst_drop_pct": -54.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 90.1
@@ -777,6 +917,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 2.5
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 284,
+    "train": {
+     "per_year_pct": 9.4,
+     "worst_drop_pct": -55.6,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.7,
+     "worst_drop_pct": -33.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 2.5
    }
   },
   {
@@ -817,6 +971,20 @@
     "test": {
      "per_year_pct": 2.1,
      "worst_drop_pct": -27.0,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 22.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1259,
+    "train": {
+     "per_year_pct": 10.2,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.7,
+     "worst_drop_pct": -36.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 22.1
@@ -863,6 +1031,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 21.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1192,
+    "train": {
+     "per_year_pct": 9.6,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 15.7,
+     "worst_drop_pct": -36.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 21.1
    }
   },
   {
@@ -903,6 +1085,20 @@
     "test": {
      "per_year_pct": -0.3,
      "worst_drop_pct": -13.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 2.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 269,
+    "train": {
+     "per_year_pct": 9.2,
+     "worst_drop_pct": -55.6,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.6,
+     "worst_drop_pct": -33.7,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 2.3
@@ -949,6 +1145,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 31.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 3867,
+    "train": {
+     "per_year_pct": 11.6,
+     "worst_drop_pct": -49.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.2,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 31.6
    }
   },
   {
@@ -989,6 +1199,20 @@
     "test": {
      "per_year_pct": -0.1,
      "worst_drop_pct": -20.9,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1244,
+    "train": {
+     "per_year_pct": 13.6,
+     "worst_drop_pct": -56.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -47.8,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.2
@@ -1035,6 +1259,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 26.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 3212,
+    "train": {
+     "per_year_pct": 11.7,
+     "worst_drop_pct": -48.5,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.4,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 26.3
    }
   },
   {
@@ -1075,6 +1313,20 @@
     "test": {
      "per_year_pct": -0.1,
      "worst_drop_pct": -21.4,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1284,
+    "train": {
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -58.5,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.4,
+     "worst_drop_pct": -47.8,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.6
@@ -1121,6 +1373,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 251,
+    "train": {
+     "per_year_pct": 9.5,
+     "worst_drop_pct": -56.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.2,
+     "worst_drop_pct": -33.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.6
    }
   },
   {
@@ -1154,13 +1420,27 @@
    "money_10x10pct": {
     "trades_taken": 1505,
     "train": {
-     "per_year_pct": 13.1,
-     "worst_drop_pct": -51.8,
+     "per_year_pct": 13.0,
+     "worst_drop_pct": -55.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 0.7,
-     "worst_drop_pct": -36.4,
+     "per_year_pct": -0.4,
+     "worst_drop_pct": -34.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 28.0
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1505,
+    "train": {
+     "per_year_pct": 18.4,
+     "worst_drop_pct": -60.8,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.9,
+     "worst_drop_pct": -43.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 28.0
@@ -2328,13 +2608,27 @@
    "money_10x10pct": {
     "trades_taken": 14337,
     "train": {
-     "per_year_pct": -30.6,
-     "worst_drop_pct": -99.5,
+     "per_year_pct": 31.5,
+     "worst_drop_pct": -38.0,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -35.1,
-     "worst_drop_pct": -99.1,
+     "per_year_pct": 5.3,
+     "worst_drop_pct": -32.4,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 73.5
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 14337,
+    "train": {
+     "per_year_pct": 38.5,
+     "worst_drop_pct": -47.7,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.0,
+     "worst_drop_pct": -42.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 73.5
@@ -2371,13 +2665,27 @@
    "money_10x10pct": {
     "trades_taken": 12211,
     "train": {
-     "per_year_pct": -28.2,
-     "worst_drop_pct": -99.0,
+     "per_year_pct": 20.3,
+     "worst_drop_pct": -42.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -30.0,
-     "worst_drop_pct": -98.0,
+     "per_year_pct": 9.3,
+     "worst_drop_pct": -49.5,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 90.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 12211,
+    "train": {
+     "per_year_pct": 26.6,
+     "worst_drop_pct": -44.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 19.4,
+     "worst_drop_pct": -53.1,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 90.1
@@ -2412,15 +2720,29 @@
     "stress_avg_bps": 7.2
    },
    "money_10x10pct": {
-    "trades_taken": 6651,
+    "trades_taken": 6655,
     "train": {
-     "per_year_pct": 13.5,
-     "worst_drop_pct": -47.9,
+     "per_year_pct": 16.3,
+     "worst_drop_pct": -47.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 4.0,
-     "worst_drop_pct": -64.1,
+     "per_year_pct": 3.3,
+     "worst_drop_pct": -66.2,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 80.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 6655,
+    "train": {
+     "per_year_pct": 23.9,
+     "worst_drop_pct": -48.0,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.1,
+     "worst_drop_pct": -59.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 80.2
@@ -2457,13 +2779,27 @@
    "money_10x10pct": {
     "trades_taken": 2943,
     "train": {
-     "per_year_pct": 21.0,
-     "worst_drop_pct": -41.4,
+     "per_year_pct": 24.3,
+     "worst_drop_pct": -42.3,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -3.9,
-     "worst_drop_pct": -65.5,
+     "per_year_pct": -4.1,
+     "worst_drop_pct": -64.8,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 54.4
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 2943,
+    "train": {
+     "per_year_pct": 29.7,
+     "worst_drop_pct": -45.4,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.1,
+     "worst_drop_pct": -60.8,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 54.4
@@ -2500,13 +2836,27 @@
    "money_10x10pct": {
     "trades_taken": 16596,
     "train": {
-     "per_year_pct": -35.2,
-     "worst_drop_pct": -99.7,
+     "per_year_pct": 25.4,
+     "worst_drop_pct": -43.9,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -40.9,
-     "worst_drop_pct": -99.7,
+     "per_year_pct": 2.3,
+     "worst_drop_pct": -43.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 77.0
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 16596,
+    "train": {
+     "per_year_pct": 32.3,
+     "worst_drop_pct": -53.4,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 11.3,
+     "worst_drop_pct": -43.4,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 77.0
@@ -2541,15 +2891,29 @@
     "stress_avg_bps": 13.7
    },
    "money_10x10pct": {
-    "trades_taken": 5913,
+    "trades_taken": 5914,
     "train": {
-     "per_year_pct": 13.8,
-     "worst_drop_pct": -44.6,
+     "per_year_pct": 17.7,
+     "worst_drop_pct": -44.9,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 4.9,
-     "worst_drop_pct": -62.5,
+     "per_year_pct": 4.7,
+     "worst_drop_pct": -63.3,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 76.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 5914,
+    "train": {
+     "per_year_pct": 26.0,
+     "worst_drop_pct": -49.0,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.7,
+     "worst_drop_pct": -58.7,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 76.3
@@ -2586,13 +2950,27 @@
    "money_10x10pct": {
     "trades_taken": 13220,
     "train": {
-     "per_year_pct": -29.8,
-     "worst_drop_pct": -99.4,
+     "per_year_pct": 23.0,
+     "worst_drop_pct": -40.6,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -30.3,
-     "worst_drop_pct": -98.0,
+     "per_year_pct": 7.6,
+     "worst_drop_pct": -31.2,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 70.4
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 13220,
+    "train": {
+     "per_year_pct": 29.6,
+     "worst_drop_pct": -57.7,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 18.8,
+     "worst_drop_pct": -42.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 70.4
@@ -2629,13 +3007,27 @@
    "money_10x10pct": {
     "trades_taken": 2413,
     "train": {
-     "per_year_pct": 18.5,
-     "worst_drop_pct": -45.9,
+     "per_year_pct": 22.6,
+     "worst_drop_pct": -39.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -3.6,
-     "worst_drop_pct": -63.5,
+     "per_year_pct": -3.7,
+     "worst_drop_pct": -62.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 47.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 2413,
+    "train": {
+     "per_year_pct": 28.5,
+     "worst_drop_pct": -44.8,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 10.5,
+     "worst_drop_pct": -60.4,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 47.2
@@ -2670,15 +3062,29 @@
     "stress_avg_bps": -58.1
    },
    "money_10x10pct": {
-    "trades_taken": 13597,
+    "trades_taken": 13598,
     "train": {
-     "per_year_pct": -33.2,
-     "worst_drop_pct": -99.5,
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -45.0,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -39.3,
-     "worst_drop_pct": -99.6,
+     "per_year_pct": 5.9,
+     "worst_drop_pct": -57.4,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 91.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 13598,
+    "train": {
+     "per_year_pct": 19.3,
+     "worst_drop_pct": -47.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.1,
+     "worst_drop_pct": -52.0,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 91.6
@@ -2715,13 +3121,27 @@
    "money_10x10pct": {
     "trades_taken": 12211,
     "train": {
-     "per_year_pct": -27.4,
-     "worst_drop_pct": -98.8,
+     "per_year_pct": 23.0,
+     "worst_drop_pct": -45.6,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": -27.9,
-     "worst_drop_pct": -97.6,
+     "per_year_pct": 12.1,
+     "worst_drop_pct": -51.5,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 90.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 12211,
+    "train": {
+     "per_year_pct": 29.4,
+     "worst_drop_pct": -47.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 22.4,
+     "worst_drop_pct": -54.2,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 90.1
@@ -3957,6 +4377,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 2.5
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 284,
+    "train": {
+     "per_year_pct": 9.4,
+     "worst_drop_pct": -55.6,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.7,
+     "worst_drop_pct": -33.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 2.5
    }
   },
   {
@@ -4287,6 +4721,20 @@
     "test": {
      "per_year_pct": 2.1,
      "worst_drop_pct": -27.0,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 22.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1259,
+    "train": {
+     "per_year_pct": 10.2,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 16.7,
+     "worst_drop_pct": -36.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 22.1
@@ -4710,6 +5158,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 21.1
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1192,
+    "train": {
+     "per_year_pct": 9.6,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 15.7,
+     "worst_drop_pct": -36.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 21.1
    }
   },
   {
@@ -4953,6 +5415,20 @@
     "test": {
      "per_year_pct": -0.3,
      "worst_drop_pct": -13.6,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 2.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 269,
+    "train": {
+     "per_year_pct": 9.2,
+     "worst_drop_pct": -55.6,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 14.6,
+     "worst_drop_pct": -33.7,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 2.3
@@ -6217,6 +6693,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 31.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 3867,
+    "train": {
+     "per_year_pct": 11.6,
+     "worst_drop_pct": -49.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.2,
+     "worst_drop_pct": -58.9,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 31.6
    }
   },
   {
@@ -6463,6 +6953,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.2
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1244,
+    "train": {
+     "per_year_pct": 13.6,
+     "worst_drop_pct": -56.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -47.8,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.2
    }
   },
   {
@@ -6619,6 +7123,20 @@
     "test": {
      "per_year_pct": -4.8,
      "worst_drop_pct": -57.0,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 26.3
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 3212,
+    "train": {
+     "per_year_pct": 11.7,
+     "worst_drop_pct": -48.5,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 9.4,
+     "worst_drop_pct": -58.9,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 26.3
@@ -7013,6 +7531,20 @@
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1284,
+    "train": {
+     "per_year_pct": 13.5,
+     "worst_drop_pct": -58.5,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.4,
+     "worst_drop_pct": -47.8,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.6
    }
   },
   {
@@ -7082,6 +7614,20 @@
     "test": {
      "per_year_pct": -1.5,
      "worst_drop_pct": -21.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 6.6
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 251,
+    "train": {
+     "per_year_pct": 9.5,
+     "worst_drop_pct": -56.2,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.2,
+     "worst_drop_pct": -33.7,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 6.6
@@ -7640,13 +8186,27 @@
    "money_10x10pct": {
     "trades_taken": 1505,
     "train": {
-     "per_year_pct": 13.1,
-     "worst_drop_pct": -51.8,
+     "per_year_pct": 13.0,
+     "worst_drop_pct": -55.5,
      "spy_per_year_pct": 7.3
     },
     "test": {
-     "per_year_pct": 0.7,
-     "worst_drop_pct": -36.4,
+     "per_year_pct": -0.4,
+     "worst_drop_pct": -34.7,
+     "spy_per_year_pct": 14.9
+    },
+    "days_with_a_position_pct": 28.0
+   },
+   "money_idle_in_spy": {
+    "trades_taken": 1505,
+    "train": {
+     "per_year_pct": 18.4,
+     "worst_drop_pct": -60.8,
+     "spy_per_year_pct": 7.3
+    },
+    "test": {
+     "per_year_pct": 13.9,
+     "worst_drop_pct": -43.6,
      "spy_per_year_pct": 14.9
     },
     "days_with_a_position_pct": 28.0
