@@ -1232,7 +1232,7 @@ dash.calc('vs_industry', {
           <div class="sx-calc-row"><span class="sx-flab">Add every month</span><input class="sx-in sx-calc-mon" type="number" inputmode="decimal" min="0" step="100" value="0" aria-label="Monthly addition"></div>
           <div class="sx-calc-row"><span class="sx-flab">Years: <b class="sx-calc-yl">20</b></span><input class="sx-calc-yrs" type="range" min="1" max="30" value="20" aria-label="Years"></div>
           <div class="sx-calc-row"><span class="sx-flab">Tax</span><div class="sx-seg sx-calc-tax"><button type="button" data-v="pre" aria-pressed="false">Before tax / Roth IRA</button><button type="button" data-v="post" aria-pressed="true">After tax</button></div></div>
-          <div class="sx-calc-row sx-calc-fillrow"><span class="sx-flab">US dip/mix fills</span><div class="sx-seg sx-calc-fill"><button type="button" data-v="real" aria-pressed="true">Realistic</button><button type="button" data-v="ideal" aria-pressed="false">Ideal</button></div></div>
+          <div class="sx-calc-row sx-calc-fillrow"><span class="sx-flab">Fills</span><div class="sx-seg sx-calc-fill"><button type="button" data-v="real" aria-pressed="true">Realistic</button><button type="button" data-v="ideal" aria-pressed="false">Ideal</button></div></div>
           <div class="sx-calc-row"><span class="sx-flab">Show</span><div class="sx-chips sx-calc-chips"></div></div>
         </div>
         <div class="sx-calc-chart" role="img" aria-label="Growth chart"></div>
@@ -2129,7 +2129,7 @@ dash.calc('vs_industry', {
       { id: 'usdipetf', name: 'US dip + ETF dips (paper bot 5)', pre: 17.1, post: 13.7, ideal: [24.4, 19.5], est: true, dd: -22, c: '#0891b2' },
       { id: 'mix', name: 'Dip + drift mix (6+4)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#7c3aed' },
       { id: 'drift', name: 'Earnings drift (blend of 9)', pre: 13.0, post: 10.0, est: true, dd: -51, c: '#059669' },
-      { id: 'cl', name: 'Clear leader v2.0', pre: 13.6, post: null, dd: -43, c: '#d97706' },
+      { id: 'cl', name: 'Clear leader v2.0', pre: 13.6, post: null, ideal: [13.7, null], dd: -43, c: '#d97706' },
       { id: 'spy', name: 'SPY buy & hold', pre: 9.2, post: 8.4, dd: -55, c: '#6b7280', bench: true },
     ],
     in: [
