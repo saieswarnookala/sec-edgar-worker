@@ -72,7 +72,7 @@ else:
         return None
     rows = {}
     for s in LIST + ["SPY"]:
-        p = {"symbols": s, "timeframe": "1Day", "start": "2015-01-01", "end": (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=1)).strftime("%Y-%m-%d"), "adjustment": "all", "feed": "sip", "limit": "10000"}
+        p = {"symbols": s, "timeframe": "1Day", "start": "2015-01-01", "end": (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=2)).strftime("%Y-%m-%dT00:00:00Z"), "adjustment": "all", "feed": "sip", "limit": "10000"}
         while True:
             js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p), H) or {}
             if not js: print("no data", s, flush=True)
