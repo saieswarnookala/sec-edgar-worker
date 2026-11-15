@@ -1,0 +1,47 @@
+{
+ "UPST": {
+  "status": "ok",
+  "minutes": 5.2,
+  "last_lines": [
+   "  2.67    19.7 | test -1.39 -5.5 bps n=491 | H last half-hour: fade the first 30 min (from open) (move >= 0%) in the last 30 min, long only",
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+  ]
+ },
+ "DDOG": {
+  "status": "ok",
+  "minutes": 5.2,
+  "last_lines": [
+   "  1.88     7.1 | test -0.25 -0.8 bps n=394 | H last half-hour: fade the day so far (prev close to 3:30) (move >= 2%) in the last 30 min",
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+  ]
+ },
+ "TEAM": {
+  "status": "ok",
+  "minutes": 7.0,
+  "last_lines": [
+   "  3.12   101.6 | test -0.28 -12.9 bps n=37 | D opening gap: fade a 3%+ gap down, exit 30 min",
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+  ]
+ },
+ "BX": {
+  "status": "ok",
+  "minutes": 7.5,
+  "last_lines": [
+   "  2.25    42.1 | test 0.13 2.6 bps n=310 | K swing <= 3 days: buy the next open after a 1%+ up day, sell at the close of day 3",
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+  ]
+ },
+ "LULU": {
+  "status": "ok",
+  "minutes": 7.5,
+  "last_lines": [
+   "  1.64    27.4 | test -1.09 -15.5 bps n=90 | C move from open: fade a 3% drop from the open, target open, stop close",
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+  ]
+ }
+}
