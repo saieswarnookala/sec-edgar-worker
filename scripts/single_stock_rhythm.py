@@ -159,6 +159,54 @@ for x in (0.003, 0.005, 0.01, 0.015):
                 r = sim(i, e, d, px * (1 - d * stop_k) if stop_k else np.nan, VWAP[i, sig[i]], 389)
                 if r is not None: tr.append((i, r))
             add("F VWAP snap-back", f"{'buy' if d > 0 else 'short'} {x * 100:g}% {'below' if d > 0 else 'above'} VWAP, target VWAP, stop {f'{stop_k * 100:g}%' if stop_k else 'close'}", tr)
+# ---- research-based families (Nov 14) ----
+# G) Same half-hour persistence (Heston, Korajczyk & Sadka 2010, J. Finance): a stock's return in a half-hour slot
+#    predicts its return in the SAME slot on later days, for up to ~40 days. Per-stock time-series version:
+#    trade each 30-min slot in the direction of that slot's average over the last k days.
+blocks13 = list(range(0, 390, 30))
+BR = np.stack([C[:, min(b + 29, 389)] / O[:, b] - 1 for b in blocks13], 1)
+csum = np.vstack([np.zeros(13), np.cumsum(BR, 0)])
+full = last >= 389
+for k in (1, 5, 10, 20, 40):
+    avgk = np.full_like(BR, np.nan); avgk[k:] = (csum[k:-1] - csum[:-k - 1]) / k
+    for mode in ("both", "long"):
+        for j in list(range(13)) + ["all"]:
+            cols = range(13) if j == "all" else [j]; tr = []
+            for i in range(k, D):
+                if not full[i]: continue
+                for c in cols:
+                    a = avgk[i, c]
+                    if a != a or a == 0 or (mode == "long" and a < 0): continue
+                    tr.append((i, np.sign(a) * BR[i, c]))
+            slot = "every half-hour" if j == "all" else f"{(570 + blocks13[j]) // 60}:{(570 + blocks13[j]) % 60:02d} half-hour"
+            add("G same half-hour (HKS 2010)", f"{'long/short' if mode == 'both' else 'long only'} {slot} by its last {k}-day average", tr)
+# H) Intraday momentum (Gao, Han, Li & Zhou 2018 JFE; Baltussen et al. 2021 JFE) and end-of-day reversal (CXO/1993-2019):
+#    an early-day move predicts the LAST half-hour. Enter at 3:30 pm open, exit at the close.
+last30 = CL / O[:, 360] - 1
+preds = {"first 30 min incl. overnight": C[:, 29] / PREV - 1, "first 30 min (from open)": C[:, 29] / O[:, 0] - 1,
+         "day so far (prev close to 3:30)": C[:, 359] / PREV - 1, "overnight gap": O[:, 0] / PREV - 1}
+for pn, pv in preds.items():
+    for act in ("follow", "fade"):
+        for th in (0, 0.005, 0.01, 0.02):
+            for lo in (False, True):
+                tr = []
+                for i in range(1, D):
+                    if not full[i] or not (abs(pv[i]) >= th) or pv[i] == 0: continue
+                    d = np.sign(pv[i]) * (1 if act == "follow" else -1)
+                    if lo and d < 0: continue
+                    tr.append((i, d * last30[i]))
+                add("H last half-hour", f"{act} the {pn} (move >= {th * 100:g}%) in the last 30 min{', long only' if lo else ''}", tr)
+# J) Yesterday's last half-hour predicts today's last half-hour (Zhang & Hua 2024, Risks)
+for act in ("follow", "fade"):
+    for th in (0, 0.003, 0.006):
+        for lo in (False, True):
+            tr = []
+            for i in range(1, D):
+                if not (full[i] and full[i - 1]) or not abs(last30[i - 1]) >= th or last30[i - 1] == 0: continue
+                d = np.sign(last30[i - 1]) * (1 if act == "follow" else -1)
+                if lo and d < 0: continue
+                tr.append((i, d * last30[i]))
+            add("J yesterday's last 30 min", f"{act} yesterday's last-30-min move (>= {th * 100:g}%) today in the last 30 min{', long only' if lo else ''}", tr)
 print("versions tested", len(CONFIGS), flush=True)
 
 # ---------- score ----------
@@ -198,7 +246,9 @@ summary["avg_daily_range_pct"] = {k: round(float(np.nanmean((Hh[m].max(1) - L[m]
 best_test = sorted(ok, key=lambda r: -r["test"]["t"])[:10]
 json.dump({"summary": summary, "top15_by_train": top, "best10_in_test_hindsight": best_test,
            "by_family": {f: {"versions": sum(r["family"] == f for r in ok), "train_pos": sum(r["family"] == f and r["train"]["avg_bps"] > 0 for r in ok),
-                             "test_pos": sum(r["family"] == f and r["test"]["avg_bps"] > 0 for r in ok)} for f in sorted({r["family"] for r in ok})},
+                             "test_pos": sum(r["family"] == f and r["test"]["avg_bps"] > 0 for r in ok),
+                             "train_t_over_2": sum(r["family"] == f and r["train"]["t"] > 2 for r in ok),
+                             "top3_by_train": [{"rule": r["rule"], "train": r["train"], "test": r["test"]} for r in [x for x in ok if x["family"] == f][:3]]} for f in sorted({r["family"] for r in ok})},
            "all": res, "note": __doc__}, open(OUT, "w"), indent=1)
 print(json.dumps(summary, indent=1))
 for r in top: print(f"{r['train']['t']:6.2f} {r['train']['avg_bps']:7.1f} | test {r['test'].get('t')} {r['test'].get('avg_bps')} bps n={r['test'].get('trades')} | {r['family']}: {r['rule']}")
