@@ -1,47 +1,47 @@
 {
  "ZS": {
   "status": "ok",
-  "minutes": 6.0,
+  "minutes": 6.1,
   "last_lines": [
    "  1.60    64.3 | test 1.76 66.0 bps n=204 | K swing <= 3 days: buy the next open after a 2%+ up day, sell at the close of day 3",
-   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
-   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  END = datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\")"
   ]
  },
  "DASH": {
   "status": "ok",
-  "minutes": 4.1,
+  "minutes": 4.2,
   "last_lines": [
    "  1.87     7.4 | test -3.88 -5.9 bps n=2129 | M candles (30-min): short the next 30-min bar after a weak close (bottom 20% of bar), exit after 2 bars",
-   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
-   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  END = datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\")"
   ]
  },
  "AFRM": {
   "status": "ok",
-  "minutes": 5.0,
+  "minutes": 5.1,
   "last_lines": [
    "  1.91    35.7 | test 0.78 7.6 bps n=511 | B opening-range breakout: 30-min range, short below, stop half, target 1x range",
-   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
-   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  END = datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\")"
   ]
  },
  "PBR": {
   "status": "ok",
-  "minutes": 8.4,
+  "minutes": 8.5,
   "last_lines": [
    "  1.46     8.4 | test -0.44 -4.5 bps n=68 | C move from open: follow a 3% jump from the open, target 1%, stop 1%",
-   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
-   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  END = datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\")"
   ]
  },
  "PLUG": {
   "status": "ok",
-  "minutes": 10.5,
+  "minutes": 10.6,
   "last_lines": [
    "  2.75    16.4 | test 0.44 4.5 bps n=971 | A time-of-day: short 0-30 min after open",
-   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:37: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
-   "  p = {\"timeframe\": \"1Min\", \"start\": \"2016-01-01\", \"end\": datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\"), \"adjustment\": \"split\", \"feed\": \"sip\", \"limit\": \"10000\"}"
+   "/home/runner/work/sec-edgar-worker/sec-edgar-worker/scripts/single_stock_rhythm.py:42: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).",
+   "  END = datetime.utcnow().strftime(\"%Y-%m-%dT00:00:00Z\")"
   ]
  }
 }
