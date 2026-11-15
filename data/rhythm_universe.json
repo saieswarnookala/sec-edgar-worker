@@ -1,0 +1,727 @@
+{
+ "rule": "Pick ~100 stocks for the per-stock rhythm test by a FIXED rule (no hand-picking, no hindsight):\nthe most-traded US common stocks in 2022 (average daily dollar volume) that were NOT S&P 500 members on 2022-12-30,\npriced >= $5 on average, traded >= 200 days in 2022. Chosen with 2022 data only, so stocks that later failed are kept.\nWrites data/rhythm_universe.json with the list split into batches of 5. Alpaca calls are paced (RATE_PER_MIN).",
+ "picked": [
+  {
+   "symbol": "XYZ",
+   "name": "Block, Inc.",
+   "avg_dollar_volume_2022_m": 1543.2,
+   "avg_price_2022": 86.02,
+   "days": 251
+  },
+  {
+   "symbol": "TSM",
+   "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
+   "avg_dollar_volume_2022_m": 1245.9,
+   "avg_price_2022": 90.96,
+   "days": 251
+  },
+  {
+   "symbol": "SNOW",
+   "name": "Snowflake Inc.",
+   "avg_dollar_volume_2022_m": 1174.0,
+   "avg_price_2022": 183.49,
+   "days": 251
+  },
+  {
+   "symbol": "RBLX",
+   "name": "Roblox Corporation",
+   "avg_dollar_volume_2022_m": 1027.6,
+   "avg_price_2022": 42.56,
+   "days": 251
+  },
+  {
+   "symbol": "COIN",
+   "name": "Coinbase Global, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 927.3,
+   "avg_price_2022": 102.8,
+   "days": 251
+  },
+  {
+   "symbol": "UBER",
+   "name": "Uber Technologies, Inc.",
+   "avg_dollar_volume_2022_m": 919.1,
+   "avg_price_2022": 29.35,
+   "days": 251
+  },
+  {
+   "symbol": "PANW",
+   "name": "Palo Alto Networks, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 864.2,
+   "avg_price_2022": 86.25,
+   "days": 251
+  },
+  {
+   "symbol": "ABNB",
+   "name": "Airbnb, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 855.3,
+   "avg_price_2022": 125.1,
+   "days": 251
+  },
+  {
+   "symbol": "SNAP",
+   "name": "Snap Inc.",
+   "avg_dollar_volume_2022_m": 813.4,
+   "avg_price_2022": 20.01,
+   "days": 251
+  },
+  {
+   "symbol": "CRWD",
+   "name": "CrowdStrike Holdings, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 796.1,
+   "avg_price_2022": 42.94,
+   "days": 251
+  },
+  {
+   "symbol": "RIVN",
+   "name": "Rivian Automotive, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 728.4,
+   "avg_price_2022": 38.82,
+   "days": 251
+  },
+  {
+   "symbol": "MRVL",
+   "name": "Marvell Technology, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 672.8,
+   "avg_price_2022": 54.67,
+   "days": 251
+  },
+  {
+   "symbol": "AMC",
+   "name": "AMC ENTERTAINMENT HOLDINGS, INC.",
+   "avg_dollar_volume_2022_m": 642.4,
+   "avg_price_2022": 132.56,
+   "days": 251
+  },
+  {
+   "symbol": "MELI",
+   "name": "MercadoLibre, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 641.8,
+   "avg_price_2022": 926.75,
+   "days": 251
+  },
+  {
+   "symbol": "VALE",
+   "name": "VALE S.A.",
+   "avg_dollar_volume_2022_m": 574.4,
+   "avg_price_2022": 15.62,
+   "days": 251
+  },
+  {
+   "symbol": "UPST",
+   "name": "Upstart Holdings, Inc. Common stock",
+   "avg_dollar_volume_2022_m": 567.1,
+   "avg_price_2022": 54.88,
+   "days": 251
+  },
+  {
+   "symbol": "DDOG",
+   "name": "Datadog, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 551.3,
+   "avg_price_2022": 108.57,
+   "days": 251
+  },
+  {
+   "symbol": "TEAM",
+   "name": "Atlassian Corporation Class A Common Stock",
+   "avg_dollar_volume_2022_m": 541.6,
+   "avg_price_2022": 226.03,
+   "days": 251
+  },
+  {
+   "symbol": "BX",
+   "name": "Blackstone Inc.",
+   "avg_dollar_volume_2022_m": 533.2,
+   "avg_price_2022": 103.17,
+   "days": 251
+  },
+  {
+   "symbol": "LULU",
+   "name": "lululemon athletica inc. Common Stock",
+   "avg_dollar_volume_2022_m": 530.5,
+   "avg_price_2022": 321.15,
+   "days": 251
+  },
+  {
+   "symbol": "LCID",
+   "name": "Lucid Group, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 521.0,
+   "avg_price_2022": 192.31,
+   "days": 251
+  },
+  {
+   "symbol": "WDAY",
+   "name": "Workday, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 516.0,
+   "avg_price_2022": 182.8,
+   "days": 251
+  },
+  {
+   "symbol": "ZM",
+   "name": "Zoom Communications, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 511.4,
+   "avg_price_2022": 102.99,
+   "days": 251
+  },
+  {
+   "symbol": "MDB",
+   "name": "MongoDB, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 486.2,
+   "avg_price_2022": 292.88,
+   "days": 251
+  },
+  {
+   "symbol": "BIDU",
+   "name": "Baidu, Inc. ADS",
+   "avg_dollar_volume_2022_m": 485.8,
+   "avg_price_2022": 130.33,
+   "days": 251
+  },
+  {
+   "symbol": "ZS",
+   "name": "Zscaler, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 485.0,
+   "avg_price_2022": 180.19,
+   "days": 251
+  },
+  {
+   "symbol": "DASH",
+   "name": "DoorDash, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 457.2,
+   "avg_price_2022": 76.4,
+   "days": 251
+  },
+  {
+   "symbol": "AFRM",
+   "name": "Affirm Holdings, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 455.1,
+   "avg_price_2022": 30.1,
+   "days": 251
+  },
+  {
+   "symbol": "PBR",
+   "name": "PETROLEO BRASILEIRO S.A.-PETROBRAS ADS (REP 1 COMMON SHARE)",
+   "avg_dollar_volume_2022_m": 451.5,
+   "avg_price_2022": 13.13,
+   "days": 251
+  },
+  {
+   "symbol": "PLUG",
+   "name": "Plug Power, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 450.6,
+   "avg_price_2022": 20.87,
+   "days": 251
+  },
+  {
+   "symbol": "TWLO",
+   "name": "Twilio Inc.",
+   "avg_dollar_volume_2022_m": 447.1,
+   "avg_price_2022": 107.31,
+   "days": 251
+  },
+  {
+   "symbol": "AZN",
+   "name": "AstraZeneca PLC",
+   "avg_dollar_volume_2022_m": 435.9,
+   "avg_price_2022": 62.93,
+   "days": 251
+  },
+  {
+   "symbol": "PLTR",
+   "name": "Palantir Technologies Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 435.6,
+   "avg_price_2022": 9.91,
+   "days": 251
+  },
+  {
+   "symbol": "DOCU",
+   "name": "DocuSign, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 426.2,
+   "avg_price_2022": 76.55,
+   "days": 251
+  },
+  {
+   "symbol": "CVNA",
+   "name": "Carvana Co.",
+   "avg_dollar_volume_2022_m": 418.4,
+   "avg_price_2022": 12.0,
+   "days": 251
+  },
+  {
+   "symbol": "AA",
+   "name": "Alcoa Corporation",
+   "avg_dollar_volume_2022_m": 416.7,
+   "avg_price_2022": 56.79,
+   "days": 251
+  },
+  {
+   "symbol": "NET",
+   "name": "Cloudflare, Inc. Class A common stock, par value $0.001 per share",
+   "avg_dollar_volume_2022_m": 409.4,
+   "avg_price_2022": 71.1,
+   "days": 251
+  },
+  {
+   "symbol": "U",
+   "name": "Unity Software Inc.",
+   "avg_dollar_volume_2022_m": 409.2,
+   "avg_price_2022": 57.96,
+   "days": 251
+  },
+  {
+   "symbol": "B",
+   "name": "Barrick Mining Corporation",
+   "avg_dollar_volume_2022_m": 404.6,
+   "avg_price_2022": 18.69,
+   "days": 251
+  },
+  {
+   "symbol": "SOFI",
+   "name": "SoFi Technologies, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 394.4,
+   "avg_price_2022": 7.36,
+   "days": 251
+  },
+  {
+   "symbol": "BP",
+   "name": "BP p.l.c.",
+   "avg_dollar_volume_2022_m": 393.7,
+   "avg_price_2022": 31.04,
+   "days": 251
+  },
+  {
+   "symbol": "DKNG",
+   "name": "DraftKings Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 379.5,
+   "avg_price_2022": 16.27,
+   "days": 251
+  },
+  {
+   "symbol": "TTD",
+   "name": "The Trade Desk, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 377.8,
+   "avg_price_2022": 58.61,
+   "days": 251
+  },
+  {
+   "symbol": "CLF",
+   "name": "Cleveland-Cliffs Inc.",
+   "avg_dollar_volume_2022_m": 368.3,
+   "avg_price_2022": 19.56,
+   "days": 251
+  },
+  {
+   "symbol": "LNG",
+   "name": "Cheniere Energy Inc",
+   "avg_dollar_volume_2022_m": 364.0,
+   "avg_price_2022": 144.33,
+   "days": 251
+  },
+  {
+   "symbol": "GME",
+   "name": "GameStop Corp. Class A",
+   "avg_dollar_volume_2022_m": 361.7,
+   "avg_price_2022": 29.64,
+   "days": 251
+  },
+  {
+   "symbol": "PINS",
+   "name": "Pinterest, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 353.0,
+   "avg_price_2022": 23.49,
+   "days": 251
+  },
+  {
+   "symbol": "OKTA",
+   "name": "Okta, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 350.5,
+   "avg_price_2022": 107.22,
+   "days": 251
+  },
+  {
+   "symbol": "BILL",
+   "name": "BILL Holdings, Inc.",
+   "avg_dollar_volume_2022_m": 346.5,
+   "avg_price_2022": 154.23,
+   "days": 251
+  },
+  {
+   "symbol": "PTON",
+   "name": "Peloton Interactive, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 319.8,
+   "avg_price_2022": 16.04,
+   "days": 251
+  },
+  {
+   "symbol": "NVAX",
+   "name": "Novavax, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 302.1,
+   "avg_price_2022": 50.28,
+   "days": 251
+  },
+  {
+   "symbol": "HUBS",
+   "name": "HUBSPOT, INC.",
+   "avg_dollar_volume_2022_m": 291.8,
+   "avg_price_2022": 362.01,
+   "days": 251
+  },
+  {
+   "symbol": "M",
+   "name": "Macy's Inc.",
+   "avg_dollar_volume_2022_m": 281.1,
+   "avg_price_2022": 21.57,
+   "days": 251
+  },
+  {
+   "symbol": "RIO",
+   "name": "Rio Tinto plc",
+   "avg_dollar_volume_2022_m": 277.9,
+   "avg_price_2022": 66.91,
+   "days": 251
+  },
+  {
+   "symbol": "AR",
+   "name": "ANTERO RESOURCES CORPORATION",
+   "avg_dollar_volume_2022_m": 273.8,
+   "avg_price_2022": 32.67,
+   "days": 251
+  },
+  {
+   "symbol": "SPOT",
+   "name": "Spotify Technology S.A.",
+   "avg_dollar_volume_2022_m": 261.9,
+   "avg_price_2022": 117.54,
+   "days": 251
+  },
+  {
+   "symbol": "RH",
+   "name": "RH",
+   "avg_dollar_volume_2022_m": 257.8,
+   "avg_price_2022": 306.38,
+   "days": 251
+  },
+  {
+   "symbol": "LYFT",
+   "name": "Lyft, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 248.2,
+   "avg_price_2022": 22.38,
+   "days": 251
+  },
+  {
+   "symbol": "TDOC",
+   "name": "Teladoc Health, Inc.",
+   "avg_dollar_volume_2022_m": 245.4,
+   "avg_price_2022": 44.0,
+   "days": 251
+  },
+  {
+   "symbol": "ZIM",
+   "name": "ZIM Integrated Shipping Services Ltd.",
+   "avg_dollar_volume_2022_m": 241.5,
+   "avg_price_2022": 47.71,
+   "days": 251
+  },
+  {
+   "symbol": "W",
+   "name": "Wayfair Inc.",
+   "avg_dollar_volume_2022_m": 240.2,
+   "avg_price_2022": 74.37,
+   "days": 251
+  },
+  {
+   "symbol": "SU",
+   "name": "Suncor Energy, Inc.",
+   "avg_dollar_volume_2022_m": 229.7,
+   "avg_price_2022": 32.63,
+   "days": 251
+  },
+  {
+   "symbol": "CAR",
+   "name": "Avis Budget Group, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 225.2,
+   "avg_price_2022": 196.12,
+   "days": 251
+  },
+  {
+   "symbol": "VEEV",
+   "name": "Veeva Systems Inc.",
+   "avg_dollar_volume_2022_m": 222.9,
+   "avg_price_2022": 192.86,
+   "days": 251
+  },
+  {
+   "symbol": "WOLF",
+   "name": "Wolfspeed, Inc.",
+   "avg_dollar_volume_2022_m": 221.7,
+   "avg_price_2022": 92.09,
+   "days": 251
+  },
+  {
+   "symbol": "MARA",
+   "name": "MARA Holdings, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 221.4,
+   "avg_price_2022": 14.85,
+   "days": 251
+  },
+  {
+   "symbol": "OVV",
+   "name": "Ovintiv Inc.",
+   "avg_dollar_volume_2022_m": 218.6,
+   "avg_price_2022": 48.67,
+   "days": 251
+  },
+  {
+   "symbol": "RUN",
+   "name": "Sunrun Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 214.9,
+   "avg_price_2022": 27.45,
+   "days": 251
+  },
+  {
+   "symbol": "NLY",
+   "name": "Annaly Capital Management. Inc.",
+   "avg_dollar_volume_2022_m": 210.8,
+   "avg_price_2022": 25.1,
+   "days": 251
+  },
+  {
+   "symbol": "NVS",
+   "name": "Novartis AG",
+   "avg_dollar_volume_2022_m": 204.9,
+   "avg_price_2022": 85.33,
+   "days": 251
+  },
+  {
+   "symbol": "APO",
+   "name": "Apollo Global Management, Inc.",
+   "avg_dollar_volume_2022_m": 203.5,
+   "avg_price_2022": 58.6,
+   "days": 251
+  },
+  {
+   "symbol": "BURL",
+   "name": "BURLINGTON STORES, INC.",
+   "avg_dollar_volume_2022_m": 201.8,
+   "avg_price_2022": 176.05,
+   "days": 251
+  },
+  {
+   "symbol": "EXE",
+   "name": "Expand Energy Corporation Common Stock",
+   "avg_dollar_volume_2022_m": 201.2,
+   "avg_price_2022": 89.27,
+   "days": 251
+  },
+  {
+   "symbol": "CP",
+   "name": "Canadian Pacific Kansas City Limited",
+   "avg_dollar_volume_2022_m": 201.0,
+   "avg_price_2022": 74.6,
+   "days": 251
+  },
+  {
+   "symbol": "DKS",
+   "name": "Dick's Sporting Goods, Inc.",
+   "avg_dollar_volume_2022_m": 200.2,
+   "avg_price_2022": 103.33,
+   "days": 251
+  },
+  {
+   "symbol": "Z",
+   "name": "Zillow Group, Inc. Class C Capital Stock",
+   "avg_dollar_volume_2022_m": 199.8,
+   "avg_price_2022": 40.37,
+   "days": 251
+  },
+  {
+   "symbol": "KKR",
+   "name": "KKR & Co. Inc.",
+   "avg_dollar_volume_2022_m": 195.7,
+   "avg_price_2022": 53.63,
+   "days": 251
+  },
+  {
+   "symbol": "IBN",
+   "name": "ICICI Bank Limited",
+   "avg_dollar_volume_2022_m": 194.3,
+   "avg_price_2022": 20.53,
+   "days": 251
+  },
+  {
+   "symbol": "KSS",
+   "name": "Kohls Corporation",
+   "avg_dollar_volume_2022_m": 194.1,
+   "avg_price_2022": 40.62,
+   "days": 251
+  },
+  {
+   "symbol": "DELL",
+   "name": "Dell Technologies Inc.",
+   "avg_dollar_volume_2022_m": 193.9,
+   "avg_price_2022": 46.11,
+   "days": 251
+  },
+  {
+   "symbol": "CHWY",
+   "name": "Chewy, Inc.",
+   "avg_dollar_volume_2022_m": 192.8,
+   "avg_price_2022": 39.04,
+   "days": 251
+  },
+  {
+   "symbol": "HOOD",
+   "name": "Robinhood Markets, Inc. Class A Common Stock",
+   "avg_dollar_volume_2022_m": 192.6,
+   "avg_price_2022": 10.62,
+   "days": 251
+  },
+  {
+   "symbol": "LPLA",
+   "name": "LPL Financial Holdings Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 192.1,
+   "avg_price_2022": 202.83,
+   "days": 251
+  },
+  {
+   "symbol": "GTM",
+   "name": "ZoomInfo Technologies Inc Common Stock",
+   "avg_dollar_volume_2022_m": 190.1,
+   "avg_price_2022": 43.65,
+   "days": 251
+  },
+  {
+   "symbol": "WSM",
+   "name": "Williams-Sonoma, Inc.",
+   "avg_dollar_volume_2022_m": 188.0,
+   "avg_price_2022": 67.84,
+   "days": 251
+  },
+  {
+   "symbol": "MSTR",
+   "name": "Strategy Inc Common Stock Class A",
+   "avg_dollar_volume_2022_m": 184.8,
+   "avg_price_2022": 29.36,
+   "days": 251
+  },
+  {
+   "symbol": "TECK",
+   "name": "Teck Resources Limited",
+   "avg_dollar_volume_2022_m": 178.9,
+   "avg_price_2022": 35.14,
+   "days": 251
+  },
+  {
+   "symbol": "CVE",
+   "name": "Cenovus Energy Inc.",
+   "avg_dollar_volume_2022_m": 178.5,
+   "avg_price_2022": 18.01,
+   "days": 251
+  },
+  {
+   "symbol": "ALNY",
+   "name": "Alnylam Pharmaceuticals, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 177.9,
+   "avg_price_2022": 174.85,
+   "days": 251
+  },
+  {
+   "symbol": "CCJ",
+   "name": "Cameco Corporation",
+   "avg_dollar_volume_2022_m": 176.3,
+   "avg_price_2022": 24.45,
+   "days": 251
+  },
+  {
+   "symbol": "ENTG",
+   "name": "Entegris, Inc. Common Stock",
+   "avg_dollar_volume_2022_m": 175.4,
+   "avg_price_2022": 101.91,
+   "days": 251
+  },
+  {
+   "symbol": "ENB",
+   "name": "Enbridge, Inc",
+   "avg_dollar_volume_2022_m": 173.0,
+   "avg_price_2022": 42.18,
+   "days": 251
+  },
+  {
+   "symbol": "CNQ",
+   "name": "Canadian Natural Resources Limited",
+   "avg_dollar_volume_2022_m": 171.5,
+   "avg_price_2022": 28.24,
+   "days": 251
+  },
+  {
+   "symbol": "UL",
+   "name": "Unilever plc",
+   "avg_dollar_volume_2022_m": 171.4,
+   "avg_price_2022": 53.08,
+   "days": 251
+  },
+  {
+   "symbol": "BLDR",
+   "name": "Builders FirstSource, Inc.",
+   "avg_dollar_volume_2022_m": 170.3,
+   "avg_price_2022": 64.7,
+   "days": 251
+  },
+  {
+   "symbol": "CPNG",
+   "name": "Coupang, Inc.",
+   "avg_dollar_volume_2022_m": 169.6,
+   "avg_price_2022": 17.48,
+   "days": 251
+  },
+  {
+   "symbol": "ALLY",
+   "name": "Ally Financial Inc.",
+   "avg_dollar_volume_2022_m": 168.6,
+   "avg_price_2022": 36.67,
+   "days": 251
+  },
+  {
+   "symbol": "AVTR",
+   "name": "Avantor, Inc.",
+   "avg_dollar_volume_2022_m": 166.9,
+   "avg_price_2022": 28.55,
+   "days": 251
+  },
+  {
+   "symbol": "NVO",
+   "name": "Novo-Nordisk A/S",
+   "avg_dollar_volume_2022_m": 166.4,
+   "avg_price_2022": 54.76,
+   "days": 251
+  },
+  {
+   "symbol": "EPD",
+   "name": "Enterprise Products Partners L.P.",
+   "avg_dollar_volume_2022_m": 162.5,
+   "avg_price_2022": 25.25,
+   "days": 251
+  }
+ ],
+ "batches": [
+  "XYZ,TSM,SNOW,RBLX,COIN",
+  "UBER,PANW,ABNB,SNAP,CRWD",
+  "RIVN,MRVL,AMC,MELI,VALE",
+  "UPST,DDOG,TEAM,BX,LULU",
+  "LCID,WDAY,ZM,MDB,BIDU",
+  "ZS,DASH,AFRM,PBR,PLUG",
+  "TWLO,AZN,PLTR,DOCU,CVNA",
+  "AA,NET,U,B,SOFI",
+  "BP,DKNG,TTD,CLF,LNG",
+  "GME,PINS,OKTA,BILL,PTON",
+  "NVAX,HUBS,M,RIO,AR",
+  "SPOT,RH,LYFT,TDOC,ZIM",
+  "W,SU,CAR,VEEV,WOLF",
+  "MARA,OVV,RUN,NLY,NVS",
+  "APO,BURL,EXE,CP,DKS",
+  "Z,KKR,IBN,KSS,DELL",
+  "CHWY,HOOD,LPLA,GTM,WSM",
+  "MSTR,TECK,CVE,ALNY,CCJ",
+  "ENTG,ENB,CNQ,UL,BLDR",
+  "CPNG,ALLY,AVTR,NVO,EPD"
+ ]
+}
