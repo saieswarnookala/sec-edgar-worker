@@ -14,7 +14,7 @@
   "test_t_over_2": 5,
   "top15_train_still_positive_in_test": 5,
   "top15_train_t_over_2_in_test": 0,
-  "rank_corr_train_vs_test": -0.203,
+  "rank_corr_train_vs_test": -0.202,
   "buy_hold": {
    "train": -58.1,
    "test": 231.6
