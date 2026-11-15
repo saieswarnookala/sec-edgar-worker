@@ -127,7 +127,9 @@ V = [("A. today's dip bot (stocks only)", dict()),
      ("F. B with 12 slots of 8.3%", dict(etf_rule="5-day drop 5%+", etf_hold=10, slots=12, w=1 / 12)),
      ("G. ETF dips only (no stocks)", dict(etf_rule="5-day drop 5%+", etf_hold=10, stocks=False)),
      ("A. stress costs", dict(cs=0.0015, ce=0.0005)),
-     ("C. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0015, ce=0.0005))]
+     ("C. stress costs", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0015, ce=0.0005)),
+     ("A. ideal (no costs)", dict(cs=0.0, ce=0.0)),
+     ("C. ideal (no costs)", dict(etf_rule="5-day drop 5%+", etf_hold=10, cs=0.0, ce=0.0))]
 res = {}
 for name, kw in V:
     res[name] = sim(**kw); a = res[name]
