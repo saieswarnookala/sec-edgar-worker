@@ -72,9 +72,10 @@ else:
         return None
     rows = {}
     for s in LIST + ["SPY"]:
-        p = {"symbols": s, "timeframe": "1Day", "start": "2015-01-01", "end": datetime.utcnow().strftime("%Y-%m-%d"), "adjustment": "all", "feed": "sip", "limit": "10000"}
+        p = {"symbols": s, "timeframe": "1Day", "start": "2015-01-01", "end": (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=1)).strftime("%Y-%m-%d"), "adjustment": "all", "feed": "sip", "limit": "10000"}
         while True:
             js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p), H) or {}
+            if not js: print("no data", s, flush=True)
             for b in (js.get("bars") or {}).get(s, []): rows.setdefault(s, {})[b["t"][:10]] = (b["o"], b["c"], b["v"])
             if not js.get("next_page_token"): break
             p["page_token"] = js["next_page_token"]
@@ -193,7 +194,8 @@ for tn, x in TRIG:
                                 sel = m4 & ~np.isnan(raw)
                                 row = {"trigger": f"{tn} {x * 100:g}%+", "universe": un, "volume": vn, "trend": trn, "earnings": en, "market": mn,
                                        "entry": {"gap": "at the open (gap day)", "close": "that day's close", "open": "next open"}[entry],
-                                       "exit": "smart (back above 5-day avg, max 3 days)" if ex == "smart" else f"close of day {ex}", "key": key}
+                                       "exit": "smart (back above 5-day avg, max 3 days)" if ex == "smart" else f"close of day {ex}", "key": key,
+                                       "sortcol": {"1-day drop": "r1", "drop vs SPY": "rel", "2-day drop": "r2", "gap down at open": "gap"}[tn]}
                                 for pn, pv in (("train", 0), ("test", 1)):
                                     s = sel & (E.per.values == pv); rr = raw[s] - 2 * COST; ex_ = rr - bas[s]
                                     yrs = max((period == pv).sum() / 252, 1e-9)
@@ -233,15 +235,16 @@ club = [x for x in okr if x["train"]["avg_bps"] >= 100 and x["test"]["avg_bps"] 
 club.sort(key=lambda x: -x["train"]["t"])
 
 # ---------------- money simulation for the top versions (chosen on train) ----------------
-def money(x, slots=10, size=0.10):
+def money(x, slots=10, size=0.10, park=False):
     m = x["_mask"]; ent = E.i.values + (0 if x["key"].startswith(("gap", "close")) else 1)
     hold = {"1": 1, "2": 2, "3": 3, "smart": 3}[x["key"].split("_")[1]]
     ex_day = E.i.values + (hold - 1 if x["key"].startswith("gap") else hold)
-    tr = pd.DataFrame({"ent": ent[m], "exd": ex_day[m], "ret": E["R_" + x["key"]].values[m] - 2 * COST, "sz": E.r1.values[m], "j": E.j.values[m]}).dropna()
+    tr = pd.DataFrame({"ent": ent[m], "exd": ex_day[m], "ret": E["R_" + x["key"]].values[m] - 2 * COST, "sz": E[x["sortcol"]].values[m], "j": E.j.values[m]}).dropna()
     tr = tr.sort_values(["ent", "sz"])  # biggest drops first
     open_, eq, curve, held_days, taken = [], 1.0, {}, 0, 0
     for d in range(D):
         if period[d] < 0: continue
+        if park and d > 0 and spyr[d] == spyr[d]: eq *= 1 + (1 - size * len(open_)) * spyr[d]   # idle money sits in SPY
         for p in [p for p in open_ if p[0] <= d]: eq *= 1 + size * p[1]; open_.remove(p)
         for _, t in tr[tr.ent == d].iterrows():
             if len(open_) >= slots or any(q[2] == t.j for q in open_): continue
@@ -257,8 +260,8 @@ def money(x, slots=10, size=0.10):
                    "spy_per_year_pct": round((spy ** (1 / yrs) - 1) * 100, 1)}
     out["days_with_a_position_pct"] = round(100 * held_days / max(1, (period >= 0).sum()), 1)
     return out
-for x in okr[:10] + club[:10]: x["money_10x10pct"] = money(x)
-clean = lambda xs: [{k: v for k, v in x.items() if k != "_mask"} for x in xs]
+for x in okr[:10] + club[:10]: x["money_10x10pct"] = money(x); x["money_idle_in_spy"] = money(x, park=True)
+clean = lambda xs: [{k: v for k, v in x.items() if k not in ("_mask", "sortcol")} for x in xs]
 json.dump({"summary": summary, "top20_by_train": clean(okr[:20]), "one_pct_club": clean(club[:30]), "one_pct_club_count": len(club),
            "effects": effects, "best_in_test_hindsight": clean(sorted(okr, key=lambda x: -x["test"]["t"])[:10]),
            "all": clean(okr), "note": __doc__}, open(OUT, "w"), indent=1, default=float)
