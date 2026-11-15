@@ -1,0 +1,195 @@
+{
+ "note": "52-week-high and same-month seasonality tests on point-in-time S&P 500 members (incl. companies that later left\nor failed), Nov 15 2026. Research only, not financial advice. The published evidence ends ~2016-2017, so 2017-2026 here\nis a clean out-of-sample check.\nA) Monthly tilts, long-only, equal weight, rebalanced at each month-end close, held one month:\n   - 52-week high: stocks closest to their 52-week high (price / highest close of the past 252 days), top 10% and 20%\n   - seasonality: stocks with the best average return in the SAME calendar month over the past 10 years (>= 5 years of data)\n   - both combined (average of the two ranks)\n   compared with all members equal-weighted and SPY. Cost 0.10% per side on the part of the portfolio that changes.\nB) 52-week-high as a filter on the dip bot's own signals (5-day drop >= 10% vs SPY, above 200-day avg, normal volume,\n   price >= $5): trade return with the bot's sell rule (back above the 5-day average, max 5 days), bought at the close,\n   split by how far below the 52-week high the stock was.",
+ "monthly_tilts": {
+  "equal-weight all members": {
+   "1999-2016": {
+    "per_year_pct": 8.5,
+    "worst_drop_pct": -56.1,
+    "vs_equal_weight_per_month_pct": 0.0,
+    "t": 0.0,
+    "months_beating_pct": 0.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 11.9,
+    "worst_drop_pct": -27.6,
+    "vs_equal_weight_per_month_pct": 0.0,
+    "t": 0.0,
+    "months_beating_pct": 0.0
+   }
+  },
+  "SPY": {
+   "1999-2016": {
+    "per_year_pct": 5.3,
+    "worst_drop_pct": -50.8,
+    "vs_equal_weight_per_month_pct": -0.28,
+    "t": -2.58,
+    "months_beating_pct": 46.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 15.0,
+    "worst_drop_pct": -23.9,
+    "vs_equal_weight_per_month_pct": 0.2,
+    "t": 1.16,
+    "months_beating_pct": 55.0
+   }
+  },
+  "52-week high: top 10%": {
+   "1999-2016": {
+    "per_year_pct": 3.2,
+    "worst_drop_pct": -49.4,
+    "vs_equal_weight_per_month_pct": -0.48,
+    "t": -2.13,
+    "months_beating_pct": 48.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 6.6,
+    "worst_drop_pct": -21.4,
+    "vs_equal_weight_per_month_pct": -0.46,
+    "t": -1.75,
+    "months_beating_pct": 47.0
+   }
+  },
+  "52-week high: top 20%": {
+   "1999-2016": {
+    "per_year_pct": 6.4,
+    "worst_drop_pct": -44.3,
+    "vs_equal_weight_per_month_pct": -0.23,
+    "t": -1.13,
+    "months_beating_pct": 53.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 9.6,
+    "worst_drop_pct": -17.9,
+    "vs_equal_weight_per_month_pct": -0.23,
+    "t": -1.04,
+    "months_beating_pct": 52.0
+   }
+  },
+  "52-week high: bottom 10% (farthest below)": {
+   "1999-2016": {
+    "per_year_pct": 1.0,
+    "worst_drop_pct": -86.9,
+    "vs_equal_weight_per_month_pct": -0.21,
+    "t": -0.48,
+    "months_beating_pct": 44.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 7.1,
+    "worst_drop_pct": -49.5,
+    "vs_equal_weight_per_month_pct": -0.11,
+    "t": -0.25,
+    "months_beating_pct": 42.0
+   }
+  },
+  "seasonality: top 10%": {
+   "1999-2016": {
+    "per_year_pct": 5.1,
+    "worst_drop_pct": -51.3,
+    "vs_equal_weight_per_month_pct": -0.15,
+    "t": -0.81,
+    "months_beating_pct": 49.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 8.0,
+    "worst_drop_pct": -31.4,
+    "vs_equal_weight_per_month_pct": -0.24,
+    "t": -0.92,
+    "months_beating_pct": 47.0
+   }
+  },
+  "seasonality: top 20%": {
+   "1999-2016": {
+    "per_year_pct": 6.0,
+    "worst_drop_pct": -53.4,
+    "vs_equal_weight_per_month_pct": -0.11,
+    "t": -0.92,
+    "months_beating_pct": 44.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 9.6,
+    "worst_drop_pct": -31.0,
+    "vs_equal_weight_per_month_pct": -0.14,
+    "t": -0.84,
+    "months_beating_pct": 44.0
+   }
+  },
+  "52w high + seasonality: top 10%": {
+   "1999-2016": {
+    "per_year_pct": 6.3,
+    "worst_drop_pct": -44.5,
+    "vs_equal_weight_per_month_pct": -0.18,
+    "t": -0.96,
+    "months_beating_pct": 48.0
+   },
+   "2017-2026 (out-of-sample)": {
+    "per_year_pct": 9.3,
+    "worst_drop_pct": -21.4,
+    "vs_equal_weight_per_month_pct": -0.22,
+    "t": -0.9,
+    "months_beating_pct": 48.0
+   }
+  }
+ },
+ "dip_filter": {
+  "all dip signals": {
+   "1999-2016": {
+    "n": 3265,
+    "avg_trade_pct": 1.18,
+    "win_pct": 67.2
+   },
+   "2017-2026 (out-of-sample)": {
+    "n": 2853,
+    "avg_trade_pct": 1.19,
+    "win_pct": 68.8
+   }
+  },
+  "within 10% of 52w high": {
+   "1999-2016": {
+    "n": 236,
+    "avg_trade_pct": 0.53,
+    "win_pct": 66.5
+   },
+   "2017-2026 (out-of-sample)": {
+    "n": 328,
+    "avg_trade_pct": 0.99,
+    "win_pct": 76.2
+   }
+  },
+  "10-20% below": {
+   "1999-2016": {
+    "n": 1609,
+    "avg_trade_pct": 0.87,
+    "win_pct": 65.9
+   },
+   "2017-2026 (out-of-sample)": {
+    "n": 1600,
+    "avg_trade_pct": 0.85,
+    "win_pct": 66.7
+   }
+  },
+  "20-30% below": {
+   "1999-2016": {
+    "n": 802,
+    "avg_trade_pct": 1.7,
+    "win_pct": 69.6
+   },
+   "2017-2026 (out-of-sample)": {
+    "n": 598,
+    "avg_trade_pct": 1.52,
+    "win_pct": 69.9
+   }
+  },
+  "30%+ below": {
+   "1999-2016": {
+    "n": 617,
+    "avg_trade_pct": 1.55,
+    "win_pct": 67.7
+   },
+   "2017-2026 (out-of-sample)": {
+    "n": 316,
+    "avg_trade_pct": 2.34,
+    "win_pct": 69.0
+   }
+  }
+ }
+}
