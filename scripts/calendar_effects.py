@@ -35,10 +35,10 @@ dates = []
 for y in range(1999, 2021):
     t = H.unescape(re.sub(r"<[^>]+>", " ", get(f"https://www.federalreserve.gov/monetarypolicy/fomchistorical{y}.htm"))); t = re.sub(r"\s+", " ", t); time.sleep(0.5)
     found = []
-    for m in re.finditer(rf"({MON}) (\d{{1,2}})(?:\s*-\s*(?:({MON}) )?(\d{{1,2}}))? (?:FOMC )?Meeting - {y}", t):
+    for m in re.finditer(rf"({MON}) (\d{{1,2}})(?:\s*[-\u2013\u2014]\s*(?:({MON}) )?(\d{{1,2}}))? (?:FOMC )?Meeting\s*[-\u2013\u2014]\s*{y}", t):
         mon2 = m.group(3) or m.group(1); day2 = m.group(4) or m.group(2)
         found.append(pd.Timestamp(f"{mon2} {day2} {y}"))
-    found = sorted(set(found))
+    found = sorted(set(found)); found = [d for i, d in enumerate(found) if i + 1 == len(found) or (found[i + 1] - d).days > 3]   # same meeting listed twice -> keep last day
     print(y, len(found), [d.strftime("%m-%d") for d in found], flush=True)
     if not 7 <= len(found) <= 9: raise SystemExit(f"FOMC parse check failed for {y}: {len(found)} meetings")
     dates += found
