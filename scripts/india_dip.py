@@ -336,6 +336,79 @@ def run():
                     OUT["results"].append(r); print("dip", th, kind, below, tag, r["cagr"], r["dd"], flush=True)
         OUT["note"] += " Trend rule: hold Nifty while above its average (checked daily at the close, acted on next day; '10m' = 10-month average checked at month end); otherwise the 'below' choice. 0.05% per switch."
         os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_trend.json", "w"), indent=1, default=float); return
+    if MODE == "bots":
+        # Nov 16: the newer US paper bots, on India. Bot 5 = dips + sector/ETF dips sleeve (index 5-day drop >= 5% while above its
+        # 200-day avg, sell on close > 5-day avg or after 10 days, fills slots after stocks); bot 6 = tuned (8% dip, 150-day trend,
+        # hold 7) + sleeve. Sector indices stand in for their ETFs (Nifty sector ETFs exist for most). Realistic = next open,
+        # 0.30%/side stocks, 0.15%/side sector ETFs; ideal = close, 0.15% / 0.05%.
+        SECT = {"^NSEBANK": "Bank", "^CNXIT": "IT", "^CNXPHARMA": "Pharma", "^CNXAUTO": "Auto", "^CNXFMCG": "FMCG", "^CNXMETAL": "Metal",
+                "^CNXENERGY": "Energy", "^CNXREALTY": "Realty", "^CNXPSUBANK": "PSU Bank", "^CNXMEDIA": "Media", "^CNXINFRA": "Infra",
+                "^CNXPSE": "PSE", "^CNXMNC": "MNC", "^CNXCONSUM": "Consumption", "NIFTY_FIN_SERVICE.NS": "Financials", "^NSEMDCP50": "Midcap 50",
+                "^CNXSC": "Smallcap", "^NSEI": "Nifty 50", "JUNIORBEES.NS": "Next 50", "GOLDBEES.NS": "Gold", "MON100.NS": "Nasdaq 100"}
+        E = {}
+        for sym, nm_ in SECT.items():
+            d = yahoo(sym); time.sleep(0.3)
+            if d is None: print("sector missing", sym, flush=True); continue
+            c = d.c.reindex(dates).ffill(); o = d.o.reindex(dates).ffill()
+            if c.notna().sum() < 1000: print("sector short history", sym, int(c.notna().sum()), flush=True); continue
+            E[nm_] = (c, o)
+        print("sector/ETF series used:", list(E), flush=True)
+        if len(E) < 8: raise RuntimeError("too few sector series")
+        EC = pd.DataFrame({k: v[0] for k, v in E.items()}); EO = pd.DataFrame({k: v[1] for k, v in E.items()})
+        e5 = EC.pct_change(5); eab = EC > EC.rolling(200).mean()
+        SE = ((e5 <= -0.05) & eab & EC.notna()).values; RE = (-e5).values
+        RtE = EC.pct_change().fillna(0).values; OCE = (EC / EO - 1).fillna(0).values; over5E = (EC > EC.rolling(5).mean()).values
+        RtA, OCA, overA = np.hstack([Rt, RtE]), np.hstack([OC, OCE]), np.hstack([over5, over5E]); NS = Rt.shape[1]
+        def sim2(S, R, park, SEs=None, cost=0.0015, cost_e=0.0005, entry="close", mx=5, mx_e=10, slots=10):
+            eq = 1.0; curve = np.ones(D); pos = []; tr = []; tre = []; inv = []
+            for t in range(START, D):
+                used = sum(p[2] for p in pos); day = 0.0
+                for p in pos:
+                    g = OCA[t, p[0]] if (entry == "open" and p[1] == 0) else RtA[t, p[0]]
+                    p[3] *= 1 + g; day += p[2] * g
+                day += max(0.0, 1 - used) * park[t]; inv.append(used); eq *= 1 + day; keep = []
+                for p in pos:
+                    g = OCA[t, p[0]] if (entry == "open" and p[1] == 0) else RtA[t, p[0]]
+                    p[1] += 1; p[2] *= (1 + g) / (1 + day); isE = p[0] >= NS; c_ = cost_e if isE else cost
+                    if p[1] >= (mx_e if isE else mx) or overA[t, p[0]]:
+                        eq *= 1 - c_ * p[2]; (tre if isE else tr).append(p[3] - 1 - 2 * c_)
+                    else: keep.append(p)
+                pos = keep; used = sum(p[2] for p in pos); held = {p[0] for p in pos}
+                new = [c for c in sorted(np.where(S[t])[0], key=lambda c: -R[t, c]) if c not in held][: max(0, slots - len(pos))]
+                if SEs is not None and len(new) < slots - len(pos):
+                    new += [NS + c for c in sorted(np.where(SEs[t])[0], key=lambda c: -RE[t, c]) if NS + c not in held][: slots - len(pos) - len(new)]
+                if new:
+                    w = min(1.0 / slots, max(0.0, 1 - used) / len(new))
+                    for c in new: pos.append([c, 0, w, 1.0]); eq *= 1 - (cost_e if c >= NS else cost) * w
+                curve[t] = eq
+            o = summarize(curve, tr + tre, inv)
+            if tre: o["sector_trades"] = len(tre); o["sector_avg_trade_pct"] = round(100 * float(np.mean(tre)), 2); o["sector_win_rate"] = round(100 * float((np.array(tre) > 0).mean()), 1)
+            if tr: o["stock_trades"] = len(tr); o["stock_avg_trade_pct"] = round(100 * float(np.mean(tr)), 2)
+            return o
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
+        gtr = (gold > gold.rolling(100).mean()).shift(1, fill_value=False).values; dv = (1 + 0.013) ** (1 / 248) - 1
+        def tsig(k): return (n > n.rolling(k).mean()).shift(1, fill_value=False).values.astype(bool)
+        PK = {"Nifty 100-day trend, else liquid": np.where(tsig(100), nr + dv, liq),
+              "Nifty 150-day trend, else gold-if-trending/liquid": np.where(tsig(150), nr + dv, np.where(gtr, gr, liq))}
+        M = members(200).values; volok = ~(vr > 2.0).values; R = (-rl).values
+        ab200 = above.values & M & ~glitch.values; ab150 = (Cf > Cf.rolling(150).mean()).values & M & ~glitch.values
+        V_ = [("bot 1 rules (10% dip, 200-day, hold 5)", (rl.values <= -0.10) & ab200 & volok, 5, False),
+              ("India best (12% dip, 200-day, hold 5)", (rl.values <= -0.12) & ab200 & volok, 5, False),
+              ("bot 5: bot 1 rules + sector dips", (rl.values <= -0.10) & ab200 & volok, 5, True),
+              ("India best + sector dips", (rl.values <= -0.12) & ab200 & volok, 5, True),
+              ("bot 6 tuned (8% dip, 150-day, hold 7) + sector dips", (rl.values <= -0.08) & ab150 & volok, 7, True),
+              ("bot 6 tuned without sector dips", (rl.values <= -0.08) & ab150 & volok, 7, False),
+              ("sector dips only", np.zeros_like(ab200), 5, True),
+              ("parking only", np.zeros_like(ab200), 5, False)]
+        for pname, park in PK.items():
+            for name, S, mx, sect in V_:
+                for tag, kw in [("ideal", {}), ("realistic", dict(entry="open", cost=0.003, cost_e=0.0015)), ("stress 2x costs", dict(entry="open", cost=0.006, cost_e=0.003))]:
+                    if tag == "stress 2x costs" and not name.startswith(("bot 6", "bot 5", "India best +")): continue
+                    r = sim2(S, R, park, SE if sect else None, mx=mx, **kw); r.update(version=name, parking=pname, scenario=tag)
+                    OUT["results"].append(r)
+                    print(f"{pname[:22]:22s} | {name:52s} | {tag:15s} {r['cagr']:5.1f}%/yr dd {r['dd']:6.1f} | train {r.get('train_2008_2018', {}).get('cagr')} test {r.get('test_2019_2026', {}).get('cagr')} | sector trades {r.get('sector_trades', 0)} avg {r.get('sector_avg_trade_pct')}", flush=True)
+        OUT["nifty_with_dividends_pct"] = summarize(np.cumprod(1 + nr + dv) / np.prod(1 + nr[:START + 1] + dv))
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_bots.json", "w"), indent=1, default=float); return
     for k in (100, 200):
         M = members(k).values; ab = above.values & M & ~glitch.values; R = (-rl).values; volok = ~(vr > 2.0).values
         for th in (0.08, 0.10, 0.12):
@@ -352,4 +425,4 @@ def run():
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
 try: run()
 except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
