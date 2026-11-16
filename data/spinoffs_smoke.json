@@ -1,0 +1,159 @@
+{
+ "note": "Spin-offs (Nov 15 2026). Research only, not financial advice.\nIdea (Cusatis, Miles & Woolridge 1993; McConnell & Ovtchinnikov; Greenblatt): a newly spun-off company is often dumped by\nfunds that got shares they didn't want (wrong size / index / sector), then does better than the market over the next 1-2 years.\nData (all free): SEC EDGAR quarterly form index -> every Form 10-12B (registration a company files before it is spun off),\n2015-2026. Match each filer to a stock: SEC's company file (data.sec.gov/submissions) tickers, else the Alpaca asset list\n(includes delisted names) by company name. Prices: all-US daily bars cached in R2 (daily/us_all_adj_all.json.gz, 2016-2026,\nincl. delisted). Spin-off day = the stock's first trading day, which must come after the 10-12B and within 18 months.\nBuy at the close of trading day 1, 5 or 20; hold 60/125/250 trading days. If it stops trading (takeover, bankruptcy) the last\nprice is used. Compared with SPY and with the average stock ($5+) over the same days, after 0.4% round-trip costs.\nDry runs on random data swing +-7% vs the average stock with ~120 events (overlapping 1-year windows), so only a much bigger,\nconsistent gap counts. Bot: hold each spin-off 250 days from day 20, up to 10 at 10% each, idle money in SPY.\nDRY=random|planted: synthetic prices; 'planted' adds +15% over the year after each fake spin-off (must be found).",
+ "built": "2026-11-16",
+ "dry": null,
+ "spinoffs": 15,
+ "list": [
+  {
+   "ticker": "AMRZ",
+   "first_day": "2025-06-23",
+   "name": "Amrize Ltd"
+  },
+  {
+   "ticker": "Q",
+   "first_day": "2025-11-03",
+   "name": "Novus SpinCo 1, Inc."
+  },
+  {
+   "ticker": "RAL",
+   "first_day": "2025-06-30",
+   "name": "Ralliant Corp"
+  },
+  {
+   "ticker": "SOLS",
+   "first_day": "2025-10-20",
+   "name": "Solstice Advanced Materials, LLC"
+  },
+  {
+   "ticker": "VSNT",
+   "first_day": "2025-12-15",
+   "name": "Versant Media Group, Inc."
+  },
+  {
+   "ticker": "VGNT",
+   "first_day": "2026-04-01",
+   "name": "Cyprium Holdings Ltd"
+  },
+  {
+   "ticker": "FDXF",
+   "first_day": "2026-06-01",
+   "name": "FedEx Freight Holding Company, Inc."
+  },
+  {
+   "ticker": "SUNB",
+   "first_day": "2026-03-02",
+   "name": "Sunbelt Rentals Holdings, Inc."
+  },
+  {
+   "ticker": "HONA",
+   "first_day": "2026-06-15",
+   "name": "Honeywell Aerospace Inc."
+  },
+  {
+   "ticker": "MFP",
+   "first_day": "2026-06-29",
+   "name": "Middleby Food Processing, Inc."
+  },
+  {
+   "ticker": "MBGL",
+   "first_day": "2026-07-01",
+   "name": "Mobility Global Inc."
+  },
+  {
+   "ticker": "ADIG",
+   "first_day": "2026-08-04",
+   "name": "ADI GLOBAL DISTRIBUTION INC."
+  },
+  {
+   "ticker": "VYLR",
+   "first_day": "2026-10-01",
+   "name": "Vylor Inc."
+  },
+  {
+   "ticker": "PBAM",
+   "first_day": "2026-07-30",
+   "name": "Private Bancorp of America, Inc."
+  },
+  {
+   "ticker": "WCCB",
+   "first_day": "2026-09-16",
+   "name": "West Coast Community Bancorp"
+  }
+ ],
+ "results": {
+  "buy day 1, hold 60d": {
+   "all": {
+    "n": 13,
+    "avg_pct": 0.2,
+    "vs_spy_pct": -4.0,
+    "median_vs_spy_pct": -6.8,
+    "vs_avg_stock_pct": -1.1,
+    "beat_spy_pct": 23.1,
+    "t_vs_avg_stock": -0.23
+   },
+   "2016-2020": {
+    "n": 0
+   },
+   "2021-2026": {
+    "n": 13,
+    "avg_pct": 0.2,
+    "vs_spy_pct": -4.0,
+    "median_vs_spy_pct": -6.8,
+    "vs_avg_stock_pct": -1.1,
+    "beat_spy_pct": 23.1,
+    "t_vs_avg_stock": -0.23
+   }
+  },
+  "buy day 5, hold 60d": {
+   "all": {
+    "n": 13,
+    "avg_pct": -2.4,
+    "vs_spy_pct": -6.1,
+    "median_vs_spy_pct": -11.0,
+    "vs_avg_stock_pct": -3.4,
+    "beat_spy_pct": 23.1,
+    "t_vs_avg_stock": -0.52
+   },
+   "2016-2020": {
+    "n": 0
+   },
+   "2021-2026": {
+    "n": 13,
+    "avg_pct": -2.4,
+    "vs_spy_pct": -6.1,
+    "median_vs_spy_pct": -11.0,
+    "vs_avg_stock_pct": -3.4,
+    "beat_spy_pct": 23.1,
+    "t_vs_avg_stock": -0.52
+   }
+  },
+  "buy day 20, hold 60d": {
+   "all": {
+    "n": 11,
+    "avg_pct": 9.9,
+    "vs_spy_pct": 5.5,
+    "median_vs_spy_pct": -7.3,
+    "vs_avg_stock_pct": 8.7,
+    "beat_spy_pct": 36.4,
+    "t_vs_avg_stock": 0.95
+   },
+   "2016-2020": {
+    "n": 0
+   },
+   "2021-2026": {
+    "n": 11,
+    "avg_pct": 9.9,
+    "vs_spy_pct": 5.5,
+    "median_vs_spy_pct": -7.3,
+    "vs_avg_stock_pct": 8.7,
+    "beat_spy_pct": 36.4,
+    "t_vs_avg_stock": 0.95
+   }
+  }
+ },
+ "bot": {
+  "per_year_pct": 16.0,
+  "worst_drop_pct": -33.8,
+  "spy_pct": 14.8
+ }
+}
