@@ -357,7 +357,9 @@ def run():
         EC = pd.DataFrame({k: v[0] for k, v in E.items()}); EO = pd.DataFrame({k: v[1] for k, v in E.items()})
         e5 = EC.pct_change(5); eab = EC > EC.rolling(200).mean()
         SE = ((e5 <= -0.05) & eab & EC.notna()).values; RE = (-e5).values
-        RtE = EC.pct_change().fillna(0).values; OCE = (EC / EO - 1).fillna(0).values; over5E = (EC > EC.rolling(5).mean()).values
+        RtE = EC.pct_change().fillna(0).values; OCE = (EC / EO - 1).values
+        bad = ~np.isfinite(OCE) | (EO.values <= 0) | (np.abs(OCE) > 0.2); print('sector days with a bad open (use close-to-close instead):', int(bad.sum()), flush=True)
+        OCE = np.where(bad, RtE, OCE); over5E = (EC > EC.rolling(5).mean()).values
         RtA, OCA, overA = np.hstack([Rt, RtE]), np.hstack([OC, OCE]), np.hstack([over5, over5E]); NS = Rt.shape[1]
         def sim2(S, R, park, SEs=None, cost=0.0015, cost_e=0.0005, entry="close", mx=5, mx_e=10, slots=10):
             eq = 1.0; curve = np.ones(D); pos = []; tr = []; tre = []; inv = []
