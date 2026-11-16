@@ -1,0 +1,217 @@
+{
+ "note": "13F 'best ideas' (Nov 15 2026). Research only, not financial advice.\nIdea (Cohen, Polk & Silli 2010, 'Best Ideas'): a fund manager's single biggest position (highest portfolio weight) is their\nhighest-conviction pick and has historically beaten the market; picks that several managers share may be stronger.\nData (free): SEC Form 13F data sets (every 13F-HR filing, holdings by CUSIP), 2015q4 onward. Managers kept: 20-400 positions\n(active stock pickers, not index giants), biggest position <= 40% of the portfolio (skip parent-company stakes).\nCUSIP -> ticker: OpenFIGI (free API, common stock only, ETFs dropped). Prices: all-US daily (R2 daily/us_all_adj_all.json.gz, 2016+, incl delisted).\nPortfolio: on each 13F deadline (quarter end + 46 days) equal-weight the stocks that are a best idea of >= 1 manager\n(and >= 3 managers = 'consensus'); hold until the next deadline. Baselines: equal-weight ALL eligible stocks ($5+, $5M/day) and SPY.\nCosts 0.3% per quarterly rebalance. DRY=random|planted uses synthetic prices and picks.",
+ "built": "2026-11-16",
+ "dry": null,
+ "quarters": 1,
+ "results": {
+  "best ideas (>= 1 manager)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 371.0
+  },
+  "consensus best ideas (>= 3 managers)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 88.0
+  },
+  "best ideas, large (top 500)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 212.0
+  },
+  "best ideas, mid (501-1500)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 124.0
+  },
+  "best ideas, small (1501+)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 0.0
+  },
+  "BASELINE all eligible stocks": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 1466.0
+  },
+  "BASELINE large (top 500)": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null,
+   "avg_stocks": 500.0
+  },
+  "SPY": {
+   "all": null,
+   "2016-2020": null,
+   "2021-2026": null
+  }
+ },
+ "latest_picks": [
+  [
+   "AAPL",
+   165
+  ],
+  [
+   "MSFT",
+   63
+  ],
+  [
+   "JNJ",
+   38
+  ],
+  [
+   "META",
+   30
+  ],
+  [
+   "GOOGL",
+   26
+  ],
+  [
+   "AMZN",
+   18
+  ],
+  [
+   "GOOG",
+   18
+  ],
+  [
+   "SPG",
+   18
+  ],
+  [
+   "V",
+   18
+  ],
+  [
+   "CVS",
+   15
+  ],
+  [
+   "JPM",
+   15
+  ],
+  [
+   "PG",
+   15
+  ],
+  [
+   "HD",
+   14
+  ],
+  [
+   "VZ",
+   14
+  ],
+  [
+   "TD",
+   13
+  ],
+  [
+   "C",
+   11
+  ],
+  [
+   "MMM",
+   11
+  ],
+  [
+   "T",
+   10
+  ],
+  [
+   "KO",
+   9
+  ],
+  [
+   "PFE",
+   9
+  ],
+  [
+   "PEP",
+   8
+  ],
+  [
+   "BIDU",
+   7
+  ],
+  [
+   "FISV",
+   7
+  ],
+  [
+   "WFC",
+   7
+  ],
+  [
+   "CSCO",
+   6
+  ],
+  [
+   "DAL",
+   6
+  ],
+  [
+   "MKL",
+   6
+  ],
+  [
+   "ORLY",
+   6
+  ],
+  [
+   "PM",
+   6
+  ],
+  [
+   "SBUX",
+   6
+  ],
+  [
+   "SLB",
+   6
+  ],
+  [
+   "STZ",
+   6
+  ],
+  [
+   "TMO",
+   6
+  ],
+  [
+   "UPS",
+   6
+  ],
+  [
+   "BAC",
+   5
+  ],
+  [
+   "CMCSA",
+   5
+  ],
+  [
+   "NEE",
+   5
+  ],
+  [
+   "NFLX",
+   5
+  ],
+  [
+   "NKE",
+   5
+  ],
+  [
+   "TJX",
+   5
+  ]
+ ]
+}
