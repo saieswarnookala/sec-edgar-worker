@@ -1,0 +1,530 @@
+{
+ "note": "S&P 500 additions and removals (Nov 15 2026). Research only, not financial advice.\nKnown effects: stocks ADDED to the index jump between the announcement and the effective date (index funds must buy), then\nmay give some back; stocks REMOVED get dumped by index funds and have historically bounced back over the following months.\nData: point-in-time S&P 500 membership 1999-2026 (start = first day as a member, end = first day no longer a member).\nWe don't have announcement dates (usually ~5 trading days before the change), so:\n  - 'add: last 5 days before joining' shows the run-up (NOT tradeable without the announcement date; shown for context)\n  - 'add: buy on first day as member' and 'removed: buy on first day out' are tradeable from public lists.\nRemoved stocks that keep trading are measured to their last price if they stop trading inside the window (no survivor bias\nfrom dropping them). Removals with no price after the end date (mostly takeovers) can't be bought and are skipped.\nReturns after 0.2% round-trip costs, vs SPY; t-stats average events per day first.",
+ "built": "2026-11-15",
+ "additions": 674,
+ "removals_tradeable": 345,
+ "results": {
+  "1999-2026": {
+   "add: last 5 days before joining (run-up, not tradeable)": {
+    "events": 674,
+    "5d": {
+     "n": 637,
+     "avg_pct": 1.98,
+     "vs_spy_pct": 1.91,
+     "median_vs_spy_pct": 1.15,
+     "beat_spy_pct": 60.3,
+     "t_stat": 7.15
+    },
+    "20d": {
+     "n": 637,
+     "avg_pct": 1.16,
+     "vs_spy_pct": 0.72,
+     "median_vs_spy_pct": -0.1,
+     "beat_spy_pct": 49.3,
+     "t_stat": 1.55
+    },
+    "60d": {
+     "n": 632,
+     "avg_pct": 2.24,
+     "vs_spy_pct": 0.84,
+     "median_vs_spy_pct": -0.39,
+     "beat_spy_pct": 48.6,
+     "t_stat": 0.87
+    },
+    "120d": {
+     "n": 628,
+     "avg_pct": 4.91,
+     "vs_spy_pct": 1.79,
+     "median_vs_spy_pct": -1.91,
+     "beat_spy_pct": 45.9,
+     "t_stat": 1.34
+    },
+    "250d": {
+     "n": 616,
+     "avg_pct": 6.78,
+     "vs_spy_pct": -0.68,
+     "median_vs_spy_pct": -4.04,
+     "beat_spy_pct": 43.7,
+     "t_stat": -0.22
+    }
+   },
+   "add: buy on first day as member": {
+    "events": 674,
+    "5d": {
+     "n": 674,
+     "avg_pct": -1.15,
+     "vs_spy_pct": -1.19,
+     "median_vs_spy_pct": -0.79,
+     "beat_spy_pct": 40.9,
+     "t_stat": -5.05
+    },
+    "20d": {
+     "n": 673,
+     "avg_pct": -0.89,
+     "vs_spy_pct": -1.69,
+     "median_vs_spy_pct": -1.32,
+     "beat_spy_pct": 44.3,
+     "t_stat": -4.07
+    },
+    "60d": {
+     "n": 668,
+     "avg_pct": 0.54,
+     "vs_spy_pct": -0.89,
+     "median_vs_spy_pct": -0.98,
+     "beat_spy_pct": 47.5,
+     "t_stat": -1.25
+    },
+    "120d": {
+     "n": 663,
+     "avg_pct": 2.98,
+     "vs_spy_pct": -0.28,
+     "median_vs_spy_pct": -2.87,
+     "beat_spy_pct": 45.6,
+     "t_stat": 0.14
+    },
+    "250d": {
+     "n": 650,
+     "avg_pct": 5.88,
+     "vs_spy_pct": -1.79,
+     "median_vs_spy_pct": -5.57,
+     "beat_spy_pct": 42.3,
+     "t_stat": -0.77
+    }
+   },
+   "removed: buy on first day out": {
+    "events": 345,
+    "5d": {
+     "n": 345,
+     "avg_pct": 0.94,
+     "vs_spy_pct": 0.76,
+     "median_vs_spy_pct": -0.24,
+     "beat_spy_pct": 45.2,
+     "t_stat": 1.08
+    },
+    "20d": {
+     "n": 343,
+     "avg_pct": 5.59,
+     "vs_spy_pct": 4.69,
+     "median_vs_spy_pct": -0.2,
+     "beat_spy_pct": 48.1,
+     "t_stat": 2.01
+    },
+    "60d": {
+     "n": 340,
+     "avg_pct": 17.01,
+     "vs_spy_pct": 15.07,
+     "median_vs_spy_pct": 0.25,
+     "beat_spy_pct": 51.8,
+     "t_stat": 1.83
+    },
+    "120d": {
+     "n": 336,
+     "avg_pct": 18.75,
+     "vs_spy_pct": 14.89,
+     "median_vs_spy_pct": -0.2,
+     "beat_spy_pct": 49.1,
+     "t_stat": 1.88
+    },
+    "250d": {
+     "n": 328,
+     "avg_pct": 31.16,
+     "vs_spy_pct": 22.48,
+     "median_vs_spy_pct": -0.2,
+     "beat_spy_pct": 47.3,
+     "t_stat": 2.43
+    }
+   },
+   "removed: buy 20 days after removal": {
+    "events": 345,
+    "5d": {
+     "n": 310,
+     "avg_pct": 0.91,
+     "vs_spy_pct": 0.73,
+     "median_vs_spy_pct": -0.18,
+     "beat_spy_pct": 48.1,
+     "t_stat": 1.35
+    },
+    "20d": {
+     "n": 307,
+     "avg_pct": 5.68,
+     "vs_spy_pct": 4.73,
+     "median_vs_spy_pct": 1.85,
+     "beat_spy_pct": 55.7,
+     "t_stat": 3.18
+    },
+    "60d": {
+     "n": 307,
+     "avg_pct": 11.52,
+     "vs_spy_pct": 9.77,
+     "median_vs_spy_pct": -0.32,
+     "beat_spy_pct": 49.5,
+     "t_stat": 1.36
+    },
+    "120d": {
+     "n": 303,
+     "avg_pct": 13.49,
+     "vs_spy_pct": 9.55,
+     "median_vs_spy_pct": 0.85,
+     "beat_spy_pct": 50.2,
+     "t_stat": 1.76
+    },
+    "250d": {
+     "n": 294,
+     "avg_pct": 31.19,
+     "vs_spy_pct": 21.94,
+     "median_vs_spy_pct": -1.33,
+     "beat_spy_pct": 48.0,
+     "t_stat": 2.05
+    }
+   }
+  },
+  "1999-2012": {
+   "add: last 5 days before joining (run-up, not tradeable)": {
+    "events": 383,
+    "5d": {
+     "n": 365,
+     "avg_pct": 2.35,
+     "vs_spy_pct": 2.57,
+     "median_vs_spy_pct": 2.05,
+     "beat_spy_pct": 65.5,
+     "t_stat": 6.95
+    },
+    "20d": {
+     "n": 365,
+     "avg_pct": 0.75,
+     "vs_spy_pct": 0.85,
+     "median_vs_spy_pct": -0.01,
+     "beat_spy_pct": 49.9,
+     "t_stat": 1.34
+    },
+    "60d": {
+     "n": 365,
+     "avg_pct": 0.52,
+     "vs_spy_pct": 0.72,
+     "median_vs_spy_pct": 0.22,
+     "beat_spy_pct": 50.7,
+     "t_stat": 0.35
+    },
+    "120d": {
+     "n": 365,
+     "avg_pct": 2.23,
+     "vs_spy_pct": 2.02,
+     "median_vs_spy_pct": -0.9,
+     "beat_spy_pct": 48.5,
+     "t_stat": 1.13
+    },
+    "250d": {
+     "n": 365,
+     "avg_pct": 3.55,
+     "vs_spy_pct": 1.16,
+     "median_vs_spy_pct": -2.65,
+     "beat_spy_pct": 46.8,
+     "t_stat": 0.38
+    }
+   },
+   "add: buy on first day as member": {
+    "events": 383,
+    "5d": {
+     "n": 383,
+     "avg_pct": -1.4,
+     "vs_spy_pct": -1.51,
+     "median_vs_spy_pct": -1.03,
+     "beat_spy_pct": 39.9,
+     "t_stat": -5.01
+    },
+    "20d": {
+     "n": 383,
+     "avg_pct": -1.75,
+     "vs_spy_pct": -2.27,
+     "median_vs_spy_pct": -1.84,
+     "beat_spy_pct": 41.8,
+     "t_stat": -3.77
+    },
+    "60d": {
+     "n": 383,
+     "avg_pct": -1.58,
+     "vs_spy_pct": -1.64,
+     "median_vs_spy_pct": -0.98,
+     "beat_spy_pct": 47.0,
+     "t_stat": -1.9
+    },
+    "120d": {
+     "n": 383,
+     "avg_pct": -0.12,
+     "vs_spy_pct": -0.87,
+     "median_vs_spy_pct": -1.81,
+     "beat_spy_pct": 46.7,
+     "t_stat": -0.44
+    },
+    "250d": {
+     "n": 383,
+     "avg_pct": 1.41,
+     "vs_spy_pct": -1.16,
+     "median_vs_spy_pct": -5.3,
+     "beat_spy_pct": 43.6,
+     "t_stat": -0.48
+    }
+   },
+   "removed: buy on first day out": {
+    "events": 178,
+    "5d": {
+     "n": 178,
+     "avg_pct": 2.4,
+     "vs_spy_pct": 2.02,
+     "median_vs_spy_pct": -0.2,
+     "beat_spy_pct": 46.6,
+     "t_stat": 1.47
+    },
+    "20d": {
+     "n": 178,
+     "avg_pct": 10.45,
+     "vs_spy_pct": 9.68,
+     "median_vs_spy_pct": 0.26,
+     "beat_spy_pct": 51.7,
+     "t_stat": 2.29
+    },
+    "60d": {
+     "n": 178,
+     "avg_pct": 29.35,
+     "vs_spy_pct": 28.77,
+     "median_vs_spy_pct": 2.26,
+     "beat_spy_pct": 58.4,
+     "t_stat": 1.89
+    },
+    "120d": {
+     "n": 178,
+     "avg_pct": 28.53,
+     "vs_spy_pct": 27.31,
+     "median_vs_spy_pct": 0.21,
+     "beat_spy_pct": 51.7,
+     "t_stat": 2.05
+    },
+    "250d": {
+     "n": 178,
+     "avg_pct": 46.98,
+     "vs_spy_pct": 43.87,
+     "median_vs_spy_pct": 0.62,
+     "beat_spy_pct": 51.7,
+     "t_stat": 2.77
+    }
+   },
+   "removed: buy 20 days after removal": {
+    "events": 178,
+    "5d": {
+     "n": 151,
+     "avg_pct": 2.2,
+     "vs_spy_pct": 2.05,
+     "median_vs_spy_pct": -0.03,
+     "beat_spy_pct": 49.0,
+     "t_stat": 2.26
+    },
+    "20d": {
+     "n": 151,
+     "avg_pct": 6.91,
+     "vs_spy_pct": 7.06,
+     "median_vs_spy_pct": 3.29,
+     "beat_spy_pct": 60.3,
+     "t_stat": 3.07
+    },
+    "60d": {
+     "n": 151,
+     "avg_pct": 18.33,
+     "vs_spy_pct": 19.16,
+     "median_vs_spy_pct": 2.27,
+     "beat_spy_pct": 53.6,
+     "t_stat": 1.42
+    },
+    "120d": {
+     "n": 151,
+     "avg_pct": 18.43,
+     "vs_spy_pct": 18.19,
+     "median_vs_spy_pct": 4.09,
+     "beat_spy_pct": 54.3,
+     "t_stat": 1.97
+    },
+    "250d": {
+     "n": 151,
+     "avg_pct": 47.03,
+     "vs_spy_pct": 43.92,
+     "median_vs_spy_pct": 8.39,
+     "beat_spy_pct": 57.0,
+     "t_stat": 2.3
+    }
+   }
+  },
+  "2013-2026": {
+   "add: last 5 days before joining (run-up, not tradeable)": {
+    "events": 291,
+    "5d": {
+     "n": 272,
+     "avg_pct": 1.48,
+     "vs_spy_pct": 1.03,
+     "median_vs_spy_pct": 0.27,
+     "beat_spy_pct": 53.3,
+     "t_stat": 2.76
+    },
+    "20d": {
+     "n": 272,
+     "avg_pct": 1.7,
+     "vs_spy_pct": 0.55,
+     "median_vs_spy_pct": -0.45,
+     "beat_spy_pct": 48.5,
+     "t_stat": 0.79
+    },
+    "60d": {
+     "n": 267,
+     "avg_pct": 4.59,
+     "vs_spy_pct": 1.0,
+     "median_vs_spy_pct": -0.64,
+     "beat_spy_pct": 45.7,
+     "t_stat": 0.94
+    },
+    "120d": {
+     "n": 263,
+     "avg_pct": 8.62,
+     "vs_spy_pct": 1.47,
+     "median_vs_spy_pct": -3.46,
+     "beat_spy_pct": 42.2,
+     "t_stat": 0.77
+    },
+    "250d": {
+     "n": 251,
+     "avg_pct": 11.48,
+     "vs_spy_pct": -3.37,
+     "median_vs_spy_pct": -6.06,
+     "beat_spy_pct": 39.0,
+     "t_stat": -1.24
+    }
+   },
+   "add: buy on first day as member": {
+    "events": 291,
+    "5d": {
+     "n": 291,
+     "avg_pct": -0.82,
+     "vs_spy_pct": -0.78,
+     "median_vs_spy_pct": -0.63,
+     "beat_spy_pct": 42.3,
+     "t_stat": -1.9
+    },
+    "20d": {
+     "n": 290,
+     "avg_pct": 0.23,
+     "vs_spy_pct": -0.92,
+     "median_vs_spy_pct": -0.49,
+     "beat_spy_pct": 47.6,
+     "t_stat": -1.69
+    },
+    "60d": {
+     "n": 285,
+     "avg_pct": 3.37,
+     "vs_spy_pct": 0.12,
+     "median_vs_spy_pct": -1.09,
+     "beat_spy_pct": 48.1,
+     "t_stat": 0.29
+    },
+    "120d": {
+     "n": 280,
+     "avg_pct": 7.23,
+     "vs_spy_pct": 0.52,
+     "median_vs_spy_pct": -3.34,
+     "beat_spy_pct": 43.9,
+     "t_stat": 0.57
+    },
+    "250d": {
+     "n": 267,
+     "avg_pct": 12.29,
+     "vs_spy_pct": -2.71,
+     "median_vs_spy_pct": -5.66,
+     "beat_spy_pct": 40.4,
+     "t_stat": -0.7
+    }
+   },
+   "removed: buy on first day out": {
+    "events": 167,
+    "5d": {
+     "n": 167,
+     "avg_pct": -0.63,
+     "vs_spy_pct": -0.58,
+     "median_vs_spy_pct": -0.64,
+     "beat_spy_pct": 43.7,
+     "t_stat": -0.87
+    },
+    "20d": {
+     "n": 165,
+     "avg_pct": 0.34,
+     "vs_spy_pct": -0.7,
+     "median_vs_spy_pct": -1.07,
+     "beat_spy_pct": 44.2,
+     "t_stat": -0.4
+    },
+    "60d": {
+     "n": 162,
+     "avg_pct": 3.45,
+     "vs_spy_pct": 0.01,
+     "median_vs_spy_pct": -1.37,
+     "beat_spy_pct": 44.4,
+     "t_stat": -0.38
+    },
+    "120d": {
+     "n": 158,
+     "avg_pct": 7.73,
+     "vs_spy_pct": 0.9,
+     "median_vs_spy_pct": -4.44,
+     "beat_spy_pct": 46.2,
+     "t_stat": -0.87
+    },
+    "250d": {
+     "n": 150,
+     "avg_pct": 12.38,
+     "vs_spy_pct": -2.91,
+     "median_vs_spy_pct": -5.52,
+     "beat_spy_pct": 42.0,
+     "t_stat": -1.27
+    }
+   },
+   "removed: buy 20 days after removal": {
+    "events": 167,
+    "5d": {
+     "n": 159,
+     "avg_pct": -0.31,
+     "vs_spy_pct": -0.52,
+     "median_vs_spy_pct": -0.22,
+     "beat_spy_pct": 47.2,
+     "t_stat": -1.42
+    },
+    "20d": {
+     "n": 156,
+     "avg_pct": 4.5,
+     "vs_spy_pct": 2.48,
+     "median_vs_spy_pct": 0.45,
+     "beat_spy_pct": 51.3,
+     "t_stat": 1.1
+    },
+    "60d": {
+     "n": 156,
+     "avg_pct": 4.94,
+     "vs_spy_pct": 0.67,
+     "median_vs_spy_pct": -1.31,
+     "beat_spy_pct": 45.5,
+     "t_stat": -0.39
+    },
+    "120d": {
+     "n": 152,
+     "avg_pct": 8.59,
+     "vs_spy_pct": 0.98,
+     "median_vs_spy_pct": -3.96,
+     "beat_spy_pct": 46.1,
+     "t_stat": -0.63
+    },
+    "250d": {
+     "n": 143,
+     "avg_pct": 14.46,
+     "vs_spy_pct": -1.26,
+     "median_vs_spy_pct": -13.11,
+     "beat_spy_pct": 38.5,
+     "t_stat": -0.97
+    }
+   }
+  }
+ }
+}
