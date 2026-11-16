@@ -1,0 +1,37 @@
+name: 13F best ideas test
+on:
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Smoke run: only the first N SEC 13F files (0 = all)'
+        default: '0'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy boto3
+      - name: Run
+        shell: bash
+        env:
+          FILES: ${{ inputs.files }}
+          OUT: ${{ inputs.files == '0' && 'data/thirteenf_best_ideas.json' || 'data/thirteenf_smoke.json' }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          set -o pipefail; python -u scripts/thirteenf_best_ideas.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/thirteenf*.json && git commit -qm "13F best ideas results" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
