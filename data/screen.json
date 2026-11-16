@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T21:46:00.233Z",
+ "generated_at": "2026-11-16T23:46:00.829Z",
  "earnings_year": "CY2025",
  "rules": {
   "per_bucket": 15,
@@ -1421,14 +1421,14 @@
    "market_cap": 137570390,
    "score": 46,
    "pe": 20.79,
-   "roe": 0.1266,
+   "roe": 0.1237,
    "net_margin": 0.2927,
    "fcf_yield": 0.0611,
    "sales_g3": 0.078,
    "sales_growth": 0.1053,
    "profit_growth": 0.2236,
    "profit_g3": 0.1824,
-   "de": 0.0056,
+   "de": 0.0525,
    "net_income": 6617821,
    "revenue": 22606066,
    "fy_end": "2025-06-30"
