@@ -518,7 +518,25 @@
     "stock_value": 39242
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-16T11:05:15.681Z",
+   "today": "2026-11-16",
+   "equity": 100583.95,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 4,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 78,
+    "spy_delta": 0,
+    "spy_price": 754.37,
+    "stock_value": 39544
+   },
+   "orders": []
   }
  ],
- "updated": "2026-11-13T19:26:09.551Z"
+ "updated": "2026-11-16T11:05:15.681Z"
 }
