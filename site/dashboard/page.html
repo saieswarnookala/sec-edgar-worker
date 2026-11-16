@@ -1153,6 +1153,22 @@ dash.calc('vs_industry', {
     <div class="pb-live" data-bot="mix"></div>
   </section>
 
+  <section class="sx-card" id="pb-short">
+    <div class="sx-ch"><h3>8. Dip + short-interest filter ($10k virtual, new Nov 16)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Starts next trading day</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Not connected to Robinhood</span><span class="sx-badge">Same run as bot 1</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>Rules</h4><ul>
+        <li>Exactly bot 1's rules, plus one check: <b>skip a dip if short sellers need 5+ days to cover</b> (lots of traders betting it keeps falling).</li>
+        <li>Days to cover = shares sold short ÷ average daily volume, from FINRA's free twice-a-month file (counted 12 days after its date, like the backtest).</li>
+        <li>Runs next to an identical twin <b>without</b> the filter, same prices and fills, so the difference is only the filter.</li>
+      </ul></div>
+      <div><h4>Backtest (S&amp;P 500, 2018–2026)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>24.0%</b></div><div class="sx-stat"><span>Without filter</span><b>22.7%</b></div><div class="sx-stat"><span>Heavily shorted dips</span><b>+0.1%/trade</b></div><div class="sx-stat"><span>Lightly shorted dips</span><b>+1.8%/trade</b></div></div>
+        <p class="sx-cap">The per-trade gap is too big to be luck, but the yearly gain came almost all from 2023–26 (2018–22: 13.4% vs 14.0%), and FINRA's free history starts only in Dec 2017. That's why it's paper only.</p></div>
+    </div>
+    <div class="pb-live" data-bot="short"></div>
+  </section>
+
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Started Nov 5, 2026</span><span class="sx-badge">Real paper orders</span><span class="sx-badge">Runs before the open (6:05 + 7:35 am ET)</span></div>
@@ -1946,13 +1962,13 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
     };
     const block = (bot, b) => {
-      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
       let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
         <div class="sx-stat"><span>Started with</span><b>${money(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${money(last?.eq)}</b></div>
         <div class="sx-stat"><span>Bot</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>SPY same days</span><b class="${cls(spyRet)}">${pctTxt(spyRet)}</b></div>
-        ${bot === 'etf' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>Twin without ETFs</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
+        ${bot === 'etf' || bot === 'short' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>${bot === 'short' ? 'Twin without filter' : 'Twin without ETFs'}</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
         <div class="sx-stat"><span>Last run</span><b>${fmtDay(b.last?.day)}</b></div>${bot === 'vol' && b.last?.scale != null ? `<div class="sx-stat"><span>Buy size now</span><b>${b.last.scale.toFixed(2)}× (${Math.round(1000 * b.last.scale) / 100}%)</b></div>` : ''}</div>`;
       h += chart(c);
       const pos = b.positions || [];
@@ -1974,7 +1990,8 @@ dash.calc('vs_industry', {
       if (bot === 'tuned' && b.last) h += `<p class="sx-cap"><b>Stock dips today (8% rule):</b> ${b.last.stock_signals ?? 0} · <b>ETFs dipping:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'etf' && b.last) h += `<p class="sx-cap"><b>ETFs dipping today:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'mix' && b.last) h += `<p class="sx-cap"><b>Dip signals today:</b> ${b.last.dip_signals ?? 0} · <b>Earnings-drift signals:</b> ${b.last.drift_found === false ? 'morning run not found' : (b.last.drift_signals || []).length ? b.last.drift_signals.map(esc).join(', ') : 'none'}</p>`;
-      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      if (bot === 'short' && b.last) { const sk = Object.entries(b.last.skipped || {}); h += `<p class="sx-cap"><b>Short data:</b> ${b.last.si_date ? 'FINRA report of ' + esc(b.last.si_date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')) : 'missing (' + esc(b.last.si_error || '') + '), no dips skipped'} · <b>Dips today:</b> ${b.last.dip_signals ?? 0} · <b>Skipped (heavily shorted):</b> ${sk.length ? sk.map(([k, v]) => esc(k) + ' ' + v + ' days').join(', ') : 'none'}</p>`; }
+      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
       return h;
     };
     try {
