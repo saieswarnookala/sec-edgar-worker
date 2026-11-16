@@ -102,6 +102,53 @@ export function virtualStep({ vs, today, days, prices, closes, scores, park, sca
   vs.trades = vs.trades.slice(-300);
   return { vs, equity: +equity.toFixed(2), done };
 }
+// ---- Bot 8 "dip + short-interest filter" (virtual, from Nov 16) ----
+// Same as bot 1 but skips dips in heavily shorted stocks: days to cover (shares short / avg daily volume) >= SHORT_CUT.
+// Backtest 2018-2026 (scripts/short_dips.py): 24.0 vs 22.7%/yr, but the gain came almost all from 2023-26 -> unproven.
+// Data: FINRA's free twice-monthly short interest file. A report counts only 12 days after its settlement date (as in the backtest).
+export const SHORT_CUT = 5, SI_LAG_DAYS = 12;
+export function siCandidates(today, lag = SI_LAG_DAYS, back = 40) {
+  // settlement dates are the 15th and the month end, moved back to a weekday -> try weekdays near those, newest first
+  const out = [], t = new Date(today + 'T12:00:00Z');
+  for (let k = lag; k <= lag + back; k++) {
+    const d = new Date(t.getTime() - k * 864e5), day = d.getUTCDate(), wd = d.getUTCDay();
+    const monthEnd = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+    if (wd === 0 || wd === 6) continue;
+    if ((day >= 9 && day <= 15) || day >= monthEnd - 5) out.push(d.toISOString().slice(0, 10).replace(/-/g, ''));
+  }
+  return out;
+}
+export function parseSI(text) {
+  // pipe-separated; newer files quote every field, older ones don't (and names can contain stray quotes)
+  const lines = text.split(/\r?\n/).filter(Boolean), un = (x) => (x || '').trim().replace(/^"|"$/g, '');
+  const h = lines[0].split('|').map(un), iS = h.indexOf('symbolCode'), iD = h.findIndex((c) => c.toLowerCase().startsWith('daystocover'));
+  const iQ = h.indexOf('currentShortPositionQuantity'), iV = h.indexOf('averageDailyVolumeQuantity');
+  if (iS < 0 || (iD < 0 && (iQ < 0 || iV < 0))) throw new Error('FINRA short interest columns changed: ' + h.join(','));
+  const m = {};
+  for (const ln of lines.slice(1)) {
+    const f = ln.split('|').map(un), sym = f[iS]; if (!sym) continue;
+    let v = iD >= 0 ? parseFloat(f[iD]) : NaN;
+    if (!Number.isFinite(v) && iQ >= 0 && iV >= 0 && +f[iV] > 0) v = +f[iQ] / +f[iV];
+    if (Number.isFinite(v)) m[sym] = v;
+  }
+  return m;
+}
+export async function fetchShortInterest(today, fetchFn = fetch) {
+  for (const d of siCandidates(today)) {
+    const r = await fetchFn(`https://cdn.finra.org/equity/otcmarket/biweekly/shrt${d}.csv`, { headers: { 'User-Agent': 'Mozilla/5.0 sentinel-research' } });
+    if (r.ok) { const txt = await r.text(); if (txt.length > 10000) return { date: d, dtc: parseSI(txt) }; }
+    await new Promise((res) => setTimeout(res, 300));
+  }
+  return null;
+}
+export function shortFilter(scores, dtc, cut = SHORT_CUT) {
+  const kept = {}, skipped = {};
+  for (const [s, v] of Object.entries(scores)) {
+    const x = dtc[s] ?? dtc[s.replace(/-/g, '.')] ?? dtc[s.replace(/\./g, '-')];
+    if (x != null && x >= cut) skipped[s] = +x.toFixed(2); else kept[s] = v;   // no short data -> keep (backtest did the same)
+  }
+  return { kept, skipped };
+}
 // ---- Bot 7 "dip + drift 6+4" (virtual, from Nov 16; backtest 2004-2026: 15.8%/yr, worst -24%) ----
 // One $10k account: up to 6 dip slots (today's dip rules) + up to 4 earnings-drift slots (stock beat SPY by >= 5% on its
 // earnings reaction day -> buy, hold 60 trading days), 10% each. Drift signals come from the morning drift run
@@ -293,6 +340,20 @@ async function main() {
       mst.history = [...(mst.history || []), { today, equity: m.equity, spy: prices.SPY, park: park || 'CASH', dip_signals: Object.keys(scores).length, drift_signals: driftSignals.map((x) => x.symbol), drift_signals_found: ds.date === today, orders: m.done }].slice(-400);
       mst.updated = log.run; writeFileSync(mfile, JSON.stringify(mst, null, 1));
       log.mix_bot = { equity: m.equity, drift_signals: driftSignals.length, orders: m.done.length };
+    }
+    // Bot 8 "dip + short filter" (virtual) + identical twin without the filter (same prices and fills)
+    const sfile = 'data/paper_short_state.json', sst = existsSync(sfile) ? JSON.parse(readFileSync(sfile, 'utf8')) : { history: [] };
+    if (!(sst.history || []).some((h) => h.today === today)) {
+      let si = null, siErr = null;
+      try { si = await fetchShortInterest(today); } catch (e) { siErr = String(e.message || e).slice(0, 200); }
+      const { kept, skipped } = si ? shortFilter(scores, si.dtc) : { kept: scores, skipped: {} };
+      const f = virtualStep({ vs: sst.vs, today, days, prices, closes, scores: kept, park, scale: 1 });
+      const tw = virtualStep({ vs: sst.twin, today, days, prices, closes, scores, park, scale: 1 });
+      sst.vs = f.vs; sst.twin = tw.vs;
+      const dtcToday = si ? Object.fromEntries(Object.keys(scores).map((s) => [s, si.dtc[s] ?? si.dtc[s.replace(/-/g, '.')] ?? null])) : {};
+      sst.history = [...(sst.history || []), { today, equity: f.equity, twin_equity: tw.equity, spy: prices.SPY, park: park || 'CASH', si_date: si?.date || null, si_error: siErr || (si ? undefined : 'no FINRA file found'), dip_signals: Object.keys(scores).length, days_to_cover: dtcToday, skipped, orders: f.done }].slice(-400);
+      sst.updated = log.run; writeFileSync(sfile, JSON.stringify(sst, null, 1));
+      log.short_bot = { equity: f.equity, twin_equity: tw.equity, si_date: si?.date || null, skipped: Object.keys(skipped), orders: f.done.length };
     }
     // Bot 6 "tuned dip": 8% dips, 150-day trend, hold up to 7 days, + ETF dips (virtual, no broker)
     const tfile = 'data/paper_dip_tuned_state.json', tst = existsSync(tfile) ? JSON.parse(readFileSync(tfile, 'utf8')) : { history: [] };

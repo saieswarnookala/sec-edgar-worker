@@ -11,3 +11,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -u scripts/finra_probe.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Live check of bot 8 FINRA fetch
+        run: node -e "import('./scripts/paper-dip.mjs').then(async m => { const t = new Date().toISOString().slice(0,10); const r = await m.fetchShortInterest(t); if (!r) { console.log('NO FILE FOUND'); process.exit(1); } console.log('date', r.date, 'symbols', Object.keys(r.dtc).length, 'AAPL', r.dtc.AAPL, 'BRK.B', r.dtc['BRK.B'], 'filter', JSON.stringify(m.shortFilter({AAPL:-0.1,'BRK-B':-0.1,GME:-0.1}, r.dtc))); })"

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX, siCandidates, parseSI, shortFilter, fetchShortInterest } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -138,5 +138,18 @@ console.log(`\n${n} passed`);
   assert.equal(Object.keys(r.vs.park).length, 0);                                           // park null = cash
   assert.ok(Math.abs(r.vs.cash - r.equity) < 0.01);
 });
+{
+  const q = '"accountingYearMonthNumber"|"symbolCode"|"issueName"|"currentShortPositionQuantity"|"averageDailyVolumeQuantity"|"daysToCoverQuantity"\n"20261015"|"AAPL"|"Apple Inc."|"100"|"50"|"2.00"\n"20261015"|"BRK.B"|"Berkshire"|"900"|"100"|"9.00"\n';
+  const u = 'accountingYearMonthNumber|symbolCode|issueName|currentShortPositionQuantity|averageDailyVolumeQuantity|daysToCoverQuantity\n20190614|XYZ|Foo "Bar Inc|10|5|\n20190614|AAPL|Apple Inc.|47003511|26629536|1.77\n';
+  assert.deepEqual(parseSI(q), { AAPL: 2, 'BRK.B': 9 }); assert.deepEqual(parseSI(u), { XYZ: 2, AAPL: 1.77 });
+  const c = siCandidates('2026-11-16'); assert.ok(c.includes('20261030') && c.includes('20261015')); assert.ok(!c.some((d) => d > '20261104'));   // >= 12 days old
+  assert.equal(c[0], '20261030');
+  const r = shortFilter({ AAPL: -0.12, 'BRK-B': -0.15, NEW: -0.11 }, { AAPL: 2, 'BRK.B': 9 });
+  assert.deepEqual(Object.keys(r.kept).sort(), ['AAPL', 'NEW']); assert.deepEqual(r.skipped, { 'BRK-B': 9 });
+  const big = q + Array(400).fill('"20261030"|"ZZZ"|"Z"|"1"|"1"|"1.00"').join('\n');
+  const fake = async (url) => ({ ok: url.endsWith('shrt20261030.csv'), text: async () => big });
+  const got = await fetchShortInterest('2026-11-16', fake); assert.equal(got.date, '20261030'); assert.equal(got.dtc['BRK.B'], 9);
+  console.log('ok   bot 8 FINRA parse/candidates/filter/fetch');
+}
 console.log('ok   fractional sizing for small live account');
 }
