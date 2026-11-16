@@ -1,16 +1,16 @@
 {
  "positions": [
   {
-   "symbol": "IFF",
-   "entry_date": "2026-11-09",
-   "qty": 3,
-   "dip_pct": -10.1
-  },
-  {
    "symbol": "EXPE",
    "entry_date": "2026-11-11",
    "qty": 3,
    "dip_pct": -16.9
+  },
+  {
+   "symbol": "MRNA",
+   "entry_date": "2026-11-16",
+   "qty": 4,
+   "dip_pct": -17.9
   }
  ],
  "history": [
@@ -475,7 +475,83 @@
     }
    ],
    "orders": []
+  },
+  {
+   "run": "2026-11-16T20:25:41.957Z",
+   "today": "2026-11-16",
+   "ny_time": "15:25",
+   "equity": 9791.82,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "MRNA": {
+     "ratio": 0.49,
+     "today_est": 6678464
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 738.87,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "MRNA": -0.1788882580796578
+   },
+   "sells": [
+    {
+     "symbol": "IFF",
+     "qty": 3,
+     "reason": "held 5 days (max 5)"
+    }
+   ],
+   "buys": [
+    {
+     "symbol": "MRNA",
+     "qty": 4,
+     "dip_pct": -17.9
+    }
+   ],
+   "park_trades": [
+    {
+     "symbol": "DBC",
+     "qty": 284,
+     "side": "sell",
+     "reason": "switch parking"
+    }
+   ],
+   "vol_bot": {
+    "scale": 1.5,
+    "equity": 10000,
+    "orders": 1
+   },
+   "etf_bot": {
+    "equity": 10000,
+    "twin_equity": 10000,
+    "etf_signals": 0,
+    "orders": 1
+   },
+   "mix_bot": {
+    "equity": 10000,
+    "drift_signals": 0,
+    "orders": 1
+   },
+   "short_bot": {
+    "equity": 10000,
+    "twin_equity": 10000,
+    "si_date": "20261030",
+    "skipped": [],
+    "orders": 1
+   },
+   "tuned_bot": {
+    "equity": 10000,
+    "signals": 1,
+    "orders": 1
+   },
+   "orders": [
+    "SELL 284 DBC (switch parking)",
+    "SELL 3 IFF (held 5 days (max 5))",
+    "BUY 4 MRNA (dip -17.9%)"
+   ]
   }
  ],
- "updated": "2026-11-15T13:47:40.944Z"
+ "updated": "2026-11-16T20:25:41.957Z"
 }

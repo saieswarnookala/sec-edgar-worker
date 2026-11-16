@@ -1,0 +1,32 @@
+{
+ "history": [
+  {
+   "today": "2026-11-16",
+   "equity": 10000,
+   "spy": 738.87,
+   "park": "CASH",
+   "dip_signals": 1,
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": [
+    "BUY $1000 MRNA dip (dip -17.9%)"
+   ]
+  }
+ ],
+ "vs": {
+  "cash": 9000.0002149,
+  "positions": [
+   {
+    "symbol": "MRNA",
+    "kind": "dip",
+    "entry_date": "2026-11-16",
+    "qty": 4.630915,
+    "entry_px": 215.94,
+    "info": "dip -17.9%"
+   }
+  ],
+  "park": {},
+  "trades": []
+ },
+ "updated": "2026-11-16T20:25:41.957Z"
+}

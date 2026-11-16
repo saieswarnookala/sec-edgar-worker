@@ -1,0 +1,32 @@
+{
+ "history": [
+  {
+   "today": "2026-11-16",
+   "equity": 10000,
+   "spy": 738.87,
+   "scale": 1.5,
+   "vol_rank": 1,
+   "spy_vol_pct": 23.1,
+   "park": "CASH",
+   "orders": [
+    "BUY $1500 MRNA (dip -17.9%)"
+   ]
+  }
+ ],
+ "vs": {
+  "cash": 8500.00021438,
+  "positions": [
+   {
+    "symbol": "MRNA",
+    "entry_date": "2026-11-16",
+    "qty": 6.946373,
+    "entry_px": 215.94,
+    "dip_pct": -17.9,
+    "size_pct": 15
+   }
+  ],
+  "park": {},
+  "trades": []
+ },
+ "updated": "2026-11-16T20:25:41.957Z"
+}
