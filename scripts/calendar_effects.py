@@ -4,7 +4,7 @@
 2) Pre-Fed-meeting drift (Lucca & Moench 2015): SPY tends to rise into scheduled FOMC announcements.
    Measured close-to-close on the announcement day (day A, statement at 2 pm) and the day before (A-1); compared with all
    other days; split 1999-2011 (the paper's sample) vs 2012-2026 (after it was published).
-   Meeting dates: federalreserve.gov (fomchistorical<year>.htm for 1999-2020, fomccalendars.htm 2021+); scheduled meetings
+   Meeting dates: federalreserve.gov (fomchistorical<year>.htm parsed for 1999-2016, 2017+ listed from the Fed calendar); scheduled meetings
    only; each year must have 7-9 or the run stops."""
 import os, re, json, time, urllib.request, html as H
 import numpy as np, pandas as pd
@@ -32,7 +32,7 @@ def get(u):
         except Exception as e: print("retry", u, str(e)[:80], flush=True); time.sleep(5 * (a + 1))
     return ""
 dates = []
-for y in range(1999, 2021):
+for y in range(1999, 2017):
     t = H.unescape(re.sub(r"<[^>]+>", " ", get(f"https://www.federalreserve.gov/monetarypolicy/fomchistorical{y}.htm"))); t = re.sub(r"\s+", " ", t); time.sleep(0.5)
     found = []
     for m in re.finditer(rf"({MON}) (\d{{1,2}})(?:\s*[-\u2013\u2014]\s*(?:({MON}) )?(\d{{1,2}}))? (?:FOMC )?Meeting\s*[-\u2013\u2014]\s*{y}", t):
@@ -42,7 +42,11 @@ for y in range(1999, 2021):
     print(y, len(found), [d.strftime("%m-%d") for d in found], flush=True)
     if not 7 <= len(found) <= 9: raise SystemExit(f"FOMC parse check failed for {y}: {len(found)} meetings")
     dates += found
-recent = {2021: "January 27; March 17; April 28; June 16; July 28; September 22; November 3; December 15",
+recent = {2017: "February 1; March 15; May 3; June 14; July 26; September 20; November 1; December 13",   # 2017-2020 pages use another layout; dates from the Fed calendar
+          2018: "January 31; March 21; May 2; June 13; August 1; September 26; November 8; December 19",
+          2019: "January 30; March 20; May 1; June 19; July 31; September 18; October 30; December 11",
+          2020: "January 29; April 29; June 10; July 29; September 16; November 5; December 16",   # March 2020 meetings were emergency moves, left out
+          2021: "January 27; March 17; April 28; June 16; July 28; September 22; November 3; December 15",
           2022: "January 26; March 16; May 4; June 15; July 27; September 21; November 2; December 14",
           2023: "February 1; March 22; May 3; June 14; July 26; September 20; November 1; December 13",
           2024: "January 31; March 20; May 1; June 12; July 31; September 18; November 7; December 18",
