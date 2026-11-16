@@ -1,0 +1,1161 @@
+{
+ "years": "2008-01-01 to 2026-11-16",
+ "stocks_with_prices": 487,
+ "nifty50": {
+  "cagr": 7.9,
+  "dd": -59.9,
+  "per": {
+   "2008-2009": -8.2,
+   "2010-2015": 7.4,
+   "2016-2020": 12.1,
+   "2021-2026": 10.7
+  },
+  "train_2008_2018": {
+   "cagr": 5.4,
+   "dd": -59.9
+  },
+  "test_2019_2026": {
+   "cagr": 11.5,
+   "dd": -38.4
+  }
+ },
+ "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.",
+ "results": [
+  {
+   "cagr": 17.6,
+   "dd": -22.1,
+   "per": {
+    "2008-2009": 47.6,
+    "2010-2015": 10.4,
+    "2016-2020": 15.6,
+    "2021-2026": 17.7
+   },
+   "train_2008_2018": {
+    "cagr": 16.8,
+    "dd": -22.1
+   },
+   "test_2019_2026": {
+    "cagr": 18.7,
+    "dd": -10.8
+   },
+   "invested_pct": 11.1,
+   "trades": 1655,
+   "win_rate": 63.7,
+   "avg_trade_pct": 0.76,
+   "stock_trades": 1655,
+   "stock_avg_trade_pct": 0.76,
+   "version": "bot 1 rules (10% dip, 200-day, hold 5)",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 12.6,
+   "dd": -23.5,
+   "per": {
+    "2008-2009": 31.0,
+    "2010-2015": 6.1,
+    "2016-2020": 13.9,
+    "2021-2026": 12.5
+   },
+   "train_2008_2018": {
+    "cagr": 11.6,
+    "dd": -23.5
+   },
+   "test_2019_2026": {
+    "cagr": 14.0,
+    "dd": -11.4
+   },
+   "invested_pct": 11.1,
+   "trades": 1655,
+   "win_rate": 56.7,
+   "avg_trade_pct": 0.27,
+   "stock_trades": 1655,
+   "stock_avg_trade_pct": 0.27,
+   "version": "bot 1 rules (10% dip, 200-day, hold 5)",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 16.5,
+   "dd": -18.4,
+   "per": {
+    "2008-2009": 43.7,
+    "2010-2015": 9.6,
+    "2016-2020": 15.2,
+    "2021-2026": 16.8
+   },
+   "train_2008_2018": {
+    "cagr": 15.6,
+    "dd": -18.4
+   },
+   "test_2019_2026": {
+    "cagr": 17.8,
+    "dd": -10.9
+   },
+   "invested_pct": 5.1,
+   "trades": 751,
+   "win_rate": 66.2,
+   "avg_trade_pct": 1.13,
+   "stock_trades": 751,
+   "stock_avg_trade_pct": 1.13,
+   "version": "India best (12% dip, 200-day, hold 5)",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.6,
+   "dd": -18.5,
+   "per": {
+    "2008-2009": 34.8,
+    "2010-2015": 8.3,
+    "2016-2020": 14.8,
+    "2021-2026": 14.8
+   },
+   "train_2008_2018": {
+    "cagr": 13.7,
+    "dd": -18.5
+   },
+   "test_2019_2026": {
+    "cagr": 15.9,
+    "dd": -12.1
+   },
+   "invested_pct": 5.1,
+   "trades": 751,
+   "win_rate": 59.5,
+   "avg_trade_pct": 0.71,
+   "stock_trades": 751,
+   "stock_avg_trade_pct": 0.71,
+   "version": "India best (12% dip, 200-day, hold 5)",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 17.4,
+   "dd": -21.6,
+   "per": {
+    "2008-2009": 47.2,
+    "2010-2015": 10.4,
+    "2016-2020": 14.8,
+    "2021-2026": 18.1
+   },
+   "train_2008_2018": {
+    "cagr": 16.8,
+    "dd": -21.6
+   },
+   "test_2019_2026": {
+    "cagr": 18.3,
+    "dd": -13.3
+   },
+   "invested_pct": 14.1,
+   "trades": 2037,
+   "win_rate": 64.2,
+   "avg_trade_pct": 0.66,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": 0.58,
+   "sector_win_rate": 68.1,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": 0.68,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -22.6,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -22.6
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 2037,
+   "win_rate": 56.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 57.3,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": 0.2,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -24.8,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -24.8
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 2037,
+   "win_rate": 50.1,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 50.4,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": -0.4,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 16.8,
+   "dd": -18.4,
+   "per": {
+    "2008-2009": 43.1,
+    "2010-2015": 10.3,
+    "2016-2020": 14.2,
+    "2021-2026": 18.0
+   },
+   "train_2008_2018": {
+    "cagr": 15.9,
+    "dd": -18.4
+   },
+   "test_2019_2026": {
+    "cagr": 18.1,
+    "dd": -12.2
+   },
+   "invested_pct": 8.5,
+   "trades": 1186,
+   "win_rate": 67.1,
+   "avg_trade_pct": 0.87,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": 0.74,
+   "sector_win_rate": 70.2,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": 0.95,
+   "version": "India best + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -18.6,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -18.6
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 1186,
+   "win_rate": 58.7,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 59.1,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": 0.55,
+   "version": "India best + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -20.1,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -20.1
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 1186,
+   "win_rate": 52.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 53.0,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": -0.05,
+   "version": "India best + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 15.8,
+   "dd": -22.2,
+   "per": {
+    "2008-2009": 55.9,
+    "2010-2015": 15.2,
+    "2016-2020": 6.1,
+    "2021-2026": 13.4
+   },
+   "train_2008_2018": {
+    "cagr": 17.9,
+    "dd": -17.8
+   },
+   "test_2019_2026": {
+    "cagr": 12.9,
+    "dd": -22.2
+   },
+   "invested_pct": 27.0,
+   "trades": 3712,
+   "win_rate": 63.8,
+   "avg_trade_pct": 0.4,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": 0.35,
+   "sector_win_rate": 65.7,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": 0.4,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -20.4,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -20.4
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 3712,
+   "win_rate": 54.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 54.5,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": -0.16,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -26.3,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -26.3
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 3712,
+   "win_rate": 46.9,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 47.7,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": -0.76,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 16.4,
+   "dd": -20.7,
+   "per": {
+    "2008-2009": 55.5,
+    "2010-2015": 15.7,
+    "2016-2020": 7.2,
+    "2021-2026": 14.0
+   },
+   "train_2008_2018": {
+    "cagr": 18.2,
+    "dd": -17.8
+   },
+   "test_2019_2026": {
+    "cagr": 14.0,
+    "dd": -20.7
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 64.0,
+   "avg_trade_pct": 0.44,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": 0.44,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 4.9,
+   "dd": -28.1,
+   "per": {
+    "2008-2009": 19.6,
+    "2010-2015": 5.0,
+    "2016-2020": 0.1,
+    "2021-2026": 4.4
+   },
+   "train_2008_2018": {
+    "cagr": 5.2,
+    "dd": -28.1
+   },
+   "test_2019_2026": {
+    "cagr": 4.5,
+    "dd": -23.9
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 54.7,
+   "avg_trade_pct": -0.13,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": -0.13,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": -6.0,
+   "dd": -75.3,
+   "per": {
+    "2008-2009": 1.8,
+    "2010-2015": -5.9,
+    "2016-2020": -8.3,
+    "2021-2026": -6.7
+   },
+   "train_2008_2018": {
+    "cagr": -5.9,
+    "dd": -58.0
+   },
+   "test_2019_2026": {
+    "cagr": -6.3,
+    "dd": -45.6
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 47.2,
+   "avg_trade_pct": -0.73,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": -0.73,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 13.6,
+   "dd": -14.6,
+   "per": {
+    "2008-2009": 37.7,
+    "2010-2015": 6.5,
+    "2016-2020": 14.8,
+    "2021-2026": 12.7
+   },
+   "train_2008_2018": {
+    "cagr": 13.2,
+    "dd": -14.6
+   },
+   "test_2019_2026": {
+    "cagr": 14.2,
+    "dd": -10.6
+   },
+   "invested_pct": 3.8,
+   "trades": 491,
+   "win_rate": 71.1,
+   "avg_trade_pct": 0.81,
+   "sector_trades": 491,
+   "sector_avg_trade_pct": 0.81,
+   "sector_win_rate": 71.1,
+   "version": "sector dips only",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -14.7,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -14.7
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 491,
+   "win_rate": 61.1,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 491,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 61.1,
+   "version": "sector dips only",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 12.4,
+   "dd": -14.5,
+   "per": {
+    "2008-2009": 36.1,
+    "2010-2015": 5.3,
+    "2016-2020": 15.5,
+    "2021-2026": 10.1
+   },
+   "train_2008_2018": {
+    "cagr": 12.1,
+    "dd": -14.5
+   },
+   "test_2019_2026": {
+    "cagr": 12.8,
+    "dd": -12.8
+   },
+   "invested_pct": 0.0,
+   "version": "parking only",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 12.4,
+   "dd": -14.5,
+   "per": {
+    "2008-2009": 36.1,
+    "2010-2015": 5.3,
+    "2016-2020": 15.5,
+    "2021-2026": 10.1
+   },
+   "train_2008_2018": {
+    "cagr": 12.1,
+    "dd": -14.5
+   },
+   "test_2019_2026": {
+    "cagr": 12.8,
+    "dd": -12.8
+   },
+   "invested_pct": 0.0,
+   "version": "parking only",
+   "parking": "Nifty 100-day trend, else liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.1,
+   "dd": -22.6,
+   "per": {
+    "2008-2009": 42.0,
+    "2010-2015": 11.5,
+    "2016-2020": 20.5,
+    "2021-2026": 18.8
+   },
+   "train_2008_2018": {
+    "cagr": 16.9,
+    "dd": -22.1
+   },
+   "test_2019_2026": {
+    "cagr": 22.1,
+    "dd": -22.6
+   },
+   "invested_pct": 11.1,
+   "trades": 1655,
+   "win_rate": 63.7,
+   "avg_trade_pct": 0.76,
+   "stock_trades": 1655,
+   "stock_avg_trade_pct": 0.76,
+   "version": "bot 1 rules (10% dip, 200-day, hold 5)",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.1,
+   "dd": -23.5,
+   "per": {
+    "2008-2009": 26.1,
+    "2010-2015": 7.2,
+    "2016-2020": 18.7,
+    "2021-2026": 13.5
+   },
+   "train_2008_2018": {
+    "cagr": 11.7,
+    "dd": -23.5
+   },
+   "test_2019_2026": {
+    "cagr": 17.3,
+    "dd": -23.3
+   },
+   "invested_pct": 11.1,
+   "trades": 1655,
+   "win_rate": 56.7,
+   "avg_trade_pct": 0.27,
+   "stock_trades": 1655,
+   "stock_avg_trade_pct": 0.27,
+   "version": "bot 1 rules (10% dip, 200-day, hold 5)",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 18.2,
+   "dd": -21.9,
+   "per": {
+    "2008-2009": 39.1,
+    "2010-2015": 10.7,
+    "2016-2020": 19.8,
+    "2021-2026": 18.3
+   },
+   "train_2008_2018": {
+    "cagr": 15.8,
+    "dd": -18.4
+   },
+   "test_2019_2026": {
+    "cagr": 21.6,
+    "dd": -21.9
+   },
+   "invested_pct": 5.1,
+   "trades": 751,
+   "win_rate": 66.2,
+   "avg_trade_pct": 1.13,
+   "stock_trades": 751,
+   "stock_avg_trade_pct": 1.13,
+   "version": "India best (12% dip, 200-day, hold 5)",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 16.2,
+   "dd": -21.2,
+   "per": {
+    "2008-2009": 30.5,
+    "2010-2015": 9.4,
+    "2016-2020": 19.4,
+    "2021-2026": 16.2
+   },
+   "train_2008_2018": {
+    "cagr": 13.8,
+    "dd": -18.5
+   },
+   "test_2019_2026": {
+    "cagr": 19.5,
+    "dd": -21.2
+   },
+   "invested_pct": 5.1,
+   "trades": 751,
+   "win_rate": 59.5,
+   "avg_trade_pct": 0.71,
+   "stock_trades": 751,
+   "stock_avg_trade_pct": 0.71,
+   "version": "India best (12% dip, 200-day, hold 5)",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 19.3,
+   "dd": -22.0,
+   "per": {
+    "2008-2009": 41.6,
+    "2010-2015": 11.4,
+    "2016-2020": 19.6,
+    "2021-2026": 20.4
+   },
+   "train_2008_2018": {
+    "cagr": 16.8,
+    "dd": -21.6
+   },
+   "test_2019_2026": {
+    "cagr": 22.7,
+    "dd": -22.0
+   },
+   "invested_pct": 14.1,
+   "trades": 2037,
+   "win_rate": 64.2,
+   "avg_trade_pct": 0.66,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": 0.58,
+   "sector_win_rate": 68.1,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": 0.68,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -22.6,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -22.6
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 2037,
+   "win_rate": 56.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 57.3,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": 0.2,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -24.8,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -24.8
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 2037,
+   "win_rate": 50.1,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 417,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 50.4,
+   "stock_trades": 1620,
+   "stock_avg_trade_pct": -0.4,
+   "version": "bot 5: bot 1 rules + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 18.7,
+   "dd": -21.3,
+   "per": {
+    "2008-2009": 38.3,
+    "2010-2015": 11.3,
+    "2016-2020": 18.7,
+    "2021-2026": 20.4
+   },
+   "train_2008_2018": {
+    "cagr": 15.9,
+    "dd": -18.4
+   },
+   "test_2019_2026": {
+    "cagr": 22.6,
+    "dd": -21.3
+   },
+   "invested_pct": 8.5,
+   "trades": 1186,
+   "win_rate": 67.1,
+   "avg_trade_pct": 0.87,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": 0.74,
+   "sector_win_rate": 70.2,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": 0.95,
+   "version": "India best + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -18.6,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -18.6
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 1186,
+   "win_rate": 58.7,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 59.1,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": 0.55,
+   "version": "India best + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -20.1,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -20.1
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 1186,
+   "win_rate": 52.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 457,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 53.0,
+   "stock_trades": 729,
+   "stock_avg_trade_pct": -0.05,
+   "version": "India best + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 17.8,
+   "dd": -23.9,
+   "per": {
+    "2008-2009": 49.5,
+    "2010-2015": 16.1,
+    "2016-2020": 10.6,
+    "2021-2026": 16.5
+   },
+   "train_2008_2018": {
+    "cagr": 17.6,
+    "dd": -19.4
+   },
+   "test_2019_2026": {
+    "cagr": 18.0,
+    "dd": -23.9
+   },
+   "invested_pct": 27.0,
+   "trades": 3712,
+   "win_rate": 63.8,
+   "avg_trade_pct": 0.4,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": 0.35,
+   "sector_win_rate": 65.7,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": 0.4,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -20.4,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -20.4
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 3712,
+   "win_rate": 54.4,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 54.5,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": -0.16,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": NaN,
+   "dd": -26.3,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -26.3
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 3712,
+   "win_rate": 46.9,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 321,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 47.7,
+   "stock_trades": 3391,
+   "stock_avg_trade_pct": -0.76,
+   "version": "bot 6 tuned (8% dip, 150-day, hold 7) + sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 18.2,
+   "dd": -24.1,
+   "per": {
+    "2008-2009": 49.1,
+    "2010-2015": 16.7,
+    "2016-2020": 11.9,
+    "2021-2026": 16.1
+   },
+   "train_2008_2018": {
+    "cagr": 18.0,
+    "dd": -19.3
+   },
+   "test_2019_2026": {
+    "cagr": 18.4,
+    "dd": -24.1
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 64.0,
+   "avg_trade_pct": 0.44,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": 0.44,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 6.6,
+   "dd": -30.0,
+   "per": {
+    "2008-2009": 14.6,
+    "2010-2015": 6.0,
+    "2016-2020": 4.5,
+    "2021-2026": 6.3
+   },
+   "train_2008_2018": {
+    "cagr": 5.0,
+    "dd": -30.0
+   },
+   "test_2019_2026": {
+    "cagr": 8.6,
+    "dd": -25.5
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 54.7,
+   "avg_trade_pct": -0.13,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": -0.13,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": -4.6,
+   "dd": -64.2,
+   "per": {
+    "2008-2009": -2.5,
+    "2010-2015": -5.1,
+    "2016-2020": -4.3,
+    "2021-2026": -5.0
+   },
+   "train_2008_2018": {
+    "cagr": -6.0,
+    "dd": -56.2
+   },
+   "test_2019_2026": {
+    "cagr": -2.6,
+    "dd": -35.0
+   },
+   "invested_pct": 24.7,
+   "trades": 3429,
+   "win_rate": 47.2,
+   "avg_trade_pct": -0.73,
+   "stock_trades": 3429,
+   "stock_avg_trade_pct": -0.73,
+   "version": "bot 6 tuned without sector dips",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "stress 2x costs"
+  },
+  {
+   "cagr": 15.6,
+   "dd": -22.3,
+   "per": {
+    "2008-2009": 33.8,
+    "2010-2015": 7.4,
+    "2016-2020": 19.3,
+    "2021-2026": 15.6
+   },
+   "train_2008_2018": {
+    "cagr": 13.3,
+    "dd": -16.9
+   },
+   "test_2019_2026": {
+    "cagr": 18.8,
+    "dd": -22.3
+   },
+   "invested_pct": 3.8,
+   "trades": 491,
+   "win_rate": 71.1,
+   "avg_trade_pct": 0.81,
+   "sector_trades": 491,
+   "sector_avg_trade_pct": 0.81,
+   "sector_win_rate": 71.1,
+   "version": "sector dips only",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": NaN,
+   "dd": -14.7,
+   "per": {
+    "2008-2009": Infinity,
+    "2010-2015": 0.0,
+    "2016-2020": 0.0,
+    "2021-2026": 0.0
+   },
+   "train_2008_2018": {
+    "cagr": NaN,
+    "dd": -14.7
+   },
+   "test_2019_2026": {
+    "cagr": NaN,
+    "dd": NaN
+   },
+   "invested_pct": NaN,
+   "trades": 491,
+   "win_rate": 61.1,
+   "avg_trade_pct": Infinity,
+   "sector_trades": 491,
+   "sector_avg_trade_pct": Infinity,
+   "sector_win_rate": 61.1,
+   "version": "sector dips only",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  },
+  {
+   "cagr": 14.3,
+   "dd": -23.2,
+   "per": {
+    "2008-2009": 33.3,
+    "2010-2015": 6.3,
+    "2016-2020": 20.1,
+    "2021-2026": 12.1
+   },
+   "train_2008_2018": {
+    "cagr": 12.5,
+    "dd": -17.8
+   },
+   "test_2019_2026": {
+    "cagr": 16.6,
+    "dd": -23.2
+   },
+   "invested_pct": 0.0,
+   "version": "parking only",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "ideal"
+  },
+  {
+   "cagr": 14.3,
+   "dd": -23.2,
+   "per": {
+    "2008-2009": 33.3,
+    "2010-2015": 6.3,
+    "2016-2020": 20.1,
+    "2021-2026": 12.1
+   },
+   "train_2008_2018": {
+    "cagr": 12.5,
+    "dd": -17.8
+   },
+   "test_2019_2026": {
+    "cagr": 16.6,
+    "dd": -23.2
+   },
+   "invested_pct": 0.0,
+   "version": "parking only",
+   "parking": "Nifty 150-day trend, else gold-if-trending/liquid",
+   "scenario": "realistic"
+  }
+ ],
+ "nifty_with_dividends_pct": {
+  "cagr": 9.3,
+  "dd": -59.4,
+  "per": {
+   "2008-2009": -7.0,
+   "2010-2015": 8.8,
+   "2016-2020": 13.5,
+   "2021-2026": 12.1
+  },
+  "train_2008_2018": {
+   "cagr": 6.8,
+   "dd": -59.4
+  },
+  "test_2019_2026": {
+   "cagr": 12.9,
+   "dd": -38.3
+  }
+ }
+}
