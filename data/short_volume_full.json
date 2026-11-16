@@ -1,0 +1,237 @@
+{
+ "note": "Short VOLUME as a dip filter (Nov 15 2026). Research only, not financial advice.\nBot 8 uses FINRA short INTEREST (days to cover), which is free only from Dec 2017. FINRA's free DAILY short-sale volume files\n(off-exchange TRF trades: FNSQshvol = Nasdaq TRF, FNYXshvol = NYSE TRF, FNQCshvol = Nasdaq TRF Chicago) go back to Aug 2009.\nShort volume ratio (SVR) = short shares / total shares traded that day. Signal: SVR during the dip (the 4 days before the buy day,\nbecause a day's file comes out after the close) minus the stock's own normal SVR (the 60 days before that) = \"short selling jump\".\nSTAGE=check  -> 2018-2026 only: does SVR agree with days-to-cover (same stocks flagged? same weak bounces?)\nSTAGE=full   -> 2009-2026: trade-level results by half + bot simulation.\nCache: one R2 object per finished month, finra/shvol/<YYYYMM>.json.gz, only S&P-history symbols.\nDRY=random|planted: fake SVR jumps (random must show nothing, planted must be found).",
+ "built": "2026-11-16",
+ "stage": "full",
+ "dry": null,
+ "first_month": "2009-08",
+ "dip_trades": 3312,
+ "groups": {
+  "full": {
+   "2009-2026": {
+    "all dips": {
+     "n": 3220,
+     "avg_trade_pct": 1.05,
+     "win_pct": 67.9
+    },
+    "short selling jumped 10+ points": {
+     "n": 248,
+     "avg_trade_pct": 0.4,
+     "win_pct": 63.7,
+     "diff_vs_rest_pct": -0.71,
+     "t_stat": -2.34
+    },
+    "biggest jump 20% (>= +5.1 pts)": {
+     "n": 644,
+     "avg_trade_pct": 0.28,
+     "win_pct": 62.9,
+     "diff_vs_rest_pct": -0.96,
+     "t_stat": -4.27
+    },
+    "short selling fell most 20% (<= -9.1 pts)": {
+     "n": 644,
+     "avg_trade_pct": 1.51,
+     "win_pct": 69.7,
+     "diff_vs_rest_pct": 0.56,
+     "t_stat": 2.41
+    },
+    "highest short ratio 20% (>= 55%)": {
+     "n": 644,
+     "avg_trade_pct": 0.02,
+     "win_pct": 62.7,
+     "diff_vs_rest_pct": -1.29,
+     "t_stat": -6.01
+    }
+   },
+   "2009-2017": {
+    "all dips": {
+     "n": 486,
+     "avg_trade_pct": 0.14,
+     "win_pct": 61.9
+    },
+    "short selling jumped 10+ points": {
+     "n": 27,
+     "avg_trade_pct": -2.1,
+     "win_pct": 40.7,
+     "diff_vs_rest_pct": -2.38,
+     "t_stat": -2.58
+    },
+    "biggest jump 20% (>= +3.7 pts)": {
+     "n": 98,
+     "avg_trade_pct": -0.84,
+     "win_pct": 54.1,
+     "diff_vs_rest_pct": -1.23,
+     "t_stat": -2.29
+    },
+    "short selling fell most 20% (<= -9.5 pts)": {
+     "n": 98,
+     "avg_trade_pct": 0.94,
+     "win_pct": 65.3,
+     "diff_vs_rest_pct": 1.0,
+     "t_stat": 2.0
+    },
+    "highest short ratio 20% (>= 50%)": {
+     "n": 98,
+     "avg_trade_pct": -0.3,
+     "win_pct": 56.1,
+     "diff_vs_rest_pct": -0.55,
+     "t_stat": -0.89
+    }
+   },
+   "2018-2026": {
+    "all dips": {
+     "n": 2734,
+     "avg_trade_pct": 1.22,
+     "win_pct": 69.0
+    },
+    "short selling jumped 10+ points": {
+     "n": 221,
+     "avg_trade_pct": 0.71,
+     "win_pct": 66.5,
+     "diff_vs_rest_pct": -0.55,
+     "t_stat": -1.76
+    },
+    "biggest jump 20% (>= +5.5 pts)": {
+     "n": 547,
+     "avg_trade_pct": 0.47,
+     "win_pct": 65.3,
+     "diff_vs_rest_pct": -0.94,
+     "t_stat": -3.81
+    },
+    "short selling fell most 20% (<= -9.0 pts)": {
+     "n": 547,
+     "avg_trade_pct": 1.61,
+     "win_pct": 70.6,
+     "diff_vs_rest_pct": 0.5,
+     "t_stat": 1.91
+    },
+    "highest short ratio 20% (>= 56%)": {
+     "n": 547,
+     "avg_trade_pct": -0.08,
+     "win_pct": 62.7,
+     "diff_vs_rest_pct": -1.63,
+     "t_stat": -6.89
+    }
+   }
+  }
+ },
+ "agreement_with_days_to_cover": {
+  "dips_with_both": 2734,
+  "rank_corr_dtc_vs_short_ratio": 0.319,
+  "rank_corr_dtc_vs_jump": 0.04,
+  "heavily_shorted_dtc5": {
+   "n": 316,
+   "avg_trade_pct": 0.09,
+   "win_pct": 63.6,
+   "diff_vs_rest_pct": -1.27,
+   "t_stat": -4.32
+  },
+  "big_jump_10pts": {
+   "n": 221,
+   "avg_trade_pct": 0.71,
+   "win_pct": 66.5,
+   "diff_vs_rest_pct": -0.55,
+   "t_stat": -1.76
+  },
+  "both_flags": {
+   "n": 44,
+   "avg_trade_pct": 1.26,
+   "win_pct": 70.5
+  },
+  "share_of_dtc5_dips_also_jump10": 0.139,
+  "all_stocks_monthly_rank_corr_dtc_vs_short_ratio": 0.304
+ },
+ "portfolio": {
+  "rules as now": {
+   "2009-2026": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.1,
+    "trades_per_month": 8.0,
+    "avg_trade_pct": 0.72
+   },
+   "2009-2017": {
+    "per_year_pct": 7.2,
+    "worst_drop_pct": -14.8,
+    "spy_pct": 13.9,
+    "trades_per_month": 3.2,
+    "avg_trade_pct": -0.21
+   },
+   "2018-2026": {
+    "per_year_pct": 22.8,
+    "worst_drop_pct": -17.0,
+    "spy_pct": 14.2,
+    "trades_per_month": 12.5,
+    "avg_trade_pct": 0.94
+   }
+  },
+  "skip short-selling jump >= 10 pts": {
+   "2009-2026": {
+    "per_year_pct": 15.6,
+    "worst_drop_pct": -17.9,
+    "spy_pct": 14.1,
+    "trades_per_month": 7.7,
+    "avg_trade_pct": 0.8
+   },
+   "2009-2017": {
+    "per_year_pct": 7.6,
+    "worst_drop_pct": -14.1,
+    "spy_pct": 13.9,
+    "trades_per_month": 3.1,
+    "avg_trade_pct": -0.09
+   },
+   "2018-2026": {
+    "per_year_pct": 23.5,
+    "worst_drop_pct": -17.9,
+    "spy_pct": 14.2,
+    "trades_per_month": 11.9,
+    "avg_trade_pct": 1.02
+   }
+  },
+  "skip short-selling jump >= 15 pts": {
+   "2009-2026": {
+    "per_year_pct": 15.4,
+    "worst_drop_pct": -16.9,
+    "spy_pct": 14.1,
+    "trades_per_month": 7.9,
+    "avg_trade_pct": 0.75
+   },
+   "2009-2017": {
+    "per_year_pct": 7.1,
+    "worst_drop_pct": -15.0,
+    "spy_pct": 13.9,
+    "trades_per_month": 3.1,
+    "avg_trade_pct": -0.21
+   },
+   "2018-2026": {
+    "per_year_pct": 23.4,
+    "worst_drop_pct": -16.9,
+    "spy_pct": 14.2,
+    "trades_per_month": 12.3,
+    "avg_trade_pct": 0.98
+   }
+  },
+  "skip short ratio >= 60%": {
+   "2009-2026": {
+    "per_year_pct": 15.4,
+    "worst_drop_pct": -17.4,
+    "spy_pct": 14.1,
+    "trades_per_month": 7.4,
+    "avg_trade_pct": 0.8
+   },
+   "2009-2017": {
+    "per_year_pct": 7.1,
+    "worst_drop_pct": -14.8,
+    "spy_pct": 13.9,
+    "trades_per_month": 3.1,
+    "avg_trade_pct": -0.25
+   },
+   "2018-2026": {
+    "per_year_pct": 23.6,
+    "worst_drop_pct": -17.4,
+    "spy_pct": 14.2,
+    "trades_per_month": 11.5,
+    "avg_trade_pct": 1.06
+   }
+  }
+ }
+}
