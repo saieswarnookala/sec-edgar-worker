@@ -66,7 +66,7 @@ def get(url):
             time.sleep(3 * 2 ** a)
         except Exception: time.sleep(3 * 2 ** a)
     return None
-lock = threading.Lock(); last = [0.0]
+lock = threading.Lock(); last = [0.0]; BAD = []
 def polite_get(url):
     with lock:                                   # <= ~6 requests/second across all threads
         w = last[0] + 0.17 - time.time()
@@ -78,10 +78,14 @@ def day_rows(d):
     for pre in ("FNSQshvol", "FNYXshvol", "FNQCshvol"):
         txt = polite_get(f"https://cdn.finra.org/equity/regsho/daily/{pre}{d}.txt")
         if not txt: continue
-        lines = txt.splitlines(); h = lines[0].split("|")
-        if "Symbol" not in h or "ShortVolume" not in h or "TotalVolume" not in h: raise SystemExit(f"FINRA columns changed {pre}{d}: {h}")
-        iS, iV, iT = h.index("Symbol"), h.index("ShortVolume"), h.index("TotalVolume")
-        for ln in lines[1:]:
+        lines = txt.splitlines(); h = lines[0].split("|") if lines else []
+        if "Symbol" in h and "ShortVolume" in h and "TotalVolume" in h: iS, iV, iT = h.index("Symbol"), h.index("ShortVolume"), h.index("TotalVolume"); body = lines[1:]
+        elif len(h) in (5, 6) and h[0].isdigit() and len(h[0]) == 8:     # some old files have no header row: known layouts
+            iS, iV, iT = 1, 2, (3 if len(h) == 5 else 4); body = lines
+            BAD.append(f"{pre}{d} no header ({len(h)} cols)")
+        else:
+            BAD.append(f"{pre}{d} unknown layout {h[:6]}"); continue
+        for ln in body:
             f = ln.split("|")
             if len(f) <= iT: continue
             s = f[iS].replace("/", ".")
@@ -114,6 +118,8 @@ if not DRY:
                 j = jmap(s, i)
                 if j is not None and tv > 0: SV[i, j] = sv; TV[i, j] = tv
         if per.month == 1 or n: print(per, "days with data", len(res), "| downloaded days", n, f"| {time.time() - t_start:.0f}s", flush=True)
+    print("files without a header row / unreadable:", len(BAD), BAD[:8], flush=True)
+    if sum("unknown" in b for b in BAD) > 50: raise SystemExit("too many unreadable FINRA files: " + str(BAD[:10]))
     print("days fetched from FINRA", fetched, "| stock-days with short volume", int(np.isfinite(SV).sum()), flush=True)
 
 # features: SVR over days t-4..t-1 vs SVR over t-64..t-5 (only data published before the 3:45 pm buy)
