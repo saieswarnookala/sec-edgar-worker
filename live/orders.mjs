@@ -155,7 +155,7 @@ export function formatTradeAlert(o) {
   L.push('', '2) ORDERS TRIGGERED');
   if (!planned.length) L.push(`   none: nothing to sell, ${o.signals.length ? 'no dip could be bought (see 1)' : 'no new dips'}, idle money already ${o.park ? 'in ' + o.park : 'in cash'}`);
   for (const x of [...sells, ...buys]) {
-    const why = x.why || '', reason = /parking/.test(why) ? (x.side === 'buy' ? `park spare cash in ${x.symbol} (${why})` : `free cash from parking ETF ${x.symbol} (${why})`) : x.side === 'sell' && /held|bounced/.test(why) ? `exit rule: ${why}` : x.side === 'buy' ? `dip buy: fell ${why.replace(/^dip -?/, '')}` : why;
+    const why = x.why || '', reason = /parking/.test(why) ? (x.side === 'buy' ? `park spare cash in ${x.symbol} (${why})` : `free cash from parking ETF ${x.symbol} (${why})`) : x.side === 'sell' && /held|bounced/.test(why) ? `exit rule: ${why}` : x.side === 'buy' ? `dip buy: fell ${why.replace(/^dip -?/, '').replace(/^([\d.]+%)/, '$1 more than SPY')}` : why;
     const sent = o.placed.find((y) => y.symbol === x.symbol && y.side === x.side) || x;
     L.push(`   ${x.side.toUpperCase()} ${x.symbol} ${sent.dollars == null && sent.shares == null ? '' : amt(sent)}`.trimEnd(), `     why: ${reason || 'see earlier run'}`, `     -> ${status(x)}`);
   }
@@ -163,7 +163,7 @@ export function formatTradeAlert(o) {
   L.push('', '3) RESULT');
   L.push(live ? `   Orders: ${ok} of ${planned.length} placed on Robinhood${bad ? `, ${bad} NOT placed` : ''}` : `   Orders: DRY RUN, ${planned.length} planned, nothing sent to Robinhood (test mode)`);
   const newBuys = o.placed.filter((p) => p.side === 'buy' && !/parking/.test(p.why || '')).length, nowHeld = keepSet.size + newBuys;
-  L.push(`   Dip stocks held now: ${nowHeld} of ${o.slots} slots${newBuys ? ` (${keepSet.size} kept + ${newBuys} new)` : ''}`);
+  L.push(`   Dip stocks ${live ? 'held now' : 'it would hold'}: ${nowHeld} of ${o.slots} slots${newBuys ? ` (${keepSet.size} kept + ${newBuys} new)` : ''}`);
   L.push(`   Idle money: ${o.park ? `parked in ${o.park} (market is in an uptrend)` : 'kept in cash (SPY is below its 100-day average, so no parking ETF)'}`);
   L.push(`   Account: ${usd(o.account || 0)} total, ${o.buyingPower != null ? usd(o.buyingPower) : 'n/a'} free to buy with`);
   L.push(`   Checked: ${o.today} ${o.time} ET`);
