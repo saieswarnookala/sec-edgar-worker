@@ -54,6 +54,9 @@ if (!mode) {
   ok('Robinhood fractional answer: yes / no / unclear', () => {
     assert.equal(readFractional({ fractional_tradability: 'tradable' }), true); assert.equal(readFractional({ is_fractional_tradable: false }), false);
     assert.equal(readFractional({ symbol: 'MRNA', tradable: true }), undefined); assert.equal(readFractional([{ fractional_tradability: 'untradable' }]), false);
+    // Robinhood's real reply for MRNA on Nov 17 2026: regular-hours fractional OK, extended-hours not -> fractional
+    const real = { data: { results: [{ symbol: 'MRNA', tradeable: true, fractional_tradability: 'tradable', extended_hours_fractional_tradability: false, all_day_tradability: 'tradable' }] }, guide: 'Fractional and dollar-based orders place only in regular_hours' };
+    assert.equal(readFractional(real), true); assert.equal(readFractional(JSON.stringify(real)), true);
   });
   const { tradeWindow } = await import('./live-dip.mjs');
   const { parseConfig } = await import('./live-dip.mjs');

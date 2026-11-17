@@ -88,10 +88,21 @@ const rhRead = async (client) => {
 // Robinhood's own answer on fractional shares: true / false when it says so, undefined when unclear or the check failed
 // (an order Robinhood can't take is simply rejected, so "unknown" is tried as fractional rather than silently dropped).
 export function readFractional(reply) {
-  const txt = JSON.stringify(reply ?? '').toLowerCase();
-  if (/fractional[^,{}]*?["']?\s*:\s*(false|"untradable"|"no"|"not_tradable"|"position_closing_only")/.test(txt)) return false;
-  if (/fractional[^,{}]*?["']?\s*:\s*(true|"tradable"|"yes")/.test(txt)) return true;
-  return undefined;
+  // Only the regular-hours field counts: "extended_hours_fractional_tradability" is about after-hours orders, and the bot
+  // trades at ~3:47 pm (Robinhood: fractional / dollar orders place only in regular hours anyway).
+  let ans;
+  const walk = (x) => {
+    if (ans !== undefined || x == null || typeof x !== 'object') return;
+    if (Array.isArray(x)) return x.forEach(walk);
+    for (const [k, v] of Object.entries(x)) {
+      const key = k.toLowerCase();
+      if (key === 'fractional_tradability' && typeof v === 'string') { ans = v.toLowerCase() === 'tradable'; return; }
+      if (/^(is_)?fractional(ly)?_(tradable|tradability|enabled)$/.test(key) && typeof v === 'boolean') { ans = v; return; }
+    }
+    for (const v of Object.values(x)) walk(v);
+  };
+  walk(typeof reply === 'string' ? (() => { try { return JSON.parse(reply); } catch { return null; } })() : reply);
+  return ans;
 }
 async function tradabilityRaw(client, s) {
   const p = toolMap.get_equity_tradability.inputSchema?.properties || {}, k = Object.keys(p).find((x) => /symbol/i.test(x)) || 'symbols';
