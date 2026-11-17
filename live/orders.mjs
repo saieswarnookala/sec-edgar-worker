@@ -88,7 +88,7 @@ export function planToOrders(plan, prices, fractionalOk = () => true) {
   const out = [];
   for (const t of plan.parkTrades.filter((x) => x.side === 'sell')) out.push({ symbol: t.symbol, side: 'sell', shares: t.qty, why: t.reason });
   for (const s of plan.sells) out.push({ symbol: s.symbol, side: 'sell', shares: s.qty, why: s.reason });
-  for (const b of plan.buys) out.push(fractionalOk(b.symbol) ? { symbol: b.symbol, side: 'buy', dollars: b.qty * prices[b.symbol], why: `dip ${b.dip_pct}%` } : { symbol: b.symbol, side: 'buy', shares: Math.floor(b.qty), why: `dip ${b.dip_pct}% (whole shares)` });
+  for (const b of plan.buys) out.push(fractionalOk(b.symbol) ? { symbol: b.symbol, side: 'buy', dollars: Math.round(b.qty * prices[b.symbol] * 100) / 100, why: `dip ${b.dip_pct}%` } : { symbol: b.symbol, side: 'buy', shares: Math.floor(b.qty), why: `dip ${b.dip_pct}% (whole shares)` });
   for (const t of plan.parkTrades.filter((x) => x.side === 'buy')) out.push(fractionalOk(t.symbol) ? { symbol: t.symbol, side: 'buy', dollars: t.qty * prices[t.symbol], why: 'parking' } : { symbol: t.symbol, side: 'buy', shares: Math.floor(t.qty), why: 'parking (whole shares)' });
   return out.filter((o) => (o.dollars ?? o.shares) > 0);
 }

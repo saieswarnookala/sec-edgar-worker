@@ -205,7 +205,7 @@ export function decide({ today, days, state, held, equity, prices, closes, score
     .sort((a, b) => a[1] - b[1]).slice(0, Math.max(0, SLOTS - keep.length - cands.length)).map(([s, r]) => [s, r, 'etf']);
   cands.push(...etfC);
   const w = cands.length ? Math.min(weight, freeFrac / cands.length) : 0, buys = [];
-  for (const [s, ex, kind] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1), ...(kind ? { kind } : {}) }); }
+  for (const [s, ex, kind] of cands) { const qty = roundQty((w * equity) / prices[s], fractional); if (qty > 0 && qty * prices[s] >= (fractional ? minOrderUsd - 0.005 : 0)) buys.push({ symbol: s, qty, dip_pct: +(ex * 100).toFixed(1), ...(kind ? { kind } : {}) }); }
   const stockVal = keptVal + buys.reduce((a, b) => a + b.qty * prices[b.symbol], 0);
   // parking: sell any ETF that isn't today's park target; size the target to the leftover
   const parkTrades = [];
