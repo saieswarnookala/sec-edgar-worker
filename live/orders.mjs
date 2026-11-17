@@ -142,11 +142,13 @@ export function formatTradeAlert(o) {
   const L = [];
   L.push(`1) STOCKS PICKED (S&P 500, down 10%+ in 5 days, still above 200-day trend)`);
   if (!o.signals.length) L.push('   none today, so no new buys');
-  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : `skip: all ${o.slots} slots used`}`));
-  if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: slots full`);
+  const slotUsd = (o.account || 0) / (o.slots || 10), full = keepSet.size + bought.size >= o.slots;
+  const whySkip = full ? `skip: all ${o.slots} slots used` : slotUsd < 1.01 ? `skip: too small to buy (1 slot = 10% of ${usd(o.account || 0)} = ${usd(slotUsd)}, Robinhood minimum is $1)` : 'skip: not enough cash left';
+  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
+  if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip.replace(/^skip: /, '')}`);
   if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
   L.push('', '2) ORDERS TRIGGERED');
-  if (!planned.length) L.push('   none: nothing to sell, no new dips, parking already right');
+  if (!planned.length) L.push(`   none: nothing to sell, ${o.signals.length ? 'no dip could be bought (see 1)' : 'no new dips'}, idle money already ${o.park ? 'in ' + o.park : 'in cash'}`);
   for (const x of [...sells, ...buys]) {
     const why = x.why || '', reason = /parking/.test(why) ? (x.side === 'buy' ? `park spare cash in ${x.symbol} (${why})` : `free cash from parking ETF ${x.symbol} (${why})`) : x.side === 'sell' && /held|bounced/.test(why) ? `exit rule: ${why}` : x.side === 'buy' ? `dip buy: fell ${why.replace(/^dip -?/, '')}` : why;
     const sent = o.placed.find((y) => y.symbol === x.symbol && y.side === x.side) || x;
@@ -154,10 +156,12 @@ export function formatTradeAlert(o) {
   }
   const ok = o.placed.filter((p) => !p.dry).length, bad = o.failed.length;
   L.push('', '3) RESULT');
-  L.push(live ? `   ${ok} of ${planned.length} orders placed on Robinhood${bad ? `, ${bad} NOT placed` : ''}` : `   DRY RUN: ${planned.length} orders planned, nothing sent to Robinhood`);
-  const newBuys = o.placed.filter((p) => p.side === 'buy' && !/parking/.test(p.why || '')).length;
-  L.push(`   dip stocks held: ${keepSet.size} kept${newBuys ? ` + ${newBuys} new` : ''} (max ${o.slots}) | parking: ${o.park || 'CASH (market below trend)'}`);
-  L.push(`   account ${usd(o.account || 0)} | buying power ${o.buyingPower != null ? usd(o.buyingPower) : 'n/a'} | ${o.today} ${o.time} ET`);
+  L.push(live ? `   Orders: ${ok} of ${planned.length} placed on Robinhood${bad ? `, ${bad} NOT placed` : ''}` : `   Orders: DRY RUN, ${planned.length} planned, nothing sent to Robinhood (test mode)`);
+  const newBuys = o.placed.filter((p) => p.side === 'buy' && !/parking/.test(p.why || '')).length, nowHeld = keepSet.size + newBuys;
+  L.push(`   Dip stocks held now: ${nowHeld} of ${o.slots} slots${newBuys ? ` (${keepSet.size} kept + ${newBuys} new)` : ''}`);
+  L.push(`   Idle money: ${o.park ? `parked in ${o.park} (market is in an uptrend)` : 'kept in cash (SPY is below its 100-day average, so no parking ETF)'}`);
+  L.push(`   Account: ${usd(o.account || 0)} total, ${o.buyingPower != null ? usd(o.buyingPower) : 'n/a'} free to buy with`);
+  L.push(`   Checked: ${o.today} ${o.time} ET`);
   if (live && ok) L.push('   fills get confirmed after the close (fill alert comes after 4 pm ET)');
   const head = live ? (bad ? `${bad} order${bad > 1 ? 's' : ''} NOT placed` : planned.length ? `${ok} order${ok === 1 ? '' : 's'} placed` : 'no trades today') : `${planned.length} orders planned`;
   const title = `${live ? 'LIVE' : 'DRY RUN'} dip bot ${o.today}: ${head}${bought.size ? ` | buys ${[...bought].join(', ')}` : ''}`;
