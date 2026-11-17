@@ -45,9 +45,16 @@ if (!mode) {
     assert.match(f.title, /1 order NOT placed/); assert.match(f.body, /NOT PLACED: too close/); assert.match(f.body, /Y -11.0% -> skip: all 1 slots used/);
     const z = formatTradeAlert({ mode: 'dry', today: '2026-11-17', time: '15:52', signals: [['MRNA', -0.15], ['GPN', -0.13]], spy5: -0.012, moves: { MRNA: -0.162, GPN: -0.142 }, keep: [], orders: [], placed: [], failed: [], skipped: [], park: null, account: 10, buyingPower: 10, slots: 10 });
     assert.match(z.body, /1\) STOCKS PICKED \(S&P 500, down 10%\+ in 5 days, still above 200-day trend\)/); assert.match(z.body, /MRNA -16.2% \(SPY -1.2%\) -> BUY|MRNA -16.2% \(SPY -1.2%\) -> skip/); assert.match(z.body, /Dip stocks held now: 0 of 10 slots/); assert.match(z.body, /none: nothing to sell, no dip could be bought \(see 1\), idle money already in cash/); assert.match(z.body, /Idle money: kept in cash \(SPY is below its 100-day average/); assert.match(z.body, /Account: \$10.00 total, \$10.00 free to buy with/);
-    console.log(z.body); assert.equal(f.priority, 4);
+    const z2 = formatTradeAlert({ mode: 'dry', today: '2026-11-17', time: '16:26', signals: [['MRNA', -0.15]], spy5: -0.022, moves: { MRNA: -0.175 }, planBuys: ['MRNA'], frac: { MRNA: false }, prices: { MRNA: 23.1 }, keep: [], orders: [], placed: [], failed: [], skipped: [], park: null, account: 10, buyingPower: 10, slots: 10 });
+    assert.match(z2.body, /MRNA -17.5% \(SPY -2.2%\) -> skip: Robinhood says no fractional shares for MRNA, and the \$1.00 slot can't buy 1 whole share \(\$23.10\)/);
+    assert.equal(f.priority, 4);
   });
   process.env.SENTINEL_HOME = mkdtempSync(join(tmpdir(), 'live-'));
+  const { readFractional } = await import('./live-dip.mjs');
+  ok('Robinhood fractional answer: yes / no / unclear', () => {
+    assert.equal(readFractional({ fractional_tradability: 'tradable' }), true); assert.equal(readFractional({ is_fractional_tradable: false }), false);
+    assert.equal(readFractional({ symbol: 'MRNA', tradable: true }), undefined); assert.equal(readFractional([{ fractional_tradability: 'untradable' }]), false);
+  });
   const { tradeWindow } = await import('./live-dip.mjs');
   const { parseConfig } = await import('./live-dip.mjs');
   ok('config: inline comments stripped, quotes kept, blanks empty', () => {

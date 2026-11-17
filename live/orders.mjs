@@ -145,9 +145,12 @@ export function formatTradeAlert(o) {
   L.push(`1) STOCKS PICKED (S&P 500, down ${DIP * 100}%+ in ${LOOKBACK} days, still above ${TREND}-day trend)`);
   if (!o.signals.length) L.push('   none today, so no new buys');
   const slotUsd = (o.account || 0) / (o.slots || 10), full = keepSet.size + bought.size >= o.slots;
-  const whySkip = full ? `skip: all ${o.slots} slots used` : slotUsd < 1 ? `skip: too small to buy (slot ${usd(slotUsd)}, $1 minimum)` : 'skip: not enough cash left';
-  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${o.moves?.[s] != null && o.spy5 != null ? `${pc(o.moves[s])} (SPY ${pc(o.spy5)})` : pc(d)} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
-  if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip.replace(/^skip: /, '')}`);
+  const whySkip0 = full ? `skip: all ${o.slots} slots used` : slotUsd < 1 ? `skip: too small to buy (slot ${usd(slotUsd)}, $1 minimum)` : 'skip: not enough cash left';
+  const whySkip = (s) => (!full && o.planBuys?.includes(s) && o.frac?.[s] === false
+    ? `skip: Robinhood says no fractional shares for ${s}, and the ${usd(slotUsd)} slot can't buy 1 whole share${o.prices?.[s] ? ` (${usd(o.prices[s])})` : ''}`
+    : whySkip0);
+  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${o.moves?.[s] != null && o.spy5 != null ? `${pc(o.moves[s])} (SPY ${pc(o.spy5)})` : pc(d)} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip(s)}`));
+  if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip0.replace(/^skip: /, '')}`);
   if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
   L.push('', '2) ORDERS TRIGGERED');
   if (!planned.length) L.push(`   none: nothing to sell, ${o.signals.length ? 'no dip could be bought (see 1)' : 'no new dips'}, idle money already ${o.park ? 'in ' + o.park : 'in cash'}`);

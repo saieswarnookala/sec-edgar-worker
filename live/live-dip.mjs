@@ -85,14 +85,36 @@ const rhRead = async (client) => {
   const [pf, pos, ord] = await Promise.all([call(client, 'get_portfolio', acctArgs('get_portfolio')), call(client, 'get_equity_positions', acctArgs('get_equity_positions')), call(client, 'get_equity_orders', acctArgs('get_equity_orders'))]);
   return { money: readMoney(pf), held: readPositions(pos), orders: readOrders(ord), raw: { pf, pos, ord } };
 };
+// Robinhood's own answer on fractional shares: true / false when it says so, undefined when unclear or the check failed
+// (an order Robinhood can't take is simply rejected, so "unknown" is tried as fractional rather than silently dropped).
+export function readFractional(reply) {
+  const txt = JSON.stringify(reply ?? '').toLowerCase();
+  if (/fractional[^,{}]*?["']?\s*:\s*(false|"untradable"|"no"|"not_tradable"|"position_closing_only")/.test(txt)) return false;
+  if (/fractional[^,{}]*?["']?\s*:\s*(true|"tradable"|"yes")/.test(txt)) return true;
+  return undefined;
+}
+async function tradabilityRaw(client, s) {
+  const p = toolMap.get_equity_tradability.inputSchema?.properties || {}, k = Object.keys(p).find((x) => /symbol/i.test(x)) || 'symbols';
+  return call(client, 'get_equity_tradability', acctArgs('get_equity_tradability', { [k]: p[k]?.type === 'array' ? [s] : s }));
+}
+const FRAC_RAW = {};
 async function fractionalMap(client, syms) {
   const out = {};
   if (!toolMap.get_equity_tradability) return out;
-  const p = toolMap.get_equity_tradability.inputSchema?.properties || {}, k = Object.keys(p).find((x) => /symbol/i.test(x)) || 'symbols';
   for (const s of syms) {
-    try { const r = await call(client, 'get_equity_tradability', acctArgs('get_equity_tradability', { [k]: p[k]?.type === 'array' ? [s] : s })); const txt = JSON.stringify(r).toLowerCase(); out[s] = /fractional[^,]*(true|"tradable"|"yes")/.test(txt) && !/fractional[^,]*(false|"untradable"|"no")/.test(txt); } catch { out[s] = false; }
+    try { const r = await tradabilityRaw(client, s); FRAC_RAW[s] = JSON.stringify(r).slice(0, 600); out[s] = readFractional(r); }
+    catch (e) { FRAC_RAW[s] = 'check failed: ' + String(e?.message || e).slice(0, 200); out[s] = undefined; }
   }
   return out;
+}
+async function cmdTradable() {
+  const syms = process.argv.slice(3).map((x) => x.toUpperCase());
+  if (!syms.length) return console.log('usage: node live-dip.mjs tradable MRNA GPN');
+  const { client } = await rh();
+  for (const s of syms) {
+    try { const r = await tradabilityRaw(client, s); console.log(s, '-> fractional:', readFractional(r), '\n', JSON.stringify(r, null, 1).slice(0, 1500)); }
+    catch (e) { console.log(s, '-> check failed:', e?.message || e); }
+  }
 }
 
 // ---- commands ----
@@ -153,6 +175,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const plan = decide({ today, days, state, held, equity, prices: g.prices, closes: g.closes, scores: g.scores, park: g.park, parkHeld, fractional: true });
     const frac = await fractionalMap(client, [...new Set([...plan.buys.map((b) => b.symbol), ...plan.parkTrades.map((t) => t.symbol)])]);
     let orders = planToOrders(plan, g.prices, (s) => frac[s] !== false);
+    log.fractional = { answer: frac, raw: FRAC_RAW };
     // idempotency: never re-place an order Robinhood already has for today
     const todays = before.orders.filter((o) => o.created_at && ny(new Date(o.created_at)).date === today && !/cancel|reject|fail/.test(o.state));
     const dupes = orders.filter((o) => todays.some((t) => t.symbol === o.symbol && t.side === o.side));
@@ -187,7 +210,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
     const r5 = (s) => { const c = g.closes?.[s] || [], p = g.prices?.[s]; return c.length >= 5 && p > 0 ? p / c.at(-5) - 1 : null; };   // same 5-day window as dipScore
-    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park: g.park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
+    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park: g.park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
     await notify(a.title, a.body, { priority: a.priority, tags: a.tags });
   } catch (e) {
     log.error = String(e.message || e);
@@ -231,8 +254,8 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), verify: cmdVerify, status: cmdStatus,
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|verify|status|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|status|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
 }
