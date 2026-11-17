@@ -1,4 +1,4 @@
-# Idea Scout: 2026-11-16
+# Idea Scout: 2026-11-17
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
@@ -6,43 +6,43 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 
 **Category:** build
 
-- **What:** Popular launch (741 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (742 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50470488>
 
-## 2. Show HN: Get your coding agent off ~2019 JavaScript, onto modern web primitives
+## 2. Show HN: Yogurt – Free, private, open-source alternative to Granola
 
 **Category:** build
 
-- **What:** Popular launch (448 points). Ideas: a niche version, integrations, or a hosted service around it.
-- **Evidence:** <https://news.ycombinator.com/item?id=50443812>
-
-## 3. Show HN: Yogurt – Free, private, open-source alternative to Granola
-
-**Category:** build
-
-- **What:** Popular launch (305 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (306 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50454625>
+
+## 3. Show HN: DeepSeek V3 in ~200 lines of pure Jax
+
+**Category:** build
+
+- **What:** Popular launch (276 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **Evidence:** <https://news.ycombinator.com/item?id=50497589>
 
 ## 4. FrigadeHQ/yogurt: Private AI meeting notes that stay on your computer. A free, open-source alternative to Granola for Mac, Windows and Linux.
 
 **Category:** build
 
-- **What:** New GitHub project with 1854 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 1997 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/FrigadeHQ/yogurt>
 
-## 5. janestreet/agent_skills: Agent skills
+## 5. huamidev/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.
 
 **Category:** build
 
-- **What:** New GitHub project with 9564 stars in 2 weeks. Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/janestreet/agent_skills>
+- **What:** New GitHub project with 8098 stars in 2 weeks (Swift). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/huamidev/GestaltX>
 
-## 6. Minireel/HGhub: Plug-in media player
+## 6. deepseek-ai/chat-demo: Chat Demo
 
 **Category:** build
 
-- **What:** New GitHub project with 9480 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/Minireel/HGhub>
+- **What:** New GitHub project with 4507 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/deepseek-ai/chat-demo>
 
 ## 7. Indian chip startup Bharat Semi lands $24M seed round as it eyes global AI sensor market - TechCrunch
 
@@ -58,12 +58,12 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 - **What:** Where investors are putting money this week. Look for adjacent problems these customers have.
 - **Evidence:** <https://news.google.com/rss/articles/CBMiuwFBVV95cUxObkxPOGVxOXJ1ZHo1Wjh4YjRHamNPWFZUUXhWMG1FSU5EUmZRcHZ2QXRyWk5Va1hiRFEyOHdlZGZkNTkwYjJkVUh6Y3l4TVhuTnFiSDRfa2M4amV6ODc5MnFSVi0xd3ZsTzVEZ2lEdlNfVE1OX2ZKSkJDZDlaUHNFV3JsVHhMX3ZEOGlrdEpRMEtTMGxyck1kbVlPSWhnSmZuelVZRnRNcUR2M0dULWJpd3phaGRoOXc5WXVz?oc=5>
 
-## 9. SRTD raises €31.5M seed round to develop cell-selective RNA therapies - European Biotechnology Magazine
+## 9. Cyber startup Corma goes from stealth to unicorn in just three months with $125 million Series A - CTech
 
 **Category:** service
 
 - **What:** Where investors are putting money this week. Look for adjacent problems these customers have.
-- **Evidence:** <https://news.google.com/rss/articles/CBMiuAFBVV95cUxQNHFCdlZSMkJBeHd2Z0VWcml6RGxpYXN6anc2ejlzeXdkZUdvS1o4VUxGa1Z3aXBXdUNieE43VEJXcnRPSjBjeXViS19KN0RVbkdjZERlT0pDbjktRkxna3VTUHJZQU5pWXlTZ2lHZzJjSk03YXFjZnFuRWxCWnFLTXNIeFlDZGZ5VkxoVkZkalByY0dTQkFZUGx1ekZQdDIxVThXbzVRVkY1bW1LaXJKX0hQMl9KUmFu?oc=5>
+- **Evidence:** <https://news.google.com/rss/articles/CBMiaEFVX3lxTE53Tm5ra3Vobi1qRHo4NER2b3JGMHBXV05uME9wUTliVEQtWUxET2lhcGRlbnJBSVMzZngwcWZRT3hBdDEtMnVHNHBGaHViNERjMExzbHNoRjQwTlIzdDQyOWM3N2pZcXI1?oc=5>
 
 ## 10. NVDA NVIDIA Corporation (Technology)
 
@@ -84,6 +84,6 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 - **What:** From your screener: profitable and growing, P/E 25.7, net margin 28.5%. A research lead, not a buy signal.
 
 
-<sub>Sources unavailable this run: news (429), reddit (403)</sub>
+<sub>Sources unavailable this run: reddit (403)</sub>
 
 <sub>Research only, not financial advice.</sub>
