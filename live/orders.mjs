@@ -1,4 +1,4 @@
-import { DIP, LOOKBACK, TREND, MIN_PX, VOL_MAX } from '../scripts/paper-dip.mjs';
+import { DIP, LOOKBACK, TREND } from '../scripts/paper-dip.mjs';
 // Pure helpers for the live runner: turn the strategy's plan into Robinhood MCP calls, enforce hard limits,
 // and read Robinhood replies whose exact field names are not documented (tolerant, fail closed).
 // Exact tool parameter names come from the server's own tool schemas (saved by `node live-dip.mjs doctor`).
@@ -142,12 +142,11 @@ export function formatTradeAlert(o) {
   const keepSet = new Set((o.keep || []).map((p) => p.symbol)), bought = new Set(buys.map((b) => b.symbol));
   const L = [];
   const pc = (x) => `${x > 0 ? '+' : ''}${(x * 100).toFixed(1)}%`;
-  L.push(`1) STOCKS PICKED (rule: fell ${DIP * 100}%+ more than SPY in ${LOOKBACK} days, still above its ${TREND}-day average, price $${MIN_PX}+, volume under ${VOL_MAX}x normal)`);
-  if (o.spy5 != null) L.push(`   SPY last 5 days: ${pc(o.spy5)}`);
+  L.push(`1) STOCKS PICKED (S&P 500, down ${DIP * 100}%+ in ${LOOKBACK} days, still above ${TREND}-day trend)`);
   if (!o.signals.length) L.push('   none today, so no new buys');
   const slotUsd = (o.account || 0) / (o.slots || 10), full = keepSet.size + bought.size >= o.slots;
-  const whySkip = full ? `skip: all ${o.slots} slots used` : slotUsd < 1.01 ? `skip: too small to buy (1 slot = 10% of ${usd(o.account || 0)} = ${usd(slotUsd)}, Robinhood minimum is $1)` : 'skip: not enough cash left';
-  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% vs SPY${o.moves?.[s] != null && o.spy5 != null ? ` (${s} ${pc(o.moves[s])}, SPY ${pc(o.spy5)})` : ''} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
+  const whySkip = full ? `skip: all ${o.slots} slots used` : slotUsd < 1 ? `skip: too small to buy (slot ${usd(slotUsd)}, $1 minimum)` : 'skip: not enough cash left';
+  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${o.moves?.[s] != null && o.spy5 != null ? `${pc(o.moves[s])} (SPY ${pc(o.spy5)})` : pc(d)} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
   if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip.replace(/^skip: /, '')}`);
   if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
   L.push('', '2) ORDERS TRIGGERED');
