@@ -1,3 +1,4 @@
+import { DIP, LOOKBACK, TREND, MIN_PX, VOL_MAX } from '../scripts/paper-dip.mjs';
 // Pure helpers for the live runner: turn the strategy's plan into Robinhood MCP calls, enforce hard limits,
 // and read Robinhood replies whose exact field names are not documented (tolerant, fail closed).
 // Exact tool parameter names come from the server's own tool schemas (saved by `node live-dip.mjs doctor`).
@@ -141,7 +142,7 @@ export function formatTradeAlert(o) {
   const keepSet = new Set((o.keep || []).map((p) => p.symbol)), bought = new Set(buys.map((b) => b.symbol));
   const L = [];
   const pc = (x) => `${x > 0 ? '+' : ''}${(x * 100).toFixed(1)}%`;
-  L.push(`1) STOCKS PICKED (S&P 500, fell 10%+ MORE than SPY in 5 days, still above 200-day trend)`);
+  L.push(`1) STOCKS PICKED (rule: fell ${DIP * 100}%+ more than SPY in ${LOOKBACK} days, still above its ${TREND}-day average, price $${MIN_PX}+, volume under ${VOL_MAX}x normal)`);
   if (o.spy5 != null) L.push(`   SPY last 5 days: ${pc(o.spy5)}`);
   if (!o.signals.length) L.push('   none today, so no new buys');
   const slotUsd = (o.account || 0) / (o.slots || 10), full = keepSet.size + bought.size >= o.slots;
