@@ -123,7 +123,7 @@ export function fitBuys(orders, buyingPower, prices, keep = 0.995) {
 
 // ---- phone alert: what was picked, what the bot decided, and what Robinhood accepted ----
 // o = { mode, today, time, signals: [[sym, dip]], keep: [{symbol}], orders (planned), placed, failed, skipped: ['SYM side'],
-//       park, account, buyingPower, slots, heavyVolume: [sym] }
+//       park, account, buyingPower, slots, heavyVolume: [sym], spy5 (SPY 5-day return), moves: {sym: own 5-day return} }
 const usd = (x) => '$' + (+x).toFixed(2);
 export function formatTradeAlert(o) {
   const live = o.mode === 'live', amt = (x) => (x.dollars != null ? usd(x.dollars) : `${+(+x.shares).toFixed(6)} sh`);
@@ -140,11 +140,13 @@ export function formatTradeAlert(o) {
   const sells = planned.filter((x) => x.side === 'sell'), buys = planned.filter((x) => x.side === 'buy');
   const keepSet = new Set((o.keep || []).map((p) => p.symbol)), bought = new Set(buys.map((b) => b.symbol));
   const L = [];
-  L.push(`1) STOCKS PICKED (S&P 500, down 10%+ in 5 days, still above 200-day trend)`);
+  const pc = (x) => `${x > 0 ? '+' : ''}${(x * 100).toFixed(1)}%`;
+  L.push(`1) STOCKS PICKED (S&P 500, fell 10%+ MORE than SPY in 5 days, still above 200-day trend)`);
+  if (o.spy5 != null) L.push(`   SPY last 5 days: ${pc(o.spy5)}`);
   if (!o.signals.length) L.push('   none today, so no new buys');
   const slotUsd = (o.account || 0) / (o.slots || 10), full = keepSet.size + bought.size >= o.slots;
   const whySkip = full ? `skip: all ${o.slots} slots used` : slotUsd < 1.01 ? `skip: too small to buy (1 slot = 10% of ${usd(o.account || 0)} = ${usd(slotUsd)}, Robinhood minimum is $1)` : 'skip: not enough cash left';
-  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
+  o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${(d * 100).toFixed(1)}% vs SPY${o.moves?.[s] != null && o.spy5 != null ? ` (${s} ${pc(o.moves[s])}, SPY ${pc(o.spy5)})` : ''} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip}`));
   if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip.replace(/^skip: /, '')}`);
   if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
   L.push('', '2) ORDERS TRIGGERED');
