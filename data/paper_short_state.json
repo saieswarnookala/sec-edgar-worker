@@ -15,10 +15,27 @@
    "orders": [
     "BUY $1000 MRNA (dip -17.9%)"
    ]
+  },
+  {
+   "today": "2026-11-17",
+   "equity": 9956.7,
+   "twin_equity": 9956.7,
+   "spy": 730.195,
+   "park": "CASH",
+   "si_date": "20261030",
+   "dip_signals": 2,
+   "days_to_cover": {
+    "GPN": 4.31,
+    "MRNA": 1.76
+   },
+   "skipped": {},
+   "orders": [
+    "BUY $996 GPN (dip -12.2%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 9000.0002149,
+  "cash": 8004.3301682599995,
   "positions": [
    {
     "symbol": "MRNA",
@@ -26,6 +43,14 @@
     "qty": 4.630915,
     "entry_px": 215.94,
     "dip_pct": -17.9,
+    "size_pct": 10
+   },
+   {
+    "symbol": "GPN",
+    "entry_date": "2026-11-17",
+    "qty": 11.505316,
+    "entry_px": 86.54,
+    "dip_pct": -12.2,
     "size_pct": 10
    }
   ],
@@ -33,7 +58,7 @@
   "trades": []
  },
  "twin": {
-  "cash": 9000.0002149,
+  "cash": 8004.3301682599995,
   "positions": [
    {
     "symbol": "MRNA",
@@ -42,10 +67,18 @@
     "entry_px": 215.94,
     "dip_pct": -17.9,
     "size_pct": 10
+   },
+   {
+    "symbol": "GPN",
+    "entry_date": "2026-11-17",
+    "qty": 11.505316,
+    "entry_px": 86.54,
+    "dip_pct": -12.2,
+    "size_pct": 10
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-16T20:25:41.957Z"
+ "updated": "2026-11-17T20:25:39.763Z"
 }

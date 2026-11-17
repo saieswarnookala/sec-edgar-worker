@@ -11,6 +11,12 @@
    "entry_date": "2026-11-16",
    "qty": 4,
    "dip_pct": -17.9
+  },
+  {
+   "symbol": "GPN",
+   "entry_date": "2026-11-17",
+   "qty": 11,
+   "dip_pct": -12.2
   }
  ],
  "history": [
@@ -551,7 +557,73 @@
     "SELL 3 IFF (held 5 days (max 5))",
     "BUY 4 MRNA (dip -17.9%)"
    ]
+  },
+  {
+   "run": "2026-11-17T20:25:39.763Z",
+   "today": "2026-11-17",
+   "ny_time": "15:25",
+   "equity": 9725.63,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "GPN": {
+     "ratio": 1.38,
+     "today_est": 1383394
+    },
+    "MRNA": {
+     "ratio": 0.46,
+     "today_est": 8374742
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 730.195,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "GPN": -0.12184169677905399,
+    "MRNA": -0.1500716312369923
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "GPN",
+     "qty": 11,
+     "dip_pct": -12.2
+    }
+   ],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.5,
+    "equity": 9935.05,
+    "orders": 1
+   },
+   "etf_bot": {
+    "equity": 9956.7,
+    "twin_equity": 9956.7,
+    "etf_signals": 0,
+    "orders": 1
+   },
+   "mix_bot": {
+    "equity": 9956.7,
+    "drift_signals": 0,
+    "orders": 1
+   },
+   "short_bot": {
+    "equity": 9956.7,
+    "twin_equity": 9956.7,
+    "si_date": "20261030",
+    "skipped": [],
+    "orders": 1
+   },
+   "tuned_bot": {
+    "equity": 9956.7,
+    "signals": 2,
+    "orders": 1
+   },
+   "orders": [
+    "BUY 11 GPN (dip -12.2%)"
+   ]
   }
  ],
- "updated": "2026-11-16T20:25:41.957Z"
+ "updated": "2026-11-17T20:25:39.763Z"
 }

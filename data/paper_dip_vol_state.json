@@ -11,10 +11,22 @@
    "orders": [
     "BUY $1500 MRNA (dip -17.9%)"
    ]
+  },
+  {
+   "today": "2026-11-17",
+   "equity": 9935.05,
+   "spy": 730.195,
+   "scale": 1.5,
+   "vol_rank": 1,
+   "spy_vol_pct": 23.2,
+   "park": "CASH",
+   "orders": [
+    "BUY $1490 GPN (dip -12.2%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8500.00021438,
+  "cash": 7009.742557919999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -23,10 +35,18 @@
     "entry_px": 215.94,
     "dip_pct": -17.9,
     "size_pct": 15
+   },
+   {
+    "symbol": "GPN",
+    "entry_date": "2026-11-17",
+    "qty": 17.220449,
+    "entry_px": 86.54,
+    "dip_pct": -12.2,
+    "size_pct": 15
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-16T20:25:41.957Z"
+ "updated": "2026-11-17T20:25:39.763Z"
 }
