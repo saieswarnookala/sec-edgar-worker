@@ -31,3 +31,8 @@ for k in range(60, 0, -1):
 print("before-close account: equity", round(stc["history"][-1]["equity"]), "| stock buys", nb_, "| closed trades", len(stc["trades"]))
 assert nb_ > 0 and len(stc["trades"]) > 0
 print(tc); print(bc)
+
+# morning status message from the before-close account (no orders, no state change)
+before = json.dumps(stc, sort_keys=True); tm, bm = B.morning(sig, stc)
+assert json.dumps(stc, sort_keys=True) == before and "ORDERS" not in bm.upper().split("ORDERS (IF ANY)")[0]
+print(tm); print(bm)

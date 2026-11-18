@@ -1,4 +1,5 @@
-"""India bots A and B (from Nov 18 2026), separate from the US bots: the best India dip strategy, virtual money, no broker. Research only, not financial advice.
+"""India bot (from Nov 18 2026), separate from the US bots. One bot: before-close orders at ~3:05 pm IST (MODE=close) plus an 8:15 am
+IST status message (MODE=morning: holdings, watchlist, account; no orders). MODE=open (next-open variant) is kept only for manual tests. the best India dip strategy, virtual money, no broker. Research only, not financial advice.
 Runs every NSE trading day after the close (GitHub Actions ~6 pm IST). Sends a phone alert (ntfy) with the orders to place
 at the NEXT morning's open (9:15 am IST), so anyone can follow it by hand; the bot fills its own virtual orders at that open.
 
@@ -109,11 +110,17 @@ def signals(px, nifty, nb, gb):
         if L["close"] > L["ma200"] and rel[s] <= -DIP and L["raw"] > MINPX and not (vr[s] > VOLX) and not glitch[s]:
             dips.append({"symbol": s, "rel_pct": round(float(rel[s]) * 100, 1), "own_pct": round(float(r5[s]) * 100, 1), "close": round(L["close"], 2), "raw_close": round(L["raw"], 2)})
     dips.sort(key=lambda x: x["rel_pct"])
+    watch = []
+    for s in members:
+        L = last.get(s)
+        if L and L["ma200"] and L["close"] > L["ma200"] and -DIP < rel[s] <= -0.08 and L["raw"] > MINPX and not glitch[s]:
+            watch.append({"symbol": s, "rel_pct": round(float(rel[s]) * 100, 1), "own_pct": round(float(r5[s]) * 100, 1)})
+    watch.sort(key=lambda x: x["rel_pct"])
     ntrend = n.iloc[-1] > n.iloc[-150:].mean(); g = gb.c.reindex(dates).ffill(); gtrend = g.iloc[-1] > g.iloc[-100:].mean()
     park = NIFTY_ETF if ntrend else (GOLD_ETF if gtrend else LIQ_ETF)
     etf = {NIFTY_ETF: {"close": float(nb.c.reindex(dates).ffill().iloc[-1]), "raw": float(nb.rc.reindex(dates).ffill().iloc[-1]), "open": float(nb.o.reindex(dates).iloc[-1]) if pd.notna(nb.o.reindex(dates).iloc[-1]) else None},
            GOLD_ETF: {"close": float(g.iloc[-1]), "raw": float(gb.rc.reindex(dates).ffill().iloc[-1]), "open": float(gb.o.reindex(dates).iloc[-1]) if pd.notna(gb.o.reindex(dates).iloc[-1]) else None}}
-    return {"today": str(today.date()), "dates": [str(d.date()) for d in dates[-10:]], "last": last, "etf": etf, "dips": dips, "nifty5_pct": round(float(n5) * 100, 1),
+    return {"today": str(today.date()), "dates": [str(d.date()) for d in dates[-10:]], "last": last, "etf": etf, "dips": dips, "watch": watch, "nifty5_pct": round(float(n5) * 100, 1),
             "nifty_close": round(float(n.iloc[-1]), 1), "nifty_trend": bool(ntrend), "gold_trend": bool(gtrend), "park": park, "members": len(members)}
 
 def px_of(sig, s, field="close"):
@@ -217,23 +224,46 @@ def fmt(sig, st, r, mode="open", other=None):
         elif o["symbol"] == "LIQUID_OUT": L.append(f"   SELL liquid fund {inr(o['inr'])}\n     why: {o['why']}")
         elif o["side"] == "sell": L.append(f"   SELL {o['qty']} {o['symbol']}\n     why: {o['why']}")
         else: L.append(f"   BUY ~{o.get('approx_qty', '?')} {o['symbol']} (~{inr(o['inr'])})\n     why: {o['why']}")
-    L += ["", f"3) RESULT (India Bot {'B' if mode == 'close' else 'A'}, virtual Rs 10 lakh, started " + st["started"] + ")"]
+    L += ["", "3) RESULT (virtual Rs 10 lakh, started " + st["started"] + ")"]
     if r["done"]: L.append(("   Filled now: " if mode == "close" else "   Filled at today's open: ") + "; ".join(r["done"][:8]))
     L.append(f"   Dip stocks held: {len(st['positions'])} of {SLOTS} | parking: {', '.join(f'{q} {s}' for s, q in st['park'].items()) or 'none'}{' + liquid ' + inr(st['liquid']) if st['liquid'] > 1 else ''}")
     L.append(f"   Idle money rule now: {sig['park']} ({'Nifty above 150-day avg' if sig['nifty_trend'] else ('Nifty below trend, gold above 100-day avg' if sig['gold_trend'] else 'Nifty and gold below trend')})")
     L.append(f"   Account: {inr(eq)} ({ret:+.2f}%) vs Nifty 50 {nret:+.2f}% since start | cash {inr(st['cash'])}")
     if other: L.append(f"   {other['name']}: {inr(other['equity'])} ({(other['equity'] / START_CASH - 1) * 100:+.2f}%)")
     L.append(f"   Data: NSE {'prices at ' + sig['quote_ist'] + ' IST' if mode == 'close' else 'close ' + sig['today']}")
-    title = f"{'INDIA BOT B (before close)' if mode == 'close' else 'INDIA BOT A (next open)'} {sig['today']}: {len(r['orders'])} order{'s' if len(r['orders']) != 1 else ''} {'- place before 3:30 pm IST' if mode == 'close' else 'for tomorrow'} | buys {', '.join(o['symbol'] for o in r['orders'] if o['side'] == 'buy' and o['symbol'] not in (LIQ_ETF, 'LIQUID_OUT', NIFTY_ETF, GOLD_ETF)) or 'none'}"
+    title = f"{'INDIA BOT' if mode == 'close' else 'INDIA BOT (next-open test)'} {sig['today']}: {len(r['orders'])} order{'s' if len(r['orders']) != 1 else ''} {'- place before 3:30 pm IST' if mode == 'close' else 'for tomorrow'} | buys {', '.join(o['symbol'] for o in r['orders'] if o['side'] == 'buy' and o['symbol'] not in (LIQ_ETF, 'LIQUID_OUT', NIFTY_ETF, GOLD_ETF)) or 'none'}"
     return title, "\n".join(L)
 
 def notify(title, body):
     topic = os.environ.get("NTFY_TOPIC_INDIA")               # India alerts only: never the US topic
     if not topic or os.environ.get("NO_NOTIFY"): print("[no ntfy: set the NTFY_TOPIC_INDIA secret]" if not topic else "[no ntfy]", title); return
     try:
-        urllib.request.urlopen(urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers={"Title": title.encode("ascii", "ignore").decode(), "Tags": "india,chart_with_upwards_trend"}), timeout=30)
+        urllib.request.urlopen(urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers={"Title": title.encode("ascii", "ignore").decode(), "Priority": "high", "Tags": "india,chart_with_upwards_trend"}), timeout=30)
         print("ntfy sent", flush=True)
     except Exception as e: print("ntfy failed", e, flush=True)
+
+def morning(sig, st):
+    """8:15 am IST status from the India bot: holdings, account vs Nifty, watchlist. No orders - those come at ~3:05 pm."""
+    inr = lambda x: f"Rs {x:,.0f}"
+    L = ["1) HOLDING NOW"]
+    for p in (st or {}).get("positions", []):
+        c = px_of(sig, p["symbol"]); L.append(f"   {p['symbol']}: {p['qty']} bought {p['entry_day']} @ {p['entry_px']:.2f}, now {c:.2f} ({(c / p['entry_px'] - 1) * 100:+.1f}%)" if c else f"   {p['symbol']}: {p['qty']} (no price)")
+    if not (st or {}).get("positions"): L.append("   no dip stocks")
+    park = (st or {}).get("park", {}); L.append(f"   parking: {', '.join(f'{q} {s_}' for s_, q in park.items()) or 'none'}{' + liquid fund ' + inr(st['liquid']) if st and st.get('liquid', 0) > 1 else ''}")
+    L += ["", "2) WATCHLIST (8-12% worse than Nifty over 5 days, above 200-day trend; becomes a buy if it reaches 12% worse by ~3 pm)"]
+    watch = sig.get("watch", [])
+    for w in watch[:10]: L.append(f"   {w['symbol']} {w['own_pct']:+.1f}% (Nifty {sig['nifty5_pct']:+.1f}%), {abs(w['rel_pct'])}% worse than Nifty")
+    if not watch: L.append("   none close to the trigger")
+    L += ["", "3) ACCOUNT"]
+    if st and st.get("history"):
+        h = st["history"]; eq = h[-1]["equity"]; nret = (sig["nifty_close"] / h[0]["nifty"] - 1) * 100
+        L.append(f"   {inr(eq)} ({(eq / START_CASH - 1) * 100:+.2f}%) vs Nifty 50 {nret:+.2f}% since {st['started']}")
+        if len(h) > 1: L.append(f"   last change: {(h[-1]['equity'] / h[-2]['equity'] - 1) * 100:+.2f}% ({h[-1]['day']})")
+    else: L.append("   not started yet (first trading run today at ~3:05 pm IST)")
+    L.append(f"   Idle money rule: {sig['park']} | Data: NSE close {sig['today']}")
+    L += ["", "Orders (if any) come at ~3:05 pm IST, to place before the 3:30 pm close."]
+    n = len((st or {}).get("positions", []))
+    return f"INDIA BOT morning: holding {n} stock{'s' if n != 1 else ''}, {len(watch)} on watch", "\n".join(L)
 
 STATE_CLOSE = os.environ.get("STATE_CLOSE", "data/paper_india_close_state.json")
 def main():
@@ -243,6 +273,10 @@ def main():
     now_ist = datetime.now(IST); tday = now_ist.strftime("%Y-%m-%d")
     qt = nifty.attrs.get("quote_time"); qdt = datetime.fromtimestamp(qt, IST) if qt else None
     sig["quote_ist"] = qdt.strftime("%H:%M") if qdt else "?"
+    if mode == "morning":
+        if now_ist.weekday() >= 5 and not os.environ.get("FORCE"): print("weekend - no morning message", flush=True); return
+        st = json.load(open(STATE_CLOSE)) if os.path.exists(STATE_CLOSE) else None
+        title, body = morning(sig, st); print(title); print(body, flush=True); notify(title, body); return
     if not os.environ.get("DRY_FAKE") and not os.environ.get("FORCE"):
         early = mode == "open" and now_ist.hour < 9 and sig["today"] < tday       # Bot A backup run before the 9:15 open: yesterday's close is right
         if sig["today"] != tday and not early: print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return

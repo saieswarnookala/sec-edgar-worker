@@ -1,17 +1,15 @@
-name: India bots (A next open, B before close)
+name: India bot (before close + morning status)
 # India only - separate from the US bots. Alerts go only to the NTFY_TOPIC_INDIA secret.
 on:
   schedule:
-    # The main alarm for India Bot B is the Cloudflare timer (09:20 / 09:40 UTC = 2:50 / 3:10 pm IST): GitHub's schedule starts late.
-    - cron: '30 9 * * 1-5'            # India Bot B backup: 3:00 pm IST (skips itself if Bot B already ran or the window has passed)
-    - cron: '30 12 * * 1-5'           # India Bot A: 6:00 pm IST, after the NSE close
-    - cron: '30 15 * * 1-5'           # India Bot A backup: 9:00 pm IST
-    - cron: '30 0 * * 2-6'            # India Bot A backup: 6:00 am IST next morning, before the 9:15 open
+    # The main alarm for the before-close run is the Cloudflare timer (09:20 / 09:40 UTC = 2:50 / 3:10 pm IST): GitHub's schedule starts late.
+    - cron: '30 9 * * 1-5'            # before-close backup: 3:00 pm IST (skips itself if it already ran or the window has passed)
+    - cron: '45 2 * * 1-5'            # morning status: 8:15 am IST (holdings, watchlist, account; no orders)
   workflow_dispatch:
     inputs:
       bot:
-        description: 'A (next open) or B (before close)'
-        default: 'A'
+        description: 'B = before close (the India bot), morning = status message, A = next-open test (manual only)'
+        default: 'B'
       force:
         description: 'Run even outside its time window / non-session day (uses the latest prices)'
         default: ''
@@ -36,12 +34,12 @@ jobs:
       - name: Run
         shell: bash
         env:
-          MODE: ${{ (github.event_name == 'schedule' && github.event.schedule == '30 9 * * 1-5') && 'close' || (inputs.bot == 'B' && 'close' || 'open') }}
+          MODE: ${{ github.event_name == 'schedule' && (github.event.schedule == '45 2 * * 1-5' && 'morning' || 'close') || (inputs.bot == 'morning' && 'morning' || (inputs.bot == 'A' && 'open' || 'close')) }}
           FORCE: ${{ inputs.force }}
           NO_NOTIFY: ${{ inputs.notify == 'no' && '1' || '' }}
           NTFY_TOPIC_INDIA: ${{ secrets.NTFY_TOPIC_INDIA }}
         run: |
-          echo "India Bot $([ "$MODE" = close ] && echo B || echo A) (MODE=$MODE)"
+          echo "India bot MODE=$MODE"
           set -o pipefail; python -u scripts/paper_india.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit
         shell: bash
