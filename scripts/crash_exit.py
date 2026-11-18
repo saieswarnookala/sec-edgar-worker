@@ -89,7 +89,8 @@ else:
         if a >= end: break
         SPYH.update(hourly(["SPY"], a, b).get("SPY", {}))
     print("SPY hourly days:", len(SPYH), flush=True)
-    if len(SPYH) < 1000: raise SystemExit("too little SPY hourly data - check Alpaca keys / feed")
+    need = 0.7 * (D - t0)
+    if len(SPYH) < need: raise SystemExit(f"too little SPY hourly data ({len(SPYH)} days, need {need:.0f}) - check Alpaca keys / feed")
 
 SPHI20 = pd.Series(SPRAW).rolling(20, min_periods=15).max().values      # SPY's highest close of the last 20 days (raw)
 def trigger(i, X, falling=None):
