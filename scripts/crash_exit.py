@@ -143,6 +143,7 @@ def sim(X=None, buy_after=True, sell_park=True, bonus=0.0, falling=None):
     out = {"exits": len(events)}
     for name, a, b in (("2016-2026", START, "2100-01-01"), ("2016-2020", START, "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01"), ("2020 (covid)", "2020-01-01", "2021-01-01"), ("2022 (bear)", "2022-01-01", "2023-01-01")):
         ix = np.flatnonzero((dn >= np.datetime64(a)) & (dn < np.datetime64(b)) & (np.arange(D) >= t0))
+        if len(ix) < 30: out[name] = {}; continue
         cv = curve[ix] / curve[ix[0]]; y = len(ix) / 252
         out[name] = {"per_year_pct" if y > 1.5 else "return_pct": round(((cv[-1] ** (1 / y)) - 1) * 100 if y > 1.5 else (cv[-1] - 1) * 100, 1),
                      "worst_drop_pct": round(float((cv / np.maximum.accumulate(cv) - 1).min()) * 100, 1)}
@@ -155,7 +156,7 @@ def sim(X=None, buy_after=True, sell_park=True, bonus=0.0, falling=None):
 
 RES = {"rules as now (no crash exit)": sim()}
 chk = sim(X=9.99)
-assert abs(chk["2016-2026"]["per_year_pct"] - RES["rules as now (no crash exit)"]["2016-2026"]["per_year_pct"]) < 1e-9, "X=never must equal the base bot"
+assert chk["2016-2026"] == RES["rules as now (no crash exit)"]["2016-2026"], "X=never must equal the base bot"
 print("check ok: crash exit that never fires = base bot", flush=True)
 V = [(f"SPY -{x*100:g}% intraday -> sell all{'' if ba else ', no buys that day'}{'' if sp else ' (keep parking)'}", dict(X=x, buy_after=ba, sell_park=sp))
      for x in (0.015, 0.02, 0.03) for ba in (True, False) for sp in (True, False)]
@@ -165,7 +166,8 @@ for name, kw in V:
     RES[name] = sim(**kw)
 base = RES["rules as now (no crash exit)"]
 for name, r in RES.items():
-    print(f"{name:58s} {r['2016-2026']['per_year_pct']}%/yr worst {r['2016-2026']['worst_drop_pct']}% | exits {r['exits']} | 2016-20 {r['2016-2020']['per_year_pct']} 2021-26 {r['2021-2026']['per_year_pct']} | 2020 {r['2020 (covid)']['return_pct']}% (dd {r['2020 (covid)']['worst_drop_pct']}) 2022 {r['2022 (bear)']['return_pct']}%"
+    g = lambda k, f: r.get(k, {}).get(f)
+    print(f"{name:58s} {g('2016-2026', 'per_year_pct') or g('2016-2026', 'return_pct')}%/yr worst {g('2016-2026', 'worst_drop_pct')}% | exits {r['exits']} | 2016-20 {g('2016-2020', 'per_year_pct')} 2021-26 {g('2021-2026', 'per_year_pct')} | 2020 {g('2020 (covid)', 'return_pct')}% (dd {g('2020 (covid)', 'worst_drop_pct')}) 2022 {g('2022 (bear)', 'return_pct')}%"
           + (f" | SPY at exit {r.get('avg_spy_at_exit_pct')}% -> close {r.get('avg_spy_close_on_exit_days_pct')}%, recovered {r.get('exits_where_spy_recovered_by_close')}" if r.get("exits") else ""), flush=True)
 print(f"stock exit prices: {FALLBACK[1]} needed, {FALLBACK[0]} estimated (no Alpaca bar); Alpaca calls {CALLS[0]}", flush=True)
 json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "fallback_estimates": FALLBACK, "results": RES},
