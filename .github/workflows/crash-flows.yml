@@ -12,7 +12,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-        with:
       - run: pip install pandas pyarrow numpy
       - name: Run
         shell: bash
