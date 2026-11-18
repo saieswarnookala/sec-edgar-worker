@@ -23,6 +23,16 @@
    "orders": [
     "BUY $996 GPN dip (dip -12.2%)"
    ]
+  },
+  {
+   "today": "2026-11-18",
+   "equity": 9905.33,
+   "spy": 730.04,
+   "park": "CASH",
+   "dip_signals": 2,
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": []
   }
  ],
  "vs": {
@@ -48,5 +58,5 @@
   "park": {},
   "trades": []
  },
- "updated": "2026-11-17T20:25:39.763Z"
+ "updated": "2026-11-18T20:25:58.326Z"
 }

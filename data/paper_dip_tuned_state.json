@@ -21,10 +21,21 @@
    "orders": [
     "BUY $996 GPN (dip -12.2%)"
    ]
+  },
+  {
+   "today": "2026-11-18",
+   "equity": 9905.33,
+   "spy": 730.04,
+   "park": "CASH",
+   "stock_signals": 3,
+   "etf_signals": [],
+   "orders": [
+    "BUY $991 HUM (dip -8.1%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8004.3301682599995,
+  "cash": 7013.797335005,
   "positions": [
    {
     "symbol": "MRNA",
@@ -41,10 +52,18 @@
     "entry_px": 86.54,
     "dip_pct": -12.2,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-18",
+    "qty": 2.521691,
+    "entry_px": 392.805,
+    "dip_pct": -8.1,
+    "size_pct": 10
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-17T20:25:39.763Z"
+ "updated": "2026-11-18T20:25:58.326Z"
 }

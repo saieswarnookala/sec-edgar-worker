@@ -23,6 +23,16 @@
    "orders": [
     "BUY $1490 GPN (dip -12.2%)"
    ]
+  },
+  {
+   "today": "2026-11-18",
+   "equity": 9858.03,
+   "spy": 730.04,
+   "scale": 1.492,
+   "vol_rank": 0.992,
+   "spy_vol_pct": 22.9,
+   "park": "CASH",
+   "orders": []
   }
  ],
  "vs": {
@@ -48,5 +58,5 @@
   "park": {},
   "trades": []
  },
- "updated": "2026-11-17T20:25:39.763Z"
+ "updated": "2026-11-18T20:25:58.326Z"
 }
