@@ -1,11 +1,16 @@
-name: Paper trade India dip bot
+name: India bots (A next open, B before close)
+# India only - separate from the US bots. Alerts go only to the NTFY_TOPIC_INDIA secret.
 on:
   schedule:
-    - cron: '30 12 * * 1-5'     # 6:00 pm IST, after NSE close (3:30 pm) and Yahoo's end-of-day update
+    - cron: '15,25,35,45 9 * * 1-5'   # India Bot B: 2:45-3:15 pm IST (several tries because GitHub starts late; it runs once a day)
+    - cron: '30 12 * * 1-5'           # India Bot A: 6:00 pm IST, after the NSE close
   workflow_dispatch:
     inputs:
+      bot:
+        description: 'A (next open) or B (before close)'
+        default: 'A'
       force:
-        description: 'Run even if today is not an NSE session (uses the latest close)'
+        description: 'Run even outside its time window / non-session day (uses the latest prices)'
         default: ''
       notify:
         description: 'Send the phone alert (yes/no)'
@@ -13,7 +18,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: paper-india
+  group: india-bots
   cancel-in-progress: false
 jobs:
   run:
@@ -28,16 +33,17 @@ jobs:
       - name: Run
         shell: bash
         env:
+          MODE: ${{ (github.event_name == 'schedule' && github.event.schedule != '30 12 * * 1-5') && 'close' || (inputs.bot == 'B' && 'close' || 'open') }}
           FORCE: ${{ inputs.force }}
           NO_NOTIFY: ${{ inputs.notify == 'no' && '1' || '' }}
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           NTFY_TOPIC_INDIA: ${{ secrets.NTFY_TOPIC_INDIA }}
         run: |
+          echo "India Bot $([ "$MODE" = close ] && echo B || echo A) (MODE=$MODE)"
           set -o pipefail; python -u scripts/paper_india.py 2>&1 | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/paper_india_state.json 2>/dev/null || true
-          git commit -qm "India paper bot $(date -u +%F)" || exit 0
+          git add data/paper_india_state.json data/paper_india_close_state.json 2>/dev/null || true
+          git commit -qm "India bots $(date -u +%F)" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1

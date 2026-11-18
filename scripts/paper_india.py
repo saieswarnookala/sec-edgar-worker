@@ -1,4 +1,4 @@
-"""India paper bot (from Nov 18 2026): the best India dip strategy, virtual money, no broker. Research only, not financial advice.
+"""India bots A and B (from Nov 18 2026), separate from the US bots: the best India dip strategy, virtual money, no broker. Research only, not financial advice.
 Runs every NSE trading day after the close (GitHub Actions ~6 pm IST). Sends a phone alert (ntfy) with the orders to place
 at the NEXT morning's open (9:15 am IST), so anyone can follow it by hand; the bot fills its own virtual orders at that open.
 
@@ -10,8 +10,9 @@ Rules (backtest 2008-2026, realistic next-open fills: ~16.3%/yr before tax, wors
 - Idle money: NIFTYBEES while the Nifty 50 is above its 150-day average; else GOLDBEES if gold is above its 100-day
   average; else a liquid fund (LIQUIDBEES; modelled as cash earning ~6%/yr). 2% kept in cash.
 - Costs (virtual): 0.30% per side for stocks (STT, stamp, brokerage, spread), 0.15% for ETFs. Whole shares only.
-Note: in the backtest, sells happened at the close; here every order (buy or sell) is for the next open, so a manual
-follower can do it. State: data/paper_india_state.json. DRY_FAKE=1 runs on made-up prices (tests)."""
+India Bot A = MODE=open (after-close run ~6 pm IST, orders for the next open; backtest 'realistic'
+16.3%/yr); India Bot B = MODE=close (before-close run ~3:05 pm IST, orders filled at once at the latest price, like placing them before
+the 3:30 pm close; backtest close fills 18.3%/yr before costs differences). Today's volume is partial in the before-close run. State: data/paper_india_state.json. DRY_FAKE=1 runs on made-up prices (tests)."""
 import os, sys, io, json, time, urllib.request, urllib.parse
 from datetime import datetime, timezone, timedelta
 import numpy as np, pandas as pd
@@ -41,6 +42,7 @@ def yahoo(sym):
         df = pd.DataFrame({"c": adj, "rc": q["close"], "o": q["open"], "v": q["volume"]}, index=idx)
         df = df[~df.index.duplicated(keep="last")].dropna(subset=["c", "rc"]); df = df[(df.c > 0) & (df.rc > 0)]
         df["o"] = df.o * df.c / df.rc
+        df.attrs["quote_time"] = j.get("meta", {}).get("regularMarketTime")
         return df
     except Exception as e: print("parse", sym, e, flush=True); return None
 def universe():
@@ -118,15 +120,11 @@ def px_of(sig, s, field="close"):
     if s in sig["etf"]: return sig["etf"][s][field] or sig["etf"][s]["close"]
     L = sig["last"].get(s); return (L[field] or L["close"]) if L else None
 
-def step(state, sig):
-    """one trading day: (1) fill yesterday's orders at today's open, (2) value at close, (3) plan orders for tomorrow's open"""
-    st = state or {"cash": START_CASH, "liquid": 0.0, "positions": [], "park": {}, "pending": [], "trades": [], "history": [], "started": sig["today"]}
-    today, done = sig["today"], []
-    if st["history"] and st["history"][-1]["day"] >= today: return st, None            # already ran for this session
-    if st["liquid"]: st["liquid"] *= 1 + LIQ                                                # liquid fund accrual for the day
-    # 1) fill pending orders at today's open (sells first)
-    for o in sorted(st.get("pending", []), key=lambda x: x["side"] != "sell"):
-        p = px_of(sig, o["symbol"], "open")
+def fill(st, sig, orders, field, today):
+    """execute orders at today's open or close price (sells first); returns what happened"""
+    done = []
+    for o in sorted(orders, key=lambda x: x["side"] != "sell"):
+        p = px_of(sig, o["symbol"], field)
         if p is None: done.append(f"NOT FILLED {o['side']} {o['symbol']}: no price today"); continue
         c = COST_E if o["symbol"] in (NIFTY_ETF, GOLD_ETF) else COST_S
         if o["side"] == "sell":
@@ -149,6 +147,16 @@ def step(state, sig):
             if o["symbol"] in (NIFTY_ETF, GOLD_ETF): st["park"][o["symbol"]] = st["park"].get(o["symbol"], 0) + q
             else: st["positions"].append({"symbol": o["symbol"], "qty": q, "entry_px": p, "entry_day": today, "dip_pct": o.get("dip_pct")})
             done.append(f"BOUGHT {q} {o['symbol']} @ {p:.2f}")
+    return done
+
+def step(state, sig, mode="open"):
+    """one trading day. mode 'open': fill yesterday's orders at today's open, value at close, plan orders for tomorrow's open.
+    mode 'close': plan from the latest (pre-close) prices and fill at once at those prices, like a person placing orders at ~3:10 pm."""
+    st = state or {"cash": START_CASH, "liquid": 0.0, "positions": [], "park": {}, "pending": [], "trades": [], "history": [], "started": sig["today"]}
+    today, done = sig["today"], []
+    if st["history"] and st["history"][-1]["day"] >= today: return st, None            # already ran for this session
+    if st["liquid"]: st["liquid"] *= 1 + LIQ                                                # liquid fund accrual for the day
+    if mode == "open": done = fill(st, sig, st.get("pending", []), "open", today); st["pending"] = []
     # 2) value at today's close
     val = lambda s, q: q * (px_of(sig, s) or 0)
     stock_val = sum(val(p["symbol"], p["qty"]) for p in st["positions"]); park_val = sum(val(s, q) for s, q in st["park"].items())
@@ -185,55 +193,73 @@ def step(state, sig):
         if gap > 0.05 * equity: orders.append({"side": "buy", "symbol": want, "inr": gap, "approx_qty": int(gap // p), "why": "park idle money (" + ("Nifty above its 150-day average" if want == NIFTY_ETF else "Nifty below trend, gold above its 100-day average") + ")"})
         elif gap < -0.05 * equity and st["park"].get(want):
             q = min(st["park"][want], int(-gap // p) + 1); orders.append({"side": "sell", "symbol": want, "qty": q, "why": "free cash for stock buys", "partial": True})
-    st["pending"] = orders
+    if mode == "close":
+        now = fill(st, sig, orders, "close", today); done += now; st["pending"] = []
+        stock_val = sum(val(p["symbol"], p["qty"]) for p in st["positions"]); park_val = sum(val(s_, q) for s_, q in st["park"].items())
+        equity = st["cash"] + st["liquid"] + stock_val + park_val
+    else: st["pending"] = orders
     st["history"].append({"day": today, "equity": round(equity, 2), "nifty": sig["nifty_close"], "cash": round(st["cash"], 2), "liquid": round(st["liquid"], 2),
                           "stocks": len(st["positions"]), "park": dict(st["park"]), "park_target": want, "dips": len(sig["dips"]), "filled": done, "orders": len(orders)})
     st["history"] = st["history"][-800:]; st["trades"] = st["trades"][-400:]
     return st, {"done": done, "orders": orders, "equity": equity, "stock_val": stock_val, "park_val": park_val}
 
-def fmt(sig, st, r):
+def fmt(sig, st, r, mode="open", other=None):
     inr = lambda x: f"Rs {x:,.0f}"
     h0 = st["history"][0]; eq = r["equity"]; ret = (eq / START_CASH - 1) * 100; nret = (sig["nifty_close"] / h0["nifty"] - 1) * 100
     L = [f"1) STOCKS PICKED (top 200 NSE, down 12%+ vs Nifty in 5 days, still above 200-day trend)", f"   Nifty last 5 days: {sig['nifty5_pct']:+.1f}%"]
     if not sig["dips"]: L.append("   none today")
     for d in sig["dips"][:12]:
         L.append(f"   {d['symbol']} {d['own_pct']:+.1f}% (Nifty {sig['nifty5_pct']:+.1f}%) -> " + ("BUY" if not d.get("skip") else "skip: " + d["skip"]))
-    L += ["", "2) ORDERS FOR TOMORROW'S OPEN (9:15 am IST)"]
+    L += ["", "2) ORDERS TO PLACE NOW (before the 3:30 pm IST close, at about these prices)" if mode == "close" else "2) ORDERS FOR TOMORROW'S OPEN (9:15 am IST)"]
     if not r["orders"]: L.append("   none: nothing to sell, no new dips, parking already right")
     for o in r["orders"]:
         if o["symbol"] == LIQ_ETF: L.append(f"   BUY liquid fund ({LIQ_ETF}) {inr(o['inr'])}\n     why: {o['why']}")
         elif o["symbol"] == "LIQUID_OUT": L.append(f"   SELL liquid fund {inr(o['inr'])}\n     why: {o['why']}")
         elif o["side"] == "sell": L.append(f"   SELL {o['qty']} {o['symbol']}\n     why: {o['why']}")
         else: L.append(f"   BUY ~{o.get('approx_qty', '?')} {o['symbol']} (~{inr(o['inr'])})\n     why: {o['why']}")
-    L += ["", "3) RESULT (virtual Rs 10 lakh, started " + st["started"] + ")"]
-    if r["done"]: L.append("   Filled at today's open: " + "; ".join(r["done"][:8]))
+    L += ["", f"3) RESULT (India Bot {'B' if mode == 'close' else 'A'}, virtual Rs 10 lakh, started " + st["started"] + ")"]
+    if r["done"]: L.append(("   Filled now: " if mode == "close" else "   Filled at today's open: ") + "; ".join(r["done"][:8]))
     L.append(f"   Dip stocks held: {len(st['positions'])} of {SLOTS} | parking: {', '.join(f'{q} {s}' for s, q in st['park'].items()) or 'none'}{' + liquid ' + inr(st['liquid']) if st['liquid'] > 1 else ''}")
     L.append(f"   Idle money rule now: {sig['park']} ({'Nifty above 150-day avg' if sig['nifty_trend'] else ('Nifty below trend, gold above 100-day avg' if sig['gold_trend'] else 'Nifty and gold below trend')})")
     L.append(f"   Account: {inr(eq)} ({ret:+.2f}%) vs Nifty 50 {nret:+.2f}% since start | cash {inr(st['cash'])}")
-    L.append(f"   Data: NSE close {sig['today']}")
-    title = f"INDIA paper bot {sig['today']}: {len(r['orders'])} order{'s' if len(r['orders']) != 1 else ''} for tomorrow | buys {', '.join(o['symbol'] for o in r['orders'] if o['side'] == 'buy' and o['symbol'] not in (LIQ_ETF, 'LIQUID_OUT', NIFTY_ETF, GOLD_ETF)) or 'none'}"
+    if other: L.append(f"   {other['name']}: {inr(other['equity'])} ({(other['equity'] / START_CASH - 1) * 100:+.2f}%)")
+    L.append(f"   Data: NSE {'prices at ' + sig['quote_ist'] + ' IST' if mode == 'close' else 'close ' + sig['today']}")
+    title = f"{'INDIA BOT B (before close)' if mode == 'close' else 'INDIA BOT A (next open)'} {sig['today']}: {len(r['orders'])} order{'s' if len(r['orders']) != 1 else ''} {'- place before 3:30 pm IST' if mode == 'close' else 'for tomorrow'} | buys {', '.join(o['symbol'] for o in r['orders'] if o['side'] == 'buy' and o['symbol'] not in (LIQ_ETF, 'LIQUID_OUT', NIFTY_ETF, GOLD_ETF)) or 'none'}"
     return title, "\n".join(L)
 
 def notify(title, body):
-    topic = os.environ.get("NTFY_TOPIC_INDIA") or os.environ.get("NTFY_TOPIC")
-    if not topic or os.environ.get("NO_NOTIFY"): print("[no ntfy]", title); return
+    topic = os.environ.get("NTFY_TOPIC_INDIA")               # India alerts only: never the US topic
+    if not topic or os.environ.get("NO_NOTIFY"): print("[no ntfy: set the NTFY_TOPIC_INDIA secret]" if not topic else "[no ntfy]", title); return
     try:
         urllib.request.urlopen(urllib.request.Request(f"https://ntfy.sh/{topic}", data=body.encode(), headers={"Title": title.encode("ascii", "ignore").decode(), "Tags": "india,chart_with_upwards_trend"}), timeout=30)
         print("ntfy sent", flush=True)
     except Exception as e: print("ntfy failed", e, flush=True)
 
+STATE_CLOSE = os.environ.get("STATE_CLOSE", "data/paper_india_close_state.json")
 def main():
+    mode = os.environ.get("MODE", "open")            # open = after-close run (orders for next open); close = before-close run (~3:05 pm IST)
     px, nifty, nb, gb, miss = load_market()
     sig = signals(px, nifty, nb, gb)
     now_ist = datetime.now(IST); tday = now_ist.strftime("%Y-%m-%d")
-    if not os.environ.get("DRY_FAKE") and not os.environ.get("FORCE") and sig["today"] != tday:
-        print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return
-    st = json.load(open(STATE)) if os.path.exists(STATE) else None
-    st, r = step(st, sig)
+    qt = nifty.attrs.get("quote_time"); qdt = datetime.fromtimestamp(qt, IST) if qt else None
+    sig["quote_ist"] = qdt.strftime("%H:%M") if qdt else "?"
+    if not os.environ.get("DRY_FAKE") and not os.environ.get("FORCE"):
+        if sig["today"] != tday: print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return
+        if mode == "close":
+            mins = now_ist.hour * 60 + now_ist.minute
+            if not (14 * 60 + 45 <= mins <= 15 * 60 + 25): print(f"before-close run only between 2:45 and 3:25 pm IST (now {now_ist:%H:%M}) - skipping", flush=True); return
+            if not qdt or (now_ist - qdt).total_seconds() > 20 * 60: print(f"prices are stale (quote {sig['quote_ist']} IST) - not trading on old prices", flush=True); return
+    path = STATE_CLOSE if mode == "close" else STATE
+    st = json.load(open(path)) if os.path.exists(path) else None
+    st, r = step(st, sig, mode)
     if r is None: print("already ran for", sig["today"], flush=True); return
     st["missing_symbols"] = miss
-    title, body = fmt(sig, st, r); print(title); print(body, flush=True)
-    os.makedirs(os.path.dirname(STATE) or ".", exist_ok=True); json.dump(st, open(STATE, "w"), indent=1, default=float)
+    op = STATE if mode == "close" else STATE_CLOSE; other = None
+    if os.path.exists(op):
+        o = json.load(open(op))
+        if o.get("history"): other = {"name": "India Bot A, next open" if mode == "close" else "India Bot B, before close", "equity": o["history"][-1]["equity"]}
+    title, body = fmt(sig, st, r, mode, other); print(title); print(body, flush=True)
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True); json.dump(st, open(path, "w"), indent=1, default=float)
     notify(title, body)
 
 if __name__ == "__main__":

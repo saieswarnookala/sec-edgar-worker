@@ -18,3 +18,16 @@ again, r2 = B.step(st, sig); assert r2 is None, "second run on the same day must
 print(title); print(body[:1600])
 fills = [f for h in st["history"] for f in h["filled"]]
 print(len(fills), "fills;", sum("NIFTYBEES" in f for f in fills), "NIFTYBEES fills"); print(fills[:14]); print(st["trades"])
+
+# before-close account: same days, mode 'close' (decide + fill at once at the latest price)
+stc, nb_, ns_ = None, 0, 0
+for k in range(60, 0, -1):
+    cut = lambda d: d.iloc[:-k] if k else d
+    sig = B.signals({s: cut(d) for s, d in px.items()}, cut(nifty), cut(nb), cut(gb)); sig["quote_ist"] = "15:05"
+    stc, r = B.step(stc, sig, "close")
+    assert r is not None and stc["cash"] >= -1e-6 and not stc["pending"], "close mode must fill at once, never leave orders pending"
+    import re; nb_ += sum(bool(re.match(r"BOUGHT \d+ S\d", f)) for f in r["done"]); ns_ += sum(bool(re.match(r"SOLD \d+ S\d", f)) for f in r["done"])
+    if k == 1: tc, bc = B.fmt(sig, stc, r, "close", {"name": "next-open", "equity": st["history"][-1]["equity"]})
+print("before-close account: equity", round(stc["history"][-1]["equity"]), "| stock buys", nb_, "| closed trades", len(stc["trades"]))
+assert nb_ > 0 and len(stc["trades"]) > 0
+print(tc); print(bc)
