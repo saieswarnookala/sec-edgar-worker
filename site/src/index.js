@@ -103,6 +103,9 @@ export const TIMERS = {
   '25,40 16,17,19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],
   // Screener refresh: 21:45 UTC (4:45 pm ET winter, 5:45 summer) after the close, backup 23:45 UTC. GitHub's own schedule ran 4-6 h late.
   '45 21,23 * * *': ['screen.yml', {}],
+  // INDIA Bot B (before close): 09:20 and 09:40 UTC = 2:50 / 3:10 pm IST. India has no daylight saving, so one line all year.
+  // The India bots are otherwise separate (own workflow, state and ntfy topic); this is only the alarm clock. 5 of 5 free cron triggers used.
+  '20,40 9 * * 1-5': ['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }],
 };
 export async function runTimer(cron, env, fetchFn = fetch) {
   const t = TIMERS[cron];

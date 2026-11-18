@@ -84,7 +84,7 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Backtest (scripts/screener_backtest.py, data/screener_backtest*.json; S&P 500 point-in-time, pick each May, hold 12 months, 2013-2026): 15.8%/yr (15.8 / 15.9 halves) vs SPY 14.0%, equal-weight 12.8%, old high-P/E 11.2% (7.8% after 2019). Momentum (11.9%) and 200-day trend filter (10.5%) hurt. 9 of 11 nearby versions beat SPY; no debt limit tested 19.2% but kept the debt rule on purpose.
 - Small/mid/micro test running: scripts/smallcap_backtest.py (weekly Alpaca bars + SEC, survivorship warning) -> data/smallcap_backtest.json; then rerun scripts/make_screener_report.py to add it to the PDF.
 - Screener tab: summary card + backtest table on top, PDF download (site/static-data/screener_rules_report.pdf, built by scripts/make_screener_report.py).
-- Refresh: Cloudflare cron '45 21,23 * * *' dispatches screen.yml daily (GitHub schedule ran 4-6 h late). Cloudflare free plan: 4 of 5 cron triggers used.
+- Refresh: Cloudflare cron '45 21,23 * * *' dispatches screen.yml daily (GitHub schedule ran 4-6 h late). Cloudflare free plan: 5 of 5 cron triggers used (5th = India Bot B).
 - Discussion brief for Sai's friend: https://claude.ai/artifact/7xSY9Xtx9YuszTaBYVEfUi
 
 ### Rhythm and volatile-bounce research (Nov 14) - nothing new to trade
@@ -141,8 +141,8 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 ### India bots A and B (virtual Rs 10 lakh each, from Nov 18) - separate from the US bots
 - scripts/paper_india.py, workflow paper-india.yml ("India bots"), test scripts/test_paper_india.py (60 fake days, both bots). Alerts ONLY to secret NTFY_TOPIC_INDIA (never the US topic; no secret = no alert).
 - Rules = India best: top 200 NSE by traded value (re-picked Jan/Jul), 12% dip vs Nifty over 5 sessions, above 200-day, volume <= 2x, smart exit (close > 5-day avg or 5 sessions), 10 x 10%, whole shares; idle money NIFTYBEES if Nifty > 150-day avg, else GOLDBEES if gold > 100-day avg, else liquid fund (cash at ~6%/yr). Costs 0.30%/side stocks, 0.15% ETFs.
-- India Bot A (MODE=open): 6 pm IST run (cron 12:30 UTC), orders for the NEXT open, fills itself at that open. State data/paper_india_state.json. Backtest 'realistic' 16.3%/yr.
-- India Bot B (MODE=close): 2:45-3:25 pm IST window (crons 09:15/25/35/45 UTC, runs once a day), decides on the latest prices and fills at once, like placing orders before the 3:30 pm close; refuses stale quotes (> 20 min). State data/paper_india_close_state.json. Backtest close fills 18.3%/yr before the extra realism.
+- India Bot A (MODE=open): GitHub crons 12:30 + 15:30 UTC and 00:30 UTC next morning (6 pm / 9 pm / 6 am IST; first one that runs wins, any time before the 9:15 open is fine), orders for the NEXT open, fills itself at that open. State data/paper_india_state.json. Backtest 'realistic' 16.3%/yr.
+- India Bot B (MODE=close): 2:45-3:25 pm IST window; started by the Cloudflare timer '20,40 9 * * 1-5' (2:50 / 3:10 pm IST, the 5th and last free cron trigger) with a GitHub backup at 09:30 UTC; runs once a day, decides on the latest prices and fills at once, like placing orders before the 3:30 pm close; refuses stale quotes (> 20 min). State data/paper_india_close_state.json. Backtest close fills 18.3%/yr before the extra realism.
 - First run (Bot A, Nov 17 close): no dips; parks Rs 9.8 lakh in NIFTYBEES at the Nov 18 open. Yahoo lacks ~20 new listings (<1 yr history; can't pass the 200-day rule).
 ## 6. Live bot: Robinhood (live/, guide live/README.md)
 - Account: Robinhood agentic (MCP) account, LIMITED MARGIN (so sale proceeds are usable the same day), opened Nov 11–12, ~$10 in it. Plan $1,000.

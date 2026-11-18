@@ -2,8 +2,11 @@ name: India bots (A next open, B before close)
 # India only - separate from the US bots. Alerts go only to the NTFY_TOPIC_INDIA secret.
 on:
   schedule:
-    - cron: '15,25,35,45 9 * * 1-5'   # India Bot B: 2:45-3:15 pm IST (several tries because GitHub starts late; it runs once a day)
+    # The main alarm for India Bot B is the Cloudflare timer (09:20 / 09:40 UTC = 2:50 / 3:10 pm IST): GitHub's schedule starts late.
+    - cron: '30 9 * * 1-5'            # India Bot B backup: 3:00 pm IST (skips itself if Bot B already ran or the window has passed)
     - cron: '30 12 * * 1-5'           # India Bot A: 6:00 pm IST, after the NSE close
+    - cron: '30 15 * * 1-5'           # India Bot A backup: 9:00 pm IST
+    - cron: '30 0 * * 2-6'            # India Bot A backup: 6:00 am IST next morning, before the 9:15 open
   workflow_dispatch:
     inputs:
       bot:
@@ -33,7 +36,7 @@ jobs:
       - name: Run
         shell: bash
         env:
-          MODE: ${{ (github.event_name == 'schedule' && github.event.schedule != '30 12 * * 1-5') && 'close' || (inputs.bot == 'B' && 'close' || 'open') }}
+          MODE: ${{ (github.event_name == 'schedule' && github.event.schedule == '30 9 * * 1-5') && 'close' || (inputs.bot == 'B' && 'close' || 'open') }}
           FORCE: ${{ inputs.force }}
           NO_NOTIFY: ${{ inputs.notify == 'no' && '1' || '' }}
           NTFY_TOPIC_INDIA: ${{ secrets.NTFY_TOPIC_INDIA }}

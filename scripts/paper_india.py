@@ -244,7 +244,8 @@ def main():
     qt = nifty.attrs.get("quote_time"); qdt = datetime.fromtimestamp(qt, IST) if qt else None
     sig["quote_ist"] = qdt.strftime("%H:%M") if qdt else "?"
     if not os.environ.get("DRY_FAKE") and not os.environ.get("FORCE"):
-        if sig["today"] != tday: print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return
+        early = mode == "open" and now_ist.hour < 9 and sig["today"] < tday       # Bot A backup run before the 9:15 open: yesterday's close is right
+        if sig["today"] != tday and not early: print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return
         if mode == "close":
             mins = now_ist.hour * 60 + now_ist.minute
             if not (14 * 60 + 45 <= mins <= 15 * 60 + 25): print(f"before-close run only between 2:45 and 3:25 pm IST (now {now_ist:%H:%M}) - skipping", flush=True); return
