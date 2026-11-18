@@ -1,4 +1,4 @@
-# Idea Scout: 2026-11-17
+# Idea Scout: 2026-11-18
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
@@ -9,39 +9,39 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 - **What:** Popular launch (742 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50470488>
 
-## 2. Show HN: Yogurt – Free, private, open-source alternative to Granola
-
-**Category:** build
-
-- **What:** Popular launch (306 points). Ideas: a niche version, integrations, or a hosted service around it.
-- **Evidence:** <https://news.ycombinator.com/item?id=50454625>
-
-## 3. Show HN: DeepSeek V3 in ~200 lines of pure Jax
+## 2. Show HN: DeepSeek V3 in ~200 lines of pure Jax
 
 **Category:** build
 
 - **What:** Popular launch (276 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50497589>
 
+## 3. Show HN: Isometric SF – A pixel-art map of the SF Bay Area
+
+**Category:** build
+
+- **What:** Popular launch (256 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **Evidence:** <https://news.ycombinator.com/item?id=50487228>
+
 ## 4. FrigadeHQ/yogurt: Private AI meeting notes that stay on your computer. A free, open-source alternative to Granola for Mac, Windows and Linux.
 
 **Category:** build
 
-- **What:** New GitHub project with 1997 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 2338 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/FrigadeHQ/yogurt>
 
-## 5. huamidev/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.
+## 5. huami1314/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.
 
 **Category:** build
 
-- **What:** New GitHub project with 8098 stars in 2 weeks (Swift). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/huamidev/GestaltX>
+- **What:** New GitHub project with 8355 stars in 2 weeks (Swift). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/huami1314/GestaltX>
 
 ## 6. deepseek-ai/chat-demo: Chat Demo
 
 **Category:** build
 
-- **What:** New GitHub project with 4507 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 4807 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/deepseek-ai/chat-demo>
 
 ## 7. Indian chip startup Bharat Semi lands $24M seed round as it eyes global AI sensor market - TechCrunch
@@ -69,19 +69,19 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 32.7, net margin 55.6%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 31.3, net margin 55.6%. A research lead, not a buy signal.
 
 ## 11. NFLX Netflix Inc. (Consumer Discretionary)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 23.2, net margin 24.3%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 22.7, net margin 24.3%. A research lead, not a buy signal.
 
 ## 12. JNJ Johnson & Johnson (Health Care)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 25.7, net margin 28.5%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 25.4, net margin 28.5%. A research lead, not a buy signal.
 
 
 <sub>Sources unavailable this run: reddit (403)</sub>
