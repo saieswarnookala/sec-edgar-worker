@@ -1,0 +1,5610 @@
+{
+ "note": "Hourly crash exit for the dip bot (Nov 17 2026). Research only, not financial advice.\nQuestion: if the bot checked SPY every hour and sold its dip stocks (and the parking ETF) when the market is crashing that day,\nwould it earn more or have smaller drops?\nBase bot = live rules: point-in-time S&P 500, price >= $5, above 200-day avg, 5-day return >= 10% worse than SPY, volume <= 2x;\n10 slots x 10%, buy at the close, sell when close > 5-day avg (after >= 1 day) or after 5 days; idle money in SPY (stand-in for the\nClear Leader ETF) when SPY > 100-day avg, else cash. Costs 0.05%/side.\nCrash rule: at the end of each regular-hours hour (10:00 ... 15:00 ET), if SPY is down >= X% from yesterday's close, sell\neverything at that hour's price (+0.1% slippage). Variants: X = 1.5 / 2 / 3%; after the exit the bot either skips new buys that day or\nbuys dips at the close as usual. Hourly bars: Alpaca (SIP, raw prices) 2016-2026; a held stock's exit price = its hourly close\nvs its own previous raw close; if Alpaca has no bar for it, its move is estimated as 1.2 x SPY's (counted and reported).\nSecond trigger type ('falling market'): SPY already 5/7/10% below its 20-day high AND down 1/2% today.\nChecks: X = never must equal the base bot exactly; DRY=planted gives crash exits a free +3% (must be found).\nDRY=1 uses synthetic hourly data (no network).",
+ "built": "2026-11-18",
+ "dry": null,
+ "fallback_estimates": [
+  13,
+  1863
+ ],
+ "results": {
+  "rules as now (no crash exit)": {
+   "exits": 0,
+   "2016-2026": {
+    "per_year_pct": 20.9,
+    "worst_drop_pct": -17.0
+   },
+   "2016-2020": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -17.0
+   },
+   "2021-2026": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 60.5,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 1.1,
+    "worst_drop_pct": -10.0
+   }
+  },
+  "SPY -1.5% intraday -> sell all": {
+   "exits": 206,
+   "2016-2026": {
+    "per_year_pct": 91.1,
+    "worst_drop_pct": -17.0
+   },
+   "2016-2020": {
+    "per_year_pct": 112.6,
+    "worst_drop_pct": -15.0
+   },
+   "2021-2026": {
+    "per_year_pct": 74.9,
+    "worst_drop_pct": -17.0
+   },
+   "2020 (covid)": {
+    "return_pct": 437.4,
+    "worst_drop_pct": -11.0
+   },
+   "2022 (bear)": {
+    "return_pct": 38.5,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -1.95,
+   "avg_spy_close_on_exit_days_pct": -2.03,
+   "exits_where_spy_recovered_by_close": 95,
+   "events": [
+    {
+     "day": "2024-04-12",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.62,
+     "spy_close_pct": -1.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-01",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.97,
+     "spy_close_pct": -1.42,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.23
+    },
+    {
+     "day": "2024-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -2.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-06",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.41
+    },
+    {
+     "day": "2024-10-31",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.96,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.31
+    },
+    {
+     "day": "2024-12-27",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-12-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.65,
+     "spy_close_pct": -1.14,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-01-10",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.76,
+     "spy_close_pct": -1.53,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.14
+    },
+    {
+     "day": "2025-01-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.41,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.49
+    },
+    {
+     "day": "2025-02-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.63,
+     "spy_close_pct": -0.67,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.27
+    },
+    {
+     "day": "2025-02-21",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.69,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.16
+    },
+    {
+     "day": "2025-03-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.71,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.81
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.57,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -1.26
+    },
+    {
+     "day": "2025-03-28",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.61,
+     "spy_close_pct": -2.01,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.0
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-08-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -1.64,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.37
+    },
+    {
+     "day": "2025-09-02",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -0.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.16
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.79,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2025-11-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -1.66,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.9
+    },
+    {
+     "day": "2026-01-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.52
+    },
+    {
+     "day": "2026-02-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.52,
+     "spy_close_pct": -0.85,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": 1.06
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -1.31,
+     "stocks_sold": 10,
+     "stocks_by_close_pct_of_account": -3.79
+    },
+    {
+     "day": "2026-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.78,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2026-03-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.7
+    },
+    {
+     "day": "2026-03-27",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.51,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.37
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-06-09",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -0.29,
+     "stocks_sold": 8,
+     "stocks_by_close_pct_of_account": -2.51
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -1.5% intraday -> sell all (keep parking)": {
+   "exits": 206,
+   "2016-2026": {
+    "per_year_pct": 90.5,
+    "worst_drop_pct": -16.6
+   },
+   "2016-2020": {
+    "per_year_pct": 109.7,
+    "worst_drop_pct": -16.6
+   },
+   "2021-2026": {
+    "per_year_pct": 75.8,
+    "worst_drop_pct": -16.4
+   },
+   "2020 (covid)": {
+    "return_pct": 422.3,
+    "worst_drop_pct": -11.9
+   },
+   "2022 (bear)": {
+    "return_pct": 33.3,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -1.95,
+   "avg_spy_close_on_exit_days_pct": -2.03,
+   "exits_where_spy_recovered_by_close": 95,
+   "events": [
+    {
+     "day": "2024-04-12",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.62,
+     "spy_close_pct": -1.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-01",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.97,
+     "spy_close_pct": -1.42,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.23
+    },
+    {
+     "day": "2024-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -2.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-06",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.41
+    },
+    {
+     "day": "2024-10-31",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.96,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.31
+    },
+    {
+     "day": "2024-12-27",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-12-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.65,
+     "spy_close_pct": -1.14,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-01-10",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.76,
+     "spy_close_pct": -1.53,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.14
+    },
+    {
+     "day": "2025-01-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.41,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.49
+    },
+    {
+     "day": "2025-02-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.63,
+     "spy_close_pct": -0.67,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.27
+    },
+    {
+     "day": "2025-02-21",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.69,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.16
+    },
+    {
+     "day": "2025-03-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.71,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.81
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.57,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -1.26
+    },
+    {
+     "day": "2025-03-28",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.61,
+     "spy_close_pct": -2.01,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.0
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-08-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -1.64,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.37
+    },
+    {
+     "day": "2025-09-02",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -0.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.16
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.79,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2025-11-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -1.66,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.9
+    },
+    {
+     "day": "2026-01-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.52
+    },
+    {
+     "day": "2026-02-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.52,
+     "spy_close_pct": -0.85,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": 1.06
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -1.31,
+     "stocks_sold": 10,
+     "stocks_by_close_pct_of_account": -3.79
+    },
+    {
+     "day": "2026-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.78,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2026-03-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.7
+    },
+    {
+     "day": "2026-03-27",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.51,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.37
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-06-09",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -0.29,
+     "stocks_sold": 8,
+     "stocks_by_close_pct_of_account": -2.51
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -1.5% intraday -> sell all, no buys that day": {
+   "exits": 206,
+   "2016-2026": {
+    "per_year_pct": 85.8,
+    "worst_drop_pct": -17.4
+   },
+   "2016-2020": {
+    "per_year_pct": 97.1,
+    "worst_drop_pct": -15.6
+   },
+   "2021-2026": {
+    "per_year_pct": 77.2,
+    "worst_drop_pct": -17.4
+   },
+   "2020 (covid)": {
+    "return_pct": 416.8,
+    "worst_drop_pct": -11.0
+   },
+   "2022 (bear)": {
+    "return_pct": 41.1,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -1.95,
+   "avg_spy_close_on_exit_days_pct": -2.03,
+   "exits_where_spy_recovered_by_close": 95,
+   "events": [
+    {
+     "day": "2024-04-12",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.62,
+     "spy_close_pct": -1.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-01",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.97,
+     "spy_close_pct": -1.42,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -2.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-06",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.41
+    },
+    {
+     "day": "2024-10-31",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.96,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.31
+    },
+    {
+     "day": "2024-12-27",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-12-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.65,
+     "spy_close_pct": -1.14,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-01-10",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.76,
+     "spy_close_pct": -1.53,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.14
+    },
+    {
+     "day": "2025-01-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.41,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.49
+    },
+    {
+     "day": "2025-02-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.63,
+     "spy_close_pct": -0.67,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.27
+    },
+    {
+     "day": "2025-02-21",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.69,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.16
+    },
+    {
+     "day": "2025-03-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.38
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.71,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -2.44
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.57,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.33
+    },
+    {
+     "day": "2025-03-28",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.61,
+     "spy_close_pct": -2.01,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.0
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-08-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -1.64,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.37
+    },
+    {
+     "day": "2025-09-02",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -0.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.16
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.79,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2025-11-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -1.66,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.9
+    },
+    {
+     "day": "2026-01-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.52
+    },
+    {
+     "day": "2026-02-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.52,
+     "spy_close_pct": -0.85,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": 1.06
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -1.31,
+     "stocks_sold": 9,
+     "stocks_by_close_pct_of_account": -2.7
+    },
+    {
+     "day": "2026-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.78,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2026-03-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.7
+    },
+    {
+     "day": "2026-03-27",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.51,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-06-09",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -0.29,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -1.91
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -1.5% intraday -> sell all, no buys that day (keep parking)": {
+   "exits": 206,
+   "2016-2026": {
+    "per_year_pct": 85.3,
+    "worst_drop_pct": -17.1
+   },
+   "2016-2020": {
+    "per_year_pct": 94.2,
+    "worst_drop_pct": -17.1
+   },
+   "2021-2026": {
+    "per_year_pct": 78.3,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 402.3,
+    "worst_drop_pct": -11.9
+   },
+   "2022 (bear)": {
+    "return_pct": 35.9,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -1.95,
+   "avg_spy_close_on_exit_days_pct": -2.03,
+   "exits_where_spy_recovered_by_close": 95,
+   "events": [
+    {
+     "day": "2024-04-12",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.62,
+     "spy_close_pct": -1.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-01",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.97,
+     "spy_close_pct": -1.42,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -2.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-09-06",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.41
+    },
+    {
+     "day": "2024-10-31",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.96,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.31
+    },
+    {
+     "day": "2024-12-27",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-12-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.65,
+     "spy_close_pct": -1.14,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-01-10",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.76,
+     "spy_close_pct": -1.53,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.14
+    },
+    {
+     "day": "2025-01-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.54,
+     "spy_close_pct": -1.41,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.49
+    },
+    {
+     "day": "2025-02-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.63,
+     "spy_close_pct": -0.67,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.27
+    },
+    {
+     "day": "2025-02-21",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.69,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.16
+    },
+    {
+     "day": "2025-03-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.38
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.71,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -2.44
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.57,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.33
+    },
+    {
+     "day": "2025-03-28",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.61,
+     "spy_close_pct": -2.01,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.0
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-08-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -1.64,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.37
+    },
+    {
+     "day": "2025-09-02",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -0.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.16
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.79,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2025-11-13",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.56,
+     "spy_close_pct": -1.66,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.9
+    },
+    {
+     "day": "2026-01-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.52
+    },
+    {
+     "day": "2026-02-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.52,
+     "spy_close_pct": -0.85,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": 1.06
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.53,
+     "spy_close_pct": -1.31,
+     "stocks_sold": 9,
+     "stocks_by_close_pct_of_account": -2.7
+    },
+    {
+     "day": "2026-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.78,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.26
+    },
+    {
+     "day": "2026-03-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -1.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.7
+    },
+    {
+     "day": "2026-03-27",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.51,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.66,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-06-09",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -0.29,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -1.91
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -2% intraday -> sell all": {
+   "exits": 106,
+   "2016-2026": {
+    "per_year_pct": 50.1,
+    "worst_drop_pct": -15.8
+   },
+   "2016-2020": {
+    "per_year_pct": 58.5,
+    "worst_drop_pct": -15.8
+   },
+   "2021-2026": {
+    "per_year_pct": 43.8,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 174.4,
+    "worst_drop_pct": -12.1
+   },
+   "2022 (bear)": {
+    "return_pct": 3.2,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.51,
+   "avg_spy_close_on_exit_days_pct": -2.69,
+   "exits_where_spy_recovered_by_close": 48,
+   "events": [
+    {
+     "day": "2021-09-28",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.02,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2021-11-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.65
+    },
+    {
+     "day": "2022-03-07",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.95,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.97
+    },
+    {
+     "day": "2022-04-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.13,
+     "spy_close_pct": -2.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-04-29",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.37,
+     "spy_close_pct": -3.7,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.86,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.91
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -3.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.45,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.05,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-15",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.18,
+     "spy_close_pct": -2.45,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.39
+    },
+    {
+     "day": "2022-12-16",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.53,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.23
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.07,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.81
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.36,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.25,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -2% intraday -> sell all (keep parking)": {
+   "exits": 106,
+   "2016-2026": {
+    "per_year_pct": 49.6,
+    "worst_drop_pct": -16.6
+   },
+   "2016-2020": {
+    "per_year_pct": 56.6,
+    "worst_drop_pct": -16.6
+   },
+   "2021-2026": {
+    "per_year_pct": 44.1,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 171.9,
+    "worst_drop_pct": -11.9
+   },
+   "2022 (bear)": {
+    "return_pct": 0.2,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.51,
+   "avg_spy_close_on_exit_days_pct": -2.69,
+   "exits_where_spy_recovered_by_close": 48,
+   "events": [
+    {
+     "day": "2021-09-28",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.02,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2021-11-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.65
+    },
+    {
+     "day": "2022-03-07",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.95,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.97
+    },
+    {
+     "day": "2022-04-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.13,
+     "spy_close_pct": -2.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-04-29",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.37,
+     "spy_close_pct": -3.7,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.86,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.91
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -3.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.45,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.05,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-15",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.18,
+     "spy_close_pct": -2.45,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.39
+    },
+    {
+     "day": "2022-12-16",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.53,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.23
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.07,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.81
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.36,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.25,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -2% intraday -> sell all, no buys that day": {
+   "exits": 106,
+   "2016-2026": {
+    "per_year_pct": 48.6,
+    "worst_drop_pct": -16.3
+   },
+   "2016-2020": {
+    "per_year_pct": 57.4,
+    "worst_drop_pct": -16.3
+   },
+   "2021-2026": {
+    "per_year_pct": 41.9,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 170.1,
+    "worst_drop_pct": -12.1
+   },
+   "2022 (bear)": {
+    "return_pct": 2.8,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.51,
+   "avg_spy_close_on_exit_days_pct": -2.69,
+   "exits_where_spy_recovered_by_close": 48,
+   "events": [
+    {
+     "day": "2021-09-28",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.02,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2021-11-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-03-07",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.95,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.97
+    },
+    {
+     "day": "2022-04-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.13,
+     "spy_close_pct": -2.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-04-29",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.37,
+     "spy_close_pct": -3.7,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.86,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.91
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -3.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.45,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.05,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-15",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.18,
+     "spy_close_pct": -2.45,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.39
+    },
+    {
+     "day": "2022-12-16",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.53,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.07,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -2.44
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.36,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.25,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -2% intraday -> sell all, no buys that day (keep parking)": {
+   "exits": 106,
+   "2016-2026": {
+    "per_year_pct": 48.1,
+    "worst_drop_pct": -17.1
+   },
+   "2016-2020": {
+    "per_year_pct": 55.6,
+    "worst_drop_pct": -17.1
+   },
+   "2021-2026": {
+    "per_year_pct": 42.3,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 167.7,
+    "worst_drop_pct": -11.9
+   },
+   "2022 (bear)": {
+    "return_pct": -0.3,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.51,
+   "avg_spy_close_on_exit_days_pct": -2.69,
+   "exits_where_spy_recovered_by_close": 48,
+   "events": [
+    {
+     "day": "2021-09-28",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.02,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2021-11-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-03-07",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.95,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.97
+    },
+    {
+     "day": "2022-04-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.13,
+     "spy_close_pct": -2.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-04-29",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.37,
+     "spy_close_pct": -3.7,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.86,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.91
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.01,
+     "spy_close_pct": -3.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.45,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.05,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-15",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.18,
+     "spy_close_pct": -2.45,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.39
+    },
+    {
+     "day": "2022-12-16",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -1.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-07-24",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -2.27,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.87
+    },
+    {
+     "day": "2024-08-02",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.53,
+     "spy_close_pct": -1.86,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -1.25
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-03-06",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.07,
+     "spy_close_pct": -1.78,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.75
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -2.44
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.23,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.61
+    },
+    {
+     "day": "2025-10-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.7,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.94
+    },
+    {
+     "day": "2026-03-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -0.88,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2026-06-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.36,
+     "spy_close_pct": -2.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.23
+    },
+    {
+     "day": "2026-10-30",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.25,
+     "spy_close_pct": -1.77,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.59
+    }
+   ]
+  },
+  "SPY -3% intraday -> sell all": {
+   "exits": 30,
+   "2016-2026": {
+    "per_year_pct": 24.5,
+    "worst_drop_pct": -17.9
+   },
+   "2016-2020": {
+    "per_year_pct": 23.4,
+    "worst_drop_pct": -17.9
+   },
+   "2021-2026": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 129.1,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 2.9,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -3.74,
+   "avg_spy_close_on_exit_days_pct": -4.1,
+   "exits_where_spy_recovered_by_close": 13,
+   "events": [
+    {
+     "day": "2016-01-20",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.04,
+     "spy_close_pct": -1.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2016-06-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -3.59,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.12,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-08-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.36,
+     "spy_close_pct": -3.01,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -2.67
+    },
+    {
+     "day": "2020-02-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.33,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.3
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.64,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-06-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -5.76,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.89
+    },
+    {
+     "day": "2020-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.37,
+     "spy_close_pct": -3.44,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.9,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.51,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.06,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.23,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.95,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "SPY -3% intraday -> sell all (keep parking)": {
+   "exits": 30,
+   "2016-2026": {
+    "per_year_pct": 24.2,
+    "worst_drop_pct": -17.8
+   },
+   "2016-2020": {
+    "per_year_pct": 23.0,
+    "worst_drop_pct": -17.8
+   },
+   "2021-2026": {
+    "per_year_pct": 25.5,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 126.4,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 1.8,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -3.74,
+   "avg_spy_close_on_exit_days_pct": -4.1,
+   "exits_where_spy_recovered_by_close": 13,
+   "events": [
+    {
+     "day": "2016-01-20",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.04,
+     "spy_close_pct": -1.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2016-06-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -3.59,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.12,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-08-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.36,
+     "spy_close_pct": -3.01,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -2.67
+    },
+    {
+     "day": "2020-02-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.33,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.3
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.64,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-06-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -5.76,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.89
+    },
+    {
+     "day": "2020-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.37,
+     "spy_close_pct": -3.44,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.9,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.51,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.06,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.23,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.95,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "SPY -3% intraday -> sell all, no buys that day": {
+   "exits": 30,
+   "2016-2026": {
+    "per_year_pct": 24.3,
+    "worst_drop_pct": -18.2
+   },
+   "2016-2020": {
+    "per_year_pct": 23.1,
+    "worst_drop_pct": -18.2
+   },
+   "2021-2026": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 126.8,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 3.7,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -3.74,
+   "avg_spy_close_on_exit_days_pct": -4.1,
+   "exits_where_spy_recovered_by_close": 13,
+   "events": [
+    {
+     "day": "2016-01-20",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.04,
+     "spy_close_pct": -1.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2016-06-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -3.59,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.12,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-08-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.36,
+     "spy_close_pct": -3.01,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -2.67
+    },
+    {
+     "day": "2020-02-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.33,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.3
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.64,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-06-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -5.76,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.89
+    },
+    {
+     "day": "2020-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.37,
+     "spy_close_pct": -3.44,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.9,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.51,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.06,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.23,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.95,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "SPY -3% intraday -> sell all, no buys that day (keep parking)": {
+   "exits": 30,
+   "2016-2026": {
+    "per_year_pct": 24.1,
+    "worst_drop_pct": -18.0
+   },
+   "2016-2020": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -18.0
+   },
+   "2021-2026": {
+    "per_year_pct": 25.6,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 124.0,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 2.6,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -3.74,
+   "avg_spy_close_on_exit_days_pct": -4.1,
+   "exits_where_spy_recovered_by_close": 13,
+   "events": [
+    {
+     "day": "2016-01-20",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.04,
+     "spy_close_pct": -1.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2016-06-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -3.59,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.12,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-08-05",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.36,
+     "spy_close_pct": -3.01,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -2.67
+    },
+    {
+     "day": "2020-02-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.33,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.3
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.64,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-06-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.1,
+     "spy_close_pct": -5.76,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.89
+    },
+    {
+     "day": "2020-09-03",
+     "hour_et": 13,
+     "spy_at_exit_pct": -3.37,
+     "spy_close_pct": -3.44,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-05",
+     "hour_et": 12,
+     "spy_at_exit_pct": -3.9,
+     "spy_close_pct": -3.55,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.67
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.51,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-13",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.06,
+     "spy_close_pct": -4.35,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.07
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.23,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-04-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.47,
+     "spy_close_pct": -4.93,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 11,
+     "spy_at_exit_pct": -3.95,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.58,
+     "spy_close_pct": -4.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 14,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "falling market: SPY 5%+ below 20-day high AND -1% today -> sell all": {
+   "exits": 98,
+   "2016-2026": {
+    "per_year_pct": 37.8,
+    "worst_drop_pct": -16.5
+   },
+   "2016-2020": {
+    "per_year_pct": 55.4,
+    "worst_drop_pct": -16.5
+   },
+   "2021-2026": {
+    "per_year_pct": 24.6,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 309.2,
+    "worst_drop_pct": -8.5
+   },
+   "2022 (bear)": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -1.79,
+   "avg_spy_close_on_exit_days_pct": -1.86,
+   "exits_where_spy_recovered_by_close": 45,
+   "events": [
+    {
+     "day": "2022-05-11",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.4,
+     "spy_close_pct": -1.59,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.04
+    },
+    {
+     "day": "2022-05-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.06,
+     "spy_close_pct": -0.1,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.11
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.67,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.48
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.16
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-28",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.16,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": 0.97
+    },
+    {
+     "day": "2022-06-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.84,
+     "spy_close_pct": -0.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-07-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.93,
+     "spy_close_pct": 0.19,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-08-30",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.06,
+     "spy_close_pct": -1.1,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-01",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.22,
+     "spy_close_pct": 0.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-02",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.02,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.93,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-20",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.2,
+     "spy_close_pct": -1.15,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.72,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.26,
+     "spy_close_pct": -0.99,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.98,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -0.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.29,
+     "spy_close_pct": 2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.07,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-19",
+     "hour_et": 15,
+     "spy_at_exit_pct": -1.18,
+     "spy_close_pct": -0.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.12
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.2,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-30",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.07,
+     "spy_close_pct": -0.26,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.02
+    },
+    {
+     "day": "2023-03-10",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": -1.44,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2023-03-15",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.57,
+     "spy_close_pct": -0.63,
+     "stocks_sold": 5,
+     "stocks_by_close_pct_of_account": -2.35
+    },
+    {
+     "day": "2023-10-03",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.3,
+     "spy_close_pct": -1.34,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.49,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.04,
+     "spy_close_pct": -0.83,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.97
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.14,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.33
+    },
+    {
+     "day": "2025-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.12,
+     "spy_close_pct": -1.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-03-21",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.07,
+     "spy_close_pct": 0.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.43,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2026-03-27",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.39,
+     "spy_close_pct": -1.71,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.37
+    }
+   ]
+  },
+  "falling market: SPY 5%+ below 20-day high AND -2% today -> sell all": {
+   "exits": 49,
+   "2016-2026": {
+    "per_year_pct": 25.8,
+    "worst_drop_pct": -16.5
+   },
+   "2016-2020": {
+    "per_year_pct": 26.9,
+    "worst_drop_pct": -16.5
+   },
+   "2021-2026": {
+    "per_year_pct": 25.1,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 54.4,
+    "worst_drop_pct": -10.4
+   },
+   "2022 (bear)": {
+    "return_pct": -0.5,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.75,
+   "avg_spy_close_on_exit_days_pct": -2.97,
+   "exits_where_spy_recovered_by_close": 21,
+   "events": [
+    {
+     "day": "2019-01-03",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.39,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-02-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -4.49,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.73
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.87,
+     "spy_close_pct": -2.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.66,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.76,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.3,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-04-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.28,
+     "spy_close_pct": -1.45,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.4,
+     "spy_close_pct": -1.11,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-23",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.02,
+     "spy_close_pct": -2.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-10-30",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -1.04,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.65
+    },
+    {
+     "day": "2022-03-07",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.95,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -1.97
+    },
+    {
+     "day": "2022-04-22",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.13,
+     "spy_close_pct": -2.74,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-04-29",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.37,
+     "spy_close_pct": -3.7,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -1.32
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.57,
+     "spy_close_pct": -3.8,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-14",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.05,
+     "spy_close_pct": -2.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-12-22",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -1.43,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2024-08-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.32,
+     "spy_close_pct": -2.91,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -0.88
+    },
+    {
+     "day": "2025-03-10",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -2.66,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -3.32
+    },
+    {
+     "day": "2025-04-04",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -5.85,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -1.19
+    },
+    {
+     "day": "2025-04-16",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": -2.22,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "falling market: SPY 7%+ below 20-day high AND -1% today -> sell all": {
+   "exits": 59,
+   "2016-2026": {
+    "per_year_pct": 20.1,
+    "worst_drop_pct": -16.5
+   },
+   "2016-2020": {
+    "per_year_pct": 15.0,
+    "worst_drop_pct": -16.5
+   },
+   "2021-2026": {
+    "per_year_pct": 24.9,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 59.2,
+    "worst_drop_pct": -8.7
+   },
+   "2022 (bear)": {
+    "return_pct": -1.8,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.02,
+   "avg_spy_close_on_exit_days_pct": -1.94,
+   "exits_where_spy_recovered_by_close": 30,
+   "events": [
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.26,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.3,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-04-03",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.43,
+     "spy_close_pct": -1.45,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.64,
+     "spy_close_pct": -1.11,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-23",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.0,
+     "spy_close_pct": -2.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.65
+    },
+    {
+     "day": "2022-02-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.48,
+     "spy_close_pct": 1.5,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-04-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.35,
+     "spy_close_pct": 0.58,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.52
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.09,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-05-02",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.06,
+     "spy_close_pct": 0.6,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.8,
+     "spy_close_pct": -0.6,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.22
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.49,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.91
+    },
+    {
+     "day": "2022-05-11",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.4,
+     "spy_close_pct": -1.59,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.04
+    },
+    {
+     "day": "2022-05-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.06,
+     "spy_close_pct": -0.1,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.11
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.67,
+     "spy_close_pct": 0.04,
+     "stocks_sold": 3,
+     "stocks_by_close_pct_of_account": -0.48
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.55,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.16
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-06-30",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.84,
+     "spy_close_pct": -0.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-07-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.93,
+     "spy_close_pct": 0.19,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-01",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.22,
+     "spy_close_pct": 0.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-02",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.02,
+     "spy_close_pct": -1.05,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.93,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-20",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.2,
+     "spy_close_pct": -1.15,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.72,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.26,
+     "spy_close_pct": -0.99,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.98,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-05",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.75,
+     "spy_close_pct": -0.23,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2022-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-13",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.29,
+     "spy_close_pct": 2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-03-11",
+     "hour_et": 11,
+     "spy_at_exit_pct": -1.04,
+     "spy_close_pct": -0.83,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": 1.51
+    },
+    {
+     "day": "2025-03-13",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.14,
+     "spy_close_pct": -1.33,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.33
+    },
+    {
+     "day": "2025-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.12,
+     "spy_close_pct": -1.08,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.02
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.68,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "falling market: SPY 7%+ below 20-day high AND -2% today -> sell all": {
+   "exits": 34,
+   "2016-2026": {
+    "per_year_pct": 20.5,
+    "worst_drop_pct": -17.1
+   },
+   "2016-2020": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -17.1
+   },
+   "2021-2026": {
+    "per_year_pct": 26.2,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 56.4,
+    "worst_drop_pct": -10.4
+   },
+   "2022 (bear)": {
+    "return_pct": 0.6,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.94,
+   "avg_spy_close_on_exit_days_pct": -3.05,
+   "exits_where_spy_recovered_by_close": 16,
+   "events": [
+    {
+     "day": "2016-01-15",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.28,
+     "spy_close_pct": -2.15,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2016-01-20",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.08,
+     "spy_close_pct": -1.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-10-26",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.81,
+     "spy_close_pct": -1.76,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.85
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.65,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-27",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": 0.77,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-01-03",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.39,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-02-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.04,
+     "spy_close_pct": -4.49,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.73
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.87,
+     "spy_close_pct": -2.86,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-05",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.66,
+     "spy_close_pct": -3.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.76,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.3,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-04-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.28,
+     "spy_close_pct": -1.45,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.4,
+     "spy_close_pct": -1.11,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-09-23",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.02,
+     "spy_close_pct": -2.32,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-01-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": 0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.13
+    },
+    {
+     "day": "2022-01-25",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.43,
+     "spy_close_pct": -1.22,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": -0.65
+    },
+    {
+     "day": "2022-04-26",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.12,
+     "spy_close_pct": -2.9,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.21
+    },
+    {
+     "day": "2022-05-09",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.52,
+     "spy_close_pct": -3.2,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": -1.32
+    },
+    {
+     "day": "2022-05-18",
+     "hour_et": 12,
+     "spy_at_exit_pct": -2.89,
+     "spy_close_pct": -4.03,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-24",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 2,
+     "stocks_by_close_pct_of_account": 0.18
+    },
+    {
+     "day": "2022-06-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.74,
+     "spy_close_pct": -3.31,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-29",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.15,
+     "spy_close_pct": -2.09,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.06,
+     "spy_close_pct": -2.79,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.09
+    },
+    {
+     "day": "2025-04-21",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.24,
+     "spy_close_pct": -2.38,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  },
+  "falling market: SPY 10%+ below 20-day high AND -1% today -> sell all": {
+   "exits": 24,
+   "2016-2026": {
+    "per_year_pct": 20.4,
+    "worst_drop_pct": -17.0
+   },
+   "2016-2020": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -17.0
+   },
+   "2021-2026": {
+    "per_year_pct": 25.9,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 58.0,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 0.6,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -2.58,
+   "avg_spy_close_on_exit_days_pct": -2.88,
+   "exits_where_spy_recovered_by_close": 10,
+   "events": [
+    {
+     "day": "2018-12-20",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.43,
+     "spy_close_pct": -1.63,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-21",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.44,
+     "spy_close_pct": -2.04,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-24",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.38,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.7,
+     "spy_close_pct": 0.77,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-01-02",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.1,
+     "spy_close_pct": 0.1,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-01-03",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.17,
+     "spy_close_pct": -2.39,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.76,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.26,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.3,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-04-03",
+     "hour_et": 12,
+     "spy_at_exit_pct": -1.43,
+     "spy_close_pct": -1.45,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-05-11",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.4,
+     "spy_close_pct": -1.59,
+     "stocks_sold": 4,
+     "stocks_by_close_pct_of_account": 0.31
+    },
+    {
+     "day": "2022-05-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.06,
+     "spy_close_pct": -0.1,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": -0.11
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.72,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-26",
+     "hour_et": 14,
+     "spy_at_exit_pct": -1.26,
+     "spy_close_pct": -0.99,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-10-10",
+     "hour_et": 13,
+     "spy_at_exit_pct": -1.22,
+     "spy_close_pct": -0.76,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.12
+    },
+    {
+     "day": "2025-04-07",
+     "hour_et": 10,
+     "spy_at_exit_pct": -1.9,
+     "spy_close_pct": -0.18,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.02
+    }
+   ]
+  },
+  "falling market: SPY 10%+ below 20-day high AND -2% today -> sell all": {
+   "exits": 16,
+   "2016-2026": {
+    "per_year_pct": 20.7,
+    "worst_drop_pct": -17.0
+   },
+   "2016-2020": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -17.0
+   },
+   "2021-2026": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -15.4
+   },
+   "2020 (covid)": {
+    "return_pct": 58.0,
+    "worst_drop_pct": -9.3
+   },
+   "2022 (bear)": {
+    "return_pct": 1.1,
+    "worst_drop_pct": -10.0
+   },
+   "avg_spy_at_exit_pct": -3.59,
+   "avg_spy_close_on_exit_days_pct": -3.88,
+   "exits_where_spy_recovered_by_close": 7,
+   "events": [
+    {
+     "day": "2018-12-24",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.65,
+     "spy_close_pct": -2.64,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2018-12-27",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.51,
+     "spy_close_pct": 0.77,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2019-01-03",
+     "hour_et": 15,
+     "spy_at_exit_pct": -2.11,
+     "spy_close_pct": -2.39,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-02-28",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.34,
+     "spy_close_pct": -0.42,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.33
+    },
+    {
+     "day": "2020-03-06",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.01,
+     "spy_close_pct": -1.65,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-09",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.89,
+     "spy_close_pct": -7.81,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-11",
+     "hour_et": 10,
+     "spy_at_exit_pct": -2.76,
+     "spy_close_pct": -4.87,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-12",
+     "hour_et": 10,
+     "spy_at_exit_pct": -5.74,
+     "spy_close_pct": -9.57,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-16",
+     "hour_et": 10,
+     "spy_at_exit_pct": -8.82,
+     "spy_close_pct": -10.94,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-18",
+     "hour_et": 10,
+     "spy_at_exit_pct": -4.04,
+     "spy_close_pct": -5.06,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-20",
+     "hour_et": 15,
+     "spy_at_exit_pct": -3.41,
+     "spy_close_pct": -4.28,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-23",
+     "hour_et": 11,
+     "spy_at_exit_pct": -2.3,
+     "spy_close_pct": -2.56,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2020-03-27",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.07,
+     "spy_close_pct": -2.98,
+     "stocks_sold": 6,
+     "stocks_by_close_pct_of_account": -0.4
+    },
+    {
+     "day": "2020-04-01",
+     "hour_et": 10,
+     "spy_at_exit_pct": -3.44,
+     "spy_close_pct": -4.5,
+     "stocks_sold": 1,
+     "stocks_by_close_pct_of_account": 0.26
+    },
+    {
+     "day": "2020-04-03",
+     "hour_et": 14,
+     "spy_at_exit_pct": -2.28,
+     "spy_close_pct": -1.45,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    },
+    {
+     "day": "2022-09-23",
+     "hour_et": 13,
+     "spy_at_exit_pct": -2.03,
+     "spy_close_pct": -1.68,
+     "stocks_sold": 0,
+     "stocks_by_close_pct_of_account": 0
+    }
+   ]
+  }
+ }
+}
