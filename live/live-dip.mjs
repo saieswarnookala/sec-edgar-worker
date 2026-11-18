@@ -138,7 +138,8 @@ async function cmdDoctor() {
   const r = await rhRead(client);
   const test = buildOrderArgs(toolMap.place_equity_order, { symbol: 'SPY', side: 'buy', dollars: 5 }, E.RH_ACCOUNT);
   const test2 = buildOrderArgs(toolMap.place_equity_order, { symbol: 'SPY', side: 'sell', shares: 0.01 }, E.RH_ACCOUNT);
-  console.log(JSON.stringify({ executor: EXECUTOR, token: fresh, tools: tools.length, saved_schemas: TOOLS, place_equity_order_schema: toolMap.place_equity_order.inputSchema, dollar_order_mapping: test, share_order_mapping: test2,
+  const mask = (o) => JSON.parse(JSON.stringify(o).replace(/\d{6,}/g, (m) => '…' + m.slice(-4)));
+  console.log(JSON.stringify({ mode: MODE, executor: EXECUTOR, token: fresh, tools: tools.length, saved_schemas: TOOLS, place_equity_order_schema: toolMap.place_equity_order.inputSchema, dollar_order_mapping: mask(test), share_order_mapping: mask(test2),
     accounts: JSON.stringify(accts).replace(/\d{6,}/g, (m) => '…' + m.slice(-4)).slice(0, 1500), money: r.money, positions: r.held, open_or_recent_orders: r.orders.slice(0, 5) }, null, 1));
   console.log('\nSend Claude the "place_equity_order_schema" and both "mapping" lines above (no balances needed).');
 }
