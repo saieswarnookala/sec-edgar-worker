@@ -425,6 +425,7 @@ def run():
         for pname, park in PARK.items():
             r = sim(np.zeros_like(M), R, park); r.update(universe=f"top {k}", dip="none", volume="-", parking=pname, scenario="parking only"); OUT["results"].append(r)
     os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_dip.json", "w"), indent=1, default=float)
-try: run()
-except Exception:
+if __name__ == "__main__":
+  try: run()
+  except Exception:
     os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
