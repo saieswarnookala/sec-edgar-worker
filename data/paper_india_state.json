@@ -1,0 +1,54 @@
+{
+ "cash": 1000000.0,
+ "liquid": 0.0,
+ "positions": [],
+ "park": {},
+ "pending": [
+  {
+   "side": "buy",
+   "symbol": "NIFTYBEES",
+   "inr": 980000.0,
+   "approx_qty": 3407,
+   "why": "park idle money (Nifty above its 150-day average)"
+  }
+ ],
+ "trades": [],
+ "history": [
+  {
+   "day": "2026-11-17",
+   "equity": 1000000.0,
+   "nifty": 25387.4,
+   "cash": 1000000.0,
+   "liquid": 0.0,
+   "stocks": 0,
+   "park": {},
+   "park_target": "NIFTYBEES",
+   "dips": 0,
+   "filled": [],
+   "orders": 1
+  }
+ ],
+ "started": "2026-11-17",
+ "missing_symbols": [
+  "BAGMANE",
+  "BHARATCOAL",
+  "CLEANMAX",
+  "CMPDI",
+  "DUMMYHEG",
+  "EMMVEE",
+  "FRACTAL",
+  "GROWW",
+  "ICICIAMC",
+  "LENSKART",
+  "MEESHO",
+  "PINELABS",
+  "PIRAMALFIN",
+  "PWL",
+  "TENNIND",
+  "TMCV",
+  "VAML",
+  "VEDPOWER",
+  "VISL",
+  "VOGL"
+ ]
+}
