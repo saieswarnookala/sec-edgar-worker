@@ -554,7 +554,27 @@
     "stock_value": 38166
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-18T11:05:31.648Z",
+   "today": "2026-11-18",
+   "equity": 97800.57,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 1,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 78,
+    "spy_delta": 1,
+    "spy_price": 732.44,
+    "stock_value": 37958
+   },
+   "orders": [
+    "BUY 1 SPY (park)"
+   ]
   }
  ],
- "updated": "2026-11-17T11:05:14.410Z"
+ "updated": "2026-11-18T11:05:31.648Z"
 }
