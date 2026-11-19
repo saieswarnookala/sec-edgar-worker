@@ -1,0 +1,109 @@
+{
+ "note": "'True live' replay of the dip bot with minute data (Nov 18 2026). Research only, not financial advice.\nThe live Robinhood bot decides on the ~3:45 pm prices and its orders fill a minute or two later. Backtests so far either buy at\nthe exact close (ideal) or at the next open (realistic). This replays what the bot really does, 2016-2026 (Alpaca SIP minute bars):\n  decide at 15:45 ET with the 15:45 price (dips, exits, 200-day and 5-day averages all use it as 'today'),\n  fill at the average of the 15:46-15:50 minute closes, plus a spread/slippage cost per side.\nVariants: decide 15:45 (cost 0.05% and 0.10%), decide 15:55 (fill 15:56-15:59), ideal (close, 0.05%), realistic (next open, 0.15%);\nfor today's Robinhood rules and Dip bot v3.0 (+ ETF dips + bonds). Idle-money parking (Clear Leader / IEF / cash) uses daily closes.\nMinute prices are turned into the adjusted daily scale with the stock's own move from that minute to its 15:59 close\n(adj_px = adj_close * raw_px / raw_last_close); if Alpaca's raw last close is > 3% from the S&P data's raw close the minute data is\ntreated as a different company/bad and the daily close is used (counted).\nOnly stocks that could be near a signal are fetched: close-based 5-day gap vs SPY <= -7% (ETFs: 5-day drop <= -3%), plus the next\n7 days for exits. Known shortcut: the volume filter uses the full day's volume (the live bot estimates it at 3:45).\nMinute data cached in R2 (alpaca/m1540/<YYYY-MM>.json.gz). DRY=1: fake minute prices (no network).",
+ "built": "2026-11-19",
+ "dry": null,
+ "period_start": "2016-01-04",
+ "minute_fallbacks": [
+  23558,
+  305315
+ ],
+ "alpaca_calls": 3355,
+ "results": {
+  "Robinhood rules | ideal (close, 0.05%)": {
+   "per_year_pct": 24.5,
+   "worst_drop_pct": -18.0,
+   "trades": 1400,
+   "avg_trade_pct": 0.86,
+   "win_pct": 65,
+   "2016-2020": 14.2,
+   "2021-2026": 34.1
+  },
+  "Robinhood rules | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%": {
+   "per_year_pct": 25.1,
+   "worst_drop_pct": -17.4,
+   "trades": 1420,
+   "avg_trade_pct": 0.91,
+   "win_pct": 65,
+   "2016-2020": 14.5,
+   "2021-2026": 35.0,
+   "signals_different_from_close_pct": 10.6
+  },
+  "Robinhood rules | LIVE 3:45, 0.10% per side": {
+   "per_year_pct": 23.4,
+   "worst_drop_pct": -18.0,
+   "trades": 1420,
+   "avg_trade_pct": 0.81,
+   "win_pct": 64,
+   "2016-2020": 13.7,
+   "2021-2026": 32.5,
+   "signals_different_from_close_pct": 10.6
+  },
+  "Robinhood rules | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
+   "per_year_pct": 24.4,
+   "worst_drop_pct": -16.9,
+   "trades": 1403,
+   "avg_trade_pct": 0.88,
+   "win_pct": 66,
+   "2016-2020": 14.1,
+   "2021-2026": 33.9,
+   "signals_different_from_close_pct": 6.6
+  },
+  "Robinhood rules | realistic (next open, 0.15%)": {
+   "per_year_pct": 18.8,
+   "worst_drop_pct": -18.7,
+   "trades": 1400,
+   "avg_trade_pct": 0.5,
+   "win_pct": 63,
+   "2016-2020": 11.3,
+   "2021-2026": 25.6
+  },
+  "Dip bot v3.0 | ideal (close, 0.05%)": {
+   "per_year_pct": 28.1,
+   "worst_drop_pct": -15.4,
+   "trades": 1674,
+   "avg_trade_pct": 0.88,
+   "win_pct": 67,
+   "2016-2020": 19.5,
+   "2021-2026": 35.9
+  },
+  "Dip bot v3.0 | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%": {
+   "per_year_pct": 28.0,
+   "worst_drop_pct": -15.5,
+   "trades": 1681,
+   "avg_trade_pct": 0.88,
+   "win_pct": 66,
+   "2016-2020": 19.5,
+   "2021-2026": 35.9,
+   "signals_different_from_close_pct": 10.6
+  },
+  "Dip bot v3.0 | LIVE 3:45, 0.10% per side": {
+   "per_year_pct": 26.3,
+   "worst_drop_pct": -15.6,
+   "trades": 1681,
+   "avg_trade_pct": 0.79,
+   "win_pct": 65,
+   "2016-2020": 18.6,
+   "2021-2026": 33.3,
+   "signals_different_from_close_pct": 10.6
+  },
+  "Dip bot v3.0 | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
+   "per_year_pct": 27.6,
+   "worst_drop_pct": -15.4,
+   "trades": 1673,
+   "avg_trade_pct": 0.88,
+   "win_pct": 67,
+   "2016-2020": 19.3,
+   "2021-2026": 35.3,
+   "signals_different_from_close_pct": 6.6
+  },
+  "Dip bot v3.0 | realistic (next open, 0.15%)": {
+   "per_year_pct": 20.7,
+   "worst_drop_pct": -14.8,
+   "trades": 1674,
+   "avg_trade_pct": 0.49,
+   "win_pct": 64,
+   "2016-2020": 15.5,
+   "2021-2026": 25.3
+  }
+ }
+}
