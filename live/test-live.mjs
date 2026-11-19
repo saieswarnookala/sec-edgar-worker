@@ -183,3 +183,28 @@ if (!mode) {
   if (c.AMD !== 489.165 || c.XYZ !== 10.6) throw new Error('rhTodayClose ' + JSON.stringify(c));
   console.log('ok   Robinhood quote backup: official close when dated today, else last regular trade (never yesterday\'s close)');
 }
+
+{
+  const { parseBars, parseQuotes, compareSignals, gatherSignalsRH } = await import('./rh-data.mjs');
+  const bars = parseBars({ data: { results: [{ symbol: 'AMD', bars: [{ begins_at: '2026-11-18T00:00:00Z', close_price: '530.14', volume: 34028588 }, { begins_at: '2026-11-17T00:00:00Z', close_price: '503.41', volume: 36294745 }, { begins_at: '2026-11-16T00:00:00Z', close_price: '1', interpolated: true }] }] } });
+  if (bars.AMD.length !== 2 || bars.AMD[0].d !== '2026-11-17' || bars.AMD[1].v !== 34028588) throw new Error('parseBars');
+  const q = parseQuotes({ data: { results: [{ quote: { symbol: 'AMD', last_trade_price: '489.165', venue_last_trade_time: '2026-11-19T20:59:59Z', last_non_reg_trade_price: '479.1999', venue_last_non_reg_trade_time: '2026-11-19T21:51:16Z' } }] } });
+  if (q.AMD !== 479.1999) throw new Error('parseQuotes should take the newer trade');
+  // fake Robinhood: 300 flat days, AMD falls 15% vs SPY -> one dip in both sources -> same picks
+  const days = Array.from({ length: 320 }, (_, i) => new Date(Date.UTC(2025, 8, 1) + i * 864e5).toISOString().slice(0, 10)).filter((d) => ![0, 6].includes(new Date(d).getUTCDay()));
+  const today = '2026-11-19';
+  const fake = { callTool: null };
+  const call = async (_c, name, args) => {
+    if (name === 'get_equity_quotes') return { data: { results: args.symbols.map((s) => ({ quote: { symbol: s, last_trade_price: s === 'AMD' ? '85' : '100', venue_last_trade_time: today + 'T20:46:00Z' } })) } };
+    if (args.interval === 'month') return { data: { results: args.symbols.map((s) => ({ symbol: s, bars: Array.from({ length: 24 }, (_, i) => ({ begins_at: new Date(Date.UTC(2024, 10 + i, 1)).toISOString(), close_price: String(100 + i), volume: 1 })) })) } };
+    if (args.interval === '30minute') return { data: { results: args.symbols.map((s) => ({ symbol: s, bars: [{ begins_at: today + 'T15:00:00Z', close_price: '85', volume: 1000 }] })) } };
+    return { data: { results: args.symbols.map((s) => ({ symbol: s, bars: days.filter((d) => d < today).map((d, i, all) => ({ begins_at: d + 'T00:00:00Z', close_price: String(50 + 50 * i / (all.length - 1)), volume: 1000000 })) })) } };
+  };
+  const rg = await gatherSignalsRH({ client: fake, call, today, members: ['AMD', 'MSFT'], now: new Date(today + 'T20:46:00Z') });
+  if (Object.keys(rg.scores).join() !== 'AMD' || rg.errors.length) throw new Error('gatherSignalsRH ' + JSON.stringify({ s: rg.scores, e: rg.errors }));
+  const c = compareSignals({ ...rg, source: 'alpaca' }, rg);
+  if (!c.same_picks || c.price_gap_pct.max !== 0) throw new Error('compareSignals same');
+  const c2 = compareSignals({ ...rg, scores: { MSFT: -0.2 } }, rg);
+  if (c2.same_picks || c2.stock_dips.only_alpaca[0] !== 'MSFT' || c2.stock_dips.only_robinhood[0] !== 'AMD') throw new Error('compareSignals diff');
+  console.log('ok   Robinhood data path: bars/quotes parsed, same dips as the Alpaca path on the same data, differences reported');
+}

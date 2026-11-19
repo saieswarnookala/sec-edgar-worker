@@ -18,6 +18,7 @@ import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
 import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
+import { gatherSignalsRH, compareSignals, shadowAlert } from './rh-data.mjs';
 
 // Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
 // (e.g. MAX_DRAWDOWN="0.35   # ..." would silently disable the breaker), so the file always wins, comments stripped.
@@ -224,6 +225,11 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const r5 = (s) => { const c = g.closes?.[s] || [], p = g.prices?.[s]; return c.length >= 5 && p > 0 ? p / c.at(-5) - 1 : null; };   // same 5-day window as dipScore
     const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park: g.park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
     await notify(a.title, a.body, { priority: a.priority, tags: a.tags });
+    // SHADOW: the same picks from Robinhood data only (after the orders, so it can never delay or change them). RH_SHADOW=0 turns it off.
+    if (E.RH_SHADOW !== '0' && EXECUTOR !== 'claude') {
+      try { const rg = await gatherSignalsRH({ client, call, today, members: g.members, closeMin: closeMins[today] ?? 960 }); log.shadow = compareSignals(g, rg); const sa = shadowAlert(log.shadow); await notify(sa.title, sa.body, { priority: 2, tags: 'mag' }); }
+      catch (e) { log.shadow = { error: String(e.message || e).slice(0, 300) }; }
+    }
   } catch (e) {
     log.error = String(e.message || e);
     const auth = e instanceof AuthRequired || /401|unauthor|authenticat|sign.?in again|re-?auth|expired token/i.test(log.error);
@@ -320,6 +326,16 @@ async function cmdRhCall() {
   console.log(JSON.stringify(await call(client, name, args), null, 1).slice(0, 4000));
 }
 
+// Compare Alpaca and Robinhood data right now, no orders: node live-dip.mjs shadow
+async function cmdShadow() {
+  const today = ny().date, days = await tradingDays(today);
+  const { client } = await rh();
+  const a = await gatherSignals({ api, today, days });
+  const b = await gatherSignalsRH({ client, call, today, members: a.members, closeMin: closeMins[today] ?? 960 });
+  const c = compareSignals(a, b), sa = shadowAlert(c);
+  console.log(sa.title + '\n' + sa.body + '\n' + JSON.stringify({ ...c, watch: c.watch.slice(0, 15) }, null, 1));
+}
+
 function cmdStatus() {
   const s = loadState();
   console.log(JSON.stringify({ mode: MODE, halted: existsSync(HALT) ? readFileSync(HALT, 'utf8') : false, token_hours_left: Math.round((tokenSecondsLeft() || 0) / 3600), positions: s.positions, peak_equity: s.peak_equity, last_runs: s.history.slice(-3).map((h) => ({ today: h.today, mode: h.mode, placed: h.placed?.length, failed: h.failed?.length, error: h.error })), last_verify: s.verify?.at(-1) }, null, 1));
@@ -327,8 +343,8 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), rhcall: cmdRhCall, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
 }
