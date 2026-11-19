@@ -236,6 +236,18 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
   }
 }
 
+// Robinhood daily bar close for one symbol on `day` (YYYY-MM-DD) from a get_equity_historicals reply, whatever its nesting.
+export function rhCloseOn(reply, day) {
+  let best = null;
+  const walk = (x) => {
+    if (Array.isArray(x)) return x.forEach(walk);
+    if (!x || typeof x !== 'object') return;
+    const t = x.begins_at ?? x.timestamp ?? x.time ?? x.date ?? x.t, c = x.close_price ?? x.close ?? x.c;
+    if (t != null && c != null && String(t).slice(0, 10) === day && Number(c) > 0) best = Number(c);
+    Object.values(x).forEach(walk);
+  };
+  walk(reply); return best;
+}
 // Every UUID anywhere in a reply (Robinhood places the order under an approval id, so the order id can differ from the first id seen)
 export function uuidsIn(x, out = new Set()) {
   if (typeof x === 'string') { for (const m of x.matchAll(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi)) out.add(m[0].toLowerCase()); }
@@ -265,7 +277,11 @@ async function cmdVerify() {
     // fill quality vs the official close (the backtest's "ideal" price)
     let closes = {}, log_close_err = null;
     const syms = [...new Set(todays.map((o) => o.symbol))];
-    // free Alpaca data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
+    if (toolMap.get_equity_historicals) for (const sy of syms) {                    // 1) Robinhood's own official close
+      try { const c = rhCloseOn(await call(client, 'get_equity_historicals', { symbols: [sy], start_time: today, end_time: today, interval: 'day', bounds: 'regular', adjustment_type: 'none' }), today); if (c) closes[sy] = c; }
+      catch (e) { log_close_err = 'robinhood: ' + String(e.message || e).slice(0, 160); }
+    }
+    // 2) backup: Alpaca. Free data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
     for (const feed of ['sip', 'iex']) {
       if (!syms.length || syms.every((s) => closes[s])) break;
       try { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: today, end: new Date(Date.now() - 16 * 60e3).toISOString(), feed })); for (const [s, b] of Object.entries(js.bars || {})) if (!closes[s] && b.at(-1)?.c) closes[s] = b.at(-1).c; }
@@ -281,6 +297,15 @@ async function cmdVerify() {
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
 }
 
+// Read-only peek at any Robinhood tool: node live-dip.mjs rhcall get_equity_quotes '{"symbols":["AMD"]}'
+async function cmdRhCall() {
+  const name = process.argv[3] || '', args = JSON.parse(process.argv[4] || '{}');
+  if (!/^get_/.test(name)) throw new Error('rhcall only runs read-only get_* tools');
+  const { client } = await rh();
+  if (!toolMap[name]) throw new Error('no such tool: ' + name);
+  console.log(JSON.stringify(await call(client, name, args), null, 1).slice(0, 4000));
+}
+
 function cmdStatus() {
   const s = loadState();
   console.log(JSON.stringify({ mode: MODE, halted: existsSync(HALT) ? readFileSync(HALT, 'utf8') : false, token_hours_left: Math.round((tokenSecondsLeft() || 0) / 3600), positions: s.positions, peak_equity: s.peak_equity, last_runs: s.history.slice(-3).map((h) => ({ today: h.today, mode: h.mode, placed: h.placed?.length, failed: h.failed?.length, error: h.error })), last_verify: s.verify?.at(-1) }, null, 1));
@@ -288,8 +313,8 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), rhcall: cmdRhCall, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|status|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
 }

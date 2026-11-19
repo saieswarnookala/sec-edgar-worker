@@ -166,3 +166,11 @@ if (!mode) {
   if (uuidsIn({ a: { approval_id: 'X 6AFF604B-664A-46BC-9EB1-E239A3961011' } }).size !== 1) throw new Error('uuidsIn');
   console.log('ok   verify: own order matched even when Robinhood order id differs; extra same-stock order still a stranger');
 }
+
+{
+  const { rhCloseOn } = await import('./live-dip.mjs');
+  const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
+  const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };
+  if (rhCloseOn(a, '2026-11-19') !== 479.3 || rhCloseOn(b, '2026-11-19') !== 479.3 || rhCloseOn(a, '2026-11-20') !== null) throw new Error('rhCloseOn');
+  console.log('ok   Robinhood daily close read from historicals in any nesting');
+}
