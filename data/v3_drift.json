@@ -1,0 +1,307 @@
+{
+ "note": "v3.0 + earnings-drift slots, and interest on cash (Nov 19 2026). Research only, not financial advice.\nEngine = scripts/stack_and_rebound.py (point-in-time S&P 500, ETF dips, IEF bond parking, real Clear Leader parking).\nDrift = S&P 500 stock that beat SPY by 5%+ on its earnings reaction day (SEC 8-K Item 2.02; filed before 9:30 -> that day, else the next),\nbought at that day's close (live-like) or next open (realistic), held 60 trading days. Earnings dates exist from Aug 2004, so the\ncomparison period is 2004-2026. Versions: drift in 2 or 3 of the 10 slots (reserved), or 2-3 extra slots on top of v3.0's 10.\nCash interest: on cash days the idle money earns the 3-month T-bill yield (^IRX), like a money-market sweep.\nCost settings: LIVE-LIKE (close, 0.08%/side), IDEAL (close, 0.05%), REALISTIC (next open, 0.15%).",
+ "built": "2026-11-19",
+ "dry": null,
+ "results": {
+  "live-like | v3.0 now": {
+   "2004-2026": 18.4,
+   "worst": -18.7,
+   "2004-2014": 12.7,
+   "2015-2026": 23.5,
+   "2022": 7.8,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "live-like | v3.0 + cash interest": {
+   "2004-2026": 18.5,
+   "worst": -18.6,
+   "2004-2014": 12.8,
+   "2015-2026": 23.8,
+   "2022": 9.0,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "live-like | v3.0, 2 of 10 slots drift": {
+   "2004-2026": 19.9,
+   "worst": -17.1,
+   "2004-2014": 14.9,
+   "2015-2026": 24.5,
+   "2022": 7.3,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.34
+  },
+  "live-like | v3.0, 3 of 10 slots drift": {
+   "2004-2026": 20.8,
+   "worst": -20.3,
+   "2004-2014": 14.6,
+   "2015-2026": 26.4,
+   "2022": 3.9,
+   "trades_per_month": 9.9,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.43
+  },
+  "live-like | v3.0 + 2 extra drift slots": {
+   "2004-2026": 20.0,
+   "worst": -17.6,
+   "2004-2014": 14.9,
+   "2015-2026": 24.6,
+   "2022": 7.3,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.34
+  },
+  "live-like | v3.0 + 3 extra drift slots": {
+   "2004-2026": 21.2,
+   "worst": -20.3,
+   "2004-2014": 14.8,
+   "2015-2026": 27.1,
+   "2022": 11.9,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.84
+  },
+  "live-like | v3.0 + 2 extra drift (4% beat)": {
+   "2004-2026": 19.7,
+   "worst": -19.2,
+   "2004-2014": 14.6,
+   "2015-2026": 24.4,
+   "2022": 7.3,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.15
+  },
+  "live-like | v3.0 + 2 extra drift (6% beat)": {
+   "2004-2026": 20.6,
+   "worst": -17.6,
+   "2004-2014": 14.7,
+   "2015-2026": 26.1,
+   "2022": 13.9,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 6.31
+  },
+  "live-like | v3.0 + 2 extra drift, 40-day hold": {
+   "2004-2026": 19.8,
+   "worst": -16.8,
+   "2004-2014": 15.5,
+   "2015-2026": 23.7,
+   "2022": 7.7,
+   "trades_per_month": 10.3,
+   "drift_trades_per_month": 0.9,
+   "drift_avg_trade_pct": 3.99
+  },
+  "live-like | v3.0 + 2 extra drift + cash interest": {
+   "2004-2026": 20.1,
+   "worst": -17.6,
+   "2004-2014": 15.0,
+   "2015-2026": 24.8,
+   "2022": 8.3,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.34
+  },
+  "ideal | v3.0 now": {
+   "2004-2026": 19.1,
+   "worst": -18.5,
+   "2004-2014": 13.2,
+   "2015-2026": 24.5,
+   "2022": 8.6,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "ideal | v3.0 + cash interest": {
+   "2004-2026": 19.3,
+   "worst": -18.5,
+   "2004-2014": 13.3,
+   "2015-2026": 24.7,
+   "2022": 9.8,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "ideal | v3.0, 2 of 10 slots drift": {
+   "2004-2026": 20.7,
+   "worst": -17.0,
+   "2004-2014": 15.4,
+   "2015-2026": 25.5,
+   "2022": 8.1,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.4
+  },
+  "ideal | v3.0, 3 of 10 slots drift": {
+   "2004-2026": 21.5,
+   "worst": -20.1,
+   "2004-2014": 15.1,
+   "2015-2026": 27.4,
+   "2022": 4.6,
+   "trades_per_month": 9.9,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.49
+  },
+  "ideal | v3.0 + 2 extra drift slots": {
+   "2004-2026": 20.7,
+   "worst": -17.5,
+   "2004-2014": 15.4,
+   "2015-2026": 25.6,
+   "2022": 8.1,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.4
+  },
+  "ideal | v3.0 + 3 extra drift slots": {
+   "2004-2026": 22.0,
+   "worst": -20.1,
+   "2004-2014": 15.3,
+   "2015-2026": 28.0,
+   "2022": 12.7,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.9
+  },
+  "ideal | v3.0 + 2 extra drift (4% beat)": {
+   "2004-2026": 20.5,
+   "worst": -19.1,
+   "2004-2014": 15.1,
+   "2015-2026": 25.4,
+   "2022": 8.1,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.21
+  },
+  "ideal | v3.0 + 2 extra drift (6% beat)": {
+   "2004-2026": 21.4,
+   "worst": -17.5,
+   "2004-2014": 15.2,
+   "2015-2026": 27.1,
+   "2022": 14.7,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 6.37
+  },
+  "ideal | v3.0 + 2 extra drift, 40-day hold": {
+   "2004-2026": 20.6,
+   "worst": -16.6,
+   "2004-2014": 16.0,
+   "2015-2026": 24.7,
+   "2022": 8.4,
+   "trades_per_month": 10.3,
+   "drift_trades_per_month": 0.9,
+   "drift_avg_trade_pct": 4.05
+  },
+  "ideal | v3.0 + 2 extra drift + cash interest": {
+   "2004-2026": 20.9,
+   "worst": -17.5,
+   "2004-2014": 15.5,
+   "2015-2026": 25.8,
+   "2022": 9.0,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.4
+  },
+  "realistic | v3.0 now": {
+   "2004-2026": 14.3,
+   "worst": -21.2,
+   "2004-2014": 10.2,
+   "2015-2026": 18.1,
+   "2022": 2.6,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "realistic | v3.0 + cash interest": {
+   "2004-2026": 14.5,
+   "worst": -21.2,
+   "2004-2014": 10.3,
+   "2015-2026": 18.3,
+   "2022": 3.7,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.0,
+   "drift_avg_trade_pct": null
+  },
+  "realistic | v3.0, 2 of 10 slots drift": {
+   "2004-2026": 16.2,
+   "worst": -18.4,
+   "2004-2014": 12.6,
+   "2015-2026": 19.4,
+   "2022": 2.8,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.15
+  },
+  "realistic | v3.0, 3 of 10 slots drift": {
+   "2004-2026": 17.0,
+   "worst": -21.7,
+   "2004-2014": 12.5,
+   "2015-2026": 21.2,
+   "2022": -0.2,
+   "trades_per_month": 9.9,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.27
+  },
+  "realistic | v3.0 + 2 extra drift slots": {
+   "2004-2026": 16.3,
+   "worst": -18.4,
+   "2004-2014": 12.7,
+   "2015-2026": 19.6,
+   "2022": 2.8,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.15
+  },
+  "realistic | v3.0 + 3 extra drift slots": {
+   "2004-2026": 17.5,
+   "worst": -21.7,
+   "2004-2014": 12.7,
+   "2015-2026": 21.8,
+   "2022": 7.0,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 1.0,
+   "drift_avg_trade_pct": 5.68
+  },
+  "realistic | v3.0 + 2 extra drift (4% beat)": {
+   "2004-2026": 16.2,
+   "worst": -17.7,
+   "2004-2014": 12.5,
+   "2015-2026": 19.6,
+   "2022": 2.9,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.18
+  },
+  "realistic | v3.0 + 2 extra drift (6% beat)": {
+   "2004-2026": 16.9,
+   "worst": -19.1,
+   "2004-2014": 12.5,
+   "2015-2026": 20.9,
+   "2022": 8.1,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 6.1
+  },
+  "realistic | v3.0 + 2 extra drift, 40-day hold": {
+   "2004-2026": 16.1,
+   "worst": -17.1,
+   "2004-2014": 13.2,
+   "2015-2026": 18.7,
+   "2022": 3.5,
+   "trades_per_month": 10.3,
+   "drift_trades_per_month": 0.9,
+   "drift_avg_trade_pct": 3.95
+  },
+  "realistic | v3.0 + 2 extra drift + cash interest": {
+   "2004-2026": 16.4,
+   "worst": -18.4,
+   "2004-2014": 12.7,
+   "2015-2026": 19.7,
+   "2022": 3.7,
+   "trades_per_month": 10.0,
+   "drift_trades_per_month": 0.7,
+   "drift_avg_trade_pct": 5.15
+  }
+ }
+}
