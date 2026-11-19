@@ -55,6 +55,14 @@ export function parkSymbol({ clPos, spyCloses, spyPx }) {
   const ma = avg([...spyCloses.slice(-(CRASH_MA - 1)), spyPx]);
   return spyPx > ma ? clPos : null; // null = cash
 }
+// ---- Bot 9 "bonds instead of cash" (Nov 18 backtest 1999-2026: 15.1%/yr vs 13.4% with cash, worst -19% vs -28%) ----
+// When SPY is below its 100-day average the idle money goes to IEF (7-10 yr Treasuries) if IEF is above ITS 100-day average, else cash.
+export const BOND = 'IEF', BOND_MA = 100;
+export function bondParkSymbol({ park, bondCloses, bondPx }) {
+  if (park) return park;
+  if (!(bondPx > 0) || (bondCloses || []).length < BOND_MA - 1) return null;
+  return bondPx > avg([...bondCloses.slice(-(BOND_MA - 1)), bondPx]) ? BOND : null;
+}
 // ---- ETF dip sleeve (Nov 14 combined backtest 1999-2026: 17.1%/yr, worst -22% vs 14.9%, -27% for stocks only) ----
 // When slots are still free after the stock dips, buy ETFs down 5%+ over 5 days that are above their 200-day average.
 // Same sell rule (close back above the 5-day average), held at most 10 days. Virtual bot only for now.
@@ -355,6 +363,18 @@ async function main() {
       sst.updated = log.run; writeFileSync(sfile, JSON.stringify(sst, null, 1));
       log.short_bot = { equity: f.equity, twin_equity: tw.equity, si_date: si?.date || null, skipped: Object.keys(skipped), orders: f.done.length };
     }
+    // Bot 9 "bonds instead of cash" (virtual) + identical twin that keeps cash (same prices and fills)
+    const bfile = 'data/paper_bond_state.json', bst = existsSync(bfile) ? JSON.parse(readFileSync(bfile, 'utf8')) : { history: [] };
+    if (!(bst.history || []).some((h) => h.today === today)) try {
+      const bpark = bondParkSymbol({ park, bondCloses: closes[BOND], bondPx: prices[BOND] });
+      const f = virtualStep({ vs: bst.vs, today, days, prices, closes, scores, park: bpark, scale: 1 });
+      const tw = virtualStep({ vs: bst.twin, today, days, prices, closes, scores, park, scale: 1 });
+      bst.vs = f.vs; bst.twin = tw.vs;
+      const ima = (closes[BOND] || []).length >= BOND_MA - 1 && prices[BOND] ? avg([...closes[BOND].slice(-(BOND_MA - 1)), prices[BOND]]) : null;
+      bst.history = [...(bst.history || []), { today, equity: f.equity, twin_equity: tw.equity, spy: prices.SPY, park: bpark || 'CASH', twin_park: park || 'CASH', ief: prices[BOND] ?? null, ief_ma100: ima && +ima.toFixed(2), dip_signals: Object.keys(scores).length, orders: f.done }].slice(-400);
+      bst.updated = log.run; writeFileSync(bfile, JSON.stringify(bst, null, 1));
+      log.bond_bot = { equity: f.equity, twin_equity: tw.equity, park: bpark || 'CASH', orders: f.done.length };
+    } catch (e) { log.bond_bot_error = String(e.message || e).slice(0, 300); }   // never let the new bot break bots 1-8
     // Bot 6 "tuned dip": 8% dips, 150-day trend, hold up to 7 days, + ETF dips (virtual, no broker)
     const tfile = 'data/paper_dip_tuned_state.json', tst = existsSync(tfile) ? JSON.parse(readFileSync(tfile, 'utf8')) : { history: [] };
     if (!(tst.history || []).some((h) => h.today === today)) {

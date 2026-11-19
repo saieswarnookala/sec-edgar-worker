@@ -1168,6 +1168,22 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="short"></div>
   </section>
+  <section class="sx-card">
+    <div class="sx-ch"><h3>9. Bonds instead of cash ($10k virtual, new Nov 19)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Starts next trading day</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Not connected to Robinhood</span><span class="sx-badge">Same run as bot 1</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>Rules</h4><ul>
+        <li>Exactly bot 1's (the Robinhood bot's) dip rules. Only the <b>idle money</b> changes.</li>
+        <li>SPY above its 100-day average: Clear Leader ETF, same as now.</li>
+        <li>SPY below it: <b>IEF</b> (7–10 year US Treasury bonds) if IEF is above its own 100-day average, else cash.</li>
+        <li>Runs next to an identical twin that keeps cash on those days, same prices and fills, so the difference is only the bond rule.</li>
+      </ul></div>
+      <div><h4>Backtest (S&amp;P 500, 1999–2026)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>15.1%</b></div><div class="sx-stat"><span>With cash (twin)</span><b>13.4%</b></div><div class="sx-stat"><span>Worst drop</span><b>−19%</b></div><div class="sx-stat"><span>With cash</span><b>−28%</b></div></div>
+        <p class="sx-cap">In crashes since 1997, mid-term Treasuries rose in 8 of 12 (avg +12.5% in the 4 bear markets). The 100-day check on IEF keeps it out of 2022-type years when bonds fell with stocks. Bonds had a 40-year tailwind from falling rates, so expect a bit less. SPY stands in for Clear Leader in the backtest.</p></div>
+    </div>
+    <div class="pb-live" data-bot="bond"></div>
+  </section>
 
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
@@ -1974,13 +1990,13 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
     };
     const block = (bot, b) => {
-      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
       let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
         <div class="sx-stat"><span>Started with</span><b>${money(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${money(last?.eq)}</b></div>
         <div class="sx-stat"><span>Bot</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>SPY same days</span><b class="${cls(spyRet)}">${pctTxt(spyRet)}</b></div>
-        ${bot === 'etf' || bot === 'short' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>${bot === 'short' ? 'Twin without filter' : 'Twin without ETFs'}</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
+        ${bot === 'etf' || bot === 'short' || bot === 'bond' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>${bot === 'short' ? 'Twin without filter' : bot === 'bond' ? 'Twin with cash' : 'Twin without ETFs'}</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
         <div class="sx-stat"><span>Last run</span><b>${fmtDay(b.last?.day)}</b></div>${bot === 'vol' && b.last?.scale != null ? `<div class="sx-stat"><span>Buy size now</span><b>${b.last.scale.toFixed(2)}× (${Math.round(1000 * b.last.scale) / 100}%)</b></div>` : ''}</div>`;
       h += chart(c);
       const pos = b.positions || [];
@@ -2003,7 +2019,8 @@ dash.calc('vs_industry', {
       if (bot === 'etf' && b.last) h += `<p class="sx-cap"><b>ETFs dipping today:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'mix' && b.last) h += `<p class="sx-cap"><b>Dip signals today:</b> ${b.last.dip_signals ?? 0} · <b>Earnings-drift signals:</b> ${b.last.drift_found === false ? 'morning run not found' : (b.last.drift_signals || []).length ? b.last.drift_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'short' && b.last) { const sk = Object.entries(b.last.skipped || {}); h += `<p class="sx-cap"><b>Short data:</b> ${b.last.si_date ? 'FINRA report of ' + esc(b.last.si_date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')) : 'missing (' + esc(b.last.si_error || '') + '), no dips skipped'} · <b>Dips today:</b> ${b.last.dip_signals ?? 0} · <b>Skipped (heavily shorted):</b> ${sk.length ? sk.map(([k, v]) => esc(k) + ' ' + v + ' days').join(', ') : 'none'}</p>`; }
-      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      if (bot === 'bond' && b.last) h += `<p class="sx-cap"><b>Idle money today:</b> ${esc(b.last.park || 'CASH')} (twin: ${esc(b.last.twin_park || 'CASH')}) · <b>IEF</b> ${b.last.ief != null ? '$' + (+b.last.ief).toFixed(2) : '—'} vs its 100-day avg ${b.last.ief_ma100 != null ? '$' + b.last.ief_ma100 : '—'}</p>`;
+      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
       return h;
     };
     try {

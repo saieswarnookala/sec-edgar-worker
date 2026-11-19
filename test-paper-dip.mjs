@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX, siCandidates, parseSI, shortFilter, fetchShortInterest } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX, siCandidates, parseSI, shortFilter, fetchShortInterest, bondParkSymbol, BOND } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -152,4 +152,20 @@ console.log(`\n${n} passed`);
   console.log('ok   bot 8 FINRA parse/candidates/filter/fetch');
 }
 console.log('ok   fractional sizing for small live account');
+}
+
+// Bot 9: bonds instead of cash
+{
+  const up = Array.from({ length: 120 }, (_, i) => 90 + i * 0.1), down = Array.from({ length: 120 }, (_, i) => 110 - i * 0.1);
+  const eq = (a, b, m) => { if (a !== b) throw new Error(m + ': ' + a + ' vs ' + b); };
+  eq(bondParkSymbol({ park: 'QQQ', bondCloses: down, bondPx: 90 }), 'QQQ', 'market OK keeps Clear Leader');
+  eq(bondParkSymbol({ park: null, bondCloses: up, bondPx: 102 }), BOND, 'weak market + IEF trending up -> IEF');
+  eq(bondParkSymbol({ park: null, bondCloses: down, bondPx: 98 }), null, 'weak market + IEF trending down -> cash');
+  eq(bondParkSymbol({ park: null, bondCloses: up.slice(0, 50), bondPx: 102 }), null, 'too little IEF history -> cash');
+  eq(bondParkSymbol({ park: null, bondCloses: up, bondPx: undefined }), null, 'no IEF price -> cash');
+  const prices = { SPY: 100, IEF: 102, AAA: 50 }, closes = { SPY: Array(200).fill(100), IEF: up, AAA: Array(200).fill(50) };
+  const a = virtualStep({ vs: undefined, today: '2026-11-19', days: ['2026-11-18', '2026-11-19'], prices, closes, scores: {}, park: 'IEF', scale: 1 });
+  const b = virtualStep({ vs: undefined, today: '2026-11-19', days: ['2026-11-18', '2026-11-19'], prices, closes, scores: {}, park: null, scale: 1 });
+  if (!(a.vs.park.IEF > 0) || Object.keys(b.vs.park).length) throw new Error('bond bot should park in IEF, twin in cash');
+  console.log('ok   bot 9 bond parking: Clear Leader when market OK, IEF only when trending up, else cash; twin stays in cash');
 }
