@@ -31,13 +31,14 @@ def ydaily(sym, adj=True):
 def fred(series):
     if DRY:
         d = pd.date_range(START, "2026-11-13", freq="W-MON"); return pd.Series(np.linspace(1000, 3000, len(d)), index=d)
-    for a in range(5):
+    err = None
+    for a in range(2):
         try:
-            txt = urllib.request.urlopen(urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}", headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read().decode()
+            txt = urllib.request.urlopen(urllib.request.Request(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}", headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read().decode()
             df = pd.read_csv(io.StringIO(txt)); df.columns = ["date", "v"]
             s = pd.to_numeric(df.v, errors="coerce"); s.index = pd.to_datetime(df.date); return s.dropna()
         except Exception as e: err = e; time.sleep(3 * (a + 1))
-    print("FRED failed", series, err, flush=True); return pd.Series(dtype=float)
+    print("FRED failed", series, err, flush=True); return pd.Series(dtype=float, index=pd.DatetimeIndex([]))
 
 spy = ydaily("SPY"); spy = spy[spy.index >= START]; days = spy.index
 if len(spy) < 5000: raise SystemExit(f"SPY history too short ({len(spy)} days)")
@@ -74,8 +75,10 @@ if low and low[1] / peak_lvl - 1 <= -MIN_DROP: episodes.append((peak_day, low[0]
 print(f"{len(episodes)} crashes of {MIN_DROP*100:.0f}%+ since {START}", flush=True)
 
 FL = {"Money-market funds, retail ($bn)": fred("WRMFNS"), "Money-market funds, institutional ($bn)": fred("WIMFNS"),
-      "10-yr Treasury yield (%)": fred("DGS10"), "2-yr Treasury yield (%)": fred("DGS2"), "Junk-bond spread (%)": fred("BAMLH0A0HYM2")}
+      "10-yr Treasury yield (%)": ydaily("^TNX", adj=False), "3-month T-bill yield (%)": ydaily("^IRX", adj=False), "VIX fear index": ydaily("^VIX", adj=False),
+      "Junk-bond spread (%)": fred("BAMLH0A0HYM2")}
 def at(s, d):
+    if not len(s): return None
     s = s[s.index <= d]; return float(s.iloc[-1]) if len(s) else None
 def ret(lvl, a, b):
     x, y = lvl.asof(a) if lvl.notna().any() else np.nan, lvl.asof(b) if lvl.notna().any() else np.nan
@@ -88,7 +91,7 @@ for p, t, dd in episodes:
            "during": {k: ret(v, p, t) for k, v in ASSETS.items()}, "after_3mo": {k: ret(v, t, after) for k, v in ASSETS.items()}, "flows": {}}
     for k, s in FL.items():
         a, b = at(s, p), at(s, t)
-        if a is not None and b is not None and s.index[0] <= p: row["flows"][k] = {"at_peak": round(a, 2), "at_bottom": round(b, 2), "change": round(b - a, 2)}
+        if a is not None and b is not None and len(s) and s.index[0] <= p: row["flows"][k] = {"at_peak": round(a, 2), "at_bottom": round(b, 2), "change": round(b - a, 2)}
     CR.append(row)
     up = sorted([(v, k) for k, v in row["during"].items() if v is not None], reverse=True)
     print(f"{row['peak']} -> {row['bottom']} SPY {row['spy_drop_pct']}% | best: " + ", ".join(f"{k} {v:+}%" for v, k in up[:5]) + " | worst: " + ", ".join(f"{k} {v:+}%" for v, k in up[-3:])
