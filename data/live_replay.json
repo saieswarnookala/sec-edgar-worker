@@ -4,10 +4,10 @@
  "dry": null,
  "period_start": "2016-01-04",
  "minute_fallbacks": [
-  23558,
-  305315
+  138373,
+  1603314
  ],
- "alpaca_calls": 3355,
+ "alpaca_calls": 3270,
  "results": {
   "Robinhood rules | ideal (close, 0.05%)": {
    "per_year_pct": 24.5,
@@ -87,7 +87,7 @@
    "signals_different_from_close_pct": 10.6
   },
   "Dip bot v3.0 | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
-   "per_year_pct": 27.6,
+   "per_year_pct": 27.7,
    "worst_drop_pct": -15.4,
    "trades": 1673,
    "avg_trade_pct": 0.88,
@@ -104,6 +104,150 @@
    "win_pct": 64,
    "2016-2020": 15.5,
    "2021-2026": 25.3
+  },
+  "v3.0 tuned 8%/150-day/7-day | ideal (close, 0.05%)": {
+   "per_year_pct": 26.6,
+   "worst_drop_pct": -18.7,
+   "trades": 2761,
+   "avg_trade_pct": 0.56,
+   "win_pct": 65,
+   "2016-2020": 27.1,
+   "2021-2026": 26.1
+  },
+  "v3.0 tuned 8%/150-day/7-day | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%": {
+   "per_year_pct": 27.1,
+   "worst_drop_pct": -18.8,
+   "trades": 2806,
+   "avg_trade_pct": 0.55,
+   "win_pct": 65,
+   "2016-2020": 26.7,
+   "2021-2026": 27.4,
+   "signals_different_from_close_pct": 11.4
+  },
+  "v3.0 tuned 8%/150-day/7-day | LIVE 3:45, 0.10% per side": {
+   "per_year_pct": 23.9,
+   "worst_drop_pct": -19.3,
+   "trades": 2806,
+   "avg_trade_pct": 0.45,
+   "win_pct": 64,
+   "2016-2020": 24.6,
+   "2021-2026": 23.4,
+   "signals_different_from_close_pct": 11.4
+  },
+  "v3.0 tuned 8%/150-day/7-day | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
+   "per_year_pct": 27.7,
+   "worst_drop_pct": -18.3,
+   "trades": 2783,
+   "avg_trade_pct": 0.57,
+   "win_pct": 65,
+   "2016-2020": 27.1,
+   "2021-2026": 28.2,
+   "signals_different_from_close_pct": 6.8
+  },
+  "v3.0 tuned 8%/150-day/7-day | realistic (next open, 0.15%)": {
+   "per_year_pct": 15.8,
+   "worst_drop_pct": -18.3,
+   "trades": 2761,
+   "avg_trade_pct": 0.21,
+   "win_pct": 61,
+   "2016-2020": 19.4,
+   "2021-2026": 12.9
+  },
+  "v3.0 tuned 8%/200-day/7-day | ideal (close, 0.05%)": {
+   "per_year_pct": 25.1,
+   "worst_drop_pct": -19.4,
+   "trades": 2907,
+   "avg_trade_pct": 0.51,
+   "win_pct": 65,
+   "2016-2020": 25.2,
+   "2021-2026": 24.9
+  },
+  "v3.0 tuned 8%/200-day/7-day | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%": {
+   "per_year_pct": 25.2,
+   "worst_drop_pct": -19.0,
+   "trades": 2933,
+   "avg_trade_pct": 0.51,
+   "win_pct": 65,
+   "2016-2020": 25.2,
+   "2021-2026": 25.1,
+   "signals_different_from_close_pct": 10.4
+  },
+  "v3.0 tuned 8%/200-day/7-day | LIVE 3:45, 0.10% per side": {
+   "per_year_pct": 21.9,
+   "worst_drop_pct": -19.5,
+   "trades": 2933,
+   "avg_trade_pct": 0.41,
+   "win_pct": 64,
+   "2016-2020": 23.1,
+   "2021-2026": 21.0,
+   "signals_different_from_close_pct": 10.4
+  },
+  "v3.0 tuned 8%/200-day/7-day | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
+   "per_year_pct": 24.9,
+   "worst_drop_pct": -18.7,
+   "trades": 2916,
+   "avg_trade_pct": 0.5,
+   "win_pct": 66,
+   "2016-2020": 24.6,
+   "2021-2026": 25.2,
+   "signals_different_from_close_pct": 6.3
+  },
+  "v3.0 tuned 8%/200-day/7-day | realistic (next open, 0.15%)": {
+   "per_year_pct": 14.9,
+   "worst_drop_pct": -23.0,
+   "trades": 2907,
+   "avg_trade_pct": 0.19,
+   "win_pct": 61,
+   "2016-2020": 17.9,
+   "2021-2026": 12.4
+  },
+  "v3.0 9%/200-day/5-day | ideal (close, 0.05%)": {
+   "per_year_pct": 27.8,
+   "worst_drop_pct": -16.0,
+   "trades": 2257,
+   "avg_trade_pct": 0.71,
+   "win_pct": 66,
+   "2016-2020": 23.3,
+   "2021-2026": 31.7
+  },
+  "v3.0 9%/200-day/5-day | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%": {
+   "per_year_pct": 28.5,
+   "worst_drop_pct": -17.4,
+   "trades": 2284,
+   "avg_trade_pct": 0.72,
+   "win_pct": 66,
+   "2016-2020": 23.2,
+   "2021-2026": 33.3,
+   "signals_different_from_close_pct": 10.7
+  },
+  "v3.0 9%/200-day/5-day | LIVE 3:45, 0.10% per side": {
+   "per_year_pct": 26.0,
+   "worst_drop_pct": -17.8,
+   "trades": 2284,
+   "avg_trade_pct": 0.63,
+   "win_pct": 65,
+   "2016-2020": 21.7,
+   "2021-2026": 29.9,
+   "signals_different_from_close_pct": 10.7
+  },
+  "v3.0 9%/200-day/5-day | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%": {
+   "per_year_pct": 27.9,
+   "worst_drop_pct": -15.9,
+   "trades": 2263,
+   "avg_trade_pct": 0.72,
+   "win_pct": 66,
+   "2016-2020": 23.3,
+   "2021-2026": 32.0,
+   "signals_different_from_close_pct": 6.1
+  },
+  "v3.0 9%/200-day/5-day | realistic (next open, 0.15%)": {
+   "per_year_pct": 17.8,
+   "worst_drop_pct": -15.7,
+   "trades": 2257,
+   "avg_trade_pct": 0.31,
+   "win_pct": 62,
+   "2016-2020": 16.9,
+   "2021-2026": 18.6
   }
  }
 }
