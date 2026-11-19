@@ -1,0 +1,939 @@
+{
+ "note": "Japan tests (Nov 18 2026), after looking at Bengal Asset Management (Japan long/short hedge fund). Research only, not financial advice.\nA) Clear Leader v2.0 with Japan added to its pool: EWJ (Japan, yen not hedged, 1996+) and/or DXJ (yen hedged, 2006+;\n   before that the Nikkei 225 price index in yen stands in = roughly 'hedged'). Same rules as scripts/clear_leader_long.py.\nB) ETF dips on Japan: EWJ / DXJ 5-day drop >= 5%, above 200-day, buy at close, sell back above 5-day avg (max 10 days), vs SPY same days.\nC) The dip bot on Japanese stocks: today's Nikkei 225 members (Yahoo XXXX.T) - NOTE: today's list = survivorship bias (losers that\n   left the index are missing), so every result is also compared with a RANDOM-pick bot on the same stocks (same slots/exits).\n   Rules = US bot: 5-day return >= 10% worse than the Nikkei, above 200-day, volume <= 2x, 10 slots x 10%, sell when close > 5-day avg\n   (after >= 1 day) or 5 days; idle money in a Nikkei ETF (1321.T) when the Nikkei > 100-day avg, else cash.\n   Ideal = buy at the signal close, 0.10%/side; realistic = next open, 0.20%/side. Returns in yen (a US investor could hedge the yen).\n   Only trade-able from the US through a few ADRs (TM, SONY, MUFG, SMFG, MFG, HMC, NMR, IX...), so C is a 'does the idea work there' check.\nDRY=1: fake prices (no network) for B and C to test the code; random data must show no edge.",
+ "built": "2026-11-19",
+ "dry": null,
+ "A_clear_leader_with_japan": {
+  "Clear Leader as now": {
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 13.5,
+     "maxDD": 58.9,
+     "growth_of_10k": 914766
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "dotcom_1998_2002": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 13.1,
+     "maxDD": 56.2,
+     "growth_of_10k": 18508
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 9.2,
+     "maxDD": 16.6,
+     "growth_of_10k": 15499
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -12.7,
+     "maxDD": 56.4,
+     "growth_of_10k": 7622
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 17.0,
+     "maxDD": 19.4,
+     "growth_of_10k": 140428
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "months_held": {
+    "SPY": 318,
+    "QQQ": 52,
+    "DBC": 23,
+    "EEM": 10,
+    "GLD": 16,
+    "VNQ": 6,
+    "TLT": 3
+   },
+   "trades": 38
+  },
+  "+ Japan EWJ": {
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 13.6,
+     "maxDD": 56.8,
+     "growth_of_10k": 934975
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "dotcom_1998_2002": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 12.5,
+     "maxDD": 56.2,
+     "growth_of_10k": 17995
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 10.3,
+     "maxDD": 16.6,
+     "growth_of_10k": 16293
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -12.7,
+     "maxDD": 56.4,
+     "growth_of_10k": 7622
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 17.0,
+     "maxDD": 19.4,
+     "growth_of_10k": 140428
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "months_held": {
+    "SPY": 322,
+    "QQQ": 51,
+    "DBC": 23,
+    "EEM": 8,
+    "GLD": 15,
+    "VNQ": 6,
+    "TLT": 3
+   },
+   "trades": 40
+  },
+  "+ Japan hedged DXJ": {
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 12.6,
+     "maxDD": 58.3,
+     "growth_of_10k": 689927
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "dotcom_1998_2002": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 13.1,
+     "maxDD": 56.2,
+     "growth_of_10k": 18508
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 9.5,
+     "maxDD": 16.6,
+     "growth_of_10k": 15726
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -12.7,
+     "maxDD": 56.4,
+     "growth_of_10k": 7622
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 15.0,
+     "maxDD": 19.4,
+     "growth_of_10k": 104383
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "months_held": {
+    "SPY": 313,
+    "QQQ": 46,
+    "DBC": 22,
+    "EEM": 8,
+    "GLD": 14,
+    "VNQ": 6,
+    "TLT": 3,
+    "DXJ": 16
+   },
+   "trades": 41
+  },
+  "+ EWJ and DXJ": {
+   "full": {
+    "from": "1991-03",
+    "to": "2026-10",
+    "months": 428,
+    "strategy": {
+     "cagr": 12.6,
+     "maxDD": 56.8,
+     "growth_of_10k": 694983
+    },
+    "spy": {
+     "cagr": 10.9,
+     "maxDD": 50.8,
+     "growth_of_10k": 397803
+    }
+   },
+   "dotcom_1998_2002": {
+    "from": "1998-01",
+    "to": "2002-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 12.5,
+     "maxDD": 56.2,
+     "growth_of_10k": 17995
+    },
+    "spy": {
+     "cagr": -0.7,
+     "maxDD": 44.7,
+     "growth_of_10k": 9676
+    }
+   },
+   "2003_2007": {
+    "from": "2003-01",
+    "to": "2007-12",
+    "months": 60,
+    "strategy": {
+     "cagr": 10.3,
+     "maxDD": 16.6,
+     "growth_of_10k": 16293
+    },
+    "spy": {
+     "cagr": 12.6,
+     "maxDD": 5.0,
+     "growth_of_10k": 18118
+    }
+   },
+   "2008_2009": {
+    "from": "2008-01",
+    "to": "2009-12",
+    "months": 24,
+    "strategy": {
+     "cagr": -12.7,
+     "maxDD": 56.4,
+     "growth_of_10k": 7622
+    },
+    "spy": {
+     "cagr": -10.6,
+     "maxDD": 48.2,
+     "growth_of_10k": 7986
+    }
+   },
+   "2010_now": {
+    "from": "2010-01",
+    "to": "2026-10",
+    "months": 202,
+    "strategy": {
+     "cagr": 15.0,
+     "maxDD": 19.4,
+     "growth_of_10k": 104383
+    },
+    "spy": {
+     "cagr": 14.0,
+     "maxDD": 23.9,
+     "growth_of_10k": 91092
+    }
+   },
+   "months_held": {
+    "SPY": 315,
+    "QQQ": 45,
+    "DBC": 22,
+    "EEM": 8,
+    "GLD": 13,
+    "VNQ": 6,
+    "TLT": 3,
+    "DXJ": 16
+   },
+   "trades": 43
+  }
+ },
+ "B_japan_etf_dips": {
+  "EWJ": {
+   "all": {
+    "trades": 28,
+    "avg_pct": 0.94,
+    "vs_spy_pct": 0.76,
+    "win_pct": 71
+   },
+   "before_2013": {
+    "trades": 24,
+    "avg_pct": 1.01,
+    "vs_spy_pct": 0.81,
+    "win_pct": 71
+   },
+   "2013_on": {
+    "trades": 4,
+    "avg_pct": 0.53,
+    "vs_spy_pct": 0.5,
+    "win_pct": 75
+   }
+  },
+  "DXJ": {
+   "all": {
+    "trades": 18,
+    "avg_pct": 0.82,
+    "vs_spy_pct": 0.36,
+    "win_pct": 78
+   },
+   "before_2013": {
+    "trades": 2,
+    "avg_pct": -2.01,
+    "vs_spy_pct": -2.11,
+    "win_pct": 50
+   },
+   "2013_on": {
+    "trades": 16,
+    "avg_pct": 1.17,
+    "vs_spy_pct": 0.67,
+    "win_pct": 81
+   }
+  },
+  "SPY": {
+   "all": {
+    "trades": 19,
+    "avg_pct": 2.28,
+    "vs_spy_pct": -0.04,
+    "win_pct": 89
+   },
+   "before_2013": {
+    "trades": 11,
+    "avg_pct": 3.0,
+    "vs_spy_pct": -0.04,
+    "win_pct": 100
+   },
+   "2013_on": {
+    "trades": 8,
+    "avg_pct": 1.28,
+    "vs_spy_pct": -0.04,
+    "win_pct": 75
+   }
+  },
+  "EFA": {
+   "all": {
+    "trades": 17,
+    "avg_pct": 1.0,
+    "vs_spy_pct": 0.26,
+    "win_pct": 88
+   },
+   "before_2013": {
+    "trades": 12,
+    "avg_pct": 1.15,
+    "vs_spy_pct": 0.45,
+    "win_pct": 92
+   },
+   "2013_on": {
+    "trades": 5,
+    "avg_pct": 0.64,
+    "vs_spy_pct": -0.2,
+    "win_pct": 80
+   }
+  }
+ },
+ "C_japan_stock_dip_bot": {
+  "stocks_loaded": 223,
+  "list_size": 225,
+  "results": {
+   "Nikkei ETF buy & hold (yen)": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": NaN
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": NaN
+    },
+    "2014-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": NaN
+    },
+    "2008 crash": {
+     "return_pct": NaN,
+     "worst_drop_pct": NaN
+    },
+    "2020 covid": {
+     "return_pct": NaN,
+     "worst_drop_pct": NaN
+    }
+   },
+   "dip bot, ideal (buy at close)": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -2073.5
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -395.6
+    },
+    "2014-2026": {
+     "per_year_pct": 24.0,
+     "worst_drop_pct": -550.7
+    },
+    "2008 crash": {
+     "return_pct": -1.5,
+     "worst_drop_pct": -6.6
+    },
+    "2020 covid": {
+     "return_pct": -5.8,
+     "worst_drop_pct": -6.3
+    },
+    "trades": 1778,
+    "avg_trade_pct": 0.71,
+    "win_pct": 63,
+    "trades_per_month": 6.0
+   },
+   "dip bot, ideal (buy at close) - RANDOM picks #1": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -2742.6
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -405.4
+    },
+    "2014-2026": {
+     "per_year_pct": 44.2,
+     "worst_drop_pct": -540.1
+    },
+    "2008 crash": {
+     "return_pct": -18.6,
+     "worst_drop_pct": -18.8
+    },
+    "2020 covid": {
+     "return_pct": -5.9,
+     "worst_drop_pct": -6.4
+    },
+    "trades": 2698,
+    "avg_trade_pct": 0.01,
+    "win_pct": 55,
+    "trades_per_month": 9.2
+   },
+   "dip bot, ideal (buy at close) - RANDOM picks #2": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1513.0
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -402.7
+    },
+    "2014-2026": {
+     "per_year_pct": 20.7,
+     "worst_drop_pct": -558.7
+    },
+    "2008 crash": {
+     "return_pct": -13.3,
+     "worst_drop_pct": -13.6
+    },
+    "2020 covid": {
+     "return_pct": -5.6,
+     "worst_drop_pct": -6.1
+    },
+    "trades": 2669,
+    "avg_trade_pct": -0.03,
+    "win_pct": 54,
+    "trades_per_month": 9.1
+   },
+   "dip bot, ideal (buy at close) - RANDOM picks #3": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -5013.1
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -424.5
+    },
+    "2014-2026": {
+     "per_year_pct": 50.9,
+     "worst_drop_pct": -535.3
+    },
+    "2008 crash": {
+     "return_pct": -15.3,
+     "worst_drop_pct": -15.7
+    },
+    "2020 covid": {
+     "return_pct": -5.1,
+     "worst_drop_pct": -5.6
+    },
+    "trades": 2669,
+    "avg_trade_pct": 0.01,
+    "win_pct": 58,
+    "trades_per_month": 9.1
+   },
+   "dip bot, ideal (buy at close) - RANDOM picks #4": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1666.9
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -416.7
+    },
+    "2014-2026": {
+     "per_year_pct": 25.0,
+     "worst_drop_pct": -542.4
+    },
+    "2008 crash": {
+     "return_pct": -14.7,
+     "worst_drop_pct": -15.7
+    },
+    "2020 covid": {
+     "return_pct": -5.6,
+     "worst_drop_pct": -6.2
+    },
+    "trades": 2702,
+    "avg_trade_pct": 0.11,
+    "win_pct": 58,
+    "trades_per_month": 9.2
+   },
+   "dip bot, ideal (buy at close) - RANDOM picks #5": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -2569.2
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -402.5
+    },
+    "2014-2026": {
+     "per_year_pct": 42.6,
+     "worst_drop_pct": -543.1
+    },
+    "2008 crash": {
+     "return_pct": -16.9,
+     "worst_drop_pct": -17.1
+    },
+    "2020 covid": {
+     "return_pct": -6.2,
+     "worst_drop_pct": -6.7
+    },
+    "trades": 2669,
+    "avg_trade_pct": 0.01,
+    "win_pct": 57,
+    "trades_per_month": 9.1
+   },
+   "dip bot, realistic (next open, 0.2%/side)": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -2396.2
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -404.6
+    },
+    "2014-2026": {
+     "per_year_pct": 29.4,
+     "worst_drop_pct": -548.7
+    },
+    "2008 crash": {
+     "return_pct": -8.7,
+     "worst_drop_pct": -12.5
+    },
+    "2020 covid": {
+     "return_pct": -5.1,
+     "worst_drop_pct": -5.8
+    },
+    "trades": 2045,
+    "avg_trade_pct": 0.74,
+    "win_pct": 63,
+    "trades_per_month": 6.9
+   },
+   "dip bot, realistic (next open, 0.2%/side) - RANDOM picks #1": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1574.0
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -373.9
+    },
+    "2014-2026": {
+     "per_year_pct": 23.2,
+     "worst_drop_pct": -513.1
+    },
+    "2008 crash": {
+     "return_pct": -20.2,
+     "worst_drop_pct": -20.9
+    },
+    "2020 covid": {
+     "return_pct": -6.0,
+     "worst_drop_pct": -6.6
+    },
+    "trades": 2721,
+    "avg_trade_pct": 0.02,
+    "win_pct": 54,
+    "trades_per_month": 9.2
+   },
+   "dip bot, realistic (next open, 0.2%/side) - RANDOM picks #2": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1505.3
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -369.6
+    },
+    "2014-2026": {
+     "per_year_pct": 18.1,
+     "worst_drop_pct": -515.6
+    },
+    "2008 crash": {
+     "return_pct": -18.7,
+     "worst_drop_pct": -19.8
+    },
+    "2020 covid": {
+     "return_pct": -5.8,
+     "worst_drop_pct": -6.3
+    },
+    "trades": 2707,
+    "avg_trade_pct": -0.09,
+    "win_pct": 52,
+    "trades_per_month": 9.2
+   },
+   "dip bot, realistic (next open, 0.2%/side) - RANDOM picks #3": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1581.6
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -388.3
+    },
+    "2014-2026": {
+     "per_year_pct": 24.9,
+     "worst_drop_pct": -533.7
+    },
+    "2008 crash": {
+     "return_pct": -23.1,
+     "worst_drop_pct": -23.7
+    },
+    "2020 covid": {
+     "return_pct": -5.1,
+     "worst_drop_pct": -5.7
+    },
+    "trades": 2702,
+    "avg_trade_pct": -0.03,
+    "win_pct": 53,
+    "trades_per_month": 9.2
+   },
+   "dip bot, realistic (next open, 0.2%/side) - RANDOM picks #4": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1286.2
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -338.4
+    },
+    "2014-2026": {
+     "per_year_pct": 20.9,
+     "worst_drop_pct": -535.8
+    },
+    "2008 crash": {
+     "return_pct": -28.2,
+     "worst_drop_pct": -29.3
+    },
+    "2020 covid": {
+     "return_pct": -5.4,
+     "worst_drop_pct": -5.9
+    },
+    "trades": 2707,
+    "avg_trade_pct": -0.19,
+    "win_pct": 53,
+    "trades_per_month": 9.2
+   },
+   "dip bot, realistic (next open, 0.2%/side) - RANDOM picks #5": {
+    "2001-2026": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -1349.5
+    },
+    "2001-2013": {
+     "per_year_pct": NaN,
+     "worst_drop_pct": -372.0
+    },
+    "2014-2026": {
+     "per_year_pct": 20.3,
+     "worst_drop_pct": -544.7
+    },
+    "2008 crash": {
+     "return_pct": -25.5,
+     "worst_drop_pct": -26.4
+    },
+    "2020 covid": {
+     "return_pct": -5.7,
+     "worst_drop_pct": -6.2
+    },
+    "trades": 2723,
+    "avg_trade_pct": -0.19,
+    "win_pct": 53,
+    "trades_per_month": 9.2
+   },
+   "dip bot, ideal, idle money in cash always": {
+    "2001-2026": {
+     "per_year_pct": 4.9,
+     "worst_drop_pct": -12.4
+    },
+    "2001-2013": {
+     "per_year_pct": 5.6,
+     "worst_drop_pct": -12.4
+    },
+    "2014-2026": {
+     "per_year_pct": 4.3,
+     "worst_drop_pct": -10.8
+    },
+    "2008 crash": {
+     "return_pct": -1.5,
+     "worst_drop_pct": -6.6
+    },
+    "2020 covid": {
+     "return_pct": -0.1,
+     "worst_drop_pct": -0.9
+    },
+    "trades": 1778,
+    "avg_trade_pct": 0.71,
+    "win_pct": 63,
+    "trades_per_month": 6.0
+   },
+   "dip bot, ideal, idle money in cash always - RANDOM picks #1": {
+    "2001-2026": {
+     "per_year_pct": 0.0,
+     "worst_drop_pct": -31.6
+    },
+    "2001-2013": {
+     "per_year_pct": -1.0,
+     "worst_drop_pct": -31.6
+    },
+    "2014-2026": {
+     "per_year_pct": 1.1,
+     "worst_drop_pct": -9.8
+    },
+    "2008 crash": {
+     "return_pct": -18.6,
+     "worst_drop_pct": -18.8
+    },
+    "2020 covid": {
+     "return_pct": -0.3,
+     "worst_drop_pct": -0.8
+    },
+    "trades": 2698,
+    "avg_trade_pct": 0.01,
+    "win_pct": 55,
+    "trades_per_month": 9.2
+   },
+   "dip bot, ideal, idle money in cash always - RANDOM picks #2": {
+    "2001-2026": {
+     "per_year_pct": -0.4,
+     "worst_drop_pct": -31.8
+    },
+    "2001-2013": {
+     "per_year_pct": -2.6,
+     "worst_drop_pct": -31.8
+    },
+    "2014-2026": {
+     "per_year_pct": 1.8,
+     "worst_drop_pct": -8.7
+    },
+    "2008 crash": {
+     "return_pct": -13.3,
+     "worst_drop_pct": -13.6
+    },
+    "2020 covid": {
+     "return_pct": 0.2,
+     "worst_drop_pct": -0.2
+    },
+    "trades": 2669,
+    "avg_trade_pct": -0.03,
+    "win_pct": 54,
+    "trades_per_month": 9.1
+   },
+   "dip bot, ideal, idle money in cash always - RANDOM picks #3": {
+    "2001-2026": {
+     "per_year_pct": 0.0,
+     "worst_drop_pct": -30.8
+    },
+    "2001-2013": {
+     "per_year_pct": -0.4,
+     "worst_drop_pct": -30.8
+    },
+    "2014-2026": {
+     "per_year_pct": 0.5,
+     "worst_drop_pct": -17.7
+    },
+    "2008 crash": {
+     "return_pct": -15.3,
+     "worst_drop_pct": -15.7
+    },
+    "2020 covid": {
+     "return_pct": 0.7,
+     "worst_drop_pct": -0.0
+    },
+    "trades": 2669,
+    "avg_trade_pct": 0.01,
+    "win_pct": 58,
+    "trades_per_month": 9.1
+   },
+   "dip bot, ideal, idle money in cash always - RANDOM picks #4": {
+    "2001-2026": {
+     "per_year_pct": 1.1,
+     "worst_drop_pct": -24.2
+    },
+    "2001-2013": {
+     "per_year_pct": -0.6,
+     "worst_drop_pct": -24.2
+    },
+    "2014-2026": {
+     "per_year_pct": 2.7,
+     "worst_drop_pct": -6.9
+    },
+    "2008 crash": {
+     "return_pct": -14.7,
+     "worst_drop_pct": -15.7
+    },
+    "2020 covid": {
+     "return_pct": -0.1,
+     "worst_drop_pct": -0.8
+    },
+    "trades": 2702,
+    "avg_trade_pct": 0.11,
+    "win_pct": 58,
+    "trades_per_month": 9.2
+   },
+   "dip bot, ideal, idle money in cash always - RANDOM picks #5": {
+    "2001-2026": {
+     "per_year_pct": 0.0,
+     "worst_drop_pct": -26.4
+    },
+    "2001-2013": {
+     "per_year_pct": -0.4,
+     "worst_drop_pct": -26.4
+    },
+    "2014-2026": {
+     "per_year_pct": 0.4,
+     "worst_drop_pct": -18.2
+    },
+    "2008 crash": {
+     "return_pct": -16.9,
+     "worst_drop_pct": -17.1
+    },
+    "2020 covid": {
+     "return_pct": -0.2,
+     "worst_drop_pct": -0.5
+    },
+    "trades": 2669,
+    "avg_trade_pct": 0.01,
+    "win_pct": 57,
+    "trades_per_month": 9.1
+   }
+  },
+  "yen_per_dollar_2001_vs_now": [
+   124.4,
+   159.4
+  ]
+ }
+}
