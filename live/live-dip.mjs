@@ -263,10 +263,16 @@ async function cmdVerify() {
     const strangers = MODE === 'live' ? todays.filter((o) => o.id && !mine.has(o) && !/cancel|reject|fail/.test(o.state)) : [];
     const unfilled = todays.filter((o) => mine.has(o) && !/fill/.test(o.state));
     // fill quality vs the official close (the backtest's "ideal" price)
-    let closes = {};
-    try { const syms = [...new Set(todays.map((o) => o.symbol))]; if (syms.length) { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: today, end: today + 'T23:59:00Z', feed: 'sip' })); for (const [s, b] of Object.entries(js.bars || {})) closes[s] = b.at(-1)?.c; } } catch {}
+    let closes = {}, log_close_err = null;
+    const syms = [...new Set(todays.map((o) => o.symbol))];
+    // free Alpaca data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
+    for (const feed of ['sip', 'iex']) {
+      if (!syms.length || syms.every((s) => closes[s])) break;
+      try { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: today, end: new Date(Date.now() - 16 * 60e3).toISOString(), feed })); for (const [s, b] of Object.entries(js.bars || {})) if (!closes[s] && b.at(-1)?.c) closes[s] = b.at(-1).c; }
+      catch (e) { log_close_err = String(e.message || e).slice(0, 200); }
+    }
     const fills = todays.filter((o) => o.avg_price).map((o) => ({ symbol: o.symbol, side: o.side, price: o.avg_price, close: closes[o.symbol] ?? null, vs_close_pct: closes[o.symbol] ? +(((o.avg_price / closes[o.symbol]) - 1) * (o.side === 'buy' ? 100 : -100)).toFixed(3) : null }));
-    const v = { today, filled: fills.length, unfilled: unfilled.map((o) => `${o.side} ${o.symbol} (${o.state})`), strangers: strangers.map((o) => `${o.side} ${o.symbol} ${o.id}`), fills, avg_cost_vs_close_pct: fills.filter((f) => f.vs_close_pct != null).length ? +(fills.filter((f) => f.vs_close_pct != null).reduce((a, f) => a + f.vs_close_pct, 0) / fills.filter((f) => f.vs_close_pct != null).length).toFixed(3) : null, equity: r.money.equity };
+    const v = { today, filled: fills.length, unfilled: unfilled.map((o) => `${o.side} ${o.symbol} (${o.state})`), strangers: strangers.map((o) => `${o.side} ${o.symbol} ${o.id}`), fills, avg_cost_vs_close_pct: fills.filter((f) => f.vs_close_pct != null).length ? +(fills.filter((f) => f.vs_close_pct != null).reduce((a, f) => a + f.vs_close_pct, 0) / fills.filter((f) => f.vs_close_pct != null).length).toFixed(3) : null, equity: r.money.equity, close_lookup_error: log_close_err };
     state.verify = [...(state.verify || []), v].slice(-500); saveState(state);
     if (strangers.length) { writeFileSync(HALT, `Orders today that the bot did not place: ${v.strangers.join(', ')}. Check Robinhood, then: node live-dip.mjs resume`); await notify('Dip bot HALTED: unknown orders in the account', v.strangers.join('\n'), { priority: 5, tags: 'rotating_light' }); }
     else if (unfilled.length) await notify(`LIVE dip bot ${today}: ${unfilled.length} order(s) NOT filled`, ['Not filled (check Robinhood):', ...v.unfilled, '', ...fills.map((f) => `filled: ${f.side.toUpperCase()} ${f.symbol} @ $${(+f.price).toFixed(2)}`)].join('\n'), { priority: 4, tags: 'warning' });
