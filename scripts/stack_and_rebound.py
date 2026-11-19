@@ -86,6 +86,9 @@ def chain(*syms):
     return r
 bond_r = chain("IEF", "VFITX"); bond_lvl = (1 + bond_r.fillna(0)).cumprod().where(bond_r.notna().cumsum() > 0)
 BOND_R = bond_r.fillna(0).values
+_irx = yahoo("^IRX")                                                 # 3-month T-bill yield (%), what a cash sweep roughly earns
+TBILL_R = np.zeros(D) if _irx is None else np.r_[0, (_irx.reindex(_irx.index.union(dates)).ffill(limit=10).reindex(dates) / 100 / 252).fillna(0).values[:-1]]
+TBILL_R = np.clip(TBILL_R, 0, 0.08 / 252) if not DRY else np.full(D, 0.02 / 252)
 BOND_OK = np.r_[False, (bond_lvl > bond_lvl.rolling(100, min_periods=100).mean()).fillna(False).values[:-1]]
 
 # ---------------- Clear Leader daily returns (what the live bot parks in when SPY > 100-day avg)
@@ -142,7 +145,20 @@ def rebound_picks(p, l, n=3):
     secs = [s for s in SECTORS if s in EI and np.isfinite(E_C[p, EI[s]]) and np.isfinite(E_C[l, EI[s]])]
     return sorted(secs, key=lambda s: E_C[l, EI[s]] / E_C[p, EI[s]] - 1)[:n]
 
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None):
+# ---------------- earnings drift (8-K Item 2.02 reaction day, stock minus SPY), stored on the reaction day
+RXC = np.full((D, J), np.nan)
+try:
+    _SEC = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "sec_events_sic.json")))["tickers"]
+    _ds = np.array([str(d)[:10] for d in dn]); _Mv = M.values
+    for j, tk in enumerate(tick):
+        for d, mi in (_SEC.get(tk) or {}).get("events", []):
+            k = int(np.searchsorted(_ds, d))
+            if k < D and _ds[k] == d and mi >= 570: k += 1
+            if k < 1 or k >= D or not _Mv[k, j]: continue
+            c0, c1 = S_C[k, j], S_C[k - 1, j]
+            if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
+except Exception as e: print("no earnings events:", e, flush=True)
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False):
     SIGX = SIG if sig is None else sig
     PR = CLR if park == "cl" else spyr
     REB = {}
@@ -152,12 +168,21 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
             if not picks: continue                                   # sector ETFs had no data yet (before 1999)
             for t in range(a, min(a + rebound["days"], D)): REB[t] = picks
     pos, eq, curve, trades, held_park = [], 1.0, np.ones(D), [], "CASH"
-    def buy(t, cand_s, cand_e, at_open, w):
+    LIM = 10 - (drift if drift_mode == "reserve" else 0)
+    def buy(t, cand_s, cand_e, at_open, w, cand_d=()):
         nonlocal eq
         held = {(p["k"], p["j"]) for p in pos}
+        for j in cand_d:                                             # drift first, in its own slots
+            if sum(1 for q in pos if q["k"] == "D") >= drift: break
+            if ("D", j) in held or ("S", j) in held: continue
+            bp = S_O[t, j] if at_open else S_C[t, j]
+            if not (np.isfinite(bp) and bp > 0 and np.isfinite(S_C[t, j])): continue
+            room = 1 - sum(p["w"] for p in pos)
+            if room < 0.02: break
+            ww = min(w, room); pos.append({"k": "D", "j": j, "d": t, "px": bp, "w": ww, "open": at_open}); eq *= 1 - ww * cs; held.add(("D", j))
         for k, cands, Ca, Oa, cost in (("S", cand_s, S_C, S_O, cs), ("E", cand_e, E_C, E_O, ce)):
             for j in cands:
-                if len(pos) >= 10: return
+                if sum(1 for q in pos if q["k"] != "D") >= LIM: return
                 if cap and k == "S" and grp[j] is not None and sum(1 for q in pos if q["k"] == "S" and grp[q["j"]] == grp[j]) >= cap: continue
                 if (k, j) in held: continue
                 bp = Oa[t, j] if at_open else Ca[t, j]
@@ -168,32 +193,35 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
     def cands(t):
         c = [j for j in np.flatnonzero(SIGX[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
         e = sorted([j for j in np.flatnonzero(E_SIG[t]) if np.isfinite(E_C[t, j])], key=lambda j: E_RK[t, j]) if etf else []
-        return c, e
+        d = sorted(np.flatnonzero(np.nan_to_num(RXC[t], nan=-1) >= dth), key=lambda j: -RXC[t, j]) if drift else []
+        return c, e, d
     for t in range(t0, D):
         if fill == "open":                                        # yesterday's signals, bought at today's open
-            cs_, ce_ = cands(t - 1); buy(t, cs_, ce_, True, 0.10 * (VSCALE[t - 1] if vol else 1.0))
+            cs_, ce_, cd_ = cands(t - 1); buy(t, cs_, ce_, True, 0.10 * (VSCALE[t - 1] if vol else 1.0), cd_)
         used = sum(p["w"] for p in pos); idle = max(0.0, 1 - used)
         want = (("REB:" + ",".join(REB[t])) if t in REB and park_on[t] else "SPY") if park_on[t] else ("IEF" if bond and BOND_OK[t] else "CASH")
         if want != held_park: eq *= 1 - idle * cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
         r = 0.0
         for p in pos:
-            Cx = S_C if p["k"] == "S" else E_C
+            Cx = E_C if p["k"] == "E" else S_C
             prev = p["px"] if (p["open"] and p["d"] == t) else Cx[t - 1, p["j"]]
             r += p["w"] * (Cx[t, p["j"]] / prev - 1)
         if held_park == "SPY": r += idle * PR[t]
         elif held_park == "IEF": r += idle * BOND_R[t]
+        elif held_park == "CASH" and cash_interest: r += idle * TBILL_R[t]
         elif held_park.startswith("REB:"):
             ss = held_park[4:].split(","); r += idle * float(np.mean([Er[t, EI[s]] for s in ss]))
         eq *= 1 + r; keep = []
         for p in pos:
-            Cx, Mx = (S_C, S_M5) if p["k"] == "S" else (E_C, E_M5)
-            age = t - p["d"] + (1 if p["open"] else 0); mh = mhs if p["k"] == "S" else 10
-            if age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh):
-                c = cs if p["k"] == "S" else ce; eq *= 1 - p["w"] * c; trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))
+            Cx, Mx = (E_C, E_M5) if p["k"] == "E" else (S_C, S_M5)
+            age = t - p["d"] + (1 if p["open"] else 0); mh = {"S": mhs, "E": 10, "D": dhold}[p["k"]]
+            out = (age >= mh or not np.isfinite(Cx[t, p["j"]])) if p["k"] == "D" else (age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh))
+            if out:
+                c = ce if p["k"] == "E" else cs; eq *= 1 - p["w"] * c; trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))
             else: keep.append(p)
         pos = keep
         if fill == "close":
-            cs_, ce_ = cands(t); buy(t, cs_, ce_, False, 0.10 * (VSCALE[t] if vol else 1.0))
+            cs_, ce_, cd_ = cands(t); buy(t, cs_, ce_, False, 0.10 * (VSCALE[t] if vol else 1.0), cd_)
         curve[t] = eq
     return curve, trades
 PER = [("1999-2026", "1999-01-01", "2100"), ("1999-2012", "1999-01-01", "2013-01-01"), ("2013-2026", "2013-01-01", "2100"), ("2018-2026 (short data)", "2018-01-02", "2100"),
