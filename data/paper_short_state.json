@@ -47,10 +47,26 @@
    },
    "skipped": {},
    "orders": []
+  },
+  {
+   "today": "2026-11-19",
+   "equity": 9896.97,
+   "twin_equity": 9896.97,
+   "spy": 717.29,
+   "park": "CASH",
+   "si_date": "20261030",
+   "dip_signals": 1,
+   "days_to_cover": {
+    "AMD": 1.86
+   },
+   "skipped": {},
+   "orders": [
+    "BUY $990 AMD (dip -12%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8004.3301682599995,
+  "cash": 7014.633929674999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -66,6 +82,14 @@
     "qty": 11.505316,
     "entry_px": 86.54,
     "dip_pct": -12.2,
+    "size_pct": 10
+   },
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 2.043919,
+    "entry_px": 484.215,
+    "dip_pct": -12,
     "size_pct": 10
    }
   ],
@@ -73,7 +97,7 @@
   "trades": []
  },
  "twin": {
-  "cash": 8004.3301682599995,
+  "cash": 7014.633929674999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -90,10 +114,18 @@
     "entry_px": 86.54,
     "dip_pct": -12.2,
     "size_pct": 10
+   },
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 2.043919,
+    "entry_px": 484.215,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-18T20:25:58.326Z"
+ "updated": "2026-11-19T20:26:06.529Z"
 }

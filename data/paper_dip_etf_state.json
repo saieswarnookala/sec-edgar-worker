@@ -30,10 +30,26 @@
    "park": "CASH",
    "etf_signals": {},
    "orders": []
+  },
+  {
+   "today": "2026-11-19",
+   "equity": 9896.97,
+   "twin_equity": 9896.97,
+   "spy": 717.29,
+   "park": "CASH",
+   "etf_signals": {
+    "XLE": -0.05246385823099642,
+    "XLV": -0.05526273758185607
+   },
+   "orders": [
+    "BUY $990 AMD (dip -12%)",
+    "BUY $990 XLV ETF (dip -5.5%)",
+    "BUY $990 XLE ETF (dip -5.2%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8004.3301682599995,
+  "cash": 5035.240842014999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -49,6 +65,32 @@
     "qty": 11.505316,
     "entry_px": 86.54,
     "dip_pct": -12.2,
+    "size_pct": 10
+   },
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 2.043919,
+    "entry_px": 484.215,
+    "dip_pct": -12,
+    "size_pct": 10
+   },
+   {
+    "symbol": "XLV",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "qty": 5.577326,
+    "entry_px": 177.45,
+    "dip_pct": -5.5,
+    "size_pct": 10
+   },
+   {
+    "symbol": "XLE",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "qty": 16.236512,
+    "entry_px": 60.955,
+    "dip_pct": -5.2,
     "size_pct": 10
    }
   ],
@@ -56,7 +98,7 @@
   "trades": []
  },
  "twin": {
-  "cash": 8004.3301682599995,
+  "cash": 7014.633929674999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -73,10 +115,18 @@
     "entry_px": 86.54,
     "dip_pct": -12.2,
     "size_pct": 10
+   },
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 2.043919,
+    "entry_px": 484.215,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-18T20:25:58.326Z"
+ "updated": "2026-11-19T20:26:06.529Z"
 }

@@ -1,0 +1,57 @@
+{
+ "history": [
+  {
+   "today": "2026-11-19",
+   "equity": 10000,
+   "spy": 717.29,
+   "park": "CASH",
+   "stock_signals": 1,
+   "etf_signals": [
+    "XLE",
+    "XLV"
+   ],
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": [
+    "BUY $1000 AMD (dip -12%)",
+    "BUY $1000 XLV ETF (dip -5.5%)",
+    "BUY $1000 XLE ETF (dip -5.2%)"
+   ]
+  }
+ ],
+ "vs": {
+  "cash": 7000.000199455,
+  "positions": [
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 2.065198,
+    "entry_px": 484.215,
+    "dip_pct": -12,
+    "size_pct": 10
+   },
+   {
+    "symbol": "XLV",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "qty": 5.63539,
+    "entry_px": 177.45,
+    "dip_pct": -5.5,
+    "size_pct": 10
+   },
+   {
+    "symbol": "XLE",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "qty": 16.405545,
+    "entry_px": 60.955,
+    "dip_pct": -5.2,
+    "size_pct": 10
+   }
+  ],
+  "park": {},
+  "trades": [],
+  "drift": []
+ },
+ "updated": "2026-11-19T20:26:06.529Z"
+}

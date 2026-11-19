@@ -33,10 +33,22 @@
    "spy_vol_pct": 22.9,
    "park": "CASH",
    "orders": []
+  },
+  {
+   "today": "2026-11-19",
+   "equity": 9845.54,
+   "spy": 717.29,
+   "scale": 1.5,
+   "vol_rank": 1,
+   "spy_vol_pct": 23.3,
+   "park": "CASH",
+   "orders": [
+    "BUY $1477 AMD (dip -12%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 7009.742557919999,
+  "cash": 5532.9124713149995,
   "positions": [
    {
     "symbol": "MRNA",
@@ -53,10 +65,18 @@
     "entry_px": 86.54,
     "dip_pct": -12.2,
     "size_pct": 15
+   },
+   {
+    "symbol": "AMD",
+    "entry_date": "2026-11-19",
+    "qty": 3.049947,
+    "entry_px": 484.215,
+    "dip_pct": -12,
+    "size_pct": 15
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-18T20:25:58.326Z"
+ "updated": "2026-11-19T20:26:06.529Z"
 }

@@ -11,6 +11,12 @@
    "entry_date": "2026-11-17",
    "qty": 11,
    "dip_pct": -12.2
+  },
+  {
+   "symbol": "AMD",
+   "entry_date": "2026-11-19",
+   "qty": 1,
+   "dip_pct": -12
   }
  ],
  "history": [
@@ -687,7 +693,92 @@
    "orders": [
     "SELL 3 EXPE (held 5 days (max 5))"
    ]
+  },
+  {
+   "run": "2026-11-19T20:26:06.529Z",
+   "today": "2026-11-19",
+   "ny_time": "15:26",
+   "equity": 9670.75,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "AMD": {
+     "ratio": 1.88,
+     "today_est": 89881242
+    },
+    "HUM": {
+     "ratio": 1.5,
+     "today_est": 1939822
+    },
+    "MRNA": {
+     "ratio": 0.51,
+     "today_est": 10043100
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 717.29,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "AMD": -0.12009905593854153
+   },
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "AMD",
+     "qty": 1,
+     "dip_pct": -12
+    }
+   ],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.5,
+    "equity": 9845.54,
+    "orders": 1
+   },
+   "etf_bot": {
+    "equity": 9896.97,
+    "twin_equity": 9896.97,
+    "etf_signals": 2,
+    "orders": 3
+   },
+   "mix_bot": {
+    "equity": 9896.97,
+    "drift_signals": 0,
+    "orders": 1
+   },
+   "short_bot": {
+    "equity": 9896.97,
+    "twin_equity": 9896.97,
+    "si_date": "20261030",
+    "skipped": [],
+    "orders": 1
+   },
+   "bond_bot": {
+    "equity": 10000,
+    "twin_equity": 10000,
+    "park": "CASH",
+    "orders": 1
+   },
+   "v3_bot": {
+    "equity": 10000,
+    "park": "CASH",
+    "orders": 3
+   },
+   "v31_bot": {
+    "equity": 10000,
+    "drift": 0,
+    "orders": 3
+   },
+   "tuned_bot": {
+    "equity": 9862.34,
+    "signals": 2,
+    "orders": 2
+   },
+   "orders": [
+    "BUY 1 AMD (dip -12%)"
+   ]
   }
  ],
- "updated": "2026-11-18T20:25:58.326Z"
+ "updated": "2026-11-19T20:26:06.529Z"
 }

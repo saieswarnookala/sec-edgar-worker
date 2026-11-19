@@ -33,10 +33,22 @@
    "drift_signals": [],
    "drift_signals_found": true,
    "orders": []
+  },
+  {
+   "today": "2026-11-19",
+   "equity": 9896.97,
+   "spy": 717.29,
+   "park": "CASH",
+   "dip_signals": 1,
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": [
+    "BUY $990 AMD dip (dip -12.0%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8004.3301682599995,
+  "cash": 7014.633929674999,
   "positions": [
    {
     "symbol": "MRNA",
@@ -53,10 +65,18 @@
     "qty": 11.505316,
     "entry_px": 86.54,
     "info": "dip -12.2%"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "dip",
+    "entry_date": "2026-11-19",
+    "qty": 2.043919,
+    "entry_px": 484.215,
+    "info": "dip -12.0%"
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-18T20:25:58.326Z"
+ "updated": "2026-11-19T20:26:06.529Z"
 }
