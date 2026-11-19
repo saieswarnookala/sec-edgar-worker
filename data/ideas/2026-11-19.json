@@ -1,0 +1,1477 @@
+{
+ "date": "2026-11-19",
+ "mode": "digest",
+ "summary": "Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)",
+ "ideas": [
+  {
+   "title": "Show HN: DeepSeek V3 in ~200 lines of pure Jax",
+   "category": "build",
+   "what": "Popular launch (276 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50497589"
+   ]
+  },
+  {
+   "title": "Show HN: Isometric SF – A pixel-art map of the SF Bay Area",
+   "category": "build",
+   "what": "Popular launch (256 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50487228"
+   ]
+  },
+  {
+   "title": "Show HN: ExitPath – Open-source ways out of Slack, Notion and Microsoft 365",
+   "category": "build",
+   "what": "Popular launch (247 points). Ideas: a niche version, integrations, or a hosted service around it.",
+   "evidence": [
+    "https://news.ycombinator.com/item?id=50547980"
+   ]
+  },
+  {
+   "title": "FrigadeHQ/yogurt: Private AI meeting notes that stay on your computer. A free, open-source alternative to Granola for Mac, Windows and Linux.",
+   "category": "build",
+   "what": "New GitHub project with 2604 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/FrigadeHQ/yogurt"
+   ]
+  },
+  {
+   "title": "huami1314/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.",
+   "category": "build",
+   "what": "New GitHub project with 8529 stars in 2 weeks (Swift). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/huami1314/GestaltX"
+   ]
+  },
+  {
+   "title": "erkamyaman/rust-anything: Rewrite your whole app in Rust, one piece at a time, checked against the original's recorded behavior at every step. CLIs, HTTP servers and libraries in TypeScript, Python, C",
+   "category": "build",
+   "what": "New GitHub project with 5021 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.",
+   "evidence": [
+    "https://github.com/erkamyaman/rust-anything"
+   ]
+  },
+  {
+   "title": "This Startup Raised $1 Billion to Build AI Faster and With Fewer Humans - WSJ",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMiuwFBVV95cUxObkxPOGVxOXJ1ZHo1Wjh4YjRHamNPWFZUUXhWMG1FSU5EUmZRcHZ2QXRyWk5Va1hiRFEyOHdlZGZkNTkwYjJkVUh6Y3l4TVhuTnFiSDRfa2M4amV6ODc5MnFSVi0xd3ZsTzVEZ2lEdlNfVE1OX2ZKSkJDZDlaUHNFV3JsVHhMX3ZEOGlrdEpRMEtTMGxyck1kbVlPSWhnSmZuelVZRnRNcUR2M0dULWJpd3phaGRoOXc5WXVz?oc=5"
+   ]
+  },
+  {
+   "title": "Israeli startup raises $11 million Seed to automate the growing burden of AI security - CTech",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMiaEFVX3lxTE96Y1g0M1FXcDFGWWtyQ0xuZ3VRQThKenY5aGxDLV9YSG9TX0owWFoyN1JjbmZxcWJRVmV2WUxjR1FGOC02WDhiek9XSVRkR2Q5dEt4YlMyTVBnbVlxeUNvaWRZUkhEZllM?oc=5"
+   ]
+  },
+  {
+   "title": "Indian chip startup Bharat Semi lands $24M seed round as it eyes global AI sensor market - TechCrunch",
+   "category": "service",
+   "what": "Where investors are putting money this week. Look for adjacent problems these customers have.",
+   "evidence": [
+    "https://news.google.com/rss/articles/CBMivwFBVV95cUxORlp0dzgwTTFLWm5FZ25md2xZM1hldHoxRmhaVHJncWNmYUd2WVJRZGZlQVlycUlRMENUblNDSHpudlV2ZlRvTFhMaUFCb1hVUndRRHMtMmRaSnFiV1Yxb19kQ3ppVTQ0X29hZG1FVlBmVW8yWWJ6aVh6R0xESlJMWElCQ2kzN19rX29feWFJeV9EQzc3dmdYQmRoWUg3d1lTc2xaRUV5Y2FBa3lZNWpFNVMzdEZrNGRVQk0yX3h3NA?oc=5"
+   ]
+  },
+  {
+   "title": "NVDA NVIDIA Corporation (Technology)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 31.2, net margin 55.6%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "NFLX Netflix Inc. (Consumer Discretionary)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 22.3, net margin 24.3%. A research lead, not a buy signal.",
+   "evidence": []
+  },
+  {
+   "title": "JNJ Johnson & Johnson (Health Care)",
+   "category": "invest",
+   "what": "From your screener: profitable and growing, P/E 25.0, net margin 28.5%. A research lead, not a buy signal.",
+   "evidence": []
+  }
+ ],
+ "errors": {
+  "reddit": "403"
+ },
+ "signals": {
+  "hn": [
+   {
+    "src": "Hacker News",
+    "title": "U.S. October PPI Rises 6.5% YoY, Highest in Nearly Four Years",
+    "text": "U.S. producer prices rose 6.5% YoY in October, the highest since November 2022, below expectations of 6.6% and up from 6.3% previously. PPI increased 0.3% MoM, below the expected 0.4%, while September’s reading was revised up from 1.3% to 1.4%.",
+    "url": "https://news.ycombinator.com/item?id=50484421",
+    "points": 176,
+    "comments": 231,
+    "score": 6.86
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: ExitPath – Open-source ways out of Slack, Notion and Microsoft 365",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50547980",
+    "points": 247,
+    "comments": 93,
+    "score": 6.76
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Isometric SF – A pixel-art map of the SF Bay Area",
+    "text": "Technical Write-up:  https:&#x2F;&#x2F;www.justinchavez.com&#x2F;blog&#x2F;isometric-sf-how&#x2F;  Hi HN! Showcasing this fun project. I took 1300 square miles of the SF Bay Area from Google Photorealistic 3D Tiles and transformed them into a cohesive pixel map. It&#x27;s really fun to explore and stumble upon various famous landmarks like Apple Park, Palace of Fine Arts, or UC Berkeley. The techn",
+    "url": "https://news.ycombinator.com/item?id=50487228",
+    "points": 256,
+    "comments": 76,
+    "score": 6.71
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Take Voyager 1 apart, down to a single memory chip",
+    "text": "Voyager 1 reached one light-day from Earth today. On the site you can: - see where both Voyagers are right now - open a nuclear battery to its 24 plutonium spheres - go into the data computer, down to a single memory chip - see how the Golden Record&#x27;s cover explains how to play it - watch how Voyager 1 was fixed by radio - see which dish on Earth is listening to them, live I also made a 4-min",
+    "url": "https://news.ycombinator.com/item?id=50548161",
+    "points": 234,
+    "comments": 57,
+    "score": 6.51
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Stripe closed us after one $1,500 invoice and never asked for evidence",
+    "text": "We&#x27;re a small business that sells pre-booked appointments with homeowners to local contractors, billed per appointment that actually happens. Our first client agreed to this on a recorded call and saved his card through a $1 Stripe payment link, which we planned to use for billing later. That $1 payment went through. A few weeks later we invoiced him $1,500 for 3 completed appointments and ch",
+    "url": "https://news.ycombinator.com/item?id=50510042",
+    "points": 181,
+    "comments": 92,
+    "score": 6.49
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: DeepSeek V3 in ~200 lines of pure Jax",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50497589",
+    "points": 276,
+    "comments": 30,
+    "score": 6.38
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Alloy CSS, dialogs, menus and tabs that work with JavaScript off",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50532385",
+    "points": 210,
+    "comments": 38,
+    "score": 6.24
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Live map of U.S. flights during tonight's FAA nationwide ground stop",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50491545",
+    "points": 220,
+    "comments": 27,
+    "score": 6.14
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: A terminal-native idle factory game, written in Rust with ratatui",
+    "text": "Hey HN readers! I&#x27;m snipedbywifi ( https:&#x2F;&#x2F;gitlab.com&#x2F;snipedbywifi ), and i&#x27;ve been working on terminactory. Please try it out if you&#x27;d like to play a cozy factory game while waiting for long agent tasks to finish! The game is a factory game (overused niche, i know xD), but runs in your terminal. Reason i built it? glad you asked: So basically, it started off with me ",
+    "url": "https://news.ycombinator.com/item?id=50497132",
+    "points": 173,
+    "comments": 44,
+    "score": 6.13
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Type Fighter 2",
+    "text": "Type Fighter II is an arcade inspired game for people learning to touch type. Free, no account, and progress stays local. You can try on mobile, best with a physical keyboard.",
+    "url": "https://news.ycombinator.com/item?id=50544821",
+    "points": 139,
+    "comments": 68,
+    "score": 6.13
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Cornhole News – A Hacker News inspired site for news across the Midwest",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50561515",
+    "points": 142,
+    "comments": 64,
+    "score": 6.12
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: If AI tools are so good, why isn't your bug backlog empty?",
+    "text": "A lot of people outside tech ask me if AI is going to replace programmers and I just think: if that were the case we should be running out of things to do The bug backlog should be empty and we&#x27;ve caught up to every feature request from PMs to the point that we are bottlenecked on the business side But that does not seem to be the case with my own company or most devs I talk to in the industr",
+    "url": "https://news.ycombinator.com/item?id=50520076",
+    "points": 103,
+    "comments": 116,
+    "score": 6.1
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Zigzag, a native Mac browser for people leaving Arc",
+    "text": "Hello HN! I am Zigao, a high school student from Shanghai. I am new to HN so hello to y’all! I used Arc everyday, and I never had any issues with it. So when The Browser Company announced that they will shut down Arc on Dec 22 I was devastated. I don’t want to switch back to boring tabs along the top. Everything else i’ve tried is either a Chromium fork or an AI integrated browser that I don’t wan",
+    "url": "https://news.ycombinator.com/item?id=50496787",
+    "points": 121,
+    "comments": 74,
+    "score": 6.05
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Foolscap – a writing app that reads your book and never writes for you",
+    "text": "People are scared of their ability to write and think atrophying, so I wondered: what if I built something that enhanced human creativity instead of destroying it by doing the thinking and writing for people? Foolscap is the result, or at least the first version of that idea that&#x27;s fleshed out enough to share here. It reads as you write and picks out the structure: characters, ideas, threads,",
+    "url": "https://news.ycombinator.com/item?id=50559749",
+    "points": 99,
+    "comments": 80,
+    "score": 5.91
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Mastra Factory, the open-source software factory we use to build Mastra",
+    "text": "Hi HN, we&#x27;re Shane, Sam, and Abhi. Almost two years ago, we shared Mastra, our open-source TypeScript agent framework, on Show HN:  https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=43103073 . It got a few hundred upvotes; a couple of weeks later our downloads had doubled, and we were off to the races. Today we&#x27;re sharing Mastra Factory, the open-source software factory we built to hel",
+    "url": "https://news.ycombinator.com/item?id=50548660",
+    "points": 136,
+    "comments": 41,
+    "score": 5.9
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: HN is being scraped for emails to scam",
+    "text": "I know that many folks here post their personal emails in the Who&#x27;s for Hire monthly pages and other places, and want to remind you that this public site gets views from folks with ill intent (or their bots&#x2F;agents) as well. I use unique emails for every site, so I immediately knew that the late AWS payments email sent to my HN email were fake. There were other tells, but I want to remind",
+    "url": "https://news.ycombinator.com/item?id=50513451",
+    "points": 123,
+    "comments": 43,
+    "score": 5.83
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: What are the most useful, concrete AI skills to independently learn?",
+    "text": "Specifically, what are the most useful, concrete skills to learn as an individual to take economic advantage of the advances in LLMs, agents and associated new technological capabilities? What is accessible to learn just from the internet and experimentation, without a degree program, assuming a preexisting moderately technical background? The clearer and more specific (eg. “Learn how-to x with y”",
+    "url": "https://news.ycombinator.com/item?id=50494696",
+    "points": 93,
+    "comments": 54,
+    "score": 5.69
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Agweb – a browser for agents that stays out of your way",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50497147",
+    "points": 109,
+    "comments": 37,
+    "score": 5.66
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: StarSling (YC P25) – Self-improving CI for agent-volume repos",
+    "text": "We’re Yonas and Daniel and we’re building StarSling ( https:&#x2F;&#x2F;starsling.dev ), fast GitHub Actions runners with AI agents that ship PRs to continuously improve your tests and workflows. Every CI job gets its own ephemeral sandbox on the fastest Zen 5 machines and NVMe Disk with unlimited concurrency so a burst of agent PRs all run at once. We’re different from other runners because ours ",
+    "url": "https://news.ycombinator.com/item?id=50536468",
+    "points": 87,
+    "comments": 51,
+    "score": 5.6
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Fursoy – Out-of-order RV64IMAFDV core in SystemVerilog (Linux 6.6)",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50497137",
+    "points": 86,
+    "comments": 39,
+    "score": 5.48
+   },
+   {
+    "src": "Hacker News",
+    "title": "US test reactor cleared for operations",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50483533",
+    "points": 85,
+    "comments": 34,
+    "score": 5.41
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: Onlook (YC W25) – An open-source developer tool for designers",
+    "text": "Hey HN, I&#x27;m Daniel, founder of Onlook ( https:&#x2F;&#x2F;github.com&#x2F;onlook-dev&#x2F;onlook  and onlook.com). Onlook is a desktop app that puts a canvas on top of your real codebase, letting you design directly in code with the agent you already use. Over 25,000 designers and developers have supported the project, 100+ have contributed, and it&#x27;s been the #1 trending repo in the worl",
+    "url": "https://news.ycombinator.com/item?id=50562320",
+    "points": 60,
+    "comments": 58,
+    "score": 5.34
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Open-source, real-time object tracking for live video feeds",
+    "text": "I type &quot;forklift&quot; on a live warehouse camera, and tamserve finds and tracks both forklifts, including the one driving in. Then I add &quot;person&quot; without stopping it. tamserve runs Meta&#x27;s SAM 3 on live camera feeds. SAM 3&#x27;s own tracker handles one recorded video at a time, runs at about 8 fps, and runs out of memory on long videos. tamserve uses SAM 3 to find objects ever",
+    "url": "https://news.ycombinator.com/item?id=50523377",
+    "points": 117,
+    "comments": 13,
+    "score": 5.29
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: Maritime (YC F26) – A managed cloud for production AI agents",
+    "text": "Hi HN, we&#x27;re Ary and Maria, co-founders of Maritime ( https:&#x2F;&#x2F;maritime.sh ). We&#x27;re building an agent-native cloud that handles everything from custom environments to lifecycle management for AI agents. Demo:  https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=lCWMdBQ96rY  There’s been an explosion of sandbox companies coming out of SF, but sandboxes solve maybe 10% of the infrastru",
+    "url": "https://news.ycombinator.com/item?id=50549188",
+    "points": 57,
+    "comments": 54,
+    "score": 5.27
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Nobody blocks a keyboard – Rooted Android as a physical USB Deck",
+    "text": "Hey HN, \nI built Emittr because, i frequently deal with air-gapped or locked-down systems where USB storage is disabled and third party software cannot be installed. \nNobody blocks a physical keyboard, so i used the Linux Kernel&#x27;s USB gadget subsystem (ConfigFS at &#x2F;dev&#x2F;hidg0) to turn a rooted android phone to a real USB HID Keyboard and mouse. \n1. No installation on target device. I",
+    "url": "https://news.ycombinator.com/item?id=50517840",
+    "points": 55,
+    "comments": 56,
+    "score": 5.25
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: The Last Complication, a Zachtronics-style watchmaking puzzle game",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50511718",
+    "points": 89,
+    "comments": 21,
+    "score": 5.25
+   },
+   {
+    "src": "Hacker News",
+    "title": "Launch HN: Axonnic (YC F26) – Sleeves that track fingers and estimate force",
+    "text": "Hi HN! We’re Arsh and Max, founders of Axonnic ( https:&#x2F;&#x2F;axonnic.com ). We’ve developed a forearm sleeve that reads muscle activity to decode finger movements and estimate fingertip force, while leaving the hands bare. It’s used to record human movement and generate training data for dextrous robots. Here’s a demo video:  https:&#x2F;&#x2F;youtube.com&#x2F;shorts&#x2F;xBrocTc9cfA  We’ve ",
+    "url": "https://news.ycombinator.com/item?id=50522776",
+    "points": 56,
+    "comments": 29,
+    "score": 4.99
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: What is the state of self-hosting email in 2026?",
+    "text": "I mean both on your own server and on cheap but reliable VPS providers like Hetzner? If you self-host email what is your current stack?",
+    "url": "https://news.ycombinator.com/item?id=50488230",
+    "points": 48,
+    "comments": 36,
+    "score": 4.95
+   },
+   {
+    "src": "Hacker News",
+    "title": "Codeberg seems to have vanished from DNS",
+    "text": "It seems that at 06:30 UTC today, Codeberg&#x27;s registrar has placed them on clientHold, which has removed them from the .org zone entirely.",
+    "url": "https://news.ycombinator.com/item?id=50542948",
+    "points": 58,
+    "comments": 21,
+    "score": 4.88
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Google Search to start locking down search behind a login wall",
+    "text": "Usually, when I used Google Search on some ISP CGNAT IP addresses (not even a VPN), I usually get countless CAPTCHAs evertime I initiate a new session to Google Search on a new private browsing window (probably an artifact from residential proxy botnets). Recently, in addition to that, they started to just lock the entire search results page behind a login prompt on some of those bad IP addresses ",
+    "url": "https://news.ycombinator.com/item?id=50491617",
+    "points": 47,
+    "comments": 30,
+    "score": 4.85
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Can anyone name anything new that AI has done?",
+    "text": "We&#x27;re 2 years into this. Still looking for something that an AI did all by itself that is actually new. Everything I&#x27;ve seen so far still involves a human sussing out the new thing or the model is just aggregating data that is already there from disconnected sources that never got tied together.",
+    "url": "https://news.ycombinator.com/item?id=50484426",
+    "points": 30,
+    "comments": 55,
+    "score": 4.73
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Claude Code Is Down",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50480909",
+    "points": 37,
+    "comments": 21,
+    "score": 4.5
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Carton Clock – A working pendulum clock made from empty drink cartons",
+    "text": "After my last trash clock ( https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49930439 ), I wanted to see how low I could go. My latest clock is built mainly from empty drink cartons, plus a few skewers, some paper straws, a piece of string, some nuts as weights, and lots of hot glue. It has a pendulum, an escapement, and hands for seconds, minutes, and hours, and runs for about an hour. The des",
+    "url": "https://news.ycombinator.com/item?id=50482279",
+    "points": 88,
+    "comments": 3,
+    "score": 4.5
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude OAuth Failures",
+    "text": "Claude has started having serious OAuth errors and hangs, but nothing appears on the Claude Status site yet[0]. It&#x27;s been several minutes now, not sure if its a blip or something more serious. Obv Claude is still reporting the issues with MS O365 connector; but not sure if it&#x27;s related. [0] https:&#x2F;&#x2F;status.claude.com&#x2F;",
+    "url": "https://news.ycombinator.com/item?id=50480936",
+    "points": 28,
+    "comments": 24,
+    "score": 4.32
+   },
+   {
+    "src": "Hacker News",
+    "title": "Anthropic (ANT) stock lists at nearly $2T valuation",
+    "text": "Anthropic (ANT) stock listed at nearly $2 Trillion valuation. It is the biggest IPO ever!",
+    "url": "https://news.ycombinator.com/item?id=50562528",
+    "points": 39,
+    "comments": 11,
+    "score": 4.28
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Robotics needs better CAD, so I wrote a B-rep kernel and 3,487 tests",
+    "text": "Hey HN, I’m Tony. I’m a co-founder of Springcraft, where we have been doing a lot of CAD modeling for robot parts. Our team kept running into limitations with existing kernels, and so I decided to write a new B-rep kernel and a new comprehensive, kernel-agnostic B-rep conformance test suite. Both are available today under MIT licenses. The kernel, springrep, is written in safe Rust with no depende",
+    "url": "https://news.ycombinator.com/item?id=50552140",
+    "points": 32,
+    "comments": 9,
+    "score": 4.04
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: An API for word timestamps from speech, 75% within 20ms",
+    "text": "Hey HN, we&#x27;re Yarn (W24) and we make a video editing app for startups, and we built Quebec ( https:&#x2F;&#x2F;quebec.yarn.so ), an API that gives you accurate word timestamps from speech. We needed it because cutting a word even 50ms off from its true timing can ruin talking head footage (examples in the write up). Accurate word timestamps usually come from a forced aligner, which takes the ",
+    "url": "https://news.ycombinator.com/item?id=50532515",
+    "points": 33,
+    "comments": 5,
+    "score": 3.84
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude AI Is Down",
+    "text": "Claude AI is down according to independent detectors [1]. The official status page ha no incident issue yet. [1] https:&#x2F;&#x2F;downdetector.co.uk&#x2F;status&#x2F;claude-ai&#x2F;\n[2] https:&#x2F;&#x2F;status.claude.com&#x2F;uptime",
+    "url": "https://news.ycombinator.com/item?id=50480941",
+    "points": 28,
+    "comments": 7,
+    "score": 3.83
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Are iPhone Duo Customers Happy?",
+    "text": "I&#x27;m thinking of getting one. Would love to hear from anyone who owns one and has an opinion.",
+    "url": "https://news.ycombinator.com/item?id=50522639",
+    "points": 17,
+    "comments": 18,
+    "score": 3.79
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Aren't the current cyber attacks suspicious?",
+    "text": "Just looking at history and having some bayesian mindset the fact that: FAA,NSA,MSFT,APPLE,EQUINOR all got hacked in a week. Isn&#x27;t it obvious that some nation state or activist&#x2F;terrorist group has gotten hold of an AI hacking tool&#x2F;Agent that can wreak havoc? It&#x27;s not business as usual anymore, it&#x27;s an agentic cyber war that has started isn&#x27;t it? * Edit: about bayesian",
+    "url": "https://news.ycombinator.com/item?id=50538449",
+    "points": 17,
+    "comments": 17,
+    "score": 3.77
+   },
+   {
+    "src": "Hacker News",
+    "title": "Claude Gets Hella Paranoid",
+    "text": "Mm, so I hesitate to write this, because my own AI agents might read it. But what the hell. I&#x27;ve got this crappy little $300 PC on my network hooked up to my projector, that I mostly use to serve Jellyfin. So tired of it going down every time there&#x27;s a Windows update, but I&#x27;ve been too lazy to get around to installing Ubuntu. Last night, when it went down, I asked my Claude-claw via",
+    "url": "https://news.ycombinator.com/item?id=50543947",
+    "points": 19,
+    "comments": 11,
+    "score": 3.68
+   },
+   {
+    "src": "Hacker News",
+    "title": "Vercel should fork and maintain Deno",
+    "text": "Given the news of Deno being acquired by Cloudflare and its already stated eventual sunset, someone has to take over deno.\nVercel certainly has the resources, I am looking for a job and would love to work on Vercel&#x27;s deno maintenance (which I suggest should be renamed to &quot;veno&quot;, or &quot;vino&quot;) Thoughts on the future of deno post Cloudflare?",
+    "url": "https://news.ycombinator.com/item?id=50497196",
+    "points": 16,
+    "comments": 14,
+    "score": 3.64
+   },
+   {
+    "src": "Ask HN",
+    "title": "Ask HN: Best books you read in 2026?",
+    "text": "",
+    "url": "https://news.ycombinator.com/item?id=50501990",
+    "points": 19,
+    "comments": 9,
+    "score": 3.6
+   },
+   {
+    "src": "Hacker News",
+    "title": "GitLab 19.6.0 is out and still vulnerable to Ruby2Shell and NGINX2Root",
+    "text": "What&#x27;s going on at GitLab? They released their usual monthly release 19.6.0 to their package repos (https:&#x2F;&#x2F;packages.gitlab.com&#x2F;gitlab&#x2F;gitlab-ee&#x2F;ubuntu&#x2F;jammy&#x2F;pool&#x2F;main&#x2F;g&#x2F;gitlab-ee&#x2F;) but did not announce it at all as of 3.5h after release (https:&#x2F;&#x2F;docs.gitlab.com&#x2F;releases&#x2F;all-releases.xml, https:&#x2F;&#x2F;docs.gitlab.",
+    "url": "https://news.ycombinator.com/item?id=50561571",
+    "points": 20,
+    "comments": 6,
+    "score": 3.49
+   },
+   {
+    "src": "Hacker News",
+    "title": "Tell HN: Cloudflare's abuse report form is a blank page",
+    "text": "https:&#x2F;&#x2F;abuse.cloudflare.com&#x2F;  \nhttps:&#x2F;&#x2F;web.archive.org&#x2F;web&#x2F;20261112125921&#x2F;https:&#x2F;&#x2F;abuse.cloudflare.com&#x2F; When you want to report abuse to Cloudflare they tell you here to use a form that is actually just a completely blank page: https:&#x2F;&#x2F;www.cloudflare.com&#x2F;trust-hub&#x2F;reporting-abuse&#x2F;",
+    "url": "https://news.ycombinator.com/item?id=50491285",
+    "points": 18,
+    "comments": 7,
+    "score": 3.46
+   },
+   {
+    "src": "Hacker News",
+    "title": "Interesting Learnings Working for a Startup",
+    "text": "1. product isn&#x27;t important, sales is important 2. infra isn&#x27;t important, talent to build it is important 3. which stack you use to build the product isn&#x27;t important, business taste is important 4. pushing employees isn&#x27;t the fastest way to ship, building a process from learnings is much more efficient share your learnings below",
+    "url": "https://news.ycombinator.com/item?id=50542361",
+    "points": 19,
+    "comments": 6,
+    "score": 3.45
+   },
+   {
+    "src": "Show HN",
+    "title": "Show HN: Deslop skill based on corpus-linguistics and psycholinguistics research",
+    "text": "I vibed this deslop skill because I was getting increasingly annoyed that deslop skills for prose relied either on fitting prose into an overly restrictive format (simple-english and iso-24495) or telling AI to rewrite something without providing any tools in the skill to measure the outcome (which more often than not resulted in one slop being replaced with another). This skill is based on publis",
+    "url": "https://news.ycombinator.com/item?id=50516995",
+    "points": 17,
+    "comments": 6,
+    "score": 3.36
+   }
+  ],
+  "github": [
+   {
+    "src": "GitHub",
+    "title": "FrigadeHQ/yogurt: Private AI meeting notes that stay on your computer. A free, open-source alternative to Granola for Mac, Windows and Linux.",
+    "url": "https://github.com/FrigadeHQ/yogurt",
+    "points": 2604,
+    "lang": "TypeScript",
+    "score": 9.83
+   },
+   {
+    "src": "GitHub",
+    "title": "huami1314/GestaltX: An MobileGestalt editor for iOS 27.x, featuring region-code tweaks, device presets, backups.",
+    "url": "https://github.com/huami1314/GestaltX",
+    "points": 8529,
+    "lang": "Swift",
+    "score": 7.86
+   },
+   {
+    "src": "GitHub",
+    "title": "erkamyaman/rust-anything: Rewrite your whole app in Rust, one piece at a time, checked against the original's recorded behavior at every step. CLIs, HTTP servers and libraries in TypeScript, Python, C",
+    "url": "https://github.com/erkamyaman/rust-anything",
+    "points": 5021,
+    "lang": "Rust",
+    "score": 7.4
+   },
+   {
+    "src": "GitHub",
+    "title": "deepseek-ai/chat-demo: Chat Demo",
+    "url": "https://github.com/deepseek-ai/chat-demo",
+    "points": 5019,
+    "lang": "TypeScript",
+    "score": 7.4
+   },
+   {
+    "src": "GitHub",
+    "title": "krisgfx9/Wireless-Device-Battery-Monitor: Show the battery level of wireless mice, headsets, keyboards and controllers on the Windows 10/11 taskbar. Lightweight tray app, no vendor software needed. Su",
+    "url": "https://github.com/krisgfx9/Wireless-Device-Battery-Monitor",
+    "points": 4603,
+    "lang": "C++",
+    "score": 7.33
+   },
+   {
+    "src": "GitHub",
+    "title": "tangerineturtle1/NX2navi: ",
+    "url": "https://github.com/tangerineturtle1/NX2navi",
+    "points": 4330,
+    "lang": "C",
+    "score": 7.27
+   },
+   {
+    "src": "GitHub",
+    "title": "ersinkoc/phonebox: Turn an old Android phone into a customizable desk panel and touch control deck for Windows, Linux and macOS. 124 widgets and 30 templates for system stats, AI coding, media and aut",
+    "url": "https://github.com/ersinkoc/phonebox",
+    "points": 3803,
+    "lang": "C#",
+    "score": 7.16
+   },
+   {
+    "src": "GitHub",
+    "title": "JenkinWoo/sheeridVerify: ",
+    "url": "https://github.com/JenkinWoo/sheeridVerify",
+    "points": 3687,
+    "lang": "JavaScript",
+    "score": 7.13
+   },
+   {
+    "src": "GitHub",
+    "title": "jhaizhou-ops/S2Arm: Run your own Switch games natively on iPhone, iPad and Mac: game code rewritten to ARM64, graphics direct to Metal, one app for the whole library. Bring your own games and keys. 把你",
+    "url": "https://github.com/jhaizhou-ops/S2Arm",
+    "points": 3674,
+    "lang": "C#",
+    "score": 7.13
+   },
+   {
+    "src": "GitHub",
+    "title": "apex-compute/ANR: Apex Neural Rendering (ANR) by Apex Compute",
+    "url": "https://github.com/apex-compute/ANR",
+    "points": 2695,
+    "lang": "C++",
+    "score": 6.86
+   },
+   {
+    "src": "GitHub",
+    "title": "Kianuni/Erosion-CN: iOS / iPadOS 系统配置与 MobileGestalt 研究工具箱（中英双语 · 防白苹果安全加固版） | Bootloop-safe iOS / iPadOS System Configuration & MobileGestalt Toolbox (Bilingual EN/ZH)",
+    "url": "https://github.com/Kianuni/Erosion-CN",
+    "points": 2548,
+    "lang": "Swift",
+    "score": 6.81
+   },
+   {
+    "src": "GitHub",
+    "title": "DIYgod/pinky: Let AI use your iPhone or Android phone, with you in the loop: any MCP agent from macOS, Windows or Linux, or Pinky itself, right on the phone.",
+    "url": "https://github.com/DIYgod/pinky",
+    "points": 2529,
+    "lang": "Go",
+    "score": 6.81
+   },
+   {
+    "src": "GitHub",
+    "title": "Immortal-Protocols/lastbook: Offline knowledge AI, maps and videos for survival and rebuilding",
+    "url": "https://github.com/Immortal-Protocols/lastbook",
+    "points": 2520,
+    "lang": "Python",
+    "score": 6.8
+   },
+   {
+    "src": "GitHub",
+    "title": "Noniv/abyssal-garden: A dreamy underwater world you can swim through in your browser: swaying kelp forests, sunbeams, a sunken ship and manta rays. Everything is generated by code with WebGPU (no imag",
+    "url": "https://github.com/Noniv/abyssal-garden",
+    "points": 2494,
+    "lang": "JavaScript",
+    "score": 6.79
+   },
+   {
+    "src": "GitHub",
+    "title": "gylive/google-ultra: ",
+    "url": "https://github.com/gylive/google-ultra",
+    "points": 2438,
+    "lang": "Python",
+    "score": 6.77
+   },
+   {
+    "src": "GitHub",
+    "title": "HolyArrs/HolyArrs: One self-hosted app for your shows, movies and music.",
+    "url": "https://github.com/HolyArrs/HolyArrs",
+    "points": 2232,
+    "lang": "Go",
+    "score": 6.7
+   },
+   {
+    "src": "GitHub",
+    "title": "Eynnzerr/TelemetryCleaner: 基于 Shizuku 免 Root 清除国产安卓 SystemHelper、RegService 等系统预装隐私数据收集模块",
+    "url": "https://github.com/Eynnzerr/TelemetryCleaner",
+    "points": 1955,
+    "lang": "Kotlin",
+    "score": 6.58
+   },
+   {
+    "src": "GitHub",
+    "title": "HybridRobotics/supermimic: Humanoid whole-body motion tracking with one differentiable world model.",
+    "url": "https://github.com/HybridRobotics/supermimic",
+    "points": 1855,
+    "lang": "Python",
+    "score": 6.54
+   },
+   {
+    "src": "GitHub",
+    "title": "ZiChuanLan/freebie-radar: 白嫖与资讯资源聚合雷达：100+个源定时采集 + AI 二审过滤假福利 + 获取方式分级隔离抽奖/试用/推广 + Telegram 即时推送",
+    "url": "https://github.com/ZiChuanLan/freebie-radar",
+    "points": 1785,
+    "lang": "TypeScript",
+    "score": 6.5
+   },
+   {
+    "src": "GitHub",
+    "title": "agentes-chat/agentes-chat: Open-source, self-hosted Slack alternative where your team and AI agents work together in channels and DMs. Agents run on Claude, ChatGPT/Codex, Gemini or Grok, with MCP too",
+    "url": "https://github.com/agentes-chat/agentes-chat",
+    "points": 1751,
+    "lang": "TypeScript",
+    "score": 6.49
+   },
+   {
+    "src": "GitHub",
+    "title": "Hut-hzf/ung220z-tool: ung220z-tool 是一个针对 UNG220Z（九联/Unionman 中国移动光猫）的一键凭据提取工具，仅限在你自己的设备上用于找回忘记的管理密码、迁移宽带配置或安全自查。",
+    "url": "https://github.com/Hut-hzf/ung220z-tool",
+    "points": 1721,
+    "lang": "Python",
+    "score": 6.47
+   },
+   {
+    "src": "GitHub",
+    "title": "duwqijlk/muse-protocol: muse.ai 注册与邀请码兑换协议研究（纯 HTTP Python 实现）",
+    "url": "https://github.com/duwqijlk/muse-protocol",
+    "points": 1654,
+    "lang": "Python",
+    "score": 6.44
+   },
+   {
+    "src": "GitHub",
+    "title": "CzzzzzzJ/mdldm-maitian: 麦田：自媒体多平台发布中控与数据监控（B站/抖音/小红书/视频号/YouTube/X），飞书卡片通知 + 数据大屏",
+    "url": "https://github.com/CzzzzzzJ/mdldm-maitian",
+    "points": 1594,
+    "lang": "JavaScript",
+    "score": 6.41
+   },
+   {
+    "src": "GitHub",
+    "title": "adriadam10/mkw-recomp: Static recompilation of Mario Kart World (Nintendo Switch 2) to a native PC program",
+    "url": "https://github.com/adriadam10/mkw-recomp",
+    "points": 1545,
+    "lang": "C",
+    "score": 6.38
+   },
+   {
+    "src": "GitHub",
+    "title": "Goblinmine/homelab-diagram: Renders an r/homelab-style network diagram from a YAML inventory (Python → SVG/PNG). Written with Claude.",
+    "url": "https://github.com/Goblinmine/homelab-diagram",
+    "points": 1460,
+    "lang": "Python",
+    "score": 6.33
+   }
+  ],
+  "news": [
+   {
+    "src": "News",
+    "title": "This Startup Raised $1 Billion to Build AI Faster and With Fewer Humans - WSJ",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxObkxPOGVxOXJ1ZHo1Wjh4YjRHamNPWFZUUXhWMG1FSU5EUmZRcHZ2QXRyWk5Va1hiRFEyOHdlZGZkNTkwYjJkVUh6Y3l4TVhuTnFiSDRfa2M4amV6ODc5MnFSVi0xd3ZsTzVEZ2lEdlNfVE1OX2ZKSkJDZDlaUHNFV3JsVHhMX3ZEOGlrdEpRMEtTMGxyck1kbVlPSWhnSmZuelVZRnRNcUR2M0dULWJpd3phaGRoOXc5WXVz?oc=5",
+    "date": "Fri, 13 Nov 2026 01:29:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Israeli startup raises $11 million Seed to automate the growing burden of AI security - CTech",
+    "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE96Y1g0M1FXcDFGWWtyQ0xuZ3VRQThKenY5aGxDLV9YSG9TX0owWFoyN1JjbmZxcWJRVmV2WUxjR1FGOC02WDhiek9XSVRkR2Q5dEt4YlMyTVBnbVlxeUNvaWRZUkhEZllM?oc=5",
+    "date": "Wed, 18 Nov 2026 13:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Indian chip startup Bharat Semi lands $24M seed round as it eyes global AI sensor market - TechCrunch",
+    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxORlp0dzgwTTFLWm5FZ25md2xZM1hldHoxRmhaVHJncWNmYUd2WVJRZGZlQVlycUlRMENUblNDSHpudlV2ZlRvTFhMaUFCb1hVUndRRHMtMmRaSnFiV1Yxb19kQ3ppVTQ0X29hZG1FVlBmVW8yWWJ6aVh6R0xESlJMWElCQ2kzN19rX29feWFJeV9EQzc3dmdYQmRoWUg3d1lTc2xaRUV5Y2FBa3lZNWpFNVMzdEZrNGRVQk0yX3h3NA?oc=5",
+    "date": "Sun, 15 Nov 2026 23:30:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Neuron Seed Funding Round Oversubscribed - Los Angeles Business Journal",
+    "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPT3lHSFRySlJwRlpaRkdVMUpoMVZFSGlLZktRTzhlaTZ0a08yTUtkR3JqNnBQNTZCLXgxa0ZVQTZ2M2kwMXlKajRjY2pDaHdhajc0SGFxREN3TnFfOUFXVmJseGVETWtEdVNTNGh1aFNFbUJKUDdXc0UzaUszdHJwMnZ3WHJaQ0twZWc?oc=5",
+    "date": "Mon, 16 Nov 2026 08:01:03 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Restaurant AI startup Marble raises $5.5M seed round - Dealroom",
+    "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQdTlSUHNiU081M3N6UXcwcDd0SllXRWtOSGsxUE92NEN0cDlCUGp3alBGVUx0ejhXVW9YRTdxRnZSc2RxbWpuMWItVzhhRlliT2UyTTI0c0ZXT3NpUm1qMmlfUmNyTHlIRUw1Z3RlVDR5cEZ1MnV0NmFRZTRYMjFmanEtUEZrY3BacFNLUEdn?oc=5",
+    "date": "Tue, 17 Nov 2026 12:10:21 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Investment Fund Management Startup Perry AI Announces $2.2M Seed Round - Law.com",
+    "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNWjFpUjJBenR6NThaMXZ6MExJWWozVlRCLXU3aF9YQWNLemV6MGtPMkdfMC1zOEE2ZGh1ektKVGRlUE1PZ1M5NVp6UVlIUkh4MEVGTXg0TDVzSnVWMVc0dHRWcHlaSVlEQXFlRUI4Q3pOSm9PUEJZeWt0VVZZZmszLVp6UDF2LTd4bnpLQ2tiRFJsVGJqdFA5emxoR2ZFdGtHWFg3T0Z3MjRaV1lwX1VIWktBU19wQQ?oc=5",
+    "date": "Wed, 18 Nov 2026 18:25:57 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Freestyle Snacks raises $5 million in seed round - Food Business News",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQbHRlMjZkRGJPUVM4NXF1YWlTaUF3OWdzV0hhUjFlc0RFRkVxRGtGWlJWZjc0cXMxc2VTWHFkeWIxOVVJdWFkWTd1ZDlHT3Q4dWFrVWptRk1qR19IVXJIdDI5OHhndTRkenBhdm15dUxaVXp4bXRJUjdnMG9qVzhsN3FzQnpGZ0JHSXNzQWctZWk0QXpoQzNhNUowUQ?oc=5",
+    "date": "Tue, 17 Nov 2026 14:00:31 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Mass General Brigham spin-off launches with $22M seed round - The Business Journals",
+    "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQd25JUFpIRnQwaVVrTDlINVRSYUhiaGV5UnVIRHgtZ3RZNHU3Q3NrdnN0ZWl4UFcxZTJHMlpaZ1lqUGc1OXJ2Q01IdkRoYUVJRTU2ZW9rRFQ2Q2xGUEszS3RBWmZGSkFUejBTMExtMFRjbmVSY2FQbjRlNkRfdldLelhyU3JMNnRBc0dmc2xRVTFMZXg4amZ2YXotZTY5N2w2?oc=5",
+    "date": "Tue, 17 Nov 2026 19:01:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Finnish startup raises €3.5 million pre-seed to bring AI to data centre construction sites - ArcticStartup - ArcticStartup",
+    "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBTNXRQM3I0Y2RkNTZpdXZLa3h3Yy10Y0JRcHFDMmVBVVI2b2tFWkZaSGgxakNlVmExWHFMQUtPWEtVa0pxa3lhTUZBNXVVV3AyNkhBU3VmZV9vS0RySGd1QXJzb9IBY0FVX3lxTFBTNXRQM3I0Y2RkNTZpdXZLa3h3Yy10Y0JRcHFDMmVBVVI2b2tFWkZaSGgxakNlVmExWHFMQUtPWEtVa0pxa3lhTUZBNXVVV3AyNkhBU3VmZV9vS0RySGd1QXJzbw?oc=5",
+    "date": "Tue, 17 Nov 2026 07:51:56 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Indian AI video startup Lemonpeel raises $1m pre-seed round - Tech in Asia",
+    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOM1laRWlNNFptT245QzViU2tvaXhwSWYtRi0waDdMN2p5WmNocTNOVUVlYVQ0MnVlUHdIM0VreUlDUmNWUHdWMXk4WklfcVdGWTIzcWdNQUtmcGpuamJMMFlzWDhQdHJPelJJajRFbGdNbTZMaG5XRGFNWkt6X2FMQ0w4Y1d0OUp3Y2R3?oc=5",
+    "date": "Tue, 17 Nov 2026 06:39:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Woodlands startup Mavria raises $130M to mass-produce AI data centers - InnovationMap",
+    "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQWGZWWm1tUmttYUpEd0o1UVhoUE1NT1VObnYzdFF5Qi1kSmZVV1I1STZQbFRwLVRVMzg1WHhnVVFwaEh5ei1fYVRzeXVzY21kUWd2RzhSZ3BqVGlXUkZIYXRSSE1vcFBzZEJWMTFDNGs2X0ZUTHVzNS1LQnA0SzYzZGoyYw?oc=5",
+    "date": "Mon, 16 Nov 2026 22:10:56 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Exclusive: Italian robotics startup Mosaico raises €7.5m to tackle AI’s data problem - Sifted",
+    "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9xWDdmeC1RV2tQN3VDU0cxSXJQRG93aXAtQnJjNm9VUDFFbkNrUlhpNmlzR0YyS0xYdmJlc1JfenAwaTJfM2VZZnptZ3lOX2g2c1A4WXp5OXRMVkxFOVNqSkM0bXI2RmxoVjdYOFZITDhuZXZBV3dJZA?oc=5",
+    "date": "Mon, 16 Nov 2026 05:03:02 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Exclusive | Genesis AI, a Robotics Startup, Raises $500 Million - WSJ",
+    "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPTWFFQXhWNzlaWHRMZ2E5dWdTY0pIa2dVci0wa0VETFVvZXRzS2Z3Vm9uenBueTdiNFVpQmxXTHBGUm1IS04tdEJuaTJKY0hoVHhsSWVhOGNFeUcyc09LSlV3aG05bzMycGZDa29JM3hvRFp1bm1UV1ZLblBFdzBMdVdMSzh4Zlk3M1drZm8tNUIyQ00?oc=5",
+    "date": "Tue, 17 Nov 2026 14:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Isomorphic Labs raises $5B series C months after $2.1B round - Fierce Biotech",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOendaLU5JaDRyX040VjJfUHNuRDVrTFVjVVlXeGpkWjVFaWN4a1lENllJVkxWSU5US1hvbHlEYWFnWXRCMlpkTDljWmtaVVM4VnhCOFZIZGFjU0YxaTBLLWNiazhWcjBTZmdoam9qVFJDcE1nQ0ZuRG1kamVwNTBMYUdoajJtajhESVo3WDJuX09aZkoxRWNjVURtVQ?oc=5",
+    "date": "Tue, 17 Nov 2026 14:20:39 GMT"
+   },
+   {
+    "src": "News",
+    "title": "AI drug developer Isomorphic raises $5 billion in Series C round - Reuters",
+    "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPamxJLTFxaXJJZm9BU0RWSlFEUE9IWkE1bFNvVkRSYjhVMHNERDhWUWxGbkF3RGtfUUFMQ1ZwaG9QZkdOSk84bGszOWRJdXV3YXhVR1l0aHJ6M2FXUlRFNDJ5bEtkZWthNHdTQ1pPaWJKNGlzdXVhamNxWlNvTElkOURYVGI5VVZhWGpqb1YxZGE0eHVVTnh2MUdBQTdhVUl0VDU3WTB4ZmNMWGxxeHFXZVdzVQ?oc=5",
+    "date": "Tue, 17 Nov 2026 17:11:42 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Exclusive: Boltz raises $110M as usage of its AI drug design software jumps 50-fold - Endpoints News",
+    "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFA1d2lyamFsR1BxY3NkLXZwVWNpU3FyZVJCbmc4Y1h6TWlDbDVnWkptS0tGam9mMEhySmppdE9mYVJGUGtObTNpMmZRbkdoaFBZRWduekx0QXNmZmJaRC1uUUEteGZCVzJVd05IdEk5a1NRc3M?oc=5",
+    "date": "Wed, 18 Nov 2026 12:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Demis Hassabis’ AI company raises $5 billion, months after he left as Google DeepMind CEO - CNBC",
+    "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPTFpzOHFHREVGLWRCYk1xQlppZXlkZTJtQ3dsV3JqNHM3al9SVF82UGtNUk52Y2diUTlXYUt2QWZ1MFRnN3dlbEpLQUdiYWc4aDgtOERaLVJLckgzaUFTOTBtMEo0NUcxckFWSy1yRThTSkx6Z3lfV3dQdFBaU1pBelpncTB1d0nSAYwBQVVfeXFMTUtFN2U2MHg1TlE2aVZSa1pRUTQ1ZUY0blFyV1RKaFJHWWVTQlRTeEh5cG0temdzTmFHR2d4MVZlMXpNQ1l4eHBkRXJwOFd6ZUhQMk9pOUI5cWZFdUE4S3hoSngwNXZxTndONlM1cUgycFZZOUttZzdVc056eXF3Q18xbjBOLTZQX2w4Qy0?oc=5",
+    "date": "Tue, 17 Nov 2026 13:58:07 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Genesis AI Raises $500M Series A to Accelerate Robot Deployment - Unite.AI",
+    "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOYmUwTEdLZ1JabHpUMWloRERmS0NlVjBwcWxZM3pzSGNoVjZtUjZXSFYyaDB3bkdBX08yQlo4aDV2ZmpfV0ZtRWNXc3lVcm5UbTJfY3lVQll5a1dwQU5GNlVrNW9Ra21teFViV01tTDdET3VxcDZTN2F5b1VtVGFkWDY1eFBnTVJyd3ByZA?oc=5",
+    "date": "Tue, 17 Nov 2026 14:18:02 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Isomorphic Labs raises USD 5 billion in landmark AI drug discovery financing - AllSci",
+    "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOS1VudS1rWXluVXBfZTRMNHNQSm1OSFJrSV9uOE81M2hRS1NiQk8wOHNLZGhHQ2FWejRpLXhZWG1ldkpsRWtFbU5xZTZ2T0hqcUJHOWZFVTNWVUVlYUxpT3RkYTRsUnFCTm5sa1hnSzAwOGdPUXdSdnp2UTFJQmZYVlBqYUl4aWxCM0M2SC0wemZyYjVX?oc=5",
+    "date": "Tue, 17 Nov 2026 13:06:27 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Hatz AI Raises $24 Million in Series A Bonds to Solidify Its Position as the AI Platform for MSPs and SMBs - The Cannata Report -",
+    "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1mcG0xdHpQdDJxZjM4el81a0xiQk96U0NNd3NweDV1cjdrLXBfSXVBMGoxcEFHVkxjaHBJQnhMV1UzQTNFZ00zSzBDSlRaY2xOaFFpNWE0ZEtodnhXOUo4aUZGalNQWG1VeVpRTmVqdEpxTG9rRlNTTS1VYzc1eWM?oc=5",
+    "date": "Thu, 19 Nov 2026 14:00:22 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Payhawk raises $280m in Series C funding round at $2bn valuation - FinTech Futures",
+    "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOUlAwX3B2WWMtZ3JCaF9iOWlmbjR0TzBQbWlCTmozR0VQYWtFdS16eDhFWmRhYXBxREYxUzZ5NkcyV0kwa3hLUHhmSTVtWkI5QkNsR3FGZ2toQWxDbm1pZWtwQVFIZTRyX2UzS250THVmQ2NVNzNVZE95M3lTMFZDbFIxMUV0cG9ScTlPb2xfMW5OakxYaWlIUnVhZExYbE0?oc=5",
+    "date": "Wed, 18 Nov 2026 08:58:06 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Genesis AI Raises $500M in Series A Funding to Develop General-Purpose Robots - AI Insider",
+    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQUi15aXlZRmtGN0VuamtqS2l6OEdlXzhURHhFUUlHd0QyWGhteVk4SXFvRVNoeHNmNTlkS1ZRQTRiUm9fc2VmakVNX3M5bkRXdVEwWlRIV3hUUFRmSl9rcUJ0eEFha0U1SFR2SzFvZDdHUGptSkE2ODN0TVVWSURsUDlCa2F1X3VYQ1M2RjlfQWlPUWh1bDUxdmM4UUVpcjh3MzNkaUY4TEhETDg4S0QzRg?oc=5",
+    "date": "Tue, 17 Nov 2026 15:41:43 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Genesis AI Raises $500 Million to Scale Robots With Human-Like Dexterity - PYMNTS.com",
+    "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNSEZRTktORjhOMjJHaV9RUlJJbDBsRjlqdl9RUXlIU1M4dE5lRWhBMDdHRWhYSUY1ZUF3bEVvR2x6UzB0YnhIRG9HcHo3N0YzNm9oMmpacnJvN0RJR3B0NE8wdHR0bTZObmJTOU1IODI0cFJjRUFLVXdORFp1dk5XZU5kemVNcE1wNFJKNHZ1U0RvbC1ubklQSDFFeHI4WkxEUVN0ZzhOeUdCN1hhcmxITmN4WmFuR2J0Y2ZBYV9xeFlxQQ?oc=5",
+    "date": "Tue, 17 Nov 2026 18:39:08 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Genesis AI Raises $500M Series A at $3.5B Valuation With Backing From T. Rowe Price Associates, NVIDIA and Khosla Ventures - citybiz",
+    "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPcWlwWHdBT2JMVHZzVW1OeFFTQWtYU0tnR2F1SlZmQ1VYSWZHRXlvWUVWRUlFc2sxRVZ0cjI1TXkzaTRwOUZCenl6bFhOVEptZExXNXZXSGFGbm9pZlNNUTR1QUU2cTFiRUQ3U3JxUjNjM1lSLXVoWFl4NXRxU0FjSGVUVGVwNGdoaEdMSkNFVjFTYnNnOW1pY0VwbkZKbm9uM25YNWhxVHJ0QTdXRFUxWWgxVFlrT0RONzgtVmlnUnZVLUFWTUJpNTRBOWVGX2gtbjBzTnY2VGdTREgwbjBJZy1qVGxmX2JhU1VwbkZR?oc=5",
+    "date": "Tue, 17 Nov 2026 15:09:48 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Banks, credit unions, CDFIs — wading through MD small-business loan options - Maryland Daily Record",
+    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE51YXVERGNXTTZ5eG5POUUzWml5YUJSYjdwRmE2SEZsdDR6TVc3QzNjWFpyS1BXSG12R0MxUFF1LU1VLWppc0t0VGNxcEJzTm9ZczEydHZaUURDY3hqWjl4VVA3TjJQWC0yOWJnWjNnLXZvcFFCNGJN?oc=5",
+    "date": "Wed, 18 Nov 2026 10:01:09 GMT"
+   },
+   {
+    "src": "News",
+    "title": "11 Reasons Why Tech Startups Fail (and How to Avoid Them) - Oracle NetSuite",
+    "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPRHhtSktVeVI0cUNVWE5feHp4RXpTdzVMTUdIQWJkbUlaN2NmQ2plUVFITkZiU3pMbXFIVWR0MTYwOUp3ejlXM2hhVkRiUXpXTDJvWUJqeVUwYnNpb3B0c2FxSXV5NDdDcUVTYmVZWmZjSFhWTjJqX0F2MkpOSFhLQWJwMWlPdEw4RkswSURETlYzSU5oaEl4UF9SMzI?oc=5",
+    "date": "Fri, 13 Nov 2026 12:32:49 GMT"
+   },
+   {
+    "src": "News",
+    "title": "AI writes 90% of the code at this company. It still can't hire enough engineers. - Business Insider",
+    "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPY2Q0S2w2M09WaTM3V0xCazBjWnVtUXFjTXJILVBaS1dMbHNfWS1iaDRDX1RDMG9CWkhjVEFMRlcxOFFmSjN6VzRuZzlqOXhCWXVjUzVvd2UtbE5iVTNURzhwRjl4eG9jcnBycHFQT1JGb29YYUlnLXBPbDh1NVpXanVfUDJoUFdUV1BxdU50VVVMa2VxVVNJZjZ4ME45S1hSOTVMLUU4akEwUQ?oc=5",
+    "date": "Sun, 15 Nov 2026 10:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Best ERP Systems Of 2026 - Forbes",
+    "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBkdGxzOGlhN252aW9QWUJQTjZzdW82anNLc3lPTVlyWXhhT1puTE9sdUdwRlNjSWlUUjNoamtXbEVudlI3Q0xFNExwdmdyRlAzeHVUMGFOT0hwYV9vNWMxc29rOVJDZi1ZSmRBZHpaQTNYSVU5?oc=5",
+    "date": "Tue, 17 Nov 2026 11:31:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "AI fears crushed software—leaving Intuit 60% undervalued at 20x P/E - Yahoo Finance Singapore",
+    "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPMDhPTjlOWERsMXpPMlNJR29vZENmcW9SU2x0OW1wWUhpcWtwMmtwQ09CeXlCeTE0Ql9GT2M5QWJQNnBvZ2d3UDFhdHg3aWt5dUlXeGVqWlNsRk02VE15bnRvOTlyckszV2xjYmZvNEI1OThCZVZOR2k0WlVseF9PX01OQ09URlhxS3c?oc=5",
+    "date": "Tue, 17 Nov 2026 07:57:50 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Sage Plans Business Accounts and Debit Cards Inside Its Software, Starting in France - ERP Today",
+    "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQSi1rTV9xZWV1M1hEcURhWmNlRXhKWDdibmdxR1FaNHV3cE4yT2pFNS1fR1dXZEdzazl1ZnNRZDBhWW5FTUxLaFh4MzZ1NDByZFFid2ctQjY1X09IeFY3RFJOR0s0bFljSmVHcHRzYWxpZWJfd2tUN2xUTDhDZ0hHU3RlR0ZneTl3NnYxQmNmS2UtZVphSl9EclNCYm5MMUNTN2ZMXw?oc=5",
+    "date": "Fri, 13 Nov 2026 20:38:42 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Guide to Small Business Data Analytics Trends and Tools - Business.com",
+    "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFB4aWVOT2lpVUpHVEZKTkJlcXBiT1ZMNWNUZHUtOFNfQ2NJRHV3WXh5MHlFcVMyRHBJTVZENzRwZVRwZmF3Ry1yczRSRkN1b3V4ZElwY3I1U0pzdmNYN3YwM3R0U0FVeklnU3pneVFuWQ?oc=5",
+    "date": "Tue, 17 Nov 2026 08:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Intuit to Report Q1 Earnings: Should You Buy, Sell or Hold the Stock? - TradingView",
+    "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPdTMxbmdSWmd3ZXRSMFRnUGUxdS0zQ1pRNUViaEgyU19Bc284aUZGSV9HWUdGWXRqckE5WFJTb2IzOThUb2VENjFhOVRMREYzVVNNX1FfdW51elNQYUVCN0tzNi1hNGk1VkpQb2VVXzJMOGFDTE1rcVFfUnJzRWNscXF0Uy1USXpoTU92cnFvTGZsWXJvRXN6TUVGZGVSX0lDVHJidE40TTJTMXUtYmliYm9yNlFJdU5UclFwZmxWZw?oc=5",
+    "date": "Wed, 18 Nov 2026 15:38:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Google | History, Products, Services, &amp; Alphabet - Britannica",
+    "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE4wU1BXOWt2dGpGcEctd3VSVElDeGhIRnNzblo3RzhObnZ0ejVOdkJvblJKTWI4TTRxbHF2dGtMQ1c5azRnZXVrX2QtNnVyYUxUMHJ5bXBn?oc=5",
+    "date": "Sun, 15 Nov 2026 08:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "These Companies Have Already Replaced Workers with AI in 2025 and 2026 - Tech.co",
+    "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE16Z2F6UTBYdkJVakc5M3dYemU5cDlUdi1TTllYUVItM1FJMXRnWFZtczRNRnBCWE1wVVVZTHUzLUxNNlFieWFxOUV6WElYYUhud3ptMm9VN09UaWtMNFh1SU1kOFk?oc=5",
+    "date": "Tue, 17 Nov 2026 08:00:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Earnings call transcript: Sage tops growth goals in H2 2026 as AI gains deepen - Investing.com UK",
+    "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQWFVMTXZjSmZ1YTh0OGJCbTJTblZQUnkzdlpIXzRyZGtaTHdKNFhIMlU1ajNBbFVzVnZqTWZlZDlhMlc5MUNEdktWejZ6LUctYmxlQ2UzVHpuSGdTZGFHT1ZYMGU1bzl6NlVQYkp4ckdMTTZqN3JZSlVrOWNjMGxEa194MThNVU1JdWNiWjdraHhEZGhmZ3l3R1hhZnp3OEVHd1NEU3Qzb1V2dFhtZHhfeW1vT1FzakZUVWtqb3V5SU1CaHFWaFFxM3dOSGRGZkFRa0Ewdw?oc=5",
+    "date": "Thu, 19 Nov 2026 09:34:00 GMT"
+   },
+   {
+    "src": "News",
+    "title": "Best Small Business Loans Of 2026 - Forbes",
+    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9vaDJXSjZzVGNQbTZCc3FQaEcxc1FsemdKMjkwb1NYSTFvMl8zdVdBVFJIOEt4d2lYYUJ5blZ1QkFIS0I1MDhKc04yd05SWlNTMFpsd0NyYmlvQnB2U2tVLWRoYUdUSTFta1JmZklRdy0xOXRYTk8w?oc=5",
+    "date": "Tue, 17 Nov 2026 14:08:00 GMT"
+   }
+  ],
+  "producthunt": [
+   {
+    "src": "Product Hunt",
+    "title": "Spellar for Chrome",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Manufact",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Impractical",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "TestSprite 4.0",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Verse Engine by Ctruh",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Teaflask",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Cleared",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Fieldwork Code",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Stripo Email Widgets",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Tabstack by Mozilla",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Netlify Server",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Room AI",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Adside",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Gemini 4 Neon",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "CodeDesign v3",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Tecla",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "ToolJet",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Upsolve MCP Connections",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "Noteshell",
+    "url": "",
+    "date": ""
+   },
+   {
+    "src": "Product Hunt",
+    "title": "OfinTech Desk",
+    "url": "",
+    "date": ""
+   }
+  ],
+  "reddit": [],
+  "screener": [
+   {
+    "src": "Screener",
+    "title": "NVDA NVIDIA Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 1,
+     "symbol": "NVDA",
+     "name": "NVIDIA Corporation",
+     "sector": "Technology",
+     "industry": "Semiconductors",
+     "price": 155.46,
+     "market_cap": 3746586000000,
+     "score": 71,
+     "pe": 31.2,
+     "roe": 0.5243,
+     "net_margin": 0.556,
+     "fcf_yield": 0.0274,
+     "sales_g3": 1.0005,
+     "sales_growth": 0.6547,
+     "profit_growth": 0.6475,
+     "profit_g3": 2.018,
+     "de": 0.1457,
+     "net_income": 120067000000,
+     "revenue": 215938000000,
+     "fy_end": "2026-01-25"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "NFLX Netflix Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 2,
+     "symbol": "NFLX",
+     "name": "Netflix Inc.",
+     "sector": "Consumer Discretionary",
+     "industry": "Consumer Electronics/Video Chains",
+     "price": 59.68,
+     "market_cap": 245065529891,
+     "score": 68,
+     "pe": 22.32,
+     "roe": 0.375,
+     "net_margin": 0.243,
+     "fcf_yield": 0.0386,
+     "sales_g3": 0.1264,
+     "sales_growth": 0.1585,
+     "profit_growth": 0.2604,
+     "profit_g3": 0.3471,
+     "de": 0.5167,
+     "net_income": 10981000000,
+     "revenue": 45183036000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "JNJ Johnson & Johnson",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 3,
+     "symbol": "JNJ",
+     "name": "Johnson & Johnson",
+     "sector": "Health Care",
+     "industry": "Biotechnology: Pharmaceutical Preparations",
+     "price": 278.82,
+     "market_cap": 671206248366,
+     "score": 58,
+     "pe": 25.04,
+     "roe": 0.3288,
+     "net_margin": 0.2846,
+     "fcf_yield": 0.0293,
+     "sales_g3": 0.056,
+     "sales_growth": 0.0605,
+     "profit_growth": 0.9056,
+     "profit_g3": 0.1432,
+     "de": 0.5722,
+     "net_income": 26804000000,
+     "revenue": 94193000000,
+     "fy_end": "2025-12-28"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "META Meta Platforms Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 4,
+     "symbol": "META",
+     "name": "Meta Platforms Inc.",
+     "sector": "Technology",
+     "industry": "Computer Software: Programming Data Processing",
+     "price": 618.87,
+     "market_cap": 1581981024244,
+     "score": 52,
+     "pe": 26.17,
+     "roe": 0.222,
+     "net_margin": 0.3008,
+     "fcf_yield": 0.0291,
+     "sales_g3": 0.1989,
+     "sales_growth": 0.2217,
+     "profit_growth": -0.0305,
+     "profit_g3": 0.3761,
+     "de": 0.3072,
+     "net_income": 60458000000,
+     "revenue": 200966000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "LRCX Lam Research Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 5,
+     "symbol": "LRCX",
+     "name": "Lam Research Corporation",
+     "sector": "Technology",
+     "industry": "Industrial Machinery/Components",
+     "price": 210.69,
+     "market_cap": 263187837990,
+     "score": 46,
+     "pe": 36.22,
+     "roe": 0.5224,
+     "net_margin": 0.3127,
+     "fcf_yield": 0.0223,
+     "sales_g3": 0.1006,
+     "sales_growth": 0.2602,
+     "profit_growth": 0.3559,
+     "profit_g3": 0.1722,
+     "de": 0.2676,
+     "net_income": 7265396000,
+     "revenue": 23232690000,
+     "fy_end": "2026-06-28"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "GOOGL Alphabet Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 6,
+     "symbol": "GOOGL",
+     "name": "Alphabet Inc.",
+     "sector": "Technology",
+     "industry": "Computer Software: Programming Data Processing",
+     "price": 280.2,
+     "market_cap": 3444778800000,
+     "score": 36,
+     "pe": 26.06,
+     "roe": 0.1951,
+     "net_margin": 0.3281,
+     "fcf_yield": 0.0213,
+     "sales_g3": 0.1251,
+     "sales_growth": 0.1509,
+     "profit_growth": 0.3201,
+     "profit_g3": 0.3014,
+     "de": 0.1861,
+     "net_income": 132170000000,
+     "revenue": 402836000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "AMZN Amazon.com Inc.",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 7,
+     "symbol": "AMZN",
+     "name": "Amazon.com Inc.",
+     "sector": "Consumer Discretionary",
+     "industry": "Catalog/Specialty Distribution",
+     "price": 257.89,
+     "market_cap": 2788600237734,
+     "score": 35,
+     "pe": 35.9,
+     "roe": 0.1266,
+     "net_margin": 0.1083,
+     "fcf_yield": 0.05,
+     "sales_g3": 0.1173,
+     "sales_growth": 0.1238,
+     "profit_growth": 0.3109,
+     "profit_g3": null,
+     "de": 0.2939,
+     "net_income": 77670000000,
+     "revenue": 716924000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "MSFT Microsoft Corporation",
+    "detail": {
+     "bucket": "Mega",
+     "rank": 8,
+     "symbol": "MSFT",
+     "name": "Microsoft Corporation",
+     "sector": "Technology",
+     "industry": "Computer Software: Prepackaged Software",
+     "price": 506.24,
+     "market_cap": 3759436730004,
+     "score": 33,
+     "pe": 36.92,
+     "roe": 0.2164,
+     "net_margin": 0.3615,
+     "fcf_yield": 0.019,
+     "sales_g3": 0.1242,
+     "sales_growth": 0.1493,
+     "profit_growth": 0.1554,
+     "profit_g3": 0.1187,
+     "de": 0.0754,
+     "net_income": 101832000000,
+     "revenue": 281724000000,
+     "fy_end": "2025-06-30"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "AMP Ameriprise Financial Inc.",
+    "detail": {
+     "bucket": "Large",
+     "rank": 1,
+     "symbol": "AMP",
+     "name": "Ameriprise Financial Inc.",
+     "sector": "Finance",
+     "industry": "Investment Managers",
+     "price": 505.2,
+     "market_cap": 43857659339,
+     "score": 89,
+     "pe": 12.31,
+     "roe": 0.6973,
+     "net_margin": 0.1884,
+     "fcf_yield": 0.1898,
+     "sales_g3": 0.0968,
+     "sales_growth": 0.0549,
+     "profit_growth": 0.0476,
+     "profit_g3": 0.042,
+     "de": 0,
+     "net_income": 3563000000,
+     "revenue": 18911000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "ADBE Adobe Inc.",
+    "detail": {
+     "bucket": "Large",
+     "rank": 2,
+     "symbol": "ADBE",
+     "name": "Adobe Inc.",
+     "sector": "Technology",
+     "industry": "Computer Software: Prepackaged Software",
+     "price": 235.55,
+     "market_cap": 91676060000,
+     "score": 89,
+     "pe": 12.86,
+     "roe": 0.6061,
+     "net_margin": 0.3,
+     "fcf_yield": 0.1075,
+     "sales_g3": 0.1052,
+     "sales_growth": 0.1053,
+     "profit_growth": 0.2824,
+     "profit_g3": 0.1445,
+     "de": 0.4051,
+     "net_income": 7130000000,
+     "revenue": 23769000000,
+     "fy_end": "2025-11-28"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "RNR RenaissanceRe Holdings Ltd.",
+    "detail": {
+     "bucket": "Large",
+     "rank": 3,
+     "symbol": "RNR",
+     "name": "RenaissanceRe Holdings Ltd.",
+     "sector": "Finance",
+     "industry": "Property-Casualty Insurers",
+     "price": 352.06,
+     "market_cap": 14226473162,
+     "score": 87,
+     "pe": 5.3,
+     "roe": 0.2363,
+     "net_margin": 0.2088,
+     "fcf_yield": 0.2596,
+     "sales_g3": 0.3642,
+     "sales_growth": 0.0986,
+     "profit_growth": 0.4341,
+     "profit_g3": null,
+     "de": 0.2054,
+     "net_income": 2682334000,
+     "revenue": 12848074000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "ACGL Arch Capital Group Ltd.",
+    "detail": {
+     "bucket": "Large",
+     "rank": 4,
+     "symbol": "ACGL",
+     "name": "Arch Capital Group Ltd.",
+     "sector": "Finance",
+     "industry": "Property-Casualty Insurers",
+     "price": 109.22,
+     "market_cap": 35553877198,
+     "score": 82,
+     "pe": 8.08,
+     "roe": 0.1913,
+     "net_margin": 0.2207,
+     "fcf_yield": 0.1736,
+     "sales_g3": 0.2751,
+     "sales_growth": 0.1427,
+     "profit_growth": 0.0202,
+     "profit_g3": 0.4391,
+     "de": null,
+     "net_income": 4399000000,
+     "revenue": 19929000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "DECK Deckers Outdoor Corporation",
+    "detail": {
+     "bucket": "Large",
+     "rank": 5,
+     "symbol": "DECK",
+     "name": "Deckers Outdoor Corporation",
+     "sector": "Consumer Discretionary",
+     "industry": "Shoe Manufacturing",
+     "price": 81.485,
+     "market_cap": 10876616741,
+     "score": 78,
+     "pe": 10.62,
+     "roe": 0.4411,
+     "net_margin": 0.1871,
+     "fcf_yield": 0.1009,
+     "sales_g3": 0.1469,
+     "sales_growth": 0.0976,
+     "profit_growth": 0.06,
+     "profit_g3": 0.256,
+     "de": null,
+     "net_income": 1024071000,
+     "revenue": 5472296000,
+     "fy_end": "2026-03-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "NEM Newmont Corporation",
+    "detail": {
+     "bucket": "Large",
+     "rank": 6,
+     "symbol": "NEM",
+     "name": "Newmont Corporation",
+     "sector": "Basic Materials",
+     "industry": "Precious Metals",
+     "price": 111.29,
+     "market_cap": 115651809559,
+     "score": 77,
+     "pe": 16.32,
+     "roe": 0.1986,
+     "net_margin": 0.3125,
+     "fcf_yield": 0.0894,
+     "sales_g3": 0.2391,
+     "sales_growth": 0.2134,
+     "profit_growth": 1.1162,
+     "profit_g3": null,
+     "de": 0.1426,
+     "net_income": 7085000000,
+     "revenue": 22669000000,
+     "fy_end": "2025-12-31"
+    }
+   },
+   {
+    "src": "Screener",
+    "title": "ALL Allstate Corporation (The)",
+    "detail": {
+     "bucket": "Large",
+     "rank": 7,
+     "symbol": "ALL",
+     "name": "Allstate Corporation (The)",
+     "sector": "Finance",
+     "industry": "Property-Casualty Insurers",
+     "price": 270.5,
+     "market_cap": 66935088668,
+     "score": 76,
+     "pe": 6.58,
+     "roe": 0.3146,
+     "net_margin": 0.1502,
+     "fcf_yield": 0.1476,
+     "sales_g3": 0.096,
+     "sales_growth": 0.0558,
+     "profit_growth": 1.2341,
+     "profit_g3": null,
+     "de": 0.2319,
+     "net_income": 10165000000,
+     "revenue": 67685000000,
+     "fy_end": "2025-12-31"
+    }
+   }
+  ]
+ }
+}
