@@ -17,13 +17,13 @@ DRY = os.environ.get("DRY", ""); OUT = "data/stack_and_rebound.json" if not DRY 
 REL = "https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/"
 for f in ["prices.parquet", "membership_intervals.parquet"]:
     if not os.path.exists("/tmp/" + f): urllib.request.urlretrieve(REL + f, "/tmp/" + f)
-px = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "close", "adj_close", "volume"])
-px["date"] = pd.to_datetime(px.date); px = px[px.date >= "1997-06-01"]
+px = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "open", "close", "adj_close", "volume"])
+px["date"] = pd.to_datetime(px.date); px = px[px.date >= "1997-06-01"]; px["aopen"] = px.open * px.adj_close / px.close
 mem = pd.read_parquet("/tmp/membership_intervals.parquet"); mem["start"] = pd.to_datetime(mem.start); mem["end"] = pd.to_datetime(mem.end)
 px = px[px.ticker.isin(set(mem.ticker) | {"SPY"})]
 dates = pd.DatetimeIndex(sorted(px[px.ticker == "SPY"].date.unique())); ALLT = sorted(px.ticker.unique())
 P = lambda v: px.pivot_table(index="date", columns="ticker", values=v, dropna=False).reindex(index=dates, columns=ALLT)
-A, RAW, VOLM = P("adj_close"), P("close"), P("volume"); del px
+A, RAW, VOLM, AO = P("adj_close"), P("close"), P("volume"), P("aopen"); del px
 tick = [t for t in ALLT if t != "SPY"]; D, J = len(dates), len(tick); TI = {t: j for j, t in enumerate(tick)}
 M = pd.DataFrame(False, index=dates, columns=tick)
 for _, m in mem.iterrows():
@@ -36,6 +36,7 @@ ex5 = (Cs / Cs.shift(5) - 1).sub(spy / spy.shift(5) - 1, axis=0)
 vr = VOLM[tick].rolling(5).mean() / VOLM[tick].shift(5).rolling(50).mean()
 SIG = (M & (RAW[tick] >= 5) & (vr <= 2.0) & (Cs > Cs.rolling(200).mean()) & (ex5 <= -0.10)).values
 S_C, S_M5, S_RK = Cs.values, Cs.rolling(5).mean().values, ex5.values
+S_O = AO[tick].values
 SP = spy.values; spyr = np.r_[0, SP[1:] / SP[:-1] - 1]
 dn = dates.values; t0 = int(np.searchsorted(dn, np.datetime64("1999-01-04")))
 park_on = np.r_[False, (spy > spy.rolling(100).mean()).values[:-1]]
@@ -48,17 +49,21 @@ VSCALE = np.r_[1.0, (0.5 + rank.fillna(0.5)).values[:-1]]
 ETFS = ["SPY", "QQQ", "IWM", "DIA", "MDY", "XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "XLRE", "XLC",
         "EFA", "EEM", "EWJ", "EWG", "EWU", "EWC", "EWA", "EWZ", "EWH", "EWT", "EWY", "INDA", "FXI"]
 SECTORS = ["XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "XLRE", "XLC"]
+YO = {}
 def yahoo(sym):
     if DRY:
-        rng = np.random.default_rng(abs(hash(sym)) % 2**32); return pd.Series(50 * np.exp(np.cumsum(rng.normal(0.0003, 0.013, D))), index=dates)
+        rng = np.random.default_rng(abs(hash(sym)) % 2**32); c = pd.Series(50 * np.exp(np.cumsum(rng.normal(0.0003, 0.013, D))), index=dates)
+        YO[sym] = c * np.exp(rng.normal(0, 0.004, D)); return c
     err = None
     for a in range(4):
         try:
             u = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(sym)}?period1=0&period2={int(time.time())}&interval=1d&events=div%2Csplit"
             j = json.load(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60))["chart"]["result"][0]
-            adj = (j["indicators"].get("adjclose") or [{}])[0].get("adjclose") or j["indicators"]["quote"][0]["close"]
-            s = pd.Series(adj, index=pd.to_datetime([time.strftime("%Y-%m-%d", time.gmtime(t)) for t in j["timestamp"]])).dropna()
-            time.sleep(0.4); return s[~s.index.duplicated()].sort_index()
+            q = j["indicators"]["quote"][0]; adj = (j["indicators"].get("adjclose") or [{}])[0].get("adjclose") or q["close"]
+            ix = pd.to_datetime([time.strftime("%Y-%m-%d", time.gmtime(t)) for t in j["timestamp"]])
+            df = pd.DataFrame({"a": adj, "c": q["close"], "o": q["open"]}, index=ix); df = df[~df.index.duplicated()].sort_index()
+            s = df.a.dropna(); o = (df.o * df.a / df.c).where((df.o > 0) & (df.c > 0)); YO[sym] = o
+            time.sleep(0.4); return s
         except Exception as e: err = e; time.sleep(3 * (a + 1))
     print("Yahoo failed", sym, err, flush=True); return None
 E = {s: x for s in ETFS if (x := yahoo(s)) is not None}
@@ -68,6 +73,7 @@ Ce_raw = pd.DataFrame(E).reindex(dates); Ce = Ce_raw.ffill(); EN = list(Ce.colum
 okE = Ce_raw.notna() & Ce_raw.notna().shift(-1, fill_value=False)
 E_SIG = (okE & (Ce > Ce.rolling(200).mean()) & (Ce / Ce.shift(5) - 1 <= -0.05)).values
 E_RK, E_C, E_M5 = (Ce / Ce.shift(5) - 1).values, Ce.values, Ce.rolling(5).mean().values
+E_O = pd.DataFrame({s: YO.get(s, pd.Series(dtype=float)) for s in EN}).reindex(dates).values
 Er = np.nan_to_num(np.vstack([np.zeros(len(EN)), E_C[1:] / E_C[:-1] - 1]))
 def chain(*syms):
     r = pd.Series(np.nan, index=dates)
@@ -79,6 +85,26 @@ def chain(*syms):
 bond_r = chain("IEF", "VFITX"); bond_lvl = (1 + bond_r.fillna(0)).cumprod().where(bond_r.notna().cumsum() > 0)
 BOND_R = bond_r.fillna(0).values
 BOND_OK = np.r_[False, (bond_lvl > bond_lvl.rolling(100, min_periods=100).mean()).fillna(False).values[:-1]]
+
+# ---------------- Clear Leader daily returns (what the live bot parks in when SPY > 100-day avg)
+CLR = spyr.copy(); CL_HELD = {}
+if not DRY:
+    g = {"__name__": "cl"}; exec(open("scripts/clear_leader_long.py").read(), g)
+    rows = g["run"](crash=False)[0]; posm = {r["m"]: r["pos"] for r in rows}; mret = {r["m"]: r["r"] for r in rows}
+    DAILY = {}
+    for etf, alts in g["ASSETS"].items():
+        r = pd.Series(np.nan, index=dates)
+        for s_ in [etf] + alts:
+            x = yahoo(s_)
+            if x is not None: r = r.fillna(x.pct_change().reindex(dates))
+        DAILY[etf] = r.values
+    mon = dates.strftime("%Y-%m")
+    for m in sorted(set(mon)):
+        ix = np.where(mon == m)[0]
+        if m not in posm: continue
+        d = DAILY[posm[m]][ix]; CL_HELD[posm[m]] = CL_HELD.get(posm[m], 0) + 1
+        CLR[ix] = d if np.isfinite(d).all() else (1 + mret[m]) ** (1 / len(ix)) - 1
+    print("Clear Leader months held:", CL_HELD, flush=True)
 
 # ---------------- short interest (bot 8) from the R2 cache built by short_dips.py
 DTC = np.full((D, J), np.nan); SHORT_FROM = None
@@ -114,7 +140,8 @@ def rebound_picks(p, l, n=3):
     secs = [s for s in SECTORS if s in EI and np.isfinite(E_C[p, EI[s]]) and np.isfinite(E_C[l, EI[s]])]
     return sorted(secs, key=lambda s: E_C[l, EI[s]] / E_C[p, EI[s]] - 1)[:n]
 
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy"):
+    PR = CLR if park == "cl" else spyr
     REB = {}
     if rebound:
         for a, p, l in rebound_events(rebound["drop"]):
@@ -122,41 +149,47 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
             if not picks: continue                                   # sector ETFs had no data yet (before 1999)
             for t in range(a, min(a + rebound["days"], D)): REB[t] = picks
     pos, eq, curve, trades, held_park = [], 1.0, np.ones(D), [], "CASH"
+    def buy(t, cand_s, cand_e, at_open, w):
+        nonlocal eq
+        held = {(p["k"], p["j"]) for p in pos}
+        for k, cands, Ca, Oa, cost in (("S", cand_s, S_C, S_O, cs), ("E", cand_e, E_C, E_O, ce)):
+            for j in cands:
+                if len(pos) >= 10: return
+                if (k, j) in held: continue
+                bp = Oa[t, j] if at_open else Ca[t, j]
+                if not (np.isfinite(bp) and bp > 0 and np.isfinite(Ca[t, j])): continue
+                room = 1 - sum(p["w"] for p in pos)
+                if room < 0.02: return
+                ww = min(w, room); pos.append({"k": k, "j": j, "d": t, "px": bp, "w": ww, "open": at_open}); eq *= 1 - ww * cost; held.add((k, j))
+    def cands(t):
+        c = [j for j in np.flatnonzero(SIG[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
+        e = sorted([j for j in np.flatnonzero(E_SIG[t]) if np.isfinite(E_C[t, j])], key=lambda j: E_RK[t, j]) if etf else []
+        return c, e
     for t in range(t0, D):
+        if fill == "open":                                        # yesterday's signals, bought at today's open
+            cs_, ce_ = cands(t - 1); buy(t, cs_, ce_, True, 0.10 * (VSCALE[t - 1] if vol else 1.0))
         used = sum(p["w"] for p in pos); idle = max(0.0, 1 - used)
         want = (("REB:" + ",".join(REB[t])) if t in REB and park_on[t] else "SPY") if park_on[t] else ("IEF" if bond and BOND_OK[t] else "CASH")
         if want != held_park: eq *= 1 - idle * cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
         r = 0.0
         for p in pos:
             Cx = S_C if p["k"] == "S" else E_C
-            r += p["w"] * (Cx[t, p["j"]] / Cx[t - 1, p["j"]] - 1)
-        if held_park == "SPY": r += idle * spyr[t]
+            prev = p["px"] if (p["open"] and p["d"] == t) else Cx[t - 1, p["j"]]
+            r += p["w"] * (Cx[t, p["j"]] / prev - 1)
+        if held_park == "SPY": r += idle * PR[t]
         elif held_park == "IEF": r += idle * BOND_R[t]
         elif held_park.startswith("REB:"):
             ss = held_park[4:].split(","); r += idle * float(np.mean([Er[t, EI[s]] for s in ss]))
         eq *= 1 + r; keep = []
         for p in pos:
             Cx, Mx = (S_C, S_M5) if p["k"] == "S" else (E_C, E_M5)
-            age = t - p["d"]; mh = 5 if p["k"] == "S" else 10
+            age = t - p["d"] + (1 if p["open"] else 0); mh = 5 if p["k"] == "S" else 10
             if age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh):
                 c = cs if p["k"] == "S" else ce; eq *= 1 - p["w"] * c; trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))
             else: keep.append(p)
-        pos = keep; held = {(p["k"], p["j"]) for p in pos}
-        w = 0.10 * (VSCALE[t] if vol else 1.0)
-        free = 10 - len(pos)
-        c = [j for j in np.flatnonzero(SIG[t]) if ("S", j) not in held and not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]
-        c.sort(key=lambda j: S_RK[t, j])
-        for j in c[:max(0, free)]:
-            room = 1 - sum(p["w"] for p in pos)
-            if room < 0.02: break
-            ww = min(w, room); pos.append({"k": "S", "j": j, "d": t, "px": S_C[t, j], "w": ww}); eq *= 1 - ww * cs
-        free = 10 - len(pos)
-        if etf and free > 0:
-            ce_ = [j for j in np.flatnonzero(E_SIG[t]) if ("E", j) not in held and np.isfinite(E_C[t, j])]; ce_.sort(key=lambda j: E_RK[t, j])
-            for j in ce_[:free]:
-                room = 1 - sum(p["w"] for p in pos)
-                if room < 0.02: break
-                ww = min(w, room); pos.append({"k": "E", "j": j, "d": t, "px": E_C[t, j], "w": ww}); eq *= 1 - ww * ce
+        pos = keep
+        if fill == "close":
+            cs_, ce_ = cands(t); buy(t, cs_, ce_, False, 0.10 * (VSCALE[t] if vol else 1.0))
         curve[t] = eq
     return curve, trades
 PER = [("1999-2026", "1999-01-01", "2100"), ("1999-2012", "1999-01-01", "2013-01-01"), ("2013-2026", "2013-01-01", "2100"), ("2018-2026 (short data)", "2018-01-02", "2100"),
@@ -172,22 +205,26 @@ def summ(curve, trades):
     yrs = (D - t0) / 252
     out["trades_per_month"] = round(len(trades) / (yrs * 12), 1); out["avg_trade_pct"] = round(float(np.mean([x[2] for x in trades])) * 100, 2) if trades else None
     return out
-V = [("today's bot", {}), ("+ ETF dips (bot 5)", dict(etf=True)), ("+ bonds (bot 9)", dict(bond=True)), ("+ vol sizing", dict(vol=True)), ("+ short filter (bot 8)", dict(short=True)),
-     ("ETF + bonds", dict(etf=True, bond=True)), ("ETF + bonds + vol", dict(etf=True, bond=True, vol=True)), ("ETF + bonds + short", dict(etf=True, bond=True, short=True)),
-     ("ALL four", dict(etf=True, bond=True, vol=True, short=True))]
+COMBOS = [("today's bot", {}), ("+ ETF dips (bot 5)", dict(etf=True)), ("+ bonds (bot 9)", dict(bond=True)), ("+ vol sizing", dict(vol=True)), ("+ short filter (bot 8)", dict(short=True)),
+          ("ETF + bonds", dict(etf=True, bond=True)), ("ETF + bonds + short", dict(etf=True, bond=True, short=True)), ("ETF + bonds + vol", dict(etf=True, bond=True, vol=True)),
+          ("ALL four", dict(etf=True, bond=True, vol=True, short=True))]
+IDEAL, REAL = dict(fill="close", park="cl"), dict(fill="open", park="cl", cs=0.0015, ce=0.0005)
+V = [(f"IDEAL | {n}", {**kw, **IDEAL}) for n, kw in COMBOS] + [(f"REALISTIC | {n}", {**kw, **REAL}) for n, kw in COMBOS]
+V += [("SPY-parked ideal | today's bot", {}), ("SPY-parked ideal | ETF + bonds", dict(etf=True, bond=True))]
 for drop in (0.15, 0.20):
     for n in (2, 3):
         for days in (63, 126):
-            V.append((f"+ rebound: after {int(drop*100)}% drop, worst {n} sectors, {days} days", dict(rebound=dict(drop=drop, n=n, days=days))))
-V += [("ALL four + rebound 15%/3/63", dict(etf=True, bond=True, vol=True, short=True, rebound=dict(drop=0.15, n=3, days=63))),
-      ("STRESS today's bot (3x costs)", dict(cs=0.0015, ce=0.0006, cp=0.0015)), ("STRESS ETF + bonds (3x costs)", dict(etf=True, bond=True, cs=0.0015, ce=0.0006, cp=0.0015)),
-      ("STRESS ALL four (3x costs)", dict(etf=True, bond=True, vol=True, short=True, cs=0.0015, ce=0.0006, cp=0.0015))]
+            V.append((f"IDEAL | + rebound: after {int(drop*100)}% drop, worst {n} sectors, {days} days", dict(rebound=dict(drop=drop, n=n, days=days), **IDEAL)))
+V += [("REALISTIC | ETF + bonds + rebound 15%/3/63", dict(etf=True, bond=True, rebound=dict(drop=0.15, n=3, days=63), **REAL)),
+      ("STRESS realistic x2 costs | today's bot", dict(fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
+      ("STRESS realistic x2 costs | ETF + bonds", dict(etf=True, bond=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
+      ("STRESS realistic x2 costs | ETF + bonds + short", dict(etf=True, bond=True, short=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001))]
 RES = {}
 for name, kw in V:
     RES[name] = summ(*sim(**kw)); a = RES[name]; g = lambda p, f="per_year_pct": a.get(p, {}).get(f)
     print(f"{name:58s} {g('1999-2026')}%/yr worst {g('1999-2026','worst_drop_pct')} | 99-12 {g('1999-2012')} 13-26 {g('2013-2026')} 18-26 {g('2018-2026 (short data)')} | dotcom {g('dot-com 2000-02','return_pct')} 08 {g('2008 crash','return_pct')} cov {g('2020 covid','return_pct')} 22 {g('2022 bear','return_pct')} | reb09 {g('2009 rebound','return_pct')} reb20 {g('2020 rebound','return_pct')} | {a['trades_per_month']}/mo", flush=True)
-base = RES["today's bot"]
-for name, kw in [("check: rebound that never triggers", dict(rebound=dict(drop=0.99, n=3, days=63))), ("check: vol scale fixed at 1", {})]:
+base = RES["IDEAL | today's bot"]
+for name, kw in [("check: rebound that never triggers", dict(rebound=dict(drop=0.99, n=3, days=63), **IDEAL))]:
     assert summ(*sim(**kw))["1999-2026"] == base["1999-2026"], name
 print("checks ok: add-ons switched off = base", flush=True)
 EV = [{"starts": str(dn[a])[:10], "spy_high": str(dn[p])[:10], "spy_bottom": str(dn[l])[:10], "spy_drop_pct": round((SP[l] / SP[p] - 1) * 100, 1),
