@@ -1,0 +1,1103 @@
+{
+ "note": "Stack test + crash-rebound sleeve (Nov 18 2026). Research only, not financial advice.\nBase = today's Robinhood bot: point-in-time S&P 500, price >= $5, above 200-day avg, 5-day return >= 10% worse than SPY, volume over\nthe drop <= 2x; 10 slots x 10%, buy at the close, sell when close > 5-day avg (after >= 1 day) or after 5 days. Idle money: SPY\n(stand-in for Clear Leader) when SPY > its 100-day avg (yesterday), else cash. Costs 0.05%/side stocks, 0.02% ETFs, 0.05% parking switches.\nAdd-ons, alone and stacked:\n  ETF   = bot 5: 29 index/sector/country ETFs down 5%+ in 5 days and above their 200-day fill free slots (max hold 10 days)\n  BOND  = bot 9: on cash days hold IEF (VFITX before 2002) if it is above its own 100-day avg\n  VOL   = vol bot: buy size 10% x (0.5 .. 1.5) by where SPY's 20-day volatility ranks in the last year (jumpy = bigger)\n  SHORT = bot 8: skip dips with FINRA days-to-cover >= 5 (data only from 2018; before that nothing is skipped)\n  REBOUND (new) = after SPY fell 15%+ from its high and then closes back above its 100-day avg, idle money goes for 63 trading days\n            into the 3 sector ETFs that fell most from SPY's high to its bottom (instead of SPY/Clear Leader).\nChecks: every add-on switched off must equal the base exactly; DRY=1 fake ETF/bond data, no short data (code test).",
+ "built": "2026-11-19",
+ "dry": null,
+ "short_data_from": "2018-01-10",
+ "rebound_events": [
+  {
+   "starts": "2001-01-31",
+   "spy_high": "2000-03-24",
+   "spy_bottom": "2000-12-20",
+   "spy_drop_pct": -17.1,
+   "sectors_15pct_3": [
+    "XLK",
+    "XLY",
+    "XLV"
+   ],
+   "sectors_next_63d_pct": -6.9,
+   "spy_next_63d_pct": -7.7
+  },
+  {
+   "starts": "2001-05-01",
+   "spy_high": "2001-02-01",
+   "spy_bottom": "2001-04-03",
+   "spy_drop_pct": -19.7,
+   "sectors_15pct_3": [
+    "XLK",
+    "XLI",
+    "XLV"
+   ],
+   "sectors_next_63d_pct": -3.6,
+   "spy_next_63d_pct": -3.9
+  },
+  {
+   "starts": "2001-11-14",
+   "spy_high": "2001-05-21",
+   "spy_bottom": "2001-09-21",
+   "spy_drop_pct": -25.6,
+   "sectors_15pct_3": [
+    "XLK",
+    "XLI",
+    "XLV"
+   ],
+   "sectors_next_63d_pct": -2.1,
+   "spy_next_63d_pct": -2.9
+  },
+  {
+   "starts": "2002-11-04",
+   "spy_high": "2002-03-19",
+   "spy_bottom": "2002-10-09",
+   "spy_drop_pct": -33.0,
+   "sectors_15pct_3": [
+    "XLK",
+    "XLU",
+    "XLI"
+   ],
+   "sectors_next_63d_pct": -3.3,
+   "spy_next_63d_pct": -5.5
+  },
+  {
+   "starts": "2008-04-21",
+   "spy_high": "2007-10-09",
+   "spy_bottom": "2008-03-10",
+   "spy_drop_pct": -17.8,
+   "sectors_15pct_3": [
+    "XLF",
+    "XLY",
+    "XLK"
+   ],
+   "sectors_next_63d_pct": -12.9,
+   "spy_next_63d_pct": -8.5
+  },
+  {
+   "starts": "2009-04-03",
+   "spy_high": "2008-05-19",
+   "spy_bottom": "2009-03-09",
+   "spy_drop_pct": -51.5,
+   "sectors_15pct_3": [
+    "XLF",
+    "XLI",
+    "XLB"
+   ],
+   "sectors_next_63d_pct": 13.0,
+   "spy_next_63d_pct": 8.2
+  },
+  {
+   "starts": "2010-08-03",
+   "spy_high": "2010-04-23",
+   "spy_bottom": "2010-07-02",
+   "spy_drop_pct": -15.7,
+   "sectors_15pct_3": [
+    "XLE",
+    "XLB",
+    "XLF"
+   ],
+   "sectors_next_63d_pct": 3.9,
+   "spy_next_63d_pct": 5.7
+  },
+  {
+   "starts": "2011-10-24",
+   "spy_high": "2011-04-29",
+   "spy_bottom": "2011-10-03",
+   "spy_drop_pct": -18.6,
+   "sectors_15pct_3": [
+    "XLF",
+    "XLB",
+    "XLE"
+   ],
+   "sectors_next_63d_pct": 9.1,
+   "spy_next_63d_pct": 7.6
+  },
+  {
+   "starts": "2019-02-01",
+   "spy_high": "2018-09-20",
+   "spy_bottom": "2018-12-24",
+   "spy_drop_pct": -19.3,
+   "sectors_15pct_3": [
+    "XLE",
+    "XLI",
+    "XLK"
+   ],
+   "sectors_next_63d_pct": 10.2,
+   "spy_next_63d_pct": 9.4
+  },
+  {
+   "starts": "2020-05-21",
+   "spy_high": "2020-02-19",
+   "spy_bottom": "2020-03-23",
+   "spy_drop_pct": -33.7,
+   "sectors_15pct_3": [
+    "XLE",
+    "XLF",
+    "XLI"
+   ],
+   "sectors_next_63d_pct": 8.1,
+   "spy_next_63d_pct": 14.4
+  },
+  {
+   "starts": "2022-08-01",
+   "spy_high": "2022-01-03",
+   "spy_bottom": "2022-06-16",
+   "spy_drop_pct": -23.0,
+   "sectors_15pct_3": [
+    "XLY",
+    "XLC",
+    "XLK"
+   ],
+   "sectors_next_63d_pct": -11.2,
+   "spy_next_63d_pct": -5.2
+  },
+  {
+   "starts": "2022-10-31",
+   "spy_high": "2022-08-16",
+   "spy_bottom": "2022-10-12",
+   "spy_drop_pct": -16.7,
+   "sectors_15pct_3": [
+    "XLRE",
+    "XLK",
+    "XLC"
+   ],
+   "sectors_next_63d_pct": 11.3,
+   "spy_next_63d_pct": 6.1
+  },
+  {
+   "starts": "2025-05-13",
+   "spy_high": "2025-02-19",
+   "spy_bottom": "2025-04-08",
+   "spy_drop_pct": -18.8,
+   "sectors_15pct_3": [
+    "XLK",
+    "XLY",
+    "XLC"
+   ],
+   "sectors_next_63d_pct": 12.9,
+   "spy_next_63d_pct": 10.9
+  }
+ ],
+ "results": {
+  "today's bot": {
+   "1999-2026": {
+    "per_year_pct": 14.3,
+    "worst_drop_pct": -28.2
+   },
+   "1999-2012": {
+    "per_year_pct": 11.5,
+    "worst_drop_pct": -28.2
+   },
+   "2013-2026": {
+    "per_year_pct": 17.3,
+    "worst_drop_pct": -18.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 22.5,
+    "worst_drop_pct": -18.0
+   },
+   "dot-com 2000-02": {
+    "return_pct": 22.0,
+    "worst_drop_pct": -20.6
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -1.0,
+    "worst_drop_pct": -10.0
+   },
+   "2009 rebound": {
+    "return_pct": 28.5,
+    "worst_drop_pct": -14.3
+   },
+   "2020 rebound": {
+    "return_pct": 73.4,
+    "worst_drop_pct": -9.3
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ ETF dips (bot 5)": {
+   "1999-2026": {
+    "per_year_pct": 16.6,
+    "worst_drop_pct": -23.9
+   },
+   "1999-2012": {
+    "per_year_pct": 14.0,
+    "worst_drop_pct": -23.9
+   },
+   "2013-2026": {
+    "per_year_pct": 19.3,
+    "worst_drop_pct": -15.5
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 25.2,
+    "worst_drop_pct": -15.5
+   },
+   "dot-com 2000-02": {
+    "return_pct": 31.5,
+    "worst_drop_pct": -17.8
+   },
+   "2008 crash": {
+    "return_pct": -7.2,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.5,
+    "worst_drop_pct": -10.3
+   },
+   "2022 bear": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -9.9
+   },
+   "2009 rebound": {
+    "return_pct": 30.1,
+    "worst_drop_pct": -14.4
+   },
+   "2020 rebound": {
+    "return_pct": 79.0,
+    "worst_drop_pct": -9.1
+   },
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.84
+  },
+  "+ bonds (bot 9)": {
+   "1999-2026": {
+    "per_year_pct": 16.0,
+    "worst_drop_pct": -18.8
+   },
+   "1999-2012": {
+    "per_year_pct": 14.4,
+    "worst_drop_pct": -18.8
+   },
+   "2013-2026": {
+    "per_year_pct": 17.7,
+    "worst_drop_pct": -17.2
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 23.4,
+    "worst_drop_pct": -17.2
+   },
+   "dot-com 2000-02": {
+    "return_pct": 53.7,
+    "worst_drop_pct": -17.3
+   },
+   "2008 crash": {
+    "return_pct": 0.5,
+    "worst_drop_pct": -18.5
+   },
+   "2020 covid": {
+    "return_pct": -2.9,
+    "worst_drop_pct": -7.6
+   },
+   "2022 bear": {
+    "return_pct": -0.0,
+    "worst_drop_pct": -10.0
+   },
+   "2009 rebound": {
+    "return_pct": 29.0,
+    "worst_drop_pct": -14.3
+   },
+   "2020 rebound": {
+    "return_pct": 73.7,
+    "worst_drop_pct": -9.3
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ vol sizing": {
+   "1999-2026": {
+    "per_year_pct": 15.3,
+    "worst_drop_pct": -27.8
+   },
+   "1999-2012": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -27.8
+   },
+   "2013-2026": {
+    "per_year_pct": 18.1,
+    "worst_drop_pct": -18.4
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 23.5,
+    "worst_drop_pct": -18.4
+   },
+   "dot-com 2000-02": {
+    "return_pct": 20.4,
+    "worst_drop_pct": -22.3
+   },
+   "2008 crash": {
+    "return_pct": -7.2,
+    "worst_drop_pct": -21.7
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -8.1
+   },
+   "2022 bear": {
+    "return_pct": 4.2,
+    "worst_drop_pct": -9.9
+   },
+   "2009 rebound": {
+    "return_pct": 33.3,
+    "worst_drop_pct": -10.8
+   },
+   "2020 rebound": {
+    "return_pct": 83.9,
+    "worst_drop_pct": -9.3
+   },
+   "trades_per_month": 9.1,
+   "avg_trade_pct": 0.83
+  },
+  "+ short filter (bot 8)": {
+   "1999-2026": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -28.2
+   },
+   "1999-2012": {
+    "per_year_pct": 11.5,
+    "worst_drop_pct": -28.2
+   },
+   "2013-2026": {
+    "per_year_pct": 18.1,
+    "worst_drop_pct": -17.3
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 23.8,
+    "worst_drop_pct": -17.3
+   },
+   "dot-com 2000-02": {
+    "return_pct": 22.0,
+    "worst_drop_pct": -20.6
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.8,
+    "worst_drop_pct": -7.7
+   },
+   "2022 bear": {
+    "return_pct": -4.1,
+    "worst_drop_pct": -10.0
+   },
+   "2009 rebound": {
+    "return_pct": 28.5,
+    "worst_drop_pct": -14.3
+   },
+   "2020 rebound": {
+    "return_pct": 69.0,
+    "worst_drop_pct": -9.3
+   },
+   "trades_per_month": 9.0,
+   "avg_trade_pct": 0.89
+  },
+  "ETF + bonds": {
+   "1999-2026": {
+    "per_year_pct": 18.2,
+    "worst_drop_pct": -19.2
+   },
+   "1999-2012": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -19.2
+   },
+   "2013-2026": {
+    "per_year_pct": 19.7,
+    "worst_drop_pct": -15.5
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 26.0,
+    "worst_drop_pct": -15.5
+   },
+   "dot-com 2000-02": {
+    "return_pct": 64.5,
+    "worst_drop_pct": -17.8
+   },
+   "2008 crash": {
+    "return_pct": 1.5,
+    "worst_drop_pct": -19.2
+   },
+   "2020 covid": {
+    "return_pct": -3.9,
+    "worst_drop_pct": -10.3
+   },
+   "2022 bear": {
+    "return_pct": -1.9,
+    "worst_drop_pct": -9.9
+   },
+   "2009 rebound": {
+    "return_pct": 31.5,
+    "worst_drop_pct": -14.4
+   },
+   "2020 rebound": {
+    "return_pct": 79.2,
+    "worst_drop_pct": -9.1
+   },
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.84
+  },
+  "ETF + bonds + vol": {
+   "1999-2026": {
+    "per_year_pct": 18.7,
+    "worst_drop_pct": -21.8
+   },
+   "1999-2012": {
+    "per_year_pct": 17.3,
+    "worst_drop_pct": -21.8
+   },
+   "2013-2026": {
+    "per_year_pct": 20.2,
+    "worst_drop_pct": -15.2
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 26.7,
+    "worst_drop_pct": -15.2
+   },
+   "dot-com 2000-02": {
+    "return_pct": 68.2,
+    "worst_drop_pct": -18.1
+   },
+   "2008 crash": {
+    "return_pct": 1.9,
+    "worst_drop_pct": -21.8
+   },
+   "2020 covid": {
+    "return_pct": -3.4,
+    "worst_drop_pct": -9.7
+   },
+   "2022 bear": {
+    "return_pct": 2.2,
+    "worst_drop_pct": -11.0
+   },
+   "2009 rebound": {
+    "return_pct": 36.0,
+    "worst_drop_pct": -11.2
+   },
+   "2020 rebound": {
+    "return_pct": 88.8,
+    "worst_drop_pct": -9.1
+   },
+   "trades_per_month": 11.3,
+   "avg_trade_pct": 0.82
+  },
+  "ETF + bonds + short": {
+   "1999-2026": {
+    "per_year_pct": 18.6,
+    "worst_drop_pct": -19.2
+   },
+   "1999-2012": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -19.2
+   },
+   "2013-2026": {
+    "per_year_pct": 20.5,
+    "worst_drop_pct": -15.1
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 27.3,
+    "worst_drop_pct": -15.1
+   },
+   "dot-com 2000-02": {
+    "return_pct": 64.5,
+    "worst_drop_pct": -17.8
+   },
+   "2008 crash": {
+    "return_pct": 1.5,
+    "worst_drop_pct": -19.2
+   },
+   "2020 covid": {
+    "return_pct": -4.0,
+    "worst_drop_pct": -10.3
+   },
+   "2022 bear": {
+    "return_pct": -4.9,
+    "worst_drop_pct": -10.2
+   },
+   "2009 rebound": {
+    "return_pct": 31.5,
+    "worst_drop_pct": -14.4
+   },
+   "2020 rebound": {
+    "return_pct": 74.5,
+    "worst_drop_pct": -9.0
+   },
+   "trades_per_month": 11.3,
+   "avg_trade_pct": 0.87
+  },
+  "ALL four": {
+   "1999-2026": {
+    "per_year_pct": 19.0,
+    "worst_drop_pct": -21.8
+   },
+   "1999-2012": {
+    "per_year_pct": 17.3,
+    "worst_drop_pct": -21.8
+   },
+   "2013-2026": {
+    "per_year_pct": 20.7,
+    "worst_drop_pct": -14.8
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 27.5,
+    "worst_drop_pct": -14.7
+   },
+   "dot-com 2000-02": {
+    "return_pct": 68.2,
+    "worst_drop_pct": -18.1
+   },
+   "2008 crash": {
+    "return_pct": 1.9,
+    "worst_drop_pct": -21.8
+   },
+   "2020 covid": {
+    "return_pct": -3.3,
+    "worst_drop_pct": -9.4
+   },
+   "2022 bear": {
+    "return_pct": -2.2,
+    "worst_drop_pct": -11.0
+   },
+   "2009 rebound": {
+    "return_pct": 36.0,
+    "worst_drop_pct": -11.2
+   },
+   "2020 rebound": {
+    "return_pct": 83.6,
+    "worst_drop_pct": -9.1
+   },
+   "trades_per_month": 10.9,
+   "avg_trade_pct": 0.86
+  },
+  "+ rebound: after 15% drop, worst 2 sectors, 63 days": {
+   "1999-2026": {
+    "per_year_pct": 14.3,
+    "worst_drop_pct": -25.5
+   },
+   "1999-2012": {
+    "per_year_pct": 11.8,
+    "worst_drop_pct": -25.5
+   },
+   "2013-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -20.8
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 21.9,
+    "worst_drop_pct": -20.8
+   },
+   "dot-com 2000-02": {
+    "return_pct": 21.5,
+    "worst_drop_pct": -21.2
+   },
+   "2008 crash": {
+    "return_pct": -17.5,
+    "worst_drop_pct": -25.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.6,
+    "worst_drop_pct": -11.5
+   },
+   "2009 rebound": {
+    "return_pct": 37.4,
+    "worst_drop_pct": -15.2
+   },
+   "2020 rebound": {
+    "return_pct": 65.6,
+    "worst_drop_pct": -15.5
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 15% drop, worst 2 sectors, 126 days": {
+   "1999-2026": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -27.6
+   },
+   "1999-2012": {
+    "per_year_pct": 12.2,
+    "worst_drop_pct": -27.6
+   },
+   "2013-2026": {
+    "per_year_pct": 16.0,
+    "worst_drop_pct": -23.2
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 20.4,
+    "worst_drop_pct": -23.2
+   },
+   "dot-com 2000-02": {
+    "return_pct": 17.9,
+    "worst_drop_pct": -23.6
+   },
+   "2008 crash": {
+    "return_pct": -17.5,
+    "worst_drop_pct": -25.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.6,
+    "worst_drop_pct": -11.5
+   },
+   "2009 rebound": {
+    "return_pct": 40.6,
+    "worst_drop_pct": -15.7
+   },
+   "2020 rebound": {
+    "return_pct": 51.7,
+    "worst_drop_pct": -17.7
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 15% drop, worst 3 sectors, 63 days": {
+   "1999-2026": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -22.4
+   },
+   "1999-2012": {
+    "per_year_pct": 11.9,
+    "worst_drop_pct": -22.4
+   },
+   "2013-2026": {
+    "per_year_pct": 17.5,
+    "worst_drop_pct": -18.7
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 22.8,
+    "worst_drop_pct": -18.7
+   },
+   "dot-com 2000-02": {
+    "return_pct": 28.9,
+    "worst_drop_pct": -17.3
+   },
+   "2008 crash": {
+    "return_pct": -14.1,
+    "worst_drop_pct": -22.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -11.2
+   },
+   "2009 rebound": {
+    "return_pct": 34.5,
+    "worst_drop_pct": -15.3
+   },
+   "2020 rebound": {
+    "return_pct": 71.6,
+    "worst_drop_pct": -13.0
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 15% drop, worst 3 sectors, 126 days": {
+   "1999-2026": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -23.4
+   },
+   "1999-2012": {
+    "per_year_pct": 12.2,
+    "worst_drop_pct": -23.4
+   },
+   "2013-2026": {
+    "per_year_pct": 17.0,
+    "worst_drop_pct": -19.9
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 21.9,
+    "worst_drop_pct": -19.9
+   },
+   "dot-com 2000-02": {
+    "return_pct": 26.9,
+    "worst_drop_pct": -18.0
+   },
+   "2008 crash": {
+    "return_pct": -14.1,
+    "worst_drop_pct": -22.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -11.2
+   },
+   "2009 rebound": {
+    "return_pct": 37.5,
+    "worst_drop_pct": -15.9
+   },
+   "2020 rebound": {
+    "return_pct": 62.9,
+    "worst_drop_pct": -13.0
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 20% drop, worst 2 sectors, 63 days": {
+   "1999-2026": {
+    "per_year_pct": 14.6,
+    "worst_drop_pct": -24.4
+   },
+   "1999-2012": {
+    "per_year_pct": 12.5,
+    "worst_drop_pct": -24.4
+   },
+   "2013-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -18.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 21.6,
+    "worst_drop_pct": -18.0
+   },
+   "dot-com 2000-02": {
+    "return_pct": 23.4,
+    "worst_drop_pct": -20.0
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.6,
+    "worst_drop_pct": -11.5
+   },
+   "2009 rebound": {
+    "return_pct": 37.4,
+    "worst_drop_pct": -15.2
+   },
+   "2020 rebound": {
+    "return_pct": 65.6,
+    "worst_drop_pct": -15.5
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 20% drop, worst 2 sectors, 126 days": {
+   "1999-2026": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -26.2
+   },
+   "1999-2012": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -26.2
+   },
+   "2013-2026": {
+    "per_year_pct": 16.4,
+    "worst_drop_pct": -18.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 21.0,
+    "worst_drop_pct": -18.0
+   },
+   "dot-com 2000-02": {
+    "return_pct": 20.3,
+    "worst_drop_pct": -22.1
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.6,
+    "worst_drop_pct": -11.5
+   },
+   "2009 rebound": {
+    "return_pct": 40.6,
+    "worst_drop_pct": -15.7
+   },
+   "2020 rebound": {
+    "return_pct": 51.7,
+    "worst_drop_pct": -17.7
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 20% drop, worst 3 sectors, 63 days": {
+   "1999-2026": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -22.3
+   },
+   "1999-2012": {
+    "per_year_pct": 12.5,
+    "worst_drop_pct": -22.3
+   },
+   "2013-2026": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -18.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 22.1,
+    "worst_drop_pct": -18.0
+   },
+   "dot-com 2000-02": {
+    "return_pct": 28.6,
+    "worst_drop_pct": -17.3
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -11.2
+   },
+   "2009 rebound": {
+    "return_pct": 34.5,
+    "worst_drop_pct": -15.3
+   },
+   "2020 rebound": {
+    "return_pct": 71.6,
+    "worst_drop_pct": -13.0
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "+ rebound: after 20% drop, worst 3 sectors, 126 days": {
+   "1999-2026": {
+    "per_year_pct": 14.8,
+    "worst_drop_pct": -23.4
+   },
+   "1999-2012": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -23.4
+   },
+   "2013-2026": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -18.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 21.9,
+    "worst_drop_pct": -18.0
+   },
+   "dot-com 2000-02": {
+    "return_pct": 26.6,
+    "worst_drop_pct": -18.0
+   },
+   "2008 crash": {
+    "return_pct": -10.1,
+    "worst_drop_pct": -19.4
+   },
+   "2020 covid": {
+    "return_pct": -6.9,
+    "worst_drop_pct": -7.9
+   },
+   "2022 bear": {
+    "return_pct": -2.8,
+    "worst_drop_pct": -11.2
+   },
+   "2009 rebound": {
+    "return_pct": 37.5,
+    "worst_drop_pct": -15.9
+   },
+   "2020 rebound": {
+    "return_pct": 62.9,
+    "worst_drop_pct": -13.0
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.85
+  },
+  "ALL four + rebound 15%/3/63": {
+   "1999-2026": {
+    "per_year_pct": 19.4,
+    "worst_drop_pct": -25.4
+   },
+   "1999-2012": {
+    "per_year_pct": 17.7,
+    "worst_drop_pct": -25.4
+   },
+   "2013-2026": {
+    "per_year_pct": 21.1,
+    "worst_drop_pct": -16.4
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 28.0,
+    "worst_drop_pct": -16.4
+   },
+   "dot-com 2000-02": {
+    "return_pct": 77.8,
+    "worst_drop_pct": -18.1
+   },
+   "2008 crash": {
+    "return_pct": -2.7,
+    "worst_drop_pct": -25.4
+   },
+   "2020 covid": {
+    "return_pct": -3.3,
+    "worst_drop_pct": -9.4
+   },
+   "2022 bear": {
+    "return_pct": -4.0,
+    "worst_drop_pct": -11.4
+   },
+   "2009 rebound": {
+    "return_pct": 42.2,
+    "worst_drop_pct": -13.5
+   },
+   "2020 rebound": {
+    "return_pct": 84.5,
+    "worst_drop_pct": -13.5
+   },
+   "trades_per_month": 10.9,
+   "avg_trade_pct": 0.86
+  },
+  "STRESS today's bot (3x costs)": {
+   "1999-2026": {
+    "per_year_pct": 10.7,
+    "worst_drop_pct": -34.2
+   },
+   "1999-2012": {
+    "per_year_pct": 7.7,
+    "worst_drop_pct": -34.2
+   },
+   "2013-2026": {
+    "per_year_pct": 13.9,
+    "worst_drop_pct": -21.4
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 18.0,
+    "worst_drop_pct": -21.4
+   },
+   "dot-com 2000-02": {
+    "return_pct": 5.4,
+    "worst_drop_pct": -25.6
+   },
+   "2008 crash": {
+    "return_pct": -13.3,
+    "worst_drop_pct": -21.4
+   },
+   "2020 covid": {
+    "return_pct": -7.1,
+    "worst_drop_pct": -8.0
+   },
+   "2022 bear": {
+    "return_pct": -3.6,
+    "worst_drop_pct": -10.1
+   },
+   "2009 rebound": {
+    "return_pct": 23.0,
+    "worst_drop_pct": -14.9
+   },
+   "2020 rebound": {
+    "return_pct": 64.8,
+    "worst_drop_pct": -9.3
+   },
+   "trades_per_month": 9.4,
+   "avg_trade_pct": 0.65
+  },
+  "STRESS ETF + bonds (3x costs)": {
+   "1999-2026": {
+    "per_year_pct": 13.6,
+    "worst_drop_pct": -23.3
+   },
+   "1999-2012": {
+    "per_year_pct": 11.7,
+    "worst_drop_pct": -23.3
+   },
+   "2013-2026": {
+    "per_year_pct": 15.5,
+    "worst_drop_pct": -20.9
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 20.9,
+    "worst_drop_pct": -17.8
+   },
+   "dot-com 2000-02": {
+    "return_pct": 38.3,
+    "worst_drop_pct": -18.2
+   },
+   "2008 crash": {
+    "return_pct": -4.0,
+    "worst_drop_pct": -20.7
+   },
+   "2020 covid": {
+    "return_pct": -4.1,
+    "worst_drop_pct": -10.4
+   },
+   "2022 bear": {
+    "return_pct": -4.9,
+    "worst_drop_pct": -10.6
+   },
+   "2009 rebound": {
+    "return_pct": 25.4,
+    "worst_drop_pct": -15.0
+   },
+   "2020 rebound": {
+    "return_pct": 69.9,
+    "worst_drop_pct": -9.2
+   },
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.66
+  },
+  "STRESS ALL four (3x costs)": {
+   "1999-2026": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -24.2
+   },
+   "1999-2012": {
+    "per_year_pct": 12.3,
+    "worst_drop_pct": -24.2
+   },
+   "2013-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -20.0
+   },
+   "2018-2026 (short data)": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -17.1
+   },
+   "dot-com 2000-02": {
+    "return_pct": 41.1,
+    "worst_drop_pct": -18.8
+   },
+   "2008 crash": {
+    "return_pct": -4.1,
+    "worst_drop_pct": -23.3
+   },
+   "2020 covid": {
+    "return_pct": -3.4,
+    "worst_drop_pct": -9.4
+   },
+   "2022 bear": {
+    "return_pct": -5.5,
+    "worst_drop_pct": -11.7
+   },
+   "2009 rebound": {
+    "return_pct": 31.2,
+    "worst_drop_pct": -11.5
+   },
+   "2020 rebound": {
+    "return_pct": 75.0,
+    "worst_drop_pct": -9.2
+   },
+   "trades_per_month": 10.9,
+   "avg_trade_pct": 0.68
+  }
+ }
+}
