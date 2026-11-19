@@ -174,3 +174,12 @@ if (!mode) {
   if (rhCloseOn(a, '2026-11-19') !== 479.3 || rhCloseOn(b, '2026-11-19') !== 479.3 || rhCloseOn(a, '2026-11-20') !== null) throw new Error('rhCloseOn');
   console.log('ok   Robinhood daily close read from historicals in any nesting');
 }
+
+{
+  const { rhTodayClose } = await import('./live-dip.mjs');
+  const r = { data: { results: [{ quote: { symbol: 'AMD', last_trade_price: '489.165000', venue_last_trade_time: '2026-11-19T20:59:59.94Z' }, close: { symbol: 'AMD', date: '2026-11-18', price: '530.14' } },
+                                 { quote: { symbol: 'XYZ', last_trade_price: '10.5', venue_last_trade_time: '2026-11-19T20:59:00Z' }, close: { symbol: 'XYZ', date: '2026-11-19', price: '10.6' } }] } };
+  const c = rhTodayClose(r, '2026-11-19');
+  if (c.AMD !== 489.165 || c.XYZ !== 10.6) throw new Error('rhTodayClose ' + JSON.stringify(c));
+  console.log('ok   Robinhood quote backup: official close when dated today, else last regular trade (never yesterday\'s close)');
+}

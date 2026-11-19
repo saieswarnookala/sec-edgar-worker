@@ -248,6 +248,17 @@ export function rhCloseOn(reply, day) {
   };
   walk(reply); return best;
 }
+// Today's close per symbol from a get_equity_quotes reply: results[].close when dated today, else the last regular-hours trade
+export function rhTodayClose(reply, today) {
+  const out = {};
+  for (const r of reply?.data?.results || reply?.results || []) {
+    const q = r.quote || {}, c = r.close || {}, sym = q.symbol || c.symbol;
+    if (!sym) continue;
+    if (c.date === today && +c.price > 0) out[sym] = +c.price;
+    else if (+q.last_trade_price > 0 && String(q.venue_last_trade_time || '').slice(0, 10) === today) out[sym] = +q.last_trade_price;
+  }
+  return out;
+}
 // Every UUID anywhere in a reply (Robinhood places the order under an approval id, so the order id can differ from the first id seen)
 export function uuidsIn(x, out = new Set()) {
   if (typeof x === 'string') { for (const m of x.matchAll(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi)) out.add(m[0].toLowerCase()); }
@@ -277,15 +288,18 @@ async function cmdVerify() {
     // fill quality vs the official close (the backtest's "ideal" price)
     let closes = {}, log_close_err = null;
     const syms = [...new Set(todays.map((o) => o.symbol))];
-    if (toolMap.get_equity_historicals) for (const sy of syms) {                    // 1) Robinhood's own official close
-      try { const c = rhCloseOn(await call(client, 'get_equity_historicals', { symbols: [sy], start_time: new Date(Date.parse(today + 'T12:00:00Z') - 7 * 864e5).toISOString().slice(0, 10), interval: 'day', bounds: 'regular', adjustment_type: 'none' }), today); if (c) closes[sy] = c; }
-      catch (e) { log_close_err = 'robinhood: ' + String(e.message || e).slice(0, 160); }
-    }
-    // 2) backup: Alpaca. Free data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
+    // 1) Alpaca's official SIP close. Free data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
     for (const feed of ['sip', 'iex']) {
       if (!syms.length || syms.every((s) => closes[s])) break;
       try { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: today, end: new Date(Date.now() - 16 * 60e3).toISOString(), feed })); for (const [s, b] of Object.entries(js.bars || {})) if (!closes[s] && b.at(-1)?.c) closes[s] = b.at(-1).c; }
       catch (e) { log_close_err = String(e.message || e).slice(0, 200); }
+    }
+    // 2) backup: Robinhood quotes. Its daily bars leave out today until it settles, so: the official close if it is already
+    //    today's, else the last regular-session trade (within ~0.01% of the official close in the Nov 19 check)
+    const miss = syms.filter((x) => !closes[x]);
+    if (miss.length && toolMap.get_equity_quotes) {
+      try { closes = { ...closes, ...rhTodayClose(await call(client, 'get_equity_quotes', { symbols: miss }), today) }; }
+      catch (e) { log_close_err = (log_close_err ? log_close_err + ' | ' : '') + 'robinhood: ' + String(e.message || e).slice(0, 160); }
     }
     const fills = todays.filter((o) => o.avg_price).map((o) => ({ symbol: o.symbol, side: o.side, price: o.avg_price, close: closes[o.symbol] ?? null, vs_close_pct: closes[o.symbol] ? +(((o.avg_price / closes[o.symbol]) - 1) * (o.side === 'buy' ? 100 : -100)).toFixed(3) : null }));
     const v = { today, filled: fills.length, unfilled: unfilled.map((o) => `${o.side} ${o.symbol} (${o.state})`), strangers: strangers.map((o) => `${o.side} ${o.symbol} ${o.id}`), fills, avg_cost_vs_close_pct: fills.filter((f) => f.vs_close_pct != null).length ? +(fills.filter((f) => f.vs_close_pct != null).reduce((a, f) => a + f.vs_close_pct, 0) / fills.filter((f) => f.vs_close_pct != null).length).toFixed(3) : null, equity: r.money.equity, close_lookup_error: log_close_err };
