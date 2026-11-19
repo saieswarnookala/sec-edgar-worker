@@ -1,4 +1,4 @@
-name: Live replay (minute data, 3
+name: "Intraday exits and entries (5-minute replay)"
 on:
   workflow_dispatch:
 permissions:

@@ -1,4 +1,4 @@
-name: Live replay (minute data, 3
+name: "Live replay (minute data, 3:45 decisions)"
 on:
   workflow_dispatch:
 permissions:
