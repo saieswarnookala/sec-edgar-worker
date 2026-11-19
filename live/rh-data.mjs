@@ -96,9 +96,9 @@ export function compareSignals(a, b) {
   const top = (sc) => Object.entries(sc || {}).sort((x, y) => x[1] - y[1]).slice(0, 10).map(([s]) => s);
   const ka = Object.keys(a.scores || {}), kb = Object.keys(b.scores || {});
   const ea = Object.keys(a.etfScores || {}), eb = Object.keys(b.etfScores || {});
-  const diffs = [];
-  for (const s of new Set([...a.members || [], 'SPY'])) { const x = a.prices?.[s], y = b.prices?.[s]; if (x > 0 && y > 0) diffs.push(Math.abs(y / x - 1) * 100); }
-  diffs.sort((x, y) => x - y);
+  const gaps = [];
+  for (const s of new Set([...a.members || [], 'SPY'])) { const x = a.prices?.[s], y = b.prices?.[s]; if (x > 0 && y > 0) gaps.push([Math.abs(y / x - 1) * 100, s, x, y]); }
+  gaps.sort((x, y) => x[0] - y[0]); const diffs = gaps.map((g) => g[0]);
   const watch = [...new Set([...ka, ...kb])].map((s) => ({ s, alpaca_px: a.prices?.[s] ?? null, rh_px: b.prices?.[s] ?? null, alpaca_gap: a.scores?.[s] != null ? +(a.scores[s] * 100).toFixed(2) : null, rh_gap: b.scores?.[s] != null ? +(b.scores[s] * 100).toFixed(2) : null }));
   const sameBuys = JSON.stringify(top(a.scores)) === JSON.stringify(top(b.scores));
   return {
@@ -107,7 +107,7 @@ export function compareSignals(a, b) {
     etf_dips: { only_alpaca: ea.filter((s) => !eb.includes(s)), only_robinhood: eb.filter((s) => !ea.includes(s)) },
     park: { alpaca: a.park ?? null, robinhood: b.park ?? null }, clear_leader: { alpaca: a.clPos ?? null, robinhood: b.clPos ?? null },
     heavy_volume: { alpaca: a.skipped_heavy_volume || [], robinhood: b.skipped_heavy_volume || [] },
-    price_gap_pct: { median: diffs.length ? +diffs[Math.floor(diffs.length / 2)].toFixed(3) : null, p95: diffs.length ? +diffs[Math.floor(diffs.length * 0.95)].toFixed(3) : null, max: diffs.length ? +diffs.at(-1).toFixed(3) : null, compared: diffs.length },
+    price_gap_pct: { median: diffs.length ? +diffs[Math.floor(diffs.length / 2)].toFixed(3) : null, p95: diffs.length ? +diffs[Math.floor(diffs.length * 0.95)].toFixed(3) : null, max: diffs.length ? +diffs.at(-1).toFixed(3) : null, compared: diffs.length, biggest: gaps.slice(-3).reverse().map(([d, s, x, y]) => `${s} ${x}/${y} (${d.toFixed(1)}%)`) },
     history_days: { alpaca_spy: a.closes?.SPY?.length ?? null, robinhood_spy: b.closes?.SPY?.length ?? null, robinhood_missing: (a.members || []).filter((s) => !(b.closes?.[s]?.length >= 200)).length },
     watch, robinhood_calls: b.calls, robinhood_errors: b.errors, robinhood_secs: b.secs,
   };
@@ -119,7 +119,7 @@ export function shadowAlert(c) {
   if (!c.stock_dips.same_top10_order && !c.stock_dips.only_alpaca.length && !c.stock_dips.only_robinhood.length) lines.push('  same dips, different order');
   if (c.etf_dips.only_alpaca.length || c.etf_dips.only_robinhood.length) lines.push(`  ETF dips: Alpaca-only ${c.etf_dips.only_alpaca.join(',') || '-'} | Robinhood-only ${c.etf_dips.only_robinhood.join(',') || '-'}`);
   if (c.park.alpaca !== c.park.robinhood) lines.push(`  parking: Alpaca ${c.park.alpaca || 'cash'} vs Robinhood ${c.park.robinhood || 'cash'}`);
-  lines.push(`Prices: median gap ${c.price_gap_pct.median}%, max ${c.price_gap_pct.max}% over ${c.price_gap_pct.compared} stocks`);
+  lines.push(`Prices: median gap ${c.price_gap_pct.median}%, max ${c.price_gap_pct.max}% over ${c.price_gap_pct.compared} stocks${c.price_gap_pct.max > 1 ? ` (biggest: ${(c.price_gap_pct.biggest || []).join(', ')}; Alpaca/Robinhood)` : ''}`);
   lines.push(`Robinhood: ${c.robinhood_calls?.historicals ?? 0} history + ${c.robinhood_calls?.quotes ?? 0} quote calls, ${c.robinhood_secs}s${c.robinhood_errors?.length ? `, ${c.robinhood_errors.length} errors: ${c.robinhood_errors[0]}` : ''}`);
   return { title: `Robinhood data check: ${c.same_picks ? 'match' : 'DIFFERENT'}`, body: lines.join('\n') };
 }
