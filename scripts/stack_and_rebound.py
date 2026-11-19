@@ -119,6 +119,7 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
     if rebound:
         for a, p, l in rebound_events(rebound["drop"]):
             picks = rebound_picks(p, l, rebound["n"])
+            if not picks: continue                                   # sector ETFs had no data yet (before 1999)
             for t in range(a, min(a + rebound["days"], D)): REB[t] = picks
     pos, eq, curve, trades, held_park = [], 1.0, np.ones(D), [], "CASH"
     for t in range(t0, D):
