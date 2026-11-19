@@ -89,13 +89,13 @@ export function volScale(spyCloses, spyPx) {
   return { scale: +(VOL_LO + (VOL_HI - VOL_LO) * rank).toFixed(3), rank: +rank.toFixed(3), vol_pct: +(now * Math.sqrt(252) * 100).toFixed(1) };
 }
 // Virtual paper portfolio (no broker): same signals and exits as the dip bot, fills at the ~3:45 pm price, fractional shares.
-export function virtualStep({ vs, today, days, prices, closes, scores, park, scale, etfScores = {}, stockMaxHold = MAX_HOLD }) {
+export function virtualStep({ vs, today, days, prices, closes, scores, park, scale, etfScores = {}, stockMaxHold = MAX_HOLD, extraEquity = 0 }) {
   vs = { cash: VBOT_START, positions: [], park: {}, trades: [], ...vs };
   const px = (s, fb) => prices[s] || fb || 0;
   const held = Object.fromEntries(vs.positions.map((p) => [p.symbol, p.qty]));
   const posVal = vs.positions.reduce((a, p) => a + p.qty * px(p.symbol, p.entry_px), 0);
   const parkVal = Object.entries(vs.park).reduce((a, [s, q]) => a + q * px(s), 0);
-  const equity = vs.cash + posVal + parkVal;
+  const equity = vs.cash + posVal + parkVal + extraEquity;
   const d = decide({ today, days, state: { positions: vs.positions }, held, equity, prices, closes, scores, park, parkHeld: { ...vs.park }, fractional: true, minOrderUsd: 1, weight: WEIGHT * scale, etfScores, stockMaxHold });
   const done = [];
   for (const t of d.parkTrades.filter((x) => x.side === 'sell')) { vs.cash += t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) - t.qty).toFixed(6); if (vs.park[t.symbol] <= 1e-6) delete vs.park[t.symbol]; done.push(`SELL ${t.symbol} (${t.reason})`); }
@@ -109,6 +109,45 @@ export function virtualStep({ vs, today, days, prices, closes, scores, park, sca
   for (const t of d.parkTrades.filter((x) => x.side === 'buy')) { vs.cash -= t.qty * px(t.symbol); vs.park[t.symbol] = +((vs.park[t.symbol] || 0) + t.qty).toFixed(6); done.push(`BUY ${t.symbol} (parking)`); }
   vs.trades = vs.trades.slice(-300);
   return { vs, equity: +equity.toFixed(2), done };
+}
+// ---- Bot 11 "Dip bot v3.1" = v3.0 + 2 earnings-drift slots (virtual, from Nov 20) ----
+// Backtest 2004-2026 (scripts/v3_drift.py, live-like costs): v3.0 18.4%/yr -> 20.0%, worst -18.7% -> -17.6%, both halves better.
+// Drift: S&P 500 stock that beat SPY by >= 5% on its earnings reaction day (morning drift run -> data/paper_drift_signals.json),
+// bought at ~3:45 pm that day, held 60 trading days, 10% of the account each, at most 2 at a time, on top of v3.0's 10 slots.
+export const V31 = { driftSlots: 2, driftHold: 60, weight: 0.10 };
+export function v31Step({ vs, today, days, prices, closes, scores, park, etfScores = {}, driftSignals = [] }) {
+  vs = { cash: VBOT_START, positions: [], park: {}, trades: [], drift: [], ...vs };
+  const px = (s, fb) => prices[s] || fb || 0, ti = days.indexOf(today), done = [];
+  const keep = [];
+  for (const p of vs.drift) {
+    const ei = days.indexOf(p.entry_date), age = ei >= 0 ? ti - ei : 999;
+    if (prices[p.symbol] && age >= V31.driftHold) {
+      vs.cash += p.qty * px(p.symbol);
+      vs.trades.push({ symbol: p.symbol, kind: 'drift', entry_date: p.entry_date, exit_date: today, ret_pct: +((px(p.symbol) / p.entry_px - 1) * 100).toFixed(2), reason: `held ${age} days (drift max ${V31.driftHold})` });
+      done.push(`SELL ${p.symbol} drift (held ${age} days)`);
+    } else keep.push(p);
+  }
+  vs.drift = keep;
+  const driftVal = vs.drift.reduce((a, p) => a + p.qty * px(p.symbol, p.entry_px), 0);
+  const r = virtualStep({ vs: { cash: vs.cash, positions: vs.positions, park: vs.park, trades: vs.trades }, today, days, prices, closes, scores, park, scale: 1, etfScores, extraEquity: driftVal });
+  Object.assign(vs, r.vs); done.push(...r.done);
+  const equity = r.equity, held = new Set([...vs.positions.map((p) => p.symbol), ...vs.drift.map((p) => p.symbol)]);
+  for (const sg of [...driftSignals].sort((a, b) => b.r - a.r).filter((x) => prices[x.symbol] && !held.has(x.symbol)).slice(0, Math.max(0, V31.driftSlots - vs.drift.length))) {
+    let usd = V31.weight * equity;
+    if (vs.cash < usd) {                                       // raise cash from the parking ETF(s)
+      for (const [s, q] of Object.entries(vs.park)) {
+        if (vs.cash >= usd || !px(s)) continue;
+        const sq = Math.min(q, Math.ceil(((usd - vs.cash) / px(s)) * 1e6) / 1e6);
+        vs.cash += sq * px(s); vs.park[s] = +(q - sq).toFixed(6); if (vs.park[s] <= 1e-6) delete vs.park[s]; done.push(`SELL ${s} (parking, for drift)`);
+      }
+    }
+    usd = Math.min(usd, vs.cash); if (usd < 1) break;
+    const qty = Math.floor((usd / px(sg.symbol)) * 1e6) / 1e6; vs.cash -= qty * px(sg.symbol); held.add(sg.symbol);
+    vs.drift.push({ symbol: sg.symbol, kind: 'drift', entry_date: today, qty, entry_px: px(sg.symbol), info: `reaction +${(sg.r * 100).toFixed(1)}% vs SPY` });
+    done.push(`BUY $${(qty * px(sg.symbol)).toFixed(0)} ${sg.symbol} drift (reaction +${(sg.r * 100).toFixed(1)}% vs SPY)`);
+  }
+  vs.trades = vs.trades.slice(-300);
+  return { vs, equity, done };
 }
 // ---- Bot 8 "dip + short-interest filter" (virtual, from Nov 16) ----
 // Same as bot 1 but skips dips in heavily shorted stocks: days to cover (shares short / avg daily volume) >= SHORT_CUT.
@@ -385,6 +424,18 @@ async function main() {
       v3.updated = log.run; writeFileSync(v3file, JSON.stringify(v3, null, 1));
       log.v3_bot = { equity: r3.equity, park: bpark || 'CASH', orders: r3.done.length };
     } catch (e) { log.v3_bot_error = String(e.message || e).slice(0, 300); }
+    // Bot 11 "Dip bot v3.1" (virtual): v3.0 + 2 earnings-drift slots
+    const v31file = 'data/paper_v31_state.json', v31 = existsSync(v31file) ? JSON.parse(readFileSync(v31file, 'utf8')) : { history: [] };
+    if (!(v31.history || []).some((h) => h.today === today)) try {
+      const dsf31 = 'data/paper_drift_signals.json', ds31 = existsSync(dsf31) ? JSON.parse(readFileSync(dsf31, 'utf8')) : {};
+      const dsig = ds31.date === today ? (ds31.signals || []) : [];
+      const bpark31 = bondParkSymbol({ park, bondCloses: closes[BOND], bondPx: prices[BOND] });
+      const r31 = v31Step({ vs: v31.vs, today, days, prices, closes, scores, park: bpark31, etfScores: g.etfScores || {}, driftSignals: dsig });
+      v31.vs = r31.vs;
+      v31.history = [...(v31.history || []), { today, equity: r31.equity, spy: prices.SPY, park: bpark31 || 'CASH', stock_signals: Object.keys(scores).length, etf_signals: Object.keys(g.etfScores || {}), drift_signals: dsig.map((x) => x.symbol), drift_signals_found: ds31.date === today, orders: r31.done }].slice(-400);
+      v31.updated = log.run; writeFileSync(v31file, JSON.stringify(v31, null, 1));
+      log.v31_bot = { equity: r31.equity, drift: (r31.vs.drift || []).length, orders: r31.done.length };
+    } catch (e) { log.v31_bot_error = String(e.message || e).slice(0, 300); }
     // Bot 6 "tuned dip": 8% dips, 150-day trend, hold up to 7 days, + ETF dips (virtual, no broker)
     const tfile = 'data/paper_dip_tuned_state.json', tst = existsSync(tfile) ? JSON.parse(readFileSync(tfile, 'utf8')) : { history: [] };
     if (!(tst.history || []).some((h) => h.today === today)) {

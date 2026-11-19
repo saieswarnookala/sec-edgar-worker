@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX, siCandidates, parseSI, shortFilter, fetchShortInterest, bondParkSymbol, BOND } from './scripts/paper-dip.mjs';
+import { volumeRatio, volFraction, sessionMinute, inWindow, volScale, virtualStep, dipScore, shouldExit, parkSymbol, decide, etfDipScore, ETF_MAX_HOLD, TUNED, mixStep, MIX, siCandidates, parseSI, shortFilter, fetchShortInterest, bondParkSymbol, BOND, v31Step, V31 } from './scripts/paper-dip.mjs';
 let n = 0; const ok = (name, f) => { f(); n++; console.log('ok  ', name); };
 const flat = (v, k = 210) => Array(k).fill(v);
 ok('dip: uptrend stock down 12% vs flat SPY qualifies', () => {
@@ -168,4 +168,22 @@ console.log('ok   fractional sizing for small live account');
   const b = virtualStep({ vs: undefined, today: '2026-11-19', days: ['2026-11-18', '2026-11-19'], prices, closes, scores: {}, park: null, scale: 1 });
   if (!(a.vs.park.IEF > 0) || Object.keys(b.vs.park).length) throw new Error('bond bot should park in IEF, twin in cash');
   console.log('ok   bot 9 bond parking: Clear Leader when market OK, IEF only when trending up, else cash; twin stays in cash');
+}
+
+// Bot 11: v3.0 + 2 drift slots
+{
+  const days = Array.from({ length: 70 }, (_, i) => `2026-${String(9 + Math.floor(i / 28)).padStart(2, '0')}-${String(1 + (i % 28)).padStart(2, '0')}`);
+  const closes = { SPY: Array(250).fill(100), AAA: Array(250).fill(50), BBB: Array(250).fill(20), CCC: Array(250).fill(10), QQQ: Array(250).fill(400) };
+  const prices = { SPY: 100, AAA: 50, BBB: 20, CCC: 10, QQQ: 400 };
+  let r = v31Step({ vs: undefined, today: days[0], days, prices, closes, scores: {}, park: 'QQQ', driftSignals: [{ symbol: 'AAA', r: 0.08 }, { symbol: 'BBB', r: 0.06 }, { symbol: 'CCC', r: 0.07 }] });
+  if (r.vs.drift.length !== V31.driftSlots) throw new Error('should fill exactly 2 drift slots, got ' + r.vs.drift.length);
+  if (r.vs.drift.map((p) => p.symbol).join() !== 'AAA,CCC') throw new Error('should take the 2 biggest reactions');
+  if (Math.abs(r.vs.drift[0].qty * 50 - 1000) > 2) throw new Error('drift size should be 10% of $10k');
+  const total = r.vs.cash + r.vs.drift.reduce((a, p) => a + p.qty * prices[p.symbol], 0) + Object.entries(r.vs.park).reduce((a, [s, q]) => a + q * prices[s], 0);
+  if (Math.abs(total - 10000) > 1) throw new Error('money must add up: ' + total);
+  r = v31Step({ vs: r.vs, today: days[59], days, prices, closes, scores: {}, park: 'QQQ', driftSignals: [] });
+  if (r.vs.drift.length !== 2) throw new Error('drift held until 60 days');
+  r = v31Step({ vs: r.vs, today: days[60], days, prices, closes, scores: {}, park: 'QQQ', driftSignals: [] });
+  if (r.vs.drift.length !== 0 || r.vs.trades.filter((t) => t.kind === 'drift').length !== 2) throw new Error('drift sold after 60 days');
+  console.log('ok   bot 11 v3.1: 2 biggest drift signals bought at 10%, money adds up, sold after 60 trading days');
 }
