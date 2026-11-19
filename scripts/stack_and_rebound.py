@@ -35,6 +35,8 @@ Cs = A[tick].ffill(); spy = A["SPY"].ffill()
 ex5 = (Cs / Cs.shift(5) - 1).sub(spy / spy.shift(5) - 1, axis=0)
 vr = VOLM[tick].rolling(5).mean() / VOLM[tick].shift(5).rolling(50).mean()
 SIG = (M & (RAW[tick] >= 5) & (vr <= 2.0) & (Cs > Cs.rolling(200).mean()) & (ex5 <= -0.10)).values
+def make_sig(dip=0.10, ma=200):
+    return (M & (RAW[tick] >= 5) & (vr <= 2.0) & (Cs > Cs.rolling(ma).mean()) & (ex5 <= -dip)).values
 S_C, S_M5, S_RK = Cs.values, Cs.rolling(5).mean().values, ex5.values
 S_O = AO[tick].values
 SP = spy.values; spyr = np.r_[0, SP[1:] / SP[:-1] - 1]
@@ -140,7 +142,8 @@ def rebound_picks(p, l, n=3):
     secs = [s for s in SECTORS if s in EI and np.isfinite(E_C[p, EI[s]]) and np.isfinite(E_C[l, EI[s]])]
     return sorted(secs, key=lambda s: E_C[l, EI[s]] / E_C[p, EI[s]] - 1)[:n]
 
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy"):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None):
+    SIGX = SIG if sig is None else sig
     PR = CLR if park == "cl" else spyr
     REB = {}
     if rebound:
@@ -155,6 +158,7 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
         for k, cands, Ca, Oa, cost in (("S", cand_s, S_C, S_O, cs), ("E", cand_e, E_C, E_O, ce)):
             for j in cands:
                 if len(pos) >= 10: return
+                if cap and k == "S" and grp[j] is not None and sum(1 for q in pos if q["k"] == "S" and grp[q["j"]] == grp[j]) >= cap: continue
                 if (k, j) in held: continue
                 bp = Oa[t, j] if at_open else Ca[t, j]
                 if not (np.isfinite(bp) and bp > 0 and np.isfinite(Ca[t, j])): continue
@@ -162,7 +166,7 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
                 if room < 0.02: return
                 ww = min(w, room); pos.append({"k": k, "j": j, "d": t, "px": bp, "w": ww, "open": at_open}); eq *= 1 - ww * cost; held.add((k, j))
     def cands(t):
-        c = [j for j in np.flatnonzero(SIG[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
+        c = [j for j in np.flatnonzero(SIGX[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
         e = sorted([j for j in np.flatnonzero(E_SIG[t]) if np.isfinite(E_C[t, j])], key=lambda j: E_RK[t, j]) if etf else []
         return c, e
     for t in range(t0, D):
@@ -183,7 +187,7 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
         eq *= 1 + r; keep = []
         for p in pos:
             Cx, Mx = (S_C, S_M5) if p["k"] == "S" else (E_C, E_M5)
-            age = t - p["d"] + (1 if p["open"] else 0); mh = 5 if p["k"] == "S" else 10
+            age = t - p["d"] + (1 if p["open"] else 0); mh = mhs if p["k"] == "S" else 10
             if age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh):
                 c = cs if p["k"] == "S" else ce; eq *= 1 - p["w"] * c; trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))
             else: keep.append(p)

@@ -27,12 +27,13 @@ def asym(t):  # parquet ticker -> Alpaca symbol
     b = t.rsplit("-", 1)[0] if len(t) > 7 and t[-7] == "-" and t[-6:].isdigit() else t
     return b.replace("-", ".")
 ex5c = S.ex5.values; above = (S.Cs > S.Cs.rolling(200).mean()).values
-NEAR = (S.M.values & (np.nan_to_num(ex5c, nan=1) <= -0.07)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
+NEAR_CUT = float(os.environ.get('NEAR_CUT', '-0.07'))
+NEAR = (S.M.values & (np.nan_to_num(ex5c, nan=1) <= NEAR_CUT)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
 E5 = np.nan_to_num(S.E_C / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)
 NEARE = E5 <= -0.03
 need = {t: {"SPY"} for t in range(tr0, D)}
 for t, j in zip(*np.nonzero(NEAR[tr0:])):
-    for k in range(t + tr0, min(t + tr0 + 8, D)): need[k].add(S.tick[j])
+    for k in range(t + tr0, min(t + tr0 + 10, D)): need[k].add(S.tick[j])
 for t, j in zip(*np.nonzero(NEARE[tr0:])):
     for k in range(t + tr0, min(t + tr0 + 12, D)): need[k].add("ETF:" + S.EN[j])
 print("days", D - tr0, "| symbol-days needed", sum(len(v) for v in need.values()), flush=True)
@@ -109,7 +110,10 @@ SPYK = None
 def spy_at(t, m): return mpx(t, "SPY", S.SP[t], S.RAW["SPY"].values[t], m, False)
 # ---------------- replay engine (values, not returns)
 VOLOK = (np.nan_to_num(S.vr.values, nan=9) <= 2.0) & (np.nan_to_num(RAWC, nan=0) >= 5) & S.M.values
-def run(mode, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
+SIGC = {}
+def run(mode, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, dip=0.10, ma=200, mh_s=5):
+    if (dip, ma) not in SIGC: SIGC[(dip, ma)] = S.make_sig(dip, ma)
+    SIGP = SIGC[(dip, ma)]
     """mode: 'close' (ideal), 'open' (next open), or minute int (decision minute, e.g. 1545)"""
     cash, pos, curve, held_park, trades, diff = 1.0, [], np.ones(D), "CASH", [], {"decisions": 0, "differs_from_close": 0}
     for t in range(tr0, D):
@@ -131,16 +135,16 @@ def run(mode, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
                     for j in np.flatnonzero(NEAR[tt] & VOLOK[tt]):
                         px = spx(tt, j, mode)
                         if not np.isfinite(px): continue
-                        if px / S.S_C[tt - 5, j] - 1 - spy5 <= -0.10 and px > np.mean(np.r_[S.S_C[tt - 199:tt, j], px]): out.append((px / S.S_C[tt - 5, j] - 1 - spy5, j))
+                        if px / S.S_C[tt - 5, j] - 1 - spy5 <= -dip and px > np.mean(np.r_[S.S_C[tt - ma + 1:tt, j], px]): out.append((px / S.S_C[tt - 5, j] - 1 - spy5, j))
                     ce_ = []
                     if etf:
                         for j in np.flatnonzero(NEARE[tt]):
                             px = epx(tt, j, mode)
                             if np.isfinite(px) and px / S.E_C[tt - 5, j] - 1 <= -0.05 and px > np.mean(np.r_[S.E_C[tt - 199:tt, j], px]): ce_.append((px / S.E_C[tt - 5, j] - 1, j))
-                    close_s = set(np.flatnonzero(S.SIG[tt])); live_s = {j for _, j in out}
+                    close_s = set(np.flatnonzero(SIGP[tt])); live_s = {j for _, j in out}
                     diff["decisions"] += len(close_s | live_s); diff["differs_from_close"] += len(close_s ^ live_s)
                     return [j for _, j in sorted(out)], [j for _, j in sorted(ce_)]
-                c = sorted(np.flatnonzero(S.SIG[tt]), key=lambda j: S.S_RK[tt, j])
+                c = sorted(np.flatnonzero(SIGP[tt]), key=lambda j: S.S_RK[tt, j])
                 e = sorted([j for j in np.flatnonzero(S.E_SIG[tt]) if np.isfinite(S.E_C[tt, j])], key=lambda j: S.E_RK[tt, j]) if etf else []
                 return c, e
             cs_, ce_ = signals(t - 1 if mode == "open" else t, minute)
@@ -160,7 +164,7 @@ def run(mode, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
         keep = []
         for p in pos:
             Cx, Mx = (S.S_C, None) if p["k"] == "S" else (S.E_C, None)
-            j = p["j"]; age = t - p["d"] + (1 if p.get("o") else 0); mh = 5 if p["k"] == "S" else 10
+            j = p["j"]; age = t - p["d"] + (1 if p.get("o") else 0); mh = mh_s if p["k"] == "S" else 10
             if mode in ("close", "open"):
                 now = Cx[t, j]; m5 = np.mean(Cx[t - 4:t + 1, j])
             else:
@@ -183,7 +187,8 @@ def run(mode, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
     if diff["decisions"]: o["signals_different_from_close_pct"] = round(diff["differs_from_close"] / diff["decisions"] * 100, 1)
     return o
 V = []
-for bot, kw in (("Robinhood rules", {}), ("Dip bot v3.0", dict(etf=True, bond=True))):
+for bot, kw in (("Robinhood rules", {}), ("Dip bot v3.0", dict(etf=True, bond=True)), ("v3.0 tuned 8%/150-day/7-day", dict(etf=True, bond=True, dip=0.08, ma=150, mh_s=7)),
+                ("v3.0 tuned 8%/200-day/7-day", dict(etf=True, bond=True, dip=0.08, ma=200, mh_s=7)), ("v3.0 9%/200-day/5-day", dict(etf=True, bond=True, dip=0.09, mh_s=5))):
     V += [(f"{bot} | ideal (close, 0.05%)", dict(mode="close", **kw)), (f"{bot} | LIVE 3:45 decide, 3:46-3:50 fill, 0.05%", dict(mode=1545, **kw)),
           (f"{bot} | LIVE 3:45, 0.10% per side", dict(mode=1545, cs=0.001, ce=0.0004, **kw)), (f"{bot} | LIVE 3:55 decide, 3:56-3:59 fill, 0.05%", dict(mode=1555, **kw)),
           (f"{bot} | realistic (next open, 0.15%)", dict(mode="open", cs=0.0015, ce=0.0005, **kw))]
