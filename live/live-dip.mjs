@@ -278,7 +278,7 @@ async function cmdVerify() {
     let closes = {}, log_close_err = null;
     const syms = [...new Set(todays.map((o) => o.symbol))];
     if (toolMap.get_equity_historicals) for (const sy of syms) {                    // 1) Robinhood's own official close
-      try { const c = rhCloseOn(await call(client, 'get_equity_historicals', { symbols: [sy], start_time: today, end_time: today, interval: 'day', bounds: 'regular', adjustment_type: 'none' }), today); if (c) closes[sy] = c; }
+      try { const c = rhCloseOn(await call(client, 'get_equity_historicals', { symbols: [sy], start_time: new Date(Date.parse(today + 'T12:00:00Z') - 7 * 864e5).toISOString().slice(0, 10), interval: 'day', bounds: 'regular', adjustment_type: 'none' }), today); if (c) closes[sy] = c; }
       catch (e) { log_close_err = 'robinhood: ' + String(e.message || e).slice(0, 160); }
     }
     // 2) backup: Alpaca. Free data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
