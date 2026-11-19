@@ -375,6 +375,16 @@ async function main() {
       bst.updated = log.run; writeFileSync(bfile, JSON.stringify(bst, null, 1));
       log.bond_bot = { equity: f.equity, twin_equity: tw.equity, park: bpark || 'CASH', orders: f.done.length };
     } catch (e) { log.bond_bot_error = String(e.message || e).slice(0, 300); }   // never let the new bot break bots 1-8
+    // Bot 10 "Dip bot v3.0" (virtual): Robinhood rules + ETF dips (bot 5) + bonds instead of cash (bot 9) in one account
+    const v3file = 'data/paper_v3_state.json', v3 = existsSync(v3file) ? JSON.parse(readFileSync(v3file, 'utf8')) : { history: [] };
+    if (!(v3.history || []).some((h) => h.today === today)) try {
+      const bpark = bondParkSymbol({ park, bondCloses: closes[BOND], bondPx: prices[BOND] });
+      const r3 = virtualStep({ vs: v3.vs, today, days, prices, closes, scores, park: bpark, scale: 1, etfScores: g.etfScores || {} });
+      v3.vs = r3.vs;
+      v3.history = [...(v3.history || []), { today, equity: r3.equity, spy: prices.SPY, park: bpark || 'CASH', stock_signals: Object.keys(scores).length, etf_signals: Object.keys(g.etfScores || {}), orders: r3.done }].slice(-400);
+      v3.updated = log.run; writeFileSync(v3file, JSON.stringify(v3, null, 1));
+      log.v3_bot = { equity: r3.equity, park: bpark || 'CASH', orders: r3.done.length };
+    } catch (e) { log.v3_bot_error = String(e.message || e).slice(0, 300); }
     // Bot 6 "tuned dip": 8% dips, 150-day trend, hold up to 7 days, + ETF dips (virtual, no broker)
     const tfile = 'data/paper_dip_tuned_state.json', tst = existsSync(tfile) ? JSON.parse(readFileSync(tfile, 'utf8')) : { history: [] };
     if (!(tst.history || []).some((h) => h.today === today)) {
