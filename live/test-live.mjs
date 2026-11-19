@@ -153,3 +153,16 @@ if (!mode) {
   else { assert.equal(placed.length, h.placed.length); assert.equal(placed[0].side, 'sell'); assert.ok(st.positions.some((p) => p.symbol === 'CCC' && p.entry_date === today) && !st.positions.some((p) => p.symbol === 'AAA')); console.log('ok   live run placed', placed.length, 'orders on the fake broker:', placed.map((a) => `${a.side} ${a.symbol} ${a.dollar_amount ?? a.quantity}`).join(', ')); }
   process.exit(0);
 }
+
+// verify must not call the bot's own order a stranger when Robinhood's order id differs from the reply id (Nov 19 AMD halt)
+{
+  const { matchOurOrders, uuidsIn } = await import('./live-dip.mjs');
+  const placed = [{ side: 'buy', symbol: 'AMD', id: 'aaaaaaaa-0000-0000-0000-000000000001', ids: ['aaaaaaaa-0000-0000-0000-000000000001'] }];
+  const todays = [{ side: 'buy', symbol: 'AMD', id: '6aff604b-664a-46bc-9eb1-e239a3961011', state: 'filled' }, { side: 'buy', symbol: 'AMD', id: 'bbbbbbbb-0000-0000-0000-000000000002', state: 'filled' }, { side: 'sell', symbol: 'TSLA', id: 'cccccccc-0000-0000-0000-000000000003', state: 'filled' }];
+  const mine = matchOurOrders(placed, todays);
+  if (!mine.has(todays[0]) || mine.has(todays[1]) || mine.has(todays[2])) throw new Error('matchOurOrders wrong');
+  const byId = matchOurOrders([{ side: 'buy', symbol: 'AMD', ids: ['bbbbbbbb-0000-0000-0000-000000000002'] }], todays);
+  if (!byId.has(todays[1]) || byId.has(todays[0])) throw new Error('id match should win');
+  if (uuidsIn({ a: { approval_id: 'X 6AFF604B-664A-46BC-9EB1-E239A3961011' } }).size !== 1) throw new Error('uuidsIn');
+  console.log('ok   verify: own order matched even when Robinhood order id differs; extra same-stock order still a stranger');
+}

@@ -205,7 +205,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
       if (!b.ok) { failed.push({ ...o, error: b.error }); return; }
       if (toolMap.review_equity_order) { try { o.review = await call(client, 'review_equity_order', buildOrderArgs(toolMap.review_equity_order, o, E.RH_ACCOUNT).args || b.args); } catch (e) { failed.push({ ...o, error: 'review: ' + e.message }); return; } }
       if (MODE !== 'live') { placed.push({ ...o, dry: true, args: b.args }); return; }
-      try { const r = await call(client, 'place_equity_order', b.args); const id = r?.id ?? r?.order_id ?? r?.order?.id; placed.push({ ...o, id, state: r?.state ?? r?.status ?? r?.order?.state }); }
+      try { const r = await call(client, 'place_equity_order', b.args); const id = r?.id ?? r?.order_id ?? r?.order?.id; placed.push({ ...o, id, ids: [...uuidsIn(r)], state: r?.state ?? r?.status ?? r?.order?.state }); }
       catch (e) {
         failed.push({ ...o, error: e.message });
         if (e instanceof UnexpectedAction) { writeFileSync(HALT, `Claude Code did something other than the exact order on ${today}: ${e.message}. Check Robinhood, then: node live-dip.mjs resume`); throw e; }
@@ -236,6 +236,22 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
   }
 }
 
+// Every UUID anywhere in a reply (Robinhood places the order under an approval id, so the order id can differ from the first id seen)
+export function uuidsIn(x, out = new Set()) {
+  if (typeof x === 'string') { for (const m of x.matchAll(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi)) out.add(m[0].toLowerCase()); }
+  else if (x && typeof x === 'object') for (const v of Object.values(x)) uuidsIn(v, out);
+  return out;
+}
+// Which of today's account orders are the bot's: by id first; then, for the bot's orders whose id we couldn't see, the same
+// side + symbol, at most as many as the bot placed (so an extra order in the same stock still counts as a stranger).
+export function matchOurOrders(placed, todays) {
+  const ids = new Set(placed.flatMap((p) => [p.id, ...(p.ids || [])]).filter(Boolean).map((x) => String(x).toLowerCase()));
+  const left = {}; for (const p of placed) { const k = `${p.side}|${p.symbol}`; left[k] = (left[k] || 0) + 1; }
+  const mine = new Set();
+  for (const o of todays) if (o.id && ids.has(String(o.id).toLowerCase())) { mine.add(o); left[`${o.side}|${o.symbol}`]--; }
+  for (const o of todays) { const k = `${o.side}|${o.symbol}`; if (!mine.has(o) && left[k] > 0) { mine.add(o); left[k]--; } }
+  return mine;
+}
 // After the close: confirm fills from Robinhood's own order history, measure fill vs closing price, catch strangers.
 async function cmdVerify() {
   const today = ny().date, state = loadState(), h = [...state.history].reverse().find((x) => x.today === today && x.placed);
@@ -243,9 +259,9 @@ async function cmdVerify() {
     const { client } = await rh(); const r = await rhRead(client);
     state.positions = state.positions.filter((p) => r.held[p.symbol] > 0).map((p) => ({ ...p, qty: r.held[p.symbol] }));
     const todays = r.orders.filter((o) => o.created_at && ny(new Date(o.created_at)).date === today);
-    const ours = new Set((h?.placed || []).map((p) => p.id).filter(Boolean));
-    const strangers = MODE === 'live' ? todays.filter((o) => o.id && !ours.has(o.id) && !/cancel|reject|fail/.test(o.state)) : [];
-    const unfilled = todays.filter((o) => ours.has(o.id) && !/fill/.test(o.state));
+    const mine = matchOurOrders(h?.placed || [], todays);
+    const strangers = MODE === 'live' ? todays.filter((o) => o.id && !mine.has(o) && !/cancel|reject|fail/.test(o.state)) : [];
+    const unfilled = todays.filter((o) => mine.has(o) && !/fill/.test(o.state));
     // fill quality vs the official close (the backtest's "ideal" price)
     let closes = {};
     try { const syms = [...new Set(todays.map((o) => o.symbol))]; if (syms.length) { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: today, end: today + 'T23:59:00Z', feed: 'sip' })); for (const [s, b] of Object.entries(js.bars || {})) closes[s] = b.at(-1)?.c; } } catch {}
