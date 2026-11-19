@@ -113,7 +113,7 @@ def px_at(t, kind, j, minute, fill=False):
     i = np.searchsorted(m, minute, side="right") - 1
     return float(c[i]) if i >= 0 else None
 VOLOK = (np.nan_to_num(S.vr.values, nan=9) <= 2.0) & (np.nan_to_num(RAWC, nan=0) >= 5) & S.M.values
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]
@@ -122,6 +122,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, etf=
         if want != held_park: cash *= 1 - cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
         cash *= 1 + (S.CLR[t] if held_park == "SPY" else (S.BOND_R[t] if held_park == "IEF" else 0.0))
         for p in pos: p["ref"] = (S.S_C if p["k"] != "E" else S.E_C)[t - 1, p["j"]]; p["armed"] = False; p["hi"] = 0.0
+        sold_today = set()
         checks = list(range(575, 945, 5)) if exit_mode in ("target", "lock", "placebo") or (exit_mode == "check" and n == 5) else \
                  (list(range(570 + n, 945, n)) if exit_mode == "check" else [])
         buy_checks = list(range(600, 945, 15)) if intraday_buy else []
@@ -151,13 +152,14 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, etf=
                     c = cs if p["k"] != "E" else ce
                     cash += p["v"] * (f / p["ref"]) * (1 - c); trades.append(f / p["px"] - 1 - 2 * c)
                     if not final: early_sells[0] += 1
+                    sold_today.add((p["k"], j))
                 else: keep.append(p)
             pos = keep
             # entries (3:45 always; intraday every 15 minutes if on)
             if final or T in buy_checks:
                 spys = series(t, "SPY", S.SP[t], S.RAW["SPY"].values[t]); spx = (float(spys[1][np.searchsorted(spys[0], T, side='right') - 1]) if spys is not None and np.searchsorted(spys[0], T, side='right') > 0 else (S.SP[t] if final else None))
                 if spx is None: continue
-                spy5 = spx / spy5_ref - 1; held = {(p["k"], p["j"]) for p in pos}
+                spy5 = spx / spy5_ref - 1; held = {(p["k"], p["j"]) for p in pos} | (sold_today if no_rebuy else set())
                 eq_now = cash + sum(p["v"] for p in pos)
                 cand = []
                 for j in np.flatnonzero(NEAR[t] & VOLOK[t]):
@@ -198,6 +200,8 @@ V = []
 for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
     V += [(f"{bot} | base: 3:45 only", dict(**kw)), (f"{bot} | base, 0.10% per side", dict(cs=0.001, ce=0.0004, **kw))]
     for n in (5, 15, 30): V.append((f"{bot} | sell above 5-day avg, check every {n} min", dict(exit_mode="check", n=n, **kw)))
+    V.append((f"{bot} | sell above avg every 15 min, buy only at 3:45, never rebuy a stock sold that day", dict(exit_mode="check", n=15, no_rebuy=True, **kw)))
+    V.append((f"{bot} | same, 0.10% per side", dict(exit_mode="check", n=15, no_rebuy=True, cs=0.001, ce=0.0004, **kw)))
     for x in (0.02, 0.03, 0.05): V.append((f"{bot} | profit target +{int(x*100)}%", dict(exit_mode="target", x=x, **kw)))
     for y in (0.01, 0.02): V.append((f"{bot} | lock-in: fall back below avg or {int(y*100)}% off the high", dict(exit_mode="lock", y=y, **kw)))
     V += [(f"{bot} | PLACEBO: sell at a random time of day", dict(exit_mode="placebo", **kw)),
