@@ -1,0 +1,494 @@
+{
+ "note": "v3.0 tuning (Nov 19 2026): tuned dip settings judged out-of-sample, and a sector cap. Research only, not financial advice.\nEngine = scripts/stack_and_rebound.py (point-in-time S&P 500, ETF dips, IEF bond parking, real Clear Leader daily parking).\nThree cost settings: LIVE-LIKE (buy/sell at the close, 0.08%/side stocks - the Nov 18 minute replay showed the 3:45 bot trades at about\nthe close), IDEAL (close, 0.05%), REALISTIC (next open, 0.15%).\n1) Walk-forward: a grid of dip size (8/9/10/12% worse than SPY), trend average (150/200 days) and max hold (3/5/7 days) on v3.0.\n   Settings are PICKED on 1999-2012 only (live-like), then judged on 2013-2026, which the pick never saw. Today's 10%/200/5 shown too.\n2) Sector cap: at most 2/3/4 of the 10 slots in one sector (SEC SIC codes grouped into 11 sectors; stocks without a SIC code are\n   uncapped). Extra dips go to the next-best stock or an ETF dip.\nDRY=1: fake ETF data (code test).",
+ "built": "2026-11-19",
+ "dry": null,
+ "grid": {
+  "dip 8% | 150-day | hold 3": {
+   "all": 21.7,
+   "worst": -21.4,
+   "1999-2012": 20.7,
+   "2013-2026": 22.8,
+   "2022": -8.4,
+   "trades_per_month": 23.7,
+   "avg_trade_pct": 0.41,
+   "dip": 0.08,
+   "ma": 150,
+   "hold": 3
+  },
+  "dip 8% | 150-day | hold 5": {
+   "all": 23.1,
+   "worst": -20.1,
+   "1999-2012": 24.9,
+   "2013-2026": 21.3,
+   "2022": -11.8,
+   "trades_per_month": 20.4,
+   "avg_trade_pct": 0.55,
+   "dip": 0.08,
+   "ma": 150,
+   "hold": 5
+  },
+  "dip 8% | 150-day | hold 7": {
+   "all": 23.3,
+   "worst": -19.0,
+   "1999-2012": 25.4,
+   "2013-2026": 21.2,
+   "2022": -4.5,
+   "trades_per_month": 19.7,
+   "avg_trade_pct": 0.58,
+   "dip": 0.08,
+   "ma": 150,
+   "hold": 7
+  },
+  "dip 8% | 200-day | hold 3": {
+   "all": 21.5,
+   "worst": -21.6,
+   "1999-2012": 22.3,
+   "2013-2026": 20.6,
+   "2022": -7.9,
+   "trades_per_month": 24.8,
+   "avg_trade_pct": 0.39,
+   "dip": 0.08,
+   "ma": 200,
+   "hold": 3
+  },
+  "dip 8% | 200-day | hold 5": {
+   "all": 22.8,
+   "worst": -22.6,
+   "1999-2012": 25.6,
+   "2013-2026": 20.0,
+   "2022": -10.8,
+   "trades_per_month": 21.2,
+   "avg_trade_pct": 0.52,
+   "dip": 0.08,
+   "ma": 200,
+   "hold": 5
+  },
+  "dip 8% | 200-day | hold 7": {
+   "all": 24.3,
+   "worst": -20.5,
+   "1999-2012": 28.7,
+   "2013-2026": 20.1,
+   "2022": -5.3,
+   "trades_per_month": 20.5,
+   "avg_trade_pct": 0.59,
+   "dip": 0.08,
+   "ma": 200,
+   "hold": 7
+  },
+  "dip 9% | 150-day | hold 3": {
+   "all": 21.6,
+   "worst": -19.5,
+   "1999-2012": 20.0,
+   "2013-2026": 23.3,
+   "2022": -0.0,
+   "trades_per_month": 16.9,
+   "avg_trade_pct": 0.55,
+   "dip": 0.09,
+   "ma": 150,
+   "hold": 3
+  },
+  "dip 9% | 150-day | hold 5": {
+   "all": 22.9,
+   "worst": -17.9,
+   "1999-2012": 23.5,
+   "2013-2026": 22.2,
+   "2022": 0.4,
+   "trades_per_month": 15.0,
+   "avg_trade_pct": 0.69,
+   "dip": 0.09,
+   "ma": 150,
+   "hold": 5
+  },
+  "dip 9% | 150-day | hold 7": {
+   "all": 23.1,
+   "worst": -18.6,
+   "1999-2012": 24.2,
+   "2013-2026": 21.9,
+   "2022": 4.2,
+   "trades_per_month": 14.6,
+   "avg_trade_pct": 0.74,
+   "dip": 0.09,
+   "ma": 150,
+   "hold": 7
+  },
+  "dip 9% | 200-day | hold 3": {
+   "all": 22.4,
+   "worst": -20.9,
+   "1999-2012": 22.1,
+   "2013-2026": 22.7,
+   "2022": 2.3,
+   "trades_per_month": 17.7,
+   "avg_trade_pct": 0.55,
+   "dip": 0.09,
+   "ma": 200,
+   "hold": 3
+  },
+  "dip 9% | 200-day | hold 5": {
+   "all": 23.3,
+   "worst": -20.3,
+   "1999-2012": 24.6,
+   "2013-2026": 21.9,
+   "2022": 3.5,
+   "trades_per_month": 15.7,
+   "avg_trade_pct": 0.68,
+   "dip": 0.09,
+   "ma": 200,
+   "hold": 5
+  },
+  "dip 9% | 200-day | hold 7": {
+   "all": 24.1,
+   "worst": -20.6,
+   "1999-2012": 26.5,
+   "2013-2026": 21.7,
+   "2022": 6.9,
+   "trades_per_month": 15.2,
+   "avg_trade_pct": 0.74,
+   "dip": 0.09,
+   "ma": 200,
+   "hold": 7
+  },
+  "dip 10% | 150-day | hold 3": {
+   "all": 20.4,
+   "worst": -22.3,
+   "1999-2012": 18.8,
+   "2013-2026": 21.9,
+   "2022": -3.6,
+   "trades_per_month": 12.4,
+   "avg_trade_pct": 0.67,
+   "dip": 0.1,
+   "ma": 150,
+   "hold": 3
+  },
+  "dip 10% | 150-day | hold 5": {
+   "all": 21.8,
+   "worst": -21.2,
+   "1999-2012": 21.3,
+   "2013-2026": 22.3,
+   "2022": 1.3,
+   "trades_per_month": 11.2,
+   "avg_trade_pct": 0.83,
+   "dip": 0.1,
+   "ma": 150,
+   "hold": 5
+  },
+  "dip 10% | 150-day | hold 7": {
+   "all": 22.3,
+   "worst": -24.1,
+   "1999-2012": 22.6,
+   "2013-2026": 22.0,
+   "2022": 2.6,
+   "trades_per_month": 11.0,
+   "avg_trade_pct": 0.88,
+   "dip": 0.1,
+   "ma": 150,
+   "hold": 7
+  },
+  "dip 10% | 200-day | hold 3": {
+   "all": 20.9,
+   "worst": -22.8,
+   "1999-2012": 20.4,
+   "2013-2026": 21.5,
+   "2022": 2.6,
+   "trades_per_month": 13.0,
+   "avg_trade_pct": 0.66,
+   "dip": 0.1,
+   "ma": 200,
+   "hold": 3
+  },
+  "dip 10% | 200-day | hold 5": {
+   "all": 21.9,
+   "worst": -24.7,
+   "1999-2012": 21.4,
+   "2013-2026": 22.4,
+   "2022": 7.8,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.79,
+   "dip": 0.1,
+   "ma": 200,
+   "hold": 5
+  },
+  "dip 10% | 200-day | hold 7": {
+   "all": 23.0,
+   "worst": -24.7,
+   "1999-2012": 23.7,
+   "2013-2026": 22.2,
+   "2022": 9.0,
+   "trades_per_month": 11.4,
+   "avg_trade_pct": 0.86,
+   "dip": 0.1,
+   "ma": 200,
+   "hold": 7
+  },
+  "dip 12% | 150-day | hold 3": {
+   "all": 19.2,
+   "worst": -25.1,
+   "1999-2012": 19.0,
+   "2013-2026": 19.4,
+   "2022": -12.3,
+   "trades_per_month": 7.3,
+   "avg_trade_pct": 0.99,
+   "dip": 0.12,
+   "ma": 150,
+   "hold": 3
+  },
+  "dip 12% | 150-day | hold 5": {
+   "all": 20.7,
+   "worst": -21.8,
+   "1999-2012": 20.4,
+   "2013-2026": 21.0,
+   "2022": -7.9,
+   "trades_per_month": 6.8,
+   "avg_trade_pct": 1.2,
+   "dip": 0.12,
+   "ma": 150,
+   "hold": 5
+  },
+  "dip 12% | 150-day | hold 7": {
+   "all": 20.8,
+   "worst": -24.3,
+   "1999-2012": 20.9,
+   "2013-2026": 20.6,
+   "2022": -7.1,
+   "trades_per_month": 6.7,
+   "avg_trade_pct": 1.21,
+   "dip": 0.12,
+   "ma": 150,
+   "hold": 7
+  },
+  "dip 12% | 200-day | hold 3": {
+   "all": 19.9,
+   "worst": -24.8,
+   "1999-2012": 19.6,
+   "2013-2026": 20.1,
+   "2022": -7.4,
+   "trades_per_month": 7.6,
+   "avg_trade_pct": 1.0,
+   "dip": 0.12,
+   "ma": 200,
+   "hold": 3
+  },
+  "dip 12% | 200-day | hold 5": {
+   "all": 21.1,
+   "worst": -25.5,
+   "1999-2012": 20.9,
+   "2013-2026": 21.4,
+   "2022": -5.4,
+   "trades_per_month": 7.1,
+   "avg_trade_pct": 1.18,
+   "dip": 0.12,
+   "ma": 200,
+   "hold": 5
+  },
+  "dip 12% | 200-day | hold 7": {
+   "all": 21.1,
+   "worst": -24.6,
+   "1999-2012": 21.7,
+   "2013-2026": 20.6,
+   "2022": -5.1,
+   "trades_per_month": 7.0,
+   "avg_trade_pct": 1.2,
+   "dip": 0.12,
+   "ma": 200,
+   "hold": 7
+  }
+ },
+ "walk_forward": {
+  "picked_on_1999_2012": "dip 8% | 200-day | hold 7",
+  "picked_1999_2012": 28.7,
+  "picked_2013_2026": 20.1,
+  "today_1999_2012": 21.4,
+  "today_2013_2026": 22.4,
+  "top5_by_1999_2012_their_2013_2026": {
+   "dip 8% | 200-day | hold 7": 20.1,
+   "dip 9% | 200-day | hold 7": 21.7,
+   "dip 8% | 200-day | hold 5": 20.0,
+   "dip 8% | 150-day | hold 7": 21.2,
+   "dip 8% | 150-day | hold 5": 21.3
+  },
+  "rank_of_today_in_2013_2026": 4,
+  "versions": 24,
+  "share_of_versions_beating_today_2013_2026_pct": 12.5,
+  "live-like | today's settings": {
+   "all": 21.9,
+   "worst": -24.7,
+   "1999-2012": 21.4,
+   "2013-2026": 22.4,
+   "2022": 7.8,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.79
+  },
+  "live-like | picked: dip 8% | 200-day | hold 7": {
+   "all": 24.3,
+   "worst": -20.5,
+   "1999-2012": 28.7,
+   "2013-2026": 20.1,
+   "2022": -5.3,
+   "trades_per_month": 20.5,
+   "avg_trade_pct": 0.59
+  },
+  "live-like | bot 6 settings (8%/150/7)": {
+   "all": 23.3,
+   "worst": -19.0,
+   "1999-2012": 25.4,
+   "2013-2026": 21.2,
+   "2022": -4.5,
+   "trades_per_month": 19.7,
+   "avg_trade_pct": 0.58
+  },
+  "ideal | today's settings": {
+   "all": 22.8,
+   "worst": -24.6,
+   "1999-2012": 22.3,
+   "2013-2026": 23.2,
+   "2022": 8.6,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.84
+  },
+  "ideal | picked: dip 8% | 200-day | hold 7": {
+   "all": 26.1,
+   "worst": -19.8,
+   "1999-2012": 30.5,
+   "2013-2026": 21.7,
+   "2022": -3.9,
+   "trades_per_month": 20.5,
+   "avg_trade_pct": 0.64
+  },
+  "ideal | bot 6 settings (8%/150/7)": {
+   "all": 24.9,
+   "worst": -18.7,
+   "1999-2012": 27.2,
+   "2013-2026": 22.7,
+   "2022": -3.2,
+   "trades_per_month": 19.7,
+   "avg_trade_pct": 0.64
+  },
+  "realistic | today's settings": {
+   "all": 16.6,
+   "worst": -27.3,
+   "1999-2012": 15.4,
+   "2013-2026": 17.8,
+   "2022": 2.6,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.47
+  },
+  "realistic | picked: dip 8% | 200-day | hold 7": {
+   "all": 16.7,
+   "worst": -23.1,
+   "1999-2012": 20.0,
+   "2013-2026": 13.4,
+   "2022": -9.0,
+   "trades_per_month": 20.5,
+   "avg_trade_pct": 0.32
+  },
+  "realistic | bot 6 settings (8%/150/7)": {
+   "all": 16.3,
+   "worst": -20.9,
+   "1999-2012": 18.6,
+   "2013-2026": 14.1,
+   "2022": -5.8,
+   "trades_per_month": 19.7,
+   "avg_trade_pct": 0.33
+  },
+  "2x live-like costs | today's settings": {
+   "all": 19.6,
+   "worst": -25.0,
+   "1999-2012": 19.0,
+   "2013-2026": 20.2,
+   "2022": 5.9,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.65
+  },
+  "2x live-like costs | picked: dip 8% | 200-day | hold 7": {
+   "all": 19.8,
+   "worst": -22.4,
+   "1999-2012": 23.8,
+   "2013-2026": 15.9,
+   "2022": -9.0,
+   "trades_per_month": 20.5,
+   "avg_trade_pct": 0.44
+  },
+  "2x live-like costs | bot 6 settings (8%/150/7)": {
+   "all": 19.0,
+   "worst": -19.9,
+   "1999-2012": 20.8,
+   "2013-2026": 17.2,
+   "2022": -8.0,
+   "trades_per_month": 19.7,
+   "avg_trade_pct": 0.43
+  }
+ },
+ "sector_cap": {
+  "live-like | no cap (v3.0 now)": {
+   "all": 21.9,
+   "worst": -24.7,
+   "1999-2012": 21.4,
+   "2013-2026": 22.4,
+   "2022": 7.8,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.79
+  },
+  "live-like | max 4 per sector": {
+   "all": 21.9,
+   "worst": -26.6,
+   "1999-2012": 21.4,
+   "2013-2026": 22.5,
+   "2022": 8.2,
+   "trades_per_month": 11.6,
+   "avg_trade_pct": 0.79
+  },
+  "live-like | max 3 per sector": {
+   "all": 21.3,
+   "worst": -26.8,
+   "1999-2012": 20.6,
+   "2013-2026": 22.0,
+   "2022": 7.2,
+   "trades_per_month": 11.4,
+   "avg_trade_pct": 0.77
+  },
+  "live-like | max 2 per sector": {
+   "all": 20.4,
+   "worst": -28.2,
+   "1999-2012": 20.2,
+   "2013-2026": 20.5,
+   "2022": 5.9,
+   "trades_per_month": 11.0,
+   "avg_trade_pct": 0.73
+  },
+  "realistic | no cap (v3.0 now)": {
+   "all": 16.6,
+   "worst": -27.3,
+   "1999-2012": 15.4,
+   "2013-2026": 17.8,
+   "2022": 2.6,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 0.47
+  },
+  "realistic | max 4 per sector": {
+   "all": 16.8,
+   "worst": -28.3,
+   "1999-2012": 15.6,
+   "2013-2026": 18.0,
+   "2022": 4.0,
+   "trades_per_month": 11.6,
+   "avg_trade_pct": 0.48
+  },
+  "realistic | max 3 per sector": {
+   "all": 16.4,
+   "worst": -28.2,
+   "1999-2012": 15.0,
+   "2013-2026": 17.9,
+   "2022": 3.7,
+   "trades_per_month": 11.4,
+   "avg_trade_pct": 0.46
+  },
+  "realistic | max 2 per sector": {
+   "all": 16.0,
+   "worst": -28.8,
+   "1999-2012": 15.2,
+   "2013-2026": 16.9,
+   "2022": 2.9,
+   "trades_per_month": 11.0,
+   "avg_trade_pct": 0.44
+  }
+ }
+}
