@@ -209,29 +209,30 @@ COMBOS = [("today's bot", {}), ("+ ETF dips (bot 5)", dict(etf=True)), ("+ bonds
           ("ETF + bonds", dict(etf=True, bond=True)), ("ETF + bonds + short", dict(etf=True, bond=True, short=True)), ("ETF + bonds + vol", dict(etf=True, bond=True, vol=True)),
           ("ALL four", dict(etf=True, bond=True, vol=True, short=True))]
 IDEAL, REAL = dict(fill="close", park="cl"), dict(fill="open", park="cl", cs=0.0015, ce=0.0005)
-V = [(f"IDEAL | {n}", {**kw, **IDEAL}) for n, kw in COMBOS] + [(f"REALISTIC | {n}", {**kw, **REAL}) for n, kw in COMBOS]
-V += [("SPY-parked ideal | today's bot", {}), ("SPY-parked ideal | ETF + bonds", dict(etf=True, bond=True))]
-for drop in (0.15, 0.20):
-    for n in (2, 3):
-        for days in (63, 126):
-            V.append((f"IDEAL | + rebound: after {int(drop*100)}% drop, worst {n} sectors, {days} days", dict(rebound=dict(drop=drop, n=n, days=days), **IDEAL)))
-V += [("REALISTIC | ETF + bonds + rebound 15%/3/63", dict(etf=True, bond=True, rebound=dict(drop=0.15, n=3, days=63), **REAL)),
-      ("STRESS realistic x2 costs | today's bot", dict(fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
-      ("STRESS realistic x2 costs | ETF + bonds", dict(etf=True, bond=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
-      ("STRESS realistic x2 costs | ETF + bonds + short", dict(etf=True, bond=True, short=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001))]
-RES = {}
-for name, kw in V:
-    RES[name] = summ(*sim(**kw)); a = RES[name]; g = lambda p, f="per_year_pct": a.get(p, {}).get(f)
-    print(f"{name:58s} {g('1999-2026')}%/yr worst {g('1999-2026','worst_drop_pct')} | 99-12 {g('1999-2012')} 13-26 {g('2013-2026')} 18-26 {g('2018-2026 (short data)')} | dotcom {g('dot-com 2000-02','return_pct')} 08 {g('2008 crash','return_pct')} cov {g('2020 covid','return_pct')} 22 {g('2022 bear','return_pct')} | reb09 {g('2009 rebound','return_pct')} reb20 {g('2020 rebound','return_pct')} | {a['trades_per_month']}/mo", flush=True)
-base = RES["IDEAL | today's bot"]
-for name, kw in [("check: rebound that never triggers", dict(rebound=dict(drop=0.99, n=3, days=63), **IDEAL))]:
-    assert summ(*sim(**kw))["1999-2026"] == base["1999-2026"], name
-print("checks ok: add-ons switched off = base", flush=True)
-EV = [{"starts": str(dn[a])[:10], "spy_high": str(dn[p])[:10], "spy_bottom": str(dn[l])[:10], "spy_drop_pct": round((SP[l] / SP[p] - 1) * 100, 1),
-       "sectors_15pct_3": rebound_picks(p, l, 3),
-       "sectors_next_63d_pct": round(float(np.mean([E_C[min(a + 63, D - 1), EI[s]] / E_C[a - 1, EI[s]] - 1 for s in rebound_picks(p, l, 3)])) * 100, 1) if rebound_picks(p, l, 3) else None,
-       "spy_next_63d_pct": round((SP[min(a + 63, D - 1)] / SP[a - 1] - 1) * 100, 1)} for a, p, l in rebound_events(0.15) if dn[a] >= dn[t0]]
-for e in EV: print("REBOUND", json.dumps(e), flush=True)
-json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "short_data_from": SHORT_FROM, "rebound_events": EV, "results": RES},
-          open(OUT, "w"), indent=1, default=float)
-print("wrote", OUT, flush=True)
+if __name__ == "__main__":
+    V = [(f"IDEAL | {n}", {**kw, **IDEAL}) for n, kw in COMBOS] + [(f"REALISTIC | {n}", {**kw, **REAL}) for n, kw in COMBOS]
+    V += [("SPY-parked ideal | today's bot", {}), ("SPY-parked ideal | ETF + bonds", dict(etf=True, bond=True))]
+    for drop in (0.15, 0.20):
+        for n in (2, 3):
+            for days in (63, 126):
+                V.append((f"IDEAL | + rebound: after {int(drop*100)}% drop, worst {n} sectors, {days} days", dict(rebound=dict(drop=drop, n=n, days=days), **IDEAL)))
+    V += [("REALISTIC | ETF + bonds + rebound 15%/3/63", dict(etf=True, bond=True, rebound=dict(drop=0.15, n=3, days=63), **REAL)),
+          ("STRESS realistic x2 costs | today's bot", dict(fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
+          ("STRESS realistic x2 costs | ETF + bonds", dict(etf=True, bond=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001)),
+          ("STRESS realistic x2 costs | ETF + bonds + short", dict(etf=True, bond=True, short=True, fill="open", park="cl", cs=0.003, ce=0.001, cp=0.001))]
+    RES = {}
+    for name, kw in V:
+        RES[name] = summ(*sim(**kw)); a = RES[name]; g = lambda p, f="per_year_pct": a.get(p, {}).get(f)
+        print(f"{name:58s} {g('1999-2026')}%/yr worst {g('1999-2026','worst_drop_pct')} | 99-12 {g('1999-2012')} 13-26 {g('2013-2026')} 18-26 {g('2018-2026 (short data)')} | dotcom {g('dot-com 2000-02','return_pct')} 08 {g('2008 crash','return_pct')} cov {g('2020 covid','return_pct')} 22 {g('2022 bear','return_pct')} | reb09 {g('2009 rebound','return_pct')} reb20 {g('2020 rebound','return_pct')} | {a['trades_per_month']}/mo", flush=True)
+    base = RES["IDEAL | today's bot"]
+    for name, kw in [("check: rebound that never triggers", dict(rebound=dict(drop=0.99, n=3, days=63), **IDEAL))]:
+        assert summ(*sim(**kw))["1999-2026"] == base["1999-2026"], name
+    print("checks ok: add-ons switched off = base", flush=True)
+    EV = [{"starts": str(dn[a])[:10], "spy_high": str(dn[p])[:10], "spy_bottom": str(dn[l])[:10], "spy_drop_pct": round((SP[l] / SP[p] - 1) * 100, 1),
+           "sectors_15pct_3": rebound_picks(p, l, 3),
+           "sectors_next_63d_pct": round(float(np.mean([E_C[min(a + 63, D - 1), EI[s]] / E_C[a - 1, EI[s]] - 1 for s in rebound_picks(p, l, 3)])) * 100, 1) if rebound_picks(p, l, 3) else None,
+           "spy_next_63d_pct": round((SP[min(a + 63, D - 1)] / SP[a - 1] - 1) * 100, 1)} for a, p, l in rebound_events(0.15) if dn[a] >= dn[t0]]
+    for e in EV: print("REBOUND", json.dumps(e), flush=True)
+    json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "short_data_from": SHORT_FROM, "rebound_events": EV, "results": RES},
+              open(OUT, "w"), indent=1, default=float)
+    print("wrote", OUT, flush=True)
