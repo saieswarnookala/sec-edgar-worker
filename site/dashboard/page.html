@@ -1417,12 +1417,13 @@ dash.calc('vs_industry', {
           <tr><td>When it buys</td><td>The <b>next morning at the open</b>, after the signal day's close</td><td>At the <b>closing price</b> of the day that made the signal</td></tr>
           <tr><td>Trading cost</td><td><b>0.15%</b> per buy and per sell (spread + slippage)</td><td>0.05% per side</td></tr>
           <tr><td>Why it matters</td><td colspan="2">Dips often bounce overnight, so waiting until the morning misses part of the bounce. With ~10–14 trades a month, costs add up too.</td></tr>
-          <tr><td>Which to trust</td><td colspan="2"><b>Plan with Realistic.</b> The live bots buy a few minutes before the close, so real results should land between the two, closer to Realistic once real costs are included.</td></tr>
+          <tr><td>Which to trust</td><td colspan="2"><b>For the dip bots, Ideal is closer.</b> A Nov 18 replay with minute prices (2016–2026) of what the live bot does (decide at 3:45 pm, fill by 3:50) earned the same as Ideal: 25.1% vs 24.5% for the Robinhood rules. Realistic is the cautious floor; doubled spreads would cost about 1.7%/yr.</td></tr>
         </tbody></table></div>
         <h4 style="margin-top:12px">Gap per strategy (per year, before tax)</h4>
         <div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Strategy</th><th>Realistic</th><th>Ideal</th><th>Gap</th><th>Why</th></tr></thead><tbody>
-          <tr><td>US dip + ETF dips</td><td>17.1%</td><td>24.4%</td><td>7.3</td><td>Today's dip bot plus the ETF gain measured in the combined test (+2.2 to +2.4/yr); estimated</td></tr>
-          <tr><td>US dip + smart parking</td><td>14.9%</td><td>22.0%</td><td>7.1</td><td>Many short trades: the overnight bounce and costs matter most</td></tr>
+          <tr><td>Dip bot v3.0 (paper bot 10)</td><td>16.6%</td><td>22.8%</td><td>6.2</td><td>Robinhood rules + ETF dips + bonds, same Nov 18 test (1999–2026)</td></tr>
+          <tr><td>Dip + ETF dips (paper bot 5)</td><td>15.0%</td><td>21.1%</td><td>6.1</td><td>Same Nov 18 test</td></tr>
+          <tr><td>Robinhood bot now (US dip + smart parking)</td><td>13.4%</td><td>18.5%</td><td>5.1</td><td>Same Nov 18 test; an older test gave 14.9% / 22.0%. Many short trades: the overnight bounce and costs matter most</td></tr>
           <tr><td>Dip + drift mix (6+4)</td><td>15.8%</td><td>19.1%</td><td>3.3</td><td>Fewer dip trades; drift trades hold ~60 days</td></tr>
           <tr><td>Clear Leader v2.0</td><td>13.6%</td><td>13.7%</td><td>0.1</td><td>Switches about once a year at month-end, so fills and costs barely matter</td></tr>
           <tr><td>Earnings drift, SPY</td><td colspan="2">same both ways</td><td>—</td><td>Tested only one way (drift buys before the open; SPY just holds)</td></tr>
@@ -2342,10 +2343,10 @@ dash.calc('vs_industry', {
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
   const CALC = {
     us: [
-      { id: 'usdip', name: 'US dip + smart parking', pre: 14.9, post: 11.9, ideal: [22.0, 17.6], dd: -28, c: '#2563eb' },
-      { id: 'v3', name: 'Dip bot v3.0 (Robinhood rules + ETF dips + bonds; live ≈ ideal)', pre: 16.6, post: 13.3, ideal: [22.8, 18.2], est: true, dd: -27, c: '#dc2626' },
-      { id: 'usdipetf', name: 'US dip + ETF dips (paper bot 5)', pre: 17.1, post: 13.7, ideal: [24.4, 19.5], est: true, dd: -22, c: '#0891b2' },
-      { id: 'mix', name: 'Dip + drift mix (6+4)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#7c3aed' },
+      { id: 'usdip', name: 'Robinhood bot now (US dip + smart parking)', pre: 13.4, post: 10.7, ideal: [18.5, 14.8], est: true, dd: -26, c: '#2563eb' },
+      { id: 'v3', name: 'Dip bot v3.0 (+ ETF dips + bonds; paper bot 10)', pre: 16.6, post: 13.3, ideal: [22.8, 18.2], est: true, dd: -27, c: '#7c3aed' },
+      { id: 'usdipetf', name: 'Dip + ETF dips (paper bot 5)', pre: 15.0, post: 12.0, ideal: [21.1, 16.9], est: true, dd: -27, c: '#0891b2' },
+      { id: 'mix', name: 'Dip + drift mix (6+4, 2004–2026)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#db2777' },
       { id: 'drift', name: 'Earnings drift (blend of 9)', pre: 13.0, post: 10.0, est: true, dd: -51, c: '#059669' },
       { id: 'cl', name: 'Clear leader v2.0', pre: 13.6, post: null, ideal: [13.7, null], dd: -43, c: '#d97706' },
       { id: 'spy', name: 'SPY buy & hold', pre: 9.2, post: 8.4, dd: -55, c: '#6b7280', bench: true },
@@ -2409,7 +2410,7 @@ dash.calc('vs_industry', {
         marks.map((y) => '<td>' + (y === yrs ? '<b>' + esc(fmt(o.p[y])) + '</b>' : esc(fmt(o.p[y]))) + '</td>').join('') + '<td>' + o.sx.dd + '%</td><td>' + esc(fmt(o.p[yrs] * (1 + o.sx.dd / 100))) + ' (temporarily)</td></tr>').join('');
       const added = a0 + m * 12 * yrs;
       const untestedNote = untested.length ? untested.join(', ') + ': after-tax not tested yet, switch to “Before tax” to see it. ' : '';
-      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return from the backtests (realistic fills unless “Ideal” is picked), compounded monthly. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
+      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return from the backtests (realistic fills unless “Ideal” is picked); the Robinhood bot, v3.0 and bot 5 rows come from one Nov 18 test (1999–2026), and the live bot’s 3:45 pm fills matched “Ideal” in a 2016–2026 minute replay, compounded monthly. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
         (st.tax === 'post' ? (st.mkt === 'us' ? 'After tax = 24% federal bracket, Texas; SPY taxed 15% long-term. ' : 'After tax = Indian resident rates; Nifty taxed long-term. ') : 'Before tax = what a Roth IRA (US) would keep. ') +
         'Backtests, not a forecast; not financial or tax advice.';
     };
