@@ -19,16 +19,22 @@ import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import stack_and_rebound as S
 import r2cache
-DRY = S.DRY; OUT = "data/intraday_exits.json" if not DRY else "/tmp/intraday_exits_dry.json"
+DRY = S.DRY; OUT = os.environ.get("OUT_FILE") or ("data/intraday_exits.json" if not DRY else "/tmp/intraday_exits_dry.json")
 ET, UTC = ZoneInfo("America/New_York"), ZoneInfo("UTC")
 tr0 = max(S.t0, int(np.searchsorted(S.dn, np.datetime64(os.environ.get("START", "2016-01-04"))))); D, dn = S.D, S.dn; ds = [str(d)[:10] for d in dn]
 def asym(t):
     b = t.rsplit("-", 1)[0] if len(t) > 7 and t[-7] == "-" and t[-6:].isdigit() else t
     return b.replace("-", ".")
 ex5c = np.nan_to_num(S.ex5.values, nan=1)
-NEAR = S.M.values & (ex5c <= -0.06) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
+# stocks that were dips at ANY time of the day: close-based gap <= -6%, or the day's LOW at least 8% below 5 days ago vs SPY
+_lo = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "low", "close", "adj_close"]); _lo["date"] = pd.to_datetime(_lo.date)
+_lo = _lo[_lo.ticker.isin(S.tick) & (_lo.date >= S.dates[0])]; _lo["alow"] = _lo.low * _lo.adj_close / _lo.close
+LOWA = _lo.pivot_table(index="date", columns="ticker", values="alow").reindex(index=S.dates, columns=S.tick).values; del _lo
+spy5r = np.r_[np.full(5, np.nan), S.SP[5:] / S.SP[:-5] - 1]
+lowgap = np.nan_to_num(LOWA / np.vstack([np.full((5, S.S_C.shape[1]), np.nan), S.S_C[:-5]]) - 1 - spy5r[:, None], nan=1)
+NEAR = S.M.values & ((ex5c <= -0.06) | (lowgap <= -0.08)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
 E5 = np.nan_to_num(S.E_C / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)
-NEARE = E5 <= -0.04
+NEARE = E5 <= -0.03
 need = {t: {"SPY"} for t in range(tr0, D)}
 for t, j in zip(*np.nonzero(NEAR[tr0:])):
     for k in range(t + tr0, min(t + tr0 + 8, D)): need[k].add(S.tick[j])
@@ -113,7 +119,7 @@ def px_at(t, kind, j, minute, fill=False):
     i = np.searchsorted(m, minute, side="right") - 1
     return float(c[i]) if i >= 0 else None
 VOLOK = (np.nan_to_num(S.vr.values, nan=9) <= 2.0) & (np.nan_to_num(RAWC, nan=0) >= 5) & S.M.values
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]
@@ -125,7 +131,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, no_r
         sold_today = set()
         checks = list(range(575, 945, 5)) if exit_mode in ("target", "lock", "placebo") or (exit_mode == "check" and n == 5) else \
                  (list(range(570 + n, 945, n)) if exit_mode == "check" else [])
-        buy_checks = list(range(600, 945, 15)) if intraday_buy else []
+        buy_checks = list(range(600, 945, bn)) if intraday_buy else []
         times = sorted(set(checks) | set(buy_checks) | {945})
         spy5_ref = S.SP[t - 5]
         for T in times:
@@ -198,15 +204,13 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, seed=1, no_r
     return o
 V = []
 for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
-    V += [(f"{bot} | base: 3:45 only", dict(**kw)), (f"{bot} | base, 0.10% per side", dict(cs=0.001, ce=0.0004, **kw))]
-    for n in (5, 15, 30): V.append((f"{bot} | sell above 5-day avg, check every {n} min", dict(exit_mode="check", n=n, **kw)))
-    V.append((f"{bot} | sell above avg every 15 min, buy only at 3:45, never rebuy a stock sold that day", dict(exit_mode="check", n=15, no_rebuy=True, **kw)))
-    V.append((f"{bot} | same, 0.10% per side", dict(exit_mode="check", n=15, no_rebuy=True, cs=0.001, ce=0.0004, **kw)))
-    for x in (0.02, 0.03, 0.05): V.append((f"{bot} | profit target +{int(x*100)}%", dict(exit_mode="target", x=x, **kw)))
-    for y in (0.01, 0.02): V.append((f"{bot} | lock-in: fall back below avg or {int(y*100)}% off the high", dict(exit_mode="lock", y=y, **kw)))
-    V += [(f"{bot} | PLACEBO: sell at a random time of day", dict(exit_mode="placebo", **kw)),
-          (f"{bot} | buy dips during the day (every 15 min)", dict(intraday_buy=True, **kw)),
-          (f"{bot} | check every 15 min, 0.10% per side", dict(exit_mode="check", n=15, cs=0.001, ce=0.0004, **kw))]
+    V += [(f"{bot} | base: 3:45 only", dict(**kw)), (f"{bot} | base, 0.10% per side", dict(cs=0.001, ce=0.0004, **kw)),
+          (f"{bot} | PLACEBO: sell at a random time of day", dict(exit_mode="placebo", **kw))]
+    for bn in (15, 30, 60): V.append((f"{bot} | buy dips during the day, every {bn} min", dict(intraday_buy=True, bn=bn, **kw)))
+    V.append((f"{bot} | buy during the day (15 min), 0.10% per side", dict(intraday_buy=True, bn=15, cs=0.001, ce=0.0004, **kw)))
+    for x in (0.05, 0.07, 0.10): V.append((f"{bot} | profit target +{int(x*100)}%", dict(exit_mode="target", x=x, **kw)))
+    for x in (0.05, 0.07): V.append((f"{bot} | buy during the day (15 min) + target +{int(x*100)}%", dict(intraday_buy=True, bn=15, exit_mode="target", x=x, **kw)))
+    V.append((f"{bot} | buy during the day (15 min) + target +5%, 0.10% per side", dict(intraday_buy=True, bn=15, exit_mode="target", x=0.05, cs=0.001, ce=0.0004, **kw)))
 RES = {}
 for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
