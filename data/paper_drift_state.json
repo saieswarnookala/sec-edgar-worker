@@ -23,6 +23,18 @@
    "entry_date": "2026-11-11",
    "qty": 44,
    "reaction_pct": 8.7
+  },
+  {
+   "symbol": "PANW",
+   "entry_date": "2026-11-20",
+   "qty": 25,
+   "reaction_pct": 8.4
+  },
+  {
+   "symbol": "P",
+   "entry_date": "2026-11-20",
+   "qty": 88,
+   "reaction_pct": 6.7
   }
  ],
  "history": [
@@ -592,7 +604,49 @@
     "stock_value": 38783
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-20T19:49:26.927Z",
+   "today": "2026-11-20",
+   "equity": 93427.91,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 6,
+   "signals": [
+    {
+     "symbol": "P",
+     "r": 0.06687510776865835
+    },
+    {
+     "symbol": "PANW",
+     "r": 0.08378691614099798
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "PANW",
+     "qty": 25,
+     "r": 0.08378691614099798
+    },
+    {
+     "symbol": "P",
+     "qty": 88,
+     "r": 0.06687510776865835
+    }
+   ],
+   "park": {
+    "spy_held": 79,
+    "spy_delta": -29,
+    "spy_price": 715.87,
+    "stock_value": 55199
+   },
+   "orders": [
+    "SELL 29 SPY (park)",
+    "BUY 25 PANW",
+    "BUY 88 P"
+   ]
   }
  ],
- "updated": "2026-11-19T11:05:39.489Z"
+ "updated": "2026-11-20T19:49:26.927Z"
 }
