@@ -1446,6 +1446,15 @@ dash.calc('vs_industry', {
     <div class="sx-tr-panel" data-panel="v3all" id="trading-v3all" hidden>
     <div class="sx-card"><div class="sx-ch"><h3>Dip bot v3.0 → v3.2: every version and every number (Nov 19)</h3></div>
     <p class="sx-cap"><b>Breakthrough:</b> buying dips the moment they happen during the day (every 15 min) plus a +5% profit target added about <b>+3.3%/yr</b> to v3.0 in a 2016–2026 replay with real 5-minute prices — <b>30.5% vs 27.2%</b> before tax (final run, all known gaps fixed) — and passed every check (both halves, doubled costs, no-hindsight volume filter, placebo, better in 9 of 11 years). It helps most in choppy or falling years and lagged in calm 2023–2024. Plan: Robinhood → v3.0 ~Dec 3; v3.2 on paper first (bot 12, from Nov 20). Full write-up: <a href="https://claude.ai/artifact/BAX5ngN5XBvkiu2ppgobjr" target="_blank" rel="noopener">Dip bot v3 to v3.2 doc</a>. Before tax unless marked; after tax = 24% federal bracket on short-term gains, no Texas tax.</p>
+    <h4>The simple answer: average per year</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Worst case<br>before tax</th><th><b>Expected</b><br>before tax</th><th><b>Expected</b><br>after tax</th><th>Last 10 years<br>before tax</th><th>Last 10 years<br>after tax</th></tr></thead><tbody>
+<tr><td>SPY buy &amp; hold</td><td>9.2%</td><td>9.2%</td><td>8.4%</td><td>14.7%</td><td>13.4%</td></tr>
+<tr><td>Robinhood bot today</td><td>13.4%</td><td>~17.7%</td><td>~13.5%</td><td>24.2%</td><td>18.4%</td></tr>
+<tr><td>v3.0</td><td>16.6%</td><td>~22%</td><td>~16.6%</td><td>27.2%</td><td>20.7%</td></tr>
+<tr><td>v3.1 (est.)</td><td>~18.6%</td><td>~23.5%</td><td>~18%</td><td>~28.3%</td><td>~21.5%</td></tr>
+<tr><td><b>v3.2</b></td><td>~19%</td><td><b>~24%</b></td><td><b>~18.5%</b></td><td><b>30.5%</b></td><td><b>23.2%</b></td></tr>
+</tbody></table></div>
+    <p class="sx-cap"><b>Plan with "Expected".</b> Worst case = buy the next morning at worse prices with 3× costs. Expected = the live bot's 3:45 pm trades over 1999–2026 (includes the 2000 and 2008 crashes; the minute replay and the first real AMD fill match it). Last 10 years = 2016–2026, a strong decade (even SPY made 14.7%). After tax = 24% bracket. Some single years lose money.</p>
     <h4>The versions</h4>
 <div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Adds</th><th>Status</th></tr></thead><tbody><tr><td>Robinhood bot (today)</td><td>S&amp;P 500 dips (10%+ worse than SPY in 5 days, above 200-day, normal volume), bought 3:45 pm, sold above 5-day avg or after 5 days; idle money in Clear Leader or cash</td><td>Live since Nov 19</td></tr><tr><td><b>v3.0</b></td><td>+ ETF dips in free slots; + IEF bonds instead of cash in weak markets</td><td>Paper bot 10; Robinhood ~Dec 3</td></tr><tr><td><b>v3.1</b></td><td>+ 2 earnings-drift slots (beat SPY by 5%+ on earnings day, hold 60 days)</td><td>Paper bot 11</td></tr><tr><td><b>v3.2</b></td><td>+ buy dips during the day (every 15 min, 10:00–3:30) + sell at +5% during the day (every 5 min)</td><td>Paper bot 12 (from Nov 20)</td></tr></tbody></table></div>
     <h4>Long run, 1999–2026 (v3.1 / v3.2 estimated from their own tests)</h4>
@@ -1473,7 +1482,8 @@ dash.calc('vs_industry', {
           <div class="sx-calc-row"><span class="sx-flab">Add every month</span><input class="sx-in sx-calc-mon" type="number" inputmode="decimal" min="0" step="100" value="0" aria-label="Monthly addition"></div>
           <div class="sx-calc-row"><span class="sx-flab">Years: <b class="sx-calc-yl">20</b></span><input class="sx-calc-yrs" type="range" min="1" max="30" value="20" aria-label="Years"></div>
           <div class="sx-calc-row"><span class="sx-flab">Tax</span><div class="sx-seg sx-calc-tax"><button type="button" data-v="pre" aria-pressed="false">Before tax / Roth IRA</button><button type="button" data-v="post" aria-pressed="true">After tax</button></div></div>
-          <div class="sx-calc-row sx-calc-fillrow"><span class="sx-flab">Fills</span><div class="sx-seg sx-calc-fill"><button type="button" data-v="real" aria-pressed="true">Realistic</button><button type="button" data-v="ideal" aria-pressed="false">Ideal</button></div></div>
+          <div class="sx-calc-row sx-calc-fillrow"><span class="sx-flab">Returns</span><div class="sx-seg sx-calc-fill"><button type="button" data-v="real" aria-pressed="false">Worst case</button><button type="button" data-v="live" aria-pressed="true">Expected</button><button type="button" data-v="recent" aria-pressed="false">Last 10 years</button></div></div>
+          <p class="sx-cap" style="margin:0">Worst case = buy the next morning with 3× costs (1999–2026). <b>Expected = what the live 3:45 pm bot should earn over the long run (1999–2026, incl. 2000 and 2008 crashes).</b> Last 10 years = 2016–2026, a strong decade. After tax = 24% bracket.</p>
           <div class="sx-calc-row"><span class="sx-flab">Show</span><div class="sx-chips sx-calc-chips"></div></div>
         </div>
         <div class="sx-calc-chart" role="img" aria-label="Growth chart"></div>
@@ -2415,15 +2425,15 @@ dash.calc('vs_industry', {
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
   const CALC = {
     us: [
-      { id: 'usdip', name: 'Robinhood bot now (US dip + smart parking)', pre: 13.4, post: 10.7, ideal: [18.5, 14.8], est: true, dd: -26, c: '#2563eb' },
-      { id: 'v3', name: 'Dip bot v3.0 (+ ETF dips + bonds; paper bot 10)', pre: 16.6, post: 13.3, ideal: [22.8, 18.2], est: true, dd: -27, c: '#7c3aed' },
-      { id: 'v31', name: 'Dip bot v3.1 (v3.0 + 2 drift slots; paper bot 11; est.)', pre: 18.6, post: 14.9, ideal: [24.4, 19.5], est: true, dd: -26, c: '#4c1d95' },
-      { id: 'v32', name: 'Dip bot v3.2 (v3.0 + intraday buys + 5% target; paper bot 12; est.)', pre: 19.1, post: 15.3, ideal: [26.1, 20.9], est: true, dd: -27, c: '#c026d3' },
+      { id: 'usdip', name: 'Robinhood bot now (US dip + smart parking)', pre: 13.4, post: 10.2, ideal: [18.5, 14.8], live: [17.7, 13.5], recent: [24.2, 18.4], est: true, dd: -26, c: '#2563eb' },
+      { id: 'v3', name: 'Dip bot v3.0 (+ ETF dips + bonds; paper bot 10)', pre: 16.6, post: 12.6, ideal: [22.8, 18.2], live: [21.9, 16.6], recent: [27.2, 20.7], est: true, dd: -27, c: '#7c3aed' },
+      { id: 'v31', name: 'Dip bot v3.1 (v3.0 + 2 drift slots; paper bot 11; est.)', pre: 18.6, post: 14.1, ideal: [24.4, 19.5], live: [23.5, 17.9], recent: [28.3, 21.5], est: true, dd: -26, c: '#4c1d95' },
+      { id: 'v32', name: 'Dip bot v3.2 (v3.0 + intraday buys + 5% target; paper bot 12; est.)', pre: 19.1, post: 14.5, ideal: [26.1, 20.9], live: [24.4, 18.5], recent: [30.5, 23.2], est: true, dd: -27, c: '#c026d3' },
       { id: 'usdipetf', name: 'Dip + ETF dips (paper bot 5)', pre: 15.0, post: 12.0, ideal: [21.1, 16.9], est: true, dd: -27, c: '#0891b2' },
       { id: 'mix', name: 'Dip + drift mix (6+4, 2004–2026)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#db2777' },
       { id: 'drift', name: 'Earnings drift (blend of 9)', pre: 13.0, post: 10.0, est: true, dd: -51, c: '#059669' },
       { id: 'cl', name: 'Clear leader v2.0', pre: 13.6, post: null, ideal: [13.7, null], dd: -43, c: '#d97706' },
-      { id: 'spy', name: 'SPY buy & hold', pre: 9.2, post: 8.4, dd: -55, c: '#6b7280', bench: true },
+      { id: 'spy', name: 'SPY buy & hold', pre: 9.2, post: 8.4, live: [9.2, 8.4], recent: [14.7, 13.4], dd: -55, c: '#6b7280', bench: true },
     ],
     in: [
       { id: 'inbal', name: 'India 12% dip: balanced (else 50/50 liquid + gold)', pre: 15.0, post: 12.0, est: true, dd: -19, c: '#2563eb' },
@@ -2436,7 +2446,7 @@ dash.calc('vs_industry', {
   const initCalc = () => {
     if (calcOn) return; calcOn = true;
     const P = pages.trading.querySelector('[data-panel="calc"]'), q = (x) => P.querySelector(x);
-    const st = { mkt: 'us', tax: 'post', fill: 'real', yrs: 20, amt: { us: 10000, in: 1000000 }, mon: { us: 0, in: 0 }, off: new Set() };
+    const st = { mkt: 'us', tax: 'post', fill: 'live', yrs: 20, amt: { us: 10000, in: 1000000 }, mon: { us: 0, in: 0 }, off: new Set() };
     const fmt = (v) => {
       const cur = st.mkt === 'us' ? '$' : '₹';
       if (st.mkt === 'in') { if (v >= 1e7) return cur + (v / 1e7).toFixed(2) + ' Cr'; if (v >= 1e5) return cur + (v / 1e5).toFixed(1) + ' L'; return cur + Math.round(v).toLocaleString('en-IN'); }
@@ -2444,7 +2454,7 @@ dash.calc('vs_industry', {
     };
     const rate = (sx) => {
       let pre = sx.pre, post = sx.post;
-      if (sx.ideal && st.fill === 'ideal') [pre, post] = sx.ideal;
+      if (st.mkt === 'us' && (st.fill === 'live' || st.fill === 'recent')) { const v = sx[st.fill] || (st.fill === 'live' ? (sx.ideal ? [+(sx.ideal[0] - 0.9).toFixed(1), sx.ideal[1] == null ? null : +((sx.ideal[0] - 0.9) * 0.76).toFixed(1)] : [sx.pre, sx.post]) : null); if (!v) return null; [pre, post] = v; }
       if (st.tax === 'pre') return { r: pre, flag: '' };
       return post == null ? null : { r: post, flag: sx.est ? 'after-tax estimated' : '' };
     };
@@ -2483,8 +2493,8 @@ dash.calc('vs_industry', {
       q('.sx-calc-tbl tbody').innerHTML = shown.map((o) => '<tr><td><span class="sx-calc-sw" style="background:' + o.sx.c + '"></span>' + esc(o.sx.name) + (o.flag ? ' <i>(' + esc(o.flag) + ')</i>' : '') + '</td><td>' + o.r.toFixed(1) + '%</td>' +
         marks.map((y) => '<td>' + (y === yrs ? '<b>' + esc(fmt(o.p[y])) + '</b>' : esc(fmt(o.p[y]))) + '</td>').join('') + '<td>' + o.sx.dd + '%</td><td>' + esc(fmt(o.p[yrs] * (1 + o.sx.dd / 100))) + ' (temporarily)</td></tr>').join('');
       const added = a0 + m * 12 * yrs;
-      const untestedNote = untested.length ? untested.join(', ') + ': after-tax not tested yet, switch to “Before tax” to see it. ' : '';
-      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return from the backtests (realistic fills unless “Ideal” is picked); the Robinhood bot, v3.0 and bot 5 rows come from one Nov 18 test (1999–2026), and the live bot’s 3:45 pm fills matched “Ideal” in a 2016–2026 minute replay, compounded monthly. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
+      const untestedNote = untested.length ? untested.join(', ') + (st.fill === 'recent' ? ': no 2016–2026 number for this one. ' : ': after-tax not tested yet, switch to “Before tax” to see it. ') : '';
+      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return: “Worst case” = next-morning fills with 3× costs, “Expected” = the live 3:45 pm bot over 1999–2026 (ideal minus ~1%, matched by the 2016–2026 minute replay and the first real fill), “Last 10 years” = 2016–2026 replay; compounded monthly; after tax = 24% bracket. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
         (st.tax === 'post' ? (st.mkt === 'us' ? 'After tax = 24% federal bracket, Texas; SPY taxed 15% long-term. ' : 'After tax = Indian resident rates; Nifty taxed long-term. ') : 'Before tax = what a Roth IRA (US) would keep. ') +
         'Backtests, not a forecast; not financial or tax advice.';
     };
