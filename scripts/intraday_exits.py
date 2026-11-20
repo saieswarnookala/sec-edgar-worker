@@ -226,10 +226,10 @@ def vol_ok(t, j, T):
     if len(prior) < 54 or not np.isfinite(prior).all(): return True
     base = prior[:50].mean(); recent = (prior[-4:].sum() + so_far / fr) / 5
     return base <= 0 or recent / base <= 2.0
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
-    early_sells = [0]; early_buys = [0]
+    early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
     for t in range(tr0, D):
         want = "SPY" if S.park_on[t] else ("IEF" if bond and S.BOND_OK[t] else "CASH")
         if want != held_park: cash *= 1 - cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
@@ -248,12 +248,14 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
             for p in pos:
                 Cx = S.S_C if p["k"] != "E" else S.E_C; j = p["j"]; age = t - p["d"]; mh = 5 if p["k"] == "S" else 10
                 now = px_at(t, p["k"], j, T)
-                if now is None or age < 1: keep.append(p); continue
+                sd = age < 1 and same_day and exit_mode == "target" and not final and T in checks and p["d"] == t
+                if sd and sd_cap is not None and sum(1 for d_ in DT if d_ > t - 5) >= sd_cap: sd = False
+                if now is None or (age < 1 and not sd): keep.append(p); continue
                 m5 = np.mean(np.r_[Cx[t - 4:t, j], now]); out = False
                 if final: out = now > m5 or age >= mh
                 elif T in checks:
                     if exit_mode == "check": out = now > m5
-                    elif exit_mode == "target": out = now >= p["px"] * (1 + x)
+                    elif exit_mode == "target": out = now >= p["px"] * (1 + (sd_x if age < 1 and sd_x is not None else x))
                     elif exit_mode == "placebo": out = prng.random() < 1 / 74 * 1.3     # sells at a random time of day, about as often as 'check'
                     elif exit_mode == "lock":
                         if now > m5: p["armed"] = True
@@ -265,6 +267,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     c = cs if p["k"] != "E" else ce
                     cu += p["v"] * (f / p["ref"]) * (1 - c) / pf; trades.append(f / p["px"] - 1 - 2 * c)
                     if not final: early_sells[0] += 1
+                    if age < 1: DT.append(t)
                     sold_today.add((p["k"], j))
                 else: keep.append(p)
             pos = keep
@@ -306,7 +309,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
     o = {"per_year_pct": round((cv[-1] ** (1 / y_) - 1) * 100, 1), "worst_drop_pct": round(float((cv / np.maximum.accumulate(cv) - 1).min()) * 100, 1),
          "trades_per_month": round(len(trades) / (y_ * 12), 1), "avg_trade_pct": round(float(np.mean(trades)) * 100, 2) if trades else None,
          "win_pct": round(float(np.mean(np.array(trades) > 0)) * 100) if trades else None,
-         "sold_during_day_per_month": round(early_sells[0] / (y_ * 12), 1), "bought_during_day_per_month": round(early_buys[0] / (y_ * 12), 1)}
+         "sold_during_day_per_month": round(early_sells[0] / (y_ * 12), 1), "same_day_sells_per_month": round(len(DT) / (y_ * 12), 2), "bought_during_day_per_month": round(early_buys[0] / (y_ * 12), 1)}
     for name, a_, b_ in (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01")):
         jj = np.flatnonzero((dn[ix] >= np.datetime64(a_)) & (dn[ix] < np.datetime64(b_)))
         if len(jj) == 0: o[name] = None; continue
@@ -323,13 +326,26 @@ for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
     for x in (0.05, 0.07, 0.10): V.append((f"{bot} | profit target +{int(x*100)}%", dict(exit_mode="target", x=x, **kw)))
     for x in (0.05, 0.07): V.append((f"{bot} | buy during the day (15 min) + target +{int(x*100)}%", dict(intraday_buy=True, bn=15, exit_mode="target", x=x, **kw)))
     V.append((f"{bot} | buy during the day (15 min) + target +5%, 0.10% per side", dict(intraday_buy=True, bn=15, exit_mode="target", x=0.05, cs=0.001, ce=0.0004, **kw)))
+if os.environ.get("SAME_DAY") == "1":                   # Nov 19: same-day selling (margin accounts: no day-trade limit since Jun 4 2026)
+    V = []
+    for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
+        b = dict(intraday_buy=True, bn=15, exit_mode="target", x=0.05, **kw)
+        V += [(f"{bot} | v3.2 rules (no same-day sells)", b),
+              (f"{bot} | + same-day +5% sells, unlimited", dict(same_day=True, **b)),
+              (f"{bot} | + same-day +5% sells, max 3 per 5 days", dict(same_day=True, sd_cap=3, **b)),
+              (f"{bot} | + same-day +3% sells, unlimited", dict(same_day=True, sd_x=0.03, **b)),
+              (f"{bot} | + same-day +5%, no rebuy same day", dict(same_day=True, no_rebuy=True, **b)),
+              (f"{bot} | + same-day +5% sells, 0.10% per side", dict(same_day=True, cs=0.001, ce=0.0004, **b)),
+              (f"{bot} | v3.2 rules, 0.10% per side", dict(cs=0.001, ce=0.0004, **b))]
 RES = {}
 for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
-    print(f"{name:62s} {a['per_year_pct']}%/yr worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
+    print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-for a_, b_ in (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%")):
+PAIRS = (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
+        (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%"))
+for a_, b_ in PAIRS:
     ya, yb = RES[a_]["years"], RES[b_]["years"]; d = {y: round(yb[y] - ya[y], 1) for y in ya}
     RES[f"YEARS: {b_} minus base"] = {"by_year": d, "years_better": sum(v > 0 for v in d.values()), "years": len(d), "best_year_share_of_gain_pct": round(100 * max(d.values()) / max(1e-9, sum(v for v in d.values() if v > 0)))}
     print("YEARS", b_, "vs base:", " ".join(f"{y}:{ya[y]}->{yb[y]}" for y in ya), "| better in", RES[f"YEARS: {b_} minus base"]["years_better"], "of", len(d), flush=True)
