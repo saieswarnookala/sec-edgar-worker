@@ -73,6 +73,37 @@ def fetch_day(day, syms):
             tok = js.get("next_page_token")
             if not tok: break
     return out
+# FETCH_VOL=1: download-only job - 5-minute VOLUME for the same stock-days into R2 (alpaca/m5vol/<YYYY-MM>), for a fair
+# intraday volume filter later (only the volume known at that time of day). Shares the Alpaca limit with other jobs: run slower.
+if os.environ.get("FETCH_VOL") == "1":
+    def fetch_vol(day, syms):
+        a = datetime.fromisoformat(day + "T09:30:00").replace(tzinfo=ET).astimezone(UTC); b = datetime.fromisoformat(day + "T16:00:00").replace(tzinfo=ET).astimezone(UTC)
+        out, syms = {}, sorted(syms)
+        for i in range(0, len(syms), 100):
+            p = {"symbols": ",".join(syms[i:i + 100]), "timeframe": "5Min", "start": a.strftime("%Y-%m-%dT%H:%M:%SZ"), "end": b.strftime("%Y-%m-%dT%H:%M:%SZ"), "adjustment": "raw", "feed": "sip", "limit": "10000"}; tok = None
+            while True:
+                if tok: p["page_token"] = tok
+                js = get("https://data.alpaca.markets/v2/stocks/bars?" + urllib.parse.urlencode(p))
+                if not js: break
+                for s_, bars in (js.get("bars") or {}).items():
+                    for x in bars:
+                        m = mins(datetime.fromisoformat(x["t"].replace("Z", "+00:00")).astimezone(ET))
+                        if 570 <= m < 960: out.setdefault(s_, [0] * 78)[(m - 570) // 5] = int(x.get("v") or 0)
+                tok = js.get("next_page_token")
+                if not tok: break
+        return out
+    fetched = 0
+    for mo in sorted({d[:7] for d in ds[tr0:]}):
+        cache = r2cache.load(f"alpaca/m5vol/{mo}.json.gz") or {}; changed = False
+        for t in [t for t in range(tr0, D) if ds[t][:7] == mo]:
+            day = ds[t]; have = cache.get(day, {}); none = set(have.get("_none", []))
+            want = {asym(x) for x in need[t] if not x.startswith("ETF:")}
+            miss = [x for x in want if x not in have and x not in none]
+            if miss:
+                got = fetch_vol(day, miss); fetched += 1; have.update(got); have["_none"] = sorted(none | {x for x in miss if x not in got}); cache[day] = have; changed = True
+        if changed: r2cache.save(f"alpaca/m5vol/{mo}.json.gz", cache)
+        print(mo, "volume days fetched", fetched, "calls", CALLS[0], flush=True)
+    print("volume download done", flush=True); raise SystemExit(0)
 BARS = {}
 if DRY:
     rng = np.random.default_rng(9)
