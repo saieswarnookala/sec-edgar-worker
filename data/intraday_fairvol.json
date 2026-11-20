@@ -1,0 +1,305 @@
+{
+ "note": "Checking during the day (Nov 19 2026): sell when a dip bounces intraday, profit targets, lock-ins, and buying dips during the\nday instead of only at 3:45 pm. Research only, not financial advice.\nReplays 2016-2026 on Alpaca SIP 5-minute bars (9:30-16:00 ET) for every stock/ETF near a signal and every held position.\nBase = the live bot: decide with the 15:45 price, fill at the 15:45-15:50 bar's close; 0.05% per side (also 0.10%).\nExit variants (a stock must have been held at least 1 trading day; the normal 3:45 check always runs too):\n  CHECK n   - every n minutes (5/15/30): sell as soon as the price is above the 5-day average (4 prior closes + current price)\n  TARGET x  - every 5 minutes: sell as soon as the price is x% above the buy price (2/3/5%)\n  LOCK      - every 5 minutes: once above the 5-day average, sell if it falls back below it, or y% below the day's high since (1/2%)\nEntry variant: INTRADAY BUY - every 15 minutes from 10:00, buy a stock/ETF the moment it meets the dip rules (else wait for 3:45).\nA stock sold during the day frees its slot for that day's 3:45 buys. Idle money (Clear Leader / IEF / cash) uses daily closes.\nPrices: 5-minute raw bars scaled to the adjusted daily series with the stock's own move to its last bar of the day; minute data\nmore than 3% away from the S&P data's raw close is treated as bad and that day uses the daily close (counted).\nBars cached in R2 (alpaca/m5day/<YYYY-MM>.json.gz). DRY=1: fake intraday paths (no network): a code test only - fake paths pinned to the real close are NOT a fair null test\n(an intraday rule can 'see' noise around a known close); the real-data check is the PLACEBO version (sell at a random time).",
+ "built": "2026-11-20",
+ "dry": null,
+ "period_start": "2016-01-04",
+ "fallbacks": [
+  6818,
+  87093
+ ],
+ "fair_volume": true,
+ "fair_volume_stats": [
+  21747576,
+  18764264,
+  344560
+ ],
+ "alpaca_calls": 0,
+ "results": {
+  "Robinhood rules | base: 3:45 only": {
+   "per_year_pct": 24.2,
+   "worst_drop_pct": -19.2,
+   "trades_per_month": 11.1,
+   "avg_trade_pct": 0.84,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 13.1,
+   "2021-2026": 34.5
+  },
+  "Robinhood rules | base, 0.10% per side": {
+   "per_year_pct": 22.5,
+   "worst_drop_pct": -19.9,
+   "trades_per_month": 11.1,
+   "avg_trade_pct": 0.74,
+   "win_pct": 64,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 12.3,
+   "2021-2026": 32.0
+  },
+  "Robinhood rules | PLACEBO: sell at a random time of day": {
+   "per_year_pct": 21.6,
+   "worst_drop_pct": -21.1,
+   "trades_per_month": 18.0,
+   "avg_trade_pct": 0.4,
+   "win_pct": 56,
+   "sold_during_day_per_month": 15.8,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 11.4,
+   "2021-2026": 31.0
+  },
+  "Robinhood rules | buy dips during the day, every 15 min": {
+   "per_year_pct": 28.6,
+   "worst_drop_pct": -17.9,
+   "trades_per_month": 15.3,
+   "avg_trade_pct": 0.85,
+   "win_pct": 64,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 11.7,
+   "2016-2020": 19.3,
+   "2021-2026": 37.1
+  },
+  "Robinhood rules | buy dips during the day, every 30 min": {
+   "per_year_pct": 27.6,
+   "worst_drop_pct": -18.3,
+   "trades_per_month": 15.1,
+   "avg_trade_pct": 0.83,
+   "win_pct": 64,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 11.5,
+   "2016-2020": 18.4,
+   "2021-2026": 36.2
+  },
+  "Robinhood rules | buy dips during the day, every 60 min": {
+   "per_year_pct": 26.9,
+   "worst_drop_pct": -17.8,
+   "trades_per_month": 14.6,
+   "avg_trade_pct": 0.82,
+   "win_pct": 64,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 10.8,
+   "2016-2020": 18.0,
+   "2021-2026": 35.1
+  },
+  "Robinhood rules | buy during the day (15 min), 0.10% per side": {
+   "per_year_pct": 26.2,
+   "worst_drop_pct": -18.5,
+   "trades_per_month": 15.3,
+   "avg_trade_pct": 0.75,
+   "win_pct": 63,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 11.7,
+   "2016-2020": 18.0,
+   "2021-2026": 33.8
+  },
+  "Robinhood rules | profit target +5%": {
+   "per_year_pct": 25.5,
+   "worst_drop_pct": -18.9,
+   "trades_per_month": 11.6,
+   "avg_trade_pct": 0.87,
+   "win_pct": 66,
+   "sold_during_day_per_month": 2.8,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 13.8,
+   "2021-2026": 36.5
+  },
+  "Robinhood rules | profit target +7%": {
+   "per_year_pct": 25.0,
+   "worst_drop_pct": -19.1,
+   "trades_per_month": 11.3,
+   "avg_trade_pct": 0.88,
+   "win_pct": 65,
+   "sold_during_day_per_month": 1.3,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 13.2,
+   "2021-2026": 36.0
+  },
+  "Robinhood rules | profit target +10%": {
+   "per_year_pct": 24.3,
+   "worst_drop_pct": -19.0,
+   "trades_per_month": 11.2,
+   "avg_trade_pct": 0.84,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.5,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 13.1,
+   "2021-2026": 34.8
+  },
+  "Robinhood rules | buy during the day (15 min) + target +5%": {
+   "per_year_pct": 28.8,
+   "worst_drop_pct": -17.9,
+   "trades_per_month": 16.2,
+   "avg_trade_pct": 0.81,
+   "win_pct": 65,
+   "sold_during_day_per_month": 4.0,
+   "bought_during_day_per_month": 13.2,
+   "2016-2020": 18.6,
+   "2021-2026": 38.4
+  },
+  "Robinhood rules | buy during the day (15 min) + target +7%": {
+   "per_year_pct": 28.5,
+   "worst_drop_pct": -18.2,
+   "trades_per_month": 15.7,
+   "avg_trade_pct": 0.83,
+   "win_pct": 65,
+   "sold_during_day_per_month": 2.1,
+   "bought_during_day_per_month": 12.4,
+   "2016-2020": 18.3,
+   "2021-2026": 38.1
+  },
+  "Robinhood rules | buy during the day (15 min) + target +5%, 0.10% per side": {
+   "per_year_pct": 26.4,
+   "worst_drop_pct": -18.5,
+   "trades_per_month": 16.2,
+   "avg_trade_pct": 0.71,
+   "win_pct": 65,
+   "sold_during_day_per_month": 4.0,
+   "bought_during_day_per_month": 13.2,
+   "2016-2020": 17.2,
+   "2021-2026": 34.8
+  },
+  "v3.0 | base: 3:45 only": {
+   "per_year_pct": 27.1,
+   "worst_drop_pct": -15.8,
+   "trades_per_month": 13.1,
+   "avg_trade_pct": 0.82,
+   "win_pct": 66,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 17.9,
+   "2021-2026": 35.5
+  },
+  "v3.0 | base, 0.10% per side": {
+   "per_year_pct": 25.3,
+   "worst_drop_pct": -16.0,
+   "trades_per_month": 13.1,
+   "avg_trade_pct": 0.73,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 17.0,
+   "2021-2026": 32.9
+  },
+  "v3.0 | PLACEBO: sell at a random time of day": {
+   "per_year_pct": 23.2,
+   "worst_drop_pct": -16.6,
+   "trades_per_month": 21.8,
+   "avg_trade_pct": 0.36,
+   "win_pct": 57,
+   "sold_during_day_per_month": 19.4,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 16.3,
+   "2021-2026": 29.4
+  },
+  "v3.0 | buy dips during the day, every 15 min": {
+   "per_year_pct": 30.7,
+   "worst_drop_pct": -17.7,
+   "trades_per_month": 17.8,
+   "avg_trade_pct": 0.78,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 13.7,
+   "2016-2020": 23.3,
+   "2021-2026": 37.4
+  },
+  "v3.0 | buy dips during the day, every 30 min": {
+   "per_year_pct": 30.1,
+   "worst_drop_pct": -17.7,
+   "trades_per_month": 17.5,
+   "avg_trade_pct": 0.78,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 13.4,
+   "2016-2020": 22.2,
+   "2021-2026": 37.3
+  },
+  "v3.0 | buy dips during the day, every 60 min": {
+   "per_year_pct": 30.0,
+   "worst_drop_pct": -17.7,
+   "trades_per_month": 17.0,
+   "avg_trade_pct": 0.79,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 12.5,
+   "2016-2020": 22.5,
+   "2021-2026": 36.8
+  },
+  "v3.0 | buy during the day (15 min), 0.10% per side": {
+   "per_year_pct": 28.2,
+   "worst_drop_pct": -17.8,
+   "trades_per_month": 17.8,
+   "avg_trade_pct": 0.69,
+   "win_pct": 65,
+   "sold_during_day_per_month": 0.0,
+   "bought_during_day_per_month": 13.7,
+   "2016-2020": 21.8,
+   "2021-2026": 33.9
+  },
+  "v3.0 | profit target +5%": {
+   "per_year_pct": 28.4,
+   "worst_drop_pct": -15.6,
+   "trades_per_month": 13.6,
+   "avg_trade_pct": 0.85,
+   "win_pct": 67,
+   "sold_during_day_per_month": 2.8,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 18.6,
+   "2021-2026": 37.5
+  },
+  "v3.0 | profit target +7%": {
+   "per_year_pct": 27.9,
+   "worst_drop_pct": -15.7,
+   "trades_per_month": 13.3,
+   "avg_trade_pct": 0.85,
+   "win_pct": 66,
+   "sold_during_day_per_month": 1.3,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 18.1,
+   "2021-2026": 37.0
+  },
+  "v3.0 | profit target +10%": {
+   "per_year_pct": 27.2,
+   "worst_drop_pct": -15.8,
+   "trades_per_month": 13.2,
+   "avg_trade_pct": 0.83,
+   "win_pct": 66,
+   "sold_during_day_per_month": 0.5,
+   "bought_during_day_per_month": 0.0,
+   "2016-2020": 18.0,
+   "2021-2026": 35.8
+  },
+  "v3.0 | buy during the day (15 min) + target +5%": {
+   "per_year_pct": 31.0,
+   "worst_drop_pct": -16.8,
+   "trades_per_month": 18.7,
+   "avg_trade_pct": 0.76,
+   "win_pct": 66,
+   "sold_during_day_per_month": 3.9,
+   "bought_during_day_per_month": 15.2,
+   "2016-2020": 22.7,
+   "2021-2026": 38.7
+  },
+  "v3.0 | buy during the day (15 min) + target +7%": {
+   "per_year_pct": 30.8,
+   "worst_drop_pct": -17.5,
+   "trades_per_month": 18.2,
+   "avg_trade_pct": 0.78,
+   "win_pct": 66,
+   "sold_during_day_per_month": 2.0,
+   "bought_during_day_per_month": 14.5,
+   "2016-2020": 22.2,
+   "2021-2026": 38.8
+  },
+  "v3.0 | buy during the day (15 min) + target +5%, 0.10% per side": {
+   "per_year_pct": 28.4,
+   "worst_drop_pct": -17.0,
+   "trades_per_month": 18.7,
+   "avg_trade_pct": 0.67,
+   "win_pct": 66,
+   "sold_during_day_per_month": 3.9,
+   "bought_during_day_per_month": 15.2,
+   "2016-2020": 21.1,
+   "2021-2026": 35.0
+  }
+ }
+}
