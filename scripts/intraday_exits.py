@@ -39,7 +39,8 @@ _sh = _lo[_lo.ticker == "SPY"].set_index("date").ahigh.reindex(S.dates).values; 
 _sh = np.where(np.isfinite(_sh), _sh, S.SP)
 spy5r = np.r_[np.full(5, np.nan), _sh[5:] / S.SP[:-5] - 1]
 lowgap = np.nan_to_num(LOWA / np.vstack([np.full((5, S.S_C.shape[1]), np.nan), S.S_C[:-5]]) - 1 - spy5r[:, None], nan=1)
-NEAR = S.M.values & ((ex5c <= -0.06) | (lowgap <= -0.095)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
+DIP_MIN = float(os.environ.get("DIP_MIN", "0.10"))       # smallest dip size tested (COMBO run: 0.09) -> candidate list widened to match
+NEAR = S.M.values & ((ex5c <= -0.06) | (lowgap <= -(DIP_MIN - 0.005))) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
 E5 = np.nan_to_num(S.E_C / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)
 EL5 = np.nan_to_num(S.E_L / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)   # ETF day's low vs 5 days ago
 NEARE = (E5 <= -0.03) | (EL5 <= -0.045)
@@ -226,7 +227,7 @@ def vol_ok(t, j, T):
     if len(prior) < 54 or not np.isfinite(prior).all(): return True
     base = prior[:50].mean(); recent = (prior[-4:].sum() + so_far / fr) / 5
     return base <= 0 or recent / base <= 2.0
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
@@ -247,6 +248,10 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
             keep = []
             for p in pos:
                 Cx = S.S_C if p["k"] != "E" else S.E_C; j = p["j"]; age = t - p["d"]; mh = 5 if p["k"] == "S" else 10
+                if p["k"] == "D":
+                    if not (final and age >= dhold): keep.append(p); continue
+                    f = S.S_C[t, j]; f = f if np.isfinite(f) else p["ref"]
+                    cu += p["v"] * (f / p["ref"]) * (1 - cs) / pf; trades.append(f / p["px"] - 1 - 2 * cs); continue
                 now = px_at(t, p["k"], j, T)
                 sd = age < 1 and same_day and exit_mode == "target" and not final and T in checks and p["d"] == t
                 if sd and sd_cap is not None and sum(1 for d_ in DT if d_ > t - 5) >= sd_cap: sd = False
@@ -255,7 +260,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 if final: out = now > m5 or age >= mh
                 elif T in checks:
                     if exit_mode == "check": out = now > m5
-                    elif exit_mode == "target": out = now >= p["px"] * (1 + (sd_x if age < 1 and sd_x is not None else x))
+                    elif exit_mode == "target": out = p["k"] != "D" and now >= p["px"] * (1 + (sd_x if age < 1 and sd_x is not None else x))
                     elif exit_mode == "placebo": out = prng.random() < 1 / 74 * 1.3     # sells at a random time of day, about as often as 'check'
                     elif exit_mode == "lock":
                         if now > m5: p["armed"] = True
@@ -280,11 +285,11 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 cand = []
                 for j in np.flatnonzero(NEAR[t] & (S.M.values[t] if FAIR else VOLOK[t])):
                     if FAIR and not vol_ok(t, j, T): continue
-                    if ("S", j) in held: continue
+                    if ("S", j) in held or ("D", j) in held: continue
                     now = px_at(t, "S", j, T)
                     if now is None: continue
                     g5 = now / S.S_C[t - 5, j] - 1 - spy5
-                    if g5 <= -0.10 and now > np.mean(np.r_[S.S_C[t - 199:t, j], now]): cand.append((g5, "S", j))
+                    if g5 <= -dip and now > np.mean(np.r_[S.S_C[t - 199:t, j], now]): cand.append((g5, "S", j))
                 cand.sort(key=lambda z: z[0])
                 ce_ = []
                 if etf:
@@ -294,13 +299,22 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                         if now is not None and now / S.E_C[t - 5, j] - 1 <= -0.05 and now > np.mean(np.r_[S.E_C[t - 199:t, j], now]): ce_.append((now / S.E_C[t - 5, j] - 1, "E", j))
                     ce_.sort(key=lambda z: z[0])
                 for _, k, j in cand + ce_:
-                    if len(pos) >= 10: break
+                    if sum(1 for q in pos if q["k"] != "D") >= slots: break
                     f = px_at(t, k, j, T, fill=True)
                     if f is None or not np.isfinite(f) or f <= 0: continue
-                    a = min(0.10 * eq_now, cu * pf); c = cs if k == "S" else ce
+                    a = min(w * eq_now, cu * pf); c = cs if k == "S" else ce
                     if a < 0.02 * eq_now: break
                     cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
                     if not final: early_buys[0] += 1
+                if final and drift:                                  # earnings drift (v3.1): extra slots, bought at the 3:45 step on the reaction day
+                    for j in sorted(np.flatnonzero(np.nan_to_num(S.RXC[t], nan=-1) >= dth), key=lambda j: -S.RXC[t, j]):
+                        if sum(1 for q in pos if q["k"] == "D") >= drift: break
+                        if ("D", j) in held or ("S", j) in held: continue
+                        f = px_at(t, "S", j, T, fill=True)
+                        if f is None or not np.isfinite(f) or f <= 0: continue
+                        a = min(0.10 * eq_now, cu * pf)
+                        if a < 0.02 * eq_now: break
+                        cu -= a / pf; pos.append({"k": "D", "j": j, "d": t, "px": f, "v": a * (1 - cs), "ref": f, "armed": False, "hi": 0.0}); held.add(("D", j))
         cash = cu * park_f(t, held_park, 960)
         for p in pos:                                                    # mark to the close
             Cx = S.S_C if p["k"] != "E" else S.E_C; p["v"] *= Cx[t, p["j"]] / p["ref"]; p["ref"] = Cx[t, p["j"]]
@@ -337,13 +351,22 @@ if os.environ.get("SAME_DAY") == "1":                   # Nov 19: same-day selli
               (f"{bot} | + same-day +5%, no rebuy same day", dict(same_day=True, no_rebuy=True, **b)),
               (f"{bot} | + same-day +5% sells, 0.10% per side", dict(same_day=True, cs=0.001, ce=0.0004, **b)),
               (f"{bot} | v3.2 rules, 0.10% per side", dict(cs=0.001, ce=0.0004, **b))]
+if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 together, slot count/size, dip size - all on the v3.2 rules
+    b = dict(etf=True, bond=True); i32 = dict(intraday_buy=True, bn=15, exit_mode="target", x=0.05, **b)
+    V = [("v3.0 | 3:45 only", b), ("v3.1 = v3.0 + 2 drift slots (3:45 only)", dict(drift=2, **b)),
+         ("v3.2", i32), ("v3.2 + 2 drift slots", dict(drift=2, **i32)), ("v3.2 + 3 drift slots", dict(drift=3, **i32)),
+         ("v3.2 + 2 drift slots, 0.10% per side", dict(drift=2, cs=0.001, ce=0.0004, **i32)), ("v3.2, 0.10% per side", dict(cs=0.001, ce=0.0004, **i32)),
+         ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
+         ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
+         ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
 RES = {}
 for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
+PAIRS = (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
+        (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
         (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%"))
 for a_, b_ in PAIRS:
     ya, yb = RES[a_]["years"], RES[b_]["years"]; d = {y: round(yb[y] - ya[y], 1) for y in ya}
