@@ -187,3 +187,28 @@ console.log('ok   fractional sizing for small live account');
   if (r.vs.drift.length !== 0 || r.vs.trades.filter((t) => t.kind === 'drift').length !== 2) throw new Error('drift sold after 60 days');
   console.log('ok   bot 11 v3.1: 2 biggest drift signals bought at 10%, money adds up, sold after 60 trading days');
 }
+
+// Bot 12: v3.2 intraday checks
+{
+  const { v32Intraday, phase, V32 } = await import('./scripts/paper-v32.mjs');
+  const days = ['2026-11-17', '2026-11-18', '2026-11-19'];
+  let prices = { SPY: 100, QQQ: 400, AAA: 50, BBB: 20, XLE: 80 };
+  let r = v32Intraday({ vs: undefined, today: days[0], days, prices, scores: {}, park: 'QQQ' });
+  const tot = (vs, p) => vs.cash + vs.positions.reduce((a, x) => a + x.qty * p[x.symbol], 0) + Object.entries(vs.park).reduce((a, [s, q]) => a + q * p[s], 0);
+  if (!(r.vs.park.QQQ > 0) || Math.abs(tot(r.vs, prices) - 10000) > 1) throw new Error('start: money parked in QQQ, total $10k');
+  r = v32Intraday({ vs: r.vs, today: days[1], days, prices, scores: { AAA: -0.12, BBB: -0.15 }, etfScores: { XLE: -0.06 }, park: 'QQQ' });
+  if (r.vs.positions.map((p) => p.symbol).join() !== 'BBB,AAA,XLE') throw new Error('buy order: biggest stock dip first, then ETF: ' + r.vs.positions.map((p) => p.symbol));
+  if (Math.abs(r.vs.positions[0].qty * 20 - 1000) > 2) throw new Error('10% slot');
+  if (Math.abs(tot(r.vs, prices) - 10000) > 1) throw new Error('money adds up after buys (funded from parking)');
+  const again = v32Intraday({ vs: JSON.parse(JSON.stringify(r.vs)), today: days[1], days, prices: { ...prices, AAA: 60 }, scores: { AAA: -0.12 }, park: 'QQQ' });
+  if (again.vs.positions.length !== 3) throw new Error('no same-day target sell and no double buy');
+  prices = { ...prices, AAA: 52.6, BBB: 20.9 };
+  r = v32Intraday({ vs: r.vs, today: days[2], days, prices, scores: {}, park: 'QQQ' });
+  if (r.vs.positions.map((p) => p.symbol).join() !== 'BBB,XLE') throw new Error('AAA +5.2% sold, BBB +4.5% kept: ' + r.vs.positions.map((p) => p.symbol));
+  if (Math.abs(tot(r.vs, prices) - (10000 + 20 * 2.6 + 50 * 0.9)) > 2) throw new Error('total after target sell: ' + tot(r.vs, prices));
+  if (r.vs.cash > 0.021 * tot(r.vs, prices)) throw new Error('target-sell money goes back to parking');
+  const eqp = (a, b) => { if (a !== b) throw new Error(`phase ${a} vs ${b}`); };
+  eqp(phase(590, 960), 'closed'); eqp(phase(600, 960), 'intraday'); eqp(phase(935, 960), 'intraday'); eqp(phase(940, 960), 'final'); eqp(phase(957, 960), 'final'); eqp(phase(958, 960), 'closed');
+  eqp(phase(760, 780), 'final'); eqp(phase(755, 780), 'intraday'); eqp(phase(778, 780), 'closed');
+  console.log(`ok   bot 12 v3.2: dip buys funded from parking (stocks then ETFs), +${V32.target * 100}% target only after 1 day, proceeds re-parked, half-day timing`);
+}

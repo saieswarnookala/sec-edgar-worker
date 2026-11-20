@@ -1,0 +1,44 @@
+name: "Paper bot 12: Dip bot v3.2 (intraday checks)"
+on:
+  schedule:
+    - cron: '0,15,30,45 14-20 * * 1-5'   # every 15 min, 10:00 am - 3:45 pm ET (EDT: 14:00 UTC = 10:00); the script decides what to do by NY time
+    - cron: '50,55 19,20 * * 1-5'        # extra 3:50/3:55 tries in case GitHub starts the 3:45 run late (final step runs once a day)
+    - cron: '40,50,55 16,17 * * 1-5'     # half-days (1 pm close): 12:40-12:55 pm ET
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1 = run but do not save state'
+        default: '1'
+      phase:
+        description: 'force a phase for testing: intraday | final (empty = by clock)'
+        default: ''
+permissions:
+  contents: write
+concurrency: paper-v32
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test
+        run: node test-paper-dip.mjs
+      - name: Check (virtual, no orders)
+        env:
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          DRY_RUN: ${{ inputs.dry_run || '0' }}
+          PHASE: ${{ inputs.phase || '' }}
+        run: node scripts/paper-v32.mjs
+      - name: Commit state
+        if: always()
+        run: |
+          git config user.name "strategies-bot"
+          git config user.email "strategies-bot@users.noreply.github.com"
+          [ -f data/paper_v32_state.json ] && git add data/paper_v32_state.json; true
+          git diff --cached --quiet && exit 0
+          git commit -m "paper v3.2: $(date -u +%FT%H:%M)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done
