@@ -1261,6 +1261,7 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="drift">Earnings drift</button>
       <button type="button" data-sub="clv2">Clear leader v2.0</button>
       <button type="button" data-sub="mix">Dip + drift mix (6+4)</button>
+      <button type="button" data-sub="v3all">v3.0 → v3.2: all numbers</button>
       <button type="button" data-sub="v3">Dip bot v3.0 (paper)</button>
       <button type="button" data-sub="v31">Dip bot v3.1 (paper)</button>
       <button type="button" data-sub="etfdip">Dip + ETF dips (paper)</button>
@@ -1426,6 +1427,25 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Better in both halves (2004–2014: 14.9 vs 12.7%; 2015–2026: 24.6 vs 23.5%) and with realistic costs (16.3 vs 14.3%). Nearby versions (4% or 6% beat, 40-day hold) all add +1.3 to +2.2%/yr; 3 drift slots add more but raise the worst drop. About 8 drift trades a year, +5% each on average. Earnings dates start Aug 2004. Data: data/v3_drift.json.</p></div>
     </div>
     <p class="sx-cap" style="margin-top:12px">Daily trades, holdings and the comparison with SPY are on the <button type="button" class="sx-linkbtn" data-gopaper="1">Paper bots tab</button> (card 11).</p></div></div>
+    <div class="sx-tr-panel" data-panel="v3all" id="trading-v3all" hidden>
+    <div class="sx-card"><div class="sx-ch"><h3>Dip bot v3.0 → v3.2: every version and every number (Nov 19)</h3></div>
+    <p class="sx-cap"><b>Breakthrough:</b> buying dips the moment they happen during the day (every 15 min) plus a +5% profit target added about <b>+3.9%/yr</b> to v3.0 in a 2016–2026 replay with real 5-minute prices — <b>31.0% vs 27.1%</b> before tax — and passed every check (both halves, doubled costs, no-hindsight volume filter, placebo). Plan: Robinhood → v3.0 ~Dec 3; v3.2 on paper first (bot 12). Full write-up: <a href="https://claude.ai/artifact/BAX5ngN5XBvkiu2ppgobjr" target="_blank" rel="noopener">Dip bot v3 to v3.2 doc</a>. Before tax unless marked; after tax = 24% federal bracket on short-term gains, no Texas tax.</p>
+    <h4>The versions</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Adds</th><th>Status</th></tr></thead><tbody><tr><td>Robinhood bot (today)</td><td>S&amp;P 500 dips (10%+ worse than SPY in 5 days, above 200-day, normal volume), bought 3:45 pm, sold above 5-day avg or after 5 days; idle money in Clear Leader or cash</td><td>Live since Nov 19</td></tr><tr><td><b>v3.0</b></td><td>+ ETF dips in free slots; + IEF bonds instead of cash in weak markets</td><td>Paper bot 10; Robinhood ~Dec 3</td></tr><tr><td><b>v3.1</b></td><td>+ 2 earnings-drift slots (beat SPY by 5%+ on earnings day, hold 60 days)</td><td>Paper bot 11</td></tr><tr><td><b>v3.2</b></td><td>+ buy dips during the day (every 15 min, 10:00–3:30) + sell at +5% during the day (every 5 min)</td><td>Paper bot 12 next</td></tr></tbody></table></div>
+    <h4>Long run, 1999–2026 (v3.1 / v3.2 estimated from their own tests)</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Realistic (next open, 3× costs)</th><th>Ideal (close)</th><th>Live (expected)</th><th>Live after tax</th><th>Worst drop</th></tr></thead><tbody><tr><td>SPY buy &amp; hold</td><td>9.2%</td><td>9.2%</td><td>9.2%</td><td>8.4%</td><td>−55%</td></tr><tr><td>Robinhood bot today</td><td>13.4%</td><td>18.5%</td><td>~17.7%</td><td>~13.5%</td><td>−26%</td></tr><tr><td>v3.0</td><td>16.6%</td><td>22.8%</td><td>21.9%</td><td>~16.6%</td><td>−25%</td></tr><tr><td>v3.1 (est.)</td><td>~18.6%</td><td>~24.4%</td><td>~23.5%</td><td>~17.9%</td><td>~−26%</td></tr><tr><td><b>v3.2 (est.)</b></td><td>~19.5%</td><td>~26.7%</td><td><b>~25%</b></td><td><b>~19%</b></td><td>~−27%</td></tr></tbody></table></div>
+    <h4>Intraday replay, 2016–2026 (5-minute prices, fair volume filter)</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Per year</th><th>After tax</th><th>2016–2020</th><th>2021–2026</th><th>2× spreads</th><th>Worst drop</th><th>Trades/mo</th></tr></thead><tbody><tr><td>Robinhood rules, 3:45 only</td><td>24.2%</td><td>18.4%</td><td>13.1%</td><td>34.5%</td><td>22.5%</td><td>−19.2%</td><td>11</td></tr><tr><td>Robinhood rules + intraday buys + 5% target</td><td>28.8%</td><td>21.9%</td><td>18.6%</td><td>38.4%</td><td>26.4%</td><td>−17.9%</td><td>16</td></tr><tr><td>v3.0, 3:45 only</td><td>27.1%</td><td>20.6%</td><td>17.9%</td><td>35.5%</td><td>25.3%</td><td>−15.8%</td><td>13</td></tr><tr><td>v3.0 + intraday buys (15 min)</td><td>30.7%</td><td>23.3%</td><td>23.3%</td><td>37.4%</td><td>28.2%</td><td>−17.7%</td><td>18</td></tr><tr><td><b>v3.2 = v3.0 + intraday buys + 5% target</b></td><td><b>31.0%</b></td><td><b>23.6%</b></td><td><b>22.7%</b></td><td><b>38.7%</b></td><td><b>28.4%</b></td><td><b>−16.8%</b></td><td><b>19</b></td></tr></tbody></table></div>
+    <h4>The three intraday runs (v3.0)</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Run</th><th>Stocks covered</th><th>Volume filter</th><th>3:45 only</th><th>Intraday buys (15 min)</th><th>+ 5% target</th></tr></thead><tbody><tr><td>1. First</td><td>Only stocks still down at the close</td><td>Full day (hindsight)</td><td>27.9%</td><td>30.0%</td><td>—</td></tr><tr><td>2. Confirmation</td><td>+ stocks that dipped during the day</td><td>Full day (hindsight)</td><td>27.9%</td><td>31.4%</td><td>32.2%</td></tr><tr><td>3. Fair volume</td><td>Same as 2</td><td>Only volume known at that moment</td><td>27.1%</td><td>30.7%</td><td><b>31.0%</b></td></tr></tbody></table></div>
+    <h4>Ideas tested on the selling side (v3.0, run 1; base 27.9%)</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Rule</th><th>Per year</th><th>Verdict</th></tr></thead><tbody><tr><td>Sell when above 5-day avg, check every 5 / 15 / 30 min</td><td>26.9 / 27.8 / 28.1%</td><td>Tie or worse</td></tr><tr><td>Sell at the peak, buy only at 3:45, never rebuy same day</td><td>26.9%</td><td>Worse</td></tr><tr><td>Lock-in: fall back below avg, or 1% / 2% off the high</td><td>27.5 / 27.4%</td><td>Worse</td></tr><tr><td>Profit target +2% / +3% / +5% (run 2: +7% 28.6%, +10% 28.0%)</td><td>26.9 / 28.3 / 29.4%</td><td>Only +5% helps (smoothly shrinking above it)</td></tr><tr><td>Placebo: sell at a random time</td><td>24.4%</td><td>Worst, as expected</td></tr><tr><td>Intraday buys every 60 / 30 / 15 min (run 3)</td><td>30.0 / 30.1 / 30.7%</td><td>More often = better</td></tr></tbody></table></div>
+    <h4>Other tests since v3.0</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Test</th><th>Result</th><th>Verdict</th></tr></thead><tbody><tr><td>One-minute live replay (2016–26)</td><td>3:45 decide + 3:46–3:50 fill = 28.0% vs 28.1% at the close; next open 20.7%</td><td>Live ≈ ideal</td></tr><tr><td>First live trade (Nov 19)</td><td>AMD filled $487.94 vs $489.19 close (−0.26%)</td><td>Matches the replay</td></tr><tr><td>Tuned settings (8% dips, 7-day holds), walk-forward</td><td>20.1% vs 22.4% on unseen 2013–26</td><td>Rejected</td></tr><tr><td>Sector cap (2–4 per sector)</td><td>No gain, deeper drop</td><td>Rejected</td></tr><tr><td>Earnings drift (v3.1), 2004–26</td><td>18.4% → 20.0%, worst −18.7% → −17.6%</td><td>Paper bot 11</td></tr><tr><td>Interest on cash days</td><td>+0.1–0.2%/yr</td><td>Robinhood pays it</td></tr><tr><td>Monte Carlo (v3.0)</td><td>16% chance a 12-month stretch loses; 33% chance of a 20%+ drop in 3 years</td><td>Halt line 40%</td></tr><tr><td>Robinhood-only data</td><td>Same picks as Alpaca on day 1 (68 calls, 18 s)</td><td>Switch after ~1 week of matches</td></tr></tbody></table></div>
+    <h4>$10,000 after tax (24%)</h4>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version (long-run live)</th><th>10 years</th><th>20 years</th></tr></thead><tbody><tr><td>SPY (8.4%)</td><td>~$22k</td><td>~$50k</td></tr><tr><td>Robinhood bot today (13.5%)</td><td>~$35k</td><td>~$126k</td></tr><tr><td>v3.0 (16.6%)</td><td>~$46k</td><td>~$216k</td></tr><tr><td><b>v3.2 (~19%, est.)</b></td><td><b>~$57k</b></td><td><b>~$323k</b></td></tr></tbody></table></div>
+    <p class="sx-cap">Caveats: intraday data only from 2016 (one strong decade); the intraday gain is smaller since 2021 (+3.2% vs +4.8%); v3.2's worst drop is ~1% deeper; it needs Robinhood checks every 5–15 minutes during market hours. Research only, not financial advice. Data: data/intraday_fairvol.json, intraday_confirm.json, intraday_exits.json, stack_and_rebound.json, v3_drift.json, live_replay.json, mc_expect.json.</p>
+    </div></div>
     <div class="sx-tr-panel" data-panel="calc" id="trading-calc" hidden>
       <div class="sx-card"><div class="sx-ch"><h3>Growth calculator</h3></div>
         <div class="sx-calc-ctl">
@@ -1450,6 +1470,8 @@ dash.calc('vs_industry', {
         </tbody></table></div>
         <h4 style="margin-top:12px">Gap per strategy (per year, before tax)</h4>
         <div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Strategy</th><th>Realistic</th><th>Ideal</th><th>Gap</th><th>Why</th></tr></thead><tbody>
+          <tr><td>Dip bot v3.2 (est.)</td><td>~19.5%</td><td>~26.7%</td><td>~7</td><td>v3.0 + the 2016–2026 intraday-replay gain (intraday buys + 5% target): +3.1%/yr at 2× costs, +3.9% at normal costs</td></tr>
+          <tr><td>Dip bot v3.1 (est.)</td><td>~18.6%</td><td>~24.4%</td><td>~6</td><td>v3.0 + the 2004–2026 drift gain (+1.6 to +2.0%/yr)</td></tr>
           <tr><td>Dip bot v3.0 (paper bot 10)</td><td>16.6%</td><td>22.8%</td><td>6.2</td><td>Robinhood rules + ETF dips + bonds, same Nov 18 test (1999–2026)</td></tr>
           <tr><td>Dip + ETF dips (paper bot 5)</td><td>15.0%</td><td>21.1%</td><td>6.1</td><td>Same Nov 18 test</td></tr>
           <tr><td>Robinhood bot now (US dip + smart parking)</td><td>13.4%</td><td>18.5%</td><td>5.1</td><td>Same Nov 18 test; an older test gave 14.9% / 22.0%. Many short trades: the overnight bounce and costs matter most</td></tr>
@@ -2367,7 +2389,7 @@ dash.calc('vs_industry', {
     return e;
   };
   // "Day trading" shows only the strategies we paper trade or rely on; everything else lives under "Tested strategies"
-  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'indiadip', 'india', 'calc', 'live'];
+  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'indiadip', 'india', 'calc', 'live'];
   const ALLSUBS = ['overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc', 'mix', 'leaders', 'shorts', 'live'];
   let mode = 'trading';
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
@@ -2376,6 +2398,7 @@ dash.calc('vs_industry', {
       { id: 'usdip', name: 'Robinhood bot now (US dip + smart parking)', pre: 13.4, post: 10.7, ideal: [18.5, 14.8], est: true, dd: -26, c: '#2563eb' },
       { id: 'v3', name: 'Dip bot v3.0 (+ ETF dips + bonds; paper bot 10)', pre: 16.6, post: 13.3, ideal: [22.8, 18.2], est: true, dd: -27, c: '#7c3aed' },
       { id: 'v31', name: 'Dip bot v3.1 (v3.0 + 2 drift slots; paper bot 11; est.)', pre: 18.6, post: 14.9, ideal: [24.4, 19.5], est: true, dd: -26, c: '#4c1d95' },
+      { id: 'v32', name: 'Dip bot v3.2 (v3.0 + intraday buys + 5% target; est.)', pre: 19.5, post: 15.6, ideal: [26.7, 21.4], est: true, dd: -27, c: '#c026d3' },
       { id: 'usdipetf', name: 'Dip + ETF dips (paper bot 5)', pre: 15.0, post: 12.0, ideal: [21.1, 16.9], est: true, dd: -27, c: '#0891b2' },
       { id: 'mix', name: 'Dip + drift mix (6+4, 2004–2026)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#db2777' },
       { id: 'drift', name: 'Earnings drift (blend of 9)', pre: 13.0, post: 10.0, est: true, dd: -51, c: '#059669' },
