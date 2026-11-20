@@ -183,6 +183,9 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
 ### Nov 19 late tests (no action taken)
+- COMBO (data/intraday_combo.json, 2016-2026 replay): v3.2 30.5 | +2 drift 31.0 (2016-20 24.4 vs 21.9, 2021-26 36.9 vs 38.4, 5/11 years,
+  worst -17.6) | +3 drift 30.5. v3.1 vs v3.0 here only +0.3 (2021-26 worse by 2.8) -> drift edge weak lately; not added to v3.2.
+  Slots: 8x12.5% 31.2 (deeper drop), 12x8.3% 29.1, 15x6.7% 28.4, 12x10% 31.0 -> keep 10x10%. Dip size: 9% 28.7, 10% 30.5, 11% 29.5, 12% 29.0 -> keep 10%.
 - Same-day selling (data/intraday_sameday.json, SAME_DAY=1): v3.2 30.5 -> 31.1 with same-day +5% sells, but only ~5 such sells a year and
   better in just 3 of 11 years (gain = 2020 + 2026); +3% same-day target worse (30.3); 3-per-5-days cap changes nothing. Not adopted
   (also H-1B caution: Sai keeps no same-day round trips on the live account).
