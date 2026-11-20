@@ -55,7 +55,7 @@ export default {
     if (path.startsWith('/api/data/')) return withHeaders(await handleData(request, env, ctx, path.slice(10)));
     if (path === '/api/timers') {   // last time the Cloudflare timer started each bot (shown on the Paper bots tab)
       const out = {};
-      for (const wf of ['paper-dip.yml', 'paper-drift.yml']) { try { out[wf] = JSON.parse((await env.CACHE.get('timer:last:' + wf)) || 'null'); } catch { out[wf] = null; } }
+      for (const wf of ['paper-dip.yml', 'paper-drift.yml', 'paper-v32.yml']) { try { out[wf] = JSON.parse((await env.CACHE.get('timer:last:' + wf)) || 'null'); } catch { out[wf] = null; } }
       return json(out);
     }
 
@@ -65,7 +65,7 @@ export default {
       if (path === '/admin') return withHeaders(await asset(env, request, '/admin.html'), { 'cache-control': 'no-store' });
       if (path === '/api/admin/timer-test' && method === 'POST') {   // start the dip workflow once now (outside market hours it just exits)
         if (!sameOrigin(request)) return json({ error: 'Bad request' }, 400);
-        return json(await runTimer('25,40 16,17,19,20 * * 1-5', env));
+        return json(await dispatch('paper-dip.yml', { dry_run: '0', force: '0' }, 'admin-test', env, fetch));
       }
       if (path === '/api/admin/users' && method === 'GET') return json({ users: await A.listUsers(env), you: s.name, root: A.adminName(env) });
       if (path === '/api/admin/users' && (method === 'POST' || method === 'DELETE')) {
@@ -91,26 +91,38 @@ export default {
   // Cloudflare cron timer: GitHub's own schedules skip or delay runs, so we start the paper-trading bots from here.
   // Each bot runs at most once a day, so the backup times are harmless.
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(runTimer(event.cron, env));
+    ctx.waitUntil(runTimer(event.cron, env, fetch, new Date(event.scheduledTime || Date.now())));
   },
 };
 
 export const TIMERS = {
   '5 11 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],          // 6:05 ET in winter / 7:05 ET in summer (pre-market)
   '35 12 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],         // backup: 7:35 / 8:35 ET
-  // dip bot: 3:25 / 3:40 pm ET (19/20 UTC = summer/winter) and 12:25 / 12:40 pm ET for 1 pm half days (16/17 UTC).
-  // One cron line (Cloudflare free plan allows 5 cron triggers per account); off-window runs exit at once.
-  '25,40 16,17,19,20 * * 1-5': ['paper-dip.yml', { dry_run: '0', force: '0' }],
+  // Market-hours clock (Nov 19): ONE cron line every 5 min, 14:00-20:55 UTC (= 10:00 am-3:55 pm ET in winter, 9:00-... in summer);
+  // marketJobs() picks what to start at each tick (Cloudflare free plan: 5 cron triggers per account, all used).
+  '*/5 14-20 * * 1-5': 'market',
   // Screener refresh: 21:45 UTC (4:45 pm ET winter, 5:45 summer) after the close, backup 23:45 UTC. GitHub's own schedule ran 4-6 h late.
   '45 21,23 * * *': ['screen.yml', {}],
   // INDIA Bot B (before close): 09:20 and 09:40 UTC = 2:50 / 3:10 pm IST. India has no daylight saving, so one line all year.
   // The India bots are otherwise separate (own workflow, state and ntfy topic); this is only the alarm clock. 5 of 5 free cron triggers used.
   '20,40 9 * * 1-5': ['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }],
 };
-export async function runTimer(cron, env, fetchFn = fetch) {
+// What the market clock starts at a given UTC time (bots check NY time and Alpaca's calendar themselves; off-window runs exit at once):
+//  * paper-dip.yml: :25 and :40 of 16,17 (12:25/12:40 pm ET half days) and 19,20 UTC (3:25/3:40 pm ET summer/winter)
+//  * paper-v32.yml (bot 12, v3.2): every 15 min + :50/:55 retries for its once-a-day 3:45 step
+export function marketJobs(when) {
+  const h = when.getUTCHours(), m = when.getUTCMinutes(), jobs = [];
+  if ([25, 40].includes(m) && [16, 17, 19, 20].includes(h)) jobs.push(['paper-dip.yml', { dry_run: '0', force: '0' }]);
+  if ([0, 15, 30, 45, 50, 55].includes(m)) jobs.push(['paper-v32.yml', { dry_run: '0', phase: '' }]);
+  return jobs;
+}
+export async function runTimer(cron, env, fetchFn = fetch, when = new Date()) {
   const t = TIMERS[cron];
   if (!t) return { skipped: cron };
-  const [wf, inputs] = t;
+  if (t === 'market') { const out = []; for (const [wf, inputs] of marketJobs(when)) out.push(await dispatch(wf, inputs, cron, env, fetchFn)); return out; }
+  return dispatch(t[0], t[1], cron, env, fetchFn);
+}
+async function dispatch(wf, inputs, cron, env, fetchFn) {
   if (!env.GH_DISPATCH_TOKEN) { const o = { cron, workflow: wf, error: 'GH_DISPATCH_TOKEN secret not set', at: new Date().toISOString() }; try { if (env.CACHE) await env.CACHE.put('timer:last:' + wf, JSON.stringify(o), { expirationTtl: 60 * 60 * 24 * 14 }); } catch {} return o; }
   const r = await fetchFn(`https://api.github.com/repos/saieswarnookala/sec-edgar-worker/actions/workflows/${wf}/dispatches`, {
     method: 'POST',

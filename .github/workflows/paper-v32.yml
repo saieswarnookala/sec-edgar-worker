@@ -1,9 +1,10 @@
 name: "Paper bot 12: Dip bot v3.2 (intraday checks)"
 on:
   schedule:
-    - cron: '0,15,30,45 14-20 * * 1-5'   # every 15 min, 10:00 am - 3:45 pm ET (EDT: 14:00 UTC = 10:00); the script decides what to do by NY time
-    - cron: '50,55 19,20 * * 1-5'        # extra 3:50/3:55 tries in case GitHub starts the 3:45 run late (final step runs once a day)
-    - cron: '40,50,55 16,17 * * 1-5'     # half-days (1 pm close): 12:40-12:55 pm ET
+    # Main clock = the Cloudflare Worker (site/src/index.js marketJobs: every 15 min + 3:50/3:55, started within seconds).
+    # GitHub's own schedule (often 5-30+ min late) is only a backup for the once-a-day 3:45 step:
+    - cron: '55 19,20 * * 1-5'
+    - cron: '55 16,17 * * 1-5'
   workflow_dispatch:
     inputs:
       dry_run:
