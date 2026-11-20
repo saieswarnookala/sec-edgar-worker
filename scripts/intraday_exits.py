@@ -11,7 +11,11 @@ A stock sold during the day frees its slot for that day's 3:45 buys. Idle money 
 Prices: 5-minute raw bars scaled to the adjusted daily series with the stock's own move to its last bar of the day; minute data
 more than 3% away from the S&P data's raw close is treated as bad and that day uses the daily close (counted).
 Bars cached in R2 (alpaca/m5day/<YYYY-MM>.json.gz). DRY=1: fake intraday paths (no network): a code test only - fake paths pinned to the real close are NOT a fair null test
-(an intraday rule can 'see' noise around a known close); the real-data check is the PLACEBO version (sell at a random time)."""
+(an intraday rule can 'see' noise around a known close); the real-data check is the PLACEBO version (sell at a random time).
+Nov 19 final-run fixes: (a) idle money is valued at the time of day it is spent or comes back (the parked ETF's own 5-minute
+bars; IEF/SPY fallback), not at the close; (b) ETFs that dipped only during the day are included (Yahoo daily lows);
+(c) the stock list is a strict superset of every possible intraday dip: day's LOW vs SPY's day HIGH (no SPY-close shortcut);
+(d) half-days: the 3:45 decision moves to 15 minutes before the early close; (e) calendar-year returns for every version."""
 import os, sys, json, time, urllib.request, urllib.parse, urllib.error
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -26,20 +30,27 @@ def asym(t):
     b = t.rsplit("-", 1)[0] if len(t) > 7 and t[-7] == "-" and t[-6:].isdigit() else t
     return b.replace("-", ".")
 ex5c = np.nan_to_num(S.ex5.values, nan=1)
-# stocks that were dips at ANY time of the day: close-based gap <= -6%, or the day's LOW at least 8% below 5 days ago vs SPY
-_lo = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "low", "close", "adj_close"]); _lo["date"] = pd.to_datetime(_lo.date)
-_lo = _lo[_lo.ticker.isin(S.tick) & (_lo.date >= S.dates[0])]; _lo["alow"] = _lo.low * _lo.adj_close / _lo.close
-LOWA = _lo.pivot_table(index="date", columns="ticker", values="alow").reindex(index=S.dates, columns=S.tick).values; del _lo
-spy5r = np.r_[np.full(5, np.nan), S.SP[5:] / S.SP[:-5] - 1]
+# stocks that could have been dips at ANY time of the day: close-based gap <= -6%, or (day's LOW vs 5 days ago) minus (SPY's day
+# HIGH vs 5 days ago) <= -9.5%. Any moment's gap is >= that number, so this cannot miss an intraday -10% dip (0.5% slack for data).
+_lo = pd.read_parquet("/tmp/prices.parquet", columns=["date", "ticker", "low", "high", "close", "adj_close"]); _lo["date"] = pd.to_datetime(_lo.date)
+_lo = _lo[_lo.ticker.isin(S.tick + ["SPY"]) & (_lo.date >= S.dates[0])]; _lo["alow"] = _lo.low * _lo.adj_close / _lo.close; _lo["ahigh"] = _lo.high * _lo.adj_close / _lo.close
+LOWA = _lo.pivot_table(index="date", columns="ticker", values="alow").reindex(index=S.dates, columns=S.tick).values
+_sh = _lo[_lo.ticker == "SPY"].set_index("date").ahigh.reindex(S.dates).values; del _lo
+_sh = np.where(np.isfinite(_sh), _sh, S.SP)
+spy5r = np.r_[np.full(5, np.nan), _sh[5:] / S.SP[:-5] - 1]
 lowgap = np.nan_to_num(LOWA / np.vstack([np.full((5, S.S_C.shape[1]), np.nan), S.S_C[:-5]]) - 1 - spy5r[:, None], nan=1)
-NEAR = S.M.values & ((ex5c <= -0.06) | (lowgap <= -0.08)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
+NEAR = S.M.values & ((ex5c <= -0.06) | (lowgap <= -0.095)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
 E5 = np.nan_to_num(S.E_C / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)
-NEARE = E5 <= -0.03
+EL5 = np.nan_to_num(S.E_L / np.vstack([np.full((5, S.E_C.shape[1]), np.nan), S.E_C[:-5]]) - 1, nan=1)   # ETF day's low vs 5 days ago
+NEARE = (E5 <= -0.03) | (EL5 <= -0.045)
+_old = S.M.values & ((ex5c <= -0.06) | (np.nan_to_num(LOWA / np.vstack([np.full((5, S.S_C.shape[1]), np.nan), S.S_C[:-5]]) - 1 - np.r_[np.full(5, np.nan), S.SP[5:] / S.SP[:-5] - 1][:, None], nan=1) <= -0.08)) & (np.nan_to_num(S.RAW[S.tick].values, nan=0) >= 4)
+print("candidate stock-days", int(NEAR[tr0:].sum()), "(old list", int(_old[tr0:].sum()), "| new ones not in the old list", int((NEAR & ~_old)[tr0:].sum()), ")", "| ETF-days", int(NEARE[tr0:].sum()), "(of which only by the day's low:", int(((EL5 <= -0.045) & (E5 > -0.03))[tr0:].sum()), ")", flush=True)
 need = {t: {"SPY"} for t in range(tr0, D)}
 for t, j in zip(*np.nonzero(NEAR[tr0:])):
     for k in range(t + tr0, min(t + tr0 + 8, D)): need[k].add(S.tick[j])
 for t, j in zip(*np.nonzero(NEARE[tr0:])):
     for k in range(t + tr0, min(t + tr0 + 13, D)): need[k].add("ETF:" + S.EN[j])
+for t in range(tr0, D): need[t] |= {"ETF:" + (S.CL_POS[t] if S.park_on[t] else "IEF")} - {"ETF:SPY"}     # the parked ETF, for time-of-day value
 print("days", D - tr0, "| symbol-days", sum(len(v) for v in need.values()), flush=True)
 H = {"APCA-API-KEY-ID": os.environ.get("APCA_API_KEY_ID", ""), "APCA-API-SECRET-KEY": os.environ.get("APCA_API_SECRET_KEY", "")}
 RATE = float(os.environ.get("RATE_PER_MIN", "150")); _last = [0.0]; CALLS = [0]
@@ -69,10 +80,11 @@ def fetch_day(day, syms):
             for s, bars in (js.get("bars") or {}).items():
                 for x in bars:
                     m = mins(datetime.fromisoformat(x["t"].replace("Z", "+00:00")).astimezone(ET))
-                    if 570 <= m < 960: out.setdefault(s, [None] * 78)[(m - 570) // 5] = round(x["c"], 4)
+                    if 570 <= m < 960: out.setdefault(s, [None] * 78)[(m - 570) // 5] = round(x["c"], 4); VOUT.setdefault(s, [0] * 78)[(m - 570) // 5] = int(x.get("v") or 0)
             tok = js.get("next_page_token")
             if not tok: break
     return out
+VOUT = {}
 # FETCH_VOL=1: download-only job - 5-minute VOLUME for the same stock-days into R2 (alpaca/m5vol/<YYYY-MM>), for a fair
 # intraday volume filter later (only the volume known at that time of day). Shares the Alpaca limit with other jobs: run slower.
 if os.environ.get("FETCH_VOL") == "1":
@@ -115,15 +127,20 @@ if DRY:
 else:
     fetched = 0
     for mo in sorted({d[:7] for d in ds[tr0:]}):
-        cache = r2cache.load(f"alpaca/m5day/{mo}.json.gz") or {}; changed = False
+        cache = r2cache.load(f"alpaca/m5day/{mo}.json.gz") or {}; changed = False; vnew = {}
         for t in [t for t in range(tr0, D) if ds[t][:7] == mo]:
             day = ds[t]; have = cache.get(day, {}); none = set(have.get("_none", []))
             want = {asym(s) if not s.startswith("ETF:") else s[4:] for s in need[t]}
             miss = [s for s in want if s not in have and s not in none]
             if miss:
-                got = fetch_day(day, miss); fetched += 1; have.update(got); have["_none"] = sorted(none | {s for s in miss if s not in got}); cache[day] = have; changed = True
+                VOUT.clear(); got = fetch_day(day, miss); fetched += 1; have.update(got); have["_none"] = sorted(none | {s for s in miss if s not in got}); cache[day] = have; changed = True
+                if VOUT: vnew[day] = dict(VOUT)
             BARS[day] = {k: np.array([np.nan if v is None else v for v in arr], dtype=np.float32) for k, arr in have.items() if k != "_none" and isinstance(arr, list) and len(arr) == 78}
         if changed: r2cache.save(f"alpaca/m5day/{mo}.json.gz", cache)
+        if vnew:
+            vc = r2cache.load(f"alpaca/m5vol/{mo}.json.gz") or {}
+            for day, h in vnew.items(): vc.setdefault(day, {}).update(h)
+            r2cache.save(f"alpaca/m5vol/{mo}.json.gz", vc)
         print(mo, "days fetched", fetched, "calls", CALLS[0], flush=True)
 # ---------------- prices on the adjusted scale: px(t, key, minute) = price at that clock time; fill = close of the next 5-min bar
 RAWC = S.RAW[S.tick].values; BAD = [0, 0]; SER = {}
@@ -139,10 +156,39 @@ def series(t, key, adj_close, raw_close):
     if not DRY and raw_close is not None and np.isfinite(raw_close) and raw_close > 0 and abs(last / raw_close - 1) > 0.03: BAD[0] += 1; SER[k] = None; return None
     c = c * adj_close / last
     SER[k] = (m, c); return SER[k]
+FINC = {}
+def fin_of(t):
+    """the 3:45 decision minute: 15 minutes before the day's last SPY bar ends (half-days close at 13:00)"""
+    if t in FINC: return FINC[t]
+    b = BARS.get(ds[t], {}).get("SPY"); f = 945
+    if b is not None and np.isfinite(b).sum() >= 10:
+        end = 575 + 5 * int(np.flatnonzero(np.isfinite(b))[-1])
+        if end <= 900: f = end - 15
+    FINC[t] = f; return f
+def ratio_at(t, sym, T):
+    """price at clock time T / the day's last 5-minute close, from raw bars (None if missing or odd)"""
+    b = BARS.get(ds[t], {}).get(sym)
+    if b is None: return None
+    ok = np.flatnonzero(np.isfinite(b))
+    if len(ok) < 10: return None
+    m = 575 + 5 * ok; i = np.searchsorted(m, T, side="right") - 1
+    if i < 0: return None
+    r = float(b[ok[i]] / b[ok[-1]]); return r if 0.85 < r < 1.15 else None
+PSTAT = [0, 0, 0]   # parking value lookups: own ETF bars, SPY bars as stand-in, straight line
+def park_f(t, held, T):
+    """value at clock time T of 1 dollar parked at yesterday's close (equals 1 + the day's return at the decision time's close)"""
+    if held == "CASH": return 1.0
+    r = S.CLR[t] if held == "SPY" else S.BOND_R[t]
+    if T >= 960: return 1 + r
+    sym = (S.CL_POS[t] if held == "SPY" else "IEF")
+    q = ratio_at(t, sym, T)
+    if q is not None: PSTAT[0] += 1; return (1 + r) * q
+    if held == "SPY" and (q := ratio_at(t, "SPY", T)) is not None: PSTAT[1] += 1; return (1 + r) * q
+    PSTAT[2] += 1; return 1 + r * max(0, T - 570) / 390
 def px_at(t, kind, j, minute, fill=False):
     adj = (S.S_C if kind != "E" else S.E_C)[t, j]
     s = series(t, asym(S.tick[j]) if kind != "E" else S.EN[j], adj, RAWC[t, j] if kind != "E" else None)
-    if s is None: return adj if minute >= 945 else None
+    if s is None: return adj if minute >= fin_of(t) else None
     m, c = s
     if fill:
         i = np.searchsorted(m, minute + 5)                              # first bar ending at or after minute+5
@@ -174,7 +220,7 @@ def vol_ok(t, j, T):
     v = VB.get(ds[t], {}).get(asym(S.tick[j]))
     if v is None: VSTAT[2] += 1; return bool(VOLOK[t, j])
     so_far = v[: max(0, (T - 570) // 5)].sum(); fr = vol_fraction(T)
-    if fr < 0.2 or so_far <= 0: return bool(np.nan_to_num(S.vr.values[t, j], nan=9) <= 2.0) if T >= 945 else True   # too early to judge: live skips the filter
+    if fr < 0.2 or so_far <= 0: return bool(np.nan_to_num(S.vr.values[t, j], nan=9) <= 2.0) if T >= fin_of(t) else True   # too early to judge: live skips the filter
     VSTAT[1] += 1
     prior = VRAW[t - 54:t, j]
     if len(prior) < 54 or not np.isfinite(prior).all(): return True
@@ -187,16 +233,16 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
     for t in range(tr0, D):
         want = "SPY" if S.park_on[t] else ("IEF" if bond and S.BOND_OK[t] else "CASH")
         if want != held_park: cash *= 1 - cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
-        cash *= 1 + (S.CLR[t] if held_park == "SPY" else (S.BOND_R[t] if held_park == "IEF" else 0.0))
+        cu = cash; FIN = fin_of(t)            # cu = idle money in 'yesterday's close' units; worth cu * park_f(t, held_park, T) at time T
         for p in pos: p["ref"] = (S.S_C if p["k"] != "E" else S.E_C)[t - 1, p["j"]]; p["armed"] = False; p["hi"] = 0.0
         sold_today = set()
-        checks = list(range(575, 945, 5)) if exit_mode in ("target", "lock", "placebo") or (exit_mode == "check" and n == 5) else \
-                 (list(range(570 + n, 945, n)) if exit_mode == "check" else [])
-        buy_checks = list(range(600, 945, bn)) if intraday_buy else []
-        times = sorted(set(checks) | set(buy_checks) | {945})
+        checks = list(range(575, FIN, 5)) if exit_mode in ("target", "lock", "placebo") or (exit_mode == "check" and n == 5) else \
+                 (list(range(570 + n, FIN, n)) if exit_mode == "check" else [])
+        buy_checks = list(range(600, FIN, bn)) if intraday_buy else []
+        times = sorted(set(checks) | set(buy_checks) | {FIN})
         spy5_ref = S.SP[t - 5]
         for T in times:
-            final = T == 945
+            final = T == FIN; pf = park_f(t, held_park, T)
             # exits
             keep = []
             for p in pos:
@@ -217,7 +263,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     f = px_at(t, p["k"], j, T, fill=True)
                     f = f if f is not None and np.isfinite(f) else Cx[t, j]
                     c = cs if p["k"] != "E" else ce
-                    cash += p["v"] * (f / p["ref"]) * (1 - c); trades.append(f / p["px"] - 1 - 2 * c)
+                    cu += p["v"] * (f / p["ref"]) * (1 - c) / pf; trades.append(f / p["px"] - 1 - 2 * c)
                     if not final: early_sells[0] += 1
                     sold_today.add((p["k"], j))
                 else: keep.append(p)
@@ -227,7 +273,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 spys = series(t, "SPY", S.SP[t], S.RAW["SPY"].values[t]); spx = (float(spys[1][np.searchsorted(spys[0], T, side='right') - 1]) if spys is not None and np.searchsorted(spys[0], T, side='right') > 0 else (S.SP[t] if final else None))
                 if spx is None: continue
                 spy5 = spx / spy5_ref - 1; held = {(p["k"], p["j"]) for p in pos} | (sold_today if no_rebuy else set())
-                eq_now = cash + sum(p["v"] for p in pos)
+                eq_now = cu * pf + sum(p["v"] for p in pos)
                 cand = []
                 for j in np.flatnonzero(NEAR[t] & (S.M.values[t] if FAIR else VOLOK[t])):
                     if FAIR and not vol_ok(t, j, T): continue
@@ -248,10 +294,11 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     if len(pos) >= 10: break
                     f = px_at(t, k, j, T, fill=True)
                     if f is None or not np.isfinite(f) or f <= 0: continue
-                    a = min(0.10 * eq_now, cash); c = cs if k == "S" else ce
+                    a = min(0.10 * eq_now, cu * pf); c = cs if k == "S" else ce
                     if a < 0.02 * eq_now: break
-                    cash -= a; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
+                    cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
                     if not final: early_buys[0] += 1
+        cash = cu * park_f(t, held_park, 960)
         for p in pos:                                                    # mark to the close
             Cx = S.S_C if p["k"] != "E" else S.E_C; p["v"] *= Cx[t, p["j"]] / p["ref"]; p["ref"] = Cx[t, p["j"]]
         curve[t] = cash + sum(p["v"] for p in pos)
@@ -262,7 +309,10 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
          "sold_during_day_per_month": round(early_sells[0] / (y_ * 12), 1), "bought_during_day_per_month": round(early_buys[0] / (y_ * 12), 1)}
     for name, a_, b_ in (("2016-2020", "2016-01-01", "2021-01-01"), ("2021-2026", "2021-01-01", "2100-01-01")):
         jj = np.flatnonzero((dn[ix] >= np.datetime64(a_)) & (dn[ix] < np.datetime64(b_)))
+        if len(jj) == 0: o[name] = None; continue
         c2 = cv[jj] / (cv[jj[0] - 1] if jj[0] > 0 else 1); o[name] = round((c2[-1] ** (252 / len(jj)) - 1) * 100, 1)
+    yrs = pd.Series(cv, index=pd.DatetimeIndex(dn[ix])).resample("YE").last(); prev = np.r_[1.0, yrs.values[:-1]]
+    o["years"] = {str(k.year): round((v / p_ - 1) * 100, 1) for k, v, p_ in zip(yrs.index, yrs.values, prev)}
     return o
 V = []
 for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
@@ -278,7 +328,12 @@ for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
     print(f"{name:62s} {a['per_year_pct']}%/yr worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
+print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
+for a_, b_ in (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%")):
+    ya, yb = RES[a_]["years"], RES[b_]["years"]; d = {y: round(yb[y] - ya[y], 1) for y in ya}
+    RES[f"YEARS: {b_} minus base"] = {"by_year": d, "years_better": sum(v > 0 for v in d.values()), "years": len(d), "best_year_share_of_gain_pct": round(100 * max(d.values()) / max(1e-9, sum(v for v in d.values() if v > 0)))}
+    print("YEARS", b_, "vs base:", " ".join(f"{y}:{ya[y]}->{yb[y]}" for y in ya), "| better in", RES[f"YEARS: {b_} minus base"]["years_better"], "of", len(d), flush=True)
 if FAIR: print(f"fair volume filter: {VSTAT[0]} checks, {VSTAT[1]} used today's volume so far, {VSTAT[2]} had no 5-minute volume (full-day filter)", flush=True)
-json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "fair_volume": FAIR, "fair_volume_stats": VSTAT, "alpaca_calls": CALLS[0], "results": RES},
+json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "park_value_lookups": PSTAT, "half_days": sum(v != 945 for v in FINC.values()), "fair_volume": FAIR, "fair_volume_stats": VSTAT, "alpaca_calls": CALLS[0], "results": RES},
           open(OUT, "w"), indent=1, default=float)
 print("wrote", OUT, flush=True)

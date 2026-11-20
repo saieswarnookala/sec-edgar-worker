@@ -51,7 +51,7 @@ VSCALE = np.r_[1.0, (0.5 + rank.fillna(0.5)).values[:-1]]
 ETFS = ["SPY", "QQQ", "IWM", "DIA", "MDY", "XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "XLRE", "XLC",
         "EFA", "EEM", "EWJ", "EWG", "EWU", "EWC", "EWA", "EWZ", "EWH", "EWT", "EWY", "INDA", "FXI"]
 SECTORS = ["XLB", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "XLRE", "XLC"]
-YO = {}
+YO = {}; YL = {}
 def yahoo(sym):
     if DRY:
         rng = np.random.default_rng(abs(hash(sym)) % 2**32); c = pd.Series(50 * np.exp(np.cumsum(rng.normal(0.0003, 0.013, D))), index=dates)
@@ -63,8 +63,8 @@ def yahoo(sym):
             j = json.load(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60))["chart"]["result"][0]
             q = j["indicators"]["quote"][0]; adj = (j["indicators"].get("adjclose") or [{}])[0].get("adjclose") or q["close"]
             ix = pd.to_datetime([time.strftime("%Y-%m-%d", time.gmtime(t)) for t in j["timestamp"]])
-            df = pd.DataFrame({"a": adj, "c": q["close"], "o": q["open"]}, index=ix); df = df[~df.index.duplicated()].sort_index()
-            s = df.a.dropna(); o = (df.o * df.a / df.c).where((df.o > 0) & (df.c > 0)); YO[sym] = o
+            df = pd.DataFrame({"a": adj, "c": q["close"], "o": q["open"], "l": q.get("low") or q["close"]}, index=ix); df = df[~df.index.duplicated()].sort_index()
+            s = df.a.dropna(); o = (df.o * df.a / df.c).where((df.o > 0) & (df.c > 0)); YO[sym] = o; YL[sym] = (df.l * df.a / df.c).where((df.l > 0) & (df.c > 0))
             time.sleep(0.4); return s
         except Exception as e: err = e; time.sleep(3 * (a + 1))
     print("Yahoo failed", sym, err, flush=True); return None
@@ -76,6 +76,7 @@ okE = Ce_raw.notna() & Ce_raw.notna().shift(-1, fill_value=False)
 E_SIG = (okE & (Ce > Ce.rolling(200).mean()) & (Ce / Ce.shift(5) - 1 <= -0.05)).values
 E_RK, E_C, E_M5 = (Ce / Ce.shift(5) - 1).values, Ce.values, Ce.rolling(5).mean().values
 E_O = pd.DataFrame({s: YO.get(s, pd.Series(dtype=float)) for s in EN}).reindex(dates).values
+E_L = pd.DataFrame({s: YL.get(s, pd.Series(dtype=float)) for s in EN}).reindex(dates).values   # daily lows (adjusted); NaN in DRY
 Er = np.nan_to_num(np.vstack([np.zeros(len(EN)), E_C[1:] / E_C[:-1] - 1]))
 def chain(*syms):
     r = pd.Series(np.nan, index=dates)
@@ -92,7 +93,7 @@ TBILL_R = np.clip(TBILL_R, 0, 0.08 / 252) if not DRY else np.full(D, 0.02 / 252)
 BOND_OK = np.r_[False, (bond_lvl > bond_lvl.rolling(100, min_periods=100).mean()).fillna(False).values[:-1]]
 
 # ---------------- Clear Leader daily returns (what the live bot parks in when SPY > 100-day avg)
-CLR = spyr.copy(); CL_HELD = {}
+CLR = spyr.copy(); CL_HELD = {}; CL_POS = np.array(["SPY"] * D, dtype=object)   # which ETF Clear Leader holds each day
 if not DRY:
     g = {"__name__": "cl"}; exec(open("scripts/clear_leader_long.py").read(), g)
     rows = g["run"](crash=False)[0]; posm = {r["m"]: r["pos"] for r in rows}; mret = {r["m"]: r["r"] for r in rows}
@@ -107,7 +108,7 @@ if not DRY:
     for m in sorted(set(mon)):
         ix = np.where(mon == m)[0]
         if m not in posm: continue
-        d = DAILY[posm[m]][ix]; CL_HELD[posm[m]] = CL_HELD.get(posm[m], 0) + 1
+        d = DAILY[posm[m]][ix]; CL_HELD[posm[m]] = CL_HELD.get(posm[m], 0) + 1; CL_POS[ix] = posm[m]
         CLR[ix] = d if np.isfinite(d).all() else (1 + mret[m]) ** (1 / len(ix)) - 1
     print("Clear Leader months held:", CL_HELD, flush=True)
 
