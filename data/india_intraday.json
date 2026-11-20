@@ -1,0 +1,100 @@
+{
+ "note": "India intraday check (Nov 19 2026): does buying dips DURING the day (and a +5% target) help the India bot, like it did in the US?\nResearch only, not financial advice. Small test: Yahoo keeps only ~60 days of 5-minute prices, so this can show \"obviously worse\",\nnot prove \"better\".\nIndia bot rules (scripts/paper_india.py): top-200 traded Nifty 500 stocks, above 200-day average, fell 12%+ more than the Nifty 50 over\n5 sessions, 5-day volume <= 2x normal, no 35% one-day jumps; 10 slots x 10%; sell when back above the 5-day average (after >= 1 session)\nor after 5 sessions; idle money NIFTYBEES (Nifty > 150-day avg) / GOLDBEES (gold > 100-day) / liquid fund (~6%/yr).\nBase = decide and fill at the 3:10 pm IST price (India Bot B). Variants:\n  + INTRADAY BUYS: every 15 min 9:45 am - 3:00 pm IST, buy a stock the moment it meets the rules (free slots only)\n  + TARGET: every 15 min, sell a position held >= 1 session once it is +5% above its buy price\nCosts 0.30% per side for stocks, 0.15% for ETFs. Idle money valued at the time of day it is spent (ETF 5-minute bars).\nPer-signal check (more data points than the portfolio): every stock-day where the dip rule first became true during the day ->\n  (a) still a dip at 3:10: was the 3:10 price higher (buying early was cheaper) or lower?\n  (b) dips that recovered by 3:10 (the base never buys them): their return from the intraday buy to the next close / 3 sessions later.\nDRY_FAKE=1: made-up prices (code test only).",
+ "built": "2026-11-20",
+ "dry": false,
+ "results": {
+  "sessions": 60,
+  "from": "2026-08-25",
+  "to": "2026-11-20",
+  "stocks": 200,
+  "base: 3:10 pm only (India bot B)": {
+   "period_return_pct": -8.62,
+   "per_year_pct_rough": -31.1,
+   "worst_drop_pct": -13.0,
+   "trades": 17,
+   "avg_trade_pct": -2.69,
+   "win_pct": 35,
+   "bought_during_day": 0,
+   "sold_during_day": 0
+  },
+  "+ buy dips during the day (15 min)": {
+   "period_return_pct": -8.84,
+   "per_year_pct_rough": -31.8,
+   "worst_drop_pct": -12.7,
+   "trades": 22,
+   "avg_trade_pct": -1.76,
+   "win_pct": 45,
+   "bought_during_day": 23,
+   "sold_during_day": 0
+  },
+  "+ profit target +5%": {
+   "period_return_pct": -8.34,
+   "per_year_pct_rough": -30.2,
+   "worst_drop_pct": -13.0,
+   "trades": 18,
+   "avg_trade_pct": -2.35,
+   "win_pct": 33,
+   "bought_during_day": 0,
+   "sold_during_day": 1
+  },
+  "+ intraday buys + target +5% (India v3.2-style)": {
+   "period_return_pct": -9.05,
+   "per_year_pct_rough": -32.4,
+   "worst_drop_pct": -12.7,
+   "trades": 23,
+   "avg_trade_pct": -1.97,
+   "win_pct": 43,
+   "bought_during_day": 24,
+   "sold_during_day": 6
+  },
+  "intraday buys + target, 2x costs": {
+   "period_return_pct": -11.44,
+   "per_year_pct_rough": -39.5,
+   "worst_drop_pct": -14.1,
+   "trades": 23,
+   "avg_trade_pct": -2.56,
+   "win_pct": 43,
+   "bought_during_day": 24,
+   "sold_during_day": 6
+  },
+  "base, 2x costs": {
+   "period_return_pct": -10.68,
+   "per_year_pct_rough": -37.3,
+   "worst_drop_pct": -14.1,
+   "trades": 17,
+   "avg_trade_pct": -3.27,
+   "win_pct": 35,
+   "bought_during_day": 0,
+   "sold_during_day": 0
+  },
+  "per_signal": {
+   "dips_found_during_the_day_and_still_dips_at_3:10__price_3:10_vs_first_seen": {
+    "n": 50,
+    "avg_pct": -0.38,
+    "median_pct": -0.1,
+    "share_positive_pct": 34,
+    "t_stat": -1.45
+   },
+   "note_1": "positive = the price was HIGHER at 3:10 than when first seen, so buying early was cheaper (good for intraday buying)",
+   "dips_that_recovered_by_3:10__return_to_next_close": {
+    "n": 13,
+    "avg_pct": 2.79,
+    "median_pct": 2.92,
+    "share_positive_pct": 77,
+    "t_stat": 2.38
+   },
+   "dips_that_recovered_by_3:10__return_to_3_sessions_later": {
+    "n": 12,
+    "avg_pct": 1.92,
+    "median_pct": 1.22,
+    "share_positive_pct": 50,
+    "t_stat": 1.05
+   },
+   "note_2": "these are extra trades only the intraday version makes; positive average = they pay (costs ~0.6% round trip not included)"
+  },
+  "fallbacks": [
+   2,
+   12000
+  ]
+ }
+}
