@@ -182,6 +182,14 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 19 late tests (no action taken)
+- Same-day selling (data/intraday_sameday.json, SAME_DAY=1): v3.2 30.5 -> 31.1 with same-day +5% sells, but only ~5 such sells a year and
+  better in just 3 of 11 years (gain = 2020 + 2026); +3% same-day target worse (30.3); 3-per-5-days cap changes nothing. Not adopted
+  (also H-1B caution: Sai keeps no same-day round trips on the live account).
+- India intraday (data/india_intraday.json, 60 days of Yahoo 5-min, Aug 25-Nov 20 2026): the India bot itself lost ~8.6% in that window
+  (17 trades, 35% wins); intraday buys / +5% target ~same (-8.8 / -9.1). Per signal: waiting until 3:10 was 0.38% cheaper (t -1.45);
+  dips that recovered by 3:10 made +2.8% next day (n 13). No case for intraday in India; friends trade by hand anyway.
+
 ## 6. Live bot: Robinhood (live/, guide live/README.md)
 - Account: Robinhood agentic (MCP) account, LIMITED MARGIN (so sale proceeds are usable the same day), opened Nov 11–12, ~$10 in it. Plan $1,000.
 - Runs on an Oracle Cloud Always Free VM (VM.Standard.A1.Flex, 1 OCPU, 6 GB, Ubuntu 24.04, Chicago, user `ubuntu`, Sai's SSH key). Account upgraded to pay-as-you-go; $1 budget alert set.
