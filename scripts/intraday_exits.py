@@ -150,6 +150,36 @@ def px_at(t, kind, j, minute, fill=False):
     i = np.searchsorted(m, minute, side="right") - 1
     return float(c[i]) if i >= 0 else None
 VOLOK = (np.nan_to_num(S.vr.values, nan=9) <= 2.0) & (np.nan_to_num(RAWC, nan=0) >= 5) & S.M.values
+# FAIR_VOL=1: the volume filter uses only what is known at that moment, exactly like the live bot: today's volume so far
+# (5-minute bars from R2 alpaca/m5vol) scaled to a full day with the live bot's intraday curve, averaged with the 4 prior days,
+# over the 50 days before them. Price/membership checks unchanged.
+FAIR = os.environ.get("FAIR_VOL") == "1"
+VOL_CURVE = [(570, 0), (600, 0.12), (660, 0.25), (720, 0.35), (780, 0.43), (840, 0.52), (900, 0.64), (930, 0.74), (960, 1)]
+def vol_fraction(m):
+    if m <= 570: return 0.0
+    if m >= 960: return 1.0
+    for (m0, f0), (m1, f1) in zip(VOL_CURVE, VOL_CURVE[1:]):
+        if m <= m1: return f0 + (f1 - f0) * (m - m0) / (m1 - m0)
+    return 1.0
+VRAW = S.VOLM[S.tick].values; VB = {}; VSTAT = [0, 0, 0]       # [checked, used today's volume so far, no intraday volume -> full-day filter]
+if FAIR and not DRY:
+    for mo in sorted({d[:7] for d in ds[tr0:]}):
+        c = r2cache.load(f"alpaca/m5vol/{mo}.json.gz") or {}
+        for day, h in c.items(): VB[day] = {k: np.array(v, dtype=np.float64) for k, v in h.items() if k != "_none" and isinstance(v, list) and len(v) == 78}
+    print("fair volume: days with 5-minute volume", len(VB), flush=True)
+def vol_ok(t, j, T):
+    if not FAIR: return bool(VOLOK[t, j])
+    if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
+    VSTAT[0] += 1
+    v = VB.get(ds[t], {}).get(asym(S.tick[j]))
+    if v is None: VSTAT[2] += 1; return bool(VOLOK[t, j])
+    so_far = v[: max(0, (T - 570) // 5)].sum(); fr = vol_fraction(T)
+    if fr < 0.2 or so_far <= 0: return bool(np.nan_to_num(S.vr.values[t, j], nan=9) <= 2.0) if T >= 945 else True   # too early to judge: live skips the filter
+    VSTAT[1] += 1
+    prior = VRAW[t - 54:t, j]
+    if len(prior) < 54 or not np.isfinite(prior).all(): return True
+    base = prior[:50].mean(); recent = (prior[-4:].sum() + so_far / fr) / 5
+    return base <= 0 or recent / base <= 2.0
 def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
@@ -199,7 +229,8 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 spy5 = spx / spy5_ref - 1; held = {(p["k"], p["j"]) for p in pos} | (sold_today if no_rebuy else set())
                 eq_now = cash + sum(p["v"] for p in pos)
                 cand = []
-                for j in np.flatnonzero(NEAR[t] & VOLOK[t]):
+                for j in np.flatnonzero(NEAR[t] & (S.M.values[t] if FAIR else VOLOK[t])):
+                    if FAIR and not vol_ok(t, j, T): continue
                     if ("S", j) in held: continue
                     now = px_at(t, "S", j, T)
                     if now is None: continue
@@ -247,6 +278,7 @@ for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
     print(f"{name:62s} {a['per_year_pct']}%/yr worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
-json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "alpaca_calls": CALLS[0], "results": RES},
+if FAIR: print(f"fair volume filter: {VSTAT[0]} checks, {VSTAT[1]} used today's volume so far, {VSTAT[2]} had no 5-minute volume (full-day filter)", flush=True)
+json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "fair_volume": FAIR, "fair_volume_stats": VSTAT, "alpaca_calls": CALLS[0], "results": RES},
           open(OUT, "w"), indent=1, default=float)
 print("wrote", OUT, flush=True)
