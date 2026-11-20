@@ -172,6 +172,15 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - MODE=close ~3:05 pm IST: decides on the latest prices and fills at once, like placing orders before the 3:30 pm close; only 2:45-3:25 pm IST, refuses quotes older than 20 min. Started by the Cloudflare timer '20,40 9 * * 1-5' (5th and last free cron trigger), GitHub backup 09:30 UTC; runs once a day. State data/paper_india_close_state.json.
 - MODE=morning 8:15 am IST (GitHub cron 02:45 UTC): holdings, watchlist (8-12% worse than Nifty), account vs Nifty; no orders, no state change.
 - MODE=open (next-open variant) kept for manual tests only (bot=A).
+### Bot 12: Dip bot v3.2 (virtual, from Nov 20) - scripts/paper-v32.mjs, .github/workflows/paper-v32.yml, data/paper_v32_state.json
+- Own workflow, cron every 15 min 10:00-15:45 ET (+3:50/3:55 retries, +half-day 12:40-12:55). Script decides by NY time + Alpaca calendar:
+  intraday (10:00 to close-20): v32Intraday = +5% target sells (held >=1 day), dip buys into free slots funded from parking, proceeds re-parked;
+  final (close-20 .. close-2, once a day): virtualStep (v3.0 rules, IEF parking) + plain v3.0 twin on the same prices.
+- Manual test: dispatch with dry_run=1 phase=intraday|final (does not save state). Tests in test-paper-dip.mjs ("bot 12").
+- Backtest: data/intraday_final.json (final run Nov 19: idle money valued by time of day, ETF intraday-only dips via Yahoo lows,
+  stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
+  worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
+
 ## 6. Live bot: Robinhood (live/, guide live/README.md)
 - Account: Robinhood agentic (MCP) account, LIMITED MARGIN (so sale proceeds are usable the same day), opened Nov 11–12, ~$10 in it. Plan $1,000.
 - Runs on an Oracle Cloud Always Free VM (VM.Standard.A1.Flex, 1 OCPU, 6 GB, Ubuntu 24.04, Chicago, user `ubuntu`, Sai's SSH key). Account upgraded to pay-as-you-go; $1 budget alert set.
