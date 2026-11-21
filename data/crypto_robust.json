@@ -1,0 +1,247 @@
+{
+ "note": "Bitcoin 10-month trend rule: robustness (Nov 20 2026). Research only, not financial advice.\nSame data/costs as scripts/crypto_trend.py (Yahoo BTC-USD from Sep 2014, ETF route 0.10%/trade + 0.25%/yr, idle money in T-bills).\nChecks: (1) average length 6-14 months; (2) check day in the month (1st/8th/15th/22nd/last); (3) trading 0/1/3/7/14 days late;\n(4) start year 2015/2017/2019/2021; (5) daily versions 100-300 days; (6) PLACEBO: 2,000 random in/out monthly schedules with the same\nshare of months invested -> where the real rule ranks. DRY=1: fake prices.",
+ "built": "2026-11-21",
+ "dry": null,
+ "results": {
+  "hold": {
+   "per_year": 48.1,
+   "worst": -83.4,
+   "2015-19": 86.7,
+   "2020-26": 34.5,
+   "2022": -65.4,
+   "trades_per_year": 0.0
+  },
+  "length 6 months": {
+   "per_year": 55.6,
+   "worst": -69.9,
+   "2015-19": 98.2,
+   "2020-26": 33.1,
+   "2022": 2.0,
+   "trades_per_year": 1.7
+  },
+  "length 7 months": {
+   "per_year": 45.1,
+   "worst": -72.6,
+   "2015-19": 94.5,
+   "2020-26": 19.3,
+   "2022": 2.0,
+   "trades_per_year": 1.9
+  },
+  "length 8 months": {
+   "per_year": 43.7,
+   "worst": -72.4,
+   "2015-19": 83.4,
+   "2020-26": 22.3,
+   "2022": -17.8,
+   "trades_per_year": 1.9
+  },
+  "length 9 months": {
+   "per_year": 48.6,
+   "worst": -72.4,
+   "2015-19": 83.4,
+   "2020-26": 29.7,
+   "2022": 2.0,
+   "trades_per_year": 1.9
+  },
+  "length 10 months": {
+   "per_year": 59.6,
+   "worst": -72.4,
+   "2015-19": 83.4,
+   "2020-26": 47.1,
+   "2022": 2.0,
+   "trades_per_year": 1.2
+  },
+  "length 11 months": {
+   "per_year": 61.8,
+   "worst": -66.0,
+   "2015-19": 100.5,
+   "2020-26": 41.3,
+   "2022": -15.8,
+   "trades_per_year": 1.1
+  },
+  "length 12 months": {
+   "per_year": 49.2,
+   "worst": -85.1,
+   "2015-19": 76.8,
+   "2020-26": 34.1,
+   "2022": 2.0,
+   "trades_per_year": 0.9
+  },
+  "length 13 months": {
+   "per_year": 55.2,
+   "worst": -80.7,
+   "2015-19": 76.8,
+   "2020-26": 43.8,
+   "2022": -17.8,
+   "trades_per_year": 0.8
+  },
+  "length 14 months": {
+   "per_year": 53.9,
+   "worst": -82.6,
+   "2015-19": 73.2,
+   "2020-26": 43.8,
+   "2022": -17.8,
+   "trades_per_year": 1.0
+  },
+  "check day 1": {
+   "per_year": 55.7,
+   "worst": -72.6,
+   "2015-19": 81.2,
+   "2020-26": 42.2,
+   "2022": 1.9,
+   "trades_per_year": 1.4
+  },
+  "check day 8": {
+   "per_year": 49.1,
+   "worst": -72.2,
+   "2015-19": 86.2,
+   "2020-26": 29.1,
+   "2022": -10.9,
+   "trades_per_year": 1.6
+  },
+  "check day 15": {
+   "per_year": 54.8,
+   "worst": -78.2,
+   "2015-19": 93.3,
+   "2020-26": 34.3,
+   "2022": 2.0,
+   "trades_per_year": 1.3
+  },
+  "check day 22": {
+   "per_year": 53.1,
+   "worst": -69.0,
+   "2015-19": 109.3,
+   "2020-26": 24.3,
+   "2022": -25.2,
+   "trades_per_year": 1.1
+  },
+  "check day last": {
+   "per_year": 59.6,
+   "worst": -72.4,
+   "2015-19": 83.4,
+   "2020-26": 47.1,
+   "2022": 2.0,
+   "trades_per_year": 1.2
+  },
+  "trade 0 days late": {
+   "per_year": 59.6,
+   "worst": -72.4,
+   "2015-19": 83.4,
+   "2020-26": 47.1,
+   "2022": 2.0,
+   "trades_per_year": 1.2
+  },
+  "trade 1 days late": {
+   "per_year": 58.0,
+   "worst": -72.6,
+   "2015-19": 81.2,
+   "2020-26": 45.8,
+   "2022": 1.9,
+   "trades_per_year": 1.2
+  },
+  "trade 3 days late": {
+   "per_year": 55.4,
+   "worst": -72.0,
+   "2015-19": 72.2,
+   "2020-26": 46.9,
+   "2022": -0.8,
+   "trades_per_year": 1.2
+  },
+  "trade 7 days late": {
+   "per_year": 53.1,
+   "worst": -73.1,
+   "2015-19": 75.0,
+   "2020-26": 41.5,
+   "2022": -11.2,
+   "trades_per_year": 1.2
+  },
+  "trade 14 days late": {
+   "per_year": 45.3,
+   "worst": -87.1,
+   "2015-19": 70.3,
+   "2020-26": 31.6,
+   "2022": -7.9,
+   "trades_per_year": 1.2
+  },
+  "daily 100-day average": {
+   "per_year": 60.0,
+   "worst": -60.7,
+   "2015-19": 88.0,
+   "2020-26": 45.2,
+   "2022": -18.6,
+   "trades_per_year": 12.2
+  },
+  "daily 150-day average": {
+   "per_year": 70.7,
+   "worst": -60.9,
+   "2015-19": 121.9,
+   "2020-26": 44.4,
+   "2022": -5.0,
+   "trades_per_year": 6.4
+  },
+  "daily 200-day average": {
+   "per_year": 55.2,
+   "worst": -70.1,
+   "2015-19": 97.5,
+   "2020-26": 32.7,
+   "2022": 2.0,
+   "trades_per_year": 6.2
+  },
+  "daily 250-day average": {
+   "per_year": 55.2,
+   "worst": -64.7,
+   "2015-19": 102.2,
+   "2020-26": 30.5,
+   "2022": -0.9,
+   "trades_per_year": 6.4
+  },
+  "daily 300-day average": {
+   "per_year": 56.8,
+   "worst": -67.9,
+   "2015-19": 98.7,
+   "2020-26": 34.6,
+   "2022": -1.0,
+   "trades_per_year": 6.1
+  },
+  "start 2015": {
+   "rule_per_year": 61.4,
+   "rule_worst": -72.4,
+   "hold_per_year": 54.4,
+   "hold_worst": -83.4
+  },
+  "start 2017": {
+   "rule_per_year": 61.7,
+   "rule_worst": -72.4,
+   "hold_per_year": 50.0,
+   "hold_worst": -83.4
+  },
+  "start 2019": {
+   "rule_per_year": 46.5,
+   "rule_worst": -53.1,
+   "hold_per_year": 40.3,
+   "hold_worst": -76.7
+  },
+  "start 2021": {
+   "rule_per_year": 29.6,
+   "rule_worst": -53.1,
+   "hold_per_year": 11.5,
+   "hold_worst": -76.7
+  },
+  "start 2023": {
+   "rule_per_year": 31.1,
+   "rule_worst": -46.6,
+   "hold_per_year": 36.6,
+   "hold_worst": -54.8
+  },
+  "placebo": {
+   "months_invested_share": 0.71,
+   "real_rule_per_year": 59.6,
+   "placebo_median_per_year": 35.7,
+   "placebo_p95_per_year": 56.5,
+   "share_of_placebos_beating_rule_pct": 2.8,
+   "real_worst": -72.4,
+   "placebo_median_worst": -78.7,
+   "share_of_placebos_with_smaller_worst_drop_pct": 21.2
+  }
+ }
+}
