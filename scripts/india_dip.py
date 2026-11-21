@@ -66,7 +66,7 @@ def run():
     nr = n.pct_change().fillna(0).values; liq = np.full(D, (1 + LIQUID) ** (1 / 248) - 1)
     ntr = (n > n.rolling(100).mean()).shift(1, fill_value=False).values
     PARK = {"cash": np.zeros(D), "liquid fund ~6%": liq, "Nifty trend (100-day), else liquid": np.where(ntr, nr, liq), "Nifty always": nr}
-    def sim(S, R, park, cost=0.0015, entry="close", mx=5, slots=10, smart=True):
+    def sim(S, R, park, cost=0.0015, entry="close", mx=5, slots=10, smart=True, curve_out=None):
         eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []
         for t in range(START, D):
             used = sum(p[2] for p in pos); day = 0.0
@@ -85,6 +85,7 @@ def run():
                 w = min(1.0 / slots, max(0.0, 1 - used) / len(new))
                 for c in new: pos.append([c, 0, w, 1.0]); eq *= 1 - cost * w
             curve[t] = eq
+        if curve_out is not None: curve_out.append(curve.copy())
         return summarize(curve, tr, inv)
     def summarize(curve, tr=None, inv=None):
         c = pd.Series(curve[START:], index=dates[START:]); p = c.pct_change().fillna(0); yrs = len(p) / 248
@@ -101,6 +102,75 @@ def run():
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "momentum":
+        # Nov 21 2026: Indian momentum basket with a crash filter (research report idea #1), and a 50/50 mix with the dip bot.
+        # Universe: top 200 or top 500 by traded value (approx point-in-time, re-picked every 6 months), price > Rs 20, glitch filter.
+        # Score: 12-month return skipping the last month (12-1), or 6-month, or (6m + 12m) / volatility. Top 20 or 30, equal weight.
+        # Rebalance monthly (first trading day) or semi-annually (Jan/Jul); a held stock stays while it ranks within 1.5x N (buffer).
+        # Crash filter (checked at each rebalance; 'daily' variant checks every day): Nifty above its 200-day average, else park in
+        # liquid fund (6%/yr) or gold-if-gold-above-its-100-day-avg. Costs 0.30% per side on every rupee traded. Before tax.
+        g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
+        gtr = (gold > gold.rolling(100).mean()).shift(1, fill_value=False).values
+        dv = (1 + 0.013) ** (1 / 248) - 1
+        nifty_ok = (n > n.rolling(200).mean()).shift(1, fill_value=False).values
+        vol = r1.rolling(120, min_periods=80).std()
+        SC = {"12-1 month": (Cf.shift(21) / Cf.shift(252) - 1), "6 month": Cf.pct_change(126), "(6m+12m)/volatility": (Cf.pct_change(126) + Cf.pct_change(252)) / (vol * np.sqrt(248))}
+        months = [i for i in range(START, D) if dates[i].month != dates[i - 1].month]
+        rows, curves = [], {}
+        def mom(k, score, N, freq, filt, hide, cost=0.003):
+            Mk = members(k).values; sc = SC[score].values; ok = Mk & ~glitch.values & np.isfinite(sc)
+            rebal = set(months if freq == "monthly" else [i for i in months if dates[i].month in (1, 7)])
+            w = {}; eq = 1.0; curve = np.ones(D); invested = []; turn = 0.0; inside = True; hold_days = {}; held_len = []
+            hide_r = liq if hide == "liquid" else np.where(gtr, gr, liq)
+            for t in range(START, D):
+                day = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                day += cash * (hide_r[t] if not inside else liq[t]); eq *= 1 + day
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day) for j, wi in w.items()}
+                for j in w: hold_days[j] = hold_days.get(j, 0) + 1
+                check = t in rebal or (filt == "daily" and inside != bool(nifty_ok[t]))
+                if check:
+                    inside = bool(nifty_ok[t]) if filt != "none" else True
+                    if inside:
+                        cand = np.where(ok[t])[0]; order = cand[np.argsort(-sc[t, cand])]; rank = {j: r for r, j in enumerate(order)}
+                        keep = [j for j in w if rank.get(j, 1e9) < 1.5 * N][:N]
+                        new = keep + [j for j in order if j not in keep][: N - len(keep)]
+                        tgt = {j: 1.0 / N for j in new}
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - cost * tv_; turn += tv_
+                    for j in list(w):
+                        if j not in tgt: held_len.append(hold_days.pop(j, 0))
+                    w = dict(tgt)
+                invested.append(sum(w.values())); curve[t] = eq
+            o = summarize(curve); yrs = (D - START) / 248
+            o.update(universe=f"top {k}", score=score, stocks=N, rebalance=freq, crash_filter=filt, hide_in=hide, turnover_per_year=round(turn / yrs, 1),
+                     invested_pct=round(100 * float(np.mean(invested)), 1), held_over_1yr_pct=round(100 * float(np.mean(np.array(held_len) > 248)), 1) if held_len else None)
+            return o, curve
+        def show(o):
+            print(f"MOM {o['universe']:7s} {o['score']:20s} N{o['stocks']} {o['rebalance']:11s} filter {o['crash_filter']:9s} hide {o['hide_in']:15s} {o['cagr']:6.1f}%/yr dd {o['dd']:6.1f} | "
+                  f"08-09 {o['per']['2008-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | test19-26 {o.get('test_2019_2026', {}).get('cagr')} | turn {o['turnover_per_year']}x/yr, >1yr {o['held_over_1yr_pct']}%", flush=True)
+        for k in (200, 500):
+            for score in SC:
+                for N in (20, 30):
+                    for freq in ("monthly", "semi-annual"):
+                        for filt in ("none", "rebalance", "daily"):
+                            hides = ("liquid", "gold or liquid") if filt != "none" else ("liquid",)
+                            for hide in hides:
+                                o, c = mom(k, score, N, freq, filt, hide); rows.append(o); show(o); curves[(k, score, N, freq, filt, hide)] = c
+        # the dip bot (today's rules, realistic) and 50/50 mixes with the best-by-2008-2018 momentum version
+        M2 = members(200).values; ab = above.values & M2 & ~glitch.values & ~(vr > 2.0).values; co = []
+        dipr = sim((rl.values <= -0.12) & ab, (-rl).values, PARK["Nifty trend (100-day), else liquid"], cost=0.003, entry="open", curve_out=co)
+        dipc = co[0]; OUT["dip_bot_today"] = dipr; print("DIP BOT today's rules", dipr["cagr"], dipr["dd"], dipr.get("test_2019_2026"), flush=True)
+        pick = max([r for r in rows if r["crash_filter"] != "none"], key=lambda r: r["train_2008_2018"]["cagr"] / max(1, -r["train_2008_2018"]["dd"]))
+        key = (int(pick["universe"].split()[1]), pick["score"], pick["stocks"], pick["rebalance"], pick["crash_filter"], pick["hide_in"])
+        mc = curves[key]; mixes = {}
+        for wm in (0.3, 0.5, 0.7):
+            rm = np.r_[0, mc[1:] / mc[:-1] - 1]; rd = np.r_[0, dipc[1:] / dipc[:-1] - 1]
+            mixes[f"{int(wm*100)}% momentum + {int((1-wm)*100)}% dip bot (rebalanced monthly-ish: daily weights)"] = summarize(np.cumprod(1 + wm * rm + (1 - wm) * rd))
+        OUT["momentum"] = rows; OUT["picked_on_2008_2018_return_per_drop"] = pick; OUT["mixes_with_dip_bot"] = mixes
+        print("PICKED (train 2008-2018 only)", json.dumps({k_: pick[k_] for k_ in ("universe", "score", "stocks", "rebalance", "crash_filter", "hide_in", "cagr", "dd", "train_2008_2018", "test_2019_2026")}), flush=True)
+        for k_, v_ in mixes.items(): print("MIX", k_, v_["cagr"], v_["dd"], v_.get("test_2019_2026"), flush=True)
+        OUT["note"] += " Momentum: before tax; a holding kept > 1 year gets 12.5% LTCG instead of 20% STCG."
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_momentum.json", "w"), indent=1, default=float); return
     if MODE == "timeframe":
         # Nov 21 2026: is the India dip bot on the wrong time frame? Same universe (top 200 by traded value), 200-day trend, 2x volume skip,
         # glitch filter, idle money = Nifty when above its 100-day avg else liquid fund. Realistic fills (next open, 0.30%/side) + ideal.
@@ -459,4 +529,4 @@ def run():
 if __name__ == "__main__":
   try: run()
   except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json", "timeframe": "data/india_timeframe.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json", "timeframe": "data/india_timeframe.json", "momentum": "data/india_momentum.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
