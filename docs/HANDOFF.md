@@ -182,6 +182,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India time-frame test (data/india_timeframe.json, 2008-2026, realistic fills, before tax)
+- Today's India bot (5-day, 12%, smart exit max 5): 13.8%/yr, worst -18.6%, 40 trades/yr. Faster dips are WORSE (1-day 4-6%, 2-day 10-12%).
+- 10-day look-back / 17% drop: 13.5-14.7%, worst ~-16%, only 23-27 trades/yr (fewer costs + tax events). Fixed 5-day hold 15.7% but no gain in 2019-26.
+- Winners (trend side, 60d look-back, hold 40d): 19.4%/yr, 2019-26 27.9%, but worst -47% (others -48..-62%) and survivorship bias -> needs a crash filter test.
 ### Nov 20 evening (data/three_tests.json, data/crypto_trend.json)
 - Sector-relative dips: all versions worse than vs-SPY (live-like 21.9 -> 19.2-20.4). Keep SPY.
 - Stress: v3.0 beta 0.45, own edge ~17%/yr (t 5.4) 1999-2026, BUT ~0 in 2013-2019 (bot 7.8% vs SPY 14.6%). Kill switch 40% confirmed.
