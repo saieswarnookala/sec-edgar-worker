@@ -182,6 +182,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India momentum test (data/india_momentum.json) - NUMBERS INFLATED by survivorship (today's Nifty 500 list)
+- Momentum basket raw: top 500 22-39%/yr, top 200 median ~22% (crash-filtered); NSE's real Nifty200 Momentum 30 index = 19.2% vs 15.1% parent (2005-26).
+- Crash filter: median worst drop -41% -> -34%, costs ~3-6 pts; hiding in gold-if-trending beats liquid. Monthly > semi-annual here.
+- Train-picked (2008-18): top 500, (6m+12m)/vol, 30 stocks, monthly, filter at rebalance, liquid: 32.4% dd -22.7 (test 33.9/-18.3) - inflated.
+- Mix with dip bot (13.8%/-18.5): 50/50 23.1% dd -14.1; 30/70 19.3% dd -15.8. Mixing lowers worst drop (low correlation) - this part is robust.
+- Practical: friends could hold a Nifty200 Momentum 30 index fund (real track record) next to the dip bot. Sai: no Indian funds (PFIC).
 ### Nov 21 India time-frame test (data/india_timeframe.json, 2008-2026, realistic fills, before tax)
 - Today's India bot (5-day, 12%, smart exit max 5): 13.8%/yr, worst -18.6%, 40 trades/yr. Faster dips are WORSE (1-day 4-6%, 2-day 10-12%).
 - 10-day look-back / 17% drop: 13.5-14.7%, worst ~-16%, only 23-27 trades/yr (fewer costs + tax events). Fixed 5-day hold 15.7% but no gain in 2019-26.
