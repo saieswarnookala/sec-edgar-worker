@@ -1,0 +1,3371 @@
+{
+ "years": "2008-01-01 to 2026-11-20",
+ "stocks_with_prices": 490,
+ "nifty50": {
+  "cagr": 8.0,
+  "dd": -59.9,
+  "per": {
+   "2008-2009": -8.2,
+   "2010-2015": 7.4,
+   "2016-2020": 12.1,
+   "2021-2026": 11.0
+  },
+  "train_2008_2018": {
+   "cagr": 5.4,
+   "dd": -59.9
+  },
+  "test_2019_2026": {
+   "cagr": 11.8,
+   "dd": -38.4
+  }
+ },
+ "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side. Momentum: before tax; a holding kept > 1 year gets 12.5% LTCG instead of 20% STCG.",
+ "results": [],
+ "dip_bot_today": {
+  "cagr": 13.8,
+  "dd": -18.5,
+  "per": {
+   "2008-2009": 34.4,
+   "2010-2015": 7.4,
+   "2016-2020": 13.7,
+   "2021-2026": 14.2
+  },
+  "train_2008_2018": {
+   "cagr": 12.8,
+   "dd": -18.5
+  },
+  "test_2019_2026": {
+   "cagr": 15.2,
+   "dd": -12.3
+  },
+  "invested_pct": 5.1,
+  "trades": 751,
+  "win_rate": 59.4,
+  "avg_trade_pct": 0.7
+ },
+ "momentum": [
+  {
+   "cagr": 24.6,
+   "dd": -43.4,
+   "per": {
+    "2008-2009": 24.5,
+    "2010-2015": 28.4,
+    "2016-2020": 14.5,
+    "2021-2026": 30.1
+   },
+   "train_2008_2018": {
+    "cagr": 22.6,
+    "dd": -35.9
+   },
+   "test_2019_2026": {
+    "cagr": 27.6,
+    "dd": -38.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.6,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 7.8
+  },
+  {
+   "cagr": 21.9,
+   "dd": -29.2,
+   "per": {
+    "2008-2009": 40.4,
+    "2010-2015": 20.0,
+    "2016-2020": 12.9,
+    "2021-2026": 25.9
+   },
+   "train_2008_2018": {
+    "cagr": 20.7,
+    "dd": -24.4
+   },
+   "test_2019_2026": {
+    "cagr": 23.6,
+    "dd": -29.2
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.1
+  },
+  {
+   "cagr": 24.5,
+   "dd": -32.8,
+   "per": {
+    "2008-2009": 40.4,
+    "2010-2015": 23.6,
+    "2016-2020": 19.3,
+    "2021-2026": 25.0
+   },
+   "train_2008_2018": {
+    "cagr": 23.2,
+    "dd": -24.6
+   },
+   "test_2019_2026": {
+    "cagr": 26.5,
+    "dd": -32.8
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 4.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.1
+  },
+  {
+   "cagr": 19.0,
+   "dd": -38.9,
+   "per": {
+    "2008-2009": 40.1,
+    "2010-2015": 16.9,
+    "2016-2020": 9.6,
+    "2021-2026": 23.0
+   },
+   "train_2008_2018": {
+    "cagr": 17.1,
+    "dd": -27.4
+   },
+   "test_2019_2026": {
+    "cagr": 21.7,
+    "dd": -31.0
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.5,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 22.4,
+   "dd": -38.2,
+   "per": {
+    "2008-2009": 40.1,
+    "2010-2015": 19.1,
+    "2016-2020": 15.7,
+    "2021-2026": 26.1
+   },
+   "train_2008_2018": {
+    "cagr": 19.3,
+    "dd": -28.0
+   },
+   "test_2019_2026": {
+    "cagr": 27.0,
+    "dd": -33.6
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.5,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 24.0,
+   "dd": -44.8,
+   "per": {
+    "2008-2009": 39.6,
+    "2010-2015": 21.7,
+    "2016-2020": 17.7,
+    "2021-2026": 27.1
+   },
+   "train_2008_2018": {
+    "cagr": 22.3,
+    "dd": -27.7
+   },
+   "test_2019_2026": {
+    "cagr": 26.7,
+    "dd": -40.1
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 17.6
+  },
+  {
+   "cagr": 16.5,
+   "dd": -44.8,
+   "per": {
+    "2008-2009": 19.5,
+    "2010-2015": 19.5,
+    "2016-2020": 4.0,
+    "2021-2026": 23.9
+   },
+   "train_2008_2018": {
+    "cagr": 15.0,
+    "dd": -25.7
+   },
+   "test_2019_2026": {
+    "cagr": 18.8,
+    "dd": -40.1
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 10.8
+  },
+  {
+   "cagr": 18.8,
+   "dd": -44.8,
+   "per": {
+    "2008-2009": 17.3,
+    "2010-2015": 23.0,
+    "2016-2020": 4.7,
+    "2021-2026": 28.2
+   },
+   "train_2008_2018": {
+    "cagr": 17.1,
+    "dd": -25.7
+   },
+   "test_2019_2026": {
+    "cagr": 21.5,
+    "dd": -40.1
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 10.8
+  },
+  {
+   "cagr": 15.8,
+   "dd": -39.6,
+   "per": {
+    "2008-2009": 30.3,
+    "2010-2015": 12.2,
+    "2016-2020": 10.5,
+    "2021-2026": 19.6
+   },
+   "train_2008_2018": {
+    "cagr": 13.2,
+    "dd": -28.6
+   },
+   "test_2019_2026": {
+    "cagr": 19.7,
+    "dd": -32.8
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.1
+  },
+  {
+   "cagr": 19.1,
+   "dd": -39.0,
+   "per": {
+    "2008-2009": 30.3,
+    "2010-2015": 14.4,
+    "2016-2020": 16.7,
+    "2021-2026": 22.7
+   },
+   "train_2008_2018": {
+    "cagr": 15.3,
+    "dd": -29.1
+   },
+   "test_2019_2026": {
+    "cagr": 24.9,
+    "dd": -33.1
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.1
+  },
+  {
+   "cagr": 25.6,
+   "dd": -38.8,
+   "per": {
+    "2008-2009": 25.5,
+    "2010-2015": 30.2,
+    "2016-2020": 15.9,
+    "2021-2026": 29.7
+   },
+   "train_2008_2018": {
+    "cagr": 24.7,
+    "dd": -36.2
+   },
+   "test_2019_2026": {
+    "cagr": 27.0,
+    "dd": -37.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.0,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 13.8
+  },
+  {
+   "cagr": 23.0,
+   "dd": -25.3,
+   "per": {
+    "2008-2009": 40.2,
+    "2010-2015": 22.0,
+    "2016-2020": 13.9,
+    "2021-2026": 26.8
+   },
+   "train_2008_2018": {
+    "cagr": 22.3,
+    "dd": -22.8
+   },
+   "test_2019_2026": {
+    "cagr": 24.2,
+    "dd": -25.1
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.3,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 4.1
+  },
+  {
+   "cagr": 25.7,
+   "dd": -32.3,
+   "per": {
+    "2008-2009": 40.2,
+    "2010-2015": 25.6,
+    "2016-2020": 20.3,
+    "2021-2026": 25.8
+   },
+   "train_2008_2018": {
+    "cagr": 24.8,
+    "dd": -22.5
+   },
+   "test_2019_2026": {
+    "cagr": 27.0,
+    "dd": -28.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 4.3,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 4.1
+  },
+  {
+   "cagr": 19.5,
+   "dd": -37.6,
+   "per": {
+    "2008-2009": 40.0,
+    "2010-2015": 17.0,
+    "2016-2020": 9.4,
+    "2021-2026": 24.9
+   },
+   "train_2008_2018": {
+    "cagr": 17.0,
+    "dd": -25.5
+   },
+   "test_2019_2026": {
+    "cagr": 23.3,
+    "dd": -24.8
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 23.0,
+   "dd": -37.3,
+   "per": {
+    "2008-2009": 40.0,
+    "2010-2015": 19.2,
+    "2016-2020": 15.6,
+    "2021-2026": 28.0
+   },
+   "train_2008_2018": {
+    "cagr": 19.2,
+    "dd": -26.2
+   },
+   "test_2019_2026": {
+    "cagr": 28.6,
+    "dd": -27.7
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 23.2,
+   "dd": -42.9,
+   "per": {
+    "2008-2009": 37.5,
+    "2010-2015": 22.1,
+    "2016-2020": 16.0,
+    "2021-2026": 26.0
+   },
+   "train_2008_2018": {
+    "cagr": 22.3,
+    "dd": -28.0
+   },
+   "test_2019_2026": {
+    "cagr": 24.6,
+    "dd": -37.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.2,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 23.3
+  },
+  {
+   "cagr": 16.8,
+   "dd": -42.9,
+   "per": {
+    "2008-2009": 20.9,
+    "2010-2015": 20.5,
+    "2016-2020": 4.3,
+    "2021-2026": 23.1
+   },
+   "train_2008_2018": {
+    "cagr": 16.3,
+    "dd": -24.7
+   },
+   "test_2019_2026": {
+    "cagr": 17.6,
+    "dd": -37.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 1.9,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 15.2
+  },
+  {
+   "cagr": 19.1,
+   "dd": -42.9,
+   "per": {
+    "2008-2009": 18.6,
+    "2010-2015": 24.0,
+    "2016-2020": 5.0,
+    "2021-2026": 27.4
+   },
+   "train_2008_2018": {
+    "cagr": 18.4,
+    "dd": -24.7
+   },
+   "test_2019_2026": {
+    "cagr": 20.4,
+    "dd": -37.9
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 1.9,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 15.2
+  },
+  {
+   "cagr": 17.0,
+   "dd": -41.6,
+   "per": {
+    "2008-2009": 33.1,
+    "2010-2015": 12.8,
+    "2016-2020": 9.7,
+    "2021-2026": 22.6
+   },
+   "train_2008_2018": {
+    "cagr": 13.9,
+    "dd": -29.8
+   },
+   "test_2019_2026": {
+    "cagr": 21.5,
+    "dd": -27.3
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.6
+  },
+  {
+   "cagr": 20.3,
+   "dd": -41.3,
+   "per": {
+    "2008-2009": 33.1,
+    "2010-2015": 15.0,
+    "2016-2020": 15.9,
+    "2021-2026": 25.7
+   },
+   "train_2008_2018": {
+    "cagr": 16.0,
+    "dd": -30.4
+   },
+   "test_2019_2026": {
+    "cagr": 26.8,
+    "dd": -27.4
+   },
+   "universe": "top 200",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.6
+  },
+  {
+   "cagr": 24.5,
+   "dd": -45.7,
+   "per": {
+    "2008-2009": 18.4,
+    "2010-2015": 28.3,
+    "2016-2020": 19.0,
+    "2021-2026": 27.5
+   },
+   "train_2008_2018": {
+    "cagr": 22.2,
+    "dd": -45.7
+   },
+   "test_2019_2026": {
+    "cagr": 27.8,
+    "dd": -36.8
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 6.8,
+   "invested_pct": 98.7,
+   "held_over_1yr_pct": 1.4
+  },
+  {
+   "cagr": 23.7,
+   "dd": -28.3,
+   "per": {
+    "2008-2009": 45.0,
+    "2010-2015": 22.7,
+    "2016-2020": 12.9,
+    "2021-2026": 27.7
+   },
+   "train_2008_2018": {
+    "cagr": 22.9,
+    "dd": -23.5
+   },
+   "test_2019_2026": {
+    "cagr": 24.9,
+    "dd": -21.9
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 6.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.6
+  },
+  {
+   "cagr": 26.4,
+   "dd": -34.2,
+   "per": {
+    "2008-2009": 45.0,
+    "2010-2015": 26.3,
+    "2016-2020": 19.3,
+    "2021-2026": 26.8
+   },
+   "train_2008_2018": {
+    "cagr": 25.4,
+    "dd": -26.4
+   },
+   "test_2019_2026": {
+    "cagr": 27.8,
+    "dd": -26.8
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 6.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.6
+  },
+  {
+   "cagr": 21.8,
+   "dd": -33.4,
+   "per": {
+    "2008-2009": 44.4,
+    "2010-2015": 21.9,
+    "2016-2020": 12.3,
+    "2021-2026": 23.1
+   },
+   "train_2008_2018": {
+    "cagr": 20.8,
+    "dd": -27.9
+   },
+   "test_2019_2026": {
+    "cagr": 23.3,
+    "dd": -21.9
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 11.8,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.2
+  },
+  {
+   "cagr": 25.3,
+   "dd": -34.2,
+   "per": {
+    "2008-2009": 44.4,
+    "2010-2015": 24.2,
+    "2016-2020": 18.6,
+    "2021-2026": 26.2
+   },
+   "train_2008_2018": {
+    "cagr": 23.0,
+    "dd": -29.2
+   },
+   "test_2019_2026": {
+    "cagr": 28.6,
+    "dd": -27.6
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 11.8,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.2
+  },
+  {
+   "cagr": 25.7,
+   "dd": -40.0,
+   "per": {
+    "2008-2009": 32.1,
+    "2010-2015": 24.2,
+    "2016-2020": 24.2,
+    "2021-2026": 26.3
+   },
+   "train_2008_2018": {
+    "cagr": 23.4,
+    "dd": -32.6
+   },
+   "test_2019_2026": {
+    "cagr": 29.0,
+    "dd": -40.0
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 3.2,
+   "invested_pct": 97.3,
+   "held_over_1yr_pct": 4.6
+  },
+  {
+   "cagr": 19.9,
+   "dd": -43.3,
+   "per": {
+    "2008-2009": 26.3,
+    "2010-2015": 22.5,
+    "2016-2020": 11.1,
+    "2021-2026": 22.9
+   },
+   "train_2008_2018": {
+    "cagr": 19.6,
+    "dd": -25.2
+   },
+   "test_2019_2026": {
+    "cagr": 20.5,
+    "dd": -43.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 3.3
+  },
+  {
+   "cagr": 22.3,
+   "dd": -41.4,
+   "per": {
+    "2008-2009": 24.0,
+    "2010-2015": 26.1,
+    "2016-2020": 11.9,
+    "2021-2026": 27.2
+   },
+   "train_2008_2018": {
+    "cagr": 21.7,
+    "dd": -25.2
+   },
+   "test_2019_2026": {
+    "cagr": 23.3,
+    "dd": -41.4
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 3.3
+  },
+  {
+   "cagr": 23.5,
+   "dd": -31.2,
+   "per": {
+    "2008-2009": 51.1,
+    "2010-2015": 21.7,
+    "2016-2020": 14.6,
+    "2021-2026": 24.9
+   },
+   "train_2008_2018": {
+    "cagr": 23.3,
+    "dd": -25.7
+   },
+   "test_2019_2026": {
+    "cagr": 23.9,
+    "dd": -25.9
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 27.1,
+   "dd": -32.1,
+   "per": {
+    "2008-2009": 51.1,
+    "2010-2015": 24.1,
+    "2016-2020": 21.0,
+    "2021-2026": 28.0
+   },
+   "train_2008_2018": {
+    "cagr": 25.6,
+    "dd": -27.2
+   },
+   "test_2019_2026": {
+    "cagr": 29.3,
+    "dd": -28.7
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 22.6,
+   "dd": -46.2,
+   "per": {
+    "2008-2009": 18.9,
+    "2010-2015": 24.0,
+    "2016-2020": 19.2,
+    "2021-2026": 25.3
+   },
+   "train_2008_2018": {
+    "cagr": 20.1,
+    "dd": -46.2
+   },
+   "test_2019_2026": {
+    "cagr": 26.1,
+    "dd": -36.9
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.9,
+   "invested_pct": 98.7,
+   "held_over_1yr_pct": 3.0
+  },
+  {
+   "cagr": 21.7,
+   "dd": -26.0,
+   "per": {
+    "2008-2009": 43.9,
+    "2010-2015": 19.0,
+    "2016-2020": 12.2,
+    "2021-2026": 26.0
+   },
+   "train_2008_2018": {
+    "cagr": 20.7,
+    "dd": -23.5
+   },
+   "test_2019_2026": {
+    "cagr": 23.2,
+    "dd": -19.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.5,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 24.3,
+   "dd": -32.2,
+   "per": {
+    "2008-2009": 43.9,
+    "2010-2015": 22.5,
+    "2016-2020": 18.6,
+    "2021-2026": 25.1
+   },
+   "train_2008_2018": {
+    "cagr": 23.2,
+    "dd": -25.1
+   },
+   "test_2019_2026": {
+    "cagr": 26.1,
+    "dd": -23.2
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 5.5,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 19.6,
+   "dd": -33.6,
+   "per": {
+    "2008-2009": 42.8,
+    "2010-2015": 16.3,
+    "2016-2020": 11.4,
+    "2021-2026": 23.3
+   },
+   "train_2008_2018": {
+    "cagr": 17.9,
+    "dd": -26.1
+   },
+   "test_2019_2026": {
+    "cagr": 22.3,
+    "dd": -19.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 11.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.4
+  },
+  {
+   "cagr": 23.1,
+   "dd": -33.1,
+   "per": {
+    "2008-2009": 42.8,
+    "2010-2015": 18.5,
+    "2016-2020": 17.6,
+    "2021-2026": 26.4
+   },
+   "train_2008_2018": {
+    "cagr": 20.0,
+    "dd": -27.8
+   },
+   "test_2019_2026": {
+    "cagr": 27.6,
+    "dd": -22.9
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 11.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.4
+  },
+  {
+   "cagr": 23.3,
+   "dd": -37.4,
+   "per": {
+    "2008-2009": 30.2,
+    "2010-2015": 25.3,
+    "2016-2020": 18.5,
+    "2021-2026": 23.3
+   },
+   "train_2008_2018": {
+    "cagr": 21.9,
+    "dd": -34.4
+   },
+   "test_2019_2026": {
+    "cagr": 25.6,
+    "dd": -37.4
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 3.0,
+   "invested_pct": 97.3,
+   "held_over_1yr_pct": 7.6
+  },
+  {
+   "cagr": 18.8,
+   "dd": -41.3,
+   "per": {
+    "2008-2009": 27.2,
+    "2010-2015": 25.0,
+    "2016-2020": 6.8,
+    "2021-2026": 20.8
+   },
+   "train_2008_2018": {
+    "cagr": 19.4,
+    "dd": -24.9
+   },
+   "test_2019_2026": {
+    "cagr": 18.3,
+    "dd": -41.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.3,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 6.5
+  },
+  {
+   "cagr": 21.2,
+   "dd": -39.3,
+   "per": {
+    "2008-2009": 24.8,
+    "2010-2015": 28.6,
+    "2016-2020": 7.6,
+    "2021-2026": 25.1
+   },
+   "train_2008_2018": {
+    "cagr": 21.5,
+    "dd": -24.9
+   },
+   "test_2019_2026": {
+    "cagr": 21.0,
+    "dd": -39.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.3,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 6.5
+  },
+  {
+   "cagr": 19.6,
+   "dd": -36.8,
+   "per": {
+    "2008-2009": 49.9,
+    "2010-2015": 16.8,
+    "2016-2020": 8.9,
+    "2021-2026": 23.0
+   },
+   "train_2008_2018": {
+    "cagr": 18.9,
+    "dd": -28.0
+   },
+   "test_2019_2026": {
+    "cagr": 20.8,
+    "dd": -25.3
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.2,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 23.1,
+   "dd": -36.7,
+   "per": {
+    "2008-2009": 49.9,
+    "2010-2015": 19.1,
+    "2016-2020": 15.0,
+    "2021-2026": 26.1
+   },
+   "train_2008_2018": {
+    "cagr": 21.1,
+    "dd": -28.7
+   },
+   "test_2019_2026": {
+    "cagr": 26.0,
+    "dd": -26.7
+   },
+   "universe": "top 200",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.2,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.9
+  },
+  {
+   "cagr": 26.7,
+   "dd": -41.5,
+   "per": {
+    "2008-2009": 24.0,
+    "2010-2015": 29.6,
+    "2016-2020": 18.4,
+    "2021-2026": 32.3
+   },
+   "train_2008_2018": {
+    "cagr": 24.7,
+    "dd": -30.7
+   },
+   "test_2019_2026": {
+    "cagr": 29.8,
+    "dd": -34.6
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.9,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 7.5
+  },
+  {
+   "cagr": 24.7,
+   "dd": -23.4,
+   "per": {
+    "2008-2009": 39.0,
+    "2010-2015": 21.8,
+    "2016-2020": 15.8,
+    "2021-2026": 31.1
+   },
+   "train_2008_2018": {
+    "cagr": 22.6,
+    "dd": -23.4
+   },
+   "test_2019_2026": {
+    "cagr": 27.9,
+    "dd": -16.9
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.5
+  },
+  {
+   "cagr": 27.4,
+   "dd": -29.9,
+   "per": {
+    "2008-2009": 39.0,
+    "2010-2015": 25.4,
+    "2016-2020": 22.3,
+    "2021-2026": 30.1
+   },
+   "train_2008_2018": {
+    "cagr": 25.1,
+    "dd": -21.8
+   },
+   "test_2019_2026": {
+    "cagr": 30.8,
+    "dd": -23.8
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 5.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.5
+  },
+  {
+   "cagr": 22.2,
+   "dd": -34.6,
+   "per": {
+    "2008-2009": 39.1,
+    "2010-2015": 20.2,
+    "2016-2020": 13.4,
+    "2021-2026": 26.9
+   },
+   "train_2008_2018": {
+    "cagr": 20.1,
+    "dd": -22.1
+   },
+   "test_2019_2026": {
+    "cagr": 25.3,
+    "dd": -19.3
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.8,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 25.7,
+   "dd": -34.7,
+   "per": {
+    "2008-2009": 39.1,
+    "2010-2015": 22.5,
+    "2016-2020": 19.7,
+    "2021-2026": 30.1
+   },
+   "train_2008_2018": {
+    "cagr": 22.3,
+    "dd": -23.4
+   },
+   "test_2019_2026": {
+    "cagr": 30.7,
+    "dd": -23.8
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.8,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 25.5,
+   "dd": -39.2,
+   "per": {
+    "2008-2009": 34.8,
+    "2010-2015": 26.1,
+    "2016-2020": 19.2,
+    "2021-2026": 27.4
+   },
+   "train_2008_2018": {
+    "cagr": 23.7,
+    "dd": -23.9
+   },
+   "test_2019_2026": {
+    "cagr": 28.1,
+    "dd": -39.2
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 15.9
+  },
+  {
+   "cagr": 20.1,
+   "dd": -39.2,
+   "per": {
+    "2008-2009": 20.2,
+    "2010-2015": 25.5,
+    "2016-2020": 7.8,
+    "2021-2026": 25.8
+   },
+   "train_2008_2018": {
+    "cagr": 19.8,
+    "dd": -23.6
+   },
+   "test_2019_2026": {
+    "cagr": 20.6,
+    "dd": -39.2
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 10.0
+  },
+  {
+   "cagr": 22.5,
+   "dd": -39.2,
+   "per": {
+    "2008-2009": 17.9,
+    "2010-2015": 29.2,
+    "2016-2020": 8.6,
+    "2021-2026": 30.2
+   },
+   "train_2008_2018": {
+    "cagr": 22.0,
+    "dd": -23.6
+   },
+   "test_2019_2026": {
+    "cagr": 23.4,
+    "dd": -39.2
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 10.0
+  },
+  {
+   "cagr": 21.1,
+   "dd": -31.3,
+   "per": {
+    "2008-2009": 37.7,
+    "2010-2015": 19.7,
+    "2016-2020": 12.0,
+    "2021-2026": 25.4
+   },
+   "train_2008_2018": {
+    "cagr": 19.4,
+    "dd": -22.7
+   },
+   "test_2019_2026": {
+    "cagr": 23.7,
+    "dd": -24.5
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.0,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  },
+  {
+   "cagr": 24.6,
+   "dd": -31.6,
+   "per": {
+    "2008-2009": 37.7,
+    "2010-2015": 22.0,
+    "2016-2020": 18.3,
+    "2021-2026": 28.5
+   },
+   "train_2008_2018": {
+    "cagr": 21.6,
+    "dd": -24.0
+   },
+   "test_2019_2026": {
+    "cagr": 29.1,
+    "dd": -27.4
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.0,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  },
+  {
+   "cagr": 26.1,
+   "dd": -36.9,
+   "per": {
+    "2008-2009": 27.1,
+    "2010-2015": 30.9,
+    "2016-2020": 17.5,
+    "2021-2026": 28.6
+   },
+   "train_2008_2018": {
+    "cagr": 25.9,
+    "dd": -27.9
+   },
+   "test_2019_2026": {
+    "cagr": 26.5,
+    "dd": -36.1
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.2,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 11.8
+  },
+  {
+   "cagr": 24.6,
+   "dd": -19.4,
+   "per": {
+    "2008-2009": 39.6,
+    "2010-2015": 24.1,
+    "2016-2020": 15.3,
+    "2021-2026": 28.7
+   },
+   "train_2008_2018": {
+    "cagr": 23.9,
+    "dd": -19.1
+   },
+   "test_2019_2026": {
+    "cagr": 25.7,
+    "dd": -18.7
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.4,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.4
+  },
+  {
+   "cagr": 27.3,
+   "dd": -26.4,
+   "per": {
+    "2008-2009": 39.6,
+    "2010-2015": 27.8,
+    "2016-2020": 21.8,
+    "2021-2026": 27.8
+   },
+   "train_2008_2018": {
+    "cagr": 26.5,
+    "dd": -19.0
+   },
+   "test_2019_2026": {
+    "cagr": 28.7,
+    "dd": -23.6
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 4.4,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.4
+  },
+  {
+   "cagr": 21.8,
+   "dd": -32.1,
+   "per": {
+    "2008-2009": 39.5,
+    "2010-2015": 22.5,
+    "2016-2020": 11.6,
+    "2021-2026": 24.6
+   },
+   "train_2008_2018": {
+    "cagr": 20.8,
+    "dd": -21.9
+   },
+   "test_2019_2026": {
+    "cagr": 23.3,
+    "dd": -20.4
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.1
+  },
+  {
+   "cagr": 25.3,
+   "dd": -32.0,
+   "per": {
+    "2008-2009": 39.5,
+    "2010-2015": 24.9,
+    "2016-2020": 17.8,
+    "2021-2026": 27.8
+   },
+   "train_2008_2018": {
+    "cagr": 23.1,
+    "dd": -23.2
+   },
+   "test_2019_2026": {
+    "cagr": 28.6,
+    "dd": -23.5
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.3,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.1
+  },
+  {
+   "cagr": 25.5,
+   "dd": -39.6,
+   "per": {
+    "2008-2009": 40.5,
+    "2010-2015": 27.6,
+    "2016-2020": 18.8,
+    "2021-2026": 24.6
+   },
+   "train_2008_2018": {
+    "cagr": 26.0,
+    "dd": -26.1
+   },
+   "test_2019_2026": {
+    "cagr": 25.1,
+    "dd": -39.6
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 23.1
+  },
+  {
+   "cagr": 19.3,
+   "dd": -39.6,
+   "per": {
+    "2008-2009": 24.0,
+    "2010-2015": 26.2,
+    "2016-2020": 6.9,
+    "2021-2026": 22.2
+   },
+   "train_2008_2018": {
+    "cagr": 20.6,
+    "dd": -22.6
+   },
+   "test_2019_2026": {
+    "cagr": 17.7,
+    "dd": -39.6
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 1.8,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 15.8
+  },
+  {
+   "cagr": 21.7,
+   "dd": -39.6,
+   "per": {
+    "2008-2009": 21.7,
+    "2010-2015": 29.9,
+    "2016-2020": 7.7,
+    "2021-2026": 26.4
+   },
+   "train_2008_2018": {
+    "cagr": 22.8,
+    "dd": -22.6
+   },
+   "test_2019_2026": {
+    "cagr": 20.4,
+    "dd": -39.6
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 1.8,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 15.8
+  },
+  {
+   "cagr": 20.3,
+   "dd": -33.4,
+   "per": {
+    "2008-2009": 41.1,
+    "2010-2015": 20.9,
+    "2016-2020": 8.9,
+    "2021-2026": 23.5
+   },
+   "train_2008_2018": {
+    "cagr": 19.8,
+    "dd": -23.1
+   },
+   "test_2019_2026": {
+    "cagr": 21.2,
+    "dd": -21.1
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.9
+  },
+  {
+   "cagr": 23.8,
+   "dd": -32.8,
+   "per": {
+    "2008-2009": 41.1,
+    "2010-2015": 23.2,
+    "2016-2020": 15.0,
+    "2021-2026": 26.6
+   },
+   "train_2008_2018": {
+    "cagr": 22.0,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 26.4,
+    "dd": -24.1
+   },
+   "universe": "top 200",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.9
+  },
+  {
+   "cagr": 37.8,
+   "dd": -40.4,
+   "per": {
+    "2008-2009": 17.2,
+    "2010-2015": 34.8,
+    "2016-2020": 33.1,
+    "2021-2026": 53.3
+   },
+   "train_2008_2018": {
+    "cagr": 30.3,
+    "dd": -35.7
+   },
+   "test_2019_2026": {
+    "cagr": 49.1,
+    "dd": -39.0
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.1,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 6.2
+  },
+  {
+   "cagr": 33.2,
+   "dd": -29.8,
+   "per": {
+    "2008-2009": 37.7,
+    "2010-2015": 24.3,
+    "2016-2020": 27.7,
+    "2021-2026": 46.3
+   },
+   "train_2008_2018": {
+    "cagr": 27.8,
+    "dd": -27.2
+   },
+   "test_2019_2026": {
+    "cagr": 41.1,
+    "dd": -25.6
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 1.4
+  },
+  {
+   "cagr": 36.1,
+   "dd": -35.8,
+   "per": {
+    "2008-2009": 37.7,
+    "2010-2015": 28.0,
+    "2016-2020": 34.9,
+    "2021-2026": 45.3
+   },
+   "train_2008_2018": {
+    "cagr": 30.4,
+    "dd": -26.9
+   },
+   "test_2019_2026": {
+    "cagr": 44.4,
+    "dd": -29.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 5.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 1.4
+  },
+  {
+   "cagr": 31.2,
+   "dd": -43.0,
+   "per": {
+    "2008-2009": 37.5,
+    "2010-2015": 23.5,
+    "2016-2020": 24.2,
+    "2021-2026": 43.8
+   },
+   "train_2008_2018": {
+    "cagr": 25.3,
+    "dd": -32.5
+   },
+   "test_2019_2026": {
+    "cagr": 39.9,
+    "dd": -27.2
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.6
+  },
+  {
+   "cagr": 35.0,
+   "dd": -41.5,
+   "per": {
+    "2008-2009": 37.5,
+    "2010-2015": 25.9,
+    "2016-2020": 31.2,
+    "2021-2026": 47.4
+   },
+   "train_2008_2018": {
+    "cagr": 27.6,
+    "dd": -33.1
+   },
+   "test_2019_2026": {
+    "cagr": 45.9,
+    "dd": -29.9
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.6
+  },
+  {
+   "cagr": 35.3,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 32.8,
+    "2010-2015": 27.6,
+    "2016-2020": 26.2,
+    "2021-2026": 53.0
+   },
+   "train_2008_2018": {
+    "cagr": 26.1,
+    "dd": -36.4
+   },
+   "test_2019_2026": {
+    "cagr": 49.1,
+    "dd": -39.8
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 18.2
+  },
+  {
+   "cagr": 25.4,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 18.2,
+    "2010-2015": 22.3,
+    "2016-2020": 8.6,
+    "2021-2026": 48.2
+   },
+   "train_2008_2018": {
+    "cagr": 17.2,
+    "dd": -36.4
+   },
+   "test_2019_2026": {
+    "cagr": 37.8,
+    "dd": -39.8
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 9.7
+  },
+  {
+   "cagr": 27.9,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 16.0,
+    "2010-2015": 25.9,
+    "2016-2020": 9.3,
+    "2021-2026": 53.4
+   },
+   "train_2008_2018": {
+    "cagr": 19.3,
+    "dd": -36.4
+   },
+   "test_2019_2026": {
+    "cagr": 40.9,
+    "dd": -39.8
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 9.7
+  },
+  {
+   "cagr": 24.1,
+   "dd": -46.3,
+   "per": {
+    "2008-2009": 26.7,
+    "2010-2015": 18.3,
+    "2016-2020": 15.9,
+    "2021-2026": 37.0
+   },
+   "train_2008_2018": {
+    "cagr": 16.9,
+    "dd": -38.0
+   },
+   "test_2019_2026": {
+    "cagr": 34.8,
+    "dd": -30.0
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 27.7,
+   "dd": -45.3,
+   "per": {
+    "2008-2009": 26.7,
+    "2010-2015": 20.6,
+    "2016-2020": 22.4,
+    "2021-2026": 40.4
+   },
+   "train_2008_2018": {
+    "cagr": 19.1,
+    "dd": -38.6
+   },
+   "test_2019_2026": {
+    "cagr": 40.6,
+    "dd": -32.7
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 34.7,
+   "dd": -42.8,
+   "per": {
+    "2008-2009": 20.3,
+    "2010-2015": 34.0,
+    "2016-2020": 25.9,
+    "2021-2026": 48.9
+   },
+   "train_2008_2018": {
+    "cagr": 28.8,
+    "dd": -34.5
+   },
+   "test_2019_2026": {
+    "cagr": 43.4,
+    "dd": -40.1
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.5,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 9.7
+  },
+  {
+   "cagr": 30.4,
+   "dd": -32.9,
+   "per": {
+    "2008-2009": 36.5,
+    "2010-2015": 25.7,
+    "2016-2020": 21.8,
+    "2021-2026": 41.1
+   },
+   "train_2008_2018": {
+    "cagr": 26.4,
+    "dd": -29.9
+   },
+   "test_2019_2026": {
+    "cagr": 36.3,
+    "dd": -21.0
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.2
+  },
+  {
+   "cagr": 33.2,
+   "dd": -38.8,
+   "per": {
+    "2008-2009": 36.5,
+    "2010-2015": 29.5,
+    "2016-2020": 28.7,
+    "2021-2026": 40.1
+   },
+   "train_2008_2018": {
+    "cagr": 29.0,
+    "dd": -30.1
+   },
+   "test_2019_2026": {
+    "cagr": 39.4,
+    "dd": -25.0
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 4.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 3.2
+  },
+  {
+   "cagr": 27.7,
+   "dd": -41.7,
+   "per": {
+    "2008-2009": 36.1,
+    "2010-2015": 21.0,
+    "2016-2020": 19.4,
+    "2021-2026": 39.6
+   },
+   "train_2008_2018": {
+    "cagr": 22.2,
+    "dd": -31.0
+   },
+   "test_2019_2026": {
+    "cagr": 35.8,
+    "dd": -21.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.4,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 31.4,
+   "dd": -40.9,
+   "per": {
+    "2008-2009": 36.1,
+    "2010-2015": 23.4,
+    "2016-2020": 26.1,
+    "2021-2026": 43.1
+   },
+   "train_2008_2018": {
+    "cagr": 24.4,
+    "dd": -31.6
+   },
+   "test_2019_2026": {
+    "cagr": 41.6,
+    "dd": -24.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.4,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.2
+  },
+  {
+   "cagr": 33.9,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 37.5,
+    "2010-2015": 26.7,
+    "2016-2020": 23.9,
+    "2021-2026": 49.9
+   },
+   "train_2008_2018": {
+    "cagr": 26.9,
+    "dd": -32.9
+   },
+   "test_2019_2026": {
+    "cagr": 44.4,
+    "dd": -39.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.2,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 21.9
+  },
+  {
+   "cagr": 24.4,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 19.9,
+    "2010-2015": 22.9,
+    "2016-2020": 7.7,
+    "2021-2026": 44.1
+   },
+   "train_2008_2018": {
+    "cagr": 18.2,
+    "dd": -32.9
+   },
+   "test_2019_2026": {
+    "cagr": 33.6,
+    "dd": -39.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 13.7
+  },
+  {
+   "cagr": 26.9,
+   "dd": -45.1,
+   "per": {
+    "2008-2009": 17.6,
+    "2010-2015": 26.5,
+    "2016-2020": 8.5,
+    "2021-2026": 49.1
+   },
+   "train_2008_2018": {
+    "cagr": 20.3,
+    "dd": -32.9
+   },
+   "test_2019_2026": {
+    "cagr": 36.7,
+    "dd": -39.4
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 13.7
+  },
+  {
+   "cagr": 24.7,
+   "dd": -42.8,
+   "per": {
+    "2008-2009": 28.5,
+    "2010-2015": 16.3,
+    "2016-2020": 18.1,
+    "2021-2026": 38.5
+   },
+   "train_2008_2018": {
+    "cagr": 17.8,
+    "dd": -33.1
+   },
+   "test_2019_2026": {
+    "cagr": 34.9,
+    "dd": -18.9
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  },
+  {
+   "cagr": 28.3,
+   "dd": -41.9,
+   "per": {
+    "2008-2009": 28.5,
+    "2010-2015": 18.6,
+    "2016-2020": 24.8,
+    "2021-2026": 42.0
+   },
+   "train_2008_2018": {
+    "cagr": 20.0,
+    "dd": -33.7
+   },
+   "test_2019_2026": {
+    "cagr": 40.7,
+    "dd": -23.5
+   },
+   "universe": "top 500",
+   "score": "12-1 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  },
+  {
+   "cagr": 39.0,
+   "dd": -47.2,
+   "per": {
+    "2008-2009": 12.6,
+    "2010-2015": 39.2,
+    "2016-2020": 42.1,
+    "2021-2026": 46.0
+   },
+   "train_2008_2018": {
+    "cagr": 34.2,
+    "dd": -47.2
+   },
+   "test_2019_2026": {
+    "cagr": 45.8,
+    "dd": -37.2
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 7.0,
+   "invested_pct": 98.7,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 35.7,
+   "dd": -26.7,
+   "per": {
+    "2008-2009": 42.1,
+    "2010-2015": 31.6,
+    "2016-2020": 31.8,
+    "2021-2026": 41.2
+   },
+   "train_2008_2018": {
+    "cagr": 34.7,
+    "dd": -23.2
+   },
+   "test_2019_2026": {
+    "cagr": 37.1,
+    "dd": -20.4
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 6.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.3
+  },
+  {
+   "cagr": 38.6,
+   "dd": -33.6,
+   "per": {
+    "2008-2009": 42.1,
+    "2010-2015": 35.5,
+    "2016-2020": 39.2,
+    "2021-2026": 40.2
+   },
+   "train_2008_2018": {
+    "cagr": 37.5,
+    "dd": -24.3
+   },
+   "test_2019_2026": {
+    "cagr": 40.3,
+    "dd": -23.0
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 6.0,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.3
+  },
+  {
+   "cagr": 33.8,
+   "dd": -32.6,
+   "per": {
+    "2008-2009": 40.7,
+    "2010-2015": 27.7,
+    "2016-2020": 32.9,
+    "2021-2026": 38.6
+   },
+   "train_2008_2018": {
+    "cagr": 31.7,
+    "dd": -27.0
+   },
+   "test_2019_2026": {
+    "cagr": 36.9,
+    "dd": -20.4
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 11.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.1
+  },
+  {
+   "cagr": 37.6,
+   "dd": -34.0,
+   "per": {
+    "2008-2009": 40.7,
+    "2010-2015": 30.2,
+    "2016-2020": 40.4,
+    "2021-2026": 42.1
+   },
+   "train_2008_2018": {
+    "cagr": 34.1,
+    "dd": -27.8
+   },
+   "test_2019_2026": {
+    "cagr": 42.8,
+    "dd": -22.7
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 11.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.1
+  },
+  {
+   "cagr": 38.9,
+   "dd": -39.4,
+   "per": {
+    "2008-2009": 30.5,
+    "2010-2015": 34.1,
+    "2016-2020": 37.1,
+    "2021-2026": 48.6
+   },
+   "train_2008_2018": {
+    "cagr": 34.0,
+    "dd": -27.9
+   },
+   "test_2019_2026": {
+    "cagr": 46.2,
+    "dd": -36.6
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 3.2,
+   "invested_pct": 97.3,
+   "held_over_1yr_pct": 6.1
+  },
+  {
+   "cagr": 31.6,
+   "dd": -39.4,
+   "per": {
+    "2008-2009": 25.4,
+    "2010-2015": 30.7,
+    "2016-2020": 18.7,
+    "2021-2026": 46.7
+   },
+   "train_2008_2018": {
+    "cagr": 27.7,
+    "dd": -27.5
+   },
+   "test_2019_2026": {
+    "cagr": 37.2,
+    "dd": -36.6
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.5,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 4.1
+  },
+  {
+   "cagr": 34.2,
+   "dd": -39.4,
+   "per": {
+    "2008-2009": 23.1,
+    "2010-2015": 34.5,
+    "2016-2020": 19.5,
+    "2021-2026": 51.9
+   },
+   "train_2008_2018": {
+    "cagr": 30.0,
+    "dd": -27.5
+   },
+   "test_2019_2026": {
+    "cagr": 40.3,
+    "dd": -36.6
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.5,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 4.1
+  },
+  {
+   "cagr": 34.2,
+   "dd": -32.4,
+   "per": {
+    "2008-2009": 51.2,
+    "2010-2015": 22.1,
+    "2016-2020": 30.4,
+    "2021-2026": 45.3
+   },
+   "train_2008_2018": {
+    "cagr": 30.5,
+    "dd": -27.2
+   },
+   "test_2019_2026": {
+    "cagr": 39.7,
+    "dd": -19.6
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.4,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.3
+  },
+  {
+   "cagr": 38.1,
+   "dd": -33.7,
+   "per": {
+    "2008-2009": 51.2,
+    "2010-2015": 24.5,
+    "2016-2020": 37.8,
+    "2021-2026": 49.0
+   },
+   "train_2008_2018": {
+    "cagr": 32.9,
+    "dd": -28.1
+   },
+   "test_2019_2026": {
+    "cagr": 45.7,
+    "dd": -22.7
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.4,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.3
+  },
+  {
+   "cagr": 38.2,
+   "dd": -44.5,
+   "per": {
+    "2008-2009": 20.7,
+    "2010-2015": 39.3,
+    "2016-2020": 35.7,
+    "2021-2026": 45.7
+   },
+   "train_2008_2018": {
+    "cagr": 34.3,
+    "dd": -44.5
+   },
+   "test_2019_2026": {
+    "cagr": 43.9,
+    "dd": -37.0
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 6.3,
+   "invested_pct": 98.7,
+   "held_over_1yr_pct": 1.8
+  },
+  {
+   "cagr": 34.9,
+   "dd": -27.7,
+   "per": {
+    "2008-2009": 46.1,
+    "2010-2015": 30.3,
+    "2016-2020": 27.1,
+    "2021-2026": 43.1
+   },
+   "train_2008_2018": {
+    "cagr": 32.7,
+    "dd": -22.8
+   },
+   "test_2019_2026": {
+    "cagr": 38.2,
+    "dd": -20.1
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.4
+  },
+  {
+   "cagr": 37.8,
+   "dd": -34.6,
+   "per": {
+    "2008-2009": 46.1,
+    "2010-2015": 34.2,
+    "2016-2020": 34.3,
+    "2021-2026": 42.1
+   },
+   "train_2008_2018": {
+    "cagr": 35.4,
+    "dd": -24.9
+   },
+   "test_2019_2026": {
+    "cagr": 41.4,
+    "dd": -23.0
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 5.6,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 0.4
+  },
+  {
+   "cagr": 32.8,
+   "dd": -33.0,
+   "per": {
+    "2008-2009": 44.7,
+    "2010-2015": 27.7,
+    "2016-2020": 27.5,
+    "2021-2026": 38.9
+   },
+   "train_2008_2018": {
+    "cagr": 30.2,
+    "dd": -24.3
+   },
+   "test_2019_2026": {
+    "cagr": 36.6,
+    "dd": -20.1
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 11.6,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.2
+  },
+  {
+   "cagr": 36.6,
+   "dd": -33.9,
+   "per": {
+    "2008-2009": 44.7,
+    "2010-2015": 30.2,
+    "2016-2020": 34.6,
+    "2021-2026": 42.4
+   },
+   "train_2008_2018": {
+    "cagr": 32.6,
+    "dd": -25.0
+   },
+   "test_2019_2026": {
+    "cagr": 42.5,
+    "dd": -23.0
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 11.6,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.2
+  },
+  {
+   "cagr": 35.7,
+   "dd": -36.9,
+   "per": {
+    "2008-2009": 29.1,
+    "2010-2015": 31.8,
+    "2016-2020": 33.3,
+    "2021-2026": 44.3
+   },
+   "train_2008_2018": {
+    "cagr": 31.0,
+    "dd": -29.8
+   },
+   "test_2019_2026": {
+    "cagr": 42.7,
+    "dd": -36.9
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 3.0,
+   "invested_pct": 97.3,
+   "held_over_1yr_pct": 8.0
+  },
+  {
+   "cagr": 29.2,
+   "dd": -36.9,
+   "per": {
+    "2008-2009": 27.1,
+    "2010-2015": 28.9,
+    "2016-2020": 17.1,
+    "2021-2026": 41.5
+   },
+   "train_2008_2018": {
+    "cagr": 25.9,
+    "dd": -26.2
+   },
+   "test_2019_2026": {
+    "cagr": 34.0,
+    "dd": -36.9
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 5.2
+  },
+  {
+   "cagr": 31.8,
+   "dd": -36.9,
+   "per": {
+    "2008-2009": 24.8,
+    "2010-2015": 32.6,
+    "2016-2020": 17.9,
+    "2021-2026": 46.5
+   },
+   "train_2008_2018": {
+    "cagr": 28.2,
+    "dd": -26.2
+   },
+   "test_2019_2026": {
+    "cagr": 37.1,
+    "dd": -36.9
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.4,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 5.2
+  },
+  {
+   "cagr": 32.5,
+   "dd": -32.5,
+   "per": {
+    "2008-2009": 51.6,
+    "2010-2015": 25.1,
+    "2016-2020": 26.5,
+    "2021-2026": 39.6
+   },
+   "train_2008_2018": {
+    "cagr": 30.3,
+    "dd": -24.6
+   },
+   "test_2019_2026": {
+    "cagr": 35.6,
+    "dd": -18.8
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.2,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 36.3,
+   "dd": -33.3,
+   "per": {
+    "2008-2009": 51.6,
+    "2010-2015": 27.5,
+    "2016-2020": 33.6,
+    "2021-2026": 43.1
+   },
+   "train_2008_2018": {
+    "cagr": 32.7,
+    "dd": -25.3
+   },
+   "test_2019_2026": {
+    "cagr": 41.5,
+    "dd": -23.0
+   },
+   "universe": "top 500",
+   "score": "6 month",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.2,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 35.2,
+   "dd": -38.5,
+   "per": {
+    "2008-2009": 20.4,
+    "2010-2015": 36.1,
+    "2016-2020": 28.6,
+    "2021-2026": 45.5
+   },
+   "train_2008_2018": {
+    "cagr": 30.9,
+    "dd": -32.8
+   },
+   "test_2019_2026": {
+    "cagr": 41.5,
+    "dd": -36.0
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.5,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 5.1
+  },
+  {
+   "cagr": 33.1,
+   "dd": -25.4,
+   "per": {
+    "2008-2009": 38.6,
+    "2010-2015": 30.0,
+    "2016-2020": 25.8,
+    "2021-2026": 40.9
+   },
+   "train_2008_2018": {
+    "cagr": 30.1,
+    "dd": -22.4
+   },
+   "test_2019_2026": {
+    "cagr": 37.3,
+    "dd": -18.5
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 5.2,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.2
+  },
+  {
+   "cagr": 36.0,
+   "dd": -31.6,
+   "per": {
+    "2008-2009": 38.6,
+    "2010-2015": 33.8,
+    "2016-2020": 32.9,
+    "2021-2026": 39.9
+   },
+   "train_2008_2018": {
+    "cagr": 32.8,
+    "dd": -22.7
+   },
+   "test_2019_2026": {
+    "cagr": 40.5,
+    "dd": -23.6
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 5.2,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.2
+  },
+  {
+   "cagr": 31.5,
+   "dd": -37.0,
+   "per": {
+    "2008-2009": 38.2,
+    "2010-2015": 28.2,
+    "2016-2020": 23.6,
+    "2021-2026": 40.0
+   },
+   "train_2008_2018": {
+    "cagr": 28.0,
+    "dd": -23.9
+   },
+   "test_2019_2026": {
+    "cagr": 36.8,
+    "dd": -18.8
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 11.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.8
+  },
+  {
+   "cagr": 35.3,
+   "dd": -36.7,
+   "per": {
+    "2008-2009": 38.2,
+    "2010-2015": 30.6,
+    "2016-2020": 30.6,
+    "2021-2026": 43.5
+   },
+   "train_2008_2018": {
+    "cagr": 30.3,
+    "dd": -25.2
+   },
+   "test_2019_2026": {
+    "cagr": 42.7,
+    "dd": -23.6
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 11.1,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 0.8
+  },
+  {
+   "cagr": 35.4,
+   "dd": -40.8,
+   "per": {
+    "2008-2009": 36.7,
+    "2010-2015": 34.9,
+    "2016-2020": 22.8,
+    "2021-2026": 47.2
+   },
+   "train_2008_2018": {
+    "cagr": 30.0,
+    "dd": -26.2
+   },
+   "test_2019_2026": {
+    "cagr": 43.5,
+    "dd": -39.2
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.5,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 14.3
+  },
+  {
+   "cagr": 28.1,
+   "dd": -40.8,
+   "per": {
+    "2008-2009": 21.9,
+    "2010-2015": 32.1,
+    "2016-2020": 9.4,
+    "2021-2026": 44.3
+   },
+   "train_2008_2018": {
+    "cagr": 23.9,
+    "dd": -24.3
+   },
+   "test_2019_2026": {
+    "cagr": 34.4,
+    "dd": -39.2
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 9.6
+  },
+  {
+   "cagr": 30.7,
+   "dd": -40.8,
+   "per": {
+    "2008-2009": 19.6,
+    "2010-2015": 36.0,
+    "2016-2020": 10.2,
+    "2021-2026": 49.4
+   },
+   "train_2008_2018": {
+    "cagr": 26.1,
+    "dd": -24.3
+   },
+   "test_2019_2026": {
+    "cagr": 37.5,
+    "dd": -39.2
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.1,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 9.6
+  },
+  {
+   "cagr": 29.1,
+   "dd": -32.6,
+   "per": {
+    "2008-2009": 36.8,
+    "2010-2015": 26.0,
+    "2016-2020": 16.0,
+    "2021-2026": 42.0
+   },
+   "train_2008_2018": {
+    "cagr": 24.0,
+    "dd": -21.7
+   },
+   "test_2019_2026": {
+    "cagr": 36.7,
+    "dd": -20.4
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 9.0,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.4
+  },
+  {
+   "cagr": 32.8,
+   "dd": -32.1,
+   "per": {
+    "2008-2009": 36.8,
+    "2010-2015": 28.5,
+    "2016-2020": 22.6,
+    "2021-2026": 45.6
+   },
+   "train_2008_2018": {
+    "cagr": 26.2,
+    "dd": -22.7
+   },
+   "test_2019_2026": {
+    "cagr": 42.6,
+    "dd": -23.6
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 20,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 9.0,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.4
+  },
+  {
+   "cagr": 36.3,
+   "dd": -34.9,
+   "per": {
+    "2008-2009": 22.2,
+    "2010-2015": 41.3,
+    "2016-2020": 30.2,
+    "2021-2026": 41.7
+   },
+   "train_2008_2018": {
+    "cagr": 34.1,
+    "dd": -29.7
+   },
+   "test_2019_2026": {
+    "cagr": 39.5,
+    "dd": -34.9
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.7,
+   "invested_pct": 96.0,
+   "held_over_1yr_pct": 9.0
+  },
+  {
+   "cagr": 32.4,
+   "dd": -22.7,
+   "per": {
+    "2008-2009": 36.7,
+    "2010-2015": 33.0,
+    "2016-2020": 25.4,
+    "2021-2026": 36.6
+   },
+   "train_2008_2018": {
+    "cagr": 31.5,
+    "dd": -19.0
+   },
+   "test_2019_2026": {
+    "cagr": 33.9,
+    "dd": -18.3
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 4.8,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.8
+  },
+  {
+   "cagr": 35.3,
+   "dd": -29.6,
+   "per": {
+    "2008-2009": 36.7,
+    "2010-2015": 37.0,
+    "2016-2020": 32.5,
+    "2021-2026": 35.7
+   },
+   "train_2008_2018": {
+    "cagr": 34.2,
+    "dd": -20.9
+   },
+   "test_2019_2026": {
+    "cagr": 37.0,
+    "dd": -23.4
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 4.8,
+   "invested_pct": 68.7,
+   "held_over_1yr_pct": 2.8
+  },
+  {
+   "cagr": 30.3,
+   "dd": -31.8,
+   "per": {
+    "2008-2009": 36.8,
+    "2010-2015": 29.5,
+    "2016-2020": 23.2,
+    "2021-2026": 35.2
+   },
+   "train_2008_2018": {
+    "cagr": 28.3,
+    "dd": -19.8
+   },
+   "test_2019_2026": {
+    "cagr": 33.2,
+    "dd": -20.4
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 10.7,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 34.1,
+   "dd": -31.7,
+   "per": {
+    "2008-2009": 36.8,
+    "2010-2015": 32.1,
+    "2016-2020": 30.1,
+    "2021-2026": 38.7
+   },
+   "train_2008_2018": {
+    "cagr": 30.7,
+    "dd": -21.1
+   },
+   "test_2019_2026": {
+    "cagr": 38.9,
+    "dd": -23.4
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "monthly",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 10.7,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.0
+  },
+  {
+   "cagr": 34.1,
+   "dd": -38.8,
+   "per": {
+    "2008-2009": 38.5,
+    "2010-2015": 31.4,
+    "2016-2020": 24.8,
+    "2021-2026": 44.0
+   },
+   "train_2008_2018": {
+    "cagr": 29.8,
+    "dd": -25.3
+   },
+   "test_2019_2026": {
+    "cagr": 40.5,
+    "dd": -37.7
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "none",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.3,
+   "invested_pct": 94.7,
+   "held_over_1yr_pct": 19.9
+  },
+  {
+   "cagr": 27.0,
+   "dd": -38.4,
+   "per": {
+    "2008-2009": 23.9,
+    "2010-2015": 29.4,
+    "2016-2020": 11.0,
+    "2021-2026": 40.7
+   },
+   "train_2008_2018": {
+    "cagr": 23.9,
+    "dd": -23.7
+   },
+   "test_2019_2026": {
+    "cagr": 31.4,
+    "dd": -37.7
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 12.3
+  },
+  {
+   "cagr": 29.5,
+   "dd": -38.4,
+   "per": {
+    "2008-2009": 21.6,
+    "2010-2015": 33.2,
+    "2016-2020": 11.8,
+    "2021-2026": 45.6
+   },
+   "train_2008_2018": {
+    "cagr": 26.1,
+    "dd": -23.7
+   },
+   "test_2019_2026": {
+    "cagr": 34.4,
+    "dd": -37.7
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "rebalance",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 2.0,
+   "invested_pct": 71.4,
+   "held_over_1yr_pct": 12.3
+  },
+  {
+   "cagr": 28.3,
+   "dd": -32.2,
+   "per": {
+    "2008-2009": 38.5,
+    "2010-2015": 24.0,
+    "2016-2020": 19.3,
+    "2021-2026": 37.6
+   },
+   "train_2008_2018": {
+    "cagr": 24.9,
+    "dd": -21.4
+   },
+   "test_2019_2026": {
+    "cagr": 33.3,
+    "dd": -24.4
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  },
+  {
+   "cagr": 32.0,
+   "dd": -31.9,
+   "per": {
+    "2008-2009": 38.5,
+    "2010-2015": 26.5,
+    "2016-2020": 26.0,
+    "2021-2026": 41.0
+   },
+   "train_2008_2018": {
+    "cagr": 27.2,
+    "dd": -22.4
+   },
+   "test_2019_2026": {
+    "cagr": 39.0,
+    "dd": -27.3
+   },
+   "universe": "top 500",
+   "score": "(6m+12m)/volatility",
+   "stocks": 30,
+   "rebalance": "semi-annual",
+   "crash_filter": "daily",
+   "hide_in": "gold or liquid",
+   "turnover_per_year": 8.9,
+   "invested_pct": 69.1,
+   "held_over_1yr_pct": 1.5
+  }
+ ],
+ "picked_on_2008_2018_return_per_drop": {
+  "cagr": 32.4,
+  "dd": -22.7,
+  "per": {
+   "2008-2009": 36.7,
+   "2010-2015": 33.0,
+   "2016-2020": 25.4,
+   "2021-2026": 36.6
+  },
+  "train_2008_2018": {
+   "cagr": 31.5,
+   "dd": -19.0
+  },
+  "test_2019_2026": {
+   "cagr": 33.9,
+   "dd": -18.3
+  },
+  "universe": "top 500",
+  "score": "(6m+12m)/volatility",
+  "stocks": 30,
+  "rebalance": "monthly",
+  "crash_filter": "rebalance",
+  "hide_in": "liquid",
+  "turnover_per_year": 4.8,
+  "invested_pct": 68.7,
+  "held_over_1yr_pct": 2.8
+ },
+ "mixes_with_dip_bot": {
+  "30% momentum + 70% dip bot (rebalanced monthly-ish: daily weights)": {
+   "cagr": 19.3,
+   "dd": -15.8,
+   "per": {
+    "2008-2009": 35.3,
+    "2010-2015": 14.8,
+    "2016-2020": 17.3,
+    "2021-2026": 20.8
+   },
+   "train_2008_2018": {
+    "cagr": 18.4,
+    "dd": -15.8
+   },
+   "test_2019_2026": {
+    "cagr": 20.8,
+    "dd": -9.4
+   }
+  },
+  "50% momentum + 50% dip bot (rebalanced monthly-ish: daily weights)": {
+   "cagr": 23.1,
+   "dd": -14.1,
+   "per": {
+    "2008-2009": 35.8,
+    "2010-2015": 19.8,
+    "2016-2020": 19.7,
+    "2021-2026": 25.3
+   },
+   "train_2008_2018": {
+    "cagr": 22.1,
+    "dd": -14.0
+   },
+   "test_2019_2026": {
+    "cagr": 24.5,
+    "dd": -11.6
+   }
+  },
+  "70% momentum + 30% dip bot (rebalanced monthly-ish: daily weights)": {
+   "cagr": 26.8,
+   "dd": -17.2,
+   "per": {
+    "2008-2009": 36.2,
+    "2010-2015": 25.0,
+    "2016-2020": 22.0,
+    "2021-2026": 29.8
+   },
+   "train_2008_2018": {
+    "cagr": 25.8,
+    "dd": -15.1
+   },
+   "test_2019_2026": {
+    "cagr": 28.2,
+    "dd": -14.3
+   }
+  }
+ }
+}
