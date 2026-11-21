@@ -1,0 +1,507 @@
+{
+ "note": "Slow crypto trend rules (Nov 20 2026). Research only, not financial advice.\nData: Yahoo daily BTC-USD (from Sep 2014) and ETH-USD (from Nov 2017), SPY, ^IRX (T-bills for idle money).\nRules (signal on the close, trade the NEXT day's close, so no look-ahead):\n  buy & hold | 10-month average, checked at month end (Faber) | 200-day average, daily | 20-week average, checked Fridays |\n  50/200-day crossover\nCosts: 'ETF route' = spot bitcoin/ether ETF (IBIT/ETHA-style): 0.10% per trade + 0.25%/yr fee.\n       'Robinhood Crypto route' = 0.95% per side (Robinhood's published spread markup), no fee.\nAlso: a 10% Bitcoin slice next to SPY (buy & hold vs the 10-month rule), rebalanced monthly.\nPeriods: whole history, 2015-2019, 2020-2026, 2022 (crypto winter). Crypto trades every day; monthly/weekly checks use calendar month ends / Fridays.\nDRY=1: fake prices (code test).",
+ "built": "2026-11-21",
+ "dry": null,
+ "results": {
+  "Bitcoin | ETF route | buy & hold": {
+   "all": {
+    "per_year_pct": 48.7,
+    "total_pct": 12400.9,
+    "worst_drop_pct": -83.4
+   },
+   "2015-2019": {
+    "per_year_pct": 86.7,
+    "total_pct": 2160.7,
+    "worst_drop_pct": -83.4
+   },
+   "2020-2026": {
+    "per_year_pct": 35.4,
+    "total_pct": 705.5,
+    "worst_drop_pct": -76.7
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -65.4,
+    "worst_drop_pct": -67.0
+   },
+   "trades_per_year": 0.1,
+   "time_invested_pct": 100
+  },
+  "Bitcoin | ETF route | 10-month average, monthly": {
+   "all": {
+    "per_year_pct": 60.1,
+    "total_pct": 30800.9,
+    "worst_drop_pct": -72.4
+   },
+   "2015-2019": {
+    "per_year_pct": 83.4,
+    "total_pct": 1972.5,
+    "worst_drop_pct": -72.4
+   },
+   "2020-2026": {
+    "per_year_pct": 48.0,
+    "total_pct": 1390.9,
+    "worst_drop_pct": -53.1
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": 2.0,
+    "worst_drop_pct": 0.0
+   },
+   "trades_per_year": 1.2,
+   "time_invested_pct": 65
+  },
+  "Bitcoin | ETF route | 200-day average, daily": {
+   "all": {
+    "per_year_pct": 55.2,
+    "total_pct": 20982.2,
+    "worst_drop_pct": -70.1
+   },
+   "2015-2019": {
+    "per_year_pct": 97.5,
+    "total_pct": 2899.8,
+    "worst_drop_pct": -70.1
+   },
+   "2020-2026": {
+    "per_year_pct": 32.7,
+    "total_pct": 602.7,
+    "worst_drop_pct": -64.4
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": 2.0,
+    "worst_drop_pct": 0.0
+   },
+   "trades_per_year": 6.2,
+   "time_invested_pct": 58
+  },
+  "Bitcoin | ETF route | 20-week average, weekly": {
+   "all": {
+    "per_year_pct": 56.4,
+    "total_pct": 23038.8,
+    "worst_drop_pct": -65.2
+   },
+   "2015-2019": {
+    "per_year_pct": 117.1,
+    "total_pct": 4706.8,
+    "worst_drop_pct": -65.2
+   },
+   "2020-2026": {
+    "per_year_pct": 25.6,
+    "total_pct": 381.3,
+    "worst_drop_pct": -59.9
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -25.3,
+    "worst_drop_pct": -31.2
+   },
+   "trades_per_year": 3.6,
+   "time_invested_pct": 58
+  },
+  "Bitcoin | ETF route | 50/200-day crossover": {
+   "all": {
+    "per_year_pct": 47.4,
+    "total_pct": 11129.7,
+    "worst_drop_pct": -68.5
+   },
+   "2015-2019": {
+    "per_year_pct": 98.9,
+    "total_pct": 3006.3,
+    "worst_drop_pct": -65.6
+   },
+   "2020-2026": {
+    "per_year_pct": 20.5,
+    "total_pct": 261.5,
+    "worst_drop_pct": -55.6
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -7.9,
+    "worst_drop_pct": -12.9
+   },
+   "trades_per_year": 1.7,
+   "time_invested_pct": 58
+  },
+  "Bitcoin | Robinhood Crypto route | buy & hold": {
+   "all": {
+    "per_year_pct": 48.9,
+    "total_pct": 12669.2,
+    "worst_drop_pct": -83.4
+   },
+   "2015-2019": {
+    "per_year_pct": 87.1,
+    "total_pct": 2189.1,
+    "worst_drop_pct": -83.4
+   },
+   "2020-2026": {
+    "per_year_pct": 35.7,
+    "total_pct": 719.4,
+    "worst_drop_pct": -76.6
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -65.3,
+    "worst_drop_pct": -66.9
+   },
+   "trades_per_year": 0.1,
+   "time_invested_pct": 100
+  },
+  "Bitcoin | Robinhood Crypto route | 10-month average, monthly": {
+   "all": {
+    "per_year_pct": 58.7,
+    "total_pct": 27644.2,
+    "worst_drop_pct": -72.9
+   },
+   "2015-2019": {
+    "per_year_pct": 81.2,
+    "total_pct": 1851.3,
+    "worst_drop_pct": -72.9
+   },
+   "2020-2026": {
+    "per_year_pct": 47.0,
+    "total_pct": 1321.8,
+    "worst_drop_pct": -53.1
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": 2.0,
+    "worst_drop_pct": 0.0
+   },
+   "trades_per_year": 1.2,
+   "time_invested_pct": 65
+  },
+  "Bitcoin | Robinhood Crypto route | 200-day average, daily": {
+   "all": {
+    "per_year_pct": 47.3,
+    "total_pct": 11110.0,
+    "worst_drop_pct": -71.9
+   },
+   "2015-2019": {
+    "per_year_pct": 91.8,
+    "total_pct": 2492.8,
+    "worst_drop_pct": -71.9
+   },
+   "2020-2026": {
+    "per_year_pct": 23.7,
+    "total_pct": 332.3,
+    "worst_drop_pct": -69.7
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": 2.0,
+    "worst_drop_pct": 0.0
+   },
+   "trades_per_year": 6.2,
+   "time_invested_pct": 58
+  },
+  "Bitcoin | Robinhood Crypto route | 20-week average, weekly": {
+   "all": {
+    "per_year_pct": 51.9,
+    "total_pct": 16094.8,
+    "worst_drop_pct": -67.0
+   },
+   "2015-2019": {
+    "per_year_pct": 113.0,
+    "total_pct": 4274.4,
+    "worst_drop_pct": -67.0
+   },
+   "2020-2026": {
+    "per_year_pct": 20.9,
+    "total_pct": 270.2,
+    "worst_drop_pct": -61.9
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -27.8,
+    "worst_drop_pct": -32.5
+   },
+   "trades_per_year": 3.6,
+   "time_invested_pct": 58
+  },
+  "Bitcoin | Robinhood Crypto route | 50/200-day crossover": {
+   "all": {
+    "per_year_pct": 45.4,
+    "total_pct": 9450.0,
+    "worst_drop_pct": -69.5
+   },
+   "2015-2019": {
+    "per_year_pct": 97.2,
+    "total_pct": 2873.3,
+    "worst_drop_pct": -66.2
+   },
+   "2020-2026": {
+    "per_year_pct": 18.5,
+    "total_pct": 221.2,
+    "worst_drop_pct": -57.1
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -8.7,
+    "worst_drop_pct": -12.9
+   },
+   "trades_per_year": 1.7,
+   "time_invested_pct": 58
+  },
+  "Ether | ETF route | buy & hold": {
+   "all": {
+    "per_year_pct": 19.3,
+    "total_pct": 393.5,
+    "worst_drop_pct": -94.0
+   },
+   "2015-2019": {
+    "per_year_pct": -34.7,
+    "total_pct": -59.9,
+    "worst_drop_pct": -94.0
+   },
+   "2020-2026": {
+    "per_year_pct": 43.8,
+    "total_pct": 1118.6,
+    "worst_drop_pct": -79.4
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -68.3,
+    "worst_drop_pct": -74.1
+   },
+   "trades_per_year": 0.1,
+   "time_invested_pct": 100
+  },
+  "Ether | ETF route | 10-month average, monthly": {
+   "all": {
+    "per_year_pct": 8.7,
+    "total_pct": 112.1,
+    "worst_drop_pct": -79.2
+   },
+   "2015-2019": {
+    "per_year_pct": -17.3,
+    "total_pct": -33.5,
+    "worst_drop_pct": -49.9
+   },
+   "2020-2026": {
+    "per_year_pct": 18.3,
+    "total_pct": 219.0,
+    "worst_drop_pct": -79.2
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -39.7,
+    "worst_drop_pct": -41.8
+   },
+   "trades_per_year": 1.9,
+   "time_invested_pct": 48
+  },
+  "Ether | ETF route | 200-day average, daily": {
+   "all": {
+    "per_year_pct": 38.0,
+    "total_pct": 1738.5,
+    "worst_drop_pct": -71.0
+   },
+   "2015-2019": {
+    "per_year_pct": 4.3,
+    "total_pct": 9.4,
+    "worst_drop_pct": -48.3
+   },
+   "2020-2026": {
+    "per_year_pct": 50.6,
+    "total_pct": 1580.5,
+    "worst_drop_pct": -63.7
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -16.6,
+    "worst_drop_pct": -19.4
+   },
+   "trades_per_year": 5.1,
+   "time_invested_pct": 48
+  },
+  "Ether | ETF route | 20-week average, weekly": {
+   "all": {
+    "per_year_pct": 36.4,
+    "total_pct": 1551.8,
+    "worst_drop_pct": -61.4
+   },
+   "2015-2019": {
+    "per_year_pct": 12.4,
+    "total_pct": 28.4,
+    "worst_drop_pct": -40.9
+   },
+   "2020-2026": {
+    "per_year_pct": 44.9,
+    "total_pct": 1186.3,
+    "worst_drop_pct": -60.5
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -35.5,
+    "worst_drop_pct": -46.2
+   },
+   "trades_per_year": 4.0,
+   "time_invested_pct": 49
+  },
+  "Ether | ETF route | 50/200-day crossover": {
+   "all": {
+    "per_year_pct": 20.0,
+    "total_pct": 417.4,
+    "worst_drop_pct": -77.9
+   },
+   "2015-2019": {
+    "per_year_pct": 1.6,
+    "total_pct": 3.3,
+    "worst_drop_pct": -49.9
+   },
+   "2020-2026": {
+    "per_year_pct": 26.3,
+    "total_pct": 400.6,
+    "worst_drop_pct": -67.1
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -31.2,
+    "worst_drop_pct": -37.2
+   },
+   "trades_per_year": 1.9,
+   "time_invested_pct": 48
+  },
+  "Ether | Robinhood Crypto route | buy & hold": {
+   "all": {
+    "per_year_pct": 19.5,
+    "total_pct": 400.2,
+    "worst_drop_pct": -94.0
+   },
+   "2015-2019": {
+    "per_year_pct": -34.8,
+    "total_pct": -60.0,
+    "worst_drop_pct": -94.0
+   },
+   "2020-2026": {
+    "per_year_pct": 44.1,
+    "total_pct": 1139.7,
+    "worst_drop_pct": -79.4
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -68.3,
+    "worst_drop_pct": -74.1
+   },
+   "trades_per_year": 0.1,
+   "time_invested_pct": 100
+  },
+  "Ether | Robinhood Crypto route | 10-month average, monthly": {
+   "all": {
+    "per_year_pct": 7.1,
+    "total_pct": 85.5,
+    "worst_drop_pct": -80.2
+   },
+   "2015-2019": {
+    "per_year_pct": -18.0,
+    "total_pct": -34.6,
+    "worst_drop_pct": -49.9
+   },
+   "2020-2026": {
+    "per_year_pct": 16.3,
+    "total_pct": 183.6,
+    "worst_drop_pct": -80.2
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -41.2,
+    "worst_drop_pct": -43.2
+   },
+   "trades_per_year": 1.9,
+   "time_invested_pct": 48
+  },
+  "Ether | Robinhood Crypto route | 200-day average, daily": {
+   "all": {
+    "per_year_pct": 32.3,
+    "total_pct": 1156.7,
+    "worst_drop_pct": -73.1
+   },
+   "2015-2019": {
+    "per_year_pct": 1.8,
+    "total_pct": 4.0,
+    "worst_drop_pct": -50.4
+   },
+   "2020-2026": {
+    "per_year_pct": 43.6,
+    "total_pct": 1108.3,
+    "worst_drop_pct": -64.6
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -18.7,
+    "worst_drop_pct": -21.5
+   },
+   "trades_per_year": 5.1,
+   "time_invested_pct": 48
+  },
+  "Ether | Robinhood Crypto route | 20-week average, weekly": {
+   "all": {
+    "per_year_pct": 32.0,
+    "total_pct": 1131.6,
+    "worst_drop_pct": -62.6
+   },
+   "2015-2019": {
+    "per_year_pct": 9.8,
+    "total_pct": 22.3,
+    "worst_drop_pct": -40.9
+   },
+   "2020-2026": {
+    "per_year_pct": 39.8,
+    "total_pct": 907.4,
+    "worst_drop_pct": -60.5
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -38.7,
+    "worst_drop_pct": -48.0
+   },
+   "trades_per_year": 4.0,
+   "time_invested_pct": 49
+  },
+  "Ether | Robinhood Crypto route | 50/200-day crossover": {
+   "all": {
+    "per_year_pct": 18.2,
+    "total_pct": 353.3,
+    "worst_drop_pct": -78.2
+   },
+   "2015-2019": {
+    "per_year_pct": 0.8,
+    "total_pct": 1.7,
+    "worst_drop_pct": -49.9
+   },
+   "2020-2026": {
+    "per_year_pct": 24.2,
+    "total_pct": 345.7,
+    "worst_drop_pct": -68.7
+   },
+   "2022": {
+    "per_year_pct": null,
+    "total_pct": -31.8,
+    "worst_drop_pct": -37.2
+   },
+   "trades_per_year": 1.9,
+   "time_invested_pct": 48
+  },
+  "95% SPY + 5% bitcoin buy & hold": {
+   "per_year_pct": 15.8,
+   "worst_monthly_drop_pct": -25.8
+  },
+  "90% SPY + 10% bitcoin buy & hold": {
+   "per_year_pct": 18.7,
+   "worst_monthly_drop_pct": -27.6
+  },
+  "95% SPY + 5% bitcoin with the 10-month rule": {
+   "per_year_pct": 15.8,
+   "worst_monthly_drop_pct": -22.8
+  },
+  "90% SPY + 10% bitcoin with the 10-month rule": {
+   "per_year_pct": 18.7,
+   "worst_monthly_drop_pct": -21.6
+  },
+  "100% SPY (2015-2026)": {
+   "per_year_pct": 12.9,
+   "worst_monthly_drop_pct": -23.9
+  }
+ }
+}
