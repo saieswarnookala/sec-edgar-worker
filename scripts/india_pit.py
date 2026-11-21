@@ -88,7 +88,7 @@ def run():
             except Exception as e: print("CHECK", s, "failed", e)
     tv = V.rolling(120, min_periods=60).median(); RC = C
     halves = [i for i in range(1, D) if dates[i].month in (1, 7) and dates[i - 1].month not in (1, 7)]
-    START = int(np.searchsorted(dates.values, np.datetime64("2008-01-01")))
+    START = int(np.searchsorted(dates.values, np.datetime64("2009-01-01")))   # NSE archive has only ~72 days of 2007 -> start once 12-month look-backs exist
     traded = C.notna().values
     def members(k):
         M = np.zeros((D, len(tick)), bool); b = halves + [D]
@@ -111,10 +111,10 @@ def run():
     def summ(curve, tr=None):
         c = pd.Series(curve[START:], index=dates[START:]); p = c.pct_change().fillna(0); yrs = len(p) / 248
         per = {}
-        for a, b in (("2008", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")):
+        for a, b in (("2009", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")):
             q = p[(p.index >= a) & (p.index <= b + "-12-31")]; per[f"{a}-{b}"] = round(100 * ((1 + q).prod() ** (248 / max(len(q), 1)) - 1), 1)
         o = {"cagr": round(100 * (c.iloc[-1] ** (1 / yrs) - 1), 1), "dd": round(100 * float((c / c.cummax() - 1).min()), 1), "per": per}
-        for nm_, a, b in (("train_2008_2018", "2008", "2018-12-31"), ("test_2019_2026", "2019", "2100")):
+        for nm_, a, b in (("train_2009_2018", "2009", "2018-12-31"), ("test_2019_2026", "2019", "2100")):
             q = c[(c.index >= a) & (c.index <= b)]; o[nm_] = {"cagr": round(100 * ((q.iloc[-1] / q.iloc[0]) ** (248 / len(q)) - 1), 1), "dd": round(100 * float((q / q.cummax() - 1).min()), 1)}
         yr = c.resample("YE").last(); g = yr.pct_change(); g.iloc[0] = yr.iloc[0] / c.iloc[0] - 1
         at, carry = 1.0, 0.0                                            # rough after-tax: 20.8% on each year's net gain, losses carried
@@ -175,7 +175,7 @@ def run():
         o = summ(curve); o.update(universe=f"top {k}", score=score, stocks=N, rebalance=freq, crash_filter=filt, hide_in=hide, turnover_per_year=round(turn / ((D - START) / 248), 1))
         return o, curve
     OUT = {"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "stocks": len(tick)}
-    def pr(lbl, o): print(f"{lbl:64s} {o['cagr']:6.1f}%/yr (after tax ~{o['after_tax_rough_cagr']}) dd {o['dd']:6.1f} | 08-09 {o['per']['2008-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | train {o['train_2008_2018']['cagr']} test {o['test_2019_2026']['cagr']}/{o['test_2019_2026']['dd']}" + (f" | {o.get('trades_per_year')} tr/yr avg {o.get('avg_trade_pct')}%" if 'trades_per_year' in o else f" | turn {o.get('turnover_per_year')}x"), flush=True)
+    def pr(lbl, o): print(f"{lbl:64s} {o['cagr']:6.1f}%/yr (after tax ~{o['after_tax_rough_cagr']}) dd {o['dd']:6.1f} | 2009 {o['per']['2009-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | train {o['train_2009_2018']['cagr']} test {o['test_2019_2026']['cagr']}/{o['test_2019_2026']['dd']}" + (f" | {o.get('trades_per_year')} tr/yr avg {o.get('avg_trade_pct')}%" if 'trades_per_year' in o else f" | turn {o.get('turnover_per_year')}x"), flush=True)
     bench = summ(np.cumprod(1 + nr + dv)); OUT["nifty50_with_dividends"] = bench; pr("NIFTY 50 (+1.3% dividends)", bench)
     # 1) dip bot variants
     OUT["dip"] = {}; CUR = {}
@@ -193,8 +193,8 @@ def run():
                         o, c = mom(k, score, N, freq, filt, hide); rows.append(o); curves[len(rows) - 1] = c
                         pr(f"MOM {o['universe']} {score} N{N} {freq} filter {filt} hide {hide}", o)
     OUT["momentum"] = rows
-    pi = max(range(len(rows)), key=lambda i: rows[i]["train_2008_2018"]["cagr"] / max(1, -rows[i]["train_2008_2018"]["dd"]) if rows[i]["crash_filter"] != "none" else -1)
-    OUT["momentum_picked_on_2008_2018"] = rows[pi]; pr("PICKED (2008-2018 only) " + json.dumps({k_: rows[pi][k_] for k_ in ('universe', 'score', 'stocks', 'rebalance', 'crash_filter', 'hide_in')}), rows[pi])
+    pi = max(range(len(rows)), key=lambda i: rows[i]["train_2009_2018"]["cagr"] / max(1, -rows[i]["train_2009_2018"]["dd"]) if rows[i]["crash_filter"] != "none" else -1)
+    OUT["momentum_picked_on_2009_2018"] = rows[pi]; pr("PICKED (2009-2018 only) " + json.dumps({k_: rows[pi][k_] for k_ in ('universe', 'score', 'stocks', 'rebalance', 'crash_filter', 'hide_in')}), rows[pi])
     med = lambda key, f: float(np.median([r[key] if not isinstance(r[key], dict) else r[key]["cagr"] for r in rows if f(r)]))
     OUT["momentum_medians"] = {f"{k} | filter {fl}": {"cagr": med("cagr", lambda r: r["universe"] == k and r["crash_filter"] == fl), "dd": med("dd", lambda r: r["universe"] == k and r["crash_filter"] == fl),
                                "test_2019_2026": med("test_2019_2026", lambda r: r["universe"] == k and r["crash_filter"] == fl)} for k in ("top 200", "top 500") for fl in ("none", "rebalance", "daily")}
