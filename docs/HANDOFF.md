@@ -182,6 +182,11 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 20 tests (data/tax_news_tests.json, v3.0 1999-2026) - no rule changes
+- Wash sales: ~16% (live-like) / 22% (realistic) of losing sales washed, but after-tax return unchanged (19.5% live-like, 15.2% realistic;
+  17.1% / 12.9% if parking gains are also taxed yearly). 31-day cooldown slightly worse; December cooldown no effect. Real after-tax ratio ~0.78-0.89.
+- News proxies (per trade): heavy volume 0.49% vs 0.87% rest; overnight-gap drops 0.63% vs 0.79%; market-up dips 0.47% vs 1.24%; market down 3%+ 2.6%.
+  All groups positive; skipping any of them lowers total return (e.g. skip market-up 21.9 -> 18.5). Keep taking all signals.
 ### Nov 19 late tests (no action taken)
 - COMBO (data/intraday_combo.json, 2016-2026 replay): v3.2 30.5 | +2 drift 31.0 (2016-20 24.4 vs 21.9, 2021-26 36.9 vs 38.4, 5/11 years,
   worst -17.6) | +3 drift 30.5. v3.1 vs v3.0 here only +0.3 (2021-26 worse by 2.8) -> drift edge weak lately; not added to v3.2.
