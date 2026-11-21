@@ -182,6 +182,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India on SURVIVORSHIP-FREE NSE bhavcopy (data/india_pit.json, 2009-2026, R2 nse/bhav/<year>.json.gz; price only, 0.30%/side)
+- Splits/bonuses: bhavcopy PREVCLOSE unadjusted -> gaps <= -18% treated as corporate actions (8,442 days); checks vs Yahoo match within dividends.
+- Nifty 50 +div 11.9% (dd -38). Dip bot today 14.0% (dd -19.5, ~11.2 after tax, 2019-26 16.1%). NSE filters +0.2; 10-day/17% 13.1% dd -14.1; top 500 worse (7.1%).
+- Momentum (6m+12m)/vol, 30 stocks, semi-annual, top 200, no filter = 18.0% (matches NSE's real Nifty200 Momentum 30 ~19% incl. div) -> validates data.
+  Top 500 same rules 26.4% (dd -42); crash filters don't cut worst drop much (-42 -> -35 test). Picked on 2009-18 (top 500, vol-adj, 20, monthly, filter, gold): 30.6%, test 28.4/-26.1.
+- Mix (picked momentum + dip, corr 0.38): 30/70 19.2% dd -16.8; 50/50 22.5% dd -23.2 (after tax ~18). Nifty/gold/liquid dual momentum 7.9% (< Nifty) -> drop it.
 ### Nov 21 VIX gate (data/vix_gate.json, v3.0 1999-2026) - not adopted
 - No gate 21.9% live-like (13-19: 7.8%). VIX>=15 & calming 22.4% (13-19 8.8, worst -21.0 vs -24.7, 9.6 vs 11.7 trades/mo); realistic 16.6 = same.
 - Stricter gates (VIX>=20/25/30, SPY vol>=20/25) lower returns (20.1 -> 15.1). Best 2013-19 only ~9.3% -> gate does NOT fix the dead period.
