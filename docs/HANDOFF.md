@@ -187,7 +187,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Stress: v3.0 beta 0.45, own edge ~17%/yr (t 5.4) 1999-2026, BUT ~0 in 2013-2019 (bot 7.8% vs SPY 14.6%). Kill switch 40% confirmed.
 - Blend: trend sleeve alone 7.2% (< SPY); blends cut return far more than drawdown. Blend after-tax figures are per-sleeve unrebalanced (not comparable) - ignore.
 - Crypto: BTC 10-month rule 60.1%/yr vs hold 48.7 (2014-26), worst -72 vs -83, 2022 +2 vs -65, 1.2 trades/yr; Robinhood Crypto cost barely matters for it.
-  ETH rules inconsistent (10-month worse than hold) -> skip. 90% SPY + 10% BTC 10-month rule: 18.7% vs SPY 12.9 (2015-26), worst -21.6 vs -23.9.
+  ETH rules inconsistent (10-month worse than hold) -> skip.
+- BTC robustness (data/crypto_robust.json): lengths 6-14 mo give 44-62%/yr vs hold 48 (7-9 mo below hold -> 10 is a lucky peak); worst drop -66..-73 vs -83 for 6-11 mo;
+  check day 49-60%; 1-7 days late 53-58%; daily 100-300 day 55-71% with worst -61..-70; placebo: only 2.8% of random schedules beat it. Start 2023: rule 31 vs hold 37.
+  Verdict: reliable crash protection, extra return NOT reliable. 90% SPY + 10% BTC 10-month rule: 18.7% vs SPY 12.9 (2015-26), worst -21.6 vs -23.9.
 ### Nov 20 tests (data/tax_news_tests.json, v3.0 1999-2026) - no rule changes
 - Wash sales: ~16% (live-like) / 22% (realistic) of losing sales washed, but after-tax return unchanged (19.5% live-like, 15.2% realistic;
   17.1% / 12.9% if parking gains are also taxed yearly). 31-day cooldown slightly worse; December cooldown no effect. Real after-tax ratio ~0.78-0.89.
