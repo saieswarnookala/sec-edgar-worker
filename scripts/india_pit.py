@@ -77,14 +77,20 @@ def run():
     else: n = yahoo("^NSEI").reindex(dates).ffill(); gold = yahoo("GOLDBEES.NS").reindex(dates).ffill()
     print("stocks (ex ETFs):", len(tick), "| days", D, dates[0].date(), "->", dates[-1].date(), flush=True)
     R = (C / PC - 1).where(C.notna() & PC.notna() & (PC > 0))
-    R = R.where(R.abs() < 1.0)                                          # drop impossible prints
+    # NSE bhavcopy PREVCLOSE is NOT adjusted for splits/bonuses. Price bands cap real moves at 20% for most stocks, so an overnight gap of
+    # -18% or worse (or +80% or more: reverse split) is treated as a corporate action: that day keeps only its open -> close move.
+    gap = (O / PC - 1).where((O > 0) & (PC > 0))
+    ca = ((gap <= -0.18) | (gap >= 0.8) | (R <= -0.30) | (R >= 0.8)).fillna(False)
+    R = R.mask(ca, ((C / O - 1).where(O > 0)).clip(-0.2, 0.2))
+    print("corporate-action days fixed:", int(ca.values.sum()), flush=True)
+    R = R.where(R.abs() < 0.6)
     Rt = R.fillna(0).values
     # validation vs Yahoo adjusted prices (splits/bonuses) for big names
     if not DRY:
         for s in ("RELIANCE", "INFY", "TCS", "HDFCBANK", "ITC", "SBIN"):
             try:
                 y = yahoo(s + ".NS", "2010-01-01"); a = (1 + R[s].loc["2010-01-04":].fillna(0)).prod(); b = y.iloc[-1] / y.loc["2010-01-04":].iloc[0]
-                print(f"CHECK {s}: NSE close/prevclose growth x{a:.2f} vs Yahoo adjusted (with dividends) x{b:.2f}", flush=True)
+                print(f"CHECK {s}: NSE growth x{a:.2f} vs Yahoo adjusted x{b:.2f} (Yahoo includes dividends: expect NSE ~15-35% lower)", flush=True)
             except Exception as e: print("CHECK", s, "failed", e)
     tv = V.rolling(120, min_periods=60).median(); RC = C
     halves = [i for i in range(1, D) if dates[i].month in (1, 7) and dates[i - 1].month not in (1, 7)]
@@ -101,7 +107,9 @@ def run():
     glitch = (R.abs() > 0.35).rolling(6, min_periods=1).max().fillna(0).astype(bool).values
     above = (Pf > Pf.rolling(200, min_periods=180).mean()).values
     over5 = (Pf > Pf.rolling(5).mean()).values
-    nr = n.pct_change().fillna(0).values; gr = gold.pct_change().fillna(0).values
+    nr = n.pct_change().fillna(0); nr = nr.where(nr.abs() < 0.2, 0).values
+    gr = gold.pct_change().fillna(0); print("gold days dropped (bad prints):", int((gr.abs() >= 0.15).sum()), flush=True); gr = gr.where(gr.abs() < 0.15, 0).values
+    gold = pd.Series(np.cumprod(1 + gr), index=dates)
     liq = np.full(D, (1.06) ** (1 / 248) - 1); dv = (1.013) ** (1 / 248) - 1
     ntr = (n > n.rolling(100).mean()).shift(1, fill_value=False).values
     park_dip = np.where(ntr, nr + dv, liq)
