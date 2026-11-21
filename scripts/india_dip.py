@@ -66,7 +66,7 @@ def run():
     nr = n.pct_change().fillna(0).values; liq = np.full(D, (1 + LIQUID) ** (1 / 248) - 1)
     ntr = (n > n.rolling(100).mean()).shift(1, fill_value=False).values
     PARK = {"cash": np.zeros(D), "liquid fund ~6%": liq, "Nifty trend (100-day), else liquid": np.where(ntr, nr, liq), "Nifty always": nr}
-    def sim(S, R, park, cost=0.0015, entry="close", mx=5, slots=10):
+    def sim(S, R, park, cost=0.0015, entry="close", mx=5, slots=10, smart=True):
         eq = 1.0; curve = np.ones(D); pos = []; tr = []; inv = []
         for t in range(START, D):
             used = sum(p[2] for p in pos); day = 0.0
@@ -77,7 +77,7 @@ def run():
             for p in pos:
                 g = OC[t, p[0]] if (entry == "open" and p[1] == 0) else Rt[t, p[0]]
                 p[1] += 1; p[2] *= (1 + g) / (1 + day)
-                if p[1] >= mx or over5[t, p[0]]: eq *= 1 - cost * p[2]; tr.append(p[3] - 1 - 2 * cost)
+                if p[1] >= mx or (smart and over5[t, p[0]]): eq *= 1 - cost * p[2]; tr.append(p[3] - 1 - 2 * cost)
                 else: keep.append(p)
             pos = keep; used = sum(p[2] for p in pos); held = {p[0] for p in pos}
             new = [c for c in sorted(np.where(S[t])[0], key=lambda c: -R[t, c]) if c not in held][: max(0, slots - len(pos))]
@@ -101,6 +101,37 @@ def run():
     OUT = {"years": f"{dates[START].date()} to {dates[-1].date()}", "stocks_with_prices": len(px),
            "nifty50": summarize((1 + pd.Series(nr, index=dates)).cumprod().values / (1 + nr[:START + 1]).prod()),
            "note": "Nifty 50 price index (no dividends, ~1.2-1.5%/yr understated). Ideal = buy at close, 0.15%/side (STT, stamp, charges). Realistic = next open, 0.30%/side.", "results": []}
+    if MODE == "timeframe":
+        # Nov 21 2026: is the India dip bot on the wrong time frame? Same universe (top 200 by traded value), 200-day trend, 2x volume skip,
+        # glitch filter, idle money = Nifty when above its 100-day avg else liquid fund. Realistic fills (next open, 0.30%/side) + ideal.
+        # A) DIPS: look-back 1/2/3/5/10 days (drop threshold scaled ~ sqrt(days): 12% at 5 days), max hold 1/2/3/5/10 days,
+        #    exit = back above 5-day avg OR max hold ("smart") vs fixed hold.
+        # B) WINNERS (trend side): buy the strongest stocks vs Nifty over 20/40/60 days (top of the list, >= +10/15/20%), hold 20/40/60 days fixed.
+        # C) Today's bot (5-day look-back, 12%, smart exit, max 5) for reference.
+        M = members(200).values; ab = above.values & M & ~glitch.values & ~(vr > 2.0).values
+        pk = PARK["Nifty trend (100-day), else liquid"]; rows = []
+        def go(label, S, R, mx, smart, **kw):
+            for scen, cost, entry in (("realistic", 0.003, "open"), ("ideal", 0.0015, "close")):
+                r = sim(S, R, pk, cost=cost, entry=entry, mx=mx, smart=smart, **kw); r.update(test=label, scenario=scen); rows.append(r)
+                if scen == "realistic":
+                    yrs = (dates[-1] - dates[START]).days / 365.25
+                    print(f"{label:62s} {r['cagr']:6.1f}%/yr dd {r['dd']:6.1f} | 08-09 {r['per']['2008-2009']} 10-15 {r['per']['2010-2015']} 16-20 {r['per']['2016-2020']} 21-26 {r['per']['2021-2026']} | "
+                          f"test19-26 {r.get('test_2019_2026', {}).get('cagr')} | {r.get('trades', 0) / yrs:.0f} trades/yr avg {r.get('avg_trade_pct')}% win {r.get('win_rate')}%", flush=True)
+        for L in (1, 2, 3, 5, 10):
+            th = round(0.12 * (L / 5) ** 0.5, 3)
+            rel = Cf.pct_change(L).sub(n.pct_change(L), axis=0)
+            S = (rel.values <= -th) & ab; R = (-rel).values
+            for mx in (1, 2, 3, 5, 10):
+                go(f"DIP look-back {L}d (drop {th*100:.1f}%), smart exit, max {mx}d", S, R, mx, True)
+            for mx in (1, 3, 5):
+                go(f"DIP look-back {L}d (drop {th*100:.1f}%), FIXED hold {mx}d", S, R, mx, False)
+        for L, th in ((20, 0.10), (40, 0.15), (60, 0.20)):
+            rel = Cf.pct_change(L).sub(n.pct_change(L), axis=0)
+            S = (rel.values >= th) & ab; R = rel.values
+            for mx in (20, 40, 60):
+                go(f"WINNERS look-back {L}d (up {int(th*100)}%+ vs Nifty), hold {mx}d", S, R, mx, False)
+        OUT["timeframe"] = rows; OUT["note"] += " Before tax. Short holds pay 20% STCG on every gain; holds over a year 12.5%."
+        os.makedirs("data", exist_ok=True); json.dump(OUT, open("data/india_timeframe.json", "w"), indent=1, default=float); return
     if MODE == "gold":
         # Where to hide when Nifty is below its trend: faster/slower gold exits, gold-vs-cash, gold+liquid splits.
         g = yahoo("GOLDBEES.NS"); gold = g.c.reindex(dates).ffill(); gr = gold.pct_change().fillna(0).values
@@ -428,4 +459,4 @@ def run():
 if __name__ == "__main__":
   try: run()
   except Exception:
-    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
+    os.makedirs("data", exist_ok=True); json.dump({"error": traceback.format_exc()}, open({"bots": "data/india_bots.json", "trend": "data/india_trend.json", "checks": "data/india_checks.json", "oos": "data/india_oos.json", "gold": "data/india_gold.json", "timeframe": "data/india_timeframe.json"}.get((sys.argv[1:2] or ["dip"])[0], "data/india_dip.json"), "w")); print(traceback.format_exc()); sys.exit(1)
