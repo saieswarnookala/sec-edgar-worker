@@ -1,0 +1,241 @@
+{
+ "note": "VIX / volatility gate for the US dip bot (Nov 21 2026, research idea #1). Research only, not financial advice.\nEngine: scripts/stack_and_rebound.py, Dip bot v3.0 (stocks + ETF dips + IEF/Clear Leader parking), 1999-2026, live-like and realistic fills.\nGate: only take NEW stock dips when fear is high. Measures: VIX (Yahoo ^VIX, previous close), or SPY's own 20-day realized volatility\n(computable from Robinhood prices alone). Versions: above 15/20/25/30; 'high but calming' = above the level AND below its 5-day high.\nThresholds judged on 1999-2012 vs 2013-2026 and on the dead period 2013-2019. Money not used for dips stays in the normal parking.\nDRY=1: fake ETF data.",
+ "built": "2026-11-21",
+ "dry": null,
+ "results": {
+  "live-like | v3.0 (no gate)": {
+   "1999-2026": 21.9,
+   "1999-2012": 21.5,
+   "2013-2026": 22.4,
+   "2013-2019": 7.8,
+   "2020-2026": 39.5,
+   "worst": -24.7,
+   "trades_per_month": 11.7
+  },
+  "live-like | VIX >= 15": {
+   "1999-2026": 21.8,
+   "1999-2012": 21.4,
+   "2013-2026": 22.2,
+   "2013-2019": 8.6,
+   "2020-2026": 37.8,
+   "worst": -24.7,
+   "trades_per_month": 10.6
+  },
+  "live-like | VIX >= 15 and below its 5-day high (calming)": {
+   "1999-2026": 22.4,
+   "1999-2012": 21.4,
+   "2013-2026": 23.4,
+   "2013-2019": 8.8,
+   "2020-2026": 40.5,
+   "worst": -21.0,
+   "trades_per_month": 9.6
+  },
+  "live-like | VIX >= 20": {
+   "1999-2026": 20.1,
+   "1999-2012": 21.1,
+   "2013-2026": 19.1,
+   "2013-2019": 9.2,
+   "2020-2026": 30.1,
+   "worst": -24.7,
+   "trades_per_month": 8.0
+  },
+  "live-like | VIX >= 20 and below its 5-day high (calming)": {
+   "1999-2026": 20.6,
+   "1999-2012": 20.9,
+   "2013-2026": 20.3,
+   "2013-2019": 9.0,
+   "2020-2026": 33.0,
+   "worst": -21.0,
+   "trades_per_month": 7.2
+  },
+  "live-like | VIX >= 25": {
+   "1999-2026": 17.9,
+   "1999-2012": 17.1,
+   "2013-2026": 18.8,
+   "2013-2019": 9.4,
+   "2020-2026": 29.3,
+   "worst": -27.9,
+   "trades_per_month": 5.3
+  },
+  "live-like | VIX >= 25 and below its 5-day high (calming)": {
+   "1999-2026": 17.7,
+   "1999-2012": 16.8,
+   "2013-2026": 18.6,
+   "2013-2019": 9.3,
+   "2020-2026": 29.0,
+   "worst": -27.3,
+   "trades_per_month": 4.8
+  },
+  "live-like | VIX >= 30": {
+   "1999-2026": 15.1,
+   "1999-2012": 12.4,
+   "2013-2026": 17.8,
+   "2013-2019": 9.3,
+   "2020-2026": 27.2,
+   "worst": -38.3,
+   "trades_per_month": 3.7
+  },
+  "live-like | VIX >= 30 and below its 5-day high (calming)": {
+   "1999-2026": 14.7,
+   "1999-2012": 12.2,
+   "2013-2026": 17.2,
+   "2013-2019": 9.3,
+   "2020-2026": 26.0,
+   "worst": -41.3,
+   "trades_per_month": 3.6
+  },
+  "live-like | SPY 20-day vol >= 12%": {
+   "1999-2026": 22.1,
+   "1999-2012": 21.7,
+   "2013-2026": 22.5,
+   "2013-2019": 8.8,
+   "2020-2026": 38.3,
+   "worst": -24.7,
+   "trades_per_month": 9.4
+  },
+  "live-like | SPY 20-day vol >= 16%": {
+   "1999-2026": 21.2,
+   "1999-2012": 21.4,
+   "2013-2026": 21.0,
+   "2013-2019": 8.5,
+   "2020-2026": 35.2,
+   "worst": -24.7,
+   "trades_per_month": 7.6
+  },
+  "live-like | SPY 20-day vol >= 20%": {
+   "1999-2026": 19.5,
+   "1999-2012": 19.1,
+   "2013-2026": 19.8,
+   "2013-2019": 9.1,
+   "2020-2026": 31.8,
+   "worst": -24.7,
+   "trades_per_month": 6.0
+  },
+  "live-like | SPY 20-day vol >= 25%": {
+   "1999-2026": 16.7,
+   "1999-2012": 15.8,
+   "2013-2026": 17.6,
+   "2013-2019": 9.3,
+   "2020-2026": 26.8,
+   "worst": -31.5,
+   "trades_per_month": 4.5
+  },
+  "realistic | v3.0 (no gate)": {
+   "1999-2026": 16.6,
+   "1999-2012": 15.5,
+   "2013-2026": 17.8,
+   "2013-2019": 7.6,
+   "2020-2026": 29.4,
+   "worst": -27.3,
+   "trades_per_month": 11.7
+  },
+  "realistic | VIX >= 15": {
+   "1999-2026": 16.8,
+   "1999-2012": 15.6,
+   "2013-2026": 18.1,
+   "2013-2019": 8.9,
+   "2020-2026": 28.4,
+   "worst": -27.3,
+   "trades_per_month": 10.6
+  },
+  "realistic | VIX >= 15 and below its 5-day high (calming)": {
+   "1999-2026": 16.6,
+   "1999-2012": 15.2,
+   "2013-2026": 18.0,
+   "2013-2019": 8.3,
+   "2020-2026": 28.9,
+   "worst": -24.2,
+   "trades_per_month": 9.6
+  },
+  "realistic | VIX >= 20": {
+   "1999-2026": 15.6,
+   "1999-2012": 15.9,
+   "2013-2026": 15.4,
+   "2013-2019": 8.4,
+   "2020-2026": 23.0,
+   "worst": -27.3,
+   "trades_per_month": 8.0
+  },
+  "realistic | VIX >= 20 and below its 5-day high (calming)": {
+   "1999-2026": 16.5,
+   "1999-2012": 15.8,
+   "2013-2026": 17.2,
+   "2013-2019": 8.4,
+   "2020-2026": 26.9,
+   "worst": -24.2,
+   "trades_per_month": 7.2
+  },
+  "realistic | VIX >= 25": {
+   "1999-2026": 15.3,
+   "1999-2012": 14.6,
+   "2013-2026": 16.1,
+   "2013-2019": 9.0,
+   "2020-2026": 23.9,
+   "worst": -29.4,
+   "trades_per_month": 5.3
+  },
+  "realistic | VIX >= 25 and below its 5-day high (calming)": {
+   "1999-2026": 14.9,
+   "1999-2012": 13.9,
+   "2013-2026": 15.9,
+   "2013-2019": 8.9,
+   "2020-2026": 23.6,
+   "worst": -29.1,
+   "trades_per_month": 4.8
+  },
+  "realistic | VIX >= 30": {
+   "1999-2026": 13.3,
+   "1999-2012": 10.7,
+   "2013-2026": 15.9,
+   "2013-2019": 8.9,
+   "2020-2026": 23.7,
+   "worst": -38.3,
+   "trades_per_month": 3.7
+  },
+  "realistic | VIX >= 30 and below its 5-day high (calming)": {
+   "1999-2026": 13.0,
+   "1999-2012": 10.7,
+   "2013-2026": 15.3,
+   "2013-2019": 8.9,
+   "2020-2026": 22.2,
+   "worst": -40.9,
+   "trades_per_month": 3.6
+  },
+  "realistic | SPY 20-day vol >= 12%": {
+   "1999-2026": 17.4,
+   "1999-2012": 15.7,
+   "2013-2026": 19.1,
+   "2013-2019": 8.6,
+   "2020-2026": 30.9,
+   "worst": -27.3,
+   "trades_per_month": 9.4
+  },
+  "realistic | SPY 20-day vol >= 16%": {
+   "1999-2026": 17.1,
+   "1999-2012": 16.2,
+   "2013-2026": 18.0,
+   "2013-2019": 7.9,
+   "2020-2026": 29.3,
+   "worst": -27.3,
+   "trades_per_month": 7.6
+  },
+  "realistic | SPY 20-day vol >= 20%": {
+   "1999-2026": 16.3,
+   "1999-2012": 15.5,
+   "2013-2026": 17.2,
+   "2013-2019": 8.6,
+   "2020-2026": 26.8,
+   "worst": -27.3,
+   "trades_per_month": 6.0
+  },
+  "realistic | SPY 20-day vol >= 25%": {
+   "1999-2026": 14.5,
+   "1999-2012": 13.3,
+   "2013-2026": 15.8,
+   "2013-2019": 8.9,
+   "2020-2026": 23.2,
+   "worst": -32.9,
+   "trades_per_month": 4.5
+  }
+ }
+}
