@@ -182,6 +182,17 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 Three tests: India after-tax reshuffle/score tweaks (data/india_slowtax.json), managed futures next to v3.0 (data/mf_slice.json), three markets (data/three_markets.json)
+- India lot-level tax (current rules all period, Rs 10 lakh): bot 13 best 32.7 -> 27.5 after tax; honest 26.8 -> 22.6. Slower reshuffles do NOT win after tax:
+  every 2 months 20.7-21.9, every 3 months 22.2-22.7 (same as monthly, half the trading) but worst drop -39 to -44 vs -34. Letting winners run: +0-0.2 pt, deeper drops. Keep bot 13.
+- Score tweaks (honest after tax vs 22.6): skip-month 21.7, 2x6m 21.3, no vol divisor 20.0, residual 19.6 (drop -26), Clenow 14.8, smooth-trend filter 21.6 (drop -26.6). None better; residual/smooth = lower return, smaller drops.
+- Managed futures (monthly data; Roth): next to v3.0 a 10-30% AQMIX/DBMF/KMLM slice lowers return roughly in proportion, Sharpe +0.02-0.06, worst drop slightly smaller -> not worth it beside the dip bot.
+  Next to SPY it helps a lot (20% MF: worst drop -24 -> -13 to -16, 2022 -18 -> -9/-10). Correlation of MF with v3.0 ~0, with SPY -0.15 to -0.36.
+- Leverage + trend (sim validated vs real SSO 14.6 vs 14.4%/yr): SPY 1994-2026 1x hold 10.4/-55; 2x with 200-day+2% band 14.4/-42; 3x band 18.2/-57.5; 2x 10-month 14.0/-45.
+  1960-2026 price index: 1x 7.3/-57, 2x band 9.5/-45, 3x band 10.4/-64. 2020 whipsaw (-3.5% for 2x band), 2022 -28 to -31%. Candidate for the Roth core; needs robustness (other MAs, Nasdaq/intl, placebo).
+- USD->INR timing (2004-2026, $1k/month, rupee FD 6.5% while waiting is counted): every rule within -0.25..0% of converting on the 1st -> no edge; rupee weakened 3.2%/yr. Send on schedule.
+- Nifty vs gold (2009-2026; GOLDBEES Yahoo history starts 2009): Nifty 14.1/-38 (after tax 13.3), gold 11.9/-30, 50/50 13.9/-23, ratio rule 15.3/-26 (after tax 12.2 because switching is taxed yearly).
+  Ratio rule: best before tax with a much smaller drop, but loses to plain Nifty after tax. z-score now -0.87 (Nifty not expensive vs gold).
 ### Nov 22 Research shortlist #1-3 on India momentum (data/india_ideas3.json, india_pit.py MODE=ideas3) - nothing worth changing bot 13 for
 - Base bot 13: best 32.6 / -23.8, honest (days 1/6/11/16, next-day) 26.7 / -33.5.
 - #2 junk filters (circuit-locked share, bottom-10% turnover, -10% days, -10% on 3x volume, all): all within +-0.5 pt (circuit 20%+ of 60 days +0.5/+0.4 = noise). ASM/GSM/pledge/insider untestable (no history).
