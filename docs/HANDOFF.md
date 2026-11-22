@@ -281,6 +281,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Robinhood login first done Nov 12 (valid ~158 h, so ~Nov 18); automatic refresh not yet proven.
 - Rollout: 1) dry week (now) → 2) live, $1,000, Robinhood trade approvals ON for a week → 3) hands-off.
 
+## Nov 22 FIX: Cloudflare cron weekdays
+- Cloudflare cron weekday numbers are 1 = SUNDAY ... 7 = Saturday (docs). Every '* * 1-5' timer ran Sun-Thu: Fridays were skipped (paper dip bots, v3.2, drift pre-market, India dip bot) and Sundays fired (harmless: bots exit off-hours).
+  Fixed to MON-FRI in site/wrangler.toml AND the matching keys in site/src/index.js (the worker maps jobs by the exact cron string). The live Robinhood bot (VM systemd timers) was not affected.
+
 ## 7. Pending
 1. Review daily dry-run alerts vs the paper dip bot.
 2. ~Nov 17: confirm the Robinhood token refreshed itself (`dip status` shows token hours).

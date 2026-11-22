@@ -96,16 +96,16 @@ export default {
 };
 
 export const TIMERS = {
-  '5 11 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],          // 6:05 ET in winter / 7:05 ET in summer (pre-market)
-  '35 12 * * 1-5': ['paper-drift.yml', { dry_run: '0' }],         // backup: 7:35 / 8:35 ET
+  '5 11 * * MON-FRI': ['paper-drift.yml', { dry_run: '0' }],          // 6:05 ET in winter / 7:05 ET in summer (pre-market)
+  '35 12 * * MON-FRI': ['paper-drift.yml', { dry_run: '0' }],         // backup: 7:35 / 8:35 ET
   // Market-hours clock (Nov 19): ONE cron line every 5 min, 14:00-20:55 UTC (= 10:00 am-3:55 pm ET in winter, 9:00-... in summer);
   // marketJobs() picks what to start at each tick (Cloudflare free plan: 5 cron triggers per account, all used).
-  '*/5 14-20 * * 1-5': 'market',
+  '*/5 14-20 * * MON-FRI': 'market',
   // Screener refresh: 21:45 UTC (4:45 pm ET winter, 5:45 summer) after the close, backup 23:45 UTC. GitHub's own schedule ran 4-6 h late.
   '45 21,23 * * *': ['screen.yml', {}],
   // INDIA Bot B (before close): 09:20 and 09:40 UTC = 2:50 / 3:10 pm IST. India has no daylight saving, so one line all year.
   // The India bots are otherwise separate (own workflow, state and ntfy topic); this is only the alarm clock. 5 of 5 free cron triggers used.
-  '20,40 9 * * 1-5': ['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }],
+  '20,40 9 * * MON-FRI': ['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }],
 };
 // What the market clock starts at a given UTC time (bots check NY time and Alpaca's calendar themselves; off-window runs exit at once):
 //  * paper-dip.yml: :25 and :40 of 16,17 (12:25/12:40 pm ET half days) and 19,20 UTC (3:25/3:40 pm ET summer/winter)
