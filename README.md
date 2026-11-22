@@ -1,5 +1,7 @@
 # sec-edgar-mcp (Cloudflare Worker)
 
+> **Sentinel trading research:** every strategy idea and tweak we tested, one file each, with results and verdicts: [ideas/README.md](ideas/README.md). Running notes: [docs/HANDOFF.md](docs/HANDOFF.md).
+
 SEC EDGAR financials as an MCP server. Free plan, no AWS.
 
 ## Deploy (first time)

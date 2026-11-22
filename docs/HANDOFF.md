@@ -9,6 +9,10 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0. Ideas catalogue (Nov 22)
+- `ideas/` has one file per strategy idea or tweak (77 so far): rules, result, verdict, data/script/workflow, and a `run()` using the shared engine. Index: ideas/README.md.
+- Add a new idea: one entry in `scripts/build_ideas.py` CATALOG, then `python scripts/build_ideas.py && python test-ideas.py`. Do this after every new test.
+
 ## 1. History in one screen
 
 | Dates | What happened | Outcome |
@@ -181,6 +185,13 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
 - Backtest: data/intraday_final.json (final run Nov 19: idle money valued by time of day, ETF intraday-only dips via Yahoo lows,
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
+
+### Nov 22 Robustness of 2x S&P + 200-day trend (data/lev_robust.json) - real but fragile, WATCH
+- 16 nearby settings (100-250 day, 0-3% band) on SPY 1994-2026: 7.7-15.4% (median 12.5; chosen 14.4 near the top), 11/16 beat SPY 10.4%; worst drop median -49%.
+- Placebo: 10.3% of 1,000 random schedules (same switches/time in) beat it (median 10.6%) -> signal helps, weakly.
+- Other markets (2x, 200-day, 2% band vs 1x hold): Nasdaq QQQ 11.4 vs 8.1, NDX 16.4 vs 13.6, EFA 8.6 vs 7.4; FAILS on IWM 5.6 vs 8.0, EEM 5.3 vs 7.4, DIA 4.1 vs 8.2.
+- Crashes: much better in slow bears (2000-02 -24 vs -47, 2008 -20 vs -55); worse in fast ones (1998 -25 vs -18, 2011 -22 vs -18, 2015-16 -21 vs -13, 2018Q4 -27 vs -19, 2020 -40 vs -33, 2022 -28 vs -24).
+- Start years 1994-2016: beat SPY in 21/23. Costs 0.2%/switch + 1.5% borrow: 13.2%. Verdict: at most a small Roth sleeve.
 
 ### Nov 22 Three tests: India after-tax reshuffle/score tweaks (data/india_slowtax.json), managed futures next to v3.0 (data/mf_slice.json), three markets (data/three_markets.json)
 - India lot-level tax (current rules all period, Rs 10 lakh): bot 13 best 32.7 -> 27.5 after tax; honest 26.8 -> 22.6. Slower reshuffles do NOT win after tax:
