@@ -184,6 +184,100 @@ def run():
         return o, curve
     def pr(lbl, o): print(f"{lbl:64s} {o['cagr']:6.1f}%/yr (after tax ~{o['after_tax_rough_cagr']}) dd {o['dd']:6.1f} | 2009 {o['per']['2009-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | train {o['train_2009_2018']['cagr']} test {o['test_2019_2026']['cagr']}/{o['test_2019_2026']['dd']}" + (f" | {o.get('trades_per_year')} tr/yr avg {o.get('avg_trade_pct')}%" if 'trades_per_year' in o else f" | turn {o.get('turnover_per_year')}x"), flush=True)
     MODE = os.environ.get("MODE", "all")
+    if MODE == "factor":
+        # Test #5 (factor rotation) + #7 (large vs mid/small switch), Nov 22 2026. niftyindices.com's TRI download now needs a login, so the
+        # price-based factor indices are REBUILT here from survivorship-free NSE data (equal weight; NSE's own indices are cap/score weighted).
+        # Value and Quality need company financials -> not possible with price data. Index funds: 0.4%/yr fee; switching 0.2% per buy/sell.
+        mstarts = [i for i in range(1, D) if dates[i].month != dates[i - 1].month]
+        qtr = [i for i in mstarts if dates[i].month in (1, 4, 7, 10)]
+        mret = n.pct_change().fillna(0).values
+        def build(memb, score, N, rebal, low=False):
+            """equal-weight factor index; score(t, cols) -> values (higher = better unless low)"""
+            rb = set(i for i in rebal if i >= START - 260); w = {}; eq = 1.0; curve = np.full(D, np.nan); started = False
+            for t in range(min(rb), D):
+                if w:
+                    day = sum(wi * Rt[t, j] for j, wi in w.items()); eq *= 1 + day; w = {j: wi * (1 + Rt[t, j]) / (1 + day) for j, wi in w.items()}
+                    for j in [j for j in w if not traded[t, j]]: w.pop(j)
+                    if w: s_ = sum(w.values()); w = {j: wi / s_ for j, wi in w.items()}
+                if t in rb:
+                    cols = np.where(memb[t] & ~glitch[t])[0]
+                    v = score(t, cols); okc = np.isfinite(v); cols, v = cols[okc], v[okc]
+                    if len(cols) >= N: pick_ = cols[np.argsort(v if low else -v)[:N]]; w = {j: 1.0 / N for j in pick_}; started = True
+                if started: curve[t] = eq
+            return curve
+        M100, M200, M250, M300, M500 = members(100), members(200), members(250), members(300), members(500)
+        momsc = SC["(6m+12m)/volatility"].values
+        def s_mom(t, cols): return momsc[t, cols]
+        def s_lv(t, cols): return np.nanstd(np.where(np.isfinite(R.values[t - 251:t + 1, cols]), R.values[t - 251:t + 1, cols], np.nan), axis=0) if t >= 251 else np.full(len(cols), np.nan)
+        def s_alpha(t, cols):
+            if t < 251: return np.full(len(cols), np.nan)
+            X = R.values[t - 251:t + 1, cols]; m = mret[t - 251:t + 1]; good = np.isfinite(X).sum(0) >= 200
+            Xf = np.where(np.isfinite(X), X, 0.0); mm = m - m.mean(); b = (mm[:, None] * (Xf - Xf.mean(0))).sum(0) / (mm ** 2).sum()
+            a = (Xf.mean(0) - b * m.mean()) * 248; a[~good] = np.nan; return a
+        def s_eq(t, cols): return np.zeros(len(cols))
+        print("building factor indices ...", flush=True)
+        FX = {"Momentum 30 (top 200, (6m+12m)/vol, 6-monthly)": build(M200, s_mom, 30, halves),
+              "Low Vol 30 (top 100, lowest 1-yr volatility, quarterly)": build(M100, s_lv, 30, qtr, low=True),
+              "Alpha 50 (top 300, highest 1-yr alpha vs Nifty, quarterly)": build(M300, s_alpha, 50, qtr),
+              "Large 100 (top 100, equal weight)": build(M100, s_eq, 100, halves),
+              "Mid 150 (ranks 101-250, equal weight)": build(M250 & ~M100, s_eq, 150, halves),
+              "Small 250 (ranks 251-500, equal weight)": build(M500 & ~M250, s_eq, 250, halves)}
+        FX["Nifty 50 (+1.3% dividends)"] = np.cumprod(1 + nr + dv)
+        keys = list(FX); short = {k: k.split(" (")[0] for k in keys}
+        IR = {k: np.nan_to_num(np.r_[0, FX[k][1:] / FX[k][:-1] - 1], nan=0.0) for k in keys}
+        n_on = (n > n.rolling(100).mean()).values; g_on = (gold > gold.rolling(100).mean()).values
+        me = [i - 1 for i in mstarts if i - 1 >= START]                    # month-end rows
+        FEE = 0.004 / 248; CST = 0.002
+        def engine(pick, freq="M", filt=False):
+            reb = set(me if freq == "M" else [i for i in me if dates[i].month in (6, 12)])
+            w = {}; pend = None; eq = 1.0; curve = np.full(D, np.nan); sw = 0; turn = 0.0
+            for t in range(START, D):
+                day = sum(wi * (gr[t] if k == "gold" else liq[t] if k == "liq" else IR[k][t] - FEE) for k, wi in w.items()); eq *= 1 + day
+                w = {k: wi * (1 + (gr[t] if k == "gold" else liq[t] if k == "liq" else IR[k][t] - FEE)) / (1 + day) for k, wi in w.items()}
+                if pend is not None:
+                    tv_ = sum(abs(pend.get(k, 0) - w.get(k, 0)) for k in set(pend) | set(w)); eq *= 1 - CST * tv_; turn += tv_
+                    if set(pend) != set(w): sw += 1
+                    w = dict(pend); pend = None
+                curve[t] = eq if w else np.nan
+                if t in reb:
+                    tg = pick(t)
+                    if tg is None: continue
+                    if filt and not n_on[t]: tg = {"gold": 1.0} if g_on[t] else {"liq": 1.0}
+                    pend = tg
+            c = np.where(np.isfinite(curve), curve, np.nan); first = int(np.argmax(np.isfinite(c))); c[:first] = c[first]
+            o = summ(c); yrs_ = (D - START) / 248; o.update(switches_per_year=round(sw / yrs_, 1), turnover_per_year=round(turn / yrs_, 1)); return o
+        tr_ = lambda k, t, lb: FX[k][t] / FX[k][t - 21 * lb] - 1 if t - 21 * lb >= 0 and np.isfinite(FX[k][t]) and np.isfinite(FX[k][t - 21 * lb]) else np.nan
+        OUTF = {"note": "India factor rotation (#5) and size switch (#7) on factor indices REBUILT from survivorship-free NSE data (equal weight), 2009-2026. "
+                        "Signal at month-end close, trade next day. Index-fund fee 0.4%/yr, 0.2% per buy/sell. After-tax rough = 20.8% on each year's net gain. "
+                        "No Value/Quality (needs company financials). Paper bot 13 basket for comparison: 32.6%/yr best case, ~27% realistic.",
+                "built": str(pd.Timestamp.today().date()), "hold": {}, "blend": {}, "rotation": {}, "size_switch": {}}
+        FAC = keys[:3]; SIZE = [keys[6], keys[4], keys[5]]
+        for k in keys:
+            o = engine(lambda t, k=k: {k: 1.0} if np.isfinite(FX[k][t]) else None); OUTF["hold"][k] = o; pr("HOLD " + k, o)
+        for lbl, ks in (("Momentum + Low Vol (50/50)", [keys[0], keys[1]]), ("Momentum + Alpha (50/50)", [keys[0], keys[2]]), ("Momentum + Low Vol + Alpha (1/3 each)", FAC)):
+            for filt in (False, True):
+                o = engine(lambda t, ks=ks: {k: 1 / len(ks) for k in ks}, "S", filt); kk = lbl + (" + crash filter" if filt else ""); OUTF["blend"][kk] = o; pr("BLEND " + kk, o)
+        for uni_l, uni in (("3 factors", FAC), ("3 factors + Nifty 50", FAC + [keys[6]])):
+            for lb in (6, 12):
+                for top in (1, 2):
+                    for freq in ("M", "S"):
+                        for filt in (False, True):
+                            def pick(t, uni=uni, lb=lb, top=top):
+                                sc_ = {k: tr_(k, t, lb) for k in uni}; sc_ = {k: v for k, v in sc_.items() if np.isfinite(v)}
+                                b_ = sorted(sc_, key=lambda k: -sc_[k])[:top]; return {k: 1 / len(b_) for k in b_} if b_ else None
+                            o = engine(pick, freq, filt); kk = f"{uni_l} | top {top} by {lb}-month return | {'monthly' if freq == 'M' else 'every 6 months'}{' | crash filter' if filt else ''}"
+                            OUTF["rotation"][kk] = o; pr("ROT " + kk, o)
+        for lbl, uni in (("Large vs Mid", [keys[3], keys[4]]), ("Large vs Mid vs Small", [keys[3], keys[4], keys[5]]), ("Nifty 50 vs Mid vs Small", SIZE)):
+            for lb in (6, 12):
+                def pick(t, uni=uni, lb=lb):
+                    sc_ = {k: tr_(k, t, lb) for k in uni}; sc_ = {k: v for k, v in sc_.items() if np.isfinite(v)}
+                    if not sc_: return None
+                    b_ = max(sc_, key=sc_.get); return {b_: 1.0} if sc_[b_] > 1.06 ** (lb / 12) - 1 else {"liq": 1.0}
+                o = engine(pick); kk = f"{lbl} | best {lb}-month return, liquid fund if none beats 6%/yr | monthly"; OUTF["size_switch"][kk] = o; pr("SIZE " + kk, o)
+        mo = pd.DataFrame({short[k]: FX[k] for k in keys}, index=dates).iloc[START:].resample("ME").last().pct_change().dropna()
+        OUTF["monthly_correlation"] = mo.corr().round(2).to_dict()
+        rot = OUTF["rotation"]; best = max(rot, key=lambda k: rot[k]["cagr"]); OUTF["best_rotation_hindsight"] = {"version": best, "of": len(rot), **rot[best]}
+        os.makedirs("data", exist_ok=True); json.dump(OUTF, open("data/india_factor.json" if not DRY else "/tmp/india_factor_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momrobust":
         # Is the India momentum basket (paper bot 13: top 500, (6m+12m)/vol, 20 stocks, monthly, Nifty-100-day filter, gold/liquid) solid or lucky?
         # 1) nearby settings, one at a time and a 3x3x3 grid  2) reshuffle on the 1st/5th/10th/15th trading day of the month
