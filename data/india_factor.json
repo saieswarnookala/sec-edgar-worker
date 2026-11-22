@@ -1,0 +1,1171 @@
+{
+ "note": "India factor rotation (#5) and size switch (#7) on factor indices REBUILT from survivorship-free NSE data (equal weight), 2009-2026. Signal at month-end close, trade next day. Index-fund fee 0.4%/yr, 0.2% per buy/sell. After-tax rough = 20.8% on each year's net gain. No Value/Quality (needs company financials). Paper bot 13 basket for comparison: 32.6%/yr best case, ~27% realistic.",
+ "built": "2026-11-22",
+ "hold": {
+  "Momentum 30 (top 200, (6m+12m)/vol, 6-monthly)": {
+   "cagr": 20.3,
+   "dd": -38.8,
+   "per": {
+    "2009-2009": 102.2,
+    "2010-2015": 13.1,
+    "2016-2020": 13.7,
+    "2021-2026": 23.2
+   },
+   "train_2009_2018": {
+    "cagr": 18.8,
+    "dd": -34.6
+   },
+   "test_2019_2026": {
+    "cagr": 22.3,
+    "dd": -36.6
+   },
+   "after_tax_rough_cagr": 16.5,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Low Vol 30 (top 100, lowest 1-yr volatility, quarterly)": {
+   "cagr": 14.3,
+   "dd": -28.4,
+   "per": {
+    "2009-2009": 91.9,
+    "2010-2015": 9.9,
+    "2016-2020": 10.6,
+    "2021-2026": 12.2
+   },
+   "train_2009_2018": {
+    "cagr": 15.5,
+    "dd": -24.9
+   },
+   "test_2019_2026": {
+    "cagr": 13.1,
+    "dd": -28.4
+   },
+   "after_tax_rough_cagr": 11.5,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Alpha 50 (top 300, highest 1-yr alpha vs Nifty, quarterly)": {
+   "cagr": 22.0,
+   "dd": -47.4,
+   "per": {
+    "2009-2009": 115.3,
+    "2010-2015": 14.9,
+    "2016-2020": 13.3,
+    "2021-2026": 25.7
+   },
+   "train_2009_2018": {
+    "cagr": 20.5,
+    "dd": -34.4
+   },
+   "test_2019_2026": {
+    "cagr": 24.0,
+    "dd": -39.1
+   },
+   "after_tax_rough_cagr": 17.9,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Large 100 (top 100, equal weight)": {
+   "cagr": 11.4,
+   "dd": -53.1,
+   "per": {
+    "2009-2009": 142.0,
+    "2010-2015": -0.4,
+    "2016-2020": 5.2,
+    "2021-2026": 15.1
+   },
+   "train_2009_2018": {
+    "cagr": 11.2,
+    "dd": -46.8
+   },
+   "test_2019_2026": {
+    "cagr": 11.9,
+    "dd": -44.2
+   },
+   "after_tax_rough_cagr": 9.4,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Mid 150 (ranks 101-250, equal weight)": {
+   "cagr": 15.8,
+   "dd": -54.2,
+   "per": {
+    "2009-2009": 156.9,
+    "2010-2015": 4.6,
+    "2016-2020": 8.0,
+    "2021-2026": 19.3
+   },
+   "train_2009_2018": {
+    "cagr": 15.2,
+    "dd": -53.2
+   },
+   "test_2019_2026": {
+    "cagr": 16.8,
+    "dd": -42.6
+   },
+   "after_tax_rough_cagr": 13.0,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Small 250 (ranks 251-500, equal weight)": {
+   "cagr": 16.2,
+   "dd": -63.1,
+   "per": {
+    "2009-2009": 161.6,
+    "2010-2015": 7.1,
+    "2016-2020": 4.1,
+    "2021-2026": 21.0
+   },
+   "train_2009_2018": {
+    "cagr": 15.4,
+    "dd": -51.3
+   },
+   "test_2019_2026": {
+    "cagr": 17.3,
+    "dd": -45.5
+   },
+   "after_tax_rough_cagr": 13.3,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Nifty 50 (+1.3% dividends)": {
+   "cagr": 14.4,
+   "dd": -38.3,
+   "per": {
+    "2009-2009": 93.0,
+    "2010-2015": 8.4,
+    "2016-2020": 13.1,
+    "2021-2026": 12.0
+   },
+   "train_2009_2018": {
+    "cagr": 15.9,
+    "dd": -27.2
+   },
+   "test_2019_2026": {
+    "cagr": 12.8,
+    "dd": -38.3
+   },
+   "after_tax_rough_cagr": 11.6,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  }
+ },
+ "blend": {
+  "Momentum + Low Vol (50/50)": {
+   "cagr": 14.8,
+   "dd": -32.4,
+   "per": {
+    "2009-2009": 29.1,
+    "2010-2015": 11.6,
+    "2016-2020": 12.3,
+    "2021-2026": 18.0
+   },
+   "train_2009_2018": {
+    "cagr": 12.5,
+    "dd": -29.6
+   },
+   "test_2019_2026": {
+    "cagr": 17.9,
+    "dd": -32.4
+   },
+   "after_tax_rough_cagr": 11.9,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Momentum + Low Vol (50/50) + crash filter": {
+   "cagr": 15.4,
+   "dd": -32.6,
+   "per": {
+    "2009-2009": 29.1,
+    "2010-2015": 9.5,
+    "2016-2020": 9.9,
+    "2021-2026": 24.5
+   },
+   "train_2009_2018": {
+    "cagr": 10.0,
+    "dd": -29.6
+   },
+   "test_2019_2026": {
+    "cagr": 22.8,
+    "dd": -32.4
+   },
+   "after_tax_rough_cagr": 12.3,
+   "switches_per_year": 1.0,
+   "turnover_per_year": 1.9
+  },
+  "Momentum + Alpha (50/50)": {
+   "cagr": 18.3,
+   "dd": -42.9,
+   "per": {
+    "2009-2009": 34.6,
+    "2010-2015": 14.1,
+    "2016-2020": 13.6,
+    "2021-2026": 24.5
+   },
+   "train_2009_2018": {
+    "cagr": 14.7,
+    "dd": -34.4
+   },
+   "test_2019_2026": {
+    "cagr": 23.2,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 14.8,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Momentum + Alpha (50/50) + crash filter": {
+   "cagr": 19.0,
+   "dd": -42.0,
+   "per": {
+    "2009-2009": 34.6,
+    "2010-2015": 9.6,
+    "2016-2020": 11.4,
+    "2021-2026": 34.0
+   },
+   "train_2009_2018": {
+    "cagr": 10.7,
+    "dd": -34.4
+   },
+   "test_2019_2026": {
+    "cagr": 30.5,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 15.3,
+   "switches_per_year": 1.0,
+   "turnover_per_year": 1.9
+  },
+  "Momentum + Low Vol + Alpha (1/3 each)": {
+   "cagr": 16.3,
+   "dd": -37.0,
+   "per": {
+    "2009-2009": 31.3,
+    "2010-2015": 12.8,
+    "2016-2020": 12.8,
+    "2021-2026": 20.7
+   },
+   "train_2009_2018": {
+    "cagr": 13.6,
+    "dd": -31.2
+   },
+   "test_2019_2026": {
+    "cagr": 20.1,
+    "dd": -34.7
+   },
+   "after_tax_rough_cagr": 13.1,
+   "switches_per_year": 0.1,
+   "turnover_per_year": 0.1
+  },
+  "Momentum + Low Vol + Alpha (1/3 each) + crash filter": {
+   "cagr": 16.8,
+   "dd": -36.7,
+   "per": {
+    "2009-2009": 31.3,
+    "2010-2015": 9.5,
+    "2016-2020": 10.4,
+    "2021-2026": 28.2
+   },
+   "train_2009_2018": {
+    "cagr": 10.3,
+    "dd": -31.2
+   },
+   "test_2019_2026": {
+    "cagr": 25.8,
+    "dd": -34.7
+   },
+   "after_tax_rough_cagr": 13.5,
+   "switches_per_year": 1.0,
+   "turnover_per_year": 1.9
+  }
+ },
+ "rotation": {
+  "3 factors | top 1 by 6-month return | monthly": {
+   "cagr": 17.5,
+   "dd": -43.2,
+   "per": {
+    "2009-2009": 61.9,
+    "2010-2015": 12.6,
+    "2016-2020": 15.6,
+    "2021-2026": 17.8
+   },
+   "train_2009_2018": {
+    "cagr": 17.5,
+    "dd": -36.4
+   },
+   "test_2019_2026": {
+    "cagr": 17.6,
+    "dd": -39.1
+   },
+   "after_tax_rough_cagr": 14.1,
+   "switches_per_year": 2.6,
+   "turnover_per_year": 5.1
+  },
+  "3 factors | top 1 by 6-month return | monthly | crash filter": {
+   "cagr": 18.6,
+   "dd": -31.9,
+   "per": {
+    "2009-2009": 61.9,
+    "2010-2015": 5.2,
+    "2016-2020": 21.8,
+    "2021-2026": 24.4
+   },
+   "train_2009_2018": {
+    "cagr": 12.3,
+    "dd": -31.9
+   },
+   "test_2019_2026": {
+    "cagr": 27.2,
+    "dd": -27.0
+   },
+   "after_tax_rough_cagr": 15.1,
+   "switches_per_year": 5.1,
+   "turnover_per_year": 10.1
+  },
+  "3 factors | top 1 by 6-month return | every 6 months": {
+   "cagr": 16.2,
+   "dd": -41.5,
+   "per": {
+    "2009-2009": 24.7,
+    "2010-2015": 12.3,
+    "2016-2020": 13.4,
+    "2021-2026": 21.5
+   },
+   "train_2009_2018": {
+    "cagr": 12.5,
+    "dd": -34.0
+   },
+   "test_2019_2026": {
+    "cagr": 21.3,
+    "dd": -36.6
+   },
+   "after_tax_rough_cagr": 13.1,
+   "switches_per_year": 1.3,
+   "turnover_per_year": 2.5
+  },
+  "3 factors | top 1 by 6-month return | every 6 months | crash filter": {
+   "cagr": 17.9,
+   "dd": -42.2,
+   "per": {
+    "2009-2009": 24.7,
+    "2010-2015": 8.8,
+    "2016-2020": 11.8,
+    "2021-2026": 32.5
+   },
+   "train_2009_2018": {
+    "cagr": 9.8,
+    "dd": -34.3
+   },
+   "test_2019_2026": {
+    "cagr": 29.3,
+    "dd": -36.6
+   },
+   "after_tax_rough_cagr": 14.4,
+   "switches_per_year": 1.5,
+   "turnover_per_year": 3.0
+  },
+  "3 factors | top 2 by 6-month return | monthly": {
+   "cagr": 18.3,
+   "dd": -38.3,
+   "per": {
+    "2009-2009": 66.5,
+    "2010-2015": 12.8,
+    "2016-2020": 14.4,
+    "2021-2026": 20.9
+   },
+   "train_2009_2018": {
+    "cagr": 17.0,
+    "dd": -34.8
+   },
+   "test_2019_2026": {
+    "cagr": 20.3,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 14.9,
+   "switches_per_year": 2.8,
+   "turnover_per_year": 2.9
+  },
+  "3 factors | top 2 by 6-month return | monthly | crash filter": {
+   "cagr": 18.8,
+   "dd": -25.4,
+   "per": {
+    "2009-2009": 66.5,
+    "2010-2015": 5.8,
+    "2016-2020": 20.1,
+    "2021-2026": 25.1
+   },
+   "train_2009_2018": {
+    "cagr": 12.5,
+    "dd": -24.6
+   },
+   "test_2019_2026": {
+    "cagr": 27.2,
+    "dd": -25.4
+   },
+   "after_tax_rough_cagr": 15.2,
+   "switches_per_year": 5.4,
+   "turnover_per_year": 9.1
+  },
+  "3 factors | top 2 by 6-month return | every 6 months": {
+   "cagr": 17.1,
+   "dd": -39.1,
+   "per": {
+    "2009-2009": 30.2,
+    "2010-2015": 12.2,
+    "2016-2020": 14.4,
+    "2021-2026": 22.4
+   },
+   "train_2009_2018": {
+    "cagr": 13.5,
+    "dd": -31.5
+   },
+   "test_2019_2026": {
+    "cagr": 21.9,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 13.8,
+   "switches_per_year": 0.9,
+   "turnover_per_year": 0.9
+  },
+  "3 factors | top 2 by 6-month return | every 6 months | crash filter": {
+   "cagr": 18.5,
+   "dd": -39.3,
+   "per": {
+    "2009-2009": 30.2,
+    "2010-2015": 9.4,
+    "2016-2020": 11.9,
+    "2021-2026": 32.7
+   },
+   "train_2009_2018": {
+    "cagr": 10.5,
+    "dd": -31.5
+   },
+   "test_2019_2026": {
+    "cagr": 29.5,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 14.8,
+   "switches_per_year": 1.2,
+   "turnover_per_year": 2.2
+  },
+  "3 factors | top 1 by 12-month return | monthly": {
+   "cagr": 14.7,
+   "dd": -49.5,
+   "per": {
+    "2009-2009": 16.2,
+    "2010-2015": 15.0,
+    "2016-2020": 6.5,
+    "2021-2026": 21.4
+   },
+   "train_2009_2018": {
+    "cagr": 11.9,
+    "dd": -30.9
+   },
+   "test_2019_2026": {
+    "cagr": 18.5,
+    "dd": -39.1
+   },
+   "after_tax_rough_cagr": 11.9,
+   "switches_per_year": 2.4,
+   "turnover_per_year": 4.7
+  },
+  "3 factors | top 1 by 12-month return | monthly | crash filter": {
+   "cagr": 16.7,
+   "dd": -33.7,
+   "per": {
+    "2009-2009": 16.2,
+    "2010-2015": 8.0,
+    "2016-2020": 15.1,
+    "2021-2026": 27.8
+   },
+   "train_2009_2018": {
+    "cagr": 8.6,
+    "dd": -33.7
+   },
+   "test_2019_2026": {
+    "cagr": 28.0,
+    "dd": -21.9
+   },
+   "after_tax_rough_cagr": 13.5,
+   "switches_per_year": 4.9,
+   "turnover_per_year": 9.7
+  },
+  "3 factors | top 1 by 12-month return | every 6 months": {
+   "cagr": 13.0,
+   "dd": -43.0,
+   "per": {
+    "2009-2009": 0.0,
+    "2010-2015": 11.8,
+    "2016-2020": 7.5,
+    "2021-2026": 21.5
+   },
+   "train_2009_2018": {
+    "cagr": 7.4,
+    "dd": -31.4
+   },
+   "test_2019_2026": {
+    "cagr": 20.6,
+    "dd": -34.6
+   },
+   "after_tax_rough_cagr": 10.5,
+   "switches_per_year": 0.9,
+   "turnover_per_year": 1.8
+  },
+  "3 factors | top 1 by 12-month return | every 6 months | crash filter": {
+   "cagr": 15.7,
+   "dd": -43.5,
+   "per": {
+    "2009-2009": 0.0,
+    "2010-2015": 9.3,
+    "2016-2020": 8.5,
+    "2021-2026": 32.6
+   },
+   "train_2009_2018": {
+    "cagr": 6.6,
+    "dd": -31.4
+   },
+   "test_2019_2026": {
+    "cagr": 28.5,
+    "dd": -28.4
+   },
+   "after_tax_rough_cagr": 12.7,
+   "switches_per_year": 1.4,
+   "turnover_per_year": 2.7
+  },
+  "3 factors | top 2 by 12-month return | monthly": {
+   "cagr": 15.7,
+   "dd": -42.6,
+   "per": {
+    "2009-2009": 14.5,
+    "2010-2015": 13.5,
+    "2016-2020": 11.3,
+    "2021-2026": 22.1
+   },
+   "train_2009_2018": {
+    "cagr": 12.0,
+    "dd": -31.9
+   },
+   "test_2019_2026": {
+    "cagr": 20.8,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 12.7,
+   "switches_per_year": 1.7,
+   "turnover_per_year": 1.8
+  },
+  "3 factors | top 2 by 12-month return | monthly | crash filter": {
+   "cagr": 16.6,
+   "dd": -28.3,
+   "per": {
+    "2009-2009": 14.5,
+    "2010-2015": 6.3,
+    "2016-2020": 18.9,
+    "2021-2026": 26.3
+   },
+   "train_2009_2018": {
+    "cagr": 8.3,
+    "dd": -28.1
+   },
+   "test_2019_2026": {
+    "cagr": 28.0,
+    "dd": -22.8
+   },
+   "after_tax_rough_cagr": 13.4,
+   "switches_per_year": 4.5,
+   "turnover_per_year": 8.3
+  },
+  "3 factors | top 2 by 12-month return | every 6 months": {
+   "cagr": 14.1,
+   "dd": -40.5,
+   "per": {
+    "2009-2009": 0.0,
+    "2010-2015": 11.5,
+    "2016-2020": 10.6,
+    "2021-2026": 22.5
+   },
+   "train_2009_2018": {
+    "cagr": 8.4,
+    "dd": -34.8
+   },
+   "test_2019_2026": {
+    "cagr": 21.8,
+    "dd": -32.4
+   },
+   "after_tax_rough_cagr": 11.4,
+   "switches_per_year": 0.9,
+   "turnover_per_year": 0.9
+  },
+  "3 factors | top 2 by 12-month return | every 6 months | crash filter": {
+   "cagr": 15.8,
+   "dd": -40.6,
+   "per": {
+    "2009-2009": 0.0,
+    "2010-2015": 8.3,
+    "2016-2020": 10.1,
+    "2021-2026": 32.4
+   },
+   "train_2009_2018": {
+    "cagr": 6.4,
+    "dd": -34.8
+   },
+   "test_2019_2026": {
+    "cagr": 29.0,
+    "dd": -32.4
+   },
+   "after_tax_rough_cagr": 12.7,
+   "switches_per_year": 1.3,
+   "turnover_per_year": 2.2
+  },
+  "3 factors + Nifty 50 | top 1 by 6-month return | monthly": {
+   "cagr": 18.4,
+   "dd": -39.1,
+   "per": {
+    "2009-2009": 105.9,
+    "2010-2015": 11.7,
+    "2016-2020": 17.9,
+    "2021-2026": 15.0
+   },
+   "train_2009_2018": {
+    "cagr": 20.7,
+    "dd": -36.9
+   },
+   "test_2019_2026": {
+    "cagr": 15.7,
+    "dd": -39.1
+   },
+   "after_tax_rough_cagr": 14.9,
+   "switches_per_year": 3.3,
+   "turnover_per_year": 6.6
+  },
+  "3 factors + Nifty 50 | top 1 by 6-month return | monthly | crash filter": {
+   "cagr": 19.6,
+   "dd": -32.4,
+   "per": {
+    "2009-2009": 96.7,
+    "2010-2015": 4.4,
+    "2016-2020": 24.3,
+    "2021-2026": 22.4
+   },
+   "train_2009_2018": {
+    "cagr": 14.8,
+    "dd": -32.4
+   },
+   "test_2019_2026": {
+    "cagr": 26.1,
+    "dd": -26.3
+   },
+   "after_tax_rough_cagr": 15.9,
+   "switches_per_year": 5.5,
+   "turnover_per_year": 10.9
+  },
+  "3 factors + Nifty 50 | top 1 by 6-month return | every 6 months": {
+   "cagr": 16.3,
+   "dd": -36.6,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 11.3,
+    "2016-2020": 15.7,
+    "2021-2026": 21.2
+   },
+   "train_2009_2018": {
+    "cagr": 12.0,
+    "dd": -34.0
+   },
+   "test_2019_2026": {
+    "cagr": 22.1,
+    "dd": -36.6
+   },
+   "after_tax_rough_cagr": 13.1,
+   "switches_per_year": 1.4,
+   "turnover_per_year": 2.7
+  },
+  "3 factors + Nifty 50 | top 1 by 6-month return | every 6 months | crash filter": {
+   "cagr": 18.0,
+   "dd": -39.4,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 8.8,
+    "2016-2020": 13.0,
+    "2021-2026": 32.2
+   },
+   "train_2009_2018": {
+    "cagr": 9.8,
+    "dd": -34.3
+   },
+   "test_2019_2026": {
+    "cagr": 29.3,
+    "dd": -36.6
+   },
+   "after_tax_rough_cagr": 14.4,
+   "switches_per_year": 1.6,
+   "turnover_per_year": 3.1
+  },
+  "3 factors + Nifty 50 | top 2 by 6-month return | monthly": {
+   "cagr": 18.1,
+   "dd": -39.1,
+   "per": {
+    "2009-2009": 106.8,
+    "2010-2015": 10.3,
+    "2016-2020": 14.1,
+    "2021-2026": 18.6
+   },
+   "train_2009_2018": {
+    "cagr": 18.0,
+    "dd": -35.7
+   },
+   "test_2019_2026": {
+    "cagr": 18.4,
+    "dd": -37.8
+   },
+   "after_tax_rough_cagr": 14.7,
+   "switches_per_year": 3.2,
+   "turnover_per_year": 3.6
+  },
+  "3 factors + Nifty 50 | top 2 by 6-month return | monthly | crash filter": {
+   "cagr": 18.1,
+   "dd": -28.2,
+   "per": {
+    "2009-2009": 97.5,
+    "2010-2015": 3.5,
+    "2016-2020": 20.2,
+    "2021-2026": 22.2
+   },
+   "train_2009_2018": {
+    "cagr": 13.0,
+    "dd": -28.2
+   },
+   "test_2019_2026": {
+    "cagr": 25.0,
+    "dd": -22.5
+   },
+   "after_tax_rough_cagr": 14.7,
+   "switches_per_year": 5.6,
+   "turnover_per_year": 9.6
+  },
+  "3 factors + Nifty 50 | top 2 by 6-month return | every 6 months": {
+   "cagr": 15.4,
+   "dd": -39.3,
+   "per": {
+    "2009-2009": 22.8,
+    "2010-2015": 11.5,
+    "2016-2020": 13.1,
+    "2021-2026": 20.3
+   },
+   "train_2009_2018": {
+    "cagr": 12.2,
+    "dd": -29.9
+   },
+   "test_2019_2026": {
+    "cagr": 19.7,
+    "dd": -36.8
+   },
+   "after_tax_rough_cagr": 12.4,
+   "switches_per_year": 1.1,
+   "turnover_per_year": 1.8
+  },
+  "3 factors + Nifty 50 | top 2 by 6-month return | every 6 months | crash filter": {
+   "cagr": 16.7,
+   "dd": -41.6,
+   "per": {
+    "2009-2009": 22.8,
+    "2010-2015": 9.0,
+    "2016-2020": 9.9,
+    "2021-2026": 30.3
+   },
+   "train_2009_2018": {
+    "cagr": 9.6,
+    "dd": -29.9
+   },
+   "test_2019_2026": {
+    "cagr": 26.5,
+    "dd": -36.8
+   },
+   "after_tax_rough_cagr": 13.4,
+   "switches_per_year": 1.4,
+   "turnover_per_year": 2.6
+  },
+  "3 factors + Nifty 50 | top 1 by 12-month return | monthly": {
+   "cagr": 17.2,
+   "dd": -48.8,
+   "per": {
+    "2009-2009": 94.8,
+    "2010-2015": 13.2,
+    "2016-2020": 6.9,
+    "2021-2026": 20.5
+   },
+   "train_2009_2018": {
+    "cagr": 16.7,
+    "dd": -31.6
+   },
+   "test_2019_2026": {
+    "cagr": 17.9,
+    "dd": -40.6
+   },
+   "after_tax_rough_cagr": 13.9,
+   "switches_per_year": 3.2,
+   "turnover_per_year": 6.3
+  },
+  "3 factors + Nifty 50 | top 1 by 12-month return | monthly | crash filter": {
+   "cagr": 19.1,
+   "dd": -33.7,
+   "per": {
+    "2009-2009": 86.0,
+    "2010-2015": 6.5,
+    "2016-2020": 15.4,
+    "2021-2026": 27.3
+   },
+   "train_2009_2018": {
+    "cagr": 12.7,
+    "dd": -33.7
+   },
+   "test_2019_2026": {
+    "cagr": 27.8,
+    "dd": -22.2
+   },
+   "after_tax_rough_cagr": 15.5,
+   "switches_per_year": 5.3,
+   "turnover_per_year": 10.5
+  },
+  "3 factors + Nifty 50 | top 1 by 12-month return | every 6 months": {
+   "cagr": 14.2,
+   "dd": -49.2,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 11.8,
+    "2016-2020": 7.6,
+    "2021-2026": 21.5
+   },
+   "train_2009_2018": {
+    "cagr": 10.0,
+    "dd": -31.6
+   },
+   "test_2019_2026": {
+    "cagr": 19.8,
+    "dd": -38.3
+   },
+   "after_tax_rough_cagr": 11.5,
+   "switches_per_year": 1.2,
+   "turnover_per_year": 2.3
+  },
+  "3 factors + Nifty 50 | top 1 by 12-month return | every 6 months | crash filter": {
+   "cagr": 16.0,
+   "dd": -52.1,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 9.4,
+    "2016-2020": 6.4,
+    "2021-2026": 31.6
+   },
+   "train_2009_2018": {
+    "cagr": 8.6,
+    "dd": -31.6
+   },
+   "test_2019_2026": {
+    "cagr": 26.2,
+    "dd": -38.3
+   },
+   "after_tax_rough_cagr": 12.9,
+   "switches_per_year": 1.5,
+   "turnover_per_year": 3.0
+  },
+  "3 factors + Nifty 50 | top 2 by 12-month return | monthly": {
+   "cagr": 17.5,
+   "dd": -45.6,
+   "per": {
+    "2009-2009": 94.0,
+    "2010-2015": 12.0,
+    "2016-2020": 9.0,
+    "2021-2026": 20.8
+   },
+   "train_2009_2018": {
+    "cagr": 16.3,
+    "dd": -30.9
+   },
+   "test_2019_2026": {
+    "cagr": 19.1,
+    "dd": -37.9
+   },
+   "after_tax_rough_cagr": 14.2,
+   "switches_per_year": 2.3,
+   "turnover_per_year": 2.8
+  },
+  "3 factors + Nifty 50 | top 2 by 12-month return | monthly | crash filter": {
+   "cagr": 18.6,
+   "dd": -29.3,
+   "per": {
+    "2009-2009": 85.3,
+    "2010-2015": 5.0,
+    "2016-2020": 17.0,
+    "2021-2026": 25.9
+   },
+   "train_2009_2018": {
+    "cagr": 12.2,
+    "dd": -29.3
+   },
+   "test_2019_2026": {
+    "cagr": 27.2,
+    "dd": -20.0
+   },
+   "after_tax_rough_cagr": 15.0,
+   "switches_per_year": 4.7,
+   "turnover_per_year": 8.6
+  },
+  "3 factors + Nifty 50 | top 2 by 12-month return | every 6 months": {
+   "cagr": 13.6,
+   "dd": -41.7,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 10.4,
+    "2016-2020": 8.4,
+    "2021-2026": 20.4
+   },
+   "train_2009_2018": {
+    "cagr": 9.2,
+    "dd": -32.0
+   },
+   "test_2019_2026": {
+    "cagr": 19.5,
+    "dd": -32.8
+   },
+   "after_tax_rough_cagr": 10.9,
+   "switches_per_year": 0.9,
+   "turnover_per_year": 1.6
+  },
+  "3 factors + Nifty 50 | top 2 by 12-month return | every 6 months | crash filter": {
+   "cagr": 15.8,
+   "dd": -43.6,
+   "per": {
+    "2009-2009": 21.0,
+    "2010-2015": 8.4,
+    "2016-2020": 7.9,
+    "2021-2026": 30.3
+   },
+   "train_2009_2018": {
+    "cagr": 8.2,
+    "dd": -32.0
+   },
+   "test_2019_2026": {
+    "cagr": 26.3,
+    "dd": -32.8
+   },
+   "after_tax_rough_cagr": 12.6,
+   "switches_per_year": 1.4,
+   "turnover_per_year": 2.6
+  }
+ },
+ "size_switch": {
+  "Large vs Mid | best 6-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 6.5,
+   "dd": -47.2,
+   "per": {
+    "2009-2009": 23.9,
+    "2010-2015": 7.3,
+    "2016-2020": -1.2,
+    "2021-2026": 10.0
+   },
+   "train_2009_2018": {
+    "cagr": 7.5,
+    "dd": -30.5
+   },
+   "test_2019_2026": {
+    "cagr": 5.4,
+    "dd": -41.6
+   },
+   "after_tax_rough_cagr": 5.1,
+   "switches_per_year": 3.0,
+   "turnover_per_year": 5.9
+  },
+  "Large vs Mid | best 12-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 5.6,
+   "dd": -35.3,
+   "per": {
+    "2009-2009": 5.4,
+    "2010-2015": 7.0,
+    "2016-2020": 1.1,
+    "2021-2026": 8.1
+   },
+   "train_2009_2018": {
+    "cagr": 2.1,
+    "dd": -35.3
+   },
+   "test_2019_2026": {
+    "cagr": 10.1,
+    "dd": -32.1
+   },
+   "after_tax_rough_cagr": 4.2,
+   "switches_per_year": 2.3,
+   "turnover_per_year": 4.5
+  },
+  "Large vs Mid vs Small | best 6-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 7.1,
+   "dd": -49.8,
+   "per": {
+    "2009-2009": 30.1,
+    "2010-2015": 9.7,
+    "2016-2020": -1.7,
+    "2021-2026": 8.7
+   },
+   "train_2009_2018": {
+    "cagr": 9.6,
+    "dd": -29.9
+   },
+   "test_2019_2026": {
+    "cagr": 4.0,
+    "dd": -42.7
+   },
+   "after_tax_rough_cagr": 5.4,
+   "switches_per_year": 3.9,
+   "turnover_per_year": 7.7
+  },
+  "Large vs Mid vs Small | best 12-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 5.2,
+   "dd": -39.7,
+   "per": {
+    "2009-2009": 5.4,
+    "2010-2015": 8.3,
+    "2016-2020": 0.1,
+    "2021-2026": 6.5
+   },
+   "train_2009_2018": {
+    "cagr": 2.6,
+    "dd": -39.7
+   },
+   "test_2019_2026": {
+    "cagr": 8.5,
+    "dd": -39.5
+   },
+   "after_tax_rough_cagr": 3.8,
+   "switches_per_year": 3.1,
+   "turnover_per_year": 6.2
+  },
+  "Nifty 50 vs Mid vs Small | best 6-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 8.8,
+   "dd": -58.8,
+   "per": {
+    "2009-2009": 38.2,
+    "2010-2015": 11.6,
+    "2016-2020": -3.8,
+    "2021-2026": 13.2
+   },
+   "train_2009_2018": {
+    "cagr": 11.8,
+    "dd": -27.8
+   },
+   "test_2019_2026": {
+    "cagr": 5.3,
+    "dd": -47.6
+   },
+   "after_tax_rough_cagr": 7.0,
+   "switches_per_year": 3.8,
+   "turnover_per_year": 7.6
+  },
+  "Nifty 50 vs Mid vs Small | best 12-month return, liquid fund if none beats 6%/yr | monthly": {
+   "cagr": 6.8,
+   "dd": -31.0,
+   "per": {
+    "2009-2009": 4.1,
+    "2010-2015": 7.8,
+    "2016-2020": 4.3,
+    "2021-2026": 8.3
+   },
+   "train_2009_2018": {
+    "cagr": 6.4,
+    "dd": -26.3
+   },
+   "test_2019_2026": {
+    "cagr": 7.4,
+    "dd": -31.0
+   },
+   "after_tax_rough_cagr": 5.2,
+   "switches_per_year": 3.7,
+   "turnover_per_year": 7.4
+  }
+ },
+ "monthly_correlation": {
+  "Momentum 30": {
+   "Momentum 30": 1.0,
+   "Low Vol 30": 0.82,
+   "Alpha 50": 0.94,
+   "Large 100": 0.86,
+   "Mid 150": 0.87,
+   "Small 250": 0.84,
+   "Nifty 50": 0.79
+  },
+  "Low Vol 30": {
+   "Momentum 30": 0.82,
+   "Low Vol 30": 1.0,
+   "Alpha 50": 0.78,
+   "Large 100": 0.9,
+   "Mid 150": 0.84,
+   "Small 250": 0.78,
+   "Nifty 50": 0.94
+  },
+  "Alpha 50": {
+   "Momentum 30": 0.94,
+   "Low Vol 30": 0.78,
+   "Alpha 50": 1.0,
+   "Large 100": 0.85,
+   "Mid 150": 0.9,
+   "Small 250": 0.89,
+   "Nifty 50": 0.76
+  },
+  "Large 100": {
+   "Momentum 30": 0.86,
+   "Low Vol 30": 0.9,
+   "Alpha 50": 0.85,
+   "Large 100": 1.0,
+   "Mid 150": 0.96,
+   "Small 250": 0.91,
+   "Nifty 50": 0.93
+  },
+  "Mid 150": {
+   "Momentum 30": 0.87,
+   "Low Vol 30": 0.84,
+   "Alpha 50": 0.9,
+   "Large 100": 0.96,
+   "Mid 150": 1.0,
+   "Small 250": 0.97,
+   "Nifty 50": 0.87
+  },
+  "Small 250": {
+   "Momentum 30": 0.84,
+   "Low Vol 30": 0.78,
+   "Alpha 50": 0.89,
+   "Large 100": 0.91,
+   "Mid 150": 0.97,
+   "Small 250": 1.0,
+   "Nifty 50": 0.81
+  },
+  "Nifty 50": {
+   "Momentum 30": 0.79,
+   "Low Vol 30": 0.94,
+   "Alpha 50": 0.76,
+   "Large 100": 0.93,
+   "Mid 150": 0.87,
+   "Small 250": 0.81,
+   "Nifty 50": 1.0
+  }
+ },
+ "best_rotation_hindsight": {
+  "version": "3 factors + Nifty 50 | top 1 by 6-month return | monthly | crash filter",
+  "of": 32,
+  "cagr": 19.6,
+  "dd": -32.4,
+  "per": {
+   "2009-2009": 96.7,
+   "2010-2015": 4.4,
+   "2016-2020": 24.3,
+   "2021-2026": 22.4
+  },
+  "train_2009_2018": {
+   "cagr": 14.8,
+   "dd": -32.4
+  },
+  "test_2019_2026": {
+   "cagr": 26.1,
+   "dd": -26.3
+  },
+  "after_tax_rough_cagr": 15.9,
+  "switches_per_year": 5.5,
+  "turnover_per_year": 10.9
+ }
+}
