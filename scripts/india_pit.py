@@ -348,6 +348,131 @@ def run():
         OUTR["placebo"] = {"runs": 200, "random_median": float(np.median(pc)), "random_p95": float(np.percentile(pc, 95)), "random_max": float(pc.max()), "share_beating_base_pct": round(float(np.mean(pc >= base["cagr"])) * 100, 1), "random_median_worst_drop": float(np.median(pd_))}
         print("PLACEBO 20 random stocks (same universe, same filter):", OUTR["placebo"], flush=True)
         os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrobust.json" if not DRY else "/tmp/india_momrobust_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
+    if MODE == "slowtax":
+        # Nov 22: (A) slower reshuffles / wider buffers / letting winners run, judged AFTER TAX with lot-level Indian tax (current rules applied to the whole
+        # period: held < 12 months 20% + cess = 20.8%; >= 12 months 12.5% + cess = 13% above Rs 1.25 lakh a year; FIFO lots; short-term losses offset both,
+        # long-term losses only long-term, carried forward; calendar years; start Rs 10 lakh). (B) score tweaks on bot 13's settings, same tax engine.
+        # best = reshuffle day 1 at that close; honest = money split over days 1/6/11/16, trade next day (each part Rs 2.5 lakh, exemption split 4 ways).
+        M500 = members(500); hide_r = np.where(gtr, gr, liq); nma = (n > n.rolling(100).mean()).shift(1, fill_value=False).values
+        r6, r12 = Pf.pct_change(126), Pf.pct_change(252); vv = vol * np.sqrt(248)
+        Ps = Pf.shift(21); r6s, r12s = Ps / Pf.shift(126) - 1, Ps / Pf.shift(252) - 1
+        SCX = {"bot 13: (6m+12m)/vol": ((r6 + r12) / vv).values, "skip last month: (6-1 + 12-1)/vol": ((r6s + r12s) / vv).values,
+               "more weight on 6m: (2x6m + 12m)/vol": ((2 * r6 + r12) / vv).values, "no volatility divisor: 6m+12m": (r6 + r12).values}
+        mser = n.pct_change().fillna(0); mm_ = mser.rolling(252).mean(); mv_ = mser.rolling(252).var()
+        beta = ((R.mul(mser, axis=0)).rolling(252, min_periods=200).mean() - R.rolling(252, min_periods=200).mean().mul(mm_, axis=0)).div(mv_, axis=0)
+        resid = R - beta.mul(mser, axis=0); del beta
+        rs = resid.shift(21).rolling(231, min_periods=180); SCX["residual momentum: 12-1 residual return / residual vol"] = (rs.sum() / (rs.std() * np.sqrt(231))).values; del resid, rs
+        lp = np.log(Pf); nW = 90; I = pd.Series(np.arange(D, dtype=float), index=dates)
+        Sy = lp.rolling(nW, min_periods=nW).sum(); Syy = (lp ** 2).rolling(nW, min_periods=nW).sum(); Sxy_g = lp.mul(I, axis=0).rolling(nW, min_periods=nW).sum()
+        Sxy = Sxy_g - Sy.mul(I - nW + 1, axis=0); Sx = nW * (nW - 1) / 2; Sxx = (nW - 1) * nW * (2 * nW - 1) / 6
+        den = nW * Sxx - Sx ** 2; slope = (nW * Sxy - Sx * Sy) / den; r2 = (slope ** 2 * den / (nW * Syy - Sy ** 2)).clip(0, 1)
+        SCX["Clenow: 90-day trend slope x R-squared"] = ((np.exp(slope * 248) - 1) * r2).values; del Sy, Syy, Sxy_g, Sxy, slope, r2, lp
+        pos = (R > 0).rolling(252, min_periods=200).mean(); neg = (R < 0).rolling(252, min_periods=200).mean()
+        smooth = (pos - neg).values; del pos, neg                               # higher = smoother climb (frog-in-the-pan)
+        mstarts = [i for i in range(1, D) if dates[i].month != dates[i - 1].month]
+        MONTHS = {"monthly": None, "every 2 months": (1, 3, 5, 7, 9, 11), "every 3 months": (1, 4, 7, 10)}
+        def plan(k, lag, months):
+            out = {}
+            for m0 in mstarts:
+                if months and dates[m0].month not in months: continue
+                s_ = m0 + k - 1
+                if s_ < D and dates[s_].month == dates[m0].month and s_ >= START and s_ + lag < D: out[s_ + lag] = s_
+            return out
+        STR, LTR, EX = 0.208, 0.13, 125000.0
+        def sleeve_tax(k, lag, cfg, cap):
+            sc = SCX[cfg.get("score", "bot 13: (6m+12m)/vol")]; N = 20; buf = cfg.get("buf", 1.5); reset = cfg.get("reset", True); two = cfg.get("smooth", False)
+            P_ = plan(k, lag, MONTHS[cfg.get("freq", "monthly")]); ex = EX * cap / 1e6
+            lots = {}; cash = cap; inside = True; st = lt = carry = 0.0; taxes = 0.0; pre = np.full(D, cap); post = np.full(D, cap); pre_eq = cap; tv_sum = 0.0
+            def sell(j, amt, t):                       # sell amt rupees of stock j, FIFO; returns proceeds before costs
+                nonlocal st, lt
+                got = 0.0; L_ = lots[j]
+                while amt > 1e-6 and L_:
+                    d0, cost, val = L_[0]; take = min(amt, val); f = take / val
+                    g = take - cost * f
+                    if t - d0 >= 248: lt += g
+                    else: st += g
+                    if take >= val - 1e-9: L_.pop(0)
+                    else: L_[0] = [d0, cost * (1 - f), val - take]
+                    amt -= take; got += take
+                if not L_: lots.pop(j)
+                return got
+            def settle():
+                nonlocal st, lt, carry, cash, taxes
+                s_, l_ = st, lt
+                if s_ < 0: l_ += s_; s_ = 0.0
+                if carry < 0:
+                    use = min(-carry, s_); s_ -= use; carry += use; use = min(-carry, max(l_, 0)); l_ -= use; carry += use
+                if l_ < 0: carry += l_; l_ = 0.0
+                tax = STR * s_ + LTR * max(0.0, l_ - ex); cash -= tax; taxes += tax; st = lt = 0.0
+            pre_cash_ratio = 1.0
+            for t in range(START, D):
+                park = hide_r[t] if not inside else liq[t]
+                for j, L_ in lots.items():
+                    r_ = Rt[t, j]
+                    for l in L_: l[2] *= 1 + r_
+                cash *= 1 + park
+                for j in [j for j in lots if not traded[t, j]]:
+                    cash += sell(j, sum(l[2] for l in lots[j]), t)
+                if t in P_:
+                    s_ = P_[t]; inside = bool(nma[s_] if lag == 0 else nma[s_ + 1])
+                    held = {j: sum(l[2] for l in L_) for j, L_ in lots.items()}; eq = cash + sum(held.values())
+                    if inside:
+                        okm = M500[s_] & ~glitch[s_] & np.isfinite(sc[s_])
+                        if lag: okm &= traded[t]
+                        cand = np.where(okm)[0]; order = cand[np.argsort(-sc[s_, cand])]
+                        if two:
+                            top = order[: 2 * N]; top = top[np.argsort(-np.nan_to_num(smooth[s_, top], nan=-9))]; order = np.r_[top, order[2 * N:]]
+                        rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in held if rank.get(j, 1e9) < buf * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                    else: new = []
+                    tgt = {}
+                    if reset or not inside: tgt = {j: eq / N for j in new}
+                    else:
+                        free = eq - sum(held[j] for j in new if j in held); buys = [j for j in new if j not in held]
+                        tgt = {j: held[j] for j in new if j in held}
+                        for j in buys: tgt[j] = max(0.0, free) / max(len(buys), 1) if len(buys) else 0.0
+                        tgt = {j: min(v, eq / N * 1.0) if j not in held else v for j, v in tgt.items()}
+                    traded_amt = 0.0
+                    for j in list(held):
+                        d_ = held[j] - tgt.get(j, 0.0)
+                        if d_ > 1e-6: cash += sell(j, d_, t); traded_amt += d_
+                    for j, v in tgt.items():
+                        d_ = v - held.get(j, 0.0)
+                        if d_ > 1e-6: lots.setdefault(j, []).append([t, d_, d_]); cash -= d_; traded_amt += d_
+                    cash -= 0.003 * traded_amt; tv_sum += traded_amt / max(eq, 1)
+                if t + 1 >= D or dates[t + 1].year != dates[t].year: settle()
+                post[t] = cash + sum(l[2] for L_ in lots.values() for l in L_)
+            # sell everything at the end and settle (what you'd keep if you cashed out)
+            for j in list(lots): cash += sell(j, sum(l[2] for l in lots[j]), D - 1)
+            settle(); post[-1] = cash
+            return post, taxes, tv_sum
+        def run_tax(cfg, days, lag):
+            cap = 1e6 / len(days); res = [sleeve_tax(k, lag, cfg, cap) for k in days]
+            post = sum(r[0] for r in res) / 1e6; o = summ(post)
+            yrs_ = (D - START) / 248
+            return {"after_tax_cagr": o["cagr"], "after_tax_dd": o["dd"], "after_tax_2019_2026": o["test_2019_2026"]["cagr"],
+                    "tax_paid_lakh": round(sum(r[1] for r in res) / 1e5, 1), "turnover_per_year": round(sum(r[2] for r in res) / len(days) / yrs_, 1)}
+        def both(lbl, cfg):
+            nonlocal STR, LTR
+            out = {}
+            for nm, days, lag in (("best_day1", (1,), 0), ("honest_4days_nextday", (1, 6, 11, 16), 1)):
+                a = run_tax(cfg, days, lag); s0, l0 = STR, LTR; STR, LTR = 0.0, 0.0; b = run_tax(cfg, days, lag); STR, LTR = s0, l0
+                out[nm] = {"before_tax_cagr": b["after_tax_cagr"], "before_tax_dd": b["after_tax_dd"], **a}
+                print(f"{nm[:6].upper():6s} {lbl:78s} pre {b['after_tax_cagr']:>5}/{b['after_tax_dd']:>6} | AFTER TAX {a['after_tax_cagr']:>5} (tax Rs {a['tax_paid_lakh']}L, turnover {a['turnover_per_year']}x/yr)", flush=True)
+            return out
+        OUTS = {"note": "India momentum (bot 13 family) with LOT-LEVEL Indian tax, current rules over 2009-2026: <12m 20.8%, >=12m 13% above Rs 1.25 lakh/yr, FIFO, losses carried; "
+                        "start Rs 10 lakh; final value after selling everything and paying tax. best = day-1 reshuffle; honest = days 1/6/11/16 next-day. 0.3%/side.",
+                "built": str(pd.Timestamp.today().date()), "A_reshuffle": {}, "B_score": {}}
+        for fr in ("monthly", "every 2 months", "every 3 months"):
+            for bf in (1.5, 2.0, 2.5):
+                for rs_ in (True, False):
+                    lbl = f"{fr} | keep while in top {int(bf * 20)} | {'trim/top up to equal' if rs_ else 'let winners run (no trims)'}"
+                    OUTS["A_reshuffle"][lbl] = both("A " + lbl, dict(freq=fr, buf=bf, reset=rs_))
+        for sk in SCX:
+            if sk.startswith("bot 13"): continue
+            OUTS["B_score"][sk] = both("B " + sk, dict(score=sk))
+        OUTS["B_score"]["smooth-trend filter: top 40 by bot-13 score, keep the 20 smoothest climbers"] = both("B smooth-trend filter", dict(smooth=True))
+        os.makedirs("data", exist_ok=True); json.dump(OUTS, open("data/india_slowtax.json" if not DRY else "/tmp/india_slowtax_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "ideas3":
         # Nov 22 research shortlist #1-3 on paper bot 13 (momentum: top 500, (6m+12m)/vol, 20 stocks, monthly, 1.5N buffer, Nifty 100-day filter):
         #  1) low-volatility basket beside momentum  2) junk/tradability exclusions  3) per-slot absolute check (12m > liquid AND above own 200-day avg).
