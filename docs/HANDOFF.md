@@ -182,6 +182,15 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 India factor rotation (#5) + size switch (#7) (data/india_factor.json, india_pit.py MODE=factor) + NIFTY BENCHMARK FIX
+- BUG FIXED: summ() measured benchmark curves (Nifty, built from 2007) from 2007 but divided by years since 2009 -> Nifty showed 11.9%; correct 2009-2026 = 14.5% (after tax ~13.7).
+  Strategy curves were unaffected (they start at 1 on START). Consequence: India dip bot (14.0%) only MATCHES Nifty (half the drop); after tax Nifty buy & hold wins. Dashboard/calculator fixed.
+- Rebuilt (equal-weight, from NSE data) hold 2009-26: Alpha 50 22.0 (dd -47), Momentum 30 20.3 (-39), Low Vol 30 14.3 (-28), Nifty 14.4 (-38). Factors move together (corr 0.78-0.94).
+- Best rotation: top factor by 6m return, monthly, crash filter 19.6 / -32; top 2 by 6m monthly + filter 18.8 / -25. Rotation adds ~0-1 pt over holding; the filter cuts drops.
+- Size switch (#7, large/mid/small, monthly): 5-9%/yr -> FAILS, drop it.
+- VALIDATION vs official NSE TRI (3y/5y to Oct 30 2026): Nifty 7.8/6.5 vs 7.74/6.70 (exact), Low Vol 9.4/8.2 vs 9.79/9.13 (close), Momentum 20.1/14.0 vs 9.41/7.93 and Alpha 20.8/18.2 vs 14.88/11.56 (ours far HIGHER:
+  equal weight + traded-value universe tilts to small high-flyers). So the rebuilt Momentum/Alpha numbers OVERSTATE the real ETFs. Official Alpha 50 TRI since 2003: ~20%/yr (back-calculated pre-2012), 5y 11.6%.
+- Real funds: Kotak Nifty Alpha 50 ETF (NSE: ALPHA, 0.30%, ~Rs 892 cr), Kotak Nifty Alpha 50 Index Fund (direct 0.35%, since Aug 2025). For friends; PFIC for Sai.
 ### Nov 22 India via US-listed ETFs for Sai's Roth (#10, data/india_usproxy.json) - NOT worth it
 - 2013-03..2026-11, USD, adjusted closes: INDA 6.7%/yr (dd -45), SMIN 10.6 (-60), EPI 8.4, INDY 7.0 vs SPY 13.4 (-34). Rupee fell ~4.4%/yr vs USD -> eats most of India's local return.
 - Best rotation: SMIN/GLD/cash best 6-month 13.3% (dd -45, 2020-26 only 9.8); INDA/GLD/cash 6-month 10.8 (-31); global SPY/INDA/GLD/cash 4.5-6.1 (worse than SPY). Nothing beats plain SPY.
