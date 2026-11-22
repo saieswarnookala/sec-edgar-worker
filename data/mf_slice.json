@@ -1,0 +1,637 @@
+{
+ "note": "Managed-futures slice next to Dip bot v3.0 in Sai's Roth IRA (Nov 22 2026). Research only, not financial advice.\nQuestion: does adding 10/20/30% of a managed-futures (trend-following) fund to the v3.0 dip bot improve the whole portfolio (return, worst drop, worst\n12 months, Sharpe), as the research suggested (DBMF +21.6% / KMLM +24.2% in 2022 while SPY fell 18.2%)?\nData: v3.0 daily curve from stack_and_rebound.py (point-in-time S&P 500; 'live-like' = buy at the 3:45 close, 'realistic' = next open, higher costs).\nFunds (Yahoo adjusted closes, fees included): AQMIX (AQR Managed Futures, from 2010), DBMF (iMGP DBi Managed Futures ETF, from mid-2019),\nKMLM (KFA Mount Lucas Managed Futures, from Dec 2020); GLD and IEF as other diversifiers; SPY for reference.\nMonthly rebalance back to the split. Roth: no tax. Periods start when each fund has data (AQMIX period = the long test).\nDRY=1: fake data (code test).",
+ "built": "2026-11-22",
+ "dry": null,
+ "periods": {
+  "AQMIX era (from 2010-01-31)": {
+   "100% v3.0 live-like": {
+    "per_year_pct": 20.2,
+    "worst_drop_pct": -13.3,
+    "worst_12m_pct": -10.6,
+    "sharpe": 1.23,
+    "y2022_pct": 7.8,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "90% v3.0 live-like + 10% AQMIX": {
+    "per_year_pct": 18.7,
+    "worst_drop_pct": -12.8,
+    "worst_12m_pct": -9.3,
+    "sharpe": 1.25,
+    "y2022_pct": 10.5,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 live-like + 20% AQMIX": {
+    "per_year_pct": 17.2,
+    "worst_drop_pct": -12.3,
+    "worst_12m_pct": -8.0,
+    "sharpe": 1.26,
+    "y2022_pct": 13.3,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "70% v3.0 live-like + 30% AQMIX": {
+    "per_year_pct": 15.7,
+    "worst_drop_pct": -11.9,
+    "worst_12m_pct": -6.8,
+    "sharpe": 1.27,
+    "y2022_pct": 16.0,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 live-like + 20% GLD (compare)": {
+    "per_year_pct": 18.1,
+    "worst_drop_pct": -13.2,
+    "worst_12m_pct": -10.5,
+    "sharpe": 1.28,
+    "y2022_pct": 6.3,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 live-like + 20% IEF (compare)": {
+    "per_year_pct": 16.6,
+    "worst_drop_pct": -9.5,
+    "worst_12m_pct": -8.2,
+    "sharpe": 1.25,
+    "y2022_pct": 3.0,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "100% v3.0 realistic": {
+    "per_year_pct": 16.3,
+    "worst_drop_pct": -13.7,
+    "worst_12m_pct": -9.0,
+    "sharpe": 1.09,
+    "y2022_pct": 2.6,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "90% v3.0 realistic + 10% AQMIX": {
+    "per_year_pct": 15.2,
+    "worst_drop_pct": -13.2,
+    "worst_12m_pct": -7.9,
+    "sharpe": 1.11,
+    "y2022_pct": 5.7,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 realistic + 20% AQMIX": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -12.7,
+    "worst_12m_pct": -6.8,
+    "sharpe": 1.12,
+    "y2022_pct": 8.9,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "70% v3.0 realistic + 30% AQMIX": {
+    "per_year_pct": 13.0,
+    "worst_drop_pct": -12.2,
+    "worst_12m_pct": -7.7,
+    "sharpe": 1.12,
+    "y2022_pct": 12.1,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 realistic + 20% GLD (compare)": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -11.5,
+    "worst_12m_pct": -9.0,
+    "sharpe": 1.13,
+    "y2022_pct": 2.1,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% v3.0 realistic + 20% IEF (compare)": {
+    "per_year_pct": 13.5,
+    "worst_drop_pct": -9.1,
+    "worst_12m_pct": -6.9,
+    "sharpe": 1.1,
+    "y2022_pct": -1.0,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "100% SPY": {
+    "per_year_pct": 14.5,
+    "worst_drop_pct": -23.9,
+    "worst_12m_pct": -18.2,
+    "sharpe": 0.93,
+    "y2022_pct": -18.2,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "90% SPY + 10% AQMIX": {
+    "per_year_pct": 13.7,
+    "worst_drop_pct": -18.7,
+    "worst_12m_pct": -13.4,
+    "sharpe": 0.97,
+    "y2022_pct": -13.4,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% SPY + 20% AQMIX": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -15.1,
+    "worst_12m_pct": -8.5,
+    "sharpe": 1.01,
+    "y2022_pct": -8.5,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "70% SPY + 30% AQMIX": {
+    "per_year_pct": 11.9,
+    "worst_drop_pct": -13.0,
+    "worst_12m_pct": -5.9,
+    "sharpe": 1.06,
+    "y2022_pct": -3.5,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% SPY + 20% GLD (compare)": {
+    "per_year_pct": 13.6,
+    "worst_drop_pct": -21.0,
+    "worst_12m_pct": -14.6,
+    "sharpe": 1.0,
+    "y2022_pct": -14.6,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "80% SPY + 20% IEF (compare)": {
+    "per_year_pct": 12.2,
+    "worst_drop_pct": -22.2,
+    "worst_12m_pct": -17.4,
+    "sharpe": 0.94,
+    "y2022_pct": -17.4,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "100% AQMIX": {
+    "per_year_pct": 4.8,
+    "worst_drop_pct": -24.4,
+    "worst_12m_pct": -15.6,
+    "sharpe": 0.39,
+    "y2022_pct": 35.5,
+    "months": 200,
+    "start": "2010-02-28"
+   },
+   "monthly_correlation": {
+    "v3.0 live-like": {
+     "v3.0 live-like": 1.0,
+     "SPY": 0.51,
+     "AQMIX": 0.07,
+     "GLD": 0.11,
+     "IEF": -0.04
+    },
+    "SPY": {
+     "v3.0 live-like": 0.51,
+     "SPY": 1.0,
+     "AQMIX": -0.19,
+     "GLD": 0.09,
+     "IEF": -0.04
+    },
+    "AQMIX": {
+     "v3.0 live-like": 0.07,
+     "SPY": -0.19,
+     "AQMIX": 1.0,
+     "GLD": 0.07,
+     "IEF": -0.18
+    },
+    "GLD": {
+     "v3.0 live-like": 0.11,
+     "SPY": 0.09,
+     "AQMIX": 0.07,
+     "GLD": 1.0,
+     "IEF": 0.35
+    },
+    "IEF": {
+     "v3.0 live-like": -0.04,
+     "SPY": -0.04,
+     "AQMIX": -0.18,
+     "GLD": 0.35,
+     "IEF": 1.0
+    }
+   }
+  },
+  "DBMF era (from 2019-05-31)": {
+   "100% v3.0 live-like": {
+    "per_year_pct": 38.1,
+    "worst_drop_pct": -11.5,
+    "worst_12m_pct": 7.8,
+    "sharpe": 1.69,
+    "y2022_pct": 7.8,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "90% v3.0 live-like + 10% DBMF": {
+    "per_year_pct": 35.2,
+    "worst_drop_pct": -9.6,
+    "worst_12m_pct": 9.2,
+    "sharpe": 1.71,
+    "y2022_pct": 9.3,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 live-like + 20% DBMF": {
+    "per_year_pct": 32.4,
+    "worst_drop_pct": -7.8,
+    "worst_12m_pct": 7.4,
+    "sharpe": 1.74,
+    "y2022_pct": 10.8,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "70% v3.0 live-like + 30% DBMF": {
+    "per_year_pct": 29.5,
+    "worst_drop_pct": -7.0,
+    "worst_12m_pct": 5.6,
+    "sharpe": 1.75,
+    "y2022_pct": 12.3,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 live-like + 20% GLD (compare)": {
+    "per_year_pct": 34.1,
+    "worst_drop_pct": -7.7,
+    "worst_12m_pct": 6.3,
+    "sharpe": 1.77,
+    "y2022_pct": 6.3,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 live-like + 20% IEF (compare)": {
+    "per_year_pct": 29.8,
+    "worst_drop_pct": -8.4,
+    "worst_12m_pct": 3.0,
+    "sharpe": 1.63,
+    "y2022_pct": 3.0,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "100% v3.0 realistic": {
+    "per_year_pct": 28.9,
+    "worst_drop_pct": -10.9,
+    "worst_12m_pct": 2.6,
+    "sharpe": 1.44,
+    "y2022_pct": 2.6,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "90% v3.0 realistic + 10% DBMF": {
+    "per_year_pct": 27.1,
+    "worst_drop_pct": -9.2,
+    "worst_12m_pct": 4.6,
+    "sharpe": 1.47,
+    "y2022_pct": 4.6,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 realistic + 20% DBMF": {
+    "per_year_pct": 25.2,
+    "worst_drop_pct": -8.0,
+    "worst_12m_pct": 5.7,
+    "sharpe": 1.49,
+    "y2022_pct": 6.5,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "70% v3.0 realistic + 30% DBMF": {
+    "per_year_pct": 23.3,
+    "worst_drop_pct": -7.3,
+    "worst_12m_pct": 4.0,
+    "sharpe": 1.51,
+    "y2022_pct": 8.5,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 realistic + 20% GLD (compare)": {
+    "per_year_pct": 26.8,
+    "worst_drop_pct": -8.3,
+    "worst_12m_pct": 2.1,
+    "sharpe": 1.51,
+    "y2022_pct": 2.1,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% v3.0 realistic + 20% IEF (compare)": {
+    "per_year_pct": 22.8,
+    "worst_drop_pct": -7.9,
+    "worst_12m_pct": -1.0,
+    "sharpe": 1.37,
+    "y2022_pct": -1.0,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "100% SPY": {
+    "per_year_pct": 16.6,
+    "worst_drop_pct": -23.9,
+    "worst_12m_pct": -18.2,
+    "sharpe": 0.87,
+    "y2022_pct": -18.2,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "90% SPY + 10% DBMF": {
+    "per_year_pct": 16.2,
+    "worst_drop_pct": -19.3,
+    "worst_12m_pct": -14.3,
+    "sharpe": 0.92,
+    "y2022_pct": -14.3,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% SPY + 20% DBMF": {
+    "per_year_pct": 15.6,
+    "worst_drop_pct": -15.8,
+    "worst_12m_pct": -10.5,
+    "sharpe": 0.99,
+    "y2022_pct": -10.5,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "70% SPY + 30% DBMF": {
+    "per_year_pct": 15.0,
+    "worst_drop_pct": -14.0,
+    "worst_12m_pct": -6.5,
+    "sharpe": 1.05,
+    "y2022_pct": -6.5,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% SPY + 20% GLD (compare)": {
+    "per_year_pct": 17.0,
+    "worst_drop_pct": -21.0,
+    "worst_12m_pct": -14.6,
+    "sharpe": 1.01,
+    "y2022_pct": -14.6,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "80% SPY + 20% IEF (compare)": {
+    "per_year_pct": 13.3,
+    "worst_drop_pct": -22.2,
+    "worst_12m_pct": -17.4,
+    "sharpe": 0.8,
+    "y2022_pct": -17.4,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "100% DBMF": {
+    "per_year_pct": 9.7,
+    "worst_drop_pct": -17.3,
+    "worst_12m_pct": -10.7,
+    "sharpe": 0.64,
+    "y2022_pct": 21.6,
+    "months": 88,
+    "start": "2019-06-30"
+   },
+   "monthly_correlation": {
+    "v3.0 live-like": {
+     "v3.0 live-like": 1.0,
+     "SPY": 0.47,
+     "DBMF": 0.11,
+     "GLD": 0.15,
+     "IEF": 0.12
+    },
+    "SPY": {
+     "v3.0 live-like": 0.47,
+     "SPY": 1.0,
+     "DBMF": -0.15,
+     "GLD": 0.18,
+     "IEF": 0.28
+    },
+    "DBMF": {
+     "v3.0 live-like": 0.11,
+     "SPY": -0.15,
+     "DBMF": 1.0,
+     "GLD": 0.08,
+     "IEF": -0.4
+    },
+    "GLD": {
+     "v3.0 live-like": 0.15,
+     "SPY": 0.18,
+     "DBMF": 0.08,
+     "GLD": 1.0,
+     "IEF": 0.4
+    },
+    "IEF": {
+     "v3.0 live-like": 0.12,
+     "SPY": 0.28,
+     "DBMF": -0.4,
+     "GLD": 0.4,
+     "IEF": 1.0
+    }
+   }
+  },
+  "KMLM era (from 2020-12-31)": {
+   "100% v3.0 live-like": {
+    "per_year_pct": 37.1,
+    "worst_drop_pct": -8.3,
+    "worst_12m_pct": 7.8,
+    "sharpe": 1.91,
+    "y2022_pct": 7.8,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "90% v3.0 live-like + 10% KMLM": {
+    "per_year_pct": 34.0,
+    "worst_drop_pct": -7.6,
+    "worst_12m_pct": 8.8,
+    "sharpe": 1.93,
+    "y2022_pct": 9.6,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 live-like + 20% KMLM": {
+    "per_year_pct": 30.8,
+    "worst_drop_pct": -6.8,
+    "worst_12m_pct": 6.5,
+    "sharpe": 1.94,
+    "y2022_pct": 11.3,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "70% v3.0 live-like + 30% KMLM": {
+    "per_year_pct": 27.7,
+    "worst_drop_pct": -6.1,
+    "worst_12m_pct": 4.2,
+    "sharpe": 1.92,
+    "y2022_pct": 13.1,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 live-like + 20% GLD (compare)": {
+    "per_year_pct": 32.6,
+    "worst_drop_pct": -6.1,
+    "worst_12m_pct": 6.3,
+    "sharpe": 1.88,
+    "y2022_pct": 6.3,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 live-like + 20% IEF (compare)": {
+    "per_year_pct": 28.4,
+    "worst_drop_pct": -6.1,
+    "worst_12m_pct": 3.0,
+    "sharpe": 1.76,
+    "y2022_pct": 3.0,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "100% v3.0 realistic": {
+    "per_year_pct": 27.8,
+    "worst_drop_pct": -6.5,
+    "worst_12m_pct": 2.6,
+    "sharpe": 1.54,
+    "y2022_pct": 2.6,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "90% v3.0 realistic + 10% KMLM": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -6.1,
+    "worst_12m_pct": 4.8,
+    "sharpe": 1.57,
+    "y2022_pct": 4.8,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 realistic + 20% KMLM": {
+    "per_year_pct": 23.6,
+    "worst_drop_pct": -5.8,
+    "worst_12m_pct": 6.1,
+    "sharpe": 1.59,
+    "y2022_pct": 7.0,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "70% v3.0 realistic + 30% KMLM": {
+    "per_year_pct": 21.5,
+    "worst_drop_pct": -5.5,
+    "worst_12m_pct": 3.9,
+    "sharpe": 1.58,
+    "y2022_pct": 9.2,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 realistic + 20% GLD (compare)": {
+    "per_year_pct": 25.2,
+    "worst_drop_pct": -6.7,
+    "worst_12m_pct": 2.1,
+    "sharpe": 1.51,
+    "y2022_pct": 2.1,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% v3.0 realistic + 20% IEF (compare)": {
+    "per_year_pct": 21.3,
+    "worst_drop_pct": -5.5,
+    "worst_12m_pct": -1.0,
+    "sharpe": 1.39,
+    "y2022_pct": -1.0,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "100% SPY": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -23.9,
+    "worst_12m_pct": -18.2,
+    "sharpe": 0.79,
+    "y2022_pct": -18.2,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "90% SPY + 10% KMLM": {
+    "per_year_pct": 14.1,
+    "worst_drop_pct": -18.5,
+    "worst_12m_pct": -14.1,
+    "sharpe": 0.84,
+    "y2022_pct": -14.1,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% SPY + 20% KMLM": {
+    "per_year_pct": 13.5,
+    "worst_drop_pct": -12.7,
+    "worst_12m_pct": -10.0,
+    "sharpe": 0.9,
+    "y2022_pct": -10.0,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "70% SPY + 30% KMLM": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -8.7,
+    "worst_12m_pct": -5.9,
+    "sharpe": 0.96,
+    "y2022_pct": -5.9,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% SPY + 20% GLD (compare)": {
+    "per_year_pct": 15.0,
+    "worst_drop_pct": -21.0,
+    "worst_12m_pct": -14.6,
+    "sharpe": 0.91,
+    "y2022_pct": -14.6,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "80% SPY + 20% IEF (compare)": {
+    "per_year_pct": 11.2,
+    "worst_drop_pct": -22.2,
+    "worst_12m_pct": -17.4,
+    "sharpe": 0.66,
+    "y2022_pct": -17.4,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "100% KMLM": {
+    "per_year_pct": 6.5,
+    "worst_drop_pct": -25.9,
+    "worst_12m_pct": -14.8,
+    "sharpe": 0.3,
+    "y2022_pct": 24.2,
+    "months": 69,
+    "start": "2021-01-31"
+   },
+   "monthly_correlation": {
+    "v3.0 live-like": {
+     "v3.0 live-like": 1.0,
+     "SPY": 0.48,
+     "KMLM": -0.04,
+     "GLD": 0.31,
+     "IEF": 0.25
+    },
+    "SPY": {
+     "v3.0 live-like": 0.48,
+     "SPY": 1.0,
+     "KMLM": -0.36,
+     "GLD": 0.15,
+     "IEF": 0.51
+    },
+    "KMLM": {
+     "v3.0 live-like": -0.04,
+     "SPY": -0.36,
+     "KMLM": 1.0,
+     "GLD": -0.19,
+     "IEF": -0.59
+    },
+    "GLD": {
+     "v3.0 live-like": 0.31,
+     "SPY": 0.15,
+     "KMLM": -0.19,
+     "GLD": 1.0,
+     "IEF": 0.41
+    },
+    "IEF": {
+     "v3.0 live-like": 0.25,
+     "SPY": 0.51,
+     "KMLM": -0.59,
+     "GLD": 0.41,
+     "IEF": 1.0
+    }
+   }
+  }
+ }
+}
