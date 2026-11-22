@@ -836,6 +836,8 @@ dash.calc('vs_industry', {
 
 <div class="sx sx-tabwrap">
   <div class="sx-tabs" role="tablist" aria-label="Views">
+    <button type="button" class="sx-tab" role="tab" data-tab="start" aria-selected="false">Start here</button>
+    <button type="button" class="sx-tab" role="tab" data-tab="liverules" aria-selected="false">Live bot rules</button>
     <button type="button" class="sx-tab" role="tab" data-tab="stock" aria-selected="true">Stock analysis</button>
     <button type="button" class="sx-tab" role="tab" data-tab="screener" aria-selected="false">Screener</button>
     <button type="button" class="sx-tab" role="tab" data-tab="custom" aria-selected="false">Custom screen</button>
@@ -1009,6 +1011,99 @@ dash.calc('vs_industry', {
 <div class="sx sx-page sx-off" id="custom" aria-hidden="true" inert></div>
 <div class="sx sx-page sx-off" id="trading" aria-hidden="true" inert></div>
 <div class="sx sx-page sx-off" id="paper" aria-hidden="true" inert></div>
+<div class="sx sx-page sx-off" id="start" aria-hidden="true" inert>
+  <section class="sx-sec"><div class="sx-sech"><div><h2>Start here: what's running</h2><p>One live bot with real money. Everything else is paper (fake money) to learn what works. Nothing on this page places orders.</p></div></div>
+  <div class="sx-stats" style="margin:10px 0 4px"><div class="sx-stat"><span>Live (real money)</span><b>1 bot</b></div><div class="sx-stat"><span>Paper, US</span><b>11 bots</b></div><div class="sx-stat"><span>Paper, India (for friends)</span><b>3 bots</b></div><div class="sx-stat"><span>Tested and dropped</span><b>35+ ideas</b></div></div></section>
+
+  <section class="sx-card st-live" style="border-left:4px solid var(--color-ok)">
+    <div class="sx-ch"><h3>Live: Robinhood dip bot (real money, about $100)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Real orders</span><span class="sx-badge">Oracle VM, 3:47 pm ET every trading day</span><span class="sx-badge">Phone alerts (ntfy)</span><span class="sx-badge">Stops itself at −40% from peak</span></div>
+    <ol class="sx-notes">
+      <li><b>Buy</b> an S&amp;P 500 stock that is above its 200-day average and fell 10%+ more than SPY in the last 5 days, unless the fall came on heavy volume (more than 2× normal).</li>
+      <li><b>Size:</b> biggest dips first, up to 10 stocks, 10% of the account each.</li>
+      <li><b>Sell</b> the first day it closes above its 5-day average, or after 5 trading days. No stop-loss.</li>
+      <li><b>Idle money</b> sits in the Clear Leader ETF when SPY is above its 100-day average, otherwise cash.</li>
+      <li><b>Your job:</b> nothing day to day. Read the evening alert; check with <code>dip status</code> on the VM if something looks off.</li></ol>
+    <p class="sx-cap">Backtest 1998–2026 with realistic fills: about 15% a year (about 12% after tax), worst drop −25%. Planned next: switch to the v3.0 rules (paper bot 10) around Dec 3 if its paper run stays clean. Full cheat sheet: <a href="#liverules" class="st-go" data-go-tab="liverules">Live bot rules</a>.</p>
+  </section>
+
+  <section class="sx-card">
+    <div class="sx-ch"><h3>Paper bots (fake money)</h3></div>
+    <p class="sx-cap">Each one tests one change. "Since start" is live paper results (short so far, so mostly noise). Labels: <b>Next live</b> = candidate to replace the live rules · <b>Keep</b> = running long term · <b>Watch</b> = still proving itself · <b>Merged</b> = its idea is already inside v3.0 · <b>Weak</b> = tests say it doesn't beat the simple option.</p>
+    <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>Bot</th><th>What it tests</th><th>Label</th><th>Since start</th><th>Benchmark, same days</th></tr></thead><tbody class="st-paper">
+      <tr data-bot="dip"><td>1</td><td>Dip bot (Alpaca $10k)</td><td>Exactly the live rules, on paper</td><td><b>Keep</b> (live twin)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v3"><td>10</td><td>Dip bot v3.0</td><td>Live rules + ETF dips + bonds when stocks are weak</td><td><b class="sx-good">Next live</b> (~Dec 3)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v32"><td>12</td><td>Dip bot v3.2</td><td>v3.0 + buying dips during the day + 5% profit target</td><td><b>Watch</b> (best replay, 30.5%)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v31"><td>11</td><td>Dip bot v3.1</td><td>v3.0 + 2 earnings-drift slots</td><td><b>Watch</b> (drift fading since 2021)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="drift"><td>3</td><td>Earnings drift (Alpaca $100k)</td><td>Buy big earnings beats, hold 3 months</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="vol"><td>2</td><td>Volatility sizing</td><td>Bigger buys when the market is jumpy</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="tuned"><td>6</td><td>Tuned dip + ETF dips</td><td>Tweaked dip settings</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="short"><td>8</td><td>Short-interest filter</td><td>Skip dips in heavily shorted stocks</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="etf"><td>5</td><td>+ ETF dips</td><td>Buy dipping index/sector ETFs in free slots</td><td>Merged into v3.0</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="bond"><td>9</td><td>Bonds instead of cash</td><td>IEF bonds instead of cash in weak markets</td><td>Merged into v3.0</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="mix"><td>7</td><td>Dip + drift 6+4</td><td>6 dip slots + 4 earnings-drift slots</td><td>Replaced by v3.1</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr class="st-india"><td colspan="6"><b>India (for friends and family; not for Sai's own money: Indian funds are PFICs)</b></td></tr>
+      <tr data-bot="inmom"><td>13</td><td>India momentum basket (₹10 lakh)</td><td>Top 20 steady risers, monthly, crash filter</td><td><b class="sx-good">Keep</b> (main India pick, ~27%/yr realistic)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="inalpha"><td>14</td><td>India Alpha 50 (₹10 lakh)</td><td>50 stocks beating the market, quarterly</td><td><b>Watch</b> (barely beats Nifty after tax)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr><td>–</td><td>India dip bot (₹10 lakh)</td><td>India version of the US dip rules; morning watchlist alerts</td><td><b class="sx-bad">Weak</b> (matches Nifty, loses after tax)</td><td>—</td><td>—</td></tr>
+    </tbody></table></div>
+    <p class="sx-cap">Details for every bot: the <a href="#paper" class="st-go" data-go-tab="paper">Paper bots</a> tab. India picks and share calculators: Day trading → "India momentum: this month's 20".</p>
+  </section>
+
+  <section class="sx-card">
+    <div class="sx-ch"><h3>Tested and dropped (so you can stop wondering)</h3></div>
+    <div class="sx-pb-cols">
+      <div><h4>Add-ons to the US dip bot</h4><ul class="sx-notes">
+        <li>Stop-losses and trailing stops: cut the winners.</li><li>Fewer slots or bigger positions: deeper drops (3 slots: −57%).</li>
+        <li>Insider-buying filter, 52-week-high ranking, earnings filters: no gain.</li><li>Sector caps, sector-relative dips, VIX gate: no gain.</li>
+        <li>Selling the same day at +5%: better in only 3 of 11 years.</li><li>Blending with other strategies: no gain.</li></ul></div>
+      <div><h4>Other US ideas</h4><ul class="sx-notes">
+        <li>Intraday patterns, opening-range breakouts, candlesticks, chart patterns.</li><li>RSI(2), ATR swing trading, industry reversal.</li>
+        <li>Short selling, buying options.</li><li>Buybacks, spin-offs, index changes, month-end and calendar effects.</li>
+        <li>"Future leaders" momentum, Japan ETFs.</li><li>Covered-call ETFs (JEPI, QYLD): trailed SPY.</li></ul></div>
+      <div><h4>India</h4><ul class="sx-notes">
+        <li>India intraday (60-day test).</li><li>Nifty / gold / cash switching: 7.9% a year.</li><li>Large / mid / small cap switching: 5–9%.</li>
+        <li>Rotating between factor indices: no gain over holding one.</li><li>India via US ETFs for the Roth (INDA 6.7% vs SPY 13.4%).</li>
+        <li>Momentum tweaks: weekly reshuffles, stops, volatility targeting, splitting the reshuffle day.</li></ul></div>
+      <div><h4>Maybe later (not dropped)</h4><ul class="sx-notes">
+        <li>Bitcoin 10-month trend as a 5–10% slice (spot ETF): mainly crash protection.</li><li>Managed-futures ETF (DBMF/KMLM) slice in the Roth.</li>
+        <li>Roth IRA version of the bot: undecided.</li><li>India: low-volatility basket, junk filters, per-stock check (test running).</li></ul></div>
+    </div>
+  </section>
+</div>
+<div class="sx sx-page sx-off" id="liverules" aria-hidden="true" inert>
+  <section class="sx-sec"><div class="sx-sech"><div><h2>Live bot rules (one page)</h2><p>The only bot trading real money. Robinhood agentic (MCP) account, about $100, limited margin. Research tool, not financial advice.</p></div></div></section>
+  <div class="sx-pb-cols">
+  <section class="sx-card"><h3>1. When it runs</h3><ul class="sx-notes">
+    <li>Every trading day at <b>3:47 pm ET</b> (backup 3:52; 12:47 on 1 pm half days), from an Oracle Cloud VM.</li>
+    <li>Health check 8:45 am (alerts only on problems); fill check 4:35 pm.</li>
+    <li>Once a day, one run at a time. It does not trade at other times.</li></ul></section>
+  <section class="sx-card"><h3>2. What it buys</h3><ul class="sx-notes">
+    <li>Only S&amp;P 500 stocks.</li>
+    <li>Above its <b>200-day average</b> (long-term uptrend).</li>
+    <li>Fell <b>10% or more worse than SPY</b> over the last 5 days.</li>
+    <li>Skipped if the 5-day volume is more than <b>2× normal</b> (usually real bad news).</li>
+    <li>Biggest dips first, up to <b>10 stocks, 10% each</b>.</li></ul></section>
+  <section class="sx-card"><h3>3. When it sells</h3><ul class="sx-notes">
+    <li>The first day the stock <b>closes above its 5-day average</b>, or</li>
+    <li>after <b>5 trading days</b>, whichever comes first.</li>
+    <li>No stop-loss (tests showed stops hurt).</li></ul></section>
+  <section class="sx-card"><h3>4. Idle money</h3><ul class="sx-notes">
+    <li>When SPY is above its 100-day average: the <b>Clear Leader ETF</b>.</li>
+    <li>Otherwise: cash. This is the crash defense.</li></ul></section>
+  <section class="sx-card"><h3>5. Safety rules</h3><ul class="sx-notes">
+    <li>Sells first, then buys sized to real buying power.</li>
+    <li>Max 20% of the account per order; at most 25 orders a day; strategy stocks only; never sells more than it holds.</li>
+    <li><b>Stops itself</b> on unknown orders, failed safety checks, an expired login, or a <b>40% drop from the peak</b>.</li></ul></section>
+  <section class="sx-card"><h3>6. Alerts and your job</h3><ul class="sx-notes">
+    <li>Phone alerts (ntfy): trades and fills normal; failures high; login expired / halted / unknown orders urgent.</li>
+    <li>Your job: read the alerts. On the VM: <code>dip status</code> (check), <code>dip halt</code> / <code>dip resume</code> (pause), <code>dip login</code> (when it says the login expired).</li></ul></section>
+  </div>
+  <section class="sx-card"><h3>What to expect</h3>
+    <div class="sx-stats"><div class="sx-stat"><span>Backtest per year (realistic)</span><b>~15%</b></div><div class="sx-stat"><span>After tax (est.)</span><b>~12%</b></div><div class="sx-stat"><span>Worst drop (backtest)</span><b class="sx-bad">−25%</b></div><div class="sx-stat"><span>Buys per month</span><b>~14</b></div></div>
+    <p class="sx-cap">Some years lag SPY (the dip edge was close to zero in 2013–2019). Planned change: the <b>v3.0 rules</b> (same stocks, plus dipping ETFs in free slots and IEF bonds instead of cash when stocks are weak) around Dec 3, if paper bot 10 stays clean. This page will be updated when the live rules change.</p></section>
+</div>
+
 </div>
 
 <template id="sx-custom-tpl">
@@ -2215,7 +2310,7 @@ dash.calc('vs_industry', {
 <script>
 (() => {
   const tabs = [...document.querySelectorAll('.sx-tab')];
-  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading'), paper: document.getElementById('paper') };
+  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading'), paper: document.getElementById('paper'), start: document.getElementById('start'), liverules: document.getElementById('liverules') };
   let built = false, cbuilt = false, tbuilt = false, sub = 'overview';
   const money = (v) => (v == null ? '—' : v >= 1e12 ? '$' + (v / 1e12).toFixed(2) + 'T' : v >= 1e9 ? '$' + (v / 1e9).toFixed(1) + 'B' : '$' + (v / 1e6).toFixed(0) + 'M');
   const pct = (v) => (v == null ? '—' : (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%');
@@ -2359,6 +2454,22 @@ dash.calc('vs_industry', {
       tb.disabled = false; loadTimers();
     });
   };
+  // Start here: paper results since start (from data/paper_status.json)
+  let stDone = false;
+  const drawStart = async () => {
+    if (stDone) return; stDone = true;
+    let bots = {}; try { bots = (await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json()).bots || {}; } catch (e) { return; }
+    const f = (v) => (v == null || !isFinite(v) ? '—' : (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%');
+    const c_ = (v) => (v == null || !isFinite(v) ? '' : v >= 0 ? 'sx-good' : 'sx-bad');
+    document.querySelectorAll('#start .st-paper tr[data-bot]').forEach((tr) => {
+      const b = bots[tr.dataset.bot]; const c = (b && b.curve) || []; if (!c.length) { tr.querySelector('.st-r').textContent = 'not started'; return; }
+      const last = c.at(-1), r = (last.eq / (b.start || c[0].eq) - 1) * 100, b0 = c.find((x) => x.spy > 0), br = b0 && last.spy ? (last.spy / b0.spy - 1) * 100 : null;
+      const india = tr.dataset.bot.startsWith('in');
+      tr.querySelector('.st-r').innerHTML = `<span class="${c_(r)}">${f(r)}</span> <span class="sx-cap">since ${c[0].d.slice(5)}</span>`;
+      tr.querySelector('.st-b').innerHTML = `<span class="${c_(br)}">${f(br)}</span> <span class="sx-cap">${india ? 'Nifty' : 'SPY'}</span>`;
+    });
+  };
+  document.querySelectorAll('[data-go-tab]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); const t = document.querySelector(`.sx-tab[data-tab="${a.dataset.goTab}"]`); if (t) { t.click(); window.scrollTo({ top: 0 }); } }));
   const show = (name, link = true) => {
     const tab = name; if (name === 'tested') name = 'trading';
     for (const [k, el] of Object.entries(pages)) {
@@ -2377,6 +2488,7 @@ dash.calc('vs_industry', {
       pages.custom.appendChild(document.getElementById('sx-custom-tpl').content.cloneNode(true));
       wireCustom();
     }
+    if (name === 'start') drawStart();
     if (name === 'paper' && !pbuilt) {
       pbuilt = true;
       pages.paper.appendChild(document.getElementById('sx-paper-tpl').content.cloneNode(true));
@@ -3834,6 +3946,8 @@ const IN2 = (() => {
   if (h === 'screener' || h.startsWith('screen-')) show('screener', false);
   if (h === 'custom' || h.startsWith('custom-')) show('custom', false);
   if (h === 'paper') show('paper', false);
+  if (h === 'start') show('start', false);
+  if (h === 'liverules') show('liverules', false);
   if (h === 'trading' || h.startsWith('trading-')) show('trading', false);
   if (h === 'tested' || h.startsWith('tested-')) show('tested', false);
   dash.onData(() => { draw(); drawCustom(); drawTrading(); });
