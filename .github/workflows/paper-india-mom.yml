@@ -1,0 +1,47 @@
+name: "India momentum paper bot"
+# India only - alerts go only to the NTFY_TOPIC_INDIA secret. Virtual money, no broker.
+on:
+  schedule:
+    - cron: '45 13 * * 1-5'     # 7:15 pm IST, after NSE publishes the day's archive; catches up missed days
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1 = do not save state or send alerts'
+        default: '0'
+permissions:
+  contents: write
+concurrency:
+  group: india-mom
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy boto3
+      - name: Test
+        run: python test-india-mom.py
+      - name: Run
+        shell: bash
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          NTFY_TOPIC_INDIA: ${{ secrets.NTFY_TOPIC_INDIA }}
+          NO_SAVE: ${{ inputs.dry_run == '1' && '1' || '' }}
+          NO_NOTIFY: ${{ inputs.dry_run == '1' && '1' || '' }}
+        run: |
+          set -o pipefail; python -u scripts/paper_india_mom.py 2>&1 | grep -v "^r2cache: loaded" | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+      - name: Commit
+        if: inputs.dry_run != '1'
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/paper_india_mom_state.json 2>/dev/null || true
+          git commit -qm "India momentum paper $(date -u +%F)" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
