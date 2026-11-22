@@ -182,6 +182,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India momentum risk controls (data/india_momrisk.json, 2009-2026, NSE survivorship-free)
+- Base (paper bot, 200-day filter at reshuffle): 30.5% dd -37.5 (test 28.4/-26.1). WINNER: 100-day filter at reshuffle: 32.6% dd -23.8, test 36.1/-21.1;
+  50/50 with dip 23.4% dd -16.2. 50-day: 27.6/-32.3. Daily filter checks, weekly/2-week reshuffles, stops, trailing stops, basket stops, vol targets,
+  30 stocks: all worse or no better (weekly 20.2% dd -58.8). Picked among 19 variants -> some luck; 100-day is the middle MA choice.
 ### India momentum paper bot (from Nov 20 2026) - scripts/paper_india_mom.py, .github/workflows/paper-india-mom.yml, data/paper_india_mom_state.json
 - Picked rules: top 500 NSE by traded value (Jan/Jul re-pick), (6m+12m)/vol, 20 stocks equal weight, first trading day each month at close, buffer top 30,
   crash filter Nifty < 200d -> GOLDBEES (if gold > 100d) else liquid 6%. 0.30%/side. Rs 10 lakh virtual. Daily 7:15 pm IST cron, catches up missed days.
