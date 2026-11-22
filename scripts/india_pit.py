@@ -246,6 +246,55 @@ def run():
         OUTR["placebo"] = {"runs": 200, "random_median": float(np.median(pc)), "random_p95": float(np.percentile(pc, 95)), "random_max": float(pc.max()), "share_beating_base_pct": round(float(np.mean(pc >= base["cagr"])) * 100, 1), "random_median_worst_drop": float(np.median(pd_))}
         print("PLACEBO 20 random stocks (same universe, same filter):", OUTR["placebo"], flush=True)
         os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrobust.json" if not DRY else "/tmp/india_momrobust_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
+    if MODE == "momsplit":
+        # Reshuffle-day luck check for paper bot 13 (Nov 21): 1) every reshuffle day 1..18 of the month, same day and 1 day late
+        # (friends see the 7:15 pm IST alert and trade next day)  2) split money into 2/3/4 parts, each reshuffled on a different day.
+        Mk = members(500); hide_r = np.where(gtr, gr, liq)
+        sc = ((Pf.pct_change(126) + Pf.pct_change(252)) / (vol * np.sqrt(248))).values; ok = Mk & ~glitch & np.isfinite(sc)
+        nma = {m: (n > n.rolling(m).mean()).shift(1, fill_value=False).values for m in (100, 200)}
+        mstarts = [i for i in range(1, D) if dates[i].month != dates[i - 1].month]
+        def plan(k, lag):
+            out = {}
+            for m0 in mstarts:
+                s_ = m0 + k - 1
+                if s_ < D and dates[s_].month == dates[m0].month and s_ >= START and s_ + lag < D: out[s_ + lag] = s_
+            return out
+        def sleeve(k, lag, ma, N=20, cost=0.003):
+            P = plan(k, lag); w = {}; eq = 1.0; curve = np.ones(D); turn = 0.0; inside = True
+            for t in range(START, D):
+                day_r = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                day_r += cash * (hide_r[t] if not inside else liq[t]); eq *= 1 + day_r
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day_r) for j, wi in w.items()}
+                for j in [j for j in w if not traded[t, j]]: w.pop(j)
+                if t in P:
+                    s_ = P[t]; inside = bool(nma[ma][s_] if lag == 0 else nma[ma][s_ + 1])   # filter as of the signal day's close
+                    if inside:
+                        cand = np.where(ok[s_] & (traded[t] if lag else True))[0]; order = cand[np.argsort(-sc[s_, cand])]; rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in w if rank.get(j, 1e9) < 1.5 * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        tgt = {j: 1.0 / N for j in new}
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - cost * tv_; turn += tv_; w = dict(tgt)
+                curve[t] = eq
+            return curve, turn
+        def runs(days, lag=0, ma=100):
+            cs = [sleeve(k, lag, ma) for k in days]; curve = sum(c for c, _ in cs) / len(days)   # each part starts with 1/K of the money
+            o = summ(curve); o.update(days=list(days), lag=lag, filter=ma, turnover_per_year=round(sum(t_ for _, t_ in cs) / len(days) / ((D - START) / 248), 1)); return o
+        OUTS = {"note": "India momentum: reshuffle-day luck and split reshuffles. NSE survivorship-free 2009-2026, before tax (after-tax rough). lag=1: trade the day after the signal.",
+                "built": str(pd.Timestamp.today().date()), "single_day": {}, "split": {}}
+        DAYS = range(1, 19) if not DRY else (1, 5, 10)
+        for lag in (0, 1):
+            rows = {}
+            for k in DAYS:
+                o = runs([k], lag); rows[str(k)] = o; pr(f"DAY {k:2d} lag {lag}", o)
+            c_ = np.array([r["cagr"] for r in rows.values()]); d_ = np.array([r["dd"] for r in rows.values()])
+            OUTS["single_day"][f"lag{lag}"] = {"rows": rows, "summary": {"per_year_min": float(c_.min()), "per_year_median": float(np.median(c_)), "per_year_mean": float(c_.mean()),
+                                                "per_year_max": float(c_.max()), "worst_drop_median": float(np.median(d_)), "worst_drop_worst": float(d_.min())}}
+            print(f"SUMMARY lag {lag}:", OUTS["single_day"][f"lag{lag}"]["summary"], flush=True)
+        for lbl, days in (("1 part, day 1", (1,)), ("2 parts, days 1 and 11", (1, 11)), ("3 parts, days 1, 8, 15", (1, 8, 15)), ("4 parts, days 1, 6, 11, 16", (1, 6, 11, 16))):
+            for lag in (0, 1):
+                for ma in ((100, 200) if len(days) > 1 else (100,)):
+                    o = runs(days, lag, ma); key = f"{lbl} | lag {lag} | filter {ma}"; OUTS["split"][key] = o; pr("SPLIT " + key, o)
+        os.makedirs("data", exist_ok=True); json.dump(OUTS, open("data/india_momsplit.json" if not DRY else "/tmp/india_momsplit_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momrisk":
         # Ways to cut the momentum basket's worst drop (base = the picked version: top 500, (6m+12m)/vol, 20 stocks, monthly,
         # Nifty-200-day filter at reshuffles, hide in gold-if-trending else liquid).
