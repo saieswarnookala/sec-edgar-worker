@@ -52,6 +52,7 @@ RULES = f"""
 <li>Rank by <b>{e(pick['score'])}</b>{' (6-month + 12-month gain, divided by volatility, like NSE\'s momentum indices)' if 'volatility' in pick['score'] else ''}.</li>
 <li>Hold the top <b>{pick['stocks']}</b>, equal amounts; reshuffle <b>{e(pick['rebalance'])}</b>. A held stock stays while it ranks within the top {int(pick['stocks'] * 1.5)} (fewer trades).</li>
 <li>Crash filter ({e(pick['crash_filter'])}): if Nifty is below its 200-day average at a reshuffle, sell everything and hold <b>{e(pick['hide_in'])}</b> (gold only while gold is above its 100-day average).</li>
+<li><b>Since Nov 21 the live rules are different:</b> 20 stocks, reshuffled monthly, with a 100-day crash filter (see "Rules we use now" below).</li>
 <li>Simpler alternative with a real track record: a <b>Nifty200 Momentum 30 index fund</b> (≈ the {pct(idx['cagr'])} row).</li></ul></div>
 <div><h4>Mix</h4><ul>
 <li>Split money between the momentum basket and the dip bot (30/70 or 50/50); top back up to the split about once a month.</li>
@@ -77,6 +78,14 @@ PANEL = f"""<!-- INDIA-PIT START -->
     <div class="ip-sec" data-s="mix" hidden><h4>Mixes: best momentum version + dip bot</h4>{table(mixes)}</div>
     <div class="ip-sec" data-s="rules" hidden><h4>Rules and method</h4>{RULES}</div>
     </div>
+    <div class="sx-card" id="ip-rules"><h3>Rules we use now: India momentum basket (paper bot 13 / "this month's 20" tab)</h3><ol class="sx-notes"><li><b>Which stocks:</b> the 500 most-traded NSE stocks (highest median daily traded value over the last 120 days). No ETFs, price above ₹20. This list is refreshed every January and July.</li>
+<li><b>Ranking:</b> (6-month gain + 12-month gain) ÷ volatility (how much the price swings, over 120 days). Rewards stocks that rose a lot <i>and</i> steadily.</li>
+<li><b>Hold the top 20</b>, equal amounts (5% each).</li>
+<li><b>Reshuffle once a month</b>, on the first NSE trading day, using that day's closing prices. A stock you hold stays while it ranks in the top 30; otherwise sell it and buy the best-ranked stock you don't own. Then top up or trim so each is about 5% again.</li>
+<li><b>Crash filter (checked at each reshuffle):</b> if the Nifty 50 closes below its 100-day average, sell all 20. Hold GOLDBEES if gold is above its own 100-day average, else a liquid fund. Buy the basket again at the first reshuffle where Nifty is back above its 100-day average.</li>
+<li><b>Nothing in between:</b> no trades between reshuffles and no stop-losses (both made results worse in tests). Exception: if a stock is suspended or delisted, it's sold.</li>
+<li><b>Orders:</b> delivery (CNC), not intraday. Assume about 0.3% per buy and per sell for charges and slippage. Usually 4–6 swaps a month (8–12 orders).</li></ol>
+    <p class="sx-cap">Backtest of exactly these rules: 32.6%/yr before tax, worst drop −23.8% (best case). Robustness tests: plan on 25–28%/yr with bad-year drops of −30 to −40%.</p></div>
     <style>.ip-ctl{{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}} .ip-wrap[data-tax="bt"] .ip-at,.ip-wrap[data-tax="at"] .ip-bt{{display:none}}</style>
     <script>(function(){{const w=document.querySelector('#trading-indiapit .ip-wrap');if(!w)return;
       w.querySelectorAll('.ip-tax button').forEach(b=>b.addEventListener('click',()=>{{w.dataset.tax=b.dataset.v;w.querySelectorAll('.ip-tax button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));}}));
