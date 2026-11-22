@@ -117,7 +117,8 @@ def run():
     vr = (V.rolling(5, min_periods=3).mean() / V.rolling(50, min_periods=30).mean().shift(5)).values
     locked = ((H == L) & C.notna()).rolling(60, min_periods=20).mean().values     # share of days stuck at a circuit (high == low)
     def summ(curve, tr=None):
-        c = pd.Series(curve[START:], index=dates[START:]); p = c.pct_change().fillna(0); yrs = len(p) / 248
+        base = curve[START - 1] if START > 0 and np.isfinite(curve[START - 1]) and curve[START - 1] > 0 else curve[START]
+        c = pd.Series(curve[START:] / base, index=dates[START:]); p = c.pct_change().fillna(0); p.iloc[0] = c.iloc[0] - 1; yrs = len(p) / 248   # Nov 22 fix: measure from START, not from the curve's own start (benchmarks started in 2007)
         per = {}
         for a, b in (("2009", "2009"), ("2010", "2015"), ("2016", "2020"), ("2021", "2026")):
             q = p[(p.index >= a) & (p.index <= b + "-12-31")]; per[f"{a}-{b}"] = round(100 * ((1 + q).prod() ** (248 / max(len(q), 1)) - 1), 1)
@@ -276,6 +277,13 @@ def run():
                 o = engine(pick); kk = f"{lbl} | best {lb}-month return, liquid fund if none beats 6%/yr | monthly"; OUTF["size_switch"][kk] = o; pr("SIZE " + kk, o)
         mo = pd.DataFrame({short[k]: FX[k] for k in keys}, index=dates).iloc[START:].resample("ME").last().pct_change().dropna()
         OUTF["monthly_correlation"] = mo.corr().round(2).to_dict()
+        last = int(np.searchsorted(dates.values, np.datetime64("2026-10-31"), side="right")) - 1
+        def win(k, y_):
+            a_ = int(np.searchsorted(dates.values, np.datetime64(dates[last] - pd.DateOffset(years=y_)))); v0, v1 = FX[k][a_], FX[k][last]
+            return round(100 * ((v1 / v0) ** (1 / y_) - 1), 1) if np.isfinite(v0) and np.isfinite(v1) else None
+        OUTF["validation_to_2026_10_31"] = {"official_nse_tri": {"Momentum 30": {"3y": 9.41, "5y": 7.93}, "Low Vol 30": {"3y": 9.79, "5y": 9.13}, "Alpha 50": {"3y": 14.88, "5y": 11.56}, "Nifty 50": {"3y": 7.74, "5y": 6.70}},
+                                            "rebuilt_here_no_fees_no_dividends": {short[k]: {"3y": win(k, 3), "5y": win(k, 5)} for k in keys}, "as_of": str(dates[last].date())}
+        print("VALIDATION", OUTF["validation_to_2026_10_31"], flush=True)
         rot = OUTF["rotation"]; best = max(rot, key=lambda k: rot[k]["cagr"]); OUTF["best_rotation_hindsight"] = {"version": best, "of": len(rot), **rot[best]}
         os.makedirs("data", exist_ok=True); json.dump(OUTF, open("data/india_factor.json" if not DRY else "/tmp/india_factor_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momrobust":
