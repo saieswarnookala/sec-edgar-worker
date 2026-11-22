@@ -182,6 +182,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India momentum robustness (data/india_momrobust.json) - edge is REAL, headline number is optimistic
+- Placebo: 200 runs of 20 RANDOM top-500 stocks with the same filter: median 12.4%, max 17.5%, worst drop median -51% -> 0% beat the basket (32.6%).
+- 27-version nearby grid: 27.9-32.6% (median 29.7), worst drop median -32.6 (worst -40.5); paper-bot setting is the grid max. All beat Nifty by 5+ pts.
+- Start years 2009/12/15/18/21/23: basket 30-33% vs Nifty 11-14% every time. Costs 0.6%/0.9% per side: 30.2 / 27.8%.
+- WARNING: reshuffle day matters: day 1 32.6% (dd -24) vs day 5/10/15: 24.1/24.3/24.9% (dd -42/-35/-48). Friends trade the day after the alert ->
+  realistic expectation ~25-28% before tax, worst drop -30 to -40%. Next: test signal-on-last-day/trade-day-1 and splitting the reshuffle across days.
 ### Nov 21 India momentum risk controls (data/india_momrisk.json, 2009-2026, NSE survivorship-free)
 - Base (paper bot, 200-day filter at reshuffle): 30.5% dd -37.5 (test 28.4/-26.1). WINNER: 100-day filter at reshuffle: 32.6% dd -23.8, test 36.1/-21.1;
   50/50 with dip 23.4% dd -16.2. 50-day: 27.6/-32.3. Daily filter checks, weekly/2-week reshuffles, stops, trailing stops, basket stops, vol targets,
