@@ -182,6 +182,14 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 Research shortlist #1-3 on India momentum (data/india_ideas3.json, india_pit.py MODE=ideas3) - nothing worth changing bot 13 for
+- Base bot 13: best 32.6 / -23.8, honest (days 1/6/11/16, next-day) 26.7 / -33.5.
+- #2 junk filters (circuit-locked share, bottom-10% turnover, -10% days, -10% on 3x volume, all): all within +-0.5 pt (circuit 20%+ of 60 days +0.5/+0.4 = noise). ASM/GSM/pledge/insider untestable (no history).
+- #3 per-slot check (12m > 6% AND above own 200-day): with Nifty filter, fill from next qualifying: best 33.2, honest 27.3 / -32.3 (+0.6, slightly smaller drop - small, consistent); slots to gold: no gain.
+  WITHOUT the Nifty filter: honest 29.2 but worst drop -45 -> no.
+- #1 low vol (lowest 1-yr vol, top 200/500, 30/50 stocks): 13.2-15.6%/yr (no dividends, so ~1-2 pts low), drops -23 to -33; ~ Nifty. Correlation with momentum 0.49, but blends 70/30, 50/50,
+  30/70 = 23.6/21.4/19.0% with drops -29 to -31 (honest momentum alone -33.5) -> blending costs return without cutting drops much. Not adopted.
+- Dashboard Nov 22: new top tabs "Start here" (live vs paper vs dropped, paper results) and "Live bot rules" (one-page cheat sheet). Update both when the live rules change (v3.0 switch).
 ### Nov 22 Paper bot 14: India Alpha 50 (our version) - scripts/paper_india_alpha.py
 - Rules = india_pit.py factor-mode rebuild: top 300 by 120-day median traded value (Jan/Jul), 1-yr Jensen alpha vs Nifty (252 days, 200+ traded), top 50 equal weight,
   quarterly on the 1st NSE trading day of Jan/Apr/Jul/Oct, no buffer, no crash filter, 0.3%/side. Twin FILTER=1 (100-day Nifty filter, gold/liquid) -> data/paper_india_alpha_filter_state.json, no alerts.
