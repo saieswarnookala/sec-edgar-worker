@@ -1247,6 +1247,22 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="inmom"></div>
   </section>
+  <section class="sx-card" id="pb-inalpha">
+    <div class="sx-ch"><h3>14. India Alpha 50, our version (₹10 lakh virtual, from Nov 22 2026)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">India only</span><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">Reshuffles quarterly: Jan, Apr, Jul, Oct</span><span class="sx-badge">Alerts: India ntfy channel</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>Rules</h4><ul>
+        <li>The 300 most-traded NSE stocks (re-picked Jan and Jul), ranked by <b>1-year alpha vs the Nifty 50</b> (return beyond what the stock's market risk explains).</li>
+        <li>Hold the top <b>50</b>, equal amounts (2% each); reshuffle on the first NSE trading day of each quarter. No buffer.</li>
+        <li><b>No crash filter</b> in this version. A twin <b>with</b> the 100-day crash filter runs alongside (untested, for comparison).</li>
+        <li>Prices from NSE's daily archive; 0.30% cost per buy and sell.</li>
+      </ul></div>
+      <div><h4>Backtest (NSE data, 2009–2026, no survivorship bias)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>22.0%</b></div><div class="sx-stat"><span>After tax (est.)</span><b>17.9%</b></div><div class="sx-stat"><span>Worst drop</span><b>−47%</b></div><div class="sx-stat"><span>2019–26</span><b>24.0%</b></div></div>
+        <p class="sx-cap">One version tested (no tuning), before trading costs of the quarterly swaps: plan on 17–20%. Moves with the momentum basket (correlation ~0.94). The official Nifty Alpha 50 (ALPHA ETF) made 11.6%/yr over 5 years vs 18.2% for this rebuild. Not for Sai's own account (PFIC).</p></div>
+    </div>
+    <div class="pb-live" data-bot="inalpha"></div>
+  </section>
 
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
@@ -1302,6 +1318,7 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="tuned">Tuned dip (paper)</button>
       <button type="button" data-sub="shortf">Short-interest filter (paper)</button>
       <button type="button" data-sub="inmonth">India momentum: this month's 20</button>
+      <button type="button" data-sub="inalpha">India Alpha 50: this quarter's 50</button>
       <button type="button" data-sub="indiapit">India: real numbers (NSE data)</button>
       <button type="button" data-sub="indiadip">India: dip + Nifty trend</button>
       <button type="button" data-sub="india">India: Nifty + gold (ETFs)</button>
@@ -1461,6 +1478,7 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Better in both halves (2004–2014: 14.9 vs 12.7%; 2015–2026: 24.6 vs 23.5%) and with realistic costs (16.3 vs 14.3%). Nearby versions (4% or 6% beat, 40-day hold) all add +1.3 to +2.2%/yr; 3 drift slots add more but raise the worst drop. About 8 drift trades a year, +5% each on average. Earnings dates start Aug 2004. Data: data/v3_drift.json.</p></div>
     </div>
     <p class="sx-cap" style="margin-top:12px">Daily trades, holdings and the comparison with SPY are on the <button type="button" class="sx-linkbtn" data-gopaper="1">Paper bots tab</button> (card 11).</p></div></div>
+    <div class="sx-tr-panel" data-panel="inalpha" id="trading-inalpha" hidden><div class="im-out"><div class="sx-card"><p class="sx-cap">Loading this quarter's 50…</p></div></div></div>
     <div class="sx-tr-panel" data-panel="inmonth" id="trading-inmonth" hidden><div class="im-out"><div class="sx-card"><p class="sx-cap">Loading this month's basket…</p></div></div></div>
 <!-- INDIA-PIT START -->
     <div class="sx-tr-panel" data-panel="indiapit" id="trading-indiapit" hidden>
@@ -2278,6 +2296,7 @@ dash.calc('vs_industry', {
     };
     const block = (bot, b) => {
       if (bot === 'inmom') return inmomBlock(b);
+      if (bot === 'inalpha') return inmomBlock(b).replace('Twin: 200-day filter', 'Twin: + crash filter');
       if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
@@ -2507,7 +2526,7 @@ dash.calc('vs_industry', {
     return e;
   };
   // "Day trading" shows only the strategies we paper trade or rely on; everything else lives under "Tested strategies"
-  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'inmonth', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
+  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'inmonth', 'inalpha', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
   const ALLSUBS = ['overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc', 'mix', 'leaders', 'shorts', 'live'];
   let mode = 'trading';
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
@@ -2528,8 +2547,9 @@ dash.calc('vs_industry', {
       { id: 'insafe', name: 'India 12% dip: safest (Nifty 100-day, else liquid)', pre: 14.0, post: 10.9, dd: -19, c: '#059669' },
       { id: 'inbest', name: 'India 12% dip: best (Nifty 150-day, else gold/liquid)', pre: 16.3, post: 12.8, est: true, dd: -21, c: '#d97706' },
       { id: 'innse', name: 'India dip bot (NSE data, 2009–2026)', pre: 14.0, post: 11.2, dd: -20, c: '#0891b2' },
-      { id: 'inmomidx', name: 'Nifty200 Momentum 30 index fund (≈ real index)', pre: 18.0, post: 14.6, dd: -37, c: '#7c3aed' },
+      { id: 'inmomidx', name: 'Momentum 30, our rebuild (top 200, every 6 months)', pre: 18.0, post: 14.6, dd: -37, c: '#7c3aed' },
       { id: 'inmom', name: 'India momentum basket: paper bot 13, 100-day filter (est.)', pre: 32.6, post: 26.4, est: true, dd: -24, c: '#c026d3' },
+      { id: 'inalpha', name: 'India Alpha 50, our version: paper bot 14 (est.)', pre: 22.0, post: 17.9, est: true, dd: -47, c: '#ea580c' },
       { id: 'inmix37', name: '30% momentum basket + 70% dip bot (est.)', pre: 19.2, post: 15.3, est: true, dd: -17, c: '#db2777' },
       { id: 'inmix55', name: '50% momentum basket + 50% dip bot (est.)', pre: 23.4, post: 18.8, est: true, dd: -16, c: '#9d174d' },
       { id: 'nifty', name: 'Nifty 50 buy & hold (with dividends, 2009–2026)', pre: 14.5, post: 13.7, dd: -38, c: '#6b7280', bench: true },
@@ -2664,12 +2684,83 @@ dash.calc('vs_industry', {
     const inp = out.querySelector('#im-amt');
     if (inp) inp.addEventListener('change', () => { const v = +inp.value; if (v > 0) { imAmt = v; drawInMonth(); } });
   };
+  // India Alpha 50 (our version): this quarter's 50 (from paper bot 14's state)
+  let iaAmt = 500000;
+  const drawInAlpha = async () => {
+    const out = tq('#trading-inalpha .im-out'); if (!out) return;
+    const esc = (x) => String(x ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const rs = (v) => '₹' + Math.round(v).toLocaleString('en-IN');
+    const day = (d) => { const [y, m, dd] = d.split('-'); return new Date(+y, +m - 1, +dd).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); };
+    let b;
+    try { b = ((await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json()).bots || {}).inalpha; } catch (e) { b = null; }
+    const L = b && b.latest;
+    if (!L) { out.innerHTML = '<div class="sx-card"><p class="sx-cap">No reshuffle recorded yet. The bot runs every weekday at 7:15 pm IST.</p></div>'; return; }
+    const [y, m] = L.day.split('-').map(Number); const qm = [0, 3, 6, 9].find((q) => q > m - 1); const nx = qm == null ? new Date(y + 1, 0, 1) : new Date(y, qm, 1); while (nx.getDay() % 6 === 0) nx.setDate(nx.getDate() + 1);
+    const nxt = nx.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    const N = (L.hold || []).length || 20, per0 = ((L.equity || 0) + (L.cost || 0)) / N, val = Object.fromEntries((b.holdings || []).map((x) => [x.s, x.v]));
+    const caps = b.caps || {}, catOf = (s) => (caps[s] && caps[s].cat) || (b.caps ? 'New' : null);
+    const catCell = (s) => { const c = catOf(s); if (!c) return '—'; const r = caps[s] && caps[s].rank; return c === 'New' ? '<span class="sx-cap">Not in AMFI list yet (recent listing)</span>' : `${c} cap${r ? ` <span class="sx-cap">#${r}</span>` : ''}`; };
+    const mix = (L.hold || []).reduce((m, s) => { const c = catOf(s); if (c) m[c] = (m[c] || 0) + 1; return m; }, {});
+    const mixTxt = b.caps ? ['Large', 'Mid', 'Small', 'New'].filter((k) => mix[k]).map((k) => `${mix[k]} ${k === 'New' ? 'new listing' + (mix[k] > 1 ? 's' : '') : k.toLowerCase() + ' cap'}`).join(' · ') : '';
+    const buys = new Set(L.buys || []);
+    const rows = (L.hold || []).slice().sort((p, q) => (buys.has(q) - buys.has(p)) || p.localeCompare(q)).map((s, i) => {
+      const px = (L.price || {})[s], sh = px ? Math.floor(iaAmt / N / px) : null, since = val[s] && per0 ? (val[s] / per0 - 1) * 100 : null;
+      return `<tr><td>${i + 1}</td><td><a href="https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(s)}" target="_blank" rel="noopener">${esc(s)}</a></td>
+        <td>${catCell(s)}</td>
+        <td>${buys.has(s) ? '<span class="sx-good">New</span>' : 'Kept'}</td><td>${px ? '₹' + px.toLocaleString('en-IN') : '—'}</td>
+        <td><b>${sh ?? '—'}</b>${sh === 0 ? ' <span class="sx-cap">(amount too small)</span>' : ''}</td>
+        <td class="${since == null ? '' : since >= 0 ? 'sx-good' : 'sx-bad'}">${since == null ? '—' : (since >= 0 ? '+' : '−') + Math.abs(since).toFixed(1) + '%'}</td></tr>`;
+    }).join('');
+    const sig = L.inside
+      ? `<span class="sx-cl-hold sx-good">Invested: hold these ${N} stocks</span><span class="sx-cap">equal amounts, ${(100 / N).toFixed(0)}% each</span>`
+      : `<span class="sx-cl-hold">Crash filter ON: hold ${L.hide === 'GOLDBEES' ? 'GOLDBEES (gold ETF)' : 'a liquid fund'}</span><span class="sx-cap">Nifty is below its 100-day average</span>`;
+    out.innerHTML = `
+    <div class="sx-card im-discipline" style="border-left:4px solid var(--color-ok)"><h3>Discipline beats emotion</h3><ul class="sx-notes"><li><b>Follow the rules every quarter, even when it feels wrong.</b> The returns come from a handful of big winners and from staying in through dull or scary months. Consistency is the strategy.</li><li><b>Don't act on feelings:</b> don't sell a stock because it fell this week, don't buy extra because it jumped, don't skip a reshuffle, and don't swap in your own favorites.</li><li><b>Bad stretches will come.</b> Drops of 40–47% happened in the test, and some years trail the Nifty. People who quit after a bad year usually miss the recovery.</li><li><b>There is no crash filter.</b> You stay invested through crashes (the worst drop in the test was −47%). Don't try to time the market; that is not part of the strategy.</li><li><b>Use money you won't need for 5+ years</b>, so a bad year never forces you to sell.</li></ul></div>
+    <div class="sx-card"><h3>This quarter's 50</h3>
+      <div class="sx-cl-sig">${sig}</div>
+      <p class="sx-cap">Picked at the NSE close on <b>${day(L.day)}</b>. Next reshuffle: the first NSE trading day of the next quarter, in January, April, July or October (around <b>${nxt}</b>, later if it's a holiday). The alert arrives about 7:15 pm IST that evening; place orders the next morning.</p>
+      ${L.inside ? `<div class="ip-ctl" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
+        <label for="ia-amt"><b>Your amount (₹)</b></label><input id="ia-amt" class="sx-exch" type="number" min="100000" step="50000" value="${iaAmt}" style="width:140px">
+        <span class="sx-cap">${rs(iaAmt / N)} per stock</span></div>
+      ${mixTxt ? `<p style="margin:0 0 8px"><b>This quarter's mix:</b> ${mixTxt} <span class="sx-cap">(AMFI list, ${esc(b.caps_asof || '')}: top 100 companies by market value = large, 101–250 = mid, the rest = small; # = AMFI rank)</span></p>` : ''}
+      <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>NSE stock</th><th>Category</th><th>Status</th><th>Price at pick</th><th>Shares to buy</th><th>Since pick (paper)</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p class="sx-cap">Shares are rounded down, so a little cash is left over. Prices move overnight; buy at the market price the next morning. "Since pick" is the virtual bot's result for that stock since ${day(L.day)}.</p>` : ''}
+      <h4 style="margin-top:12px">Changes at the last reshuffle</h4><ul class="sx-notes">
+        <li><b>Sell:</b> ${(L.sells || []).length ? L.sells.map(esc).join(', ') : 'none'}</li>
+        <li><b>Buy:</b> ${(L.buys || []).length ? L.buys.map(esc).join(', ') : 'none'}</li>
+        <li><b>Keep:</b> ${(L.hold || []).filter((x) => !buys.has(x)).map(esc).join(', ') || 'none'}</li></ul></div>
+    <div class="sx-card"><h3>The rules (what paper bot 14 follows)</h3><ol class="sx-notes"><li><b>Which stocks:</b> the 300 most-traded NSE stocks (highest median daily traded value over the last 120 days). No ETFs, price above ₹20. Refreshed every January and July.</li>
+<li><b>Score:</b> each stock's 1-year <b>alpha</b> against the Nifty 50, from daily prices: its return minus beta × Nifty's return (beta = how much it moves when Nifty moves 1%). Example: Nifty +10%, a stock with beta 1.5 up 40% → alpha 40 − 15 = +25%.</li>
+<li><b>Hold the top 50</b>, equal amounts (2% each).</li>
+<li><b>Reshuffle every 3 months</b>, on the first NSE trading day of January, April, July and October, at that day's close. Sell what dropped out of the top 50, buy the new names, reset every stock to 2%.</li>
+<li><b>No crash filter and no stop-losses</b> in this version. A suspended or delisted stock is sold. (A twin with the 100-day crash filter runs alongside, untested, for comparison.)</li>
+<li><b>Orders:</b> delivery (CNC). Assume about 0.3% per buy and per sell.</li></ol></div>
+    <div class="sx-card"><h3>How to follow it</h3><ol class="sx-notes">
+      <li><b>Start:</b> put the same amount in each of the ${N} stocks above. With 50 stocks you need about ₹5 lakh or more, or many share counts round to zero.</li>
+      <li><b>Every 3 months</b> (first NSE trading day of Jan, Apr, Jul, Oct): check this tab or the alert. Sell the <b>Sell</b> list, buy the <b>Buy</b> list, then top up or trim so each stock is about 2% again.</li>
+      <li><b>Don't trade in between.</b> No stop-losses, no market timing.</li>
+      <li><b>Zero-effort alternative:</b> the official Nifty Alpha 50 via the Kotak Nifty Alpha 50 ETF (NSE: ALPHA) or its index fund. Similar idea, different weighting; it earned less than our version recently.</li>
+      <li><b>Tax (India):</b> most sales are within a year, so short-term gains tax at 20% (+cess).</li></ol></div>
+    <div class="sx-card"><h3>What to expect</h3>
+      <div class="sx-stats"><div class="sx-stat"><span>Plan on (before tax)</span><b>17–20%/yr</b></div><div class="sx-stat"><span>After tax (est.)</span><b>~13.5–16%/yr</b></div><div class="sx-stat"><span>Bad-year drop</span><b class="sx-bad">−40 to −50%</b></div><div class="sx-stat"><span>Nifty 50 (2009–26)</span><b>~14.5%/yr</b></div></div>
+      <div class="sx-tablewrap" style="margin-top:12px"><table class="sx-scr"><thead><tr><th></th><th>Profit per year<br>before tax</th><th>Profit per year<br>after tax (est.)</th><th>Bad-year drop</th><th>₹1 lakh after 10 years<br>(after tax)</th></tr></thead><tbody>
+        <tr><td><b>Best case</b> (backtest)</td><td class="sx-good">22.0%</td><td class="sx-good">~17.9%</td><td class="sx-bad">−47%</td><td>~₹5.2 lakh</td></tr>
+        <tr><td><b>Realistic</b> (plan on this)</td><td class="sx-good">17–20%</td><td>~13.5–16%</td><td class="sx-bad">−40 to −50%</td><td>~₹3.5–4.4 lakh</td></tr>
+        <tr><td><b>Nifty 50</b> (index fund, for comparison)</td><td>14.5%</td><td>~13.7%</td><td class="sx-bad">−38%</td><td>~₹3.6 lakh</td></tr>
+        <tr><td><b>Momentum basket</b> (this month's 20, realistic)</td><td class="sx-good">25–28%</td><td class="sx-good">~20–22%</td><td class="sx-bad">−30 to −40%</td><td>~₹6.2–7.3 lakh</td></tr>
+      </tbody></table></div>
+      <p class="sx-cap"><b>Honest read:</b> before tax it beat Nifty by ~7 points a year in the backtest, but after tax and with realistic costs the edge is small, and the drops are deeper. It moves almost in step with the momentum basket (correlation ~0.94), so it is an alternative, not a diversifier. It runs as a paper bot to see whether it earns its place. Backtest: survivorship-free NSE data 2009–2026 (2010–15: 14.9%, 2016–20: 13.3%, 2021–26: 25.7% a year). Our rebuild beat the official Alpha 50 index over the last 5 years (18.2% vs 11.6%) because equal weights lean to smaller stocks.</p>
+      <p class="sx-cap"><b>Research from a backtest and a virtual paper bot, not investment advice.</b> For investors in India. US tax residents: Indian funds and ETFs are PFICs.</p></div>`;
+    const inp = out.querySelector('#ia-amt');
+    if (inp) inp.addEventListener('change', () => { const v = +inp.value; if (v > 0) { iaAmt = v; drawInAlpha(); } });
+  };
   const showSub = (k, link = true) => {
     sub = k;
     tqa('.sx-tr-tabs button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sub === k)));
     tqa('.sx-tr-panel').forEach((pn) => { pn.hidden = pn.dataset.panel !== k; });
     if (k === 'calc') initCalc();
     if (k === 'inmonth') drawInMonth();
+    if (k === 'inalpha') drawInAlpha();
     if (link) dash.setLink(mode === 'trading' ? (k === 'dip' ? 'trading' : 'trading-' + k) : (k === 'overview' ? 'tested' : 'tested-' + k));
   };
   const setMode = (m, link = true, k) => {

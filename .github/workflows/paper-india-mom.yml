@@ -27,7 +27,7 @@ jobs:
           python-version: '3.12'
       - run: pip install pandas numpy boto3
       - name: Test
-        run: python test-india-mom.py
+        run: python test-india-mom.py && python test-india-alpha.py
       - name: Run
         shell: bash
         env:
@@ -42,11 +42,15 @@ jobs:
           set -o pipefail; python -u scripts/paper_india_mom.py 2>&1 | grep -v "^r2cache: loaded" | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
           echo "--- twin: original 200-day crash filter (no alerts)"
           FILTER_MA=200 STATE=data/paper_india_mom200_state.json NO_NOTIFY=1 python -u scripts/paper_india_mom.py 2>&1 | grep -v "^r2cache: loaded" | tail -3
+          echo "--- paper bot 14: India Alpha 50 (our version), quarterly"
+          python -u scripts/paper_india_alpha.py 2>&1 | grep -v "^r2cache: loaded" | tail -4
+          echo "--- twin: Alpha 50 + 100-day crash filter (no alerts)"
+          FILTER=1 STATE=data/paper_india_alpha_filter_state.json NO_NOTIFY=1 python -u scripts/paper_india_alpha.py 2>&1 | grep -v "^r2cache: loaded" | tail -3
       - name: Commit
         if: inputs.dry_run != '1'
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/paper_india_mom_state.json data/paper_india_mom200_state.json 2>/dev/null || true
+          git add data/paper_india_mom_state.json data/paper_india_mom200_state.json data/paper_india_alpha_state.json data/paper_india_alpha_filter_state.json 2>/dev/null || true
           git commit -qm "India momentum paper $(date -u +%F)" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
