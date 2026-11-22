@@ -4,8 +4,9 @@ worst -37.5%; 2019-2026 unseen check 28.4%; expect less live):
   * Universe: the 500 most-traded NSE stocks (120-day median traded value, ETFs excluded, price > Rs 20), re-picked in January and July.
   * Score: (6-month return + 12-month return) / annualised volatility of the last 120 days.
   * First trading day of each month, at the close: hold the top 20, equal weight. A held stock stays while it ranks in the top 30.
-  * Crash filter at each reshuffle: if Nifty 50 is below its 200-day average, sell everything; hold GOLDBEES while gold is above its
-    100-day average, else a liquid fund (~6%/yr).
+  * Crash filter at each reshuffle: if Nifty 50 is below its 100-day average (FILTER_MA; Nov 21 risk test: 100-day cut the worst drop
+    from -37.5% to -23.8% and raised returns to 32.6%), sell everything; hold GOLDBEES while gold is above its 100-day average, else a
+    liquid fund (~6%/yr). A twin with the original 200-day filter runs alongside (data/paper_india_mom200_state.json, no alerts).
   * Costs 0.30% per buy and per sell. Prices from NSE's daily archive (bhavcopy, cached in R2), splits/bonuses fixed as in the backtest.
 Runs every weekday evening IST; catches up any missed days. Paper fills at the rebalance day's close (friends would place orders next day).
 State: data/paper_india_mom_state.json. DRY=1: fake data (tests)."""
@@ -16,6 +17,7 @@ DRY = os.environ.get("DRY") == "1"
 import india_pit as IP
 STATE = os.environ.get("STATE", "data/paper_india_mom_state.json")
 N, BUF, K, COST, START_EQ = 20, 30, 500, 0.003, 1_000_000.0
+FILTER_MA = int(os.environ.get("FILTER_MA", "100"))
 LIQ = (1.06) ** (1 / 248) - 1
 def load_recent():
     """last ~2.5 years of NSE daily data (C, PC, O, V) with today's days fetched into the R2 cache if missing"""
@@ -100,7 +102,7 @@ def alert(rec, st):
                  "BUY:" + ("".join(f"\n  {x}: ~{rec['shares_per_1_lakh'][x]} shares per Rs 1 lakh (Rs {rec['price'][x]})" for x in rec["buys"]) or " none"),
                  "KEEP: " + (", ".join(x for x in rec["hold"] if x not in rec["buys"]) or "none"),
                  "Then top up / trim so each is ~5% of the momentum money."]
-    else: lines = [f"Crash filter ON ({rec['day']}): Nifty is below its 200-day average.", "SELL all momentum stocks: " + (", ".join(rec["sells"]) or "(already out)"),
+    else: lines = [f"Crash filter ON ({rec['day']}): Nifty is below its {FILTER_MA}-day average.", "SELL all momentum stocks: " + (", ".join(rec["sells"]) or "(already out)"),
                    f"Park the money in {'GOLDBEES (gold is trending up)' if rec['hide'] == 'GOLDBEES' else 'a liquid fund'} until Nifty recovers."]
     h = st.get("history") or []; base = h[0] if h else None
     if base: lines.append(f"Paper account: Rs {rec['equity']:,.0f} (start Rs {START_EQ:,.0f} on {st['start']}); Nifty {h[-1]['nifty'] / base['nifty'] * 100 - 100:+.1f}% since start.")
@@ -109,12 +111,12 @@ def alert(rec, st):
 def run():
     C, PC, O, V = load_recent(); M = market(C, PC, O, V); dates = M["C"].index
     n, g = ext(dates)
-    nifty_ok = (n > n.rolling(200).mean()).shift(1, fill_value=False); gold_ok = (g > g.rolling(100).mean()).shift(1, fill_value=False)
+    nifty_ok = (n > n.rolling(FILTER_MA).mean()).shift(1, fill_value=False); gold_ok = (g > g.rolling(100).mean()).shift(1, fill_value=False)
     gr = g.pct_change().fillna(0).where(lambda x: x.abs() < 0.15, 0)
     st = json.load(open(STATE)) if os.path.exists(STATE) else {}
     if not st:
         t = len(dates) - 1; day = dates[t]
-        st = {"start": str(day.date()), "cash": START_EQ, "holdings": {}, "history": [], "last_day": str(day.date())}
+        st = {"start": str(day.date()), "filter_ma": FILTER_MA, "cash": START_EQ, "holdings": {}, "history": [], "last_day": str(day.date())}
         rec = rebalance(st, M, t, day, nifty_ok.iloc[t], gold_ok.iloc[t]); st["history"].append({"day": str(day.date()), "equity": round(equity(st), 2), "nifty": float(n.iloc[t])})
         print("started:", json.dumps(rec)[:600]); alert(rec, st)
     else:
