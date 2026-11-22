@@ -182,6 +182,11 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 India via US-listed ETFs for Sai's Roth (#10, data/india_usproxy.json) - NOT worth it
+- 2013-03..2026-11, USD, adjusted closes: INDA 6.7%/yr (dd -45), SMIN 10.6 (-60), EPI 8.4, INDY 7.0 vs SPY 13.4 (-34). Rupee fell ~4.4%/yr vs USD -> eats most of India's local return.
+- Best rotation: SMIN/GLD/cash best 6-month 13.3% (dd -45, 2020-26 only 9.8); INDA/GLD/cash 6-month 10.8 (-31); global SPY/INDA/GLD/cash 4.5-6.1 (worse than SPY). Nothing beats plain SPY.
+- INDA tracks Nifty 50 in USD closely (monthly corr 0.97). Verdict: in the Roth keep the US bot / SPY; India exposure only as a small diversifier if wanted.
+- niftyindices.com TRI API (Backpage.aspx/getTotalReturnIndexString) now 302-redirects to a login (Nov 2026) -> official factor TRIs not downloadable; factor test (#5) rebuilt from NSE data instead (india_pit.py MODE=factor).
 ### Nov 21 India momentum split reshuffle + next-day trading (data/india_momsplit.json) - keep day 1, don't split
 - Trade the day AFTER the signal (what friends do): 31.1% / dd -25.7 vs same-day 32.6 / -23.8 -> costs ~1.5 pts.
 - Reshuffle day 1..18 (single): median 24.5%, range 20.8-32.6, worst-drop median -41 (worst -55). Best cluster = month turn: day 17/18/1/2 (27-33%); mid-month (days 7-14) worst (20-25%, drops -41 to -55). Smooth cluster, not one spike -> day 1 not pure luck (maybe early-month SIP inflows), but unproven.
