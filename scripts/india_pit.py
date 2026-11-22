@@ -182,8 +182,67 @@ def run():
             curve[t] = eq
         o = summ(curve); o.update(universe=f"top {k}", score=score, stocks=N, rebalance=freq, crash_filter=filt, hide_in=hide, turnover_per_year=round(turn / ((D - START) / 248), 1))
         return o, curve
-    OUT = {"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "stocks": len(tick)}
     def pr(lbl, o): print(f"{lbl:64s} {o['cagr']:6.1f}%/yr (after tax ~{o['after_tax_rough_cagr']}) dd {o['dd']:6.1f} | 2009 {o['per']['2009-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | train {o['train_2009_2018']['cagr']} test {o['test_2019_2026']['cagr']}/{o['test_2019_2026']['dd']}" + (f" | {o.get('trades_per_year')} tr/yr avg {o.get('avg_trade_pct')}%" if 'trades_per_year' in o else f" | turn {o.get('turnover_per_year')}x"), flush=True)
+    MODE = os.environ.get("MODE", "all")
+    if MODE == "momrisk":
+        # Ways to cut the momentum basket's worst drop (base = the picked version: top 500, (6m+12m)/vol, 20 stocks, monthly,
+        # Nifty-200-day filter at reshuffles, hide in gold-if-trending else liquid).
+        Mk = members(500); sc = SC["(6m+12m)/volatility"].values; ok = Mk & ~glitch & np.isfinite(sc)
+        nma = {m: (n > n.rolling(m).mean()).shift(1, fill_value=False).values for m in (50, 100, 200)}
+        hide_r = np.where(gtr, gr, liq)
+        wk = [i for i in range(START, D) if dates[i].weekday() < dates[i - 1].weekday() or (dates[i] - dates[i - 1]).days > 3]
+        def mom2(freq="monthly", ma=200, check="rebalance", stop=None, trail=None, ddstop=None, voltgt=None, N=20, cost=0.003):
+            rebal = set(months if freq == "monthly" else wk if freq == "weekly" else wk[::2])
+            w = {}; entry = {}; peakpx = {}; eq = 1.0; curve = np.ones(D); turn = 0.0; inside = True; peak = 1.0; stopped = False; hist = []
+            for t in range(START, D):
+                day = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                day += cash * (hide_r[t] if not inside or stopped else liq[t]); eq *= 1 + day; hist.append(day)
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day) for j, wi in w.items()}
+                for j in list(w):
+                    entry[j] *= 1 + Rt[t, j]; peakpx[j] = max(peakpx[j], entry[j])
+                    if not traded[t, j] or (stop and entry[j] <= 1 - stop) or (trail and entry[j] <= peakpx[j] * (1 - trail)):
+                        eq *= 1 - cost * w[j]; turn += w[j]; w.pop(j)
+                peak = max(peak, eq)
+                if ddstop and not stopped and eq <= peak * (1 - ddstop):
+                    turn += sum(w.values()); eq *= 1 - cost * sum(w.values()); w = {}; stopped = True
+                go = t in rebal or (check == "daily" and inside != bool(nma[ma][t]))
+                if go:
+                    inside = bool(nma[ma][t]); stopped = False if t in rebal else stopped
+                    if stopped: peak = eq
+                    if inside and not stopped:
+                        cand = np.where(ok[t])[0]; order = cand[np.argsort(-sc[t, cand])]; rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in w if rank.get(j, 1e9) < 1.5 * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        scale = 1.0
+                        if voltgt and len(hist) > 60: rv = float(np.std(hist[-60:]) * np.sqrt(248)); scale = min(1.0, voltgt / max(rv, 1e-6))
+                        tgt = {j: scale / N for j in new}
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - cost * tv_; turn += tv_
+                    for j in tgt:
+                        if j not in w: entry[j] = 1.0; peakpx[j] = 1.0
+                    w = dict(tgt); peak = max(peak, eq) if not stopped else peak
+                curve[t] = eq
+            o = summ(curve); o["turnover_per_year"] = round(turn / ((D - START) / 248), 1); return o, curve
+        V = [("base: monthly reshuffle, 200-day filter at reshuffle (paper bot)", {}),
+             ("reshuffle every 2 weeks", dict(freq="biweekly")), ("reshuffle weekly", dict(freq="weekly")),
+             ("filter 100-day avg, at reshuffle", dict(ma=100)), ("filter 50-day avg, at reshuffle", dict(ma=50)),
+             ("filter 200-day, checked daily", dict(check="daily")), ("filter 100-day, checked daily", dict(check="daily", ma=100)), ("filter 50-day, checked daily", dict(check="daily", ma=50)),
+             ("stop-loss: sell a stock -15% from buy", dict(stop=0.15)), ("stop-loss: sell a stock -25% from buy", dict(stop=0.25)),
+             ("trailing stop: sell a stock -20% from its high", dict(trail=0.20)), ("trailing stop: -30% from its high", dict(trail=0.30)),
+             ("basket stop: all out if basket -15% from its peak (back in next month)", dict(ddstop=0.15)), ("basket stop: -20% from peak", dict(ddstop=0.20)),
+             ("volatility target 20% (smaller basket when markets are wild)", dict(voltgt=0.20)), ("volatility target 25%", dict(voltgt=0.25)),
+             ("30 stocks instead of 20", dict(N=30)),
+             ("combo: 100-day filter daily + volatility target 25%", dict(check="daily", ma=100, voltgt=0.25)),
+             ("combo: basket stop -15% + volatility target 25%", dict(ddstop=0.15, voltgt=0.25))]
+        OUTR = {"note": "Momentum risk-control variants on survivorship-free NSE data, 2009-2026, 0.30%/side, before tax (after-tax rough)", "built": str(pd.Timestamp.today().date()), "variants": {}, "mix_50_50_with_dip": {}}
+        _, dc = dip(); rd = np.r_[0, dc[1:] / dc[:-1] - 1]
+        ref, _ = mom(500, "(6m+12m)/volatility", 20, "monthly", "rebalance", "gold or liquid"); chk, _ = mom2()
+        print("CHECK base matches the 96-version engine:", ref["cagr"], chk["cagr"], ref["dd"], chk["dd"], flush=True); assert abs(ref["cagr"] - chk["cagr"]) < 0.25, "engine mismatch"
+        for lbl, kw in V:
+            o, c = mom2(**kw); OUTR["variants"][lbl] = o; pr("RISK " + lbl, o)
+            rm = np.r_[0, c[1:] / c[:-1] - 1]; OUTR["mix_50_50_with_dip"][lbl] = summ(np.cumprod(1 + 0.5 * rm + 0.5 * rd))
+            m = OUTR["mix_50_50_with_dip"][lbl]; print(f"     50/50 with dip bot: {m['cagr']}%/yr dd {m['dd']} test {m['test_2019_2026']}", flush=True)
+        os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrisk.json" if not DRY else "/tmp/india_momrisk_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
+    OUT = {"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "stocks": len(tick)}
     bench = summ(np.cumprod(1 + nr + dv)); OUT["nifty50_with_dividends"] = bench; pr("NIFTY 50 (+1.3% dividends)", bench)
     # 1) dip bot variants
     OUT["dip"] = {}; CUR = {}
