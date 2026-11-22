@@ -3,14 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'fetch | run | momrisk | momrobust | momsplit | factor'
+        description: 'fetch | run | momrisk | momrobust | momsplit | factor | ideas3'
         default: 'fetch'
 permissions:
   contents: write
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,5 +31,5 @@ jobs:
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/india_pit.json data/india_momrisk.json data/india_momrobust.json data/india_momsplit.json data/india_factor.json 2>/dev/null; git commit -qm "india survivorship-free results" || exit 0
+          git add data/india_pit.json data/india_momrisk.json data/india_momrobust.json data/india_momsplit.json data/india_factor.json data/india_ideas3.json 2>/dev/null; git commit -qm "india survivorship-free results" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1

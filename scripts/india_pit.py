@@ -348,6 +348,108 @@ def run():
         OUTR["placebo"] = {"runs": 200, "random_median": float(np.median(pc)), "random_p95": float(np.percentile(pc, 95)), "random_max": float(pc.max()), "share_beating_base_pct": round(float(np.mean(pc >= base["cagr"])) * 100, 1), "random_median_worst_drop": float(np.median(pd_))}
         print("PLACEBO 20 random stocks (same universe, same filter):", OUTR["placebo"], flush=True)
         os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrobust.json" if not DRY else "/tmp/india_momrobust_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
+    if MODE == "ideas3":
+        # Nov 22 research shortlist #1-3 on paper bot 13 (momentum: top 500, (6m+12m)/vol, 20 stocks, monthly, 1.5N buffer, Nifty 100-day filter):
+        #  1) low-volatility basket beside momentum  2) junk/tradability exclusions  3) per-slot absolute check (12m > liquid AND above own 200-day avg).
+        # Each version: "best" = reshuffle day 1, trade at that close (paper bot 13 = 32.6%) and "honest" = money split over days 1/6/11/16, trade next day (26.7%).
+        # Not testable with price data: ASM/GSM lists, promoter pledge, insider selling (no history) -> proxies only (circuit-lock share, low turnover, big down days).
+        M500, M200 = members(500), members(200); hide_r = np.where(gtr, gr, liq)
+        scm = ((Pf.pct_change(126) + Pf.pct_change(252)) / (vol * np.sqrt(248))).values
+        v252 = R.rolling(252, min_periods=200).std().values; sclv = -v252
+        r12 = Pf.pct_change(252).values
+        lock120 = ((H == L) & C.notna()).rolling(120, min_periods=40).mean().values
+        drop10 = (R <= -0.10).rolling(63, min_periods=1).max().fillna(0).astype(bool).values
+        vspike = (V > 3 * V.rolling(50, min_periods=20).median())
+        drop10v = ((R <= -0.10) & vspike).rolling(63, min_periods=1).max().fillna(0).astype(bool).values
+        tvv = tv.values
+        nma = (n > n.rolling(100).mean()).shift(1, fill_value=False).values
+        mstarts = [i for i in range(1, D) if dates[i].month != dates[i - 1].month]
+        def excl_fn(kind):
+            if kind is None: return None
+            def f(s_, M):
+                x = np.zeros(len(tick), bool)
+                if "circ60" in kind: x |= np.nan_to_num(locked[s_], nan=0) >= 0.2
+                if "circ120" in kind: x |= np.nan_to_num(lock120[s_], nan=0) >= 0.1
+                if "lowturn" in kind:
+                    th = np.nanpercentile(np.where(M[s_], tvv[s_], np.nan), 10); x |= ~(tvv[s_] >= th)
+                if "drop10v" in kind: x |= drop10v[s_]
+                elif "drop10" in kind: x |= drop10[s_]
+                return x
+            return f
+        def plan(k, lag, months):
+            out = {}
+            for m0 in mstarts:
+                if months and dates[m0].month not in months: continue
+                s_ = m0 + k - 1
+                if s_ < D and dates[s_].month == dates[m0].month and s_ >= START and s_ + lag < D: out[s_ + lag] = s_
+            return out
+        def sleeve(k, lag, cfg):
+            sc = cfg["score"]; M = cfg["M"]; N = cfg["N"]; buf = cfg.get("buf", 1.5); filt = cfg.get("filt", True); slot = cfg.get("slot"); ex = excl_fn(cfg.get("excl"))
+            P_ = plan(k, lag, {"M": None, "Q": (1, 4, 7, 10), "S": (1, 7)}[cfg.get("freq", "M")])
+            w = {}; eq = 1.0; curve = np.ones(D); turn = 0.0; inside = True; slots_cash = 0.0; nslot = 0; nreb = 0
+            for t in range(START, D):
+                day_r = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                park = hide_r[t] if (not inside or slot == "cash") else liq[t]
+                day_r += cash * park; eq *= 1 + day_r
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day_r) for j, wi in w.items()}
+                for j in [j for j in w if not traded[t, j]]: w.pop(j)
+                if t in P_:
+                    s_ = P_[t]; inside = bool(nma[s_] if lag == 0 else nma[s_ + 1]) if filt else True
+                    if inside:
+                        okm = M[s_] & ~glitch[s_] & np.isfinite(sc[s_])
+                        if lag: okm &= traded[t]
+                        if ex is not None: okm &= ~ex(s_, M)
+                        qual = (np.nan_to_num(r12[s_], nan=-9) > 0.06) & above[s_]
+                        if slot == "fill": okm &= qual
+                        cand = np.where(okm)[0]; order = cand[np.argsort(-sc[s_, cand])]; rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in w if rank.get(j, 1e9) < buf * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        if slot == "cash": nslot += len(new); new = [j for j in new if qual[j]]; slots_cash += 1
+                        tgt = {j: 1.0 / N for j in new}; nreb += 1
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - 0.003 * tv_; turn += tv_; w = dict(tgt)
+                curve[t] = eq
+            return curve, turn, (nreb, nslot)
+        def runv(cfg, days, lag):
+            cs = [sleeve(k, lag, cfg) for k in days]; curve = sum(c for c, _, _ in cs) / len(days)
+            o = summ(curve); o["turnover_per_year"] = round(sum(t_ for _, t_, _ in cs) / len(days) / ((D - START) / 248), 1); return o, curve
+        def both(lbl, cfg):
+            b_, cb = runv(cfg, (1,), 0); h_, ch = runv(cfg, (1, 6, 11, 16), 1)
+            pr("BEST   " + lbl, b_); pr("HONEST " + lbl, h_); return {"best_day1": b_, "honest_4days_nextday": h_}, ch
+        OUT3 = {"note": "Shortlist #1-3 on India momentum (paper bot 13). best = day-1 reshuffle at that close; honest = split over days 1/6/11/16, trade next day. "
+                        "Survivorship-free NSE 2009-2026, 0.3%/side, before tax (after-tax rough = 20.8% on each year's net gain).", "built": str(pd.Timestamp.today().date()),
+                "base": {}, "junk_filters": {}, "slot_check": {}, "low_vol": {}, "blends": {}}
+        BASE = dict(score=scm, M=M500, N=20)
+        OUT3["base"]["paper bot 13 rules"], c_base = both("BASE momentum (paper bot 13)", BASE)
+        for lbl, ex in (("circuit-locked 20%+ of last 60 days", "circ60"), ("circuit-locked 10%+ of last 120 days", "circ120"), ("bottom 10% turnover of the universe", "lowturn"),
+                        ("any -10% day in last 3 months", "drop10"), ("any -10% day on 3x volume in last 3 months (results-crash proxy)", "drop10v"),
+                        ("all three: circuit60 + low turnover + -10% on 3x volume", "circ60+lowturn+drop10v")):
+            OUT3["junk_filters"][lbl], _ = both("JUNK " + lbl, dict(BASE, excl=ex))
+        for lbl, cfg in (("skip stocks failing the check, fill with the next qualifying (Nifty filter kept)", dict(BASE, slot="fill")),
+                         ("failing slots go to gold/liquid (Nifty filter kept)", dict(BASE, slot="cash")),
+                         ("failing slots go to gold/liquid, NO Nifty filter", dict(BASE, slot="cash", filt=False)),
+                         ("skip failing stocks, fill next qualifying, NO Nifty filter", dict(BASE, slot="fill", filt=False))):
+            OUT3["slot_check"][lbl], _ = both("SLOT " + lbl, cfg)
+        lv_curves = {}
+        for uni, M_ in (("top 200", M200), ("top 500", M500)):
+            for N_ in (30, 50):
+                for fr, frl in (("S", "every 6 months (Jan/Jul)"), ("M", "monthly, 1.5N buffer")):
+                    lbl = f"{uni}, lowest 1-yr volatility, {N_} stocks, {frl}"
+                    OUT3["low_vol"][lbl], lv_curves[lbl] = both("LOWVOL " + lbl, dict(score=sclv, M=M_, N=N_, freq=fr, filt=False))
+        bestlv = max(OUT3["low_vol"], key=lambda k: OUT3["low_vol"][k]["honest_4days_nextday"]["cagr"])
+        OUT3["low_vol"][bestlv + " + Nifty crash filter"], _ = both("LOWVOL+FILTER " + bestlv, dict(score=sclv, M=M500 if "500" in bestlv else M200, N=int(bestlv.split(", ")[2].split()[0]),
+                                                                                       freq="S" if "6 months" in bestlv else "M", filt=True))
+        # blends of the honest curves, rebalanced monthly back to the split
+        def blend(c1, c2, w1):
+            r1 = np.r_[0, c1[1:] / c1[:-1] - 1]; r2 = np.r_[0, c2[1:] / c2[:-1] - 1]; a, b = w1, 1 - w1; eq = 1.0; out = np.ones(D)
+            for t in range(START, D):
+                if t in mstarts: tot = a + b; a, b = w1 * tot, (1 - w1) * tot
+                a *= 1 + r1[t]; b *= 1 + r2[t]; out[t] = a + b
+            return out
+        mo = lambda c: pd.Series(c[START:], index=dates[START:]).resample("ME").last().pct_change().dropna()
+        OUT3["blends"]["monthly_correlation_momentum_vs_best_lowvol"] = round(float(mo(c_base).corr(mo(lv_curves[bestlv]))), 2)
+        for w1 in (0.7, 0.5, 0.3):
+            o = summ(blend(c_base, lv_curves[bestlv], w1)); kk = f"{int(w1 * 100)}% momentum + {100 - int(w1 * 100)}% low vol ({bestlv}), honest"; OUT3["blends"][kk] = o; pr("BLEND " + kk, o)
+        os.makedirs("data", exist_ok=True); json.dump(OUT3, open("data/india_ideas3.json" if not DRY else "/tmp/india_ideas3_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momsplit":
         # Reshuffle-day luck check for paper bot 13 (Nov 21): 1) every reshuffle day 1..18 of the month, same day and 1 day late
         # (friends see the 7:15 pm IST alert and trade next day)  2) split money into 2/3/4 parts, each reshuffled on a different day.
