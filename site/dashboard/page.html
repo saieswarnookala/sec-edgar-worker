@@ -2607,10 +2607,15 @@ dash.calc('vs_industry', {
     const [y, m] = L.day.split('-').map(Number); const nx = new Date(y, m, 1); while (nx.getDay() % 6 === 0) nx.setDate(nx.getDate() + 1);
     const nxt = nx.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
     const N = (L.hold || []).length || 20, per0 = ((L.equity || 0) + (L.cost || 0)) / N, val = Object.fromEntries((b.holdings || []).map((x) => [x.s, x.v]));
+    const caps = b.caps || {}, catOf = (s) => (caps[s] && caps[s].cat) || (b.caps ? 'New' : null);
+    const catCell = (s) => { const c = catOf(s); if (!c) return '—'; const r = caps[s] && caps[s].rank; return c === 'New' ? '<span class="sx-cap">Not in AMFI list yet (recent listing)</span>' : `${c} cap${r ? ` <span class="sx-cap">#${r}</span>` : ''}`; };
+    const mix = (L.hold || []).reduce((m, s) => { const c = catOf(s); if (c) m[c] = (m[c] || 0) + 1; return m; }, {});
+    const mixTxt = b.caps ? ['Large', 'Mid', 'Small', 'New'].filter((k) => mix[k]).map((k) => `${mix[k]} ${k === 'New' ? 'new listing' + (mix[k] > 1 ? 's' : '') : k.toLowerCase() + ' cap'}`).join(' · ') : '';
     const buys = new Set(L.buys || []);
     const rows = (L.hold || []).slice().sort((p, q) => (buys.has(q) - buys.has(p)) || p.localeCompare(q)).map((s, i) => {
       const px = (L.price || {})[s], sh = px ? Math.floor(imAmt / N / px) : null, since = val[s] && per0 ? (val[s] / per0 - 1) * 100 : null;
       return `<tr><td>${i + 1}</td><td><a href="https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(s)}" target="_blank" rel="noopener">${esc(s)}</a></td>
+        <td>${catCell(s)}</td>
         <td>${buys.has(s) ? '<span class="sx-good">New</span>' : 'Kept'}</td><td>${px ? '₹' + px.toLocaleString('en-IN') : '—'}</td>
         <td><b>${sh ?? '—'}</b>${sh === 0 ? ' <span class="sx-cap">(amount too small)</span>' : ''}</td>
         <td class="${since == null ? '' : since >= 0 ? 'sx-good' : 'sx-bad'}">${since == null ? '—' : (since >= 0 ? '+' : '−') + Math.abs(since).toFixed(1) + '%'}</td></tr>`;
@@ -2625,7 +2630,8 @@ dash.calc('vs_industry', {
       ${L.inside ? `<div class="ip-ctl" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
         <label for="im-amt"><b>Your amount (₹)</b></label><input id="im-amt" class="sx-exch" type="number" min="10000" step="10000" value="${imAmt}" style="width:140px">
         <span class="sx-cap">${rs(imAmt / N)} per stock</span></div>
-      <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>NSE stock</th><th>This month</th><th>Price at pick</th><th>Shares to buy</th><th>Since pick (paper)</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${mixTxt ? `<p style="margin:0 0 8px"><b>This month's mix:</b> ${mixTxt} <span class="sx-cap">(AMFI list, ${esc(b.caps_asof || '')}: top 100 companies by market value = large, 101–250 = mid, the rest = small; # = AMFI rank)</span></p>` : ''}
+      <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>NSE stock</th><th>Category</th><th>This month</th><th>Price at pick</th><th>Shares to buy</th><th>Since pick (paper)</th></tr></thead><tbody>${rows}</tbody></table></div>
       <p class="sx-cap">Shares are rounded down, so a little cash is left over. Prices move overnight; buy at the market price the next morning. "Since pick" is the virtual bot's result for that stock since ${day(L.day)}.</p>` : ''}
       <h4 style="margin-top:12px">Changes this month</h4><ul class="sx-notes">
         <li><b>Sell:</b> ${(L.sells || []).length ? L.sells.map(esc).join(', ') : 'none'}</li>

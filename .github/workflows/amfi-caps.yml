@@ -1,0 +1,24 @@
+name: "AMFI large/mid/small cap list"
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '30 6 10 * *'   # monthly; AMFI updates in early Jan and early Jul
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas openpyxl
+      - run: python -u scripts/amfi_caps.py
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/amfi_caps.json; git commit -qm "AMFI cap list" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
