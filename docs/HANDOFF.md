@@ -182,6 +182,10 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### India momentum paper bot (from Nov 20 2026) - scripts/paper_india_mom.py, .github/workflows/paper-india-mom.yml, data/paper_india_mom_state.json
+- Picked rules: top 500 NSE by traded value (Jan/Jul re-pick), (6m+12m)/vol, 20 stocks equal weight, first trading day each month at close, buffer top 30,
+  crash filter Nifty < 200d -> GOLDBEES (if gold > 100d) else liquid 6%. 0.30%/side. Rs 10 lakh virtual. Daily 7:15 pm IST cron, catches up missed days.
+- Data from NSE bhavcopy R2 cache (tops up the last 40 days). Alerts to NTFY_TOPIC_INDIA (sells / buys with shares per Rs 1 lakh / keeps). Tests: test-india-mom.py.
 ### Nov 21 India on SURVIVORSHIP-FREE NSE bhavcopy (data/india_pit.json, 2009-2026, R2 nse/bhav/<year>.json.gz; price only, 0.30%/side)
 - Splits/bonuses: bhavcopy PREVCLOSE unadjusted -> gaps <= -18% treated as corporate actions (8,442 days); checks vs Yahoo match within dividends.
 - Nifty 50 +div 11.9% (dd -38). Dip bot today 14.0% (dd -19.5, ~11.2 after tax, 2019-26 16.1%). NSE filters +0.2; 10-day/17% 13.1% dd -14.1; top 500 worse (7.1%).
