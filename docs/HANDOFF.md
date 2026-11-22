@@ -182,6 +182,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 Paper bot 14: India Alpha 50 (our version) - scripts/paper_india_alpha.py
+- Rules = india_pit.py factor-mode rebuild: top 300 by 120-day median traded value (Jan/Jul), 1-yr Jensen alpha vs Nifty (252 days, 200+ traded), top 50 equal weight,
+  quarterly on the 1st NSE trading day of Jan/Apr/Jul/Oct, no buffer, no crash filter, 0.3%/side. Twin FILTER=1 (100-day Nifty filter, gold/liquid) -> data/paper_india_alpha_filter_state.json, no alerts.
+- Runs inside paper-india-mom.yml (7:15 pm IST) after bot 13; tests: test-india-alpha.py. Alerts: NTFY_TOPIC_INDIA only, quarterly. Started Nov 22 on the Nov 20 close: 50 stocks
+  (36 small / 8 mid / 5 large by AMFI), 11 overlap with bot 13. Backtest 22.0%/yr, dd -47 (no trading costs, one version, untested robustness) -> plan 17-20%; after tax ~13.5-16 vs Nifty 13.7.
+- Dashboard: card #14 (pb-inalpha), tab 'inalpha' ("India Alpha 50: this quarter's 50", drawInAlpha), calculator row inalpha 22.0/17.9/-47. Doc: https://claude.ai/artifact/TqdML5zaL3kTo7DZK1uLtt
 ### Nov 22 India factor rotation (#5) + size switch (#7) (data/india_factor.json, india_pit.py MODE=factor) + NIFTY BENCHMARK FIX
 - BUG FIXED: summ() measured benchmark curves (Nifty, built from 2007) from 2007 but divided by years since 2009 -> Nifty showed 11.9%; correct 2009-2026 = 14.5% (after tax ~13.7).
   Strategy curves were unaffected (they start at 1 on START). Consequence: India dip bot (14.0%) only MATCHES Nifty (half the drop); after tax Nifty buy & hold wins. Dashboard/calculator fixed.
