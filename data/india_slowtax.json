@@ -1,0 +1,488 @@
+{
+ "note": "India momentum (bot 13 family) with LOT-LEVEL Indian tax, current rules over 2009-2026: <12m 20.8%, >=12m 13% above Rs 1.25 lakh/yr, FIFO, losses carried; start Rs 10 lakh; final value after selling everything and paying tax. best = day-1 reshuffle; honest = days 1/6/11/16 next-day. 0.3%/side.",
+ "built": "2026-11-22",
+ "A_reshuffle": {
+  "monthly | keep while in top 30 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 32.7,
+    "before_tax_dd": -23.8,
+    "after_tax_cagr": 27.5,
+    "after_tax_dd": -28.2,
+    "after_tax_2019_2026": 30.7,
+    "tax_paid_lakh": 147.3,
+    "turnover_per_year": 6.2
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.8,
+    "before_tax_dd": -33.6,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -35.5,
+    "after_tax_2019_2026": 25.0,
+    "tax_paid_lakh": 79.7,
+    "turnover_per_year": 6.3
+   }
+  },
+  "monthly | keep while in top 30 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 32.1,
+    "before_tax_dd": -26.0,
+    "after_tax_cagr": 27.2,
+    "after_tax_dd": -29.7,
+    "after_tax_2019_2026": 29.2,
+    "tax_paid_lakh": 134.0,
+    "turnover_per_year": 5.4
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.6,
+    "before_tax_dd": -36.1,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -38.9,
+    "after_tax_2019_2026": 24.0,
+    "tax_paid_lakh": 75.4,
+    "turnover_per_year": 5.6
+   }
+  },
+  "monthly | keep while in top 40 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 31.1,
+    "before_tax_dd": -23.4,
+    "after_tax_cagr": 26.3,
+    "after_tax_dd": -27.1,
+    "after_tax_2019_2026": 28.5,
+    "tax_paid_lakh": 120.4,
+    "turnover_per_year": 5.6
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.7,
+    "before_tax_dd": -34.5,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -36.6,
+    "after_tax_2019_2026": 24.8,
+    "tax_paid_lakh": 78.7,
+    "turnover_per_year": 5.6
+   }
+  },
+  "monthly | keep while in top 40 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 30.8,
+    "before_tax_dd": -25.8,
+    "after_tax_cagr": 26.2,
+    "after_tax_dd": -30.7,
+    "after_tax_2019_2026": 27.5,
+    "tax_paid_lakh": 111.4,
+    "turnover_per_year": 4.9
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.7,
+    "before_tax_dd": -36.7,
+    "after_tax_cagr": 22.8,
+    "after_tax_dd": -39.9,
+    "after_tax_2019_2026": 24.2,
+    "tax_paid_lakh": 75.1,
+    "turnover_per_year": 4.9
+   }
+  },
+  "monthly | keep while in top 50 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 30.2,
+    "before_tax_dd": -25.3,
+    "after_tax_cagr": 25.6,
+    "after_tax_dd": -28.5,
+    "after_tax_2019_2026": 28.9,
+    "tax_paid_lakh": 109.2,
+    "turnover_per_year": 5.3
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.5,
+    "before_tax_dd": -34.9,
+    "after_tax_cagr": 22.5,
+    "after_tax_dd": -36.9,
+    "after_tax_2019_2026": 24.2,
+    "tax_paid_lakh": 76.6,
+    "turnover_per_year": 5.3
+   }
+  },
+  "monthly | keep while in top 50 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 30.1,
+    "before_tax_dd": -27.0,
+    "after_tax_cagr": 25.7,
+    "after_tax_dd": -31.1,
+    "after_tax_2019_2026": 27.8,
+    "tax_paid_lakh": 102.8,
+    "turnover_per_year": 4.6
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.6,
+    "before_tax_dd": -37.0,
+    "after_tax_cagr": 22.7,
+    "after_tax_dd": -40.0,
+    "after_tax_2019_2026": 23.8,
+    "tax_paid_lakh": 73.5,
+    "turnover_per_year": 4.6
+   }
+  },
+  "every 2 months | keep while in top 30 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 25.5,
+    "before_tax_dd": -29.6,
+    "after_tax_cagr": 21.7,
+    "after_tax_dd": -33.1,
+    "after_tax_2019_2026": 22.9,
+    "tax_paid_lakh": 64.6,
+    "turnover_per_year": 4.4
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 24.4,
+    "before_tax_dd": -36.3,
+    "after_tax_cagr": 20.7,
+    "after_tax_dd": -38.1,
+    "after_tax_2019_2026": 19.6,
+    "tax_paid_lakh": 60.9,
+    "turnover_per_year": 4.5
+   }
+  },
+  "every 2 months | keep while in top 30 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 25.4,
+    "before_tax_dd": -30.5,
+    "after_tax_cagr": 21.6,
+    "after_tax_dd": -33.3,
+    "after_tax_2019_2026": 22.5,
+    "tax_paid_lakh": 60.6,
+    "turnover_per_year": 4.0
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 24.1,
+    "before_tax_dd": -39.2,
+    "after_tax_cagr": 20.7,
+    "after_tax_dd": -41.3,
+    "after_tax_2019_2026": 19.0,
+    "tax_paid_lakh": 56.4,
+    "turnover_per_year": 4.0
+   }
+  },
+  "every 2 months | keep while in top 40 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 25.3,
+    "before_tax_dd": -31.5,
+    "after_tax_cagr": 21.6,
+    "after_tax_dd": -34.1,
+    "after_tax_2019_2026": 22.7,
+    "tax_paid_lakh": 60.8,
+    "turnover_per_year": 4.1
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.0,
+    "before_tax_dd": -35.1,
+    "after_tax_cagr": 21.3,
+    "after_tax_dd": -37.3,
+    "after_tax_2019_2026": 20.0,
+    "tax_paid_lakh": 65.0,
+    "turnover_per_year": 4.1
+   }
+  },
+  "every 2 months | keep while in top 40 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 25.2,
+    "before_tax_dd": -33.1,
+    "after_tax_cagr": 21.6,
+    "after_tax_dd": -35.9,
+    "after_tax_2019_2026": 22.6,
+    "tax_paid_lakh": 56.8,
+    "turnover_per_year": 3.7
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 24.8,
+    "before_tax_dd": -38.2,
+    "after_tax_cagr": 21.3,
+    "after_tax_dd": -40.7,
+    "after_tax_2019_2026": 19.4,
+    "tax_paid_lakh": 59.7,
+    "turnover_per_year": 3.7
+   }
+  },
+  "every 2 months | keep while in top 50 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 25.3,
+    "before_tax_dd": -32.2,
+    "after_tax_cagr": 21.5,
+    "after_tax_dd": -35.1,
+    "after_tax_2019_2026": 22.3,
+    "tax_paid_lakh": 62.9,
+    "turnover_per_year": 3.9
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.7,
+    "before_tax_dd": -33.2,
+    "after_tax_cagr": 21.9,
+    "after_tax_dd": -35.7,
+    "after_tax_2019_2026": 20.4,
+    "tax_paid_lakh": 69.4,
+    "turnover_per_year": 3.9
+   }
+  },
+  "every 2 months | keep while in top 50 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 25.0,
+    "before_tax_dd": -35.1,
+    "after_tax_cagr": 21.3,
+    "after_tax_dd": -37.5,
+    "after_tax_2019_2026": 22.5,
+    "tax_paid_lakh": 57.5,
+    "turnover_per_year": 3.5
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.3,
+    "before_tax_dd": -36.7,
+    "after_tax_cagr": 21.9,
+    "after_tax_dd": -39.4,
+    "after_tax_2019_2026": 20.2,
+    "tax_paid_lakh": 63.2,
+    "turnover_per_year": 3.4
+   }
+  },
+  "every 3 months | keep while in top 30 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 25.7,
+    "before_tax_dd": -43.4,
+    "after_tax_cagr": 21.9,
+    "after_tax_dd": -43.4,
+    "after_tax_2019_2026": 18.9,
+    "tax_paid_lakh": 65.5,
+    "turnover_per_year": 3.5
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.3,
+    "before_tax_dd": -39.4,
+    "after_tax_cagr": 22.2,
+    "after_tax_dd": -42.2,
+    "after_tax_2019_2026": 18.6,
+    "tax_paid_lakh": 72.2,
+    "turnover_per_year": 3.7
+   }
+  },
+  "every 3 months | keep while in top 30 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 25.6,
+    "before_tax_dd": -43.1,
+    "after_tax_cagr": 22.1,
+    "after_tax_dd": -43.1,
+    "after_tax_2019_2026": 18.0,
+    "tax_paid_lakh": 64.3,
+    "turnover_per_year": 3.2
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.1,
+    "before_tax_dd": -43.1,
+    "after_tax_cagr": 22.3,
+    "after_tax_dd": -45.8,
+    "after_tax_2019_2026": 18.5,
+    "tax_paid_lakh": 68.4,
+    "turnover_per_year": 3.3
+   }
+  },
+  "every 3 months | keep while in top 40 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 26.4,
+    "before_tax_dd": -43.4,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -43.7,
+    "after_tax_2019_2026": 19.8,
+    "tax_paid_lakh": 70.5,
+    "turnover_per_year": 3.3
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.5,
+    "before_tax_dd": -41.2,
+    "after_tax_cagr": 22.5,
+    "after_tax_dd": -43.8,
+    "after_tax_2019_2026": 19.6,
+    "tax_paid_lakh": 73.6,
+    "turnover_per_year": 3.4
+   }
+  },
+  "every 3 months | keep while in top 40 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 26.0,
+    "before_tax_dd": -43.1,
+    "after_tax_cagr": 22.5,
+    "after_tax_dd": -43.9,
+    "after_tax_2019_2026": 18.7,
+    "tax_paid_lakh": 65.8,
+    "turnover_per_year": 3.0
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.3,
+    "before_tax_dd": -44.4,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -47.1,
+    "after_tax_2019_2026": 19.4,
+    "tax_paid_lakh": 69.2,
+    "turnover_per_year": 3.1
+   }
+  },
+  "every 3 months | keep while in top 50 | trim/top up to equal": {
+   "best_day1": {
+    "before_tax_cagr": 26.5,
+    "before_tax_dd": -42.5,
+    "after_tax_cagr": 22.8,
+    "after_tax_dd": -43.1,
+    "after_tax_2019_2026": 20.4,
+    "tax_paid_lakh": 72.3,
+    "turnover_per_year": 3.2
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.5,
+    "before_tax_dd": -41.0,
+    "after_tax_cagr": 22.6,
+    "after_tax_dd": -43.9,
+    "after_tax_2019_2026": 19.6,
+    "tax_paid_lakh": 73.2,
+    "turnover_per_year": 3.3
+   }
+  },
+  "every 3 months | keep while in top 50 | let winners run (no trims)": {
+   "best_day1": {
+    "before_tax_cagr": 25.9,
+    "before_tax_dd": -42.1,
+    "after_tax_cagr": 22.4,
+    "after_tax_dd": -43.2,
+    "after_tax_2019_2026": 18.9,
+    "tax_paid_lakh": 64.7,
+    "turnover_per_year": 2.8
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 26.3,
+    "before_tax_dd": -44.2,
+    "after_tax_cagr": 22.7,
+    "after_tax_dd": -47.1,
+    "after_tax_2019_2026": 19.4,
+    "tax_paid_lakh": 68.7,
+    "turnover_per_year": 2.9
+   }
+  }
+ },
+ "B_score": {
+  "skip last month: (6-1 + 12-1)/vol": {
+   "best_day1": {
+    "before_tax_cagr": 30.5,
+    "before_tax_dd": -25.0,
+    "after_tax_cagr": 25.6,
+    "after_tax_dd": -27.0,
+    "after_tax_2019_2026": 30.9,
+    "tax_paid_lakh": 114.1,
+    "turnover_per_year": 6.7
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.9,
+    "before_tax_dd": -30.6,
+    "after_tax_cagr": 21.7,
+    "after_tax_dd": -32.2,
+    "after_tax_2019_2026": 24.3,
+    "tax_paid_lakh": 72.0,
+    "turnover_per_year": 6.8
+   }
+  },
+  "more weight on 6m: (2x6m + 12m)/vol": {
+   "best_day1": {
+    "before_tax_cagr": 30.9,
+    "before_tax_dd": -23.8,
+    "after_tax_cagr": 26.1,
+    "after_tax_dd": -28.0,
+    "after_tax_2019_2026": 26.6,
+    "tax_paid_lakh": 117.9,
+    "turnover_per_year": 6.5
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.2,
+    "before_tax_dd": -31.3,
+    "after_tax_cagr": 21.3,
+    "after_tax_dd": -33.4,
+    "after_tax_2019_2026": 22.1,
+    "tax_paid_lakh": 64.3,
+    "turnover_per_year": 6.7
+   }
+  },
+  "no volatility divisor: 6m+12m": {
+   "best_day1": {
+    "before_tax_cagr": 27.4,
+    "before_tax_dd": -27.9,
+    "after_tax_cagr": 23.2,
+    "after_tax_dd": -32.2,
+    "after_tax_2019_2026": 24.3,
+    "tax_paid_lakh": 75.7,
+    "turnover_per_year": 6.1
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 23.7,
+    "before_tax_dd": -32.6,
+    "after_tax_cagr": 20.0,
+    "after_tax_dd": -34.9,
+    "after_tax_2019_2026": 20.4,
+    "tax_paid_lakh": 53.3,
+    "turnover_per_year": 6.2
+   }
+  },
+  "residual momentum: 12-1 residual return / residual vol": {
+   "best_day1": {
+    "before_tax_cagr": 28.1,
+    "before_tax_dd": -23.7,
+    "after_tax_cagr": 23.7,
+    "after_tax_dd": -29.7,
+    "after_tax_2019_2026": 30.7,
+    "tax_paid_lakh": 84.5,
+    "turnover_per_year": 6.1
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 23.3,
+    "before_tax_dd": -26.4,
+    "after_tax_cagr": 19.6,
+    "after_tax_dd": -29.5,
+    "after_tax_2019_2026": 22.6,
+    "tax_paid_lakh": 51.0,
+    "turnover_per_year": 6.2
+   }
+  },
+  "Clenow: 90-day trend slope x R-squared": {
+   "best_day1": {
+    "before_tax_cagr": 21.7,
+    "before_tax_dd": -30.7,
+    "after_tax_cagr": 18.1,
+    "after_tax_dd": -34.9,
+    "after_tax_2019_2026": 19.8,
+    "tax_paid_lakh": 36.9,
+    "turnover_per_year": 8.9
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 17.8,
+    "before_tax_dd": -37.0,
+    "after_tax_cagr": 14.8,
+    "after_tax_dd": -37.7,
+    "after_tax_2019_2026": 14.3,
+    "tax_paid_lakh": 24.3,
+    "turnover_per_year": 9.0
+   }
+  },
+  "smooth-trend filter: top 40 by bot-13 score, keep the 20 smoothest climbers": {
+   "best_day1": {
+    "before_tax_cagr": 29.9,
+    "before_tax_dd": -24.6,
+    "after_tax_cagr": 25.2,
+    "after_tax_dd": -29.3,
+    "after_tax_2019_2026": 30.8,
+    "tax_paid_lakh": 104.9,
+    "turnover_per_year": 7.0
+   },
+   "honest_4days_nextday": {
+    "before_tax_cagr": 25.6,
+    "before_tax_dd": -26.6,
+    "after_tax_cagr": 21.6,
+    "after_tax_dd": -28.4,
+    "after_tax_2019_2026": 26.2,
+    "tax_paid_lakh": 69.8,
+    "turnover_per_year": 7.0
+   }
+  }
+ }
+}
