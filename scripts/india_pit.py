@@ -184,6 +184,68 @@ def run():
         return o, curve
     def pr(lbl, o): print(f"{lbl:64s} {o['cagr']:6.1f}%/yr (after tax ~{o['after_tax_rough_cagr']}) dd {o['dd']:6.1f} | 2009 {o['per']['2009-2009']} 10-15 {o['per']['2010-2015']} 16-20 {o['per']['2016-2020']} 21-26 {o['per']['2021-2026']} | train {o['train_2009_2018']['cagr']} test {o['test_2019_2026']['cagr']}/{o['test_2019_2026']['dd']}" + (f" | {o.get('trades_per_year')} tr/yr avg {o.get('avg_trade_pct')}%" if 'trades_per_year' in o else f" | turn {o.get('turnover_per_year')}x"), flush=True)
     MODE = os.environ.get("MODE", "all")
+    if MODE == "momrobust":
+        # Is the India momentum basket (paper bot 13: top 500, (6m+12m)/vol, 20 stocks, monthly, Nifty-100-day filter, gold/liquid) solid or lucky?
+        # 1) nearby settings, one at a time and a 3x3x3 grid  2) reshuffle on the 1st/5th/10th/15th trading day of the month
+        # 3) different start years  4) 2x and 3x costs  5) placebo: 20 RANDOM stocks from the same top 500, same filter (200 runs).
+        Mk = members(500); hide_r = np.where(gtr, gr, liq)
+        def score(a_, b_):
+            if b_ is None: return (Pf.pct_change(a_) / (vol * np.sqrt(248))).values
+            return ((Pf.pct_change(a_) + Pf.pct_change(b_)) / (vol * np.sqrt(248))).values
+        SCR = {"(6m+12m)/vol": score(126, 252), "(3m+6m)/vol": score(63, 126), "(3m+12m)/vol": score(63, 252), "(9m+12m)/vol": score(189, 252), "12m/vol": score(252, None), "6m/vol": score(126, None)}
+        nma = {m: (n > n.rolling(m).mean()).shift(1, fill_value=False).values for m in (60, 80, 100, 120, 150, 200)}
+        mstarts = [i for i in range(1, D) if dates[i].month != dates[i - 1].month]
+        def rebal_days(k):
+            out = []
+            for m0 in mstarts:
+                i = m0 + k - 1
+                if i < D and dates[i].month == dates[m0].month and i >= START: out.append(i)
+            return set(out)
+        RB = {k: rebal_days(k) for k in (1, 5, 10, 15)}
+        def mom3(sc_key="(6m+12m)/vol", N=20, ma=100, day=1, cost=0.003, rand=None):
+            sc = SCR[sc_key]; ok = Mk & ~glitch & np.isfinite(sc); rebal = RB[day]; rng = np.random.default_rng(rand) if rand is not None else None
+            w = {}; eq = 1.0; curve = np.ones(D); turn = 0.0; inside = True
+            for t in range(START, D):
+                day_r = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                day_r += cash * (hide_r[t] if not inside else liq[t]); eq *= 1 + day_r
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day_r) for j, wi in w.items()}
+                for j in [j for j in w if not traded[t, j]]: w.pop(j)
+                if t in rebal:
+                    inside = bool(nma[ma][t])
+                    if inside:
+                        cand = np.where(ok[t])[0]
+                        if rng is not None: new = list(rng.choice(cand, size=min(N, len(cand)), replace=False))
+                        else:
+                            order = cand[np.argsort(-sc[t, cand])]; rank = {j: r for r, j in enumerate(order)}
+                            kept = [j for j in w if rank.get(j, 1e9) < 1.5 * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        tgt = {j: 1.0 / N for j in new}
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - cost * tv_; turn += tv_; w = dict(tgt)
+                curve[t] = eq
+            o = summ(curve); o["turnover_per_year"] = round(turn / ((D - START) / 248), 1); return o, curve
+        OUTR = {"note": "India momentum basket robustness, NSE survivorship-free 2009-2026, before tax (after-tax rough).", "built": str(pd.Timestamp.today().date()), "one_at_a_time": {}, "grid": [], "start_years": {}, "costs": {}, "placebo": {}}
+        base, bc = mom3(); OUTR["base"] = base; pr("BASE paper bot 13 rules", base)
+        for lbl, kw in ([(f"stocks {x}", dict(N=x)) for x in (10, 15, 25, 30)] + [(f"score {k}", dict(sc_key=k)) for k in SCR if k != "(6m+12m)/vol"] +
+                        [(f"filter {m}-day", dict(ma=m)) for m in (60, 80, 120, 150, 200)] + [(f"reshuffle on trading day {k} of the month", dict(day=k)) for k in (5, 10, 15)]):
+            o, _ = mom3(**kw); OUTR["one_at_a_time"][lbl] = o; pr("NEAR " + lbl, o)
+        for sk in ("(6m+12m)/vol", "(3m+12m)/vol", "12m/vol"):
+            for Nn in (15, 20, 25):
+                for m in (80, 100, 150):
+                    o, _ = mom3(sc_key=sk, N=Nn, ma=m); OUTR["grid"].append({"score": sk, "stocks": Nn, "filter": m, "cagr": o["cagr"], "dd": o["dd"], "test": o["test_2019_2026"]["cagr"], "after_tax": o["after_tax_rough_cagr"]})
+        g = OUTR["grid"]; cs = np.array([x["cagr"] for x in g]); ds = np.array([x["dd"] for x in g])
+        OUTR["grid_summary"] = {"versions": len(g), "per_year_min": float(cs.min()), "per_year_median": float(np.median(cs)), "per_year_max": float(cs.max()), "worst_drop_median": float(np.median(ds)), "worst_drop_worst": float(ds.min()), "share_beating_nifty_by_5pts": round(float(np.mean(cs > OUTR.get("nifty", 11.9) + 5)) * 100)}
+        print("GRID 27 nearby versions:", OUTR["grid_summary"], flush=True)
+        cser = pd.Series(bc, index=dates); nser = pd.Series(np.cumprod(1 + nr + dv), index=dates)
+        for y in (2009, 2012, 2015, 2018, 2021, 2023):
+            a_ = cser[cser.index >= f"{y}-01-01"]; b_ = nser[nser.index >= f"{y}-01-01"]; yrs_ = len(a_) / 248
+            OUTR["start_years"][str(y)] = {"basket": round(100 * ((a_.iloc[-1] / a_.iloc[0]) ** (1 / yrs_) - 1), 1), "nifty": round(100 * ((b_.iloc[-1] / b_.iloc[0]) ** (1 / yrs_) - 1), 1), "basket_worst": round(100 * float((a_ / a_.cummax() - 1).min()), 1)}
+            print(f"START {y}: basket {OUTR['start_years'][str(y)]}", flush=True)
+        for c_ in (0.006, 0.009):
+            o, _ = mom3(cost=c_); OUTR["costs"][f"{c_*100:.1f}% per side"] = o; pr(f"COST {c_*100:.1f}% per side", o)
+        pl = [mom3(rand=s_)[0] for s_ in range(200)]; pc = np.array([x["cagr"] for x in pl]); pd_ = np.array([x["dd"] for x in pl])
+        OUTR["placebo"] = {"runs": 200, "random_median": float(np.median(pc)), "random_p95": float(np.percentile(pc, 95)), "random_max": float(pc.max()), "share_beating_base_pct": round(float(np.mean(pc >= base["cagr"])) * 100, 1), "random_median_worst_drop": float(np.median(pd_))}
+        print("PLACEBO 20 random stocks (same universe, same filter):", OUTR["placebo"], flush=True)
+        os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrobust.json" if not DRY else "/tmp/india_momrobust_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momrisk":
         # Ways to cut the momentum basket's worst drop (base = the picked version: top 500, (6m+12m)/vol, 20 stocks, monthly,
         # Nifty-200-day filter at reshuffles, hide in gold-if-trending else liquid).
