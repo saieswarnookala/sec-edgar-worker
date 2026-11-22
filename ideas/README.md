@@ -22,12 +22,11 @@ File names: `<market>_<strategy>_<tweak>.py` (us = US, in = India, gl = global /
 | Live (real money) | 1 |
 | Next live candidate | 1 |
 | Paper bot, keep | 2 |
-| Watching / maybe later | 11 |
-| Test running | 2 |
+| Watching / maybe later | 12 |
 | Kept as a tool | 2 |
 | Reference / check | 1 |
 | Merged into a newer version | 3 |
-| Tested and dropped | 54 |
+| Tested and dropped | 55 |
 
 ## US dip bot family
 
@@ -49,7 +48,7 @@ File names: `<market>_<strategy>_<tweak>.py` (us = US, in = India, gl = global /
 
 | Status | Idea | Result | File |
 | --- | --- | --- | --- |
-| Test running | v3.0 with 1.5x / 2x leverage on dip stocks (2x ETF or margin) | Running (data/lev_single.json). | [us_dip_v3_0_lev2x.py](us_dip_v3_0_lev2x.py) |
+| Watching / maybe later | v3.0 with 1.5x / 2x leverage on dip stocks (2x ETF or margin) | 1999-2026 realistic: 1x 16.6%/yr (worst -27%), 1.5x 20.2% (-34%), 2x 23.7% (-41%); margin costs ~same; 2x only in uptrends 19.7% (-41%). Return and drops scale together. | [us_dip_v3_0_lev2x.py](us_dip_v3_0_lev2x.py) |
 | Reference / check | Stress test: beta, alpha, kill switch | Beta 0.45, alpha ~17%/yr but ~0 in 2013-2019; kill switch set at -40%. | [us_dip_stress_test.py](us_dip_stress_test.py) |
 | Tested and dropped | VIX gate on the dip bot | Did not fix the weak 2013-2019 stretch (best ~9.3%/yr). | [us_dip_vix_gate.py](us_dip_vix_gate.py) |
 | Tested and dropped | Sector-relative dips | Worse than vs-SPY dips. | [us_dip_sector_relative.py](us_dip_sector_relative.py) |
@@ -70,9 +69,9 @@ File names: `<market>_<strategy>_<tweak>.py` (us = US, in = India, gl = global /
 | --- | --- | --- | --- |
 | Watching / maybe later | 2x S&P 500 with a 200-day trend filter (2% band) | SPY 1994-2026: 14.4%/yr, worst -42% vs SPY 10.4% / -55%. Robustness: 16 nearby settings 7.7-15.4% (median 12.5); 10% of random schedules beat it; works on Nasdaq/intl, fails on sma... | [us_spy_2x_trend200_band2.py](us_spy_2x_trend200_band2.py) |
 | Watching / maybe later | Net buybacks (top 10 share shrinkers) | 17.8%/yr vs SPY 13.9%, worst -43%; but one stock (WDC) added ~30 pts and it beat SPY in only 8 of 16 years. | [us_net_buybacks.py](us_net_buybacks.py) |
-| Test running | 2x single stocks (Oracle-style ETFs) with a trend filter | Running. | [us_single_stock_2x_trend.py](us_single_stock_2x_trend.py) |
 | Kept as a tool | Clear Leader v2.0 (monthly ETF leader) | 13.6%/yr, worst -43%. | [us_clear_leader_v2.py](us_clear_leader_v2.py) |
 | Kept as a tool | Quality at a fair price screener | 2013-2026 15.8%/yr vs SPY 14.0%; 9 of 11 nearby versions beat SPY. | [us_quality_screener.py](us_quality_screener.py) |
+| Tested and dropped | 2x single stocks (Oracle-style ETFs) with a trend filter | Fair test (317 stocks from 2000): 2x + trend 4.8%/yr = 1x hold 4.8%, 43 stocks wiped out (-90%+); beat 1x hold in only 25% of stocks. Oracle since 2000: 2x trend -3.7%/yr vs hold 6... | [us_single_stock_2x_trend.py](us_single_stock_2x_trend.py) |
 | Tested and dropped | Opening-range breakout and intraday rules | ORB ~ -8%/yr even at zero cost; SPY momentum ~0% since May 2024. | [us_intraday_orb.py](us_intraday_orb.py) |
 | Tested and dropped | Single-stock intraday rhythms | Nothing beat costs. | [us_intraday_rhythms.py](us_intraday_rhythms.py) |
 | Tested and dropped | RSI(2) dip | Below the dip strategy. | [us_rsi2_dip.py](us_rsi2_dip.py) |

@@ -186,6 +186,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 22 Leverage on single stocks (data/lev_single.json, scripts/lev_single.py; sim(lev=, lev_cost=, lev_trend=) added, default 1x)
+- Dip bot v3.0 realistic 1999-2026: 1x 16.6/-27, 1.5x 20.2/-34, 2x 23.7/-41 (ETF-style or margin costs ~same); 2x only when SPY > 100-day 19.7/-41. Return and drop scale together.
+- 2x single stocks + 200-day trend, fair (317 S&P members on 2000-01-03, to delisting): 4.8%/yr = 1x hold 4.8; 2x hold 1.9 (142 wiped); 2x trend beat 1x hold in 25% of stocks.
+  Hindsight 2x-ETF list: 2x trend 39.4%/yr (pure hindsight). ORCL 2000-2026: 1x 6.6, 2x trend -3.7.
+- Real 2x ETFs vs simulation: NVDL +830% vs +1,799% sim, MSFU +53 vs +101, AMZU +35 vs +57, AAPU 125 vs 132, TSLL -65 vs -77, ORCX -85 vs -82 -> real single-stock 2x costs are higher than modeled.
+
 ### Nov 22 Robustness of 2x S&P + 200-day trend (data/lev_robust.json) - real but fragile, WATCH
 - 16 nearby settings (100-250 day, 0-3% band) on SPY 1994-2026: 7.7-15.4% (median 12.5; chosen 14.4 near the top), 11/16 beat SPY 10.4%; worst drop median -49%.
 - Placebo: 10.3% of 1,000 random schedules (same switches/time in) beat it (median 10.6%) -> signal helps, weakly.

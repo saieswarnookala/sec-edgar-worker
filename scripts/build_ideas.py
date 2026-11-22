@@ -58,9 +58,10 @@ add("us_earnings_drift", "Earnings drift, blend of 9 (paper bot 3, Alpaca $100k)
     "~13%/yr before tax, worst -51%; out-of-sample 2004-2015 ok, faded since 2021.", "Watch on paper.", "data/earnings_drift_pit.json, data/paper_drift_state.json", "scripts/paper-drift.mjs", "paper-drift.yml", None, G)
 # --- tweaks tested on the dip bot
 G = "US dip bot tweaks"
-add("us_dip_v3_0_lev2x", "v3.0 with 1.5x / 2x leverage on dip stocks (2x ETF or margin)", "US", "TESTING", "2026-11-22",
+add("us_dip_v3_0_lev2x", "v3.0 with 1.5x / 2x leverage on dip stocks (2x ETF or margin)", "US", "WATCH", "2026-11-22",
     "Same signals; each dip stock held at 1.5x or 2x. Costs: 2x-ETF style (borrow + 1.1% fee) or margin (T-bill + 3%). Variant: leverage only when SPY > 100-day.",
-    "Running (data/lev_single.json).", "Pending.", "data/lev_single.json", "scripts/lev_single.py", "lev-single.yml", sim(etf=True, bond=True, lev=2.0, lev_cost=0.016, **LIVE), G)
+    "1999-2026 realistic: 1x 16.6%/yr (worst -27%), 1.5x 20.2% (-34%), 2x 23.7% (-41%); margin costs ~same; 2x only in uptrends 19.7% (-41%). Return and drops scale together.",
+    "Watch: a 1.5x margin version is possible later (needs $2k+ margin equity); not before v3.0 is live.", "data/lev_single.json", "scripts/lev_single.py", "lev-single.yml", sim(etf=True, bond=True, lev=2.0, lev_cost=0.016, **LIVE), G)
 add("us_dip_vix_gate", "VIX gate on the dip bot", "US", "DROPPED", "2026-11-21", "Only buy dips when VIX is in a chosen band.",
     "Did not fix the weak 2013-2019 stretch (best ~9.3%/yr).", "Dropped.", "data/vix_gate.json", "scripts/vix_gate.py", "vix-gate.yml", script("scripts/vix_gate.py"), G)
 add("us_dip_sector_relative", "Sector-relative dips", "US", "DROPPED", "2026-11-20", "Measure the dip against the stock's sector ETF instead of SPY (or both).",
@@ -94,9 +95,11 @@ add("us_spy_2x_trend200_band2", "2x S&P 500 with a 200-day trend filter (2% band
     "SPY 1994-2026: 14.4%/yr, worst -42% vs SPY 10.4% / -55%. Robustness: 16 nearby settings 7.7-15.4% (median 12.5); 10% of random schedules beat it; "
     "works on Nasdaq/intl, fails on small caps/EM/Dow; helps in slow bears (2000-02, 2008), hurts in fast ones (2020 -40%, 2018 -27%); 21 of 23 start years beat SPY.",
     "Watch: real but fragile; at most a small Roth sleeve.", "data/three_markets.json, data/lev_robust.json", "scripts/three_markets.py, scripts/lev_robust.py", "lev-robust.yml", script("scripts/lev_robust.py"), G)
-add("us_single_stock_2x_trend", "2x single stocks (Oracle-style ETFs) with a trend filter", "US", "TESTING", "2026-11-22",
+add("us_single_stock_2x_trend", "2x single stocks (Oracle-style ETFs) with a trend filter", "US", "DROPPED", "2026-11-22",
     "Hold a stock at 2x while it is 2% above its 200-day average, else T-bills. Fair test: every S&P 500 member on 2000-01-03 (incl. losers); hindsight list: ORCL, NVDA, TSLA...",
-    "Running.", "Pending.", "data/lev_single.json", "scripts/lev_single.py", "lev-single.yml", script("scripts/lev_single.py"), G)
+    "Fair test (317 stocks from 2000): 2x + trend 4.8%/yr = 1x hold 4.8%, 43 stocks wiped out (-90%+); beat 1x hold in only 25% of stocks. Oracle since 2000: 2x trend -3.7%/yr vs hold 6.6%. "
+    "Hindsight list looks great (39%) only because those stocks won. Real 2x ETFs did worse than the simulation (NVDL +830% vs +1,799% simulated).",
+    "Dropped.", "data/lev_single.json", "scripts/lev_single.py", "lev-single.yml", script("scripts/lev_single.py"), G)
 add("us_clear_leader_v2", "Clear Leader v2.0 (monthly ETF leader)", "US", "TOOL", "2026-11-04", "Monthly: hold the strongest of a small ETF set (124,416-combo grid).",
     "13.6%/yr, worst -43%.", "Kept only to choose where idle dip money parks.", "data/clear_leader*.json", "", "", None, G)
 add("us_quality_screener", "Quality at a fair price screener", "US", "TOOL", "2026-11-14", "Profitable, growing, ROE >= 12%, FCF > 0, debt <= equity, P/E <= 40; rank half quality, half value; hold 12 months.",
