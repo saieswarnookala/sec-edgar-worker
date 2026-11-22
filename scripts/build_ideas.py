@@ -8,7 +8,8 @@ ST = {"LIVE": "Live (real money)", "NEXT": "Next live candidate", "KEEP": "Paper
       "MERGED": "Merged into a newer version", "TOOL": "Kept as a tool", "DROPPED": "Tested and dropped", "REF": "Reference / check"}
 LIVE = dict(fill="close", park="cl", cs=0.0008, ce=0.0003)
 def sim(**kw): return {"kind": "sim", "kw": kw}
-def script(path, env=None, args=""): return {"kind": "script", "path": path, "env": env or {}, "args": args}
+def script(path, env=None, args="", needs=""): return {"kind": "script", "path": path, "env": env or {}, "args": args, "needs": needs}
+ALPACA = {"scripts/atr_minute.py", "scripts/single_stock_rhythm.py", "scripts/pattern_match.py"}   # need Alpaca keys; no fake-data mode
 def mode(m): return script("scripts/india_pit.py", {"MODE": m}, "run")
 C = []
 def add(file, title, market, status, date, rules, result, verdict, data="", src="", wf="", run=None, group=""):
@@ -48,8 +49,9 @@ add("us_dip_short_interest_filter", "Skip dips in heavily shorted stocks (paper 
     "Live rules, but skip a dip if days-to-cover (FINRA short interest, 12-day lag) is 5 or more. Data only from Dec 2017.",
     "Small, noisy gain on 2018-2026 only.", "Watch on paper.", "data/short_dips.json", "scripts/short_dips.py; stack_and_rebound.py (short=True)", "short-dips.yml", sim(short=True, **LIVE), G)
 add("us_dip_tuned_etf", "Tuned dip settings + ETF dips (paper bot 6)", "US", "WATCH", "2026-11-16",
-    "Tuned version of the dip rules (settings in scripts/paper-dip.mjs) plus the ETF sleeve.", "Backtest ~19.4%/yr in the 52-week-high test runs (ideal fills).",
-    "Watch on paper.", "data/dip_rank_52w.json", "scripts/paper-dip.mjs", "paper-dip.yml", script("scripts/paper-dip.mjs"), G)
+    "Dip of 8% (instead of 10%) vs SPY over 5 days, above the 150-day average (instead of 200), hold up to 7 days (instead of 5), plus the ETF-dip sleeve.",
+    "Nov 15 combination test 1999-2026 (ideal fills): 20.9%/yr, worst -19%.", "Watch on paper.", "data/dip_rank_52w.json",
+    "scripts/stack_and_rebound.py (make_sig dip=0.08 ma=150, mhs=7), scripts/paper-dip.mjs (TUNED)", "paper-dip.yml", sim(etf=True, mhs=7, make_sig={"dip": 0.08, "ma": 150}, **LIVE), G)
 add("us_dip_drift_6_4_mix", "6 dip slots + 4 earnings-drift slots (paper bot 7)", "US", "MERGED", "2026-11-11",
     "One account: 6 dip slots + 4 drift slots (caps matter).", "2004-2026 realistic 15.8%/yr (ideal 19.1%), after tax 12.3%, worst -24%; 45 nearby versions beat SPY.",
     "Replaced by v3.1.", "data/v3_drift.json, data/paper_mix_state.json", "scripts/stack_and_rebound.py (drift=4)", "", sim(drift=4, **LIVE), G)
@@ -103,7 +105,7 @@ add("us_single_stock_2x_trend", "2x single stocks (Oracle-style ETFs) with a tre
 add("us_clear_leader_v2", "Clear Leader v2.0 (monthly ETF leader)", "US", "TOOL", "2026-11-04", "Monthly: hold the strongest of a small ETF set (124,416-combo grid).",
     "13.6%/yr, worst -43%.", "Kept only to choose where idle dip money parks.", "data/clear_leader*.json", "", "", None, G)
 add("us_quality_screener", "Quality at a fair price screener", "US", "TOOL", "2026-11-14", "Profitable, growing, ROE >= 12%, FCF > 0, debt <= equity, P/E <= 40; rank half quality, half value; hold 12 months.",
-    "2013-2026 15.8%/yr vs SPY 14.0%; 9 of 11 nearby versions beat SPY.", "Kept as the dashboard screener.", "data/screener_backtest*.json", "scripts/screener_backtest.py", "", script("scripts/screener_backtest.py"), G)
+    "2013-2026 15.8%/yr vs SPY 14.0%; 9 of 11 nearby versions beat SPY.", "Kept as the dashboard screener.", "data/screener_backtest*.json", "scripts/screener_backtest.py", "", script("scripts/screener_backtest.py", needs="sec"), G)
 add("us_net_buybacks", "Net buybacks (top 10 share shrinkers)", "US", "WATCH", "2026-11-12", "Monthly: 10 S&P 500 stocks whose share count fell most over a year; hold >= 63 days.",
     "17.8%/yr vs SPY 13.9%, worst -43%; but one stock (WDC) added ~30 pts and it beat SPY in only 8 of 16 years.", "Maybe later as a small sleeve.", "data/new_ideas_buyback2.json", "docs/BUYBACKS.md", "", None, G)
 for f, t, d, r, res, data, src in (
@@ -127,7 +129,8 @@ for f, t, d, r, res, data, src in (
     ("us_pattern_matching", "Pattern matching / lookalikes", "2026-11-14", "Nearest-neighbour on the last 10-40 daily moves.", "Nothing real.", "data/pattern_match.json", "scripts/pattern_match.py"),
     ("us_volatile_bounce", "Volatile-stock bounce", "2026-11-14", "~10k bounce scenarios on volatile names.", "Filters help a little; no tradable edge.", "data/volatile_bounce_*.json", "scripts/volatile_bounce.py"),
     ("us_covered_call_etfs", "Covered-call ETFs (JEPI, QYLD)", "2026-11-22", "Hold covered-call income ETFs.", "Since 2020: JEPI 10.2%, QYLD 8.5% vs SPY 15.5%.", "", "research report")):
-    add(f, t, "US", "DROPPED", d, r, res, "Dropped.", data, src, "", script(src) if src.startswith("scripts/") and src.endswith(".py") else None, G)
+    nd = "alpaca" if src in ALPACA else ("internet (federalreserve.gov)" if src == "scripts/calendar_effects.py" else "")
+    add(f, t, "US", "DROPPED", d, r, res, "Dropped.", data, src, "", script(src, needs=nd) if src.startswith("scripts/") and src.endswith(".py") else None, G)
 # ======================================================================= Global / crypto / currency
 G = "Global, crypto and currency"
 add("gl_bitcoin_10month_trend", "Bitcoin 10-month trend", "Global", "WATCH", "2026-11-20", "Hold Bitcoin (spot ETF) while above its 10-month average, else cash; checked monthly.",
@@ -205,14 +208,19 @@ Generated by scripts/build_ideas.py - edit the entry there, not this file.
     elif r["kind"] == "sim":
         code = ("SETTINGS = " + repr(r["kw"]) + "\n\ndef run():\n"
                 "    import os, sys\n    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'scripts'))\n"
-                "    import stack_and_rebound as S\n    curve, trades = S.sim(**SETTINGS)\n    out = S.summ(curve, trades)\n"
+                "    import stack_and_rebound as S\n    kw = dict(SETTINGS)\n    if 'make_sig' in kw: kw['sig'] = S.make_sig(**kw.pop('make_sig'))\n"
+                "    curve, trades = S.sim(**kw)\n    out = S.summ(curve, trades)\n"
                 "    for k, v in out.items(): print(f'{k:28s} {v}')\n    return out\n")
     else:
-        code = (f"COMMAND = {r['path']!r}\nENV = {r['env']!r}\nARGS = {r['args']!r}\n\ndef run():\n"
-                "    import os, subprocess, sys\n    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')\n"
+        code = (f"COMMAND = {r['path']!r}\nENV = {r['env']!r}\nARGS = {r['args']!r}\nNEEDS = {r.get('needs', '')!r}   # '' = runs on fake data (DRY=1); 'alpaca' / 'sec' = needs real data (keys / internet)\n\ndef run():\n"
+                "    import os, subprocess, sys, py_compile\n    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')\n"
+                "    if (NEEDS == 'alpaca' and not os.environ.get('APCA_API_KEY_ID')) or (NEEDS and os.environ.get('DRY') == '1'):\n"
+                "        py_compile.compile(os.path.join(root, COMMAND), doraise=True)\n"
+                "        print(f'SKIP: {COMMAND} compiles fine but has no fake-data mode; it needs real {NEEDS} data - run it on GitHub for a real run.'); return 0\n"
                 "    if COMMAND.endswith('.mjs'): cmd = ['node', COMMAND] + ARGS.split()\n    else: cmd = [sys.executable, '-u', COMMAND] + ARGS.split()\n"
-                "    return subprocess.call(cmd, cwd=root, env={**os.environ, **ENV})\n")
-    return hdr + "IDEA = " + pprint.pformat(idea, width=150, sort_dicts=False) + "\n\n" + code + "\nif __name__ == '__main__':\n    run()\n"
+                "    env = {**os.environ, **ENV}\n    if env.get('DRY') == '1': env.setdefault('DRY_FAKE', '1')   # some older scripts use DRY_FAKE for fake data\n"
+                "    return subprocess.call(cmd, cwd=root, env=env)\n")
+    return hdr + "IDEA = " + pprint.pformat(idea, width=150, sort_dicts=False) + "\n\n" + code + "\nif __name__ == '__main__':\n    import sys\n    rc = run()\n    sys.exit(rc if isinstance(rc, int) else 0)\n"
 def main():
     os.makedirs("ideas", exist_ok=True)
     for f in os.listdir("ideas"):

@@ -36,4 +36,6 @@ def run():
     print("No standalone re-run for this idea; see WHERE above (data file and script).")
 
 if __name__ == '__main__':
-    run()
+    import sys
+    rc = run()
+    sys.exit(rc if isinstance(rc, int) else 0)

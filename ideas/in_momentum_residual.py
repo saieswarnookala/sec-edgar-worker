@@ -35,13 +35,21 @@ IDEA = {'file': 'in_momentum_residual',
 COMMAND = 'scripts/india_pit.py'
 ENV = {'MODE': 'slowtax'}
 ARGS = 'run'
+NEEDS = ''   # '' = runs on fake data (DRY=1); 'alpaca' / 'sec' = needs real data (keys / internet)
 
 def run():
-    import os, subprocess, sys
+    import os, subprocess, sys, py_compile
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+    if (NEEDS == 'alpaca' and not os.environ.get('APCA_API_KEY_ID')) or (NEEDS and os.environ.get('DRY') == '1'):
+        py_compile.compile(os.path.join(root, COMMAND), doraise=True)
+        print(f'SKIP: {COMMAND} compiles fine but has no fake-data mode; it needs real {NEEDS} data - run it on GitHub for a real run.'); return 0
     if COMMAND.endswith('.mjs'): cmd = ['node', COMMAND] + ARGS.split()
     else: cmd = [sys.executable, '-u', COMMAND] + ARGS.split()
-    return subprocess.call(cmd, cwd=root, env={**os.environ, **ENV})
+    env = {**os.environ, **ENV}
+    if env.get('DRY') == '1': env.setdefault('DRY_FAKE', '1')   # some older scripts use DRY_FAKE for fake data
+    return subprocess.call(cmd, cwd=root, env=env)
 
 if __name__ == '__main__':
-    run()
+    import sys
+    rc = run()
+    sys.exit(rc if isinstance(rc, int) else 0)

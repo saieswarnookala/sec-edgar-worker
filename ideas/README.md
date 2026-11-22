@@ -38,7 +38,7 @@ File names: `<market>_<strategy>_<tweak>.py` (us = US, in = India, gl = global /
 | Watching / maybe later | Dip bot v3.2 = v3.0 + intraday dip buys every 15 min + 5% profit target (paper bot 12) | 2016-2026 5-minute replay 30.5%/yr vs v3.0 27.2%; 2x costs 27.9 vs 25.4; better in 9 of 11 years (worse 2023, 2024). | [us_dip_v3_2_intraday_target5.py](us_dip_v3_2_intraday_target5.py) |
 | Watching / maybe later | Volatility-sized dip buys (paper bot 2) | 16.1%/yr, worst -25% vs 14.9% / -26% (gain mostly 2008-09); 4 of 4 versions better. | [us_dip_vol_sizing.py](us_dip_vol_sizing.py) |
 | Watching / maybe later | Skip dips in heavily shorted stocks (paper bot 8) | Small, noisy gain on 2018-2026 only. | [us_dip_short_interest_filter.py](us_dip_short_interest_filter.py) |
-| Watching / maybe later | Tuned dip settings + ETF dips (paper bot 6) | Backtest ~19.4%/yr in the 52-week-high test runs (ideal fills). | [us_dip_tuned_etf.py](us_dip_tuned_etf.py) |
+| Watching / maybe later | Tuned dip settings + ETF dips (paper bot 6) | Nov 15 combination test 1999-2026 (ideal fills): 20.9%/yr, worst -19%. | [us_dip_tuned_etf.py](us_dip_tuned_etf.py) |
 | Watching / maybe later | Earnings drift, blend of 9 (paper bot 3, Alpaca $100k) | ~13%/yr before tax, worst -51%; out-of-sample 2004-2015 ok, faded since 2021. | [us_earnings_drift.py](us_earnings_drift.py) |
 | Merged into a newer version | ETF dips in free slots (paper bot 5) | Combined 17.1%/yr, worst -22.4% vs 14.9% / -26.7%; better in both halves. | [us_dip_etf_sleeve.py](us_dip_etf_sleeve.py) |
 | Merged into a newer version | Bonds instead of cash when stocks are weak (paper bot 9) | Adds ~0.5-1%/yr with the same worst drop. | [us_dip_bonds_parking.py](us_dip_bonds_parking.py) |

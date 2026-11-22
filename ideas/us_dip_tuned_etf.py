@@ -2,17 +2,18 @@
 Market: US | Status: Watching / maybe later | First tested: 2026-11-16 | Group: US dip bot family
 
 RULES
-Tuned version of the dip rules (settings in scripts/paper-dip.mjs) plus the ETF sleeve.
+Dip of 8% (instead of 10%) vs SPY over 5 days, above the 150-day average (instead of 200), hold up to 7 days (instead of 5), plus the ETF-
+dip sleeve.
 
 RESULT
-Backtest ~19.4%/yr in the 52-week-high test runs (ideal fills).
+Nov 15 combination test 1999-2026 (ideal fills): 20.9%/yr, worst -19%.
 
 VERDICT
 Watch on paper.
 
 WHERE
   data:     data/dip_rank_52w.json
-  script:   scripts/paper-dip.mjs
+  script:   scripts/stack_and_rebound.py (make_sig dip=0.08 ma=150, mhs=7), scripts/paper-dip.mjs (TUNED)
   workflow: .github/workflows/paper-dip.yml
 
 RE-RUN
@@ -24,24 +25,29 @@ IDEA = {'file': 'us_dip_tuned_etf',
  'market': 'US',
  'status': 'WATCH',
  'date': '2026-11-16',
- 'rules': 'Tuned version of the dip rules (settings in scripts/paper-dip.mjs) plus the ETF sleeve.',
- 'result': 'Backtest ~19.4%/yr in the 52-week-high test runs (ideal fills).',
+ 'rules': 'Dip of 8% (instead of 10%) vs SPY over 5 days, above the 150-day average (instead of 200), hold up to 7 days (instead of 5), plus the '
+          'ETF-dip sleeve.',
+ 'result': 'Nov 15 combination test 1999-2026 (ideal fills): 20.9%/yr, worst -19%.',
  'verdict': 'Watch on paper.',
  'data': 'data/dip_rank_52w.json',
- 'script': 'scripts/paper-dip.mjs',
+ 'script': 'scripts/stack_and_rebound.py (make_sig dip=0.08 ma=150, mhs=7), scripts/paper-dip.mjs (TUNED)',
  'workflow': 'paper-dip.yml',
  'group': 'US dip bot family'}
 
-COMMAND = 'scripts/paper-dip.mjs'
-ENV = {}
-ARGS = ''
+SETTINGS = {'etf': True, 'mhs': 7, 'make_sig': {'dip': 0.08, 'ma': 150}, 'fill': 'close', 'park': 'cl', 'cs': 0.0008, 'ce': 0.0003}
 
 def run():
-    import os, subprocess, sys
-    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-    if COMMAND.endswith('.mjs'): cmd = ['node', COMMAND] + ARGS.split()
-    else: cmd = [sys.executable, '-u', COMMAND] + ARGS.split()
-    return subprocess.call(cmd, cwd=root, env={**os.environ, **ENV})
+    import os, sys
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'scripts'))
+    import stack_and_rebound as S
+    kw = dict(SETTINGS)
+    if 'make_sig' in kw: kw['sig'] = S.make_sig(**kw.pop('make_sig'))
+    curve, trades = S.sim(**kw)
+    out = S.summ(curve, trades)
+    for k, v in out.items(): print(f'{k:28s} {v}')
+    return out
 
 if __name__ == '__main__':
-    run()
+    import sys
+    rc = run()
+    sys.exit(rc if isinstance(rc, int) else 0)

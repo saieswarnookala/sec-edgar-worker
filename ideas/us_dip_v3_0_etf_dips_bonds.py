@@ -42,10 +42,14 @@ def run():
     import os, sys
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'scripts'))
     import stack_and_rebound as S
-    curve, trades = S.sim(**SETTINGS)
+    kw = dict(SETTINGS)
+    if 'make_sig' in kw: kw['sig'] = S.make_sig(**kw.pop('make_sig'))
+    curve, trades = S.sim(**kw)
     out = S.summ(curve, trades)
     for k, v in out.items(): print(f'{k:28s} {v}')
     return out
 
 if __name__ == '__main__':
-    run()
+    import sys
+    rc = run()
+    sys.exit(rc if isinstance(rc, int) else 0)

@@ -9,6 +9,7 @@ Removed stocks that keep trading are measured to their last price if they stop t
 from dropping them). Removals with no price after the end date (mostly takeovers) can't be bought and are skipped.
 Returns after 0.2% round-trip costs, vs SPY; t-stats average events per day first."""
 import os, json, urllib.request
+OUT_IC = "data/index_changes.json" if os.environ.get("DRY") != "1" else "/tmp/index_changes_dry.json"   # never overwrite real results in a test run
 import numpy as np, pandas as pd
 REL = "https://github.com/Johnbrick123/sp500-data/releases/download/snapshot-2026-11/"
 for f in ["prices.parquet", "membership_intervals.parquet"]:
@@ -64,5 +65,5 @@ for half, a, b in (("1999-2026", "1999", "2100"), ("1999-2012", "1999", "2013"),
     for k, v in RES[half].items():
         print(half, f"{k:55s} n={v['events']:4d} ", " | ".join(f"{h}d {v[f'{h}d']['vs_spy_pct']:+.2f}% (t {v[f'{h}d']['t_stat']})" for h in H if f"{h}d" in v and k.startswith("add: last") is False or (f"{h}d" in v and h == 5)), flush=True)
 json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "additions": len(adds), "removals_tradeable": len(rems), "results": RES},
-          open("data/index_changes.json", "w"), indent=1, default=float)
-print("wrote data/index_changes.json")
+          open(OUT_IC, "w"), indent=1, default=float)
+print("wrote", OUT_IC)
