@@ -1301,6 +1301,7 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="volsize">Volatility sizing (paper)</button>
       <button type="button" data-sub="tuned">Tuned dip (paper)</button>
       <button type="button" data-sub="shortf">Short-interest filter (paper)</button>
+      <button type="button" data-sub="inmonth">India momentum: this month's 20</button>
       <button type="button" data-sub="indiapit">India: real numbers (NSE data)</button>
       <button type="button" data-sub="indiadip">India: dip + Nifty trend</button>
       <button type="button" data-sub="india">India: Nifty + gold (ETFs)</button>
@@ -1460,6 +1461,7 @@ dash.calc('vs_industry', {
         <p class="sx-cap">Better in both halves (2004–2014: 14.9 vs 12.7%; 2015–2026: 24.6 vs 23.5%) and with realistic costs (16.3 vs 14.3%). Nearby versions (4% or 6% beat, 40-day hold) all add +1.3 to +2.2%/yr; 3 drift slots add more but raise the worst drop. About 8 drift trades a year, +5% each on average. Earnings dates start Aug 2004. Data: data/v3_drift.json.</p></div>
     </div>
     <p class="sx-cap" style="margin-top:12px">Daily trades, holdings and the comparison with SPY are on the <button type="button" class="sx-linkbtn" data-gopaper="1">Paper bots tab</button> (card 11).</p></div></div>
+    <div class="sx-tr-panel" data-panel="inmonth" id="trading-inmonth" hidden><div class="im-out"><div class="sx-card"><p class="sx-cap">Loading this month's basket…</p></div></div></div>
 <!-- INDIA-PIT START -->
     <div class="sx-tr-panel" data-panel="indiapit" id="trading-indiapit" hidden>
     <div class="sx-card ip-wrap" data-tax="bt"><div class="sx-ch"><h3>India: real numbers on survivorship-free NSE data (2009–2026)</h3></div>
@@ -2495,7 +2497,7 @@ dash.calc('vs_industry', {
     return e;
   };
   // "Day trading" shows only the strategies we paper trade or rely on; everything else lives under "Tested strategies"
-  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
+  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'inmonth', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
   const ALLSUBS = ['overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc', 'mix', 'leaders', 'shorts', 'live'];
   let mode = 'trading';
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
@@ -2581,11 +2583,64 @@ dash.calc('vs_industry', {
     };
     q('.sx-calc-yrs').value = st.yrs; draw();
   };
+
+  // India momentum: this month's 20 (from paper bot 13's state, rebuilt on every deploy)
+  let imAmt = 100000;
+  const drawInMonth = async () => {
+    const out = tq('#trading-inmonth .im-out'); if (!out) return;
+    const esc = (x) => String(x ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const rs = (v) => '₹' + Math.round(v).toLocaleString('en-IN');
+    const day = (d) => { const [y, m, dd] = d.split('-'); return new Date(+y, +m - 1, +dd).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); };
+    let b;
+    try { b = ((await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json()).bots || {}).inmom; } catch (e) { b = null; }
+    const L = b && b.latest;
+    if (!L) { out.innerHTML = '<div class="sx-card"><p class="sx-cap">No reshuffle recorded yet. The bot runs every weekday at 7:15 pm IST.</p></div>'; return; }
+    const [y, m] = L.day.split('-').map(Number); const nx = new Date(y, m, 1); while (nx.getDay() % 6 === 0) nx.setDate(nx.getDate() + 1);
+    const nxt = nx.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    const N = (L.hold || []).length || 20, per0 = ((L.equity || 0) + (L.cost || 0)) / N, val = Object.fromEntries((b.holdings || []).map((x) => [x.s, x.v]));
+    const buys = new Set(L.buys || []);
+    const rows = (L.hold || []).slice().sort((p, q) => (buys.has(q) - buys.has(p)) || p.localeCompare(q)).map((s, i) => {
+      const px = (L.price || {})[s], sh = px ? Math.floor(imAmt / N / px) : null, since = val[s] && per0 ? (val[s] / per0 - 1) * 100 : null;
+      return `<tr><td>${i + 1}</td><td><a href="https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(s)}" target="_blank" rel="noopener">${esc(s)}</a></td>
+        <td>${buys.has(s) ? '<span class="sx-good">New</span>' : 'Kept'}</td><td>${px ? '₹' + px.toLocaleString('en-IN') : '—'}</td>
+        <td><b>${sh ?? '—'}</b>${sh === 0 ? ' <span class="sx-cap">(amount too small)</span>' : ''}</td>
+        <td class="${since == null ? '' : since >= 0 ? 'sx-good' : 'sx-bad'}">${since == null ? '—' : (since >= 0 ? '+' : '−') + Math.abs(since).toFixed(1) + '%'}</td></tr>`;
+    }).join('');
+    const sig = L.inside
+      ? `<span class="sx-cl-hold sx-good">Invested: hold these ${N} stocks</span><span class="sx-cap">equal amounts, ${(100 / N).toFixed(0)}% each</span>`
+      : `<span class="sx-cl-hold">Crash filter ON: hold ${L.hide === 'GOLDBEES' ? 'GOLDBEES (gold ETF)' : 'a liquid fund'}</span><span class="sx-cap">Nifty is below its 100-day average</span>`;
+    out.innerHTML = `
+    <div class="sx-card"><h3>This month's basket</h3>
+      <div class="sx-cl-sig">${sig}</div>
+      <p class="sx-cap">Picked at the NSE close on <b>${day(L.day)}</b>. Next reshuffle: the first NSE trading day of next month (around <b>${nxt}</b>, later if it's a holiday). The alert arrives about 7:15 pm IST that evening; place orders the next morning.</p>
+      ${L.inside ? `<div class="ip-ctl" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
+        <label for="im-amt"><b>Your amount (₹)</b></label><input id="im-amt" class="sx-exch" type="number" min="10000" step="10000" value="${imAmt}" style="width:140px">
+        <span class="sx-cap">${rs(imAmt / N)} per stock</span></div>
+      <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>NSE stock</th><th>This month</th><th>Price at pick</th><th>Shares to buy</th><th>Since pick (paper)</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p class="sx-cap">Shares are rounded down, so a little cash is left over. Prices move overnight; buy at the market price the next morning. "Since pick" is the virtual bot's result for that stock since ${day(L.day)}.</p>` : ''}
+      <h4 style="margin-top:12px">Changes this month</h4><ul class="sx-notes">
+        <li><b>Sell:</b> ${(L.sells || []).length ? L.sells.map(esc).join(', ') : 'none'}</li>
+        <li><b>Buy:</b> ${(L.buys || []).length ? L.buys.map(esc).join(', ') : 'none'}</li>
+        <li><b>Keep:</b> ${(L.hold || []).filter((x) => !buys.has(x)).map(esc).join(', ') || 'none'}</li></ul></div>
+    <div class="sx-card"><h3>How to follow it</h3><ol class="sx-notes">
+      <li><b>Start:</b> put the same amount in each of the ${N} stocks above (the share counts do the math).</li>
+      <li><b>Once a month</b> (first NSE trading day): check this tab or the alert. Sell the <b>Sell</b> list, buy the <b>Buy</b> list, then top up or trim so each stock is about ${(100 / N).toFixed(0)}% again. Usually 4–6 swaps, 8–12 orders.</li>
+      <li><b>Crash filter:</b> if this tab says "Crash filter ON", sell all ${N} and hold GOLDBEES (when gold is trending up) or a liquid fund until a later monthly check shows Nifty back above its 100-day average.</li>
+      <li><b>Don't trade in between.</b> No stop-losses (they made it worse in tests). Use a delivery (CNC) order, not intraday.</li>
+      <li><b>Tax (India):</b> most sales are within a year, so short-term gains tax at 20% (+cess); about 0.3% per trade in charges and slippage.</li></ol></div>
+    <div class="sx-card"><h3>What to expect</h3>
+      <div class="sx-stats"><div class="sx-stat"><span>Plan on (before tax)</span><b>25–28%/yr</b></div><div class="sx-stat"><span>After tax (est.)</span><b>~20–22%/yr</b></div><div class="sx-stat"><span>Bad-year drop</span><b class="sx-bad">−30 to −40%</b></div><div class="sx-stat"><span>Nifty 50 (2009–26)</span><b>~12%/yr</b></div></div>
+      <p class="sx-cap">The best backtest version made 32.6%/yr (worst drop −24%) on NSE data with delisted stocks included, 2009–2026. Robustness tests show that's the lucky end: reshuffling on other days of the month gave ~24–25% with bigger drops. In every test it beat both random stock picks and Nifty. Mostly mid and small caps; they can fall fast. Details: India: real numbers (NSE data).</p>
+      <p class="sx-cap"><b>Research from a backtest and a virtual paper bot, not investment advice.</b> For investors in India. US tax residents: Indian funds and ETFs (GOLDBEES, liquid funds) are PFICs.</p></div>`;
+    const inp = out.querySelector('#im-amt');
+    if (inp) inp.addEventListener('change', () => { const v = +inp.value; if (v > 0) { imAmt = v; drawInMonth(); } });
+  };
   const showSub = (k, link = true) => {
     sub = k;
     tqa('.sx-tr-tabs button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sub === k)));
     tqa('.sx-tr-panel').forEach((pn) => { pn.hidden = pn.dataset.panel !== k; });
     if (k === 'calc') initCalc();
+    if (k === 'inmonth') drawInMonth();
     if (link) dash.setLink(mode === 'trading' ? (k === 'dip' ? 'trading' : 'trading-' + k) : (k === 'overview' ? 'tested' : 'tested-' + k));
   };
   const setMode = (m, link = true, k) => {
