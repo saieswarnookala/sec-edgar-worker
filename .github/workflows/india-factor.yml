@@ -25,6 +25,7 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
+          if [ "${{ inputs.mode }}" = probe2 ]; then python -u scripts/nifty_tri_probe.py; exit 0; fi
           set -o pipefail; MODE=${{ inputs.mode }} python -u scripts/india_factor.py 2>&1 | grep -v "^r2cache: loaded" | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
       - name: Commit
         if: inputs.mode == 'run'
