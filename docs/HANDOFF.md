@@ -188,7 +188,7 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   30 stocks: all worse or no better (weekly 20.2% dd -58.8). Picked among 19 variants -> some luck; 100-day is the middle MA choice.
 ### India momentum paper bot (from Nov 20 2026) - scripts/paper_india_mom.py, .github/workflows/paper-india-mom.yml, data/paper_india_mom_state.json
 - Picked rules: top 500 NSE by traded value (Jan/Jul re-pick), (6m+12m)/vol, 20 stocks equal weight, first trading day each month at close, buffer top 30,
-  crash filter Nifty < 200d -> GOLDBEES (if gold > 100d) else liquid 6%. 0.30%/side. Rs 10 lakh virtual. Daily 7:15 pm IST cron, catches up missed days.
+  crash filter Nifty < 100d (FILTER_MA, changed Nov 21 from 200d; twin with 200d in data/paper_india_mom200_state.json, no alerts) -> GOLDBEES (if gold > 100d) else liquid 6%. 0.30%/side. Rs 10 lakh virtual. Daily 7:15 pm IST cron, catches up missed days.
 - Data from NSE bhavcopy R2 cache (tops up the last 40 days). Alerts to NTFY_TOPIC_INDIA (sells / buys with shares per Rs 1 lakh / keeps). Tests: test-india-mom.py.
 ### Nov 21 India on SURVIVORSHIP-FREE NSE bhavcopy (data/india_pit.json, 2009-2026, R2 nse/bhav/<year>.json.gz; price only, 0.30%/side)
 - Splits/bonuses: bhavcopy PREVCLOSE unadjusted -> gaps <= -18% treated as corporate actions (8,442 days); checks vs Yahoo match within dividends.
