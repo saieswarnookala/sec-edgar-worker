@@ -1,0 +1,798 @@
+{
+ "note": "India via US-listed ETFs for Sai's Roth IRA (Nov 22 2026), test #10 of the India strategy report. No PFIC, no India tax, no tax on switching in a Roth.\nETFs (Yahoo adjusted closes, so dividends and fund fees are included): INDA (MSCI India, 2012), SMIN (India small cap, 2012), EPI (WisdomTree India earnings, 2008),\nINDY (India 50, 2009), GLD (gold), BIL (T-bills = cash), SPY. Tracking check: INDA vs Nifty 50 (^NSEI, price only) converted to USD with INR=X.\nRules: signal on the month-end close, trade the NEXT day's close. Cost 0.05% per buy and per sell (ETF spread). Roth: before tax = after tax.\nDRY=1: fake prices (code test).",
+ "built": "2026-11-22",
+ "dry": null,
+ "common_start": "2013-03-01",
+ "rules": {
+  "Buy & hold INDA": {
+   "all": {
+    "cagr": 6.7,
+    "total": 141.7,
+    "dd": -45.1
+   },
+   "2012_2019": {
+    "cagr": 6.1,
+    "total": 48.9,
+    "dd": -28.7
+   },
+   "2020_2026": {
+    "cagr": 7.1,
+    "total": 60.3,
+    "dd": -43.3
+   },
+   "test_2019_2026": {
+    "cagr": 7.4,
+    "total": 74.9,
+    "dd": -43.3
+   },
+   "2022": {
+    "cagr": null,
+    "total": -10.4,
+    "dd": -20.0
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold SMIN": {
+   "all": {
+    "cagr": 10.6,
+    "total": 295.5,
+    "dd": -60.5
+   },
+   "2012_2019": {
+    "cagr": 8.8,
+    "total": 76.2,
+    "dd": -40.3
+   },
+   "2020_2026": {
+    "cagr": 12.0,
+    "total": 118.1,
+    "dd": -45.4
+   },
+   "test_2019_2026": {
+    "cagr": 10.1,
+    "total": 113.1,
+    "dd": -47.7
+   },
+   "2022": {
+    "cagr": null,
+    "total": -15.8,
+    "dd": -24.8
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold EPI": {
+   "all": {
+    "cagr": 8.4,
+    "total": 199.2,
+    "dd": -50.3
+   },
+   "2012_2019": {
+    "cagr": 6.2,
+    "total": 49.9,
+    "dd": -30.7
+   },
+   "2020_2026": {
+    "cagr": 10.3,
+    "total": 96.5,
+    "dd": -44.4
+   },
+   "test_2019_2026": {
+    "cagr": 9.5,
+    "total": 104.4,
+    "dd": -46.2
+   },
+   "2022": {
+    "cagr": null,
+    "total": -6.5,
+    "dd": -20.0
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold INDY": {
+   "all": {
+    "cagr": 7.0,
+    "total": 150.8,
+    "dd": -43.5
+   },
+   "2012_2019": {
+    "cagr": 8.0,
+    "total": 68.2,
+    "dd": -30.1
+   },
+   "2020_2026": {
+    "cagr": 5.8,
+    "total": 47.4,
+    "dd": -43.5
+   },
+   "test_2019_2026": {
+    "cagr": 6.6,
+    "total": 65.1,
+    "dd": -43.5
+   },
+   "2022": {
+    "cagr": null,
+    "total": -8.9,
+    "dd": -20.0
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold SPY": {
+   "all": {
+    "cagr": 13.4,
+    "total": 455.5,
+    "dd": -33.7
+   },
+   "2012_2019": {
+    "cagr": 13.5,
+    "total": 135.7,
+    "dd": -19.3
+   },
+   "2020_2026": {
+    "cagr": 13.1,
+    "total": 133.5,
+    "dd": -33.7
+   },
+   "test_2019_2026": {
+    "cagr": 15.4,
+    "total": 209.0,
+    "dd": -33.7
+   },
+   "2022": {
+    "cagr": null,
+    "total": -18.6,
+    "dd": -24.5
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold GLD": {
+   "all": {
+    "cagr": 5.5,
+    "total": 108.7,
+    "dd": -35.0
+   },
+   "2012_2019": {
+    "cagr": -1.2,
+    "total": -7.6,
+    "dd": -35.0
+   },
+   "2020_2026": {
+    "cagr": 12.5,
+    "total": 124.3,
+    "dd": -34.9
+   },
+   "test_2019_2026": {
+    "cagr": 13.2,
+    "total": 166.1,
+    "dd": -34.9
+   },
+   "2022": {
+    "cagr": null,
+    "total": 0.8,
+    "dd": -21.0
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "Buy & hold 50% INDA + 50% SPY (rebalance monthly)": {
+   "all": {
+    "cagr": 10.4,
+    "total": 284.5,
+    "dd": -38.1
+   },
+   "2012_2019": {
+    "cagr": 10.2,
+    "total": 92.5,
+    "dd": -20.4
+   },
+   "2020_2026": {
+    "cagr": 10.4,
+    "total": 97.6,
+    "dd": -38.1
+   },
+   "test_2019_2026": {
+    "cagr": 11.7,
+    "total": 138.6,
+    "dd": -38.1
+   },
+   "2022": {
+    "cagr": null,
+    "total": -14.5,
+    "dd": -20.8
+   },
+   "switches_per_year": 0.1,
+   "start": "2013-04-01"
+  },
+  "10-month average rule: INDA or cash (BIL)": {
+   "all": {
+    "cagr": 4.2,
+    "total": 74.1,
+    "dd": -33.2
+   },
+   "2012_2019": {
+    "cagr": 1.7,
+    "total": 11.9,
+    "dd": -29.4
+   },
+   "2020_2026": {
+    "cagr": 6.5,
+    "total": 53.8,
+    "dd": -20.4
+   },
+   "test_2019_2026": {
+    "cagr": 4.8,
+    "total": 44.8,
+    "dd": -20.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -16.0,
+    "dd": -20.4
+   },
+   "switches_per_year": 2.3,
+   "start": "2013-04-01"
+  },
+  "10-month average rule: SMIN or cash (BIL)": {
+   "all": {
+    "cagr": 8.9,
+    "total": 220.9,
+    "dd": -34.7
+   },
+   "2012_2019": {
+    "cagr": 6.4,
+    "total": 52.4,
+    "dd": -31.3
+   },
+   "2020_2026": {
+    "cagr": 11.4,
+    "total": 110.5,
+    "dd": -23.0
+   },
+   "test_2019_2026": {
+    "cagr": 7.7,
+    "total": 79.4,
+    "dd": -23.0
+   },
+   "2022": {
+    "cagr": null,
+    "total": -17.4,
+    "dd": -23.0
+   },
+   "switches_per_year": 2.1,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / GLD / cash | best 6-month return | buffer 0%": {
+   "all": {
+    "cagr": 10.8,
+    "total": 304.8,
+    "dd": -31.1
+   },
+   "2012_2019": {
+    "cagr": 4.7,
+    "total": 36.4,
+    "dd": -22.1
+   },
+   "2020_2026": {
+    "cagr": 17.0,
+    "total": 194.6,
+    "dd": -31.1
+   },
+   "test_2019_2026": {
+    "cagr": 16.2,
+    "total": 225.9,
+    "dd": -31.1
+   },
+   "2022": {
+    "cagr": null,
+    "total": -19.5,
+    "dd": -23.7
+   },
+   "switches_per_year": 2.1,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / GLD / cash | best 6-month return | buffer 2%": {
+   "all": {
+    "cagr": 10.7,
+    "total": 300.8,
+    "dd": -32.5
+   },
+   "2012_2019": {
+    "cagr": 4.9,
+    "total": 37.8,
+    "dd": -27.1
+   },
+   "2020_2026": {
+    "cagr": 16.7,
+    "total": 188.6,
+    "dd": -32.5
+   },
+   "test_2019_2026": {
+    "cagr": 15.5,
+    "total": 211.9,
+    "dd": -32.5
+   },
+   "2022": {
+    "cagr": null,
+    "total": -21.1,
+    "dd": -25.2
+   },
+   "switches_per_year": 2.0,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / GLD / cash | best 12-month return | buffer 0%": {
+   "all": {
+    "cagr": 4.5,
+    "total": 81.5,
+    "dd": -39.4
+   },
+   "2012_2019": {
+    "cagr": -1.7,
+    "total": -11.0,
+    "dd": -39.4
+   },
+   "2020_2026": {
+    "cagr": 10.8,
+    "total": 102.5,
+    "dd": -28.3
+   },
+   "test_2019_2026": {
+    "cagr": 10.9,
+    "total": 125.9,
+    "dd": -28.3
+   },
+   "2022": {
+    "cagr": null,
+    "total": -11.5,
+    "dd": -19.9
+   },
+   "switches_per_year": 1.8,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / GLD / cash | best 12-month return | buffer 2%": {
+   "all": {
+    "cagr": 4.5,
+    "total": 82.8,
+    "dd": -33.0
+   },
+   "2012_2019": {
+    "cagr": -0.9,
+    "total": -6.0,
+    "dd": -33.0
+   },
+   "2020_2026": {
+    "cagr": 10.0,
+    "total": 93.0,
+    "dd": -29.5
+   },
+   "test_2019_2026": {
+    "cagr": 10.2,
+    "total": 115.3,
+    "dd": -29.5
+   },
+   "2022": {
+    "cagr": null,
+    "total": -15.7,
+    "dd": -23.6
+   },
+   "switches_per_year": 1.5,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SMIN / GLD / cash | best 6-month return | buffer 0%": {
+   "all": {
+    "cagr": 13.3,
+    "total": 450.4,
+    "dd": -45.4
+   },
+   "2012_2019": {
+    "cagr": 16.9,
+    "total": 187.2,
+    "dd": -19.3
+   },
+   "2020_2026": {
+    "cagr": 9.8,
+    "total": 90.3,
+    "dd": -45.4
+   },
+   "test_2019_2026": {
+    "cagr": 10.7,
+    "total": 123.0,
+    "dd": -45.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -23.6,
+    "dd": -28.8
+   },
+   "switches_per_year": 2.1,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SMIN / GLD / cash | best 6-month return | buffer 2%": {
+   "all": {
+    "cagr": 11.0,
+    "total": 315.3,
+    "dd": -44.4
+   },
+   "2012_2019": {
+    "cagr": 10.5,
+    "total": 96.3,
+    "dd": -25.6
+   },
+   "2020_2026": {
+    "cagr": 11.4,
+    "total": 110.0,
+    "dd": -42.4
+   },
+   "test_2019_2026": {
+    "cagr": 10.7,
+    "total": 123.3,
+    "dd": -42.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -25.1,
+    "dd": -30.2
+   },
+   "switches_per_year": 1.8,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SMIN / GLD / cash | best 12-month return | buffer 0%": {
+   "all": {
+    "cagr": 9.8,
+    "total": 258.6,
+    "dd": -29.0
+   },
+   "2012_2019": {
+    "cagr": 6.2,
+    "total": 50.4,
+    "dd": -26.3
+   },
+   "2020_2026": {
+    "cagr": 13.4,
+    "total": 136.8,
+    "dd": -29.0
+   },
+   "test_2019_2026": {
+    "cagr": 13.1,
+    "total": 163.6,
+    "dd": -29.0
+   },
+   "2022": {
+    "cagr": null,
+    "total": -21.0,
+    "dd": -27.5
+   },
+   "switches_per_year": 1.9,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SMIN / GLD / cash | best 12-month return | buffer 2%": {
+   "all": {
+    "cagr": 9.1,
+    "total": 229.1,
+    "dd": -30.3
+   },
+   "2012_2019": {
+    "cagr": 6.2,
+    "total": 50.4,
+    "dd": -26.2
+   },
+   "2020_2026": {
+    "cagr": 11.9,
+    "total": 117.2,
+    "dd": -30.3
+   },
+   "test_2019_2026": {
+    "cagr": 11.9,
+    "total": 141.8,
+    "dd": -30.3
+   },
+   "2022": {
+    "cagr": null,
+    "total": -21.0,
+    "dd": -27.5
+   },
+   "switches_per_year": 1.8,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / SMIN / GLD / cash | best 6-month return | buffer 0%": {
+   "all": {
+    "cagr": 10.7,
+    "total": 301.7,
+    "dd": -46.4
+   },
+   "2012_2019": {
+    "cagr": 12.0,
+    "total": 115.4,
+    "dd": -24.4
+   },
+   "2020_2026": {
+    "cagr": 9.4,
+    "total": 85.1,
+    "dd": -45.4
+   },
+   "test_2019_2026": {
+    "cagr": 9.5,
+    "total": 104.8,
+    "dd": -45.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -20.4,
+    "dd": -23.9
+   },
+   "switches_per_year": 2.8,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / SMIN / GLD / cash | best 6-month return | buffer 2%": {
+   "all": {
+    "cagr": 9.8,
+    "total": 258.7,
+    "dd": -47.4
+   },
+   "2012_2019": {
+    "cagr": 8.6,
+    "total": 74.3,
+    "dd": -30.3
+   },
+   "2020_2026": {
+    "cagr": 11.0,
+    "total": 104.3,
+    "dd": -42.4
+   },
+   "test_2019_2026": {
+    "cagr": 10.6,
+    "total": 120.7,
+    "dd": -42.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -22.0,
+    "dd": -25.4
+   },
+   "switches_per_year": 2.3,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / SMIN / GLD / cash | best 12-month return | buffer 0%": {
+   "all": {
+    "cagr": 8.5,
+    "total": 204.0,
+    "dd": -30.2
+   },
+   "2012_2019": {
+    "cagr": 3.6,
+    "total": 26.9,
+    "dd": -30.2
+   },
+   "2020_2026": {
+    "cagr": 13.4,
+    "total": 137.7,
+    "dd": -28.7
+   },
+   "test_2019_2026": {
+    "cagr": 13.2,
+    "total": 165.3,
+    "dd": -28.7
+   },
+   "2022": {
+    "cagr": null,
+    "total": -20.6,
+    "dd": -27.5
+   },
+   "switches_per_year": 2.1,
+   "start": "2013-04-01"
+  },
+  "Dual momentum INDA / SMIN / GLD / cash | best 12-month return | buffer 2%": {
+   "all": {
+    "cagr": 7.5,
+    "total": 166.7,
+    "dd": -33.3
+   },
+   "2012_2019": {
+    "cagr": 2.9,
+    "total": 21.4,
+    "dd": -33.3
+   },
+   "2020_2026": {
+    "cagr": 12.0,
+    "total": 118.1,
+    "dd": -30.0
+   },
+   "test_2019_2026": {
+    "cagr": 12.0,
+    "total": 143.3,
+    "dd": -30.0
+   },
+   "2022": {
+    "cagr": null,
+    "total": -20.6,
+    "dd": -27.5
+   },
+   "switches_per_year": 1.9,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SPY / INDA / GLD / cash (global) | best 6-month return | buffer 0%": {
+   "all": {
+    "cagr": 4.5,
+    "total": 82.9,
+    "dd": -50.1
+   },
+   "2012_2019": {
+    "cagr": 2.4,
+    "total": 17.1,
+    "dd": -32.3
+   },
+   "2020_2026": {
+    "cagr": 6.6,
+    "total": 54.8,
+    "dd": -33.7
+   },
+   "test_2019_2026": {
+    "cagr": 5.4,
+    "total": 51.1,
+    "dd": -35.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -22.6,
+    "dd": -23.6
+   },
+   "switches_per_year": 3.4,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SPY / INDA / GLD / cash (global) | best 6-month return | buffer 2%": {
+   "all": {
+    "cagr": 6.1,
+    "total": 124.2,
+    "dd": -42.0
+   },
+   "2012_2019": {
+    "cagr": 5.2,
+    "total": 40.9,
+    "dd": -26.2
+   },
+   "2020_2026": {
+    "cagr": 6.9,
+    "total": 57.7,
+    "dd": -34.8
+   },
+   "test_2019_2026": {
+    "cagr": 5.6,
+    "total": 53.9,
+    "dd": -35.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -24.1,
+    "dd": -25.1
+   },
+   "switches_per_year": 2.6,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SPY / INDA / GLD / cash (global) | best 12-month return | buffer 0%": {
+   "all": {
+    "cagr": 5.5,
+    "total": 108.4,
+    "dd": -32.3
+   },
+   "2012_2019": {
+    "cagr": 2.7,
+    "total": 19.6,
+    "dd": -32.3
+   },
+   "2020_2026": {
+    "cagr": 8.3,
+    "total": 73.0,
+    "dd": -32.2
+   },
+   "test_2019_2026": {
+    "cagr": 8.1,
+    "total": 85.2,
+    "dd": -32.2
+   },
+   "2022": {
+    "cagr": null,
+    "total": -18.5,
+    "dd": -23.1
+   },
+   "switches_per_year": 3.3,
+   "start": "2013-04-01"
+  },
+  "Dual momentum SPY / INDA / GLD / cash (global) | best 12-month return | buffer 2%": {
+   "all": {
+    "cagr": 4.6,
+    "total": 85.5,
+    "dd": -35.4
+   },
+   "2012_2019": {
+    "cagr": 4.8,
+    "total": 36.9,
+    "dd": -23.5
+   },
+   "2020_2026": {
+    "cagr": 4.4,
+    "total": 34.5,
+    "dd": -35.4
+   },
+   "test_2019_2026": {
+    "cagr": 4.4,
+    "total": 40.8,
+    "dd": -35.4
+   },
+   "2022": {
+    "cagr": null,
+    "total": -22.3,
+    "dd": -26.7
+   },
+   "switches_per_year": 2.5,
+   "start": "2013-04-01"
+  },
+  "Large vs small: INDA or SMIN, best 6-month return, cash if neither beats T-bills": {
+   "all": {
+    "cagr": 3.6,
+    "total": 62.0,
+    "dd": -61.4
+   },
+   "2012_2019": {
+    "cagr": 6.5,
+    "total": 53.3,
+    "dd": -32.3
+   },
+   "2020_2026": {
+    "cagr": 0.8,
+    "total": 5.7,
+    "dd": -46.1
+   },
+   "test_2019_2026": {
+    "cagr": -0.9,
+    "total": -6.9,
+    "dd": -51.0
+   },
+   "2022": {
+    "cagr": null,
+    "total": -13.9,
+    "dd": -17.7
+   },
+   "switches_per_year": 2.9,
+   "start": "2013-04-01"
+  },
+  "Large vs small: INDA or SMIN, best 12-month return, cash if neither beats T-bills": {
+   "all": {
+    "cagr": 4.8,
+    "total": 89.7,
+    "dd": -34.1
+   },
+   "2012_2019": {
+    "cagr": 3.1,
+    "total": 22.8,
+    "dd": -31.2
+   },
+   "2020_2026": {
+    "cagr": 6.3,
+    "total": 52.6,
+    "dd": -24.8
+   },
+   "test_2019_2026": {
+    "cagr": 5.6,
+    "total": 53.5,
+    "dd": -24.8
+   },
+   "2022": {
+    "cagr": null,
+    "total": -19.0,
+    "dd": -24.8
+   },
+   "switches_per_year": 1.8,
+   "start": "2013-04-01"
+  }
+ },
+ "tracking_inda_vs_nifty50_usd": {
+  "monthly_correlation": 0.968,
+  "inda_cagr": 5.9,
+  "nifty50_price_usd_cagr": 6.5,
+  "note": "Nifty 50 here is the PRICE index (no dividends, ~1.3%/yr); INDA includes dividends minus its 0.61%/yr fee",
+  "inr_change_per_year_pct": 4.4
+ }
+}
