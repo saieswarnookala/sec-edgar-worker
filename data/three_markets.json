@@ -1,0 +1,1160 @@
+{
+ "note": "Three non-stock-picking ideas (Nov 22 2026). Research only, not financial or tax advice.\nA) LEVERAGE WITH A TREND FILTER (Sai's Roth): hold 1x/2x/3x the S&P 500 while it is above its 200-day average, else T-bills\n   (\"Leverage for the long run\", Gayed & Bilello 2016). Simulated daily: L x index return - (L-1) x (T-bill + 0.5%) borrowing - fund fee\n   (1x 0.09%, 2x 0.89%, 3x 0.91%/yr), 0.05% per switch, signal at the close, trade the NEXT close. Tests: 1960-2026 on ^GSPC price index\n   (no dividends for anyone, so ~2-3 pts/yr low but fair between rows) and 1994-2026 on SPY total return; checked against the real SSO ETF (2006+).\n   Variants: 200-day daily, 200-day with a 2% band, 10-month (monthly). No tax (Roth).\nB) WHEN TO SEND USD -> INR (Sai): $1,000 saved each month. Baseline: convert on the 1st trading day of each month. Rules wait in T-bills\n   (^IRX) and convert when the dollar is strong (USD/INR above its 50-day average, or at a 60-day high), but never wait more than 3 months.\n   Rupees then earn 6.5%/yr (bank FD) until the end, so waiting has a real cost. Metric: rupees at the end vs baseline. 2004-2026, INR=X.\nC) NIFTY vs GOLD (friends in India): Nifty 50 (^NSEI + 1.3%/yr dividends) and gold (GOLDBEES.NS, in rupees). Monthly checks:\n   ratio rule = Nifty/gold vs its 5-year average (z-score): expensive (z > +1) -> 30% Nifty / 70% gold, cheap (z < -1) -> 100% Nifty, else 60/40;\n   gold 10-month trend (gold or liquid 6%); fixed mixes. Costs 0.1% per switch. After tax rough: switching rules 20.8% on each year's net gain;\n   buy & hold 13% once at the end.\nDRY=1: fake data (code test).",
+ "built": "2026-11-22",
+ "dry": null,
+ "A_leverage": {
+  "S&P 500 price index, 1960-2026 (no dividends)": {
+   "1x buy & hold": {
+    "all": {
+     "total_pct": 10761.8,
+     "worst_drop_pct": -56.8,
+     "per_year_pct": 7.3
+    },
+    "1960-1979": {
+     "total_pct": 77.0,
+     "worst_drop_pct": -48.3,
+     "per_year_pct": 2.9
+    },
+    "1980-1999": {
+     "total_pct": 1264.4,
+     "worst_drop_pct": -33.5,
+     "per_year_pct": 14.0
+    },
+    "2000-2012": {
+     "total_pct": -3.1,
+     "worst_drop_pct": -56.8,
+     "per_year_pct": -0.2
+    },
+    "2013-2026": {
+     "total_pct": 366.7,
+     "worst_drop_pct": -33.9,
+     "per_year_pct": 11.7
+    },
+    "2008": {
+     "total_pct": -37.6,
+     "worst_drop_pct": -48.0
+    },
+    "2020": {
+     "total_pct": 15.2,
+     "worst_drop_pct": -33.9
+    },
+    "2022": {
+     "total_pct": -20.0,
+     "worst_drop_pct": -25.5
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -44.8
+   },
+   "2x buy & hold": {
+    "all": {
+     "total_pct": 5009.9,
+     "worst_drop_pct": -91.3,
+     "per_year_pct": 6.1
+    },
+    "1960-1979": {
+     "total_pct": -31.7,
+     "worst_drop_pct": -80.5,
+     "per_year_pct": -1.9
+    },
+    "1980-1999": {
+     "total_pct": 2218.5,
+     "worst_drop_pct": -61.2,
+     "per_year_pct": 17.0
+    },
+    "2000-2012": {
+     "total_pct": -66.2,
+     "worst_drop_pct": -91.3,
+     "per_year_pct": -8.0
+    },
+    "2013-2026": {
+     "total_pct": 865.0,
+     "worst_drop_pct": -59.3,
+     "per_year_pct": 17.7
+    },
+    "2008": {
+     "total_pct": -68.0,
+     "worst_drop_pct": -77.1
+    },
+    "2020": {
+     "total_pct": 15.5,
+     "worst_drop_pct": -59.3
+    },
+    "2022": {
+     "total_pct": -41.5,
+     "worst_drop_pct": -48.0
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -75.2
+   },
+   "3x buy & hold": {
+    "all": {
+     "total_pct": 506.9,
+     "worst_drop_pct": -98.8,
+     "per_year_pct": 2.7
+    },
+    "1960-1979": {
+     "total_pct": -76.9,
+     "worst_drop_pct": -93.7,
+     "per_year_pct": -7.1
+    },
+    "1980-1999": {
+     "total_pct": 2463.0,
+     "worst_drop_pct": -80.8,
+     "per_year_pct": 17.6
+    },
+    "2000-2012": {
+     "total_pct": -92.9,
+     "worst_drop_pct": -98.8,
+     "per_year_pct": -18.4
+    },
+    "2013-2026": {
+     "total_pct": 1372.3,
+     "worst_drop_pct": -76.8,
+     "per_year_pct": 21.4
+    },
+    "2008": {
+     "total_pct": -86.2,
+     "worst_drop_pct": -91.2
+    },
+    "2020": {
+     "total_pct": 2.3,
+     "worst_drop_pct": -76.8
+    },
+    "2022": {
+     "total_pct": -59.4,
+     "worst_drop_pct": -65.2
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -90.8
+   },
+   "1x with 200-day": {
+    "all": {
+     "total_pct": 15634.9,
+     "worst_drop_pct": -24.4,
+     "per_year_pct": 7.9
+    },
+    "1960-1979": {
+     "total_pct": 257.5,
+     "worst_drop_pct": -13.6,
+     "per_year_pct": 6.6
+    },
+    "1980-1999": {
+     "total_pct": 1215.9,
+     "worst_drop_pct": -15.2,
+     "per_year_pct": 13.8
+    },
+    "2000-2012": {
+     "total_pct": 13.9,
+     "worst_drop_pct": -21.0,
+     "per_year_pct": 1.0
+    },
+    "2013-2026": {
+     "total_pct": 195.1,
+     "worst_drop_pct": -19.5,
+     "per_year_pct": 8.1
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 2.8,
+     "worst_drop_pct": -19.5
+    },
+    "2022": {
+     "total_pct": -14.8,
+     "worst_drop_pct": -15.1
+    },
+    "switches_per_year": 6.2,
+    "worst_12m_pct": -17.4
+   },
+   "2x with 200-day": {
+    "all": {
+     "total_pct": 48372.1,
+     "worst_drop_pct": -51.7,
+     "per_year_pct": 9.7
+    },
+    "1960-1979": {
+     "total_pct": 288.7,
+     "worst_drop_pct": -30.3,
+     "per_year_pct": 7.0
+    },
+    "1980-1999": {
+     "total_pct": 2902.5,
+     "worst_drop_pct": -34.5,
+     "per_year_pct": 18.5
+    },
+    "2000-2012": {
+     "total_pct": -17.6,
+     "worst_drop_pct": -45.1,
+     "per_year_pct": -1.5
+    },
+    "2013-2026": {
+     "total_pct": 410.1,
+     "worst_drop_pct": -37.9,
+     "per_year_pct": 12.5
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 1.8,
+     "worst_drop_pct": -36.0
+    },
+    "2022": {
+     "total_pct": -28.9,
+     "worst_drop_pct": -29.1
+    },
+    "switches_per_year": 6.2,
+    "worst_12m_pct": -37.4
+   },
+   "3x with 200-day": {
+    "all": {
+     "total_pct": 101910.5,
+     "worst_drop_pct": -72.2,
+     "per_year_pct": 10.9
+    },
+    "1960-1979": {
+     "total_pct": 318.6,
+     "worst_drop_pct": -49.8,
+     "per_year_pct": 7.4
+    },
+    "1980-1999": {
+     "total_pct": 5651.3,
+     "worst_drop_pct": -49.9,
+     "per_year_pct": 22.5
+    },
+    "2000-2012": {
+     "total_pct": -45.8,
+     "worst_drop_pct": -65.3,
+     "per_year_pct": -4.6
+    },
+    "2013-2026": {
+     "total_pct": 697.3,
+     "worst_drop_pct": -54.8,
+     "per_year_pct": 16.1
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": -1.7,
+     "worst_drop_pct": -49.8
+    },
+    "2022": {
+     "total_pct": -41.0,
+     "worst_drop_pct": -41.1
+    },
+    "switches_per_year": 6.2,
+    "worst_12m_pct": -53.7
+   },
+   "1x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 15916.4,
+     "worst_drop_pct": -20.3,
+     "per_year_pct": 7.9
+    },
+    "1960-1979": {
+     "total_pct": 159.3,
+     "worst_drop_pct": -17.8,
+     "per_year_pct": 4.9
+    },
+    "1980-1999": {
+     "total_pct": 1210.3,
+     "worst_drop_pct": -17.7,
+     "per_year_pct": 13.7
+    },
+    "2000-2012": {
+     "total_pct": 50.3,
+     "worst_drop_pct": -20.3,
+     "per_year_pct": 3.2
+    },
+    "2013-2026": {
+     "total_pct": 215.2,
+     "worst_drop_pct": -19.8,
+     "per_year_pct": 8.6
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 5.6,
+     "worst_drop_pct": -18.7
+    },
+    "2022": {
+     "total_pct": -15.7,
+     "worst_drop_pct": -17.3
+    },
+    "switches_per_year": 1.7,
+    "worst_12m_pct": -15.2
+   },
+   "2x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 42486.8,
+     "worst_drop_pct": -44.7,
+     "per_year_pct": 9.5
+    },
+    "1960-1979": {
+     "total_pct": 96.2,
+     "worst_drop_pct": -38.1,
+     "per_year_pct": 3.4
+    },
+    "1980-1999": {
+     "total_pct": 2730.8,
+     "worst_drop_pct": -37.2,
+     "per_year_pct": 18.2
+    },
+    "2000-2012": {
+     "total_pct": 36.7,
+     "worst_drop_pct": -39.4,
+     "per_year_pct": 2.4
+    },
+    "2013-2026": {
+     "total_pct": 467.4,
+     "worst_drop_pct": -38.0,
+     "per_year_pct": 13.3
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 7.2,
+     "worst_drop_pct": -34.7
+    },
+    "2022": {
+     "total_pct": -30.7,
+     "worst_drop_pct": -31.9
+    },
+    "switches_per_year": 1.7,
+    "worst_12m_pct": -32.3
+   },
+   "3x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 76026.6,
+     "worst_drop_pct": -64.4,
+     "per_year_pct": 10.4
+    },
+    "1960-1979": {
+     "total_pct": 46.4,
+     "worst_drop_pct": -56.6,
+     "per_year_pct": 1.9
+    },
+    "1980-1999": {
+     "total_pct": 4997.3,
+     "worst_drop_pct": -52.7,
+     "per_year_pct": 21.7
+    },
+    "2000-2012": {
+     "total_pct": 12.9,
+     "worst_drop_pct": -54.6,
+     "per_year_pct": 0.9
+    },
+    "2013-2026": {
+     "total_pct": 821.7,
+     "worst_drop_pct": -53.4,
+     "per_year_pct": 17.4
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 6.1,
+     "worst_drop_pct": -48.1
+    },
+    "2022": {
+     "total_pct": -43.2,
+     "worst_drop_pct": -44.3
+    },
+    "switches_per_year": 1.7,
+    "worst_12m_pct": -47.0
+   },
+   "1x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 12089.8,
+     "worst_drop_pct": -33.2,
+     "per_year_pct": 7.4
+    },
+    "1960-1979": {
+     "total_pct": 172.5,
+     "worst_drop_pct": -16.2,
+     "per_year_pct": 5.1
+    },
+    "1980-1999": {
+     "total_pct": 740.1,
+     "worst_drop_pct": -33.2,
+     "per_year_pct": 11.2
+    },
+    "2000-2012": {
+     "total_pct": 98.4,
+     "worst_drop_pct": -19.8,
+     "per_year_pct": 5.4
+    },
+    "2013-2026": {
+     "total_pct": 169.6,
+     "worst_drop_pct": -24.7,
+     "per_year_pct": 7.4
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 16.4,
+     "worst_drop_pct": -12.8
+    },
+    "2022": {
+     "total_pct": -20.3,
+     "worst_drop_pct": -21.4
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -23.1
+   },
+   "2x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 20948.9,
+     "worst_drop_pct": -59.2,
+     "per_year_pct": 8.3
+    },
+    "1960-1979": {
+     "total_pct": 116.1,
+     "worst_drop_pct": -36.1,
+     "per_year_pct": 3.9
+    },
+    "1980-1999": {
+     "total_pct": 966.0,
+     "worst_drop_pct": -59.2,
+     "per_year_pct": 12.6
+    },
+    "2000-2012": {
+     "total_pct": 129.9,
+     "worst_drop_pct": -38.7,
+     "per_year_pct": 6.6
+    },
+    "2013-2026": {
+     "total_pct": 302.1,
+     "worst_drop_pct": -46.0,
+     "per_year_pct": 10.5
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 30.1,
+     "worst_drop_pct": -24.3
+    },
+    "2022": {
+     "total_pct": -38.7,
+     "worst_drop_pct": -40.4
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -49.9
+   },
+   "3x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 19642.3,
+     "worst_drop_pct": -78.8,
+     "per_year_pct": 8.2
+    },
+    "1960-1979": {
+     "total_pct": 68.3,
+     "worst_drop_pct": -55.2,
+     "per_year_pct": 2.6
+    },
+    "1980-1999": {
+     "total_pct": 863.1,
+     "worst_drop_pct": -78.8,
+     "per_year_pct": 12.0
+    },
+    "2000-2012": {
+     "total_pct": 135.4,
+     "worst_drop_pct": -55.0,
+     "per_year_pct": 6.8
+    },
+    "2013-2026": {
+     "total_pct": 427.6,
+     "worst_drop_pct": -61.8,
+     "per_year_pct": 12.7
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 41.8,
+     "worst_drop_pct": -34.6
+    },
+    "2022": {
+     "total_pct": -53.4,
+     "worst_drop_pct": -55.3
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -72.3
+   }
+  },
+  "SPY total return, 1994-2026": {
+   "1x buy & hold": {
+    "all": {
+     "total_pct": 2468.1,
+     "worst_drop_pct": -55.2,
+     "per_year_pct": 10.4
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 250.1,
+     "worst_drop_pct": -19.0,
+     "per_year_pct": 23.3
+    },
+    "2000-2012": {
+     "total_pct": 22.7,
+     "worst_drop_pct": -55.2,
+     "per_year_pct": 1.6
+    },
+    "2013-2026": {
+     "total_pct": 488.8,
+     "worst_drop_pct": -33.7,
+     "per_year_pct": 13.6
+    },
+    "2008": {
+     "total_pct": -36.3,
+     "worst_drop_pct": -47.2
+    },
+    "2020": {
+     "total_pct": 17.1,
+     "worst_drop_pct": -33.7
+    },
+    "2022": {
+     "total_pct": -18.7,
+     "worst_drop_pct": -24.5
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -43.5
+   },
+   "2x buy & hold": {
+    "all": {
+     "total_pct": 6177.1,
+     "worst_drop_pct": -88.2,
+     "per_year_pct": 13.4
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 630.7,
+     "worst_drop_pct": -35.8,
+     "per_year_pct": 39.4
+    },
+    "2000-2012": {
+     "total_pct": -46.0,
+     "worst_drop_pct": -88.2,
+     "per_year_pct": -4.6
+    },
+    "2013-2026": {
+     "total_pct": 1444.7,
+     "worst_drop_pct": -58.8,
+     "per_year_pct": 21.8
+    },
+    "2008": {
+     "total_pct": -66.6,
+     "worst_drop_pct": -76.4
+    },
+    "2020": {
+     "total_pct": 20.3,
+     "worst_drop_pct": -58.8
+    },
+    "2022": {
+     "total_pct": -39.6,
+     "worst_drop_pct": -46.7
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -74.0
+   },
+   "3x buy & hold": {
+    "all": {
+     "total_pct": 5997.6,
+     "worst_drop_pct": -98.1,
+     "per_year_pct": 13.3
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 1259.8,
+     "worst_drop_pct": -50.9,
+     "per_year_pct": 54.6
+    },
+    "2000-2012": {
+     "total_pct": -85.7,
+     "worst_drop_pct": -98.1,
+     "per_year_pct": -13.9
+    },
+    "2013-2026": {
+     "total_pct": 2911.1,
+     "worst_drop_pct": -76.2,
+     "per_year_pct": 27.8
+    },
+    "2008": {
+     "total_pct": -85.2,
+     "worst_drop_pct": -90.8
+    },
+    "2020": {
+     "total_pct": 10.1,
+     "worst_drop_pct": -76.2
+    },
+    "2022": {
+     "total_pct": -57.4,
+     "worst_drop_pct": -63.9
+    },
+    "switches_per_year": 0.0,
+    "worst_12m_pct": -90.1
+   },
+   "1x with 200-day": {
+    "all": {
+     "total_pct": 1361.8,
+     "worst_drop_pct": -24.3,
+     "per_year_pct": 8.5
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 175.7,
+     "worst_drop_pct": -14.6,
+     "per_year_pct": 18.4
+    },
+    "2000-2012": {
+     "total_pct": 24.1,
+     "worst_drop_pct": -23.6,
+     "per_year_pct": 1.7
+    },
+    "2013-2026": {
+     "total_pct": 320.6,
+     "worst_drop_pct": -19.1,
+     "per_year_pct": 10.9
+    },
+    "2008": {
+     "total_pct": -2.8,
+     "worst_drop_pct": -4.0
+    },
+    "2020": {
+     "total_pct": 8.5,
+     "worst_drop_pct": -17.6
+    },
+    "2022": {
+     "total_pct": -14.5,
+     "worst_drop_pct": -14.6
+    },
+    "switches_per_year": 6.4,
+    "worst_12m_pct": -15.8
+   },
+   "2x with 200-day": {
+    "all": {
+     "total_pct": 4731.9,
+     "worst_drop_pct": -51.9,
+     "per_year_pct": 12.5
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 377.0,
+     "worst_drop_pct": -28.5,
+     "per_year_pct": 29.8
+    },
+    "2000-2012": {
+     "total_pct": -3.7,
+     "worst_drop_pct": -47.7,
+     "per_year_pct": -0.3
+    },
+    "2013-2026": {
+     "total_pct": 921.2,
+     "worst_drop_pct": -36.6,
+     "per_year_pct": 18.2
+    },
+    "2008": {
+     "total_pct": -6.7,
+     "worst_drop_pct": -7.9
+    },
+    "2020": {
+     "total_pct": 13.2,
+     "worst_drop_pct": -32.5
+    },
+    "2022": {
+     "total_pct": -28.4,
+     "worst_drop_pct": -28.5
+    },
+    "switches_per_year": 6.4,
+    "worst_12m_pct": -35.0
+   },
+   "3x with 200-day": {
+    "all": {
+     "total_pct": 11731.7,
+     "worst_drop_pct": -70.7,
+     "per_year_pct": 15.6
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 655.0,
+     "worst_drop_pct": -40.6,
+     "per_year_pct": 40.1
+    },
+    "2000-2012": {
+     "total_pct": -32.8,
+     "worst_drop_pct": -64.8,
+     "per_year_pct": -3.0
+    },
+    "2013-2026": {
+     "total_pct": 2133.2,
+     "worst_drop_pct": -50.8,
+     "per_year_pct": 25.1
+    },
+    "2008": {
+     "total_pct": -10.5,
+     "worst_drop_pct": -11.6
+    },
+    "2020": {
+     "total_pct": 15.2,
+     "worst_drop_pct": -45.1
+    },
+    "2022": {
+     "total_pct": -40.3,
+     "worst_drop_pct": -40.4
+    },
+    "switches_per_year": 6.4,
+    "worst_12m_pct": -51.5
+   },
+   "1x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 1903.2,
+     "worst_drop_pct": -23.2,
+     "per_year_pct": 9.5
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 180.6,
+     "worst_drop_pct": -16.4,
+     "per_year_pct": 18.8
+    },
+    "2000-2012": {
+     "total_pct": 96.4,
+     "worst_drop_pct": -19.4,
+     "per_year_pct": 5.3
+    },
+    "2013-2026": {
+     "total_pct": 258.0,
+     "worst_drop_pct": -23.2,
+     "per_year_pct": 9.6
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 0.7,
+     "worst_drop_pct": -23.2
+    },
+    "2022": {
+     "total_pct": -13.9,
+     "worst_drop_pct": -15.5
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -13.4
+   },
+   "2x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 8133.4,
+     "worst_drop_pct": -42.2,
+     "per_year_pct": 14.4
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 388.9,
+     "worst_drop_pct": -31.5,
+     "per_year_pct": 30.3
+    },
+    "2000-2012": {
+     "total_pct": 129.7,
+     "worst_drop_pct": -38.2,
+     "per_year_pct": 6.6
+    },
+    "2013-2026": {
+     "total_pct": 611.6,
+     "worst_drop_pct": -42.2,
+     "per_year_pct": 15.2
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": -3.5,
+     "worst_drop_pct": -42.2
+    },
+    "2022": {
+     "total_pct": -28.0,
+     "worst_drop_pct": -29.3
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -27.5
+   },
+   "3x with 200-day with 2% band": {
+    "all": {
+     "total_pct": 24531.1,
+     "worst_drop_pct": -57.5,
+     "per_year_pct": 18.2
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 679.3,
+     "worst_drop_pct": -44.4,
+     "per_year_pct": 40.9
+    },
+    "2000-2012": {
+     "total_pct": 141.5,
+     "worst_drop_pct": -53.2,
+     "per_year_pct": 7.0
+    },
+    "2013-2026": {
+     "total_pct": 1152.8,
+     "worst_drop_pct": -57.5,
+     "per_year_pct": 20.0
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": -10.7,
+     "worst_drop_pct": -57.5
+    },
+    "2022": {
+     "total_pct": -40.2,
+     "worst_drop_pct": -41.3
+    },
+    "switches_per_year": 1.5,
+    "worst_12m_pct": -40.5
+   },
+   "1x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 1835.2,
+     "worst_drop_pct": -24.2,
+     "per_year_pct": 9.4
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 176.9,
+     "worst_drop_pct": -19.1,
+     "per_year_pct": 18.5
+    },
+    "2000-2012": {
+     "total_pct": 121.3,
+     "worst_drop_pct": -20.9,
+     "per_year_pct": 6.3
+    },
+    "2013-2026": {
+     "total_pct": 211.0,
+     "worst_drop_pct": -24.2,
+     "per_year_pct": 8.5
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 17.7,
+     "worst_drop_pct": -12.4
+    },
+    "2022": {
+     "total_pct": -19.9,
+     "worst_drop_pct": -21.1
+    },
+    "switches_per_year": 1.4,
+    "worst_12m_pct": -19.5
+   },
+   "2x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 7231.1,
+     "worst_drop_pct": -45.3,
+     "per_year_pct": 14.0
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 375.2,
+     "worst_drop_pct": -36.4,
+     "per_year_pct": 29.7
+    },
+    "2000-2012": {
+     "total_pct": 181.0,
+     "worst_drop_pct": -40.7,
+     "per_year_pct": 8.3
+    },
+    "2013-2026": {
+     "total_pct": 432.8,
+     "worst_drop_pct": -45.3,
+     "per_year_pct": 12.8
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 33.1,
+     "worst_drop_pct": -23.7
+    },
+    "2022": {
+     "total_pct": -38.1,
+     "worst_drop_pct": -40.0
+    },
+    "switches_per_year": 1.4,
+    "worst_12m_pct": -37.4
+   },
+   "3x with 10-month (checked monthly)": {
+    "all": {
+     "total_pct": 19304.9,
+     "worst_drop_pct": -61.1,
+     "per_year_pct": 17.4
+    },
+    "1960-1979": null,
+    "1980-1999": {
+     "total_pct": 642.5,
+     "worst_drop_pct": -50.7,
+     "per_year_pct": 39.7
+    },
+    "2000-2012": {
+     "total_pct": 212.2,
+     "worst_drop_pct": -57.4,
+     "per_year_pct": 9.2
+    },
+    "2013-2026": {
+     "total_pct": 701.4,
+     "worst_drop_pct": -61.1,
+     "per_year_pct": 16.2
+    },
+    "2008": {
+     "total_pct": 1.3,
+     "worst_drop_pct": 0.0
+    },
+    "2020": {
+     "total_pct": 46.9,
+     "worst_drop_pct": -33.9
+    },
+    "2022": {
+     "total_pct": -52.8,
+     "worst_drop_pct": -54.8
+    },
+    "switches_per_year": 1.4,
+    "worst_12m_pct": -52.0
+   }
+  },
+  "check: simulated 2x vs real SSO (buy & hold)": {
+   "simulated": {
+    "total_pct": 1503.8,
+    "worst_drop_pct": -84.3,
+    "per_year_pct": 14.6
+   },
+   "real_SSO": {
+    "total_pct": 1448.8,
+    "worst_drop_pct": -84.7,
+    "per_year_pct": 14.4
+   }
+  }
+ },
+ "B_usd_inr": {
+  "1st of every month": {
+   "rupees_at_end_lakh": 356.09,
+   "vs_monthly_pct": 0.0,
+   "avg_rate_when_converting": 62.46,
+   "transfers": 275
+  },
+  "every 3 months (1st of Jan/Apr/Jul/Oct)": {
+   "rupees_at_end_lakh": 355.27,
+   "vs_monthly_pct": -0.23,
+   "avg_rate_when_converting": 62.38,
+   "transfers": 92
+  },
+  "dollar above its 50-day average (max wait 3 months)": {
+   "rupees_at_end_lakh": 355.78,
+   "vs_monthly_pct": -0.09,
+   "avg_rate_when_converting": 63.85,
+   "transfers": 236
+  },
+  "dollar at a 60-day high (max wait 3 months)": {
+   "rupees_at_end_lakh": 355.19,
+   "vs_monthly_pct": -0.25,
+   "avg_rate_when_converting": 63.63,
+   "transfers": 150
+  },
+  "note_rupee_trend": "USD/INR 45.5 -> 92.7 (3.2%/yr rupee weakening)"
+ },
+ "C_nifty_gold": {
+  "100% Nifty": {
+   "all": {
+    "total_pct": 964.0,
+    "worst_drop_pct": -38.3,
+    "per_year_pct": 14.1
+   },
+   "after_tax_rough_pct": 13.3,
+   "2008-2013": {
+    "total_pct": 120.5,
+    "worst_drop_pct": -26.9,
+    "per_year_pct": 17.2
+   },
+   "2014-2019": {
+    "total_pct": 111.1,
+    "worst_drop_pct": -21.5,
+    "per_year_pct": 13.3
+   },
+   "2020-2026": {
+    "total_pct": 131.4,
+    "worst_drop_pct": -38.3,
+    "per_year_pct": 13.0
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 16.3,
+    "worst_drop_pct": -38.3
+   }
+  },
+  "100% gold": {
+   "all": {
+    "total_pct": 648.3,
+    "worst_drop_pct": -30.2,
+    "per_year_pct": 11.9
+   },
+   "after_tax_rough_pct": 11.2,
+   "2008-2013": {
+    "total_pct": 103.3,
+    "worst_drop_pct": -23.0,
+    "per_year_pct": 15.3
+   },
+   "2014-2019": {
+    "total_pct": 22.8,
+    "worst_drop_pct": -21.5,
+    "per_year_pct": 3.5
+   },
+   "2020-2026": {
+    "total_pct": 197.6,
+    "worst_drop_pct": -30.2,
+    "per_year_pct": 17.2
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 27.4,
+    "worst_drop_pct": -14.0
+   }
+  },
+  "fixed 70/30 Nifty/gold (rebalanced monthly)": {
+   "all": {
+    "total_pct": 969.9,
+    "worst_drop_pct": -28.4,
+    "per_year_pct": 14.2
+   },
+   "after_tax_rough_pct": 11.3,
+   "2008-2013": {
+    "total_pct": 123.9,
+    "worst_drop_pct": -12.1,
+    "per_year_pct": 17.5
+   },
+   "2014-2019": {
+    "total_pct": 84.4,
+    "worst_drop_pct": -14.4,
+    "per_year_pct": 10.7
+   },
+   "2020-2026": {
+    "total_pct": 160.7,
+    "worst_drop_pct": -28.4,
+    "per_year_pct": 14.9
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 21.2,
+    "worst_drop_pct": -28.4
+   }
+  },
+  "fixed 50/50 Nifty/gold (rebalanced monthly)": {
+   "all": {
+    "total_pct": 918.5,
+    "worst_drop_pct": -23.2,
+    "per_year_pct": 13.9
+   },
+   "after_tax_rough_pct": 11.0,
+   "2008-2013": {
+    "total_pct": 122.0,
+    "worst_drop_pct": -11.9,
+    "per_year_pct": 17.3
+   },
+   "2014-2019": {
+    "total_pct": 66.3,
+    "worst_drop_pct": -11.7,
+    "per_year_pct": 8.9
+   },
+   "2020-2026": {
+    "total_pct": 176.5,
+    "worst_drop_pct": -23.2,
+    "per_year_pct": 15.9
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 23.8,
+    "worst_drop_pct": -23.2
+   }
+  },
+  "ratio rule: 30/70 when Nifty is expensive vs gold, 100% Nifty when cheap, else 60/40": {
+   "all": {
+    "total_pct": 1176.6,
+    "worst_drop_pct": -25.8,
+    "per_year_pct": 15.3
+   },
+   "after_tax_rough_pct": 12.2,
+   "2008-2013": {
+    "total_pct": 130.7,
+    "worst_drop_pct": -13.5,
+    "per_year_pct": 18.2
+   },
+   "2014-2019": {
+    "total_pct": 81.4,
+    "worst_drop_pct": -11.4,
+    "per_year_pct": 10.4
+   },
+   "2020-2026": {
+    "total_pct": 206.3,
+    "worst_drop_pct": -25.8,
+    "per_year_pct": 17.7
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 37.3,
+    "worst_drop_pct": -25.8
+   }
+  },
+  "70% Nifty + 30% gold with 10-month trend (else liquid)": {
+   "all": {
+    "total_pct": 934.3,
+    "worst_drop_pct": -28.4,
+    "per_year_pct": 14.0
+   },
+   "after_tax_rough_pct": 11.1,
+   "2008-2013": {
+    "total_pct": 116.9,
+    "worst_drop_pct": -12.1,
+    "per_year_pct": 16.8
+   },
+   "2014-2019": {
+    "total_pct": 85.1,
+    "worst_drop_pct": -15.4,
+    "per_year_pct": 10.8
+   },
+   "2020-2026": {
+    "total_pct": 160.1,
+    "worst_drop_pct": -28.4,
+    "per_year_pct": 14.9
+   },
+   "2008": null,
+   "2020": {
+    "total_pct": 21.2,
+    "worst_drop_pct": -28.4
+   }
+  },
+  "ratio_now": {
+   "z_score_latest": -0.87,
+   "monthly_correlation_nifty_gold": -0.14
+  }
+ }
+}
