@@ -1,0 +1,58 @@
+name: "Ideas check: run every idea on fake data (parallel)"
+# Each ideas/*.py runs on its own runner with DRY=1 (fake data, nothing saved, no secrets needed).
+# Input 'only' = space-separated names to run just some (empty = all).
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'idea names to run (space separated); empty = all'
+        default: ''
+permissions:
+  contents: read
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      ideas: ${{ steps.l.outputs.ideas }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: l
+        shell: bash
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import glob, json, os
+          only = set("${{ inputs.only }}".split())
+          names = sorted(os.path.basename(f)[:-3] for f in glob.glob("ideas/*.py") if not f.endswith("__init__.py"))
+          print("ideas=" + json.dumps([n for n in names if not only or n in only]))
+          PY
+  run:
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        idea: ${{ fromJson(needs.list.outputs.ideas) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: pip install pandas numpy pyarrow boto3 openpyxl
+      - name: Run ${{ matrix.idea }} on fake data
+        shell: bash
+        env:
+          DRY: '1'
+          NO_NOTIFY: '1'
+          NO_SAVE: '1'
+        run: |
+          set -o pipefail
+          before=$(git status --porcelain data/)
+          python -u ideas/${{ matrix.idea }}.py 2>&1 | tail -40 | tee /tmp/out.log
+          after=$(git status --porcelain data/)
+          if [ "$before" != "$after" ]; then echo "::error::fake-data run changed real data files: $after"; exit 1; fi
+          if grep -q "^SKIP:" /tmp/out.log; then echo "::notice::${{ matrix.idea }} skipped (needs real data)"; fi
