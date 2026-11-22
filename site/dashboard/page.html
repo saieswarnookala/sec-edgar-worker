@@ -1231,6 +1231,22 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="v32"></div>
   </section>
+  <section class="sx-card" id="pb-inmom">
+    <div class="sx-ch"><h3>13. India momentum basket (₹10 lakh virtual, from Nov 20 2026)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">India only</span><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">Reshuffles the 1st trading day of each month</span><span class="sx-badge">Alerts: India ntfy channel</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>Rules</h4><ul>
+        <li>The 500 most-traded NSE stocks (re-picked Jan and Jul), ranked by <b>(6-month + 12-month gain) ÷ volatility</b>.</li>
+        <li>Hold the top <b>20</b>, equal amounts; a held stock stays while it ranks in the top 30. About 4–6 swaps a month (8–12 orders).</li>
+        <li><b>Crash filter:</b> if Nifty is below its 200-day average at a reshuffle, sell all and hold GOLDBEES (if gold is trending up) or a liquid fund.</li>
+        <li>Prices from NSE's daily archive; 0.30% cost per buy and sell.</li>
+      </ul></div>
+      <div><h4>Backtest (NSE data, 2009–2026, no survivorship bias)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>Per year</span><b>30.6%</b></div><div class="sx-stat"><span>After tax (est.)</span><b>24.4%</b></div><div class="sx-stat"><span>Worst drop</span><b>−37.5%</b></div><div class="sx-stat"><span>2019–26 (unseen)</span><b>28.4%</b></div></div>
+        <p class="sx-cap">Best of 96 versions, so expect less live; the real Nifty200 Momentum 30 index made ~18–19%. Full numbers: Day trading → India: real numbers (NSE data). Not for Sai's own account (PFIC).</p></div>
+    </div>
+    <div class="pb-live" data-bot="inmom"></div>
+  </section>
 
   <section class="sx-card" id="pb-drift">
     <div class="sx-ch"><h3>3. Earnings drift bot ($100k Alpaca paper account)</h3></div>
@@ -2234,7 +2250,22 @@ dash.calc('vs_industry', {
         <polyline points="${line(a)}" fill="none" stroke="var(--color-ok)" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>
         <p class="sx-cap">Green = bot, grey = SPY, both from the start date (${fmtDay(pts[0].d)} → ${fmtDay(pts.at(-1).d)}).</p>`;
     };
+    const inr = (v) => (v == null || !isFinite(v) ? '—' : v >= 1e5 ? '₹' + (v / 1e5).toFixed(2) + ' L' : '₹' + Math.round(v).toLocaleString('en-IN'));
+    const inmomBlock = (b) => {
+      if (!b) return '<p class="sx-cap" style="margin-top:12px">No runs recorded yet: it runs every weekday at 7:15 pm IST.</p>';
+      const c = b.curve || [], last = c.at(-1), ret = last ? (last.eq / b.start - 1) * 100 : null, n0 = c.find((x) => x.spy > 0), nr = n0 && last && last.spy ? (last.spy / n0.spy - 1) * 100 : null;
+      let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats"><div class="sx-stat"><span>Started with</span><b>${inr(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${inr(last?.eq)}</b></div>
+        <div class="sx-stat"><span>Basket</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>Nifty same days</span><b class="${cls(nr)}">${pctTxt(nr)}</b></div>
+        <div class="sx-stat"><span>Mode</span><b>${b.inside === false ? 'Crash filter: ' + esc(b.hide || 'liquid') : 'Invested'}</b></div><div class="sx-stat"><span>Last day</span><b>${fmtDay(last?.d)}</b></div></div>`;
+      h += chart(c).replace('grey = SPY', 'grey = Nifty 50').replace('Bot vs SPY', 'Basket vs Nifty');
+      const hs = b.holdings || [];
+      h += hs.length ? `<h4 style="margin-top:10px">Holding (${hs.length})</h4><div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Stock</th><th>Value now</th><th>Share</th></tr></thead><tbody>${hs.map((x) => `<tr><td>${esc(x.s)}</td><td>${inr(x.v)}</td><td>${last ? ((100 * x.v) / last.eq).toFixed(1) + '%' : ''}</td></tr>`).join('')}</tbody></table></div>` : '<p class="sx-cap">No stocks held (crash filter or not started).</p>';
+      const rb = (b.rebalances || []).slice().reverse();
+      if (rb.length) h += `<h4 style="margin-top:10px">Reshuffles</h4><ul class="sx-notes">${rb.map((r) => `<li><b>${fmtDay(r.day)}</b>: ${r.inside ? `sold ${(r.sells || []).length ? r.sells.map(esc).join(', ') : 'none'}; bought ${(r.buys || []).length ? r.buys.map(esc).join(', ') : 'none'}` : 'crash filter: all out → ' + esc(r.hide || 'liquid')} (turnover ${r.turnover_pct}%)</li>`).join('')}</ul>`;
+      return h;
+    };
     const block = (bot, b) => {
+      if (bot === 'inmom') return inmomBlock(b);
       if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
@@ -2484,7 +2515,12 @@ dash.calc('vs_industry', {
       { id: 'inbal', name: 'India 12% dip: balanced (else 50/50 liquid + gold)', pre: 15.0, post: 12.0, est: true, dd: -19, c: '#2563eb' },
       { id: 'insafe', name: 'India 12% dip: safest (Nifty 100-day, else liquid)', pre: 14.0, post: 10.9, dd: -19, c: '#059669' },
       { id: 'inbest', name: 'India 12% dip: best (Nifty 150-day, else gold/liquid)', pre: 16.3, post: 12.8, est: true, dd: -21, c: '#d97706' },
-      { id: 'nifty', name: 'Nifty 50 buy & hold', pre: 9.3, post: 8.2, dd: -59, c: '#6b7280', bench: true },
+      { id: 'innse', name: 'India dip bot (NSE data, 2009–2026)', pre: 14.0, post: 11.2, dd: -20, c: '#0891b2' },
+      { id: 'inmomidx', name: 'Nifty200 Momentum 30 index fund (≈ real index)', pre: 18.0, post: 14.6, dd: -37, c: '#7c3aed' },
+      { id: 'inmom', name: 'India momentum basket: paper bot 13 (best of 96; est.)', pre: 30.6, post: 24.4, est: true, dd: -38, c: '#c026d3' },
+      { id: 'inmix37', name: '30% momentum basket + 70% dip bot (est.)', pre: 19.2, post: 15.3, est: true, dd: -17, c: '#db2777' },
+      { id: 'inmix55', name: '50% momentum basket + 50% dip bot (est.)', pre: 22.5, post: 18.0, est: true, dd: -23, c: '#9d174d' },
+      { id: 'nifty', name: 'Nifty 50 buy & hold (with dividends, 2009–2026)', pre: 11.9, post: 11.2, dd: -38, c: '#6b7280', bench: true },
     ],
   };
   let calcOn = false;
