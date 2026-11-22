@@ -182,6 +182,12 @@ Files: data/intraday_*.json, data/dip_filter_*.json, data/future_leaders*.json, 
   stock list = day's low vs SPY's day high, year-by-year). v3.0 27.2 -> v3.2 30.5 (2x costs 25.4 -> 27.9), better 9/11 years,
   worse 2023 (-4.6) and 2024 (-7.1). Half-day detection in the replay did NOT trigger (Alpaca shows after-hours bars) - ~3 days/yr, ignored.
 
+### Nov 21 India momentum split reshuffle + next-day trading (data/india_momsplit.json) - keep day 1, don't split
+- Trade the day AFTER the signal (what friends do): 31.1% / dd -25.7 vs same-day 32.6 / -23.8 -> costs ~1.5 pts.
+- Reshuffle day 1..18 (single): median 24.5%, range 20.8-32.6, worst-drop median -41 (worst -55). Best cluster = month turn: day 17/18/1/2 (27-33%); mid-month (days 7-14) worst (20-25%, drops -41 to -55). Smooth cluster, not one spike -> day 1 not pure luck (maybe early-month SIP inflows), but unproven.
+- Split money into 2/3/4 parts on different days: 26.7-29.2% (100-day filter), drops -27 to -34. Splitting just AVERAGES the day luck; it does NOT cut drops below day 1 and doubles orders -> not worth it.
+- 100-day filter beat 200-day in all 8 split versions (+1.5-2.5 pts, smaller drops). Confirms the Nov 21 switch.
+- Honest planning number (4 parts, next-day): 26.7%/yr (~21.6 after tax), worst -33.5. Dashboard "25-28%, -30 to -40%" stays right.
 ### Nov 21 India momentum robustness (data/india_momrobust.json) - edge is REAL, headline number is optimistic
 - Placebo: 200 runs of 20 RANDOM top-500 stocks with the same filter: median 12.4%, max 17.5%, worst drop median -51% -> 0% beat the basket (32.6%).
 - 27-version nearby grid: 27.9-32.6% (median 29.7), worst drop median -32.6 (worst -40.5); paper-bot setting is the grid max. All beat Nifty by 5+ pts.
