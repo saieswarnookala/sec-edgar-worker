@@ -19,12 +19,20 @@ LABEL = {"n50": "Nifty 50", "n500": "Nifty 500", "mid150": "Midcap 150", "small2
 H = {"Content-Type": "application/json; charset=UTF-8", "Accept": "application/json, text/javascript, */*; q=0.01", "X-Requested-With": "XMLHttpRequest",
      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
      "Origin": "https://www.niftyindices.com", "Referer": "https://www.niftyindices.com/reports/historical-data"}
+import http.cookiejar
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+def warm():   # pick up the site's cookies first, like a browser
+    try: OPENER.open(urllib.request.Request("https://www.niftyindices.com/reports/historical-data", headers={"User-Agent": H["User-Agent"]}), timeout=60).read(); print("warm ok", flush=True)
+    except Exception as e: print("warm failed", e, flush=True)
 def tri_chunk(name, a, b):
     body = json.dumps({"cinfo": json.dumps({"name": name, "startDate": a.strftime("%d-%b-%Y"), "endDate": b.strftime("%d-%b-%Y"), "indexName": name}).replace('"', "'")}).encode()
     for k in range(4):
         try:
-            r = json.loads(urllib.request.urlopen(urllib.request.Request("https://www.niftyindices.com/Backpage.aspx/getTotalReturnIndexString", data=body, headers=H), timeout=60).read())
-            rows = json.loads(r["d"]) if isinstance(r.get("d"), str) else r.get("d") or []
+            raw = OPENER.open(urllib.request.Request("https://www.niftyindices.com/Backpage.aspx/getTotalReturnIndexString", data=body, headers=H), timeout=60).read()
+            if MODE == "probe": print("  RAW", len(raw), raw[:300], flush=True)
+            r = json.loads(raw.decode("utf-8-sig").strip())
+            d_ = r.get("d")
+            rows = (json.loads(d_) if d_.strip().startswith(("[", "{")) and '"' in d_[:5] else eval(d_, {"__builtins__": {}}, {})) if isinstance(d_, str) else d_ or []
             out = {}
             for x in rows:
                 dk = next(k_ for k_ in x if "date" in k_.lower()); vk = next(k_ for k_ in x if "return" in k_.lower() or "tri" in k_.lower())
@@ -51,6 +59,7 @@ def yahoo(sym):
             s = pd.Series(adj, index=pd.to_datetime(j["timestamp"], unit="s").normalize()).dropna(); return s[~s.index.duplicated(keep="last")]
         except Exception as e: print("retry", sym, e, flush=True); time.sleep(5 * (a + 1))
     raise SystemExit("no data for " + sym)
+if not DRY: warm()
 if MODE == "probe":
     end = pd.Timestamp.today().normalize(); d, keys = tri_chunk("NIFTY 50", end - pd.Timedelta(days=60), end)
     print("PROBE NIFTY 50 TRI rows:", len(d), "keys:", keys, "last:", sorted(d.items())[-3:] if d else None)
