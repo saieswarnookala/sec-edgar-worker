@@ -24,6 +24,12 @@ if (!mode) {
     const p = checkLimits([{ symbol: 'AAA', side: 'buy', dollars: 500 }, { symbol: 'ZZZ', side: 'buy', dollars: 10 }, { symbol: 'BBB', side: 'sell', shares: 2 }, { symbol: 'ZZZ', side: 'buy', dollars: 10 }], { equity: 1000, held: { BBB: 1 }, prices: { AAA: 10, BBB: 10, ZZZ: 1 }, allowed: new Set(['AAA', 'BBB']), maxOrderUsd: 200 });
     assert.ok(p.some((x) => /too big/.test(x)) && p.some((x) => /universe/.test(x)) && p.some((x) => /more BBB/.test(x)) && p.some((x) => /duplicate/.test(x)));
   });
+  ok('limits: a parking buy may be most of the account, a dip buy may not', () => {
+    const base = { equity: 1000, held: {}, prices: { IEF: 100, AAA: 10 }, allowed: new Set(['IEF', 'AAA']), maxOrderUsd: 200 };
+    assert.deepEqual(checkLimits([{ symbol: 'IEF', side: 'buy', dollars: 700, why: 'parking' }], base), []);
+    assert.ok(checkLimits([{ symbol: 'AAA', side: 'buy', dollars: 300, why: 'dip -12%' }], base).some((x) => /too big/.test(x)));
+    assert.ok(checkLimits([{ symbol: 'IEF', side: 'buy', dollars: 1200, why: 'parking' }], base).some((x) => /too big|exceed/.test(x)));
+  });
   ok('limits: clean plan passes', () => assert.deepEqual(checkLimits([{ symbol: 'AAA', side: 'buy', dollars: 100 }], { equity: 1000, held: {}, prices: { AAA: 10 }, allowed: new Set(['AAA']), maxOrderUsd: 200 }), []));
   ok('Robinhood format: string amounts, gfd, regular hours, stable ref_id', () => {
     const rs = { inputSchema: { type: 'object', properties: { account_number: { type: 'string' }, symbol: { type: 'string' }, side: { type: 'string' }, type: { type: 'string' }, quantity: { type: 'string' }, dollar_amount: { type: 'string' }, time_in_force: { type: 'string' }, market_hours: { type: 'string' }, ref_id: { type: 'string' } }, required: ['account_number', 'symbol', 'side', 'type'] } };
@@ -68,7 +74,7 @@ if (!mode) {
     assert.deepEqual(tradeWindow(960), { start: 947, end: 958, cutoff: 958.75 });   // 3:47-3:58, last order 3:58:45
     assert.deepEqual(tradeWindow(780), { start: 767, end: 778, cutoff: 778.75 });   // half day: 12:47-12:58
   });
-  for (const m of ['dry', 'live', 'auth', 'claude', 'claudebad']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
+  for (const m of ['dry', 'live', 'livev3', 'preview', 'auth', 'claude', 'claudebad']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
   console.log(`${n} unit tests passed + dry and live runs against a fake Robinhood`);
 } else if (mode === 'claude' || mode === 'claudebad') {
   // Claude Code fallback: every call goes through (fake) `claude -p`; we check each call it makes.
@@ -134,13 +140,35 @@ if (!mode) {
   const home = mkdtempSync(join(tmpdir(), 'live-'));
   writeFileSync(join(home, 'rh-auth.json'), JSON.stringify({ tokens: { access_token: 'x', token_type: 'Bearer', expires_in: 86400 }, saved_at: Date.now() }));
   writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [{ symbol: 'AAA', entry_date: '2026-10-01', qty: 0.25 }], history: [] }));
-  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: `http://localhost:${srv.address().port}/mcp`, LIVE_MODE: mode, RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
+  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: `http://localhost:${srv.address().port}/mcp`, LIVE_MODE: ['livev3', 'preview'].includes(mode) ? 'live' : mode, LIVE_STRATEGY: ['livev3', 'preview'].includes(mode) ? 'v3' : '', RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
   const { cmdTrade } = await import('./live-dip.mjs');
   const days = ['2026-10-01', '2026-10-02', '2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', today];
-  const gather = async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500 }, closes: { AAA: [40, 40, 40, 40, 40] }, scores: { CCC: -0.15, NOFR: -0.12 }, park: 'SPY', volInfo: {} });
+  const gather = ['livev3', 'preview'].includes(mode)
+    // v3: SPY below its 100-day -> no Clear Leader target (park null); IEF above its 100-day -> park in IEF. SPY and EWZ have ETF dips, but SPY is held as parking.
+    ? async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500, EWZ: 30, IEF: 100 }, closes: { AAA: [40, 40, 40, 40, 40], IEF: Array(120).fill(90) }, scores: { CCC: -0.15, NOFR: -0.12 }, etfScores: { SPY: -0.06, EWZ: -0.07 }, park: null, volInfo: {} })
+    : async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500 }, closes: { AAA: [40, 40, 40, 40, 40] }, scores: { CCC: -0.15, NOFR: -0.12 }, park: 'SPY', volInfo: {} });
+  if (mode === 'preview') {   // config says LIVE_MODE=live, but preview must place nothing and save nothing
+    const before = readFileSync(join(home, 'dip-state.json'), 'utf8');
+    await cmdTrade({ gather, getDays: async () => days, preview: true }); srv.close();
+    assert.equal(placed.length, 0, 'preview must not place orders'); assert.equal(readFileSync(join(home, 'dip-state.json'), 'utf8'), before, 'preview must not change the saved state');
+    assert.ok(!existsSync(join(home, 'HALT'))); console.log('ok   preview (config LIVE_MODE=live): full v3 plan computed, 0 orders placed, state unchanged'); process.exit(0);
+  }
   await cmdTrade({ force: true, gather, getDays: async () => days });
   srv.close();
   const st = JSON.parse(readFileSync(join(home, 'dip-state.json'), 'utf8')), h = st.history.at(-1);
+  if (mode === 'livev3') {
+    assert.ok(!h.error, 'run error: ' + h.error); assert.ok(!existsSync(join(home, 'HALT')), 'v3 must not halt (ETF dips and IEF are allowed symbols)');
+    const sd = h.placed.map((p) => p.side + ' ' + p.symbol);
+    assert.equal(h.strategy, 'v3'); assert.equal(h.park, 'IEF', 'bonds instead of cash when SPY is weak');
+    assert.ok(sd.includes('sell SPY') && sd.includes('buy IEF'), 'parking switches SPY -> IEF: ' + sd);
+    assert.ok(sd.includes('buy EWZ') && !sd.includes('buy SPY'), 'ETF dip EWZ bought; SPY (held as parking) is not an ETF dip: ' + sd);
+    assert.ok(sd.includes('buy CCC'), 'stock dips still come first: ' + sd);
+    const ewz = st.positions.find((p) => p.symbol === 'EWZ');
+    assert.ok(ewz && ewz.kind === 'etf' && ewz.entry_date === today, 'ETF dip recorded as a position with kind etf (10-day max hold)');
+    assert.ok(!st.positions.some((p) => p.symbol === 'IEF'), 'IEF parking is not a dip position');
+    console.log('ok   v3 live run:', sd.join(', '), '| park IEF, EWZ tracked as an ETF dip');
+    process.exit(0);
+  }
   assert.ok(!h.error, 'run error: ' + h.error);
   assert.ok(!existsSync(join(home, 'HALT')), 'should not halt');
   const sides = h.placed.map((p) => p.side + ' ' + p.symbol);

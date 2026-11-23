@@ -106,7 +106,10 @@ export function checkLimits(orders, { equity, held, prices, allowed, maxOrderUsd
     if (!allowed.has(o.symbol)) problems.push('symbol not in strategy universe ' + o.symbol);
     const usd = o.dollars ?? o.shares * (prices[o.symbol] || 0);
     if (!(usd > 0)) problems.push('no price for ' + o.symbol);
-    if (o.side === 'buy' && usd > maxOrderUsd) problems.push(`order too big ${o.symbol} $${usd.toFixed(2)} > $${maxOrderUsd}`);
+    // dip buys are capped (default 20% of the account); a parking buy (idle money into the Clear Leader ETF / IEF) can be most of the
+    // account by design, so it is only capped at the account value (Nov 23 fix: a parking switch used to trip the 20% cap and halt the bot)
+    const cap = o.why === 'parking' ? equity : maxOrderUsd;
+    if (o.side === 'buy' && usd > cap) problems.push(`order too big ${o.symbol} $${usd.toFixed(2)} > $${(+cap).toFixed(2)}`);
     if (o.side === 'sell' && !(held[o.symbol] >= o.shares - 1e-6)) problems.push(`selling more ${o.symbol} than held (${o.shares} > ${held[o.symbol] || 0})`);
   }
   const buys = orders.filter((o) => o.side === 'buy').reduce((a, o) => a + (o.dollars ?? o.shares * prices[o.symbol]), 0);

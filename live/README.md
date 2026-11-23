@@ -56,8 +56,16 @@ Each run makes about 15-30 short Claude Code calls, which count toward your Clau
 2. **Approval week**: `LIVE_MODE=live` with Robinhood trade approvals ON: you tap approve on each order.
 3. **Hands-off**: approvals OFF. Watch the 4:35 pm verify alerts.
 
+## Strategy version (Nov 23 2026)
+`LIVE_STRATEGY=v1` (default): S&P 500 dips + idle money in the Clear Leader ETF, cash when SPY is weak.
+`LIVE_STRATEGY=v3`: paper bot 10 rules: same stock dips, plus ETF dips (29 index/sector/country ETFs down 5%+ in 5 days, max 10 days) in free
+slots, and IEF bonds instead of cash when SPY is below its 100-day average (if IEF is above its own). An ETF that is today's parking ETF is never also an ETF dip.
+Switch: `echo 'LIVE_STRATEGY=v3' >> ~/.sentinel-live/config.env`, then `node live-dip.mjs preview`. Back: delete that line.
+`preview` = today's full plan on real data right now, sent to your phone as PREVIEW: places nothing, saves nothing, never halts.
+Parking buys (Clear Leader / IEF) may be most of the account; only dip buys have the 20% per-order cap (fixed Nov 23: a parking switch used to halt the bot).
+
 ## Commands (on the VM, in ~/sec-edgar-worker/live)
-`node live-dip.mjs status` · `health` · `doctor` · `login` · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
+`node live-dip.mjs status` · `preview` · `health` · `doctor` · `login` · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
 Instant stop from anywhere: disconnect the agent in the Robinhood app.
 Logs: `journalctl --user -u dip-trade -n 100`
 

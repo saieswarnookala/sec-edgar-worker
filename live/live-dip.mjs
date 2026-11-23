@@ -4,16 +4,17 @@
 // Alpaca paper bot. This file only checks limits, places that exact list through Robinhood's MCP tools, and verifies it.
 // No AI picks stocks or sizes orders. Not financial advice.
 //
-// Commands:  login | doctor | health | trade | verify | status | halt | resume
+// Commands:  login | doctor | health | trade | preview (today's plan, nothing placed or saved) | verify | status | halt | resume
 // Config (env, from ~/.sentinel-live/config.env):
 //   LIVE_MODE=dry|live (default dry)   RH_ACCOUNT=<agentic account number>   APCA_API_KEY_ID / APCA_API_SECRET_KEY (market data)
 //   NTFY_TOPIC=<topic> [NTFY_URL=https://ntfy.sh]   HC_PING_URL=<healthchecks.io ping url, optional>
 //   MAX_ORDER_USD (default 20% of account)   MAX_DRAWDOWN=0.35   EQUITY_CAP=<only trade this much of the account, optional>
+//   LIVE_STRATEGY=v1|v3 (default v1). v3 = paper bot 10 rules: + ETF dips in free slots + IEF bonds instead of cash when SPY is weak.
 //   EXECUTOR=direct|claude (default direct). claude = every Robinhood call goes through official Claude Code + Robinhood MCP
 //     (CLAUDE_BIN, CLAUDE_MCP_SERVER=robinhood); our code still decides the orders and checks each call Claude makes.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, openSync, closeSync, unlinkSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { gatherSignals, decide, PAPER, DATA, SLOTS } from '../scripts/paper-dip.mjs';
+import { gatherSignals, decide, PAPER, DATA, SLOTS, BOND, bondParkSymbol, ETF_DIP_LIST } from '../scripts/paper-dip.mjs';
 import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
 import { readPositions, readOrders, readMoney, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
@@ -35,7 +36,7 @@ export function parseConfig(text) {
 }
 const CFG = join(HOME, 'config.env');
 if (existsSync(CFG)) Object.assign(process.env, parseConfig(readFileSync(CFG, 'utf8')));
-const E = process.env, MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry';
+const E = process.env; let MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry'; const STRAT = E.LIVE_STRATEGY === 'v3' ? 'v3' : 'v1';
 const STATE = join(HOME, 'dip-state.json'), HALT = join(HOME, 'HALT'), TOOLS = join(HOME, 'tools.json'), LOCK = join(HOME, 'run.lock');
 mkdirSync(HOME, { recursive: true, mode: 0o700 });
 const loadState = () => (existsSync(STATE) ? JSON.parse(readFileSync(STATE, 'utf8')) : { positions: [], history: [] });
@@ -161,7 +162,8 @@ async function cmdHealth() {
   }
 }
 
-export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals, getDays = tradingDays } = {}) {
+export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals, getDays = tradingDays, preview = false } = {}) {
+  if (preview) { MODE = 'dry'; force = true; }   // preview: today's plan on real data, nothing placed, nothing saved, never halts
   const now = ny(), today = now.date, state = loadState();
   const log = { run: new Date().toISOString(), today, ny_time: now.hm, mode: MODE };
   if (existsSync(HALT)) { await notify('Dip bot halted: no trades today', readFileSync(HALT, 'utf8'), { priority: 4, tags: 'stop_sign' }); return; }
@@ -179,13 +181,18 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     // drawdown breaker: well beyond the backtest's worst drop (-28%) means something is broken
     state.peak_equity = Math.max(state.peak_equity || 0, accountValue); state.start_equity ??= accountValue;
     const maxDd = +(E.MAX_DRAWDOWN || 0.35);
-    if (accountValue < state.peak_equity * (1 - maxDd)) { writeFileSync(HALT, `Account fell ${((1 - accountValue / state.peak_equity) * 100).toFixed(0)}% from its peak on ${today}. Check it, then run: node live-dip.mjs resume`); throw new Error('drawdown breaker tripped'); }
+    if (accountValue < state.peak_equity * (1 - maxDd)) { if (preview) throw new Error('drawdown breaker would trip'); writeFileSync(HALT, `Account fell ${((1 - accountValue / state.peak_equity) * 100).toFixed(0)}% from its peak on ${today}. Check it, then run: node live-dip.mjs resume`); throw new Error('drawdown breaker tripped'); }
     // sync with what Robinhood really holds
     const held = before.held, etfs = [...POOL, 'BIL'];
     state.positions = state.positions.filter((p) => held[p.symbol] > 0).map((p) => ({ ...p, qty: held[p.symbol] }));
     const g = await gather({ api, today, days });
     const parkHeld = Object.fromEntries(Object.entries(held).filter(([s]) => etfs.includes(s) && !state.positions.some((p) => p.symbol === s)));
-    const plan = decide({ today, days, state, held, equity, prices: g.prices, closes: g.closes, scores: g.scores, park: g.park, parkHeld, fractional: true });
+    // v3 (LIVE_STRATEGY=v3): bonds instead of cash when SPY is weak + ETF dips in free slots, exactly like paper bot 10.
+    // One holding can't be both parking and an ETF-dip position, so ETF dips skip today's parking ETF and any ETF held as parking.
+    const V3 = STRAT === 'v3';
+    const park = V3 ? bondParkSymbol({ park: g.park, bondCloses: g.closes?.[BOND], bondPx: g.prices?.[BOND] }) : g.park;
+    const etfScores = V3 ? Object.fromEntries(Object.entries(g.etfScores || {}).filter(([s]) => s !== park && !(parkHeld[s] > 0))) : {};
+    const plan = decide({ today, days, state, held, equity, prices: g.prices, closes: g.closes, scores: g.scores, park, parkHeld, fractional: true, etfScores });
     const frac = await fractionalMap(client, [...new Set([...plan.buys.map((b) => b.symbol), ...plan.parkTrades.map((t) => t.symbol)])]);
     let orders = planToOrders(plan, g.prices, (s) => frac[s] !== false);
     log.fractional = { answer: frac, raw: FRAC_RAW };
@@ -193,11 +200,11 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const todays = before.orders.filter((o) => o.created_at && ny(new Date(o.created_at)).date === today && !/cancel|reject|fail/.test(o.state));
     const dupes = orders.filter((o) => todays.some((t) => t.symbol === o.symbol && t.side === o.side));
     if (dupes.length) { log.skipped_already_placed = dupes.map((o) => o.symbol + ' ' + o.side); orders = orders.filter((o) => !dupes.includes(o)); }
-    const allowed = new Set([...g.members, ...etfs, ...Object.keys(held)]);
+    const allowed = new Set([...g.members, ...etfs, ...(V3 ? ETF_DIP_LIST : []), ...Object.keys(held)]);
     const maxOrderUsd = +(E.MAX_ORDER_USD || Math.max(5, equity * 0.2));
     const problems = checkLimits(orders, { equity, held, prices: g.prices, allowed, maxOrderUsd });
-    Object.assign(log, { account_value: accountValue, equity_used: equity, buying_power: before.money.buying_power, park: g.park || 'CASH', signals: Object.keys(g.scores).length, signal_list: Object.entries(g.scores).sort((a, b) => a[1] - b[1]).map(([k, v]) => `${k} ${(v * 100).toFixed(1)}%`), skipped_heavy_volume: g.skipped_heavy_volume, plan: orders });
-    if (problems.length) { writeFileSync(HALT, `Safety check failed on ${today}: ${problems.join('; ')}`); throw new Error('safety check failed: ' + problems.join('; ')); }
+    Object.assign(log, { account_value: accountValue, equity_used: equity, buying_power: before.money.buying_power, park: park || 'CASH', strategy: STRAT, etf_signals: Object.keys(etfScores), signals: Object.keys(g.scores).length, signal_list: Object.entries(g.scores).sort((a, b) => a[1] - b[1]).map(([k, v]) => `${k} ${(v * 100).toFixed(1)}%`), skipped_heavy_volume: g.skipped_heavy_volume, plan: orders });
+    if (problems.length) { if (preview) throw new Error('safety check would fail: ' + problems.join('; ')); writeFileSync(HALT, `Safety check failed on ${today}: ${problems.join('; ')}`); throw new Error('safety check failed: ' + problems.join('; ')); }
     const placed = [], failed = [];
     const place = async (o) => {
       if (!force && ny().min >= win.cutoff) { failed.push({ ...o, error: 'too close to the close, skipped' }); return; }
@@ -219,14 +226,18 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     else bp = (bp ?? 0) + orders.filter((o) => o.side === 'sell').reduce((a, o) => a + o.shares * (g.prices[o.symbol] || 0), 0);
     for (const o of fitBuys(orders.filter((x) => x.side === 'buy'), bp ?? equity, g.prices)) await place(o);
     // record entries: share counts get corrected from real holdings on the next run / verify
-    for (const p of placed.filter((x) => x.side === 'buy' && !etfs.includes(x.symbol))) state.positions.push({ symbol: p.symbol, entry_date: today, qty: p.shares ?? +(p.dollars / g.prices[p.symbol]).toFixed(6), dollars: p.dollars, why: p.why });
+    // record strategy entries (stock dips and, in v3, ETF dips); parking buys are not positions
+    for (const p of placed.filter((x) => x.side === 'buy' && plan.buys.some((b) => b.symbol === x.symbol))) {
+      const b = plan.buys.find((x) => x.symbol === p.symbol);
+      state.positions.push({ symbol: p.symbol, entry_date: today, qty: p.shares ?? +(p.dollars / g.prices[p.symbol]).toFixed(6), dollars: p.dollars, why: p.why, ...(b.kind ? { kind: b.kind } : {}) });
+    }
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
     const r5 = (s) => { const c = g.closes?.[s] || [], p = g.prices?.[s]; return c.length >= 5 && p > 0 ? p / c.at(-5) - 1 : null; };   // same 5-day window as dipScore
-    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park: g.park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
-    await notify(a.title, a.body, { priority: a.priority, tags: a.tags });
+    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
+    await notify((preview ? 'PREVIEW (nothing placed) ' : '') + a.title, a.body, { priority: a.priority, tags: a.tags });
     // SHADOW: the same picks from Robinhood data only (after the orders, so it can never delay or change them). RH_SHADOW=0 turns it off.
-    if (E.RH_SHADOW !== '0' && EXECUTOR !== 'claude') {
+    if (!preview && E.RH_SHADOW !== '0' && EXECUTOR !== 'claude') {
       try { const rg = await gatherSignalsRH({ client, call, today, members: g.members, closeMin: closeMins[today] ?? 960 }); log.shadow = compareSignals(g, rg); const sa = shadowAlert(log.shadow); await notify(sa.title, sa.body, { priority: 2, tags: 'mag' }); }
       catch (e) { log.shadow = { error: String(e.message || e).slice(0, 300) }; }
     }
@@ -237,7 +248,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     process.exitCode = 1;
   } finally {
     unlock();
-    state.history = [...state.history, log].slice(-500); state.updated = log.run; saveState(state);
+    if (!preview) { state.history = [...state.history, log].slice(-500); state.updated = log.run; saveState(state); }
     console.log(JSON.stringify(log, null, 1).slice(0, 6000));
   }
 }
@@ -343,8 +354,8 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
 }

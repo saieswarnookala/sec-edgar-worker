@@ -9,6 +9,13 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0a. Live bot -> v3.0 (Nov 23)
+- live/live-dip.mjs: LIVE_STRATEGY=v3 = paper bot 10 rules (ETF dips via decide(etfScores), IEF via bondParkSymbol). ETF dips skip today's parking ETF / ETFs held as parking.
+  Strategy buys (incl. ETF dips, kind 'etf') are recorded as positions by plan.buys, not by 'not a parking ETF' (SPY/QQQ/IWM/EFA/EEM are in both lists).
+- FIX (affects v1 too): checkLimits capped EVERY buy at 20% of the account, so a big parking buy/switch would halt the bot; parking buys now capped at the account value.
+- New `node live-dip.mjs preview`: full plan on real data, forced dry, no state saved, no HALT. Tests: test-live.mjs 27 ok (livev3 + preview + parking-limit cases).
+- Sai switches on the VM: git pull; node test-live.mjs; echo 'LIVE_STRATEGY=v3' >> ~/.sentinel-live/config.env; node live-dip.mjs preview. Update dashboard Start here / Live bot rules once confirmed.
+
 ## 0. Ideas catalogue (Nov 22)
 - `ideas/` has one file per strategy idea or tweak (77 so far): rules, result, verdict, data/script/workflow, and a `run()` using the shared engine. Index: ideas/README.md.
 - Add a new idea: one entry in `scripts/build_ideas.py` CATALOG, then `python scripts/build_ideas.py && python test-ideas.py`. Do this after every new test.
