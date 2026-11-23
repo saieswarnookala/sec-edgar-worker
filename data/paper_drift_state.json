@@ -35,6 +35,12 @@
    "entry_date": "2026-11-20",
    "qty": 88,
    "reaction_pct": 6.7
+  },
+  {
+   "symbol": "WMT",
+   "entry_date": "2026-11-23",
+   "qty": 74,
+   "reaction_pct": 5.2
   }
  ],
  "history": [
@@ -646,7 +652,39 @@
     "BUY 25 PANW",
     "BUY 88 P"
    ]
+  },
+  {
+   "run": "2026-11-23T11:06:05.652Z",
+   "today": "2026-11-23",
+   "equity": 95691.35,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 5,
+   "signals": [
+    {
+     "symbol": "WMT",
+     "r": 0.05155717696536899
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "WMT",
+     "qty": 74,
+     "r": 0.05155717696536899
+    }
+   ],
+   "park": {
+    "spy_held": 50,
+    "spy_delta": -8,
+    "spy_price": 689.81,
+    "stock_value": 64677
+   },
+   "orders": [
+    "SELL 8 SPY (park)",
+    "BUY 74 WMT"
+   ]
   }
  ],
- "updated": "2026-11-20T19:49:26.927Z"
+ "updated": "2026-11-23T11:06:05.652Z"
 }
