@@ -177,7 +177,7 @@ export function formatTradeAlert(o) {
   L.push(live ? `   Orders: ${ok} of ${planned.length} placed on Robinhood${bad ? `, ${bad} NOT placed` : ''}` : `   Orders: DRY RUN, ${planned.length} planned, nothing sent to Robinhood (test mode)`);
   const newBuys = o.placed.filter((p) => p.side === 'buy' && !/parking/.test(p.why || '')).length, nowHeld = keepSet.size + newBuys;
   L.push(`   Dip stocks ${live ? 'held now' : 'it would hold'}: ${nowHeld} of ${o.slots} slots${newBuys ? ` (${keepSet.size} kept + ${newBuys} new)` : ''}`);
-  L.push(`   Idle money: ${o.park ? `parked in ${o.park} (market is in an uptrend)` : 'kept in cash (SPY is below its 100-day average, so no parking ETF)'}`);
+  L.push(`   Idle money: ${o.park ? `parked in ${o.park} ${o.park === 'IEF' ? '(bonds: SPY is below its 100-day average)' : '(market is in an uptrend)'}` : 'kept in cash (SPY is below its 100-day average, so no parking ETF)'}`);
   L.push(`   Account: ${usd(o.account || 0)} total, ${o.buyingPower != null ? usd(o.buyingPower) : 'n/a'} free to buy with`);
   L.push(`   Checked: ${o.today} ${o.time} ET`);
   if (live && ok) L.push('   fills get confirmed after the close (fill alert comes after 4 pm ET)');
