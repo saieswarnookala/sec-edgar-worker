@@ -177,6 +177,22 @@
    "park": "IEF",
    "equity": 9991.41,
    "orders": []
+  },
+  {
+   "at": "2026-11-23T16:55:37.797Z",
+   "ny_time": "11:55",
+   "phase": "intraday",
+   "stock_signals": [
+    "CNC",
+    "ELV",
+    "HUM"
+   ],
+   "etf_signals": [
+    "XLE"
+   ],
+   "park": "IEF",
+   "equity": 9996.28,
+   "orders": []
   }
  ],
  "vs": {
@@ -234,5 +250,5 @@
   },
   "trades": []
  },
- "updated": "2026-11-23T16:50:46.277Z"
+ "updated": "2026-11-23T16:55:37.797Z"
 }
