@@ -1,0 +1,60 @@
+{
+ "history": [],
+ "checks": [
+  {
+   "at": "2026-11-23T15:00:36.659Z",
+   "ny_time": "10:00",
+   "phase": "intraday",
+   "stock_signals": [
+    "CNC",
+    "ELV",
+    "HUM"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10000,
+   "orders": [
+    "BUY $1000 HUM (dip -13.8%, during the day)",
+    "BUY $1000 CNC (dip -12.84%, during the day)",
+    "BUY $1000 ELV (dip -10.02%, during the day)"
+   ]
+  }
+ ],
+ "vs": {
+  "cash": 200.00000961000023,
+  "positions": [
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.589767,
+    "entry_px": 386.135,
+    "dip_pct": -13.8,
+    "size_pct": 10,
+    "bought_intraday": true
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.794045,
+    "entry_px": 63.315,
+    "dip_pct": -12.84,
+    "size_pct": 10,
+    "bought_intraday": true
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.560852,
+    "entry_px": 390.495,
+    "dip_pct": -10.02,
+    "size_pct": 10,
+    "bought_intraday": true
+   }
+  ],
+  "park": {
+   "IEF": 74.341319
+  },
+  "trades": []
+ },
+ "updated": "2026-11-23T15:00:36.659Z"
+}
