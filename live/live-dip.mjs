@@ -292,7 +292,7 @@ export function intradayPlan({ today, days, positions, held, equity, cash, price
 }
 export async function cmdIntraday({ gather = gatherSignals, getDays = tradingDays, preview = false, nowMin = null } = {}) {
   if (STRAT !== 'v32') return console.log('intraday checks run only with LIVE_STRATEGY=v32 (now ' + STRAT + ')');
-  const now = ny(), today = now.date, state = loadState(), mode = preview ? 'dry' : MODE;
+  const now = ny(), today = now.date, state = loadState(), mode = preview || E.INTRADAY_MODE === 'dry' ? 'dry' : MODE;   // INTRADAY_MODE=dry: 3:47 run stays live (v3.0 rules), daytime checks only plan
   const log = { run: new Date().toISOString(), today, ny_time: now.hm, mode, kind: 'intraday' };
   if (existsSync(HALT)) return console.log('halted: no intraday check');
   const days = await getDays(today);

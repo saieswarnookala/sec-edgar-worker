@@ -68,6 +68,7 @@ sell a dip position at +5% over its buy price only if held >= 1 trading day (nev
 into free slots (10% each), funded from cash, then by selling part of the parking ETF. Positions from v3.0 have no recorded buy price: Robinhood's
 average buy price is used. The 3:47 run treats today's intraday orders as its own (not duplicates) and never sells what was bought today.
 One error alert per problem per day; a dry day alerts only when the plan changes. `preview-intraday` = one check now, nothing placed or saved.
+Dry day first: also add `INTRADAY_MODE=dry` (3:47 run stays live with v3.0 rules, daytime checks only send what they would do). Remove that line to go live.
 Switch: `sed -i 's/^LIVE_STRATEGY=.*/LIVE_STRATEGY=v32/' ~/.sentinel-live/config.env`, re-run setup-vm.sh once (adds the timer). Logs: `journalctl --user -u dip-intraday -n 50`.
 
 ## Commands (on the VM, in ~/sec-edgar-worker/live)
