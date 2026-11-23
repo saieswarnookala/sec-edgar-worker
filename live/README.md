@@ -63,9 +63,15 @@ slots, and IEF bonds instead of cash when SPY is below its 100-day average (if I
 Switch: `echo 'LIVE_STRATEGY=v3' >> ~/.sentinel-live/config.env`, then `node live-dip.mjs preview`. Back: delete that line.
 `preview` = today's full plan on real data right now, sent to your phone as PREVIEW: places nothing, saves nothing, never halts.
 Parking buys (Clear Leader / IEF) may be most of the account; only dip buys have the 20% per-order cap (fixed Nov 23: a parking switch used to halt the bot).
+`LIVE_STRATEGY=v32`: v3 at 3:47 pm, plus `intraday` every 15 min (systemd `dip-intraday.timer`, 10:00 ET to 20 min before the close) = paper bot 12 rules:
+sell a dip position at +5% over its buy price only if held >= 1 trading day (never a same-day round trip); buy new stock dips, then ETF dips,
+into free slots (10% each), funded from cash, then by selling part of the parking ETF. Positions from v3.0 have no recorded buy price: Robinhood's
+average buy price is used. The 3:47 run treats today's intraday orders as its own (not duplicates) and never sells what was bought today.
+One error alert per problem per day; a dry day alerts only when the plan changes. `preview-intraday` = one check now, nothing placed or saved.
+Switch: `sed -i 's/^LIVE_STRATEGY=.*/LIVE_STRATEGY=v32/' ~/.sentinel-live/config.env`, re-run setup-vm.sh once (adds the timer). Logs: `journalctl --user -u dip-intraday -n 50`.
 
 ## Commands (on the VM, in ~/sec-edgar-worker/live)
-`node live-dip.mjs status` · `preview` · `health` · `doctor` · `login` · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
+`node live-dip.mjs status` · `preview` · `preview-intraday` · `health` · `doctor` · `login` · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
 Instant stop from anywhere: disconnect the agent in the Robinhood app.
 Logs: `journalctl --user -u dip-trade -n 100`
 

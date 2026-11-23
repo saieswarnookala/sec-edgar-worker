@@ -40,6 +40,16 @@ export function readOrders(data) {
   }
   const seen = new Set(); return out.filter((o) => (o.id ? !seen.has(o.id) && seen.add(o.id) : true));
 }
+// Robinhood's average buy price per symbol (used as the +5% target base for positions bought before v3.2 recorded entry_px)
+export function readAvgPrices(data) {
+  const out = {};
+  for (const arr of arraysIn(data)) for (const x of arr) {
+    if (!isObj(x)) continue;
+    const s = symOf(x), a = deepFind(x, /^(average_buy_price|avg_buy_price|average_price|average_cost|avg_cost|cost_basis_per_share)$/i);
+    if (typeof s === 'string' && a > 0) out[s.toUpperCase()] = a;
+  }
+  return out;
+}
 export function readMoney(data) {
   return { equity: deepFind(data, /^(total_value|equity|portfolio_value|total_equity|account_value)$/i), buying_power: deepFind(data, /buying_power/i) };
 }

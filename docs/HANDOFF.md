@@ -9,6 +9,15 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0b. Live bot v3.2 built (Nov 23) - rollout: v3.0 live now -> one DRY v3.2 day -> live v3.2
+- live/live-dip.mjs: LIVE_STRATEGY=v32 + `intraday` / `preview-intraday` commands. intradayPlan() = paper-v32 v32Intraday rules on real holdings
+  (+5% target only age>=1; stock then ETF dips into free slots; fund from cash then partial park sells; target money with no buys -> park, 2% buffer).
+- Buys now record entry_px (trade + intraday). Inherited positions: entry_px fallback = Robinhood average_buy_price (orders.mjs readAvgPrices), then dollars/qty.
+- Same safety as trade: HALT, lock, drawdown breaker, checkLimits, per-slot idempotency key, never re-buy/re-sell a symbol already traded today (parking excepted).
+- 3:47 run under v32: today's intraday order ids (state.intraday[].placed) are excluded from the duplicate check; verify counts them as ours (no false "stranger" HALT).
+- setup-vm.sh: dip-intraday.timer Mon..Fri 10..15:00/15 ET (no-op unless LIVE_STRATEGY=v32). test-live.mjs: v32intra + v32preview (rules, handover from v3.0, 2nd check places nothing, final run sells nothing bought today).
+- Dry-day check: `journalctl --user -u dip-intraday` and state.intraday[].holding (every position needs entry_px).
+
 ## 0a. Live bot -> v3.0 (Nov 23)
 - live/live-dip.mjs: LIVE_STRATEGY=v3 = paper bot 10 rules (ETF dips via decide(etfScores), IEF via bondParkSymbol). ETF dips skip today's parking ETF / ETFs held as parking.
   Strategy buys (incl. ETF dips, kind 'etf') are recorded as positions by plan.buys, not by 'not a parking ETF' (SPY/QQQ/IWM/EFA/EEM are in both lists).

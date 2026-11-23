@@ -74,7 +74,7 @@ if (!mode) {
     assert.deepEqual(tradeWindow(960), { start: 947, end: 958, cutoff: 958.75 });   // 3:47-3:58, last order 3:58:45
     assert.deepEqual(tradeWindow(780), { start: 767, end: 778, cutoff: 778.75 });   // half day: 12:47-12:58
   });
-  for (const m of ['dry', 'live', 'livev3', 'preview', 'auth', 'claude', 'claudebad']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
+  for (const m of ['dry', 'live', 'livev3', 'preview', 'v32intra', 'v32preview', 'auth', 'claude', 'claudebad']) { const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, m], { encoding: 'utf8' }); process.stdout.write(r.stdout); if (r.status !== 0) { console.error(r.stderr); process.exit(1); } }
   console.log(`${n} unit tests passed + dry and live runs against a fake Robinhood`);
 } else if (mode === 'claude' || mode === 'claudebad') {
   // Claude Code fallback: every call goes through (fake) `claude -p`; we check each call it makes.
@@ -116,15 +116,22 @@ if (!mode) {
   const { McpServer } = await import('@modelcontextprotocol/sdk/server/mcp.js');
   const { StreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/streamableHttp.js');
   const { z } = await import('zod');
-  const placed = [];
+  const placed = [], V32 = mode.startsWith('v32');
+  // v3.2 fake account: holdings follow the orders placed (market orders fill at the test prices)
+  const PX = { AAA: 40, BBB: 11, CCC: 250, NOFR: 20, SPY: 600, EWZ: 30 };
+  const v32Held = () => {
+    const q = { AAA: 0.25, SPY: 1.4, BBB: 5 }, avg = { AAA: 30, SPY: 550, BBB: 10 };
+    for (const a of placed) q[a.symbol] = (q[a.symbol] || 0) + (a.side === 'buy' ? 1 : -1) * (a.quantity ? +a.quantity : +a.dollar_amount / PX[a.symbol]);
+    return Object.entries(q).filter(([, v]) => v > 1e-9).map(([symbol, v]) => ({ symbol, quantity: String(+v.toFixed(6)), average_buy_price: String(avg[symbol] ?? PX[symbol]) }));
+  };
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
   const mk = () => {
     const s = new McpServer({ name: 'fake-rh', version: '1' });
     const j = (o) => ({ content: [{ type: 'text', text: JSON.stringify(o) }] });
     s.tool('get_accounts', {}, async () => j({ accounts: [{ account_number: '5RH000111', agentic_allowed: true }] }));
     s.tool('get_portfolio', { account_number: z.string() }, async () => j({ total_value: '1000.00', buying_power: placed.some((p) => p.side === 'sell') ? '230.00' : '20.00' }));
-    s.tool('get_equity_positions', { account_number: z.string() }, async () => j({ positions: [{ symbol: 'AAA', quantity: '0.25' }, { symbol: 'SPY', quantity: '1.4' }] }));
-    s.tool('get_equity_orders', { account_number: z.string() }, async () => j({ orders: [] }));
+    s.tool('get_equity_positions', { account_number: z.string() }, async () => j({ positions: V32 ? v32Held() : [{ symbol: 'AAA', quantity: '0.25' }, { symbol: 'SPY', quantity: '1.4' }] }));
+    s.tool('get_equity_orders', { account_number: z.string() }, async () => j({ orders: V32 ? placed.map((a, i) => ({ id: 'ord' + (i + 1), symbol: a.symbol, side: a.side, state: 'filled', created_at: new Date().toISOString() })) : [] }));
     s.tool('get_equity_tradability', { symbol: z.string() }, async ({ symbol }) => j({ symbol, tradable: true, fractional_tradability: symbol === 'NOFR' ? 'untradable' : 'tradable' }));
     const sch = { account_number: z.string(), symbol: z.string(), side: z.enum(['buy', 'sell']), type: z.enum(['market', 'limit']), quantity: z.string().optional(), dollar_amount: z.string().optional(), time_in_force: z.string().optional(), market_hours: z.string().optional(), ref_id: z.string().optional() };
     s.tool('review_equity_order', sch, async (a) => j({ ok: true, warnings: [] }));
@@ -139,14 +146,59 @@ if (!mode) {
   await new Promise((r) => srv.on('listening', r));
   const home = mkdtempSync(join(tmpdir(), 'live-'));
   writeFileSync(join(home, 'rh-auth.json'), JSON.stringify({ tokens: { access_token: 'x', token_type: 'Bearer', expires_in: 86400 }, saved_at: Date.now() }));
-  writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [{ symbol: 'AAA', entry_date: '2026-10-01', qty: 0.25 }], history: [] }));
-  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: `http://localhost:${srv.address().port}/mcp`, LIVE_MODE: ['livev3', 'preview'].includes(mode) ? 'live' : mode, LIVE_STRATEGY: ['livev3', 'preview'].includes(mode) ? 'v3' : '', RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
-  const { cmdTrade } = await import('./live-dip.mjs');
+  writeFileSync(join(home, 'dip-state.json'), JSON.stringify({ positions: [{ symbol: 'AAA', entry_date: '2026-10-01', qty: 0.25 }, ...(V32 ? [{ symbol: 'BBB', entry_date: today, qty: 5, dollars: 50, entry_px: 10, bought_intraday: true }] : [])], history: [] }));
+  Object.assign(process.env, { SENTINEL_HOME: home, RH_MCP_URL: `http://localhost:${srv.address().port}/mcp`, LIVE_MODE: ['livev3', 'preview'].includes(mode) || V32 ? 'live' : mode, LIVE_STRATEGY: V32 ? 'v32' : ['livev3', 'preview'].includes(mode) ? 'v3' : '', RH_ACCOUNT: '5RH000111', NTFY_TOPIC: '' });
+  const { cmdTrade, cmdIntraday, intradayPlan } = await import('./live-dip.mjs');
   const days = ['2026-10-01', '2026-10-02', '2026-10-05', '2026-10-06', '2026-10-07', '2026-10-08', today];
   const gather = ['livev3', 'preview'].includes(mode)
     // v3: SPY below its 100-day -> no Clear Leader target (park null); IEF above its 100-day -> park in IEF. SPY and EWZ have ETF dips, but SPY is held as parking.
     ? async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500, EWZ: 30, IEF: 100 }, closes: { AAA: [40, 40, 40, 40, 40], IEF: Array(120).fill(90) }, scores: { CCC: -0.15, NOFR: -0.12 }, etfScores: { SPY: -0.06, EWZ: -0.07 }, park: null, volInfo: {} })
     : async () => ({ members: ['AAA', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { AAA: 40, CCC: 250, NOFR: 20, SPY: 600, QQQ: 500 }, closes: { AAA: [40, 40, 40, 40, 40] }, scores: { CCC: -0.15, NOFR: -0.12 }, park: 'SPY', volInfo: {} });
+  if (V32) {
+    // AAA: bought by v3.0 weeks ago (no entry_px; Robinhood avg $30, now $40 = +33%) -> target sell. BBB: bought today at $10, now $11 (+10%) -> must NOT sell (no same-day round trips).
+    const g32 = async () => ({ members: ['AAA', 'BBB', 'CCC', 'NOFR'], etfs: ['SPY', 'QQQ', 'BIL'], prices: { ...PX }, closes: { AAA: [40, 40, 40, 40, 40], BBB: [10, 10, 10, 10, 10] }, scores: { CCC: -0.15, NOFR: -0.12 }, etfScores: { SPY: -0.06, EWZ: -0.07 }, park: 'SPY', volInfo: {} });
+    const getDays = async () => days, path = join(home, 'dip-state.json');
+    const pp = { today, days, equity: 1000, cash: 0, prices: { X: 105, Y: 106 }, park: 'SPY', parkHeld: {} };
+    assert.equal(intradayPlan({ ...pp, positions: [{ symbol: 'X', entry_date: today, entry_px: 100 }], held: { X: 1 } }).sells.length, 0, 'never sells a same-day buy, even at +5%');
+    assert.equal(intradayPlan({ ...pp, positions: [{ symbol: 'Y', entry_date: days.at(-2), entry_px: 100 }], held: { Y: 1 } }).sells.length, 1, 'sells at +5% from day 2');
+    assert.equal(intradayPlan({ ...pp, positions: [{ symbol: 'X', entry_date: days.at(-2), entry_px: 101 }], held: { X: 1 } }).sells.length, 0, 'no sell below +5%');
+    const full = intradayPlan({ ...pp, positions: Array.from({ length: 10 }, (_, i) => ({ symbol: 'S' + i, entry_date: today, entry_px: 1 })), held: Object.fromEntries(Array.from({ length: 10 }, (_, i) => ['S' + i, 1])), scores: { Z: -0.2 }, prices: { ...pp.prices, Z: 10 }, cash: 500 });
+    assert.equal(full.buys.length, 0, 'no buys when all 10 slots are full');
+    console.log('ok   v3.2 rules: no same-day sell, +5% sell from day 2, slots respected');
+    if (mode === 'v32preview') {
+      const before = readFileSync(path, 'utf8');
+      await cmdIntraday({ gather: g32, getDays, preview: true }); srv.close();
+      assert.equal(placed.length, 0, 'preview-intraday must not place orders'); assert.equal(readFileSync(path, 'utf8'), before, 'preview-intraday must not change the saved state');
+      assert.ok(!existsSync(join(home, 'HALT'))); console.log('ok   preview-intraday (config LIVE_MODE=live): 0 orders placed, state unchanged'); process.exit(0);
+    }
+    await cmdIntraday({ gather: g32, getDays, nowMin: 700 });
+    let st = JSON.parse(readFileSync(path, 'utf8')), r1 = st.intraday.at(-1);
+    assert.ok(!r1.error, 'intraday error: ' + r1.error); assert.ok(!existsSync(join(home, 'HALT')), 'intraday must not halt');
+    const sd = r1.placed.map((p) => p.side + ' ' + p.symbol);
+    assert.ok(sd.includes('sell AAA'), 'inherited v3.0 position sold at +5% using Robinhood avg price: ' + sd);
+    assert.ok(!sd.includes('sell BBB'), 'same-day buy BBB not sold: ' + sd);
+    assert.ok(sd.includes('buy CCC') && sd.includes('buy NOFR') && sd.includes('buy EWZ'), 'stock + ETF dips bought: ' + sd);
+    assert.ok(sd.includes('sell SPY') && !sd.includes('buy SPY'), 'buys funded by selling part of parked SPY: ' + sd);
+    assert.ok(sd.lastIndexOf('sell SPY') < sd.findIndex((x) => x.startsWith('buy')), 'sells before buys');
+    const spySold = +placed.find((a) => a.symbol === 'SPY').quantity; assert.ok(spySold > 0.3 && spySold < 0.6, 'sells only what the buys need (~0.45 SPY): ' + spySold);
+    for (const s of ['CCC', 'NOFR', 'EWZ']) { const p = st.positions.find((x) => x.symbol === s); assert.ok(p && p.entry_date === today && p.entry_px === PX[s], s + ' recorded with entry price'); }
+    assert.equal(st.positions.find((x) => x.symbol === 'EWZ').kind, 'etf'); assert.ok(!st.positions.some((x) => x.symbol === 'AAA'), 'AAA removed after its sell');
+    const n1 = placed.length;
+    await cmdIntraday({ gather: g32, getDays, nowMin: 715 });
+    st = JSON.parse(readFileSync(path, 'utf8')); assert.ok(!st.intraday.at(-1).error, 'check 2 error: ' + st.intraday.at(-1).error);
+    assert.equal(placed.length, n1, 'second check places nothing: ' + JSON.stringify(placed.slice(n1)));
+    await cmdIntraday({ gather: g32, getDays, nowMin: 585 }); await cmdIntraday({ gather: g32, getDays, nowMin: 945 }); assert.equal(placed.length, n1, 'nothing outside 10:00 to close-20');
+    await cmdTrade({ force: true, gather: g32, getDays });
+    srv.close();
+    st = JSON.parse(readFileSync(path, 'utf8')); const h = st.history.at(-1);
+    assert.ok(!h.error, 'final run error: ' + h.error); assert.ok(!existsSync(join(home, 'HALT')), 'final run must not halt');
+    const fs = (h.placed || []).map((p) => p.side + ' ' + p.symbol);
+    assert.ok(!fs.some((x) => /^sell (BBB|CCC|NOFR|EWZ)$/.test(x)), 'final run sells nothing bought today: ' + fs);
+    assert.ok(!fs.some((x) => /^buy (CCC|NOFR|EWZ|BBB)$/.test(x)), 'final run does not re-buy held dips: ' + fs);
+    assert.equal(h.strategy, 'v32');
+    console.log('ok   v3.2 intraday live run:', sd.join(', '), '| 2nd check: 0 orders | final run:', fs.join(', ') || 'no orders');
+    process.exit(0);
+  }
   if (mode === 'preview') {   // config says LIVE_MODE=live, but preview must place nothing and save nothing
     const before = readFileSync(join(home, 'dip-state.json'), 'utf8');
     await cmdTrade({ gather, getDays: async () => days, preview: true }); srv.close();
