@@ -31,10 +31,27 @@
    "park": "IEF",
    "equity": 10028.05,
    "orders": []
+  },
+  {
+   "at": "2026-11-23T15:30:39.034Z",
+   "ny_time": "10:30",
+   "phase": "intraday",
+   "stock_signals": [
+    "XYZ",
+    "CNC",
+    "ELV",
+    "HUM"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10013.99,
+   "orders": [
+    "BUY $1001 XYZ (dip -10.03%, during the day)"
+   ]
   }
  ],
  "vs": {
-  "cash": 200.00000961000023,
+  "cash": 0.000026878000085162057,
   "positions": [
    {
     "symbol": "HUM",
@@ -62,12 +79,21 @@
     "dip_pct": -10.02,
     "size_pct": 10,
     "bought_intraday": true
+   },
+   {
+    "symbol": "XYZ",
+    "entry_date": "2026-11-23",
+    "qty": 13.681251,
+    "entry_px": 73.195,
+    "dip_pct": -10.03,
+    "size_pct": 10,
+    "bought_intraday": true
    }
   ],
   "park": {
-   "IEF": 74.341319
+   "IEF": 65.575194
   },
   "trades": []
  },
- "updated": "2026-11-23T15:15:35.657Z"
+ "updated": "2026-11-23T15:30:39.034Z"
 }
