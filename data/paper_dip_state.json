@@ -1,21 +1,27 @@
 {
  "positions": [
   {
-   "symbol": "MRNA",
-   "entry_date": "2026-11-16",
-   "qty": 4,
-   "dip_pct": -17.9
-  },
-  {
-   "symbol": "GPN",
-   "entry_date": "2026-11-17",
-   "qty": 11,
-   "dip_pct": -12.2
-  },
-  {
    "symbol": "AMD",
    "entry_date": "2026-11-19",
    "qty": 1,
+   "dip_pct": -12
+  },
+  {
+   "symbol": "HUM",
+   "entry_date": "2026-11-23",
+   "qty": 2,
+   "dip_pct": -14.7
+  },
+  {
+   "symbol": "CNC",
+   "entry_date": "2026-11-23",
+   "qty": 15,
+   "dip_pct": -13.3
+  },
+  {
+   "symbol": "ELV",
+   "entry_date": "2026-11-23",
+   "qty": 2,
    "dip_pct": -12
   }
  ],
@@ -778,7 +784,135 @@
    "orders": [
     "BUY 1 AMD (dip -12%)"
    ]
+  },
+  {
+   "run": "2026-11-23T20:25:35.003Z",
+   "today": "2026-11-23",
+   "ny_time": "15:25",
+   "equity": 9768.01,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "CNC": {
+     "ratio": 1.11,
+     "today_est": 3950058
+    },
+    "ELV": {
+     "ratio": 1.54,
+     "today_est": 2406479
+    },
+    "HUM": {
+     "ratio": 1.63,
+     "today_est": 1638839
+    },
+    "ACN": {
+     "ratio": 0.8,
+     "today_est": 3927076
+    },
+    "MPC": {
+     "ratio": 1.04,
+     "today_est": 2038987
+    },
+    "SWKS": {
+     "ratio": 0.44,
+     "today_est": 1898390
+    },
+    "VLO": {
+     "ratio": 0.83,
+     "today_est": 2424027
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 724.39,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "CNC": -0.1334452715380796,
+    "ELV": -0.120239366060376,
+    "HUM": -0.14747019711835063
+   },
+   "sells": [
+    {
+     "symbol": "MRNA",
+     "qty": 4,
+     "reason": "held 5 days (max 5)"
+    },
+    {
+     "symbol": "GPN",
+     "qty": 11,
+     "reason": "bounced above 5-day average"
+    }
+   ],
+   "buys": [
+    {
+     "symbol": "HUM",
+     "qty": 2,
+     "dip_pct": -14.7
+    },
+    {
+     "symbol": "CNC",
+     "qty": 15,
+     "dip_pct": -13.3
+    },
+    {
+     "symbol": "ELV",
+     "qty": 2,
+     "dip_pct": -12
+    }
+   ],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.5,
+    "equity": 9950.76,
+    "orders": 5
+   },
+   "etf_bot": {
+    "equity": 9961.18,
+    "twin_equity": 9966.95,
+    "etf_signals": 1,
+    "orders": 5
+   },
+   "mix_bot": {
+    "equity": 9966.95,
+    "drift_signals": 1,
+    "orders": 6
+   },
+   "short_bot": {
+    "equity": 9966.95,
+    "twin_equity": 9966.95,
+    "si_date": "20261030",
+    "skipped": [],
+    "orders": 5
+   },
+   "bond_bot": {
+    "equity": 9931.76,
+    "twin_equity": 9931.76,
+    "park": "IEF",
+    "orders": 4
+   },
+   "v3_bot": {
+    "equity": 9925.92,
+    "park": "IEF",
+    "orders": 4
+   },
+   "v31_bot": {
+    "equity": 9925.92,
+    "drift": 1,
+    "orders": 6
+   },
+   "tuned_bot": {
+    "equity": 10005.35,
+    "signals": 5,
+    "orders": 6
+   },
+   "orders": [
+    "SELL 4 MRNA (held 5 days (max 5))",
+    "SELL 11 GPN (bounced above 5-day average)",
+    "BUY 2 HUM (dip -14.7%)",
+    "BUY 15 CNC (dip -13.3%)",
+    "BUY 2 ELV (dip -12%)"
+   ]
   }
  ],
- "updated": "2026-11-19T20:26:06.529Z"
+ "updated": "2026-11-23T20:25:35.003Z"
 }

@@ -15,10 +15,26 @@
     "BUY $1000 XLV ETF (dip -5.5%)",
     "BUY $1000 XLE ETF (dip -5.2%)"
    ]
+  },
+  {
+   "today": "2026-11-23",
+   "equity": 9925.92,
+   "spy": 724.39,
+   "park": "IEF",
+   "stock_signals": 3,
+   "etf_signals": [
+    "XLE"
+   ],
+   "orders": [
+    "BUY $993 HUM (dip -14.7%)",
+    "BUY $993 CNC (dip -13.3%)",
+    "BUY $993 ELV (dip -12%)",
+    "BUY IEF (parking)"
+   ]
   }
  ],
  "vs": {
-  "cash": 7000.000199455,
+  "cash": 198.5185171400003,
   "positions": [
    {
     "symbol": "AMD",
@@ -45,10 +61,36 @@
     "entry_px": 60.955,
     "dip_pct": -5.2,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.588043,
+    "entry_px": 383.53,
+    "dip_pct": -14.7,
+    "size_pct": 10
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.700605,
+    "entry_px": 63.22,
+    "dip_pct": -13.3,
+    "size_pct": 10
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.590035,
+    "entry_px": 383.235,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
-  "park": {},
+  "park": {
+   "IEF": 41.72984
+  },
   "trades": []
  },
- "updated": "2026-11-19T20:26:06.529Z"
+ "updated": "2026-11-23T20:25:35.003Z"
 }

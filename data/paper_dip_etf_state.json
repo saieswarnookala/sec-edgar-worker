@@ -46,27 +46,28 @@
     "BUY $990 XLV ETF (dip -5.5%)",
     "BUY $990 XLE ETF (dip -5.2%)"
    ]
+  },
+  {
+   "today": "2026-11-23",
+   "equity": 9961.18,
+   "twin_equity": 9966.95,
+   "spy": 724.39,
+   "park": "CASH",
+   "etf_signals": {
+    "XLE": -0.06060606060606055
+   },
+   "orders": [
+    "SELL MRNA (held 5 days (max 5))",
+    "SELL GPN (bounced above 5-day average)",
+    "BUY $996 HUM (dip -14.7%)",
+    "BUY $996 CNC (dip -13.3%)",
+    "BUY $996 ELV (dip -12%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 5035.240842014999,
+  "cash": 4077.047834529999,
   "positions": [
-   {
-    "symbol": "MRNA",
-    "entry_date": "2026-11-16",
-    "qty": 4.630915,
-    "entry_px": 215.94,
-    "dip_pct": -17.9,
-    "size_pct": 10
-   },
-   {
-    "symbol": "GPN",
-    "entry_date": "2026-11-17",
-    "qty": 11.505316,
-    "entry_px": 86.54,
-    "dip_pct": -12.2,
-    "size_pct": 10
-   },
    {
     "symbol": "AMD",
     "entry_date": "2026-11-19",
@@ -92,30 +93,55 @@
     "entry_px": 60.955,
     "dip_pct": -5.2,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.597234,
+    "entry_px": 383.53,
+    "dip_pct": -14.7,
+    "size_pct": 10
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.756366,
+    "entry_px": 63.22,
+    "dip_pct": -13.3,
+    "size_pct": 10
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.599234,
+    "entry_px": 383.235,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
   "park": {},
-  "trades": []
- },
- "twin": {
-  "cash": 7014.633929674999,
-  "positions": [
+  "trades": [
    {
     "symbol": "MRNA",
+    "kind": "stock",
     "entry_date": "2026-11-16",
-    "qty": 4.630915,
-    "entry_px": 215.94,
-    "dip_pct": -17.9,
-    "size_pct": 10
+    "exit_date": "2026-11-23",
+    "ret_pct": -2.28,
+    "reason": "held 5 days (max 5)"
    },
    {
     "symbol": "GPN",
+    "kind": "stock",
     "entry_date": "2026-11-17",
-    "qty": 11.505316,
-    "entry_px": 86.54,
-    "dip_pct": -12.2,
-    "size_pct": 10
-   },
+    "exit_date": "2026-11-23",
+    "ret_pct": 5.75,
+    "reason": "bounced above 5-day average"
+   }
+  ]
+ },
+ "twin": {
+  "cash": 6054.70884906,
+  "positions": [
    {
     "symbol": "AMD",
     "entry_date": "2026-11-19",
@@ -123,10 +149,51 @@
     "entry_px": 484.215,
     "dip_pct": -12,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.59874,
+    "entry_px": 383.53,
+    "dip_pct": -14.7,
+    "size_pct": 10
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.765498,
+    "entry_px": 63.22,
+    "dip_pct": -13.3,
+    "size_pct": 10
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.60074,
+    "entry_px": 383.235,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
   "park": {},
-  "trades": []
+  "trades": [
+   {
+    "symbol": "MRNA",
+    "kind": "stock",
+    "entry_date": "2026-11-16",
+    "exit_date": "2026-11-23",
+    "ret_pct": -2.28,
+    "reason": "held 5 days (max 5)"
+   },
+   {
+    "symbol": "GPN",
+    "kind": "stock",
+    "entry_date": "2026-11-17",
+    "exit_date": "2026-11-23",
+    "ret_pct": 5.75,
+    "reason": "bounced above 5-day average"
+   }
+  ]
  },
- "updated": "2026-11-19T20:26:06.529Z"
+ "updated": "2026-11-23T20:25:35.003Z"
 }

@@ -13,10 +13,27 @@
    "orders": [
     "BUY $1000 AMD (dip -12%)"
    ]
+  },
+  {
+   "today": "2026-11-23",
+   "equity": 9931.76,
+   "twin_equity": 9931.76,
+   "spy": 724.39,
+   "park": "IEF",
+   "twin_park": "CASH",
+   "ief": 91.63,
+   "ief_ma100": 91.08,
+   "dip_signals": 3,
+   "orders": [
+    "BUY $993 HUM (dip -14.7%)",
+    "BUY $993 CNC (dip -13.3%)",
+    "BUY $993 ELV (dip -12%)",
+    "BUY IEF (parking)"
+   ]
   }
  ],
  "vs": {
-  "cash": 9000.00015043,
+  "cash": 198.6351241349994,
   "positions": [
    {
     "symbol": "AMD",
@@ -25,13 +42,39 @@
     "entry_px": 484.215,
     "dip_pct": -12,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.589564,
+    "entry_px": 383.53,
+    "dip_pct": -14.7,
+    "size_pct": 10
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.709831,
+    "entry_px": 63.22,
+    "dip_pct": -13.3,
+    "size_pct": 10
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.591557,
+    "entry_px": 383.235,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
-  "park": {},
+  "park": {
+   "IEF": 63.536382
+  },
   "trades": []
  },
  "twin": {
-  "cash": 9000.00015043,
+  "cash": 6020.473806794999,
   "positions": [
    {
     "symbol": "AMD",
@@ -40,10 +83,34 @@
     "entry_px": 484.215,
     "dip_pct": -12,
     "size_pct": 10
+   },
+   {
+    "symbol": "HUM",
+    "entry_date": "2026-11-23",
+    "qty": 2.589564,
+    "entry_px": 383.53,
+    "dip_pct": -14.7,
+    "size_pct": 10
+   },
+   {
+    "symbol": "CNC",
+    "entry_date": "2026-11-23",
+    "qty": 15.709831,
+    "entry_px": 63.22,
+    "dip_pct": -13.3,
+    "size_pct": 10
+   },
+   {
+    "symbol": "ELV",
+    "entry_date": "2026-11-23",
+    "qty": 2.591557,
+    "entry_px": 383.235,
+    "dip_pct": -12,
+    "size_pct": 10
    }
   ],
   "park": {},
   "trades": []
  },
- "updated": "2026-11-19T20:26:06.529Z"
+ "updated": "2026-11-23T20:25:35.003Z"
 }
