@@ -48,10 +48,28 @@
    "orders": [
     "BUY $1001 XYZ (dip -10.03%, during the day)"
    ]
+  },
+  {
+   "at": "2026-11-23T15:45:36.590Z",
+   "ny_time": "10:45",
+   "phase": "intraday",
+   "stock_signals": [
+    "CNC",
+    "ELV",
+    "HUM"
+   ],
+   "etf_signals": [
+    "XLE"
+   ],
+   "park": "IEF",
+   "equity": 9980.29,
+   "orders": [
+    "BUY $998 XLE ETF (dip -5.18%, during the day)"
+   ]
   }
  ],
  "vs": {
-  "cash": 0.000026878000085162057,
+  "cash": 0.00001882280014342541,
   "positions": [
    {
     "symbol": "HUM",
@@ -88,12 +106,22 @@
     "dip_pct": -10.03,
     "size_pct": 10,
     "bought_intraday": true
+   },
+   {
+    "symbol": "XLE",
+    "kind": "etf",
+    "entry_date": "2026-11-23",
+    "qty": 16.526403,
+    "entry_px": 60.39,
+    "dip_pct": -5.18,
+    "size_pct": 10,
+    "bought_intraday": true
    }
   ],
   "park": {
-   "IEF": 65.575194
+   "IEF": 54.660611
   },
   "trades": []
  },
- "updated": "2026-11-23T15:30:39.034Z"
+ "updated": "2026-11-23T15:45:36.590Z"
 }
