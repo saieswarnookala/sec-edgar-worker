@@ -348,7 +348,7 @@ def run():
         OUTR["placebo"] = {"runs": 200, "random_median": float(np.median(pc)), "random_p95": float(np.percentile(pc, 95)), "random_max": float(pc.max()), "share_beating_base_pct": round(float(np.mean(pc >= base["cagr"])) * 100, 1), "random_median_worst_drop": float(np.median(pd_))}
         print("PLACEBO 20 random stocks (same universe, same filter):", OUTR["placebo"], flush=True)
         os.makedirs("data", exist_ok=True); json.dump(OUTR, open("data/india_momrobust.json" if not DRY else "/tmp/india_momrobust_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
-    if MODE == "slowtax":
+    if MODE in ("slowtax", "taxexec"):
         # Nov 22: (A) slower reshuffles / wider buffers / letting winners run, judged AFTER TAX with lot-level Indian tax (current rules applied to the whole
         # period: held < 12 months 20% + cess = 20.8%; >= 12 months 12.5% + cess = 13% above Rs 1.25 lakh a year; FIFO lots; short-term losses offset both,
         # long-term losses only long-term, carried forward; calendar years; start Rs 10 lakh). (B) score tweaks on bot 13's settings, same tax engine.
@@ -378,10 +378,12 @@ def run():
                 s_ = m0 + k - 1
                 if s_ < D and dates[s_].month == dates[m0].month and s_ >= START and s_ + lag < D: out[s_ + lag] = s_
             return out
-        STR, LTR, EX = 0.208, 0.13, 125000.0
+        STR, LTR, EX, SLAB = 0.208, 0.13, 125000.0, float(os.environ.get("SLAB", "0.312"))
         def sleeve_tax(k, lag, cfg, cap):
             sc = SCX[cfg.get("score", "bot 13: (6m+12m)/vol")]; N = 20; buf = cfg.get("buf", 1.5); reset = cfg.get("reset", True); two = cfg.get("smooth", False)
             P_ = plan(k, lag, MONTHS[cfg.get("freq", "monthly")]); ex = EX * cap / 1e6
+            fy = cfg.get("fy", False); h366 = cfg.get("hold366", 0); hv_lt = cfg.get("harvest_lt", False); hv_st = cfg.get("harvest_st", False); ptax = cfg.get("parktax", None)
+            slab = 0.0; ltnx = 0.0; pg = 0.0; pg_t0 = None; pg_gold = None   # park leg: realised gains taxed at slab (short) or 13% without the exemption (gold held >= 12m)
             lots = {}; cash = cap; inside = True; st = lt = carry = 0.0; taxes = 0.0; pre = np.full(D, cap); post = np.full(D, cap); pre_eq = cap; tv_sum = 0.0
             def sell(j, amt, t):                       # sell amt rupees of stock j, FIFO; returns proceeds before costs
                 nonlocal st, lt
@@ -396,17 +398,30 @@ def run():
                     amt -= take; got += take
                 if not L_: lots.pop(j)
                 return got
+            def park_realise(t):
+                nonlocal pg, pg_t0, pg_gold, slab, ltnx, st
+                if pg_t0 is None: return
+                if pg_gold and t - pg_t0 >= 248: ltnx += pg
+                elif ptax == "arb" and not pg_gold: st += pg          # arbitrage fund instead of liquid: equity-taxed (20.8% short-term)
+                else: slab += pg
+                pg = 0.0; pg_t0 = None
             def settle():
-                nonlocal st, lt, carry, cash, taxes
+                nonlocal st, lt, carry, cash, taxes, slab, ltnx
                 s_, l_ = st, lt
                 if s_ < 0: l_ += s_; s_ = 0.0
                 if carry < 0:
                     use = min(-carry, s_); s_ -= use; carry += use; use = min(-carry, max(l_, 0)); l_ -= use; carry += use
                 if l_ < 0: carry += l_; l_ = 0.0
-                tax = STR * s_ + LTR * max(0.0, l_ - ex); cash -= tax; taxes += tax; st = lt = 0.0
+                tax = STR * s_ + LTR * max(0.0, l_ - ex) + (SLAB * max(slab, 0.0) + LTR * max(ltnx, 0.0) if ptax else 0.0); cash -= tax; taxes += tax; st = lt = 0.0; slab = ltnx = 0.0
             pre_cash_ratio = 1.0
             for t in range(START, D):
                 park = hide_r[t] if not inside else liq[t]
+                if ptax and not inside:
+                    g_ = bool(gtr[t])
+                    if pg_t0 is not None and g_ != pg_gold: park_realise(t)
+                    if pg_t0 is None: pg_t0, pg_gold = t, g_
+                    if ptax == "arb" and not g_: park = park - 0.005 / 248          # arbitrage fund ~0.5%/yr below liquid
+                    pg += cash * park
                 for j, L_ in lots.items():
                     r_ = Rt[t, j]
                     for l in L_: l[2] *= 1 + r_
@@ -415,6 +430,7 @@ def run():
                     cash += sell(j, sum(l[2] for l in lots[j]), t)
                 if t in P_:
                     s_ = P_[t]; inside = bool(nma[s_] if lag == 0 else nma[s_ + 1])
+                    if ptax and inside: park_realise(t)
                     held = {j: sum(l[2] for l in L_) for j, L_ in lots.items()}; eq = cash + sum(held.values())
                     if inside:
                         okm = M500[s_] & ~glitch[s_] & np.isfinite(sc[s_])
@@ -423,7 +439,8 @@ def run():
                         if two:
                             top = order[: 2 * N]; top = top[np.argsort(-np.nan_to_num(smooth[s_, top], nan=-9))]; order = np.r_[top, order[2 * N:]]
                         rank = {j: r for r, j in enumerate(order)}
-                        kept = [j for j in held if rank.get(j, 1e9) < buf * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        near = lambda j: h366 and any(203 <= t - l[0] < 248 and l[2] > l[1] for l in lots[j]) and rank.get(j, 1e9) < 4 * N   # a winner within ~45 days of long-term: wait
+                        kept = [j for j in held if rank.get(j, 1e9) < buf * N or near(j)][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
                     else: new = []
                     tgt = {}
                     if reset or not inside: tgt = {j: eq / N for j in new}
@@ -440,7 +457,22 @@ def run():
                         d_ = v - held.get(j, 0.0)
                         if d_ > 1e-6: lots.setdefault(j, []).append([t, d_, d_]); cash -= d_; traded_amt += d_
                     cash -= 0.003 * traded_amt; tv_sum += traded_amt / max(eq, 1)
-                if t + 1 >= D or dates[t + 1].year != dates[t].year: settle()
+                yend = (t + 1 >= D) or ((dates[t + 1].month == 4 and dates[t].month == 3) if fy else (dates[t + 1].year != dates[t].year))
+                if yend and t + 1 < D and (hv_lt or hv_st):          # last trading day of the tax year: sell and rebuy at the same price (0.3%/side)
+                    room = ex - max(lt, 0.0) if hv_lt else 0.0; need = max(st, 0.0) if hv_st else 0.0
+                    for j, L_ in list(lots.items()):
+                        add = []
+                        for l in L_:
+                            g = l[2] - l[1]; f = 0.0
+                            if hv_lt and room > 1 and t - l[0] >= 248 and g > 0:
+                                f = min(1.0, room / g); lt += g * f; room -= g * f
+                            elif hv_st and need > 1 and t - l[0] < 248 and g < 0:
+                                f = min(1.0, need / -g); st += g * f; need += g * f
+                            if f > 0:                      # the rebought part is a NEW lot (new cost, holding clock restarts)
+                                v = l[2] * f; cash -= 0.006 * v; add.append([t, v, v]); l[1] *= 1 - f; l[2] -= v
+                        L_[:] = [l for l in L_ if l[2] > 1e-9] + add
+                if ptax and yend and t + 1 >= D: park_realise(t)
+                if yend: settle()
                 post[t] = cash + sum(l[2] for L_ in lots.values() for l in L_)
             # sell everything at the end and settle (what you'd keep if you cashed out)
             for j in list(lots): cash += sell(j, sum(l[2] for l in lots[j]), D - 1)
@@ -453,16 +485,34 @@ def run():
             return {"after_tax_cagr": o["cagr"], "after_tax_dd": o["dd"], "after_tax_2019_2026": o["test_2019_2026"]["cagr"],
                     "tax_paid_lakh": round(sum(r[1] for r in res) / 1e5, 1), "turnover_per_year": round(sum(r[2] for r in res) / len(days) / yrs_, 1)}
         def both(lbl, cfg):
-            nonlocal STR, LTR
+            nonlocal STR, LTR, SLAB
             out = {}
             for nm, days, lag in (("best_day1", (1,), 0), ("honest_4days_nextday", (1, 6, 11, 16), 1)):
-                a = run_tax(cfg, days, lag); s0, l0 = STR, LTR; STR, LTR = 0.0, 0.0; b = run_tax(cfg, days, lag); STR, LTR = s0, l0
+                a = run_tax(cfg, days, lag); s0, l0, k0 = STR, LTR, SLAB; STR, LTR, SLAB = 0.0, 0.0, 0.0; b = run_tax(cfg, days, lag); STR, LTR, SLAB = s0, l0, k0
                 out[nm] = {"before_tax_cagr": b["after_tax_cagr"], "before_tax_dd": b["after_tax_dd"], **a}
                 print(f"{nm[:6].upper():6s} {lbl:78s} pre {b['after_tax_cagr']:>5}/{b['after_tax_dd']:>6} | AFTER TAX {a['after_tax_cagr']:>5} (tax Rs {a['tax_paid_lakh']}L, turnover {a['turnover_per_year']}x/yr)", flush=True)
             return out
         OUTS = {"note": "India momentum (bot 13 family) with LOT-LEVEL Indian tax, current rules over 2009-2026: <12m 20.8%, >=12m 13% above Rs 1.25 lakh/yr, FIFO, losses carried; "
                         "start Rs 10 lakh; final value after selling everything and paying tax. best = day-1 reshuffle; honest = days 1/6/11/16 next-day. 0.3%/side.",
                 "built": str(pd.Timestamp.today().date()), "A_reshuffle": {}, "B_score": {}}
+        if MODE == "taxexec":
+            # Nov 24: tax-aware EXECUTION of bot 13 (same picks). Indian tax year Apr-Mar. Park leg (gold ETF / liquid fund while the crash filter is out)
+            # taxed: gold < 12 months and liquid at slab (SLAB, default 30% + cess = 31.2%), gold >= 12 months 13% (no Rs 1.25 lakh exemption).
+            OUTS = {"note": "Bot 13 (top 500, (6m+12m)/vol, 20 stocks, monthly, top-30 buffer, Nifty 100-day filter -> gold/liquid) with lot-level tax. "
+                            "hold366 = a winner within ~45 days of 12 months is kept (while still top 80); harvest_lt = sell+rebuy on the last trading day of March "
+                            "to use the Rs 1.25 lakh long-term exemption; harvest_st = sell+rebuy short-term losers to offset that year's short-term gains; "
+                            "parktax = tax the gold/liquid leg (slab " + str(SLAB) + "); arb = arbitrage fund instead of liquid (equity tax, 0.5%/yr lower return). 0.3%/side; harvest 0.3%/side x2.",
+                    "built": str(pd.Timestamp.today().date()), "variants": {}}
+            V = [("0 old engine (calendar year, park leg untaxed)", {}),
+                 ("1 base: tax year Apr-Mar, park leg taxed at slab", dict(fy=True, parktax="slab")),
+                 ("2 + hold winners to 12 months (hold366)", dict(fy=True, parktax="slab", hold366=1)),
+                 ("3 + March long-term harvest (Rs 1.25 lakh)", dict(fy=True, parktax="slab", harvest_lt=True)),
+                 ("4 + March short-term loss harvest", dict(fy=True, parktax="slab", harvest_st=True)),
+                 ("5 all three (hold366 + both harvests)", dict(fy=True, parktax="slab", hold366=1, harvest_lt=True, harvest_st=True)),
+                 ("6 all three + arbitrage fund instead of liquid", dict(fy=True, parktax="arb", hold366=1, harvest_lt=True, harvest_st=True)),
+                 ("7 all three, no trims (let winners run)", dict(fy=True, parktax="slab", hold366=1, harvest_lt=True, harvest_st=True, reset=False))]
+            for lbl, cfg in V: OUTS["variants"][lbl] = both(lbl, cfg)
+            os.makedirs("data", exist_ok=True); json.dump(OUTS, open("data/india_taxexec.json" if not DRY else "/tmp/india_taxexec_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
         for fr in ("monthly", "every 2 months", "every 3 months"):
             for bf in (1.5, 2.0, 2.5):
                 for rs_ in (True, False):

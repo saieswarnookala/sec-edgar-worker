@@ -159,7 +159,7 @@ try:
             c0, c1 = S_C[k, j], S_C[k - 1, j]
             if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
 except Exception as e: print("no earnings events:", e, flush=True)
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20):
     """log: list to receive (kind, j, entry_t, exit_t, dollars_in, net_return) per closed trade. cool: None | "31d" (no re-buy within 31 days of a
     losing sale of the same ticker) | "dec" (same, only for losing sales made from Dec 1 on)"""
     LOSS = {}
@@ -172,6 +172,8 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
             if not picks: continue                                   # sector ETFs had no data yet (before 1999)
             for t in range(a, min(a + rebound["days"], D)): REB[t] = picks
     pos, eq, curve, trades, held_park = [], 1.0, np.ones(D), [], "CASH"
+    if park_vt:                                                  # Nov 24: volatility-target the equity parking (rest in T-bills), vol from the last park_vw days
+        _pv = pd.Series(PR).rolling(park_vw).std().shift(1).values * np.sqrt(252); PSC = np.clip(park_vt / np.where(_pv > 0, _pv, np.nan), 0, 1); PSC = np.nan_to_num(PSC, nan=1.0); _psc = [1.0]
     LIM = 10 - (drift if drift_mode == "reserve" else 0)
     def buy(t, cand_s, cand_e, at_open, w, cand_d=()):
         nonlocal eq
@@ -213,7 +215,9 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
             prev = p["px"] if (p["open"] and p["d"] == t) else Cx[t - 1, p["j"]]
             L_ = p.get("L", 1.0); rr = Cx[t, p["j"]] / prev - 1
             r += p["w"] * (rr if L_ == 1.0 else L_ * rr - (L_ - 1) * TBILL_R[t] - lev_cost / 252)
-        if held_park == "SPY": r += idle * PR[t]
+        if held_park == "SPY" and park_vt:
+            sc = PSC[t]; eq *= 1 - idle * cp * abs(sc - _psc[0]); _psc[0] = sc; r += idle * (sc * PR[t] + (1 - sc) * TBILL_R[t])
+        elif held_park == "SPY": r += idle * PR[t]
         elif held_park == "IEF": r += idle * BOND_R[t]
         elif held_park == "CASH" and cash_interest: r += idle * TBILL_R[t]
         elif held_park.startswith("REB:"):
