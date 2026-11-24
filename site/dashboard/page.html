@@ -1016,16 +1016,16 @@ dash.calc('vs_industry', {
   <div class="sx-stats" style="margin:10px 0 4px"><div class="sx-stat"><span>Live (real money)</span><b>1 bot</b></div><div class="sx-stat"><span>Paper, US</span><b>11 bots</b></div><div class="sx-stat"><span>Paper, India (for friends)</span><b>3 bots</b></div><div class="sx-stat"><span>Tested and dropped</span><b>35+ ideas</b></div></div></section>
 
   <section class="sx-card st-live" style="border-left:4px solid var(--color-ok)">
-    <div class="sx-ch"><h3>Live: Robinhood dip bot v3.0 (real money, about $100)</h3></div>
-    <div class="sx-badges"><span class="sx-badge">Real orders</span><span class="sx-badge">v3.0 live since Nov 23 2026</span><span class="sx-badge">v3.2 dry run (no orders) since Nov 23</span><span class="sx-badge">Oracle VM, 3:47 pm ET</span><span class="sx-badge">Phone alerts (ntfy)</span><span class="sx-badge">Stops itself at −40% from peak</span></div>
+    <div class="sx-ch"><h3>Live: Robinhood dip bot v3.2 (real money, about $100)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Real orders</span><span class="sx-badge">v3.0 live since Nov 23 2026</span><span class="sx-badge">v3.2 live since Nov 25 2026</span><span class="sx-badge">Oracle VM: every 15 min + 3:47 pm ET</span><span class="sx-badge">Phone alerts (ntfy)</span><span class="sx-badge">Stops itself at −40% from peak</span></div>
     <ol class="sx-notes">
       <li><b>Buy</b> an S&amp;P 500 stock that is above its 200-day average and fell 10%+ more than SPY in the last 5 days, unless the fall came on heavy volume (more than 2× normal).</li>
       <li><b>Free slots</b> go to dipping ETFs (29 index / sector / country ETFs down 5%+ in 5 days, above their 200-day; held up to 10 days).</li>
       <li><b>Size:</b> biggest dips first (stocks before ETFs), up to 10 positions, 10% of the account each.</li>
-      <li><b>Sell</b> the first day it closes above its 5-day average, or after 5 trading days (ETFs 10). No stop-loss.</li>
+      <li><b>Sell</b> at <b>+5%</b> during the day (checked every 15 minutes, only after holding 1+ day), or the first day it closes above its 5-day average, or after 5 trading days (ETFs 10). No stop-loss.</li><li><b>v3.2:</b> new dips can also be bought during the day (10:00 am to 20 min before the close), paid from cash, then by selling some of the parked ETF.</li>
       <li><b>Idle money:</b> the Clear Leader ETF when SPY is above its 100-day average; otherwise IEF bonds (if IEF is above its own 100-day), else cash.</li>
       <li><b>Your job:</b> nothing day to day. Read the evening alert; check with <code>dip status</code> on the VM if something looks off.</li></ol>
-    <p class="sx-cap">Backtest 1999–2026 with realistic fills: about 16.6% a year, worst drop about −27%. First live day (Nov 23): 5 of 5 orders filled (HUM, CNC, ELV, XLE + IEF), fills 0.02% from the close. Next: v3.2 (adds 15-minute checks) goes live after a clean dry day, planned Nov 25. Full cheat sheet and the previous rules: <a href="#liverules" class="st-go" data-go-tab="liverules">Live bot rules</a>.</p>
+    <p class="sx-cap">Backtest 1999–2026 with realistic fills: about 16.6% a year, worst drop about −27%. First live days: Nov 23 5 of 5 orders filled (HUM, CNC, ELV, XLE + IEF); Nov 24 HUM sold +5.4%, ELV +3.0%, fills beat the close. v3.2 dry day Nov 24 was clean (8 checks, no errors); v3.2 live from Nov 25. 5-minute replay 2016–2026: v3.2 ~30.5% vs v3.0 ~29.4% a year. Full cheat sheet and the previous rules: <a href="#liverules" class="st-go" data-go-tab="liverules">Live bot rules</a>.</p>
   </section>
 
   <section class="sx-card">
@@ -1033,8 +1033,8 @@ dash.calc('vs_industry', {
     <p class="sx-cap">Each one tests one change. "Since start" is live paper results (short so far, so mostly noise). Labels: <b>Live now</b> = the rules the real-money bot uses · <b>Next live</b> = candidate to replace them · <b>Keep</b> = running long term · <b>Watch</b> = still proving itself · <b>Merged</b> = its idea is already inside v3.0 · <b>Weak</b> = tests say it doesn't beat the simple option.</p>
     <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>#</th><th>Bot</th><th>What it tests</th><th>Label</th><th>Since start</th><th>Benchmark, same days</th></tr></thead><tbody class="st-paper">
       <tr data-bot="dip"><td>1</td><td>Dip bot (Alpaca $10k)</td><td>Exactly the live rules, on paper</td><td><b>Keep</b> (live twin)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
-      <tr data-bot="v3"><td>10</td><td>Dip bot v3.0</td><td>Live rules + ETF dips + bonds when stocks are weak</td><td><b class="sx-good">Live now</b> (since Nov 23)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
-      <tr data-bot="v32"><td>12</td><td>Dip bot v3.2</td><td>v3.0 + buying dips during the day + 5% profit target</td><td><b class="sx-good">Next live</b> (dry run on the VM; ~Nov 25)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v3"><td>10</td><td>Dip bot v3.0</td><td>Live rules + ETF dips + bonds when stocks are weak</td><td><b>Previous live</b> (Nov 23–24)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v32"><td>12</td><td>Dip bot v3.2</td><td>v3.0 + buying dips during the day + 5% profit target</td><td><b class="sx-good">Live now</b> (since Nov 25)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="v31"><td>11</td><td>Dip bot v3.1</td><td>v3.0 + 2 earnings-drift slots</td><td><b>Watch</b> (drift fading since 2021)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="drift"><td>3</td><td>Earnings drift (Alpaca $100k)</td><td>Buy big earnings beats, hold 3 months</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="vol"><td>2</td><td>Volatility sizing</td><td>Bigger buys when the market is jumpy</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
@@ -1073,12 +1073,12 @@ dash.calc('vs_industry', {
   </section>
 </div>
 <div class="sx sx-page sx-off" id="liverules" aria-hidden="true" inert>
-  <section class="sx-sec"><div class="sx-sech"><div><h2>Live bot rules (one page)</h2><p>The only bot trading real money. Robinhood agentic (MCP) account, about $100. <b>v3.0 live since Nov 23 2026</b>; v3.2 running as a dry run (plans only, no orders). Research tool, not financial advice.</p></div></div></section>
-  <div class="sx-stats" style="margin:4px 0 10px"><div class="sx-stat"><span>Live now</span><b>v3.0</b></div><div class="sx-stat"><span>Dry run</span><b>v3.2</b></div><div class="sx-stat"><span>v3.2 live (planned)</span><b>~Nov 25</b></div><div class="sx-stat"><span>Previous</span><b>v1 (until Nov 23)</b></div></div>
+  <section class="sx-sec"><div class="sx-sech"><div><h2>Live bot rules (one page)</h2><p>The only bot trading real money. Robinhood agentic (MCP) account, about $100. <b>v3.2 live since Nov 25 2026</b> (v3.0 Nov 23–24, v1 before). Research tool, not financial advice.</p></div></div></section>
+  <div class="sx-stats" style="margin:4px 0 10px"><div class="sx-stat"><span>Live now</span><b>v3.2</b></div><div class="sx-stat"><span>Since</span><b>Nov 25 2026</b></div><div class="sx-stat"><span>Before that</span><b>v3.0 (Nov 23–24)</b></div><div class="sx-stat"><span>Previous</span><b>v1 (until Nov 23)</b></div></div>
   <div class="sx-pb-cols">
   <section class="sx-card"><h3>1. When it runs</h3><ul class="sx-notes">
     <li>Every trading day at <b>3:47 pm ET</b> (backup 3:52; 12:47 on 1 pm half days), from an Oracle Cloud VM.</li>
-    <li><b>v3.2 checks every 15 minutes</b> from 10:00 am ET to 20 minutes before the close (dry run now: alerts only when the plan changes).</li>
+    <li><b>v3.2 checks every 15 minutes</b> from 10:00 am ET to 20 minutes before the close (real orders; alerts only when it trades).</li>
     <li>Health check 8:45 am (alerts only on problems); fill check 4:35 pm.</li>
     <li>One run at a time (a lock stops overlaps).</li></ul></section>
   <section class="sx-card"><h3>2. What it buys</h3><ul class="sx-notes">
