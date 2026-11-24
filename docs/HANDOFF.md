@@ -9,6 +9,15 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0d. Research tests Nov 24 (research-nov24.yml -> data/park_turnover.json, luck_check.json, india_taxexec.json)
+- Dip quality (v3.0 trades, realistic avg/trade): abnormal volume over the dip (5d/50d, all < 2x): low third +0.84/+0.87% (99-12 / 13-26), middle +0.31/+0.37, high 0.00/+0.20.
+  Big-company dips (60d dollar volume rank top third) +0.75/+0.94 vs bottom third +0.02/+0.16. Both hold in both halves. Queue by low abnormal volume: +0.3-0.5 pt/yr (16.6 -> 16.9-17.1).
+  NEXT: on v3.0 skip/half-size dips with volume ratio > 1.4 or bottom-third dollar volume (earlier tighter-cutoff test was v1, with empty slots in cash).
+- Parking vol target (v3.0 realistic, ref 16.8%/-27.3 with T-bill interest): 20% -> 16.3/-22.4; 15% -> 15.4/-21.6; 10% -> 13.9/-21.5. Cuts the worst drop (all from 1999-2012), costs 0.5-3 pts.
+- Luck check: trial Sharpe spread 0.14; luck bar Sharpe 0.34 (N=70). v3.0 realistic Sharpe 0.95, t 5.0, DSR 0.999; v1 0.80 / t 4.2; v3.0 2013-26 only 1.11 / t 4.1. All pass.
+  India 120-variant grid: train(08-18) vs test(19-26) rank corr 0.74; best-in-train at 78th pct in test; top-10 median test 42% vs all 31%.
+- India tax execution (honest): old engine 22.6% after tax; with Apr-Mar year + gold/liquid leg taxed at slab 31.2% -> 20.8% (dd -39%). hold366 / March LTCG harvest / ST loss harvest / arbitrage fund: all within +-0.1. Dashboard best case after tax 26.4 -> 25.5.
+
 ## 0c. Hold-length + target test (Nov 23; scripts/hold_test.py, intraday_exits.py HOLD=1, hold-test.yml -> data/hold_test.json, data/intraday_hold.json)
 - Daily 1999-2026, v3.0 realistic: max hold 3d 15.2% | 5d 16.6% | 7d 17.8% | 10d 17.8% | 40d 18.3%; worst drop ~-26/-27% for all. v1: 13.4% (5d) -> 15.3% (40d).
   BUT the gain is all 1999-2012 (v3.0 5d 15.4 -> 7d 18.0); 2013-2026: 5d 17.8, 7d 17.6, 10d 17.2, 40d 17.6 (no gain).

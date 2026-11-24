@@ -2795,11 +2795,11 @@ dash.calc('vs_industry', {
       <li><b>Once a month</b> (first NSE trading day): check this tab or the alert. Sell the <b>Sell</b> list, buy the <b>Buy</b> list, then top up or trim so each stock is about ${(100 / N).toFixed(0)}% again. Usually 4–6 swaps, 8–12 orders.</li>
       <li><b>Crash filter:</b> if this tab says "Crash filter ON", sell all ${N} and hold GOLDBEES (when gold is trending up) or a liquid fund until a later monthly check shows Nifty back above its 100-day average.</li>
       <li><b>Don't trade in between.</b> No stop-losses (they made it worse in tests). Use a delivery (CNC) order, not intraday.</li>
-      <li><b>Tax (India):</b> most sales are within a year, so short-term gains tax at 20% (+cess); about 0.3% per trade in charges and slippage.</li></ol></div>
+      <li><b>Tax (India):</b> most sales are within a year, so short-term gains tax at 20% (+cess); gold/liquid gains while the crash filter is out are taxed at your slab rate; about 0.3% per trade in charges and slippage. Tested Nov 24: waiting for day 366, using the ₹1.25 lakh exemption each March and booking losses before March 31 changed after-tax returns by only ±0.1 point (with ~6× turnover a year almost nothing reaches 12 months), so just follow the monthly rules.</li></ol></div>
     <div class="sx-card"><h3>What to expect</h3>
       <div class="sx-stats"><div class="sx-stat"><span>Plan on (before tax)</span><b>25–28%/yr</b></div><div class="sx-stat"><span>After tax (est.)</span><b>~20–22%/yr</b></div><div class="sx-stat"><span>Bad-year drop</span><b class="sx-bad">−30 to −40%</b></div><div class="sx-stat"><span>Nifty 50 (2009–26)</span><b>~14.5%/yr</b></div></div>
       <div class="sx-tablewrap" style="margin-top:12px"><table class="sx-scr"><thead><tr><th></th><th>Profit per year<br>before tax</th><th>Profit per year<br>after tax (est.)</th><th>Bad-year drop</th><th>₹1 lakh after 10 years<br>(after tax)</th></tr></thead><tbody>
-        <tr><td><b>Best case</b> (backtest, picked version)</td><td class="sx-good">32.6%</td><td class="sx-good">~26.4%</td><td class="sx-bad">−24%</td><td>~₹10.4 lakh</td></tr>
+        <tr><td><b>Best case</b> (backtest, picked version)</td><td class="sx-good">32.6%</td><td class="sx-good">~25.5%</td><td class="sx-bad">−24%</td><td>~₹9.7 lakh</td></tr>
         <tr><td><b>Realistic</b> (plan on this)</td><td class="sx-good">25–28%</td><td class="sx-good">~20–22%</td><td class="sx-bad">−30 to −40%</td><td>~₹6.2–7.3 lakh</td></tr>
         <tr><td><b>Nifty 50</b> (index fund, for comparison)</td><td>14.5%</td><td>~13.7%</td><td class="sx-bad">−38%</td><td>~₹3.6 lakh</td></tr>
       </tbody></table></div>
