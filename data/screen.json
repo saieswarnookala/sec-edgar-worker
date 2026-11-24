@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T21:45:45.929Z",
+ "generated_at": "2026-11-24T23:45:58.256Z",
  "earnings_year": "CY2025",
  "rules": {
   "per_bucket": 15,
@@ -47,8 +47,8 @@
   }
  ],
  "counts": {
-  "universe": 3946,
-  "with_financials": 3139,
+  "universe": 3947,
+  "with_financials": 3140,
   "passed": 588,
   "quality_passed": 202
  },
