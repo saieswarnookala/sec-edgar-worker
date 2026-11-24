@@ -1017,7 +1017,7 @@ dash.calc('vs_industry', {
 
   <section class="sx-card st-live" style="border-left:4px solid var(--color-ok)">
     <div class="sx-ch"><h3>Live: Robinhood dip bot v3.0 (real money, about $100)</h3></div>
-    <div class="sx-badges"><span class="sx-badge">Real orders</span><span class="sx-badge">v3.0 live since Nov 23 2026</span><span class="sx-badge">v3.2 dry run (no orders) since Nov 23</span><span class="sx-badge">Oracle VM, 3:47 pm ET</span><span class="sx-badge">Phone alerts (ntfy)</span><span class="sx-badge">Stops itself at −35% from peak</span></div>
+    <div class="sx-badges"><span class="sx-badge">Real orders</span><span class="sx-badge">v3.0 live since Nov 23 2026</span><span class="sx-badge">v3.2 dry run (no orders) since Nov 23</span><span class="sx-badge">Oracle VM, 3:47 pm ET</span><span class="sx-badge">Phone alerts (ntfy)</span><span class="sx-badge">Stops itself at −40% from peak</span></div>
     <ol class="sx-notes">
       <li><b>Buy</b> an S&amp;P 500 stock that is above its 200-day average and fell 10%+ more than SPY in the last 5 days, unless the fall came on heavy volume (more than 2× normal).</li>
       <li><b>Free slots</b> go to dipping ETFs (29 index / sector / country ETFs down 5%+ in 5 days, above their 200-day; held up to 10 days).</li>
@@ -1099,7 +1099,7 @@ dash.calc('vs_industry', {
     <li>Sells first, then buys sized to real buying power. Never margin.</li>
     <li>Dip orders max 20% of the account; parking orders max the account value; strategy symbols only; never sells more than it holds.</li>
     <li>Never buys or sells the same symbol twice in a day; a retried order can't double (same order key).</li>
-    <li><b>Stops itself</b> on unknown orders, failed safety checks, an expired login, or a <b>35% drop from the peak</b>.</li></ul></section>
+    <li><b>Stops itself</b> on unknown orders, failed safety checks, an expired login, or a <b>40% drop from the peak</b> (MAX_DRAWDOWN=0.40 in the VM config).</li></ul></section>
   <section class="sx-card"><h3>6. Alerts and your job</h3><ul class="sx-notes">
     <li>Phone alerts (ntfy): trades and fills normal; failures high; login expired / halted / unknown orders urgent. Errors alert once a day, not every 15 minutes.</li>
     <li>On the VM: <code>dip status</code> (check), <code>dip preview</code> / <code>preview-intraday</code> (today's plan, places nothing), <code>dip halt</code> / <code>dip resume</code> (pause), <code>dip login</code> (when it says the login expired).</li></ul></section>
