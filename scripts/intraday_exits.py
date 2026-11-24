@@ -214,20 +214,25 @@ if FAIR and not DRY:
         c = r2cache.load(f"alpaca/m5vol/{mo}.json.gz") or {}
         for day, h in c.items(): VB[day] = {k: np.array(v, dtype=np.float64) for k, v in h.items() if k != "_none" and isinstance(v, list) and len(v) == 78}
     print("fair volume: days with 5-minute volume", len(VB), flush=True)
-def vol_ok(t, j, T):
-    if not FAIR: return bool(VOLOK[t, j])
-    if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
-    VSTAT[0] += 1
+def vol_ratio(t, j, T):
+    """5-day volume / prior 50-day volume as known at minute T (FAIR) or for the full day; None = not known yet (live skips the filter)."""
+    full = float(np.nan_to_num(S.vr.values[t, j], nan=9))
+    if not FAIR: return full
     v = VB.get(ds[t], {}).get(asym(S.tick[j]))
-    if v is None: VSTAT[2] += 1; return bool(VOLOK[t, j])
+    if v is None: VSTAT[2] += 1; return full
     so_far = v[: max(0, (T - 570) // 5)].sum(); fr = vol_fraction(T)
-    if fr < 0.2 or so_far <= 0: return bool(np.nan_to_num(S.vr.values[t, j], nan=9) <= 2.0) if T >= fin_of(t) else True   # too early to judge: live skips the filter
+    if fr < 0.2 or so_far <= 0: return full if T >= fin_of(t) else None
     VSTAT[1] += 1
     prior = VRAW[t - 54:t, j]
-    if len(prior) < 54 or not np.isfinite(prior).all(): return True
+    if len(prior) < 54 or not np.isfinite(prior).all(): return None
     base = prior[:50].mean(); recent = (prior[-4:].sum() + so_far / fr) / 5
-    return base <= 0 or recent / base <= 2.0
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5):
+    return 0.0 if base <= 0 else recent / base
+def vol_ok(t, j, T, cut=2.0):
+    if not FAIR: return bool(VOLOK[t, j]) and np.nan_to_num(S.vr.values[t, j], nan=9) <= cut
+    if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
+    VSTAT[0] += 1; r = vol_ratio(t, j, T)
+    return r is None or r <= cut
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
@@ -284,7 +289,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 eq_now = cu * pf + sum(p["v"] for p in pos)
                 cand = []
                 for j in np.flatnonzero(NEAR[t] & (S.M.values[t] if FAIR else VOLOK[t])):
-                    if FAIR and not vol_ok(t, j, T): continue
+                    if (FAIR or vcut < 2.0) and not vol_ok(t, j, T, vcut): continue
                     if ("S", j) in held or ("D", j) in held: continue
                     now = px_at(t, "S", j, T)
                     if now is None: continue
@@ -302,7 +307,8 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     if sum(1 for q in pos if q["k"] != "D") >= slots: break
                     f = px_at(t, k, j, T, fill=True)
                     if f is None or not np.isfinite(f) or f <= 0: continue
-                    a = min(w * eq_now, cu * pf); c = cs if k == "S" else ce
+                    hv = vhalf is not None and k == "S" and (lambda r_: r_ is not None and r_ > vhalf)(vol_ratio(t, j, T))   # busy dip: half size
+                    a = min(w * eq_now * (0.5 if hv else 1.0), cu * pf); c = cs if k == "S" else ce
                     if a < 0.02 * eq_now: break
                     cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
                     if not final: early_buys[0] += 1
@@ -359,6 +365,11 @@ if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 to
          ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
          ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
          ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
+if os.environ.get("VOLTEST") == "1":                    # Nov 24: skip or half-size busy dips (volume ratio known at that moment), v3.0 3:45 only and v3.2
+    V = []
+    for bot, kw in (("v3.0 (3:45 only)", dict(etf=True, bond=True)), ("v3.2 (15 min + target +5%)", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05))):
+        V += [(f"{bot} | today (skip > 2x)", dict(**kw)), (f"{bot} | skip > 1.6x", dict(vcut=1.6, **kw)), (f"{bot} | skip > 1.4x", dict(vcut=1.4, **kw)),
+              (f"{bot} | half size > 1.4x", dict(vhalf=1.4, **kw)), (f"{bot} | half size > 1.2x", dict(vhalf=1.2, **kw))]
 if os.environ.get("HOLD") == "1":                       # Nov 23: how long to hold + target size, previous live rules (v1) and v3.0
     V = []
     for bot, kw in (("previous live (v1)", {}), ("v3.0", dict(etf=True, bond=True))):
@@ -372,7 +383,8 @@ for name, kw in V:
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
+PAIRS = (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
+        (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
         (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
         (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
         (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%"))
