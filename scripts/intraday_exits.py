@@ -227,7 +227,7 @@ def vol_ok(t, j, T):
     if len(prior) < 54 or not np.isfinite(prior).all(): return True
     base = prior[:50].mean(); recent = (prior[-4:].sum() + so_far / fr) / 5
     return base <= 0 or recent / base <= 2.0
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
@@ -247,7 +247,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
             # exits
             keep = []
             for p in pos:
-                Cx = S.S_C if p["k"] != "E" else S.E_C; j = p["j"]; age = t - p["d"]; mh = 5 if p["k"] == "S" else 10
+                Cx = S.S_C if p["k"] != "E" else S.E_C; j = p["j"]; age = t - p["d"]; mh = mhs if p["k"] == "S" else 10
                 if p["k"] == "D":
                     if not (final and age >= dhold): keep.append(p); continue
                     f = S.S_C[t, j]; f = f if np.isfinite(f) else p["ref"]
@@ -359,13 +359,21 @@ if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 to
          ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
          ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
          ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
+if os.environ.get("HOLD") == "1":                       # Nov 23: how long to hold + target size, previous live rules (v1) and v3.0
+    V = []
+    for bot, kw in (("previous live (v1)", {}), ("v3.0", dict(etf=True, bond=True))):
+        for mh in (3, 5, 7, 10, 15, 40): V.append((f"{bot} | 3:45 only | max hold {'40 (= until it bounces)' if mh == 40 else str(mh) + ' days'}", dict(mhs=mh, **kw)))
+        i32 = dict(intraday_buy=True, bn=15, exit_mode="target", **kw)
+        for x in (0.03, 0.05, 0.07, 0.10): V.append((f"{bot} | v3.2 (15 min) target +{int(x*100)}% | max hold 5 days", dict(x=x, **i32)))
+        for mh in (7, 10, 40): V.append((f"{bot} | v3.2 (15 min) target +5% | max hold {'40 (= until it bounces)' if mh == 40 else str(mh) + ' days'}", dict(x=0.05, mhs=mh, **i32)))
 RES = {}
 for name, kw in V:
     RES[name] = run(**kw); a = RES[name]
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
+PAIRS = (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
+        (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
         (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
         (("v3.0 | base: 3:45 only", "v3.0 | buy during the day (15 min) + target +5%"), ("Robinhood rules | base: 3:45 only", "Robinhood rules | buy during the day (15 min) + target +5%"))
 for a_, b_ in PAIRS:
