@@ -9,6 +9,10 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0f. Trailing stop vs +5% target (Nov 24; trail-test.yml -> data/intraday_trail.json) -> KEEP +5% every 15 min
+- Live-exact v3.2 (target +5%, checks every 15 min from 10:00): 30.3%/yr, worst -16.8 (16-20 21.9, 21-26 38.1); old replay (5 min from 9:35) 30.5. v3.0: 27.2.
+- Trailing (arm / drop / interval): 5/1/15 29.9 | 5/1/5 30.4 | 5/2/15 30.5 | 5/2/5 30.9 (16-20 21.7, worst -17.0) | 3/1 29.7-29.8 | 7/2 29.6-29.7. None wins both halves without a deeper drop.
+
 ## 0e. Busy vs quiet dips, full sims (Nov 24; vol-quality.yml -> data/vol_quality.json, data/intraday_volq.json) -> KEEP 2x
 - v3.0 daily realistic (per yr / worst): today 16.6/-27.3 | skip>1.6x 17.0/-28.4 | skip>1.4x 17.0/-29.6 | skip>1.2x 16.6/-31.3 | half>1.4x 16.7/-28.1 | tilt 17.8/-28.8 (gain all 1999-2012; 2013-26 17.6 vs 17.8).
 - 5-min replay 2016-26 (volume known at the time): v3.0 27.2 -> 27.1-27.2 (skip), 25.5-26.4 (half); v3.2 30.5 -> 30.3-30.5 (skip), 28.9-29.8 (half).
