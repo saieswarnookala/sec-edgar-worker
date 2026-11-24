@@ -1,0 +1,302 @@
+{
+ "note": "Checking during the day (Nov 19 2026): sell when a dip bounces intraday, profit targets, lock-ins, and buying dips during the\nday instead of only at 3:45 pm. Research only, not financial advice.\nReplays 2016-2026 on Alpaca SIP 5-minute bars (9:30-16:00 ET) for every stock/ETF near a signal and every held position.\nBase = the live bot: decide with the 15:45 price, fill at the 15:45-15:50 bar's close; 0.05% per side (also 0.10%).\nExit variants (a stock must have been held at least 1 trading day; the normal 3:45 check always runs too):\n  CHECK n   - every n minutes (5/15/30): sell as soon as the price is above the 5-day average (4 prior closes + current price)\n  TARGET x  - every 5 minutes: sell as soon as the price is x% above the buy price (2/3/5%)\n  LOCK      - every 5 minutes: once above the 5-day average, sell if it falls back below it, or y% below the day's high since (1/2%)\nEntry variant: INTRADAY BUY - every 15 minutes from 10:00, buy a stock/ETF the moment it meets the dip rules (else wait for 3:45).\nA stock sold during the day frees its slot for that day's 3:45 buys. Idle money (Clear Leader / IEF / cash) uses daily closes.\nPrices: 5-minute raw bars scaled to the adjusted daily series with the stock's own move to its last bar of the day; minute data\nmore than 3% away from the S&P data's raw close is treated as bad and that day uses the daily close (counted).\nBars cached in R2 (alpaca/m5day/<YYYY-MM>.json.gz). DRY=1: fake intraday paths (no network): a code test only - fake paths pinned to the real close are NOT a fair null test\n(an intraday rule can 'see' noise around a known close); the real-data check is the PLACEBO version (sell at a random time).\nNov 19 final-run fixes: (a) idle money is valued at the time of day it is spent or comes back (the parked ETF's own 5-minute\nbars; IEF/SPY fallback), not at the close; (b) ETFs that dipped only during the day are included (Yahoo daily lows);\n(c) the stock list is a strict superset of every possible intraday dip: day's LOW vs SPY's day HIGH (no SPY-close shortcut);\n(d) half-days: the 3:45 decision moves to 15 minutes before the early close; (e) calendar-year returns for every version.",
+ "walk_forward": {
+  "all earlier years": {
+   "per_year_pct": 28.6,
+   "picks": {
+    "2017": "v3.2 | dip 8% | target +7%",
+    "2018": "v3.2 | dip 8% | target +5%",
+    "2019": "v3.2 | dip 8% | target +3%",
+    "2020": "v3.2 | dip 10% | target +3%",
+    "2021": "v3.2 | dip 8% | target +3%",
+    "2022": "v3.2 | dip 10% | target +3%",
+    "2023": "v3.2 | dip 10% | target +3%",
+    "2024": "v3.2 | dip 10% | target +3%",
+    "2025": "v3.2 | dip 10% | target +3%",
+    "2026": "v3.2 | dip 10% | target +3%"
+   }
+  },
+  "last 3 years": {
+   "per_year_pct": 29.3,
+   "picks": {
+    "2017": "v3.2 | dip 8% | target +7%",
+    "2018": "v3.2 | dip 8% | target +5%",
+    "2019": "v3.2 | dip 8% | target +3%",
+    "2020": "v3.2 | dip 10% | target +3%",
+    "2021": "v3.2 | dip 10% | target +5%",
+    "2022": "v3.2 | dip 10% | target +5%",
+    "2023": "v3.2 | dip 10% | target +5%",
+    "2024": "v3.2 | dip 10% | target +3%",
+    "2025": "v3.2 | dip 10% | target +7%",
+    "2026": "v3.2 | dip 12% | target +5%"
+   }
+  },
+  "fixed today (dip 10%, +5%)": 31.7,
+  "years_scored": "2017-2026 (first year only used for picking)"
+ },
+ "built": "2026-11-24",
+ "dry": null,
+ "period_start": "2016-01-04",
+ "fallbacks": [
+  6804,
+  87899
+ ],
+ "park_value_lookups": [
+  522504,
+  0,
+  0
+ ],
+ "half_days": 0,
+ "fair_volume": true,
+ "fair_volume_stats": [
+  15481800,
+  13335633,
+  241056
+ ],
+ "alpaca_calls": 0,
+ "results": {
+  "v3.2 | dip 8% | target +3%": {
+   "per_year_pct": 25.3,
+   "worst_drop_pct": -23.0,
+   "trades_per_month": 32.9,
+   "avg_trade_pct": 0.39,
+   "win_pct": 65,
+   "sold_during_day_per_month": 11.4,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 24.7,
+   "2016-2020": 22.6,
+   "2021-2026": 27.6,
+   "years": {
+    "2016": 25.6,
+    "2017": 16.5,
+    "2018": 4.4,
+    "2019": 2.4,
+    "2020": 77.0,
+    "2021": 22.2,
+    "2022": 2.8,
+    "2023": 36.9,
+    "2024": 12.8,
+    "2025": 27.0,
+    "2026": 67.7
+   }
+  },
+  "v3.2 | dip 8% | target +5%": {
+   "per_year_pct": 23.6,
+   "worst_drop_pct": -25.9,
+   "trades_per_month": 30.9,
+   "avg_trade_pct": 0.4,
+   "win_pct": 63,
+   "sold_during_day_per_month": 4.6,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 21.3,
+   "2016-2020": 21.2,
+   "2021-2026": 25.7,
+   "years": {
+    "2016": 26.0,
+    "2017": 16.2,
+    "2018": -0.4,
+    "2019": -0.2,
+    "2020": 79.5,
+    "2021": 22.4,
+    "2022": -0.9,
+    "2023": 31.2,
+    "2024": 14.3,
+    "2025": 19.8,
+    "2026": 73.5
+   }
+  },
+  "v3.2 | dip 8% | target +7%": {
+   "per_year_pct": 23.9,
+   "worst_drop_pct": -26.4,
+   "trades_per_month": 30.2,
+   "avg_trade_pct": 0.41,
+   "win_pct": 63,
+   "sold_during_day_per_month": 2.0,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 20.0,
+   "2016-2020": 21.3,
+   "2021-2026": 26.1,
+   "years": {
+    "2016": 26.7,
+    "2017": 15.4,
+    "2018": 0.8,
+    "2019": -1.5,
+    "2020": 80.6,
+    "2021": 21.9,
+    "2022": -2.7,
+    "2023": 31.8,
+    "2024": 12.9,
+    "2025": 21.6,
+    "2026": 79.3
+   }
+  },
+  "v3.2 | dip 10% | target +3%": {
+   "per_year_pct": 30.9,
+   "worst_drop_pct": -16.1,
+   "trades_per_month": 19.8,
+   "avg_trade_pct": 0.74,
+   "win_pct": 68,
+   "sold_during_day_per_month": 7.9,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 16.8,
+   "2016-2020": 21.5,
+   "2021-2026": 39.5,
+   "years": {
+    "2016": 11.0,
+    "2017": 19.5,
+    "2018": 13.4,
+    "2019": 4.3,
+    "2020": 68.7,
+    "2021": 35.1,
+    "2022": 14.5,
+    "2023": 29.1,
+    "2024": 28.5,
+    "2025": 42.2,
+    "2026": 89.5
+   }
+  },
+  "v3.2 | dip 10% | target +5%": {
+   "per_year_pct": 30.3,
+   "worst_drop_pct": -16.8,
+   "trades_per_month": 18.6,
+   "avg_trade_pct": 0.76,
+   "win_pct": 66,
+   "sold_during_day_per_month": 3.6,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 15.1,
+   "2016-2020": 21.8,
+   "2021-2026": 38.1,
+   "years": {
+    "2016": 10.9,
+    "2017": 20.3,
+    "2018": 12.0,
+    "2019": 4.2,
+    "2020": 72.2,
+    "2021": 33.3,
+    "2022": 13.7,
+    "2023": 28.5,
+    "2024": 24.7,
+    "2025": 39.5,
+    "2026": 92.2
+   }
+  },
+  "v3.2 | dip 10% | target +7%": {
+   "per_year_pct": 29.2,
+   "worst_drop_pct": -17.5,
+   "trades_per_month": 18.1,
+   "avg_trade_pct": 0.75,
+   "win_pct": 66,
+   "sold_during_day_per_month": 1.8,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 14.3,
+   "2016-2020": 21.0,
+   "2021-2026": 36.7,
+   "years": {
+    "2016": 9.8,
+    "2017": 19.5,
+    "2018": 11.9,
+    "2019": 3.4,
+    "2020": 70.7,
+    "2021": 25.9,
+    "2022": 16.8,
+    "2023": 29.9,
+    "2024": 25.2,
+    "2025": 37.3,
+    "2026": 87.5
+   }
+  },
+  "v3.2 | dip 12% | target +3%": {
+   "per_year_pct": 29.2,
+   "worst_drop_pct": -15.7,
+   "trades_per_month": 12.5,
+   "avg_trade_pct": 0.95,
+   "win_pct": 71,
+   "sold_during_day_per_month": 5.2,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 11.2,
+   "2016-2020": 18.2,
+   "2021-2026": 39.5,
+   "years": {
+    "2016": 7.6,
+    "2017": 21.2,
+    "2018": 8.2,
+    "2019": 5.7,
+    "2020": 54.8,
+    "2021": 29.9,
+    "2022": 4.7,
+    "2023": 27.2,
+    "2024": 31.0,
+    "2025": 58.4,
+    "2026": 92.9
+   }
+  },
+  "v3.2 | dip 12% | target +5%": {
+   "per_year_pct": 28.7,
+   "worst_drop_pct": -15.8,
+   "trades_per_month": 11.7,
+   "avg_trade_pct": 1.0,
+   "win_pct": 68,
+   "sold_during_day_per_month": 2.5,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 10.2,
+   "2016-2020": 17.5,
+   "2021-2026": 39.2,
+   "years": {
+    "2016": 7.3,
+    "2017": 20.8,
+    "2018": 6.6,
+    "2019": 5.9,
+    "2020": 53.2,
+    "2021": 29.8,
+    "2022": 4.2,
+    "2023": 27.1,
+    "2024": 30.7,
+    "2025": 59.4,
+    "2026": 90.8
+   }
+  },
+  "v3.2 | dip 12% | target +7%": {
+   "per_year_pct": 28.5,
+   "worst_drop_pct": -15.8,
+   "trades_per_month": 11.3,
+   "avg_trade_pct": 1.02,
+   "win_pct": 68,
+   "sold_during_day_per_month": 1.3,
+   "same_day_sells_per_month": 0.0,
+   "bought_during_day_per_month": 9.8,
+   "2016-2020": 17.4,
+   "2021-2026": 38.8,
+   "years": {
+    "2016": 7.3,
+    "2017": 20.5,
+    "2018": 6.7,
+    "2019": 5.6,
+    "2020": 53.0,
+    "2021": 26.8,
+    "2022": 4.2,
+    "2023": 27.3,
+    "2024": 29.1,
+    "2025": 59.5,
+    "2026": 94.2
+   }
+  },
+  "YEARS: v3.2 | dip 10% | target +3% minus base": {
+   "by_year": {
+    "2016": 0.1,
+    "2017": -0.8,
+    "2018": 1.4,
+    "2019": 0.1,
+    "2020": -3.5,
+    "2021": 1.8,
+    "2022": 0.8,
+    "2023": 0.6,
+    "2024": 3.8,
+    "2025": 2.7,
+    "2026": -2.7
+   },
+   "years_better": 8.0,
+   "years": 11,
+   "best_year_share_of_gain_pct": 34
+  }
+ }
+}
