@@ -116,4 +116,12 @@ await t('prices feed returns the dashboard text format (mocked Alpaca)', async (
   const txt = await r.text(); const L = txt.split('\n');
   assert.equal(L[0], 'datetime;open;high;low;close;volume'); assert.equal(L[1].split(';')[0], '2026-10-23');
 });
+await t('India alarm: 8:15 am IST morning message, 2:50 / 3:10 pm IST before-close run, nothing else', async () => {
+  const W = await import('./src/index.js');
+  const J = (iso) => W.indiaJobs(new Date(iso)).map(([wf, i]) => wf + ':' + i.bot).join(',');
+  assert.equal(J('2026-11-25T02:45:00Z'), 'paper-india.yml:morning'); assert.equal(J('2026-11-25T09:20:00Z'), 'paper-india.yml:B'); assert.equal(J('2026-11-25T09:40:00Z'), 'paper-india.yml:B');
+  for (const x of ['2026-11-25T02:20:00Z', '2026-11-25T02:40:00Z', '2026-11-25T09:45:00Z']) assert.equal(J(x), '');
+  const toml = (await import('node:fs')).readFileSync(new URL('./wrangler.toml', import.meta.url), 'utf8');
+  for (const k of Object.keys(W.TIMERS)) assert.ok(toml.includes(`"${k}"`), 'cron in wrangler.toml: ' + k);
+});
 console.log(`\n${pass} passed`);

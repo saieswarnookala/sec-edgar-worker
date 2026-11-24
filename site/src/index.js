@@ -103,9 +103,9 @@ export const TIMERS = {
   '*/5 14-20 * * MON-FRI': 'market',
   // Screener refresh: 21:45 UTC (4:45 pm ET winter, 5:45 summer) after the close, backup 23:45 UTC. GitHub's own schedule ran 4-6 h late.
   '45 21,23 * * *': ['screen.yml', {}],
-  // INDIA Bot B (before close): 09:20 and 09:40 UTC = 2:50 / 3:10 pm IST. India has no daylight saving, so one line all year.
-  // The India bots are otherwise separate (own workflow, state and ntfy topic); this is only the alarm clock. 5 of 5 free cron triggers used.
-  '20,40 9 * * MON-FRI': ['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }],
+  // INDIA (one line, no daylight saving in India): 02:45 UTC = 8:15 am IST morning status; 09:20 / 09:40 UTC = 2:50 / 3:10 pm IST before-close run.
+  // indiaJobs() picks by time; other ticks of this line do nothing. GitHub's own schedule ran the morning message 8-10 h late (Nov 24). 5 of 5 free cron triggers used.
+  '20,40,45 2,9 * * MON-FRI': 'india',
 };
 // What the market clock starts at a given UTC time (bots check NY time and Alpaca's calendar themselves; off-window runs exit at once):
 //  * paper-dip.yml: :25 and :40 of 16,17 (12:25/12:40 pm ET half days) and 19,20 UTC (3:25/3:40 pm ET summer/winter)
@@ -116,10 +116,16 @@ export function marketJobs(when) {
   if ([0, 15, 30, 45, 50, 55].includes(m)) jobs.push(['paper-v32.yml', { dry_run: '0', phase: '' }]);
   return jobs;
 }
+export function indiaJobs(when) {
+  const h = when.getUTCHours(), m = when.getUTCMinutes();
+  if (h === 2 && m === 45) return [['paper-india.yml', { bot: 'morning', force: '', notify: 'yes' }]];
+  if (h === 9 && (m === 20 || m === 40)) return [['paper-india.yml', { bot: 'B', force: '', notify: 'yes' }]];
+  return [];
+}
 export async function runTimer(cron, env, fetchFn = fetch, when = new Date()) {
   const t = TIMERS[cron];
   if (!t) return { skipped: cron };
-  if (t === 'market') { const out = []; for (const [wf, inputs] of marketJobs(when)) out.push(await dispatch(wf, inputs, cron, env, fetchFn)); return out; }
+  if (t === 'market' || t === 'india') { const out = []; for (const [wf, inputs] of (t === 'market' ? marketJobs(when) : indiaJobs(when))) out.push(await dispatch(wf, inputs, cron, env, fetchFn)); return out; }
   return dispatch(t[0], t[1], cron, env, fetchFn);
 }
 async function dispatch(wf, inputs, cron, env, fetchFn) {

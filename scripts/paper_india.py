@@ -275,8 +275,12 @@ def main():
     sig["quote_ist"] = qdt.strftime("%H:%M") if qdt else "?"
     if mode == "morning":
         if now_ist.weekday() >= 5 and not os.environ.get("FORCE"): print("weekend - no morning message", flush=True); return
+        if not os.environ.get("FORCE") and now_ist.hour >= 10: print(f"morning message started late ({now_ist:%H:%M} IST) - skipped (the market is already open)", flush=True); return
+        if not os.environ.get("FORCE") and os.path.exists(STATE_CLOSE) and json.load(open(STATE_CLOSE)).get("morning_sent") == tday: print("morning message already sent today", flush=True); return
         st = json.load(open(STATE_CLOSE)) if os.path.exists(STATE_CLOSE) else None
-        title, body = morning(sig, st); print(title); print(body, flush=True); notify(title, body); return
+        title, body = morning(sig, st); print(title); print(body, flush=True); notify(title, body)
+        if st is not None: st["morning_sent"] = tday; json.dump(st, open(STATE_CLOSE, "w"), indent=1, default=float)
+        return
     if not os.environ.get("DRY_FAKE") and not os.environ.get("FORCE"):
         early = mode == "open" and now_ist.hour < 9 and sig["today"] < tday       # Bot A backup run before the 9:15 open: yesterday's close is right
         if sig["today"] != tday and not early: print(f"no NSE session today ({tday}); latest data {sig['today']} - nothing to do", flush=True); return

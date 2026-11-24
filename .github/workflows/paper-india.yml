@@ -4,7 +4,7 @@ on:
   schedule:
     # The main alarm for the before-close run is the Cloudflare timer (09:20 / 09:40 UTC = 2:50 / 3:10 pm IST): GitHub's schedule starts late.
     - cron: '30 9 * * 1-5'            # before-close backup: 3:00 pm IST (skips itself if it already ran or the window has passed)
-    - cron: '45 2 * * 1-5'            # morning status: 8:15 am IST (holdings, watchlist, account; no orders)
+    - cron: '45 2 * * 1-5'            # morning status backup (main alarm: Cloudflare 02:45 UTC); skips itself after 10 am IST
   workflow_dispatch:
     inputs:
       bot:
@@ -45,6 +45,6 @@ jobs:
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add data/paper_india_state.json data/paper_india_close_state.json 2>/dev/null || true
+          for f in data/paper_india_state.json data/paper_india_close_state.json; do [ -f "$f" ] && git add "$f"; done   # one 'git add a b' fails entirely if a is missing (lost every India run Nov 18-23)
           git commit -qm "India bots $(date -u +%F)" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
