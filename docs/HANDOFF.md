@@ -9,6 +9,14 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0c. Hold-length + target test (Nov 23; scripts/hold_test.py, intraday_exits.py HOLD=1, hold-test.yml -> data/hold_test.json, data/intraday_hold.json)
+- Daily 1999-2026, v3.0 realistic: max hold 3d 15.2% | 5d 16.6% | 7d 17.8% | 10d 17.8% | 40d 18.3%; worst drop ~-26/-27% for all. v1: 13.4% (5d) -> 15.3% (40d).
+  BUT the gain is all 1999-2012 (v3.0 5d 15.4 -> 7d 18.0); 2013-2026: 5d 17.8, 7d 17.6, 10d 17.2, 40d 17.6 (no gain).
+- 5-min replay 2016-2026: v3.0 3:45 5d 27.2 | 7d 27.0 | 10d 26.4 | 40d 26.4; v3.2 +5% 5d 30.5 | 7d 30.5 | 10d 30.1 | 40d 30.2. 2021-26 favours 5d.
+- Target (v3.2, 5d hold): v3.0 +3% 30.9 | +5% 30.5 | +7% 30.4 | +10% 30.4; v1 +3% 27.3 | +5% 28.1 | +7% 27.9 | +10% 27.8. Within noise.
+- Forced 5-day exits: 28% of trades, avg -5.2%; with 10d: 5% of trades, avg -10.5%. Win rate ~62-66%.
+- Verdict: keep 5 days and +5%. Longer holds only helped before 2013.
+
 ## 0b. Live bot v3.2 built (Nov 23) - rollout: v3.0 live now -> one DRY v3.2 day -> live v3.2
 - live/live-dip.mjs: LIVE_STRATEGY=v32 + `intraday` / `preview-intraday` commands. intradayPlan() = paper-v32 v32Intraday rules on real holdings
   (+5% target only age>=1; stock then ETF dips into free slots; fund from cash then partial park sells; target money with no buys -> park, 2% buffer).
