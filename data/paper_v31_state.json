@@ -39,10 +39,27 @@
     "SELL IEF (parking, for drift)",
     "BUY $993 WMT drift (reaction +5.2% vs SPY)"
    ]
+  },
+  {
+   "today": "2026-11-24",
+   "equity": 10023.26,
+   "spy": 716.32,
+   "park": "IEF",
+   "stock_signals": 0,
+   "etf_signals": [],
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": [
+    "SELL XLV (bounced above 5-day average)",
+    "SELL HUM (bounced above 5-day average)",
+    "SELL CNC (bounced above 5-day average)",
+    "SELL ELV (bounced above 5-day average)",
+    "BUY IEF (parking)"
+   ]
   }
  ],
  "vs": {
-  "cash": 0.0001816400002780938,
+  "cash": -809.9048002500003,
   "positions": [
    {
     "symbol": "AMD",
@@ -53,15 +70,6 @@
     "size_pct": 10
    },
    {
-    "symbol": "XLV",
-    "kind": "etf",
-    "entry_date": "2026-11-19",
-    "qty": 5.63539,
-    "entry_px": 177.45,
-    "dip_pct": -5.5,
-    "size_pct": 10
-   },
-   {
     "symbol": "XLE",
     "kind": "etf",
     "entry_date": "2026-11-19",
@@ -69,36 +77,45 @@
     "entry_px": 60.955,
     "dip_pct": -5.2,
     "size_pct": 10
-   },
-   {
-    "symbol": "HUM",
-    "entry_date": "2026-11-23",
-    "qty": 2.588043,
-    "entry_px": 383.53,
-    "dip_pct": -14.7,
-    "size_pct": 10
-   },
-   {
-    "symbol": "CNC",
-    "entry_date": "2026-11-23",
-    "qty": 15.700605,
-    "entry_px": 63.22,
-    "dip_pct": -13.3,
-    "size_pct": 10
-   },
-   {
-    "symbol": "ELV",
-    "entry_date": "2026-11-23",
-    "qty": 2.590035,
-    "entry_px": 383.235,
-    "dip_pct": -12,
-    "size_pct": 10
    }
   ],
   "park": {
-   "IEF": 33.063753
+   "IEF": 86.968969
   },
-  "trades": [],
+  "trades": [
+   {
+    "symbol": "XLV",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-24",
+    "ret_pct": 4.2,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "HUM",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 6.13,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "CNC",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 3.01,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "ELV",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 2.6,
+    "reason": "bounced above 5-day average"
+   }
+  ],
   "drift": [
    {
     "symbol": "WMT",
@@ -110,5 +127,5 @@
    }
   ]
  },
- "updated": "2026-11-23T20:25:35.003Z"
+ "updated": "2026-11-24T20:25:35.443Z"
 }

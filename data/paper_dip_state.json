@@ -5,24 +5,6 @@
    "entry_date": "2026-11-19",
    "qty": 1,
    "dip_pct": -12
-  },
-  {
-   "symbol": "HUM",
-   "entry_date": "2026-11-23",
-   "qty": 2,
-   "dip_pct": -14.7
-  },
-  {
-   "symbol": "CNC",
-   "entry_date": "2026-11-23",
-   "qty": 15,
-   "dip_pct": -13.3
-  },
-  {
-   "symbol": "ELV",
-   "entry_date": "2026-11-23",
-   "qty": 2,
-   "dip_pct": -12
   }
  ],
  "history": [
@@ -912,7 +894,98 @@
     "BUY 15 CNC (dip -13.3%)",
     "BUY 2 ELV (dip -12%)"
    ]
+  },
+  {
+   "run": "2026-11-24T20:25:35.443Z",
+   "today": "2026-11-24",
+   "ny_time": "15:25",
+   "equity": 9820.2,
+   "dry": false,
+   "own_account": true,
+   "volume_check": {
+    "CNC": {
+     "ratio": 1.01,
+     "today_est": 3067139
+    },
+    "VLO": {
+     "ratio": 0.84,
+     "today_est": 1637716
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 716.32,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {},
+   "sells": [
+    {
+     "symbol": "HUM",
+     "qty": 2,
+     "reason": "bounced above 5-day average"
+    },
+    {
+     "symbol": "CNC",
+     "qty": 15,
+     "reason": "bounced above 5-day average"
+    },
+    {
+     "symbol": "ELV",
+     "qty": 2,
+     "reason": "bounced above 5-day average"
+    }
+   ],
+   "buys": [],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.496,
+    "equity": 10005.09,
+    "orders": 3
+   },
+   "etf_bot": {
+    "equity": 10037.44,
+    "twin_equity": 10002.94,
+    "etf_signals": 0,
+    "orders": 4
+   },
+   "mix_bot": {
+    "equity": 10020.79,
+    "drift_signals": 0,
+    "orders": 3
+   },
+   "short_bot": {
+    "equity": 10002.94,
+    "twin_equity": 10002.94,
+    "si_date": "20261030",
+    "skipped": [],
+    "orders": 3
+   },
+   "bond_bot": {
+    "equity": 9974.43,
+    "twin_equity": 9966.49,
+    "park": "IEF",
+    "orders": 4
+   },
+   "v3_bot": {
+    "equity": 10006.57,
+    "park": "IEF",
+    "orders": 5
+   },
+   "v31_bot": {
+    "equity": 10023.26,
+    "drift": 1,
+    "orders": 5
+   },
+   "tuned_bot": {
+    "equity": 10185.07,
+    "signals": 2,
+    "orders": 5
+   },
+   "orders": [
+    "SELL 2 HUM (bounced above 5-day average)",
+    "SELL 15 CNC (bounced above 5-day average)",
+    "SELL 2 ELV (bounced above 5-day average)"
+   ]
   }
  ],
- "updated": "2026-11-23T20:25:35.003Z"
+ "updated": "2026-11-24T20:25:35.443Z"
 }

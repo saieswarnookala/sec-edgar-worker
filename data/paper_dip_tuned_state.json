@@ -65,28 +65,26 @@
     "BUY $1001 VLO (dip -8.4%)",
     "BUY $1001 ACN (dip -8%)"
    ]
+  },
+  {
+   "today": "2026-11-24",
+   "equity": 10185.07,
+   "spy": 716.32,
+   "park": "CASH",
+   "stock_signals": 2,
+   "etf_signals": [],
+   "orders": [
+    "SELL HUM (bounced above 5-day average)",
+    "SELL XLV (bounced above 5-day average)",
+    "SELL SWKS (bounced above 5-day average)",
+    "SELL ACN (bounced above 5-day average)",
+    "BUY $1019 CNC (dip -8%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 3069.34908844,
+  "cash": 6212.5922289499995,
   "positions": [
-   {
-    "symbol": "HUM",
-    "entry_date": "2026-11-18",
-    "qty": 2.521691,
-    "entry_px": 392.805,
-    "dip_pct": -8.1,
-    "size_pct": 10
-   },
-   {
-    "symbol": "XLV",
-    "kind": "etf",
-    "entry_date": "2026-11-19",
-    "qty": 5.557815,
-    "entry_px": 177.45,
-    "dip_pct": -5.5,
-    "size_pct": 10
-   },
    {
     "symbol": "XLE",
     "kind": "etf",
@@ -94,14 +92,6 @@
     "qty": 16.179712,
     "entry_px": 60.955,
     "dip_pct": -5.2,
-    "size_pct": 10
-   },
-   {
-    "symbol": "SWKS",
-    "entry_date": "2026-11-23",
-    "qty": 13.021014,
-    "entry_px": 76.84,
-    "dip_pct": -9.1,
     "size_pct": 10
    },
    {
@@ -121,10 +111,10 @@
     "size_pct": 10
    },
    {
-    "symbol": "ACN",
-    "entry_date": "2026-11-23",
-    "qty": 4.493554,
-    "entry_px": 222.66,
+    "symbol": "CNC",
+    "entry_date": "2026-11-24",
+    "qty": 15.640463,
+    "entry_px": 65.12,
     "dip_pct": -8,
     "size_pct": 10
    }
@@ -146,8 +136,40 @@
     "exit_date": "2026-11-23",
     "ret_pct": 5.75,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "HUM",
+    "kind": "stock",
+    "entry_date": "2026-11-18",
+    "exit_date": "2026-11-24",
+    "ret_pct": 3.62,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "XLV",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-24",
+    "ret_pct": 4.2,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "SWKS",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 6.22,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "ACN",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 4.44,
+    "reason": "bounced above 5-day average"
    }
   ]
  },
- "updated": "2026-11-23T20:25:35.003Z"
+ "updated": "2026-11-24T20:25:35.443Z"
 }

@@ -64,10 +64,24 @@
     "BUY $997 CNC dip (dip -13.3%)",
     "BUY $997 ELV dip (dip -12.0%)"
    ]
+  },
+  {
+   "today": "2026-11-24",
+   "equity": 10020.79,
+   "spy": 716.32,
+   "park": "CASH",
+   "dip_signals": 0,
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": [
+    "SELL HUM dip (bounced above 5-day average)",
+    "SELL CNC dip (bounced above 5-day average)",
+    "SELL ELV dip (bounced above 5-day average)"
+   ]
   }
  ],
  "vs": {
-  "cash": 5058.014099,
+  "cash": 8164.98742416,
   "positions": [
    {
     "symbol": "AMD",
@@ -84,30 +98,6 @@
     "qty": 7.694702,
     "entry_px": 129.53,
     "info": "reaction +5.2% vs SPY"
-   },
-   {
-    "symbol": "HUM",
-    "kind": "dip",
-    "entry_date": "2026-11-23",
-    "qty": 2.59874,
-    "entry_px": 383.53,
-    "info": "dip -14.7%"
-   },
-   {
-    "symbol": "CNC",
-    "kind": "dip",
-    "entry_date": "2026-11-23",
-    "qty": 15.765498,
-    "entry_px": 63.22,
-    "info": "dip -13.3%"
-   },
-   {
-    "symbol": "ELV",
-    "kind": "dip",
-    "entry_date": "2026-11-23",
-    "qty": 2.60074,
-    "entry_px": 383.235,
-    "info": "dip -12.0%"
    }
   ],
   "park": {},
@@ -127,8 +117,32 @@
     "exit_date": "2026-11-23",
     "ret_pct": 5.75,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "HUM",
+    "kind": "dip",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 6.13,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "CNC",
+    "kind": "dip",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 3.01,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "ELV",
+    "kind": "dip",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 2.6,
+    "reason": "bounced above 5-day average"
    }
   ]
  },
- "updated": "2026-11-23T20:25:35.003Z"
+ "updated": "2026-11-24T20:25:35.443Z"
 }
