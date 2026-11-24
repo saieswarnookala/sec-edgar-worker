@@ -232,7 +232,7 @@ def vol_ok(t, j, T, cut=2.0):
     if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
     VSTAT[0] += 1; r = vol_ratio(t, j, T)
     return r is None or r <= cut
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
@@ -242,7 +242,8 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
         cu = cash; FIN = fin_of(t)            # cu = idle money in 'yesterday's close' units; worth cu * park_f(t, held_park, T) at time T
         for p in pos: p["ref"] = (S.S_C if p["k"] != "E" else S.E_C)[t - 1, p["j"]]; p["armed"] = False; p["hi"] = 0.0
         sold_today = set()
-        checks = list(range(575, FIN, 5)) if exit_mode in ("target", "lock", "placebo") or (exit_mode == "check" and n == 5) else \
+        checks = list(range(600, FIN, xn)) if (xn and exit_mode in ("target", "trail")) else \
+                 list(range(575, FIN, 5)) if exit_mode in ("target", "lock", "placebo", "trail") or (exit_mode == "check" and n == 5) else \
                  (list(range(570 + n, FIN, n)) if exit_mode == "check" else [])
         buy_checks = list(range(600, FIN, bn)) if intraday_buy else []
         times = sorted(set(checks) | set(buy_checks) | {FIN})
@@ -266,6 +267,9 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                 elif T in checks:
                     if exit_mode == "check": out = now > m5
                     elif exit_mode == "target": out = p["k"] != "D" and now >= p["px"] * (1 + (sd_x if age < 1 and sd_x is not None else x))
+                    elif exit_mode == "trail":           # Nov 24: arm at +x over the buy price, then sell once it is y below the highest check price (kept across days)
+                        if p["k"] != "D" and now >= p["px"] * (1 + x): p["t_arm"] = True
+                        if p.get("t_arm"): p["t_hi"] = max(p.get("t_hi", 0.0), now); out = now <= p["t_hi"] * (1 - y)
                     elif exit_mode == "placebo": out = prng.random() < 1 / 74 * 1.3     # sells at a random time of day, about as often as 'check'
                     elif exit_mode == "lock":
                         if now > m5: p["armed"] = True
@@ -365,6 +369,16 @@ if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 to
          ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
          ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
          ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
+if os.environ.get("TRAIL") == "1":                      # Nov 24: trailing stop vs fixed +5% target, v3.2 (live: checks every 15 min from 10:00)
+    b = dict(etf=True, bond=True); i15 = dict(intraday_buy=True, bn=15, **b); i5 = dict(intraday_buy=True, bn=5, **b)
+    V = [("v3.0 (3:45 only)", dict(**b)),
+         ("v3.2 live: target +5%, checks every 15 min from 10:00", dict(exit_mode="target", x=0.05, xn=15, **i15)),
+         ("v3.2 target +5%, checks every 5 min from 10:00", dict(exit_mode="target", x=0.05, xn=5, **i15)),
+         ("v3.2 old replay: target +5%, every 5 min from 9:35", dict(exit_mode="target", x=0.05, **i15))]
+    for arm, y in ((0.05, 0.01), (0.05, 0.02), (0.03, 0.01), (0.07, 0.02)):
+        for xn in (15, 5):
+            V.append((f"v3.2 trailing: arm +{int(arm*100)}%, sell {int(y*100)}% below high, every {xn} min", dict(exit_mode="trail", x=arm, y=y, xn=xn, **i15)))
+    V.append(("v3.2 trailing +5% / 1%, every 5 min, buys every 5 min too", dict(exit_mode="trail", x=0.05, y=0.01, xn=5, **i5)))
 if os.environ.get("VOLTEST") == "1":                    # Nov 24: skip or half-size busy dips (volume ratio known at that moment), v3.0 3:45 only and v3.2
     V = []
     for bot, kw in (("v3.0 (3:45 only)", dict(etf=True, bond=True)), ("v3.2 (15 min + target +5%)", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05))):
@@ -383,7 +397,8 @@ for name, kw in V:
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
+PAIRS = (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \
+        (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
         (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
         (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
         (("v3.0 | v3.2 rules (no same-day sells)", "v3.0 | + same-day +5% sells, unlimited"), ("Robinhood rules | v3.2 rules (no same-day sells)", "Robinhood rules | + same-day +5% sells, unlimited")) if os.environ.get("SAME_DAY") == "1" else \
