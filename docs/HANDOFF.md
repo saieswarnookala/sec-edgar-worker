@@ -9,6 +9,11 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0e. Busy vs quiet dips, full sims (Nov 24; vol-quality.yml -> data/vol_quality.json, data/intraday_volq.json) -> KEEP 2x
+- v3.0 daily realistic (per yr / worst): today 16.6/-27.3 | skip>1.6x 17.0/-28.4 | skip>1.4x 17.0/-29.6 | skip>1.2x 16.6/-31.3 | half>1.4x 16.7/-28.1 | tilt 17.8/-28.8 (gain all 1999-2012; 2013-26 17.6 vs 17.8).
+- 5-min replay 2016-26 (volume known at the time): v3.0 27.2 -> 27.1-27.2 (skip), 25.5-26.4 (half); v3.2 30.5 -> 30.3-30.5 (skip), 28.9-29.8 (half).
+- Per-trade average rises (0.82 -> 1.01%) but fewer trades and the freed money earns about the same, so no gain per year. Tag edge is real, portfolio edge is not.
+
 ## 0d. Research tests Nov 24 (research-nov24.yml -> data/park_turnover.json, luck_check.json, india_taxexec.json)
 - Dip quality (v3.0 trades, realistic avg/trade): abnormal volume over the dip (5d/50d, all < 2x): low third +0.84/+0.87% (99-12 / 13-26), middle +0.31/+0.37, high 0.00/+0.20.
   Big-company dips (60d dollar volume rank top third) +0.75/+0.94 vs bottom third +0.02/+0.16. Both hold in both halves. Queue by low abnormal volume: +0.3-0.5 pt/yr (16.6 -> 16.9-17.1).
