@@ -1,6 +1,7 @@
 name: Clear leader Slack alert
 on:
   schedule:
+    # Main alarm: Cloudflare timer (site/src/index.js marketJobs/eveningJobs). These GitHub schedules are backups (they often start late).
     # Only around month-end (UTC times; the script works in New York time and does nothing on other days).
     - cron: '5 19 25-31 * *'    # ~3:05 pm ET in summer (EDT) -> heads-up before the close
     - cron: '5 20 25-31 * *'    # ~3:05 pm ET in winter (EST)
