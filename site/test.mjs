@@ -130,5 +130,6 @@ await t('Clear Leader month-end alert: Cloudflare starts it at ~3:05 pm ET and a
   assert.ok(has(W.marketJobs(new Date('2026-11-27T20:05:00Z')))); assert.ok(!has(W.marketJobs(new Date('2026-11-24T20:05:00Z')))); assert.ok(!has(W.marketJobs(new Date('2026-11-27T20:10:00Z'))));
   assert.ok(has(W.eveningJobs(new Date('2026-11-30T21:45:00Z')))); assert.ok(!has(W.eveningJobs(new Date('2026-11-24T21:45:00Z'))));
   assert.ok(W.eveningJobs(new Date('2026-11-24T21:45:00Z')).some(([wf]) => wf === 'screen.yml'));
+  assert.ok(W.eveningJobs(new Date('2026-11-24T21:45:00Z')).some(([wf]) => wf === 'paper-india-mom.yml'));
 });
 console.log(`\n${pass} passed`);
