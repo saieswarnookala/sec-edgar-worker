@@ -159,7 +159,7 @@ try:
             c0, c1 = S_C[k, j], S_C[k - 1, j]
             if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
 except Exception as e: print("no earnings events:", e, flush=True)
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None):
     """log: list to receive (kind, j, entry_t, exit_t, dollars_in, net_return) per closed trade. cool: None | "31d" (no re-buy within 31 days of a
     losing sale of the same ticker) | "dec" (same, only for losing sales made from Dec 1 on)"""
     LOSS = {}
@@ -178,36 +178,44 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
     def buy(t, cand_s, cand_e, at_open, w, cand_d=()):
         nonlocal eq
         held = {(p["k"], p["j"]) for p in pos}
-        for j in cand_d:                                             # drift first, in its own slots
-            if sum(1 for q in pos if q["k"] == "D") >= drift: break
-            if ("D", j) in held or ("S", j) in held: continue
-            bp = S_O[t, j] if at_open else S_C[t, j]
-            if not (np.isfinite(bp) and bp > 0 and np.isfinite(S_C[t, j])): continue
-            room = 1 - sum(p["w"] for p in pos)
-            if room < 0.02: break
-            ww = min(w, room); pos.append({"k": "D", "j": j, "d": t, "px": bp, "w": ww, "open": at_open}); eq *= 1 - ww * cs; held.add(("D", j))
-        for k, cands, Ca, Oa, cost in (("S", cand_s, S_C, S_O, cs), ("E", cand_e, E_C, E_O, ce)):
-            for j in cands:
-                if sum(1 for q in pos if q["k"] != "D") >= LIM: return
-                if cap and k == "S" and grp[j] is not None and sum(1 for q in pos if q["k"] == "S" and grp[q["j"]] == grp[j]) >= cap: continue
-                if (k, j) in held: continue
-                if cool and (k, j) in LOSS and (dn[t] - dn[LOSS[(k, j)]]) <= np.timedelta64(31, "D") and (cool == "31d" or str(dn[LOSS[(k, j)]])[5:7] == "12"): continue
-                bp = Oa[t, j] if at_open else Ca[t, j]
-                if not (np.isfinite(bp) and bp > 0 and np.isfinite(Ca[t, j])): continue
+        def buy_d():
+            nonlocal eq
+            for j in cand_d:                                             # drift first, in its own slots
+                if sum(1 for q in pos if q["k"] == "D") >= drift: break
+                if ("D", j) in held or ("S", j) in held: continue
+                bp = S_O[t, j] if at_open else S_C[t, j]
+                if not (np.isfinite(bp) and bp > 0 and np.isfinite(S_C[t, j])): continue
                 room = 1 - sum(p["w"] for p in pos)
-                if room < 0.02: return
-                L_ = lev if (k == "S" and (not lev_trend or park_on[t])) else 1.0      # Nov 22: optional leverage on dip stocks (2x ETF or margin)
-                ww = min(w * (wmul[t - (1 if at_open else 0), j] if (wmul is not None and k == "S") else 1.0), room); pos.append({"k": k, "j": j, "d": t, "px": bp, "w": ww, "open": at_open, "eq0": eq, "L": L_}); eq *= 1 - ww * cost; held.add((k, j))
+                if room < 0.02: break
+                ww = min(w, room); pos.append({"k": "D", "j": j, "d": t, "px": bp, "w": ww, "open": at_open}); eq *= 1 - ww * cs; held.add(("D", j))
+        def buy_se():
+            nonlocal eq
+            for k, cands, Ca, Oa, cost in (("S", cand_s, S_C, S_O, cs), ("E", cand_e, E_C, E_O, ce)):
+                for j in cands:
+                    if sum(1 for q in pos if q["k"] != "D") >= LIM: return
+                    if cap and k == "S" and grp[j] is not None and sum(1 for q in pos if q["k"] == "S" and grp[q["j"]] == grp[j]) >= cap: continue
+                    if (k, j) in held: continue
+                    if cool and (k, j) in LOSS and (dn[t] - dn[LOSS[(k, j)]]) <= np.timedelta64(31, "D") and (cool == "31d" or str(dn[LOSS[(k, j)]])[5:7] == "12"): continue
+                    bp = Oa[t, j] if at_open else Ca[t, j]
+                    if not (np.isfinite(bp) and bp > 0 and np.isfinite(Ca[t, j])): continue
+                    room = 1 - sum(p["w"] for p in pos)
+                    if room < 0.02: return
+                    L_ = lev if (k == "S" and (not lev_trend or park_on[t])) else 1.0      # Nov 22: optional leverage on dip stocks (2x ETF or margin)
+                    ww = min(w * (wmul[t - (1 if at_open else 0), j] if (wmul is not None and k == "S") else 1.0), room); pos.append({"k": k, "j": j, "d": t, "px": bp, "w": ww, "open": at_open, "eq0": eq, "L": L_}); eq *= 1 - ww * cost; held.add((k, j))
+        if not dlast: buy_d()
+        buy_se()
+        if dlast: buy_d()   # Nov 24: pre-earnings buys only use what the dips and ETF dips left
     def cands(t):
         c = [j for j in np.flatnonzero(SIGX[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
         e = sorted([j for j in np.flatnonzero(E_SIG[t]) if np.isfinite(E_C[t, j])], key=lambda j: E_RK[t, j]) if etf else []
-        d = sorted(np.flatnonzero(np.nan_to_num(RXC[t], nan=-1) >= dth), key=lambda j: -RXC[t, j]) if drift else []
+        d = (sorted(np.flatnonzero(pre[t]), key=lambda j: pre_rank[t, j]) if pre is not None else sorted(np.flatnonzero(np.nan_to_num(RXC[t], nan=-1) >= dth), key=lambda j: -RXC[t, j])) if drift else []
         return c, e, d
     for t in range(t0, D):
         if fill == "open":                                        # yesterday's signals, bought at today's open
             cs_, ce_, cd_ = cands(t - 1); buy(t, cs_, ce_, True, 0.10 * (VSCALE[t - 1] if vol else 1.0), cd_)
         used = sum(p["w"] for p in pos); idle = max(0.0, 1 - used)
-        want = (("REB:" + ",".join(REB[t])) if t in REB and park_on[t] else "SPY") if park_on[t] else ("IEF" if bond and BOND_OK[t] else "CASH")
+        pon = park_on[t] and (parkx is None or parkx[t])                      # Nov 24: parkx = extra on/off filter for the stock parking (e.g. FOMC even weeks)
+        want = (("REB:" + ",".join(REB[t])) if t in REB and pon else "SPY") if pon else ("IEF" if bond and BOND_OK[t] else "CASH")
         if want != held_park: eq *= 1 - idle * cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
         r = 0.0
         for p in pos:

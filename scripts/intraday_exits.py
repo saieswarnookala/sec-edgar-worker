@@ -369,6 +369,9 @@ if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 to
          ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
          ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
          ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
+if os.environ.get("WF") == "1":                         # Nov 24: walk-forward grid for v3.2 (live-exact: target checks every 15 min from 10:00)
+    V = [(f"v3.2 | dip {int(dp*100)}% | target +{int(x*100)}%", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=x, xn=15, dip=dp))
+         for dp in (0.08, 0.10, 0.12) for x in (0.03, 0.05, 0.07)]
 if os.environ.get("TRAIL") == "1":                      # Nov 24: trailing stop vs fixed +5% target, v3.2 (live: checks every 15 min from 10:00)
     b = dict(etf=True, bond=True); i15 = dict(intraday_buy=True, bn=15, **b); i5 = dict(intraday_buy=True, bn=5, **b)
     V = [("v3.0 (3:45 only)", dict(**b)),
@@ -397,7 +400,8 @@ for name, kw in V:
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \
+PAIRS = (("v3.2 | dip 10% | target +5%", "v3.2 | dip 10% | target +3%"),) if os.environ.get("WF") == "1" else \
+        (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \
         (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
         (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
         (("v3.2", "v3.2 + 2 drift slots"), ("v3.0 | 3:45 only", "v3.1 = v3.0 + 2 drift slots (3:45 only)")) if os.environ.get("COMBO") == "1" else \
@@ -408,6 +412,20 @@ for a_, b_ in PAIRS:
     RES[f"YEARS: {b_} minus base"] = {"by_year": d, "years_better": sum(v > 0 for v in d.values()), "years": len(d), "best_year_share_of_gain_pct": round(100 * max(d.values()) / max(1e-9, sum(v for v in d.values() if v > 0)))}
     print("YEARS", b_, "vs base:", " ".join(f"{y}:{ya[y]}->{yb[y]}" for y in ya), "| better in", RES[f"YEARS: {b_} minus base"]["years_better"], "of", len(d), flush=True)
 if FAIR: print(f"fair volume filter: {VSTAT[0]} checks, {VSTAT[1]} used today's volume so far, {VSTAT[2]} had no 5-minute volume (full-day filter)", flush=True)
-json.dump({"note": __doc__, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "park_value_lookups": PSTAT, "half_days": sum(v != 945 for v in FINC.values()), "fair_volume": FAIR, "fair_volume_stats": VSTAT, "alpaca_calls": CALLS[0], "results": RES},
+WFR = None
+if os.environ.get("WF") == "1":                          # pick each year's setting from earlier years only, chain the years
+    names = [n for n, v in RES.items() if isinstance(v, dict) and isinstance(v.get("years"), dict)]; yrs = sorted({y for n in names for y in RES[n]["years"]})
+    yr = lambda n, y: (RES[n].get("years") or {}).get(y)
+    sc = lambda n, ys: np.prod([1 + (yr(n, y) or 0) / 100 for y in ys])
+    fixed = "v3.2 | dip 10% | target +5%"; out = {}
+    for lbl, win in (("all earlier years", 99), ("last 3 years", 3)):
+        ch, picks = [], {}
+        for i, y in enumerate(yrs):
+            if i == 0: continue
+            past = yrs[max(0, i - win):i]; n = max(names, key=lambda n: sc(n, past)); picks[y] = n; ch.append(yr(n, y) or 0)
+        out[lbl] = {"per_year_pct": round((np.prod([1 + c / 100 for c in ch]) ** (1 / len(ch)) - 1) * 100, 1), "picks": picks}
+    fx = [yr(fixed, y) or 0 for y in yrs[1:]]; out["fixed today (dip 10%, +5%)"] = round((np.prod([1 + c / 100 for c in fx]) ** (1 / len(fx)) - 1) * 100, 1)
+    out["years_scored"] = f"{yrs[1]}-{yrs[-1]} (first year only used for picking)"; WFR = out; print("walk-forward", json.dumps(out)[:600], flush=True)
+json.dump({"note": __doc__, "walk_forward": WFR, "built": str(pd.Timestamp.today().date()), "dry": DRY or None, "period_start": ds[tr0], "fallbacks": BAD, "park_value_lookups": PSTAT, "half_days": sum(v != 945 for v in FINC.values()), "fair_volume": FAIR, "fair_volume_stats": VSTAT, "alpaca_calls": CALLS[0], "results": RES},
           open(OUT, "w"), indent=1, default=float)
 print("wrote", OUT, flush=True)
