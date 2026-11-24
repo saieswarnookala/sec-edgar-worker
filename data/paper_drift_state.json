@@ -684,7 +684,27 @@
     "SELL 8 SPY (park)",
     "BUY 74 WMT"
    ]
+  },
+  {
+   "run": "2026-11-24T11:06:01.688Z",
+   "today": "2026-11-24",
+   "equity": 95338.25,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 0,
+   "signals": [],
+   "sells": [],
+   "buys": [],
+   "park": {
+    "spy_held": 42,
+    "spy_delta": -2,
+    "spy_price": 722.29,
+    "stock_value": 63920
+   },
+   "orders": [
+    "SELL 2 SPY (park)"
+   ]
   }
  ],
- "updated": "2026-11-23T11:06:05.652Z"
+ "updated": "2026-11-24T11:06:01.688Z"
 }
