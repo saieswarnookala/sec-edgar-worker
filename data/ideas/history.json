@@ -1168,5 +1168,65 @@
   "date": "2026-11-22",
   "title": "JNJ Johnson & Johnson (Health Care)",
   "category": "invest"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Show HN: I built a game where you are an LLM's subagent",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Show HN: I made an audio-to-MIDI model 60x more efficient",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Show HN: ExitPath – Open-source ways out of Slack, Notion and Microsoft 365",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "erkamyaman/rust-anything: Rewrite your whole app in Rust, one piece at a time, checked against the original's recorded behavior at every step. CLIs, HTTP servers and libraries in TypeScript, Python, C",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "deepseek-ai/chat-demo: Chat Demo",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Hut-hzf/ung220z-tool: ung220z-tool 是一个针对 UNG220Z，另含中兴/烽火/华为/九联多厂商适配、固件指纹识别与分家族排障建议的一键凭据提取工具，仅限在你自己的设备上用于找回忘记的管理密码、迁移宽带配置或安全自查。",
+  "category": "build"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Seed Funding Explained: A Guide for Tech Startups - Oracle NetSuite",
+  "category": "service"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Israeli startup raises $11 million Seed to automate the growing burden of AI security - CTech",
+  "category": "service"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "Restaurant AI startup Marble raises $5.5M seed round - Dealroom",
+  "category": "service"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "NVDA NVIDIA Corporation (Technology)",
+  "category": "invest"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "NFLX Netflix Inc. (Consumer Discretionary)",
+  "category": "invest"
+ },
+ {
+  "date": "2026-11-24",
+  "title": "META Meta Platforms Inc. (Technology)",
+  "category": "invest"
  }
 ]
