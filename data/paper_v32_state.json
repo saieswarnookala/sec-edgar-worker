@@ -726,20 +726,23 @@
    "park": "IEF",
    "equity": 10128.99,
    "orders": []
+  },
+  {
+   "at": "2026-11-24T17:30:36.115Z",
+   "ny_time": "12:30",
+   "phase": "intraday",
+   "stock_signals": [],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10136.01,
+   "orders": [
+    "SELL HUM (+5.17%, target)"
+   ]
   }
  ],
  "vs": {
-  "cash": 199.40361922280013,
+  "cash": 202.7202875828002,
   "positions": [
-   {
-    "symbol": "HUM",
-    "entry_date": "2026-11-23",
-    "qty": 2.589767,
-    "entry_px": 386.135,
-    "dip_pct": -13.8,
-    "size_pct": 10,
-    "bought_intraday": true
-   },
    {
     "symbol": "CNC",
     "entry_date": "2026-11-23",
@@ -779,11 +782,20 @@
    }
   ],
   "park": {
-   "IEF": 52.484191
+   "IEF": 63.911441
   },
-  "trades": []
+  "trades": [
+   {
+    "symbol": "HUM",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-24",
+    "ret_pct": 5.17,
+    "reason": "target +5% during the day"
+   }
+  ]
  },
- "updated": "2026-11-24T17:15:45.095Z",
+ "updated": "2026-11-24T17:30:36.115Z",
  "twin": {
   "cash": 200.00005232499916,
   "positions": [
