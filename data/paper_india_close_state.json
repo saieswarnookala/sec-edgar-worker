@@ -1,0 +1,61 @@
+{
+ "cash": 20710.181044280995,
+ "liquid": 0.0,
+ "positions": [
+  {
+   "symbol": "STLTECH",
+   "qty": 168,
+   "entry_px": 590.7999877929688,
+   "entry_day": "2026-11-23",
+   "dip_pct": -12.7
+  }
+ ],
+ "park": {
+  "NIFTYBEES": 3035
+ },
+ "pending": [],
+ "trades": [],
+ "history": [
+  {
+   "day": "2026-11-23",
+   "equity": 998384.61,
+   "nifty": 25349.7,
+   "cash": 20710.18,
+   "liquid": 0.0,
+   "stocks": 1,
+   "park": {
+    "NIFTYBEES": 3035
+   },
+   "park_target": "NIFTYBEES",
+   "dips": 1,
+   "filled": [
+    "BOUGHT 168 STLTECH @ 590.80",
+    "BOUGHT 3035 NIFTYBEES @ 289.43"
+   ],
+   "orders": 2
+  }
+ ],
+ "started": "2026-11-23",
+ "missing_symbols": [
+  "BAGMANE",
+  "BHARATCOAL",
+  "CLEANMAX",
+  "CMPDI",
+  "DUMMYHEG",
+  "EMMVEE",
+  "FRACTAL",
+  "GROWW",
+  "ICICIAMC",
+  "LENSKART",
+  "MEESHO",
+  "PINELABS",
+  "PIRAMALFIN",
+  "PWL",
+  "TENNIND",
+  "TMCV",
+  "VAML",
+  "VEDPOWER",
+  "VISL",
+  "VOGL"
+ ]
+}
