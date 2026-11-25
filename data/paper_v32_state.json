@@ -968,6 +968,18 @@
    "orders": [
     "BUY $1011 CRWD (dip -10.38%, during the day)"
    ]
+  },
+  {
+   "at": "2026-11-25T15:15:45.749Z",
+   "ny_time": "10:15",
+   "phase": "intraday",
+   "stock_signals": [
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10088.4,
+   "orders": []
   }
  ],
  "vs": {
@@ -1033,7 +1045,7 @@
    }
   ]
  },
- "updated": "2026-11-25T15:00:40.281Z",
+ "updated": "2026-11-25T15:15:45.749Z",
  "twin": {
   "cash": 202.61358251499905,
   "positions": [
