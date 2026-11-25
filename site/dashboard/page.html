@@ -1139,6 +1139,22 @@ dash.calc('vs_industry', {
     <p class="sx-cap"><b>Confidence checks (Nov 25):</b> on 19 other coins it was never tuned on, the rule had a smaller worst drop on all 19 and a higher return on 16. It beat holding in about 60–65% of 1- and 2-year windows and had the smaller drop in 81–90%. Trading 1–3 days late still beat holding. Luck check: Sharpe 1.47 vs 1.07 holding, t-stat 5.0. Re-picking the average length each year did worse than keeping 50, so no tuning.</p>
     <p class="sx-cap"><b>Real-order check (real IBIT/ETHA prices, Nov 2024–Nov 2026):</b> BTC backtest 11.7%/yr vs trading IBIT the next day 11.1% vs deciding at 3 pm and trading at that day's close 11.3% (holding IBIT −21.6%). ETH: backtest 27.5% vs next day 22.4% vs same day 43.3% (holding ETHA −32.3%). Signals matched the backtest on 98–99% of days; IBIT tracks Bitcoin within ~0.7% a day. So the bot decides at 3:30 pm and trades at the close.</p></section>
   </div>
+  <section class="sx-card"><h3>Example: one switch, start to finish</h3><ol class="sx-notes">
+    <li>The 50-day average of Bitcoin's daily closes is <b>$80,000</b>.</li>
+    <li>Tuesday 3:30 pm ET: Bitcoin is <b>$82,400</b> (+3.0%). Alert: <i>"BTC is +3.0% vs its 50-day average: BUY IBIT at today's close."</i></li>
+    <li>~3:50 pm: the $5,000 Bitcoin half buys IBIT; the evening run records the fill at IBIT's 4 pm close.</li>
+    <li>Weeks later: Bitcoin <b>$78,000</b>, its average has risen to <b>$79,500</b> (−1.9%). Alert: <i>"SELL IBIT at today's close"</i>; the money goes back to T-bills.</li>
+    <li>Ether runs the same way through ETHA with the other $5,000. On Nov 25 2026 both coins were 23–25% below their averages, so the bot started in T-bills.</li></ol>
+    <p class="sx-cap">Illustrative prices. About 16 switches a year per coin; each costs ~0.05% through the ETFs (vs ~1% on Robinhood's crypto spread).</p></section>
+  <section class="sx-card"><h3>How we got here (5 rounds, Nov 24–25 2026)</h3>
+    <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Round</th><th>What we tested</th><th>Result</th></tr></thead><tbody>
+      <tr><td>1</td><td>Trend rules, coin rotation, crypto dip bot, chart lookalikes, weekday effects; 37 coins incl. dead ones (Terra, FTT)</td><td>Only trend rules worked</td></tr>
+      <tr><td>2</td><td>Every average 20–200 days; 300 random schedules; Fear &amp; Greed; MVRV</td><td>30–150 days all beat holding; no random schedule beat the 50-day</td></tr>
+      <tr><td>3</td><td>Weekday-only (ETF) trading, BTC + ETH together, weekly checks, buffers</td><td>Weekday trading keeps the edge; simplest version wins</td></tr>
+      <tr><td>4</td><td>19 unseen coins, rolling windows, yearly re-tuning, trading late, luck check</td><td>Smaller drop on 19/19 coins; t-stat 5.0; don't tune</td></tr>
+      <tr><td>5</td><td>Real IBIT/ETHA prices (Nov 2024–Nov 2026)</td><td>Real orders track the backtest; 3 pm decision + same-day close is best</td></tr>
+    </tbody></table></div>
+    <p class="sx-cap">What to expect: plan on 15–30% a year with big swings, not 56% (mostly 2018–2021). It trails holding in about 1 year out of 3; its job is to cut the crashes. Full write-up: docs/CRYPTO.md in the repo.</p></section>
   <section class="sx-card"><h3>What we tested (Nov 24–25 2026)</h3>
     <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Idea</th><th>Result</th><th>Verdict</th></tr></thead><tbody>
       <tr><td>Trend: above 50-day average (BTC, ETH)</td><td>BTC 77–81%/yr vs 62% hold; ETH 58% vs 13%; smaller drops</td><td><b>Paper bot 15</b></td></tr>
