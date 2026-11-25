@@ -1,0 +1,57 @@
+{
+ "note": "Crypto execution check (Nov 25 2026): how close can real ETF orders get to the backtest? Research only, not financial advice.\nReal prices: IBIT / ETHA daily closes (Yahoo), BTC / ETH hourly (Yahoo, last ~730 days) and daily. Window = the last ~2 years (hourly data limit).\nSame rule everywhere: coin above its 50-day average of daily closes -> hold, else T-bills (cash earns ^IRX).\n  A) backtest: coin prices, UTC daily closes, trade the next day (what rounds 1-4 used)\n  B) paper bot today: decide after the US close (coin price at 4 pm ET), buy/sell the ETF at the NEXT US close\n  C) same-day: decide at 3 pm ET with the live coin price, buy/sell the ETF at TODAY's close (market-on-close / ~3:55 pm order)\n  D) hold the ETF\nCosts: 0.05%/side on ETF trades (spread + slippage); the ETF fee is already in its price. Also: how often B and C agree with A's signal,\nand the ETF's daily tracking gap vs the coin (4 pm to 4 pm). DRY=1: fake prices.",
+ "results": {
+  "BTC": {
+   "window": "2024-12-02 to 2026-11-25",
+   "A backtest (coin, next day)": {
+    "per_year_pct": -26.2,
+    "worst_drop_pct": -51.8
+   },
+   "B paper bot (ETF, next US close)": {
+    "per_year_pct": -23.8,
+    "worst_drop_pct": -52.7,
+    "trades": 2
+   },
+   "C same day (3 pm decision, ETF at today's close)": {
+    "per_year_pct": -24.6,
+    "worst_drop_pct": -52.7,
+    "trades": 2
+   },
+   "D hold IBIT": {
+    "per_year_pct": -23.7,
+    "worst_drop_pct": -52.7
+   },
+   "signal agreement with backtest: B / C (%)": [
+    87.6,
+    88.6
+   ],
+   "ETF vs coin daily tracking gap, std (%)": 7.187
+  },
+  "ETH": {
+   "window": "2024-12-02 to 2026-11-25",
+   "A backtest (coin, next day)": {
+    "per_year_pct": -21.7,
+    "worst_drop_pct": -47.6
+   },
+   "B paper bot (ETF, next US close)": {
+    "per_year_pct": -46.4,
+    "worst_drop_pct": -71.1,
+    "trades": 12
+   },
+   "C same day (3 pm decision, ETF at today's close)": {
+    "per_year_pct": -29.8,
+    "worst_drop_pct": -58.6,
+    "trades": 12
+   },
+   "D hold ETHA": {
+    "per_year_pct": -36.1,
+    "worst_drop_pct": -67.6
+   },
+   "signal agreement with backtest: B / C (%)": [
+    93.3,
+    93.3
+   ],
+   "ETF vs coin daily tracking gap, std (%)": 10.749
+  }
+ }
+}
