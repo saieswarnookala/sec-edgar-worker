@@ -9,6 +9,11 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0m. Paper bot 15: crypto trend (Nov 25) - scripts/paper_crypto.py, paper-crypto.yml, data/paper_crypto_state.json, test-crypto.py
+- 50/50 BTC (IBIT) + ETH (ETHA), $10k virtual; weekday after close: coin > 50-day avg of daily closes -> hold ETF else T-bills; trade at NEXT US close; 0.05%/trade.
+- Started on its first run (no back-fill); catches up missed days; never repeats a day. Alerts only on NTFY_TOPIC_CRYPTO secret (Sai adds it), on switches + Friday summary.
+- Timers: Cloudflare eveningJobs 21:45/23:45 UTC + GitHub backup 22:30 UTC weekdays. Dashboard: new top tab 'Crypto' (#crypto, drawCrypto) + bot 15 card.
+
 ## 0l. Crypto lab round 3 (Nov 25; crypto-lab3.yml -> data/crypto_lab3.json): how to run it
 - ETF route, weekday-only trading (weekend signals wait for Monday) keeps the edge: BTC 50d 76.9/-62 (7-day 80.9); BTC 100d 79.4/-56 (2022-26 21.2/-39 vs hold 4.0/-67).
 - 50/50 BTC+ETH (2018-06+): hold 23.3/-76.5; 50d weekdays 56.3/-56.8 (2022-26 15.6 vs -4.8); 100d 47.5/-52; 140d 44.2/-51.

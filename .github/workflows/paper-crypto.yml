@@ -1,0 +1,46 @@
+name: "Crypto paper bot"
+# Paper bot 15: BTC/ETH 50-day trend via IBIT/ETHA. Virtual money, no broker. Alerts only to the NTFY_TOPIC_CRYPTO secret.
+# Main alarm: Cloudflare evening timer (4:45 / 6:45 pm ET). This schedule is a backup; the bot never repeats a day.
+on:
+  schedule:
+    - cron: '30 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '1 = do not save state or send alerts'
+        default: '0'
+      notify:
+        description: '0 = no phone alert this run'
+        default: '1'
+permissions:
+  contents: write
+concurrency:
+  group: paper-crypto
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas numpy
+      - name: Test
+        run: python test-crypto.py
+      - name: Run
+        shell: bash
+        env:
+          NTFY_TOPIC_CRYPTO: ${{ secrets.NTFY_TOPIC_CRYPTO }}
+          NO_SAVE: ${{ inputs.dry_run == '1' && '1' || '' }}
+          NO_NOTIFY: ${{ (inputs.dry_run == '1' || inputs.notify == '0') && '1' || '' }}
+        run: set -o pipefail; python -u scripts/paper_crypto.py 2>&1 | tee /tmp/run.log
+      - name: Commit
+        if: inputs.dry_run != '1'
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          [ -f data/paper_crypto_state.json ] && git add data/paper_crypto_state.json
+          git commit -qm "Crypto paper $(date -u +%F)" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1

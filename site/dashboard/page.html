@@ -843,6 +843,7 @@ dash.calc('vs_industry', {
     <button type="button" class="sx-tab" role="tab" data-tab="custom" aria-selected="false">Custom screen</button>
     <button type="button" class="sx-tab" role="tab" data-tab="paper" aria-selected="false">Paper bots</button>
     <button type="button" class="sx-tab" role="tab" data-tab="trading" aria-selected="false">Day trading</button>
+    <button type="button" class="sx-tab" role="tab" data-tab="crypto" aria-selected="false">Crypto</button>
     <button type="button" class="sx-tab" role="tab" data-tab="tested" aria-selected="false">Tested strategies</button>
   </div>
 </div>
@@ -1045,6 +1046,7 @@ dash.calc('vs_industry', {
       <tr data-bot="mix"><td>7</td><td>Dip + drift 6+4</td><td>6 dip slots + 4 earnings-drift slots</td><td>Replaced by v3.1</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr class="st-india"><td colspan="6"><b>India (for friends and family; not for Sai's own money: Indian funds are PFICs)</b></td></tr>
       <tr data-bot="inmom"><td>13</td><td>India momentum basket (₹10 lakh)</td><td>Top 20 steady risers, monthly, crash filter</td><td><b class="sx-good">Keep</b> (main India pick, ~27%/yr realistic)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="crypto"><td>15</td><td>Crypto trend: BTC + ETH ($10,000)</td><td>Hold IBIT / ETHA only above the 50-day average</td><td><b>New</b> (paper from Nov 25)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="inalpha"><td>14</td><td>India Alpha 50 (₹10 lakh)</td><td>50 stocks beating the market, quarterly</td><td><b>Watch</b> (barely beats Nifty after tax)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr><td>–</td><td>India dip bot (₹10 lakh)</td><td>India version of the US dip rules; morning watchlist alerts</td><td><b class="sx-bad">Weak</b> (matches Nifty, loses after tax)</td><td>—</td><td>—</td></tr>
     </tbody></table></div>
@@ -1114,6 +1116,38 @@ dash.calc('vs_industry', {
     <li><b>Runs:</b> once a day at 3:47 pm only.</li>
     <li><b>Backtest:</b> about 13.4% a year in the same realistic test (about 15% in the older 1998–2026 test), worst drop about −25%.</li>
     <li>To go back: set <code>LIVE_STRATEGY=v1</code> in the VM config.</li></ul></section>
+</div>
+
+<div class="sx sx-page sx-off" id="crypto" aria-hidden="true" inert>
+  <section class="sx-sec"><div class="sx-sech"><div><h2>Crypto</h2><p>Only one crypto rule survived testing: hold Bitcoin and Ether only while each is above its 50-day average, otherwise T-bills. Paper bot 15 runs it on virtual money with IBIT and ETHA. Research tool, not financial advice.</p></div></div></section>
+  <section class="sx-card"><h3>Paper bot 15 right now</h3><div id="cr-live"><p class="sx-cap">Loading…</p></div></section>
+  <div class="sx-pb-cols">
+  <section class="sx-card"><h3>Rules (paper bot 15)</h3><ul class="sx-notes">
+    <li>Two halves: <b>Bitcoin via IBIT</b>, <b>Ether via ETHA</b> ($5,000 each to start).</li>
+    <li>Every weekday after the US close: is the coin above its <b>50-day average</b> of daily closes? Yes = hold the ETF; no = T-bills.</li>
+    <li>A change is traded at the <b>next</b> US close (as tested). Weekend moves wait for Monday.</li>
+    <li>About 16 switches a year per coin; 0.05% cost per trade. Suits a Roth (short-term gains).</li>
+    <li>Alerts: the crypto ntfy channel, only when a switch is due, plus a Friday summary.</li></ul></section>
+  <section class="sx-card"><h3>Backtest (weekdays only, ETF costs)</h3>
+    <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th></th><th>Per year</th><th>Worst drop</th><th>2022–26</th></tr></thead><tbody>
+      <tr><td><b>BTC + ETH, 50-day rule</b> (2018–26)</td><td>56%</td><td>−57%</td><td>+16%/yr</td></tr>
+      <tr><td>Hold BTC + ETH</td><td>23%</td><td>−77%</td><td>−5%/yr</td></tr>
+      <tr><td>BTC only, 50-day rule (2015–26)</td><td>77%</td><td>−62%</td><td>+17%/yr</td></tr>
+      <tr><td>Hold BTC only</td><td>62%</td><td>−83%</td><td>+4%/yr</td></tr>
+    </tbody></table></div>
+    <p class="sx-cap">Every average from 30 to 150 days beat holding; none of 300 random in/out schedules beat the 50-day rule. On Robinhood's ~1% crypto spread only slow rules (120–140 days) survive.</p></section>
+  </div>
+  <section class="sx-card"><h3>What we tested (Nov 24–25 2026)</h3>
+    <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Idea</th><th>Result</th><th>Verdict</th></tr></thead><tbody>
+      <tr><td>Trend: above 50-day average (BTC, ETH)</td><td>BTC 77–81%/yr vs 62% hold; ETH 58% vs 13%; smaller drops</td><td><b>Paper bot 15</b></td></tr>
+      <tr><td>Rotation: top 3 coins by last 4 weeks, weekly</td><td>95%/yr 2017–26 with a BTC filter, but 23% since 2023 vs BTC 39%; −94% without the filter</td><td>Watch</td></tr>
+      <tr><td>Dip bot on coins (US stock rules)</td><td>45–49% of trades win, −0.5% a trade after costs</td><td>Dropped</td></tr>
+      <tr><td>Pattern matching (past lookalike charts)</td><td>53% right on direction; about 0 after costs</td><td>Dropped</td></tr>
+      <tr><td>Weekday / weekend / turn of month</td><td>Best days flip between 2015–20 and 2021–26</td><td>Dropped</td></tr>
+      <tr><td>Fear &amp; Greed index</td><td>Buying in fear lost money; savings tilt only ~5% cheaper</td><td>Dropped</td></tr>
+      <tr><td>MVRV below 1 (price under holders' average cost)</td><td>+127% a year later vs +75% normally, but only ~3 episodes</td><td>Note only</td></tr>
+      <tr><td>Funding rates</td><td>Data blocked from our servers</td><td>Not tested</td></tr>
+    </tbody></table></div></section>
 </div>
 
 </div>
@@ -1369,6 +1403,12 @@ dash.calc('vs_industry', {
         <p class="sx-cap">One version tested (no tuning), before trading costs of the quarterly swaps: plan on 17–20%. Moves with the momentum basket (correlation ~0.94). The official Nifty Alpha 50 (ALPHA ETF) made 11.6%/yr over 5 years vs 18.2% for this rebuild. Not for Sai's own account (PFIC).</p></div>
     </div>
     <div class="pb-live" data-bot="inalpha"></div>
+  </section>
+  <section class="sx-card" id="pb-crypto">
+    <div class="sx-ch"><h3>15. Crypto trend: Bitcoin + Ether ($10,000 virtual, from Nov 25 2026)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">IBIT + ETHA</span><span class="sx-badge">Weekdays after the US close</span><span class="sx-badge">Alerts: crypto ntfy channel</span></div>
+    <p class="sx-cap">Hold each coin's ETF only while the coin is above its 50-day average, else T-bills; switches trade at the next US close. Backtest 2018–2026: ~56%/yr, worst drop −57% (holding both: 23%, −77%). Full details on the <a href="#crypto" class="st-go" data-go-tab="crypto">Crypto</a> tab.</p>
+    <div class="pb-live" data-bot="crypto"></div>
   </section>
 
   <section class="sx-card" id="pb-drift">
@@ -2322,7 +2362,7 @@ dash.calc('vs_industry', {
 <script>
 (() => {
   const tabs = [...document.querySelectorAll('.sx-tab')];
-  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading'), paper: document.getElementById('paper'), start: document.getElementById('start'), liverules: document.getElementById('liverules') };
+  const pages = { stock: document.getElementById('stock'), screener: document.getElementById('screener'), custom: document.getElementById('custom'), trading: document.getElementById('trading'), paper: document.getElementById('paper'), start: document.getElementById('start'), liverules: document.getElementById('liverules'), crypto: document.getElementById('crypto') };
   let built = false, cbuilt = false, tbuilt = false, sub = 'overview';
   const money = (v) => (v == null ? '—' : v >= 1e12 ? '$' + (v / 1e12).toFixed(2) + 'T' : v >= 1e9 ? '$' + (v / 1e9).toFixed(1) + 'B' : '$' + (v / 1e6).toFixed(0) + 'M');
   const pct = (v) => (v == null ? '—' : (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%');
@@ -2404,6 +2444,7 @@ dash.calc('vs_industry', {
     const block = (bot, b) => {
       if (bot === 'inmom') return inmomBlock(b);
       if (bot === 'inalpha') return inmomBlock(b).replace('Twin: 200-day filter', 'Twin: + crash filter');
+      if (bot === 'crypto') { if (!b || !(b.curve || []).length) return '<p class="sx-cap" style="margin-top:12px">No runs recorded yet: it runs every weekday after the US close.</p>'; const l = b.curve.at(-1); return `<div class="sx-stats" style="margin-top:12px"><div class="sx-stat"><span>Now</span><b>$${Math.round(l.eq).toLocaleString('en-US')}</b></div><div class="sx-stat"><span>Holding both</span><b>$${Math.round(l.spy || 0).toLocaleString('en-US')}</b></div>${(b.sleeves || []).map((x) => `<div class="sx-stat"><span>${x.coin} (${x.etf})</span><b>${x.held ? 'held' : 'cash'}${x.pending ? ' → ' + x.pending : ''}</b></div>`).join('')}</div>` + chart(b.curve).replace('grey = SPY', 'grey = holding both').replace('Bot vs SPY', 'Bot vs holding both'); }
       if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
@@ -2468,6 +2509,19 @@ dash.calc('vs_industry', {
   };
   // Start here: paper results since start (from data/paper_status.json)
   let stDone = false;
+  const drawCrypto = async () => {
+    const out = document.getElementById('cr-live'); if (!out) return;
+    const esc = (x) => String(x ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const usd = (v) => (v == null || !isFinite(v) ? '—' : '$' + (+v).toLocaleString('en-US', { maximumFractionDigits: v >= 1000 ? 0 : 2 }));
+    let b; try { b = ((await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json()).bots || {}).crypto; } catch (e) { b = null; }
+    if (!b || !(b.curve || []).length) { out.innerHTML = '<p class="sx-cap">No run recorded yet. Paper bot 15 runs every weekday after the US close (about 4:45 pm ET).</p>'; return; }
+    const last = b.curve.at(-1), r = (last.eq / b.start - 1) * 100, hr = last.spy ? (last.spy / b.start - 1) * 100 : null, sg = (v) => (v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(1) + '%');
+    let h = `<div class="sx-stats"><div class="sx-stat"><span>Started</span><b>${usd(b.start)} on ${esc(b.start_day)}</b></div><div class="sx-stat"><span>Now</span><b>${usd(last.eq)}</b></div><div class="sx-stat"><span>Bot</span><b>${sg(r)}</b></div><div class="sx-stat"><span>Holding both (same days)</span><b>${sg(hr)}</b></div><div class="sx-stat"><span>Last run</span><b>${esc(b.last_day)}</b></div></div>`;
+    h += `<div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Coin</th><th>Price</th><th>50-day avg</th><th>vs avg</th><th>Signal</th><th>ETF</th><th>Next close</th></tr></thead><tbody>${(b.sleeves || []).map((s) => `<tr><td>${esc(s.coin)}</td><td>${usd(s.coin_px)}</td><td>${usd(s.ma50)}</td><td>${sg(s.pct_vs_ma)}</td><td><b>${s.signal === 'hold' ? 'Hold' : 'Cash'}</b></td><td>${esc(s.etf)}: ${s.held ? 'held' : 'cash (T-bills)'}</td><td>${s.pending ? '<b>' + esc(s.pending.toUpperCase()) + ' ' + esc(s.etf) + '</b>' : 'no change'}</td></tr>`).join('')}</tbody></table></div>`;
+    const tr = (b.trades || []).slice().reverse();
+    h += tr.length ? `<h4 style="margin-top:10px">Virtual trades</h4><ul class="sx-notes">${tr.map((t) => `<li>${esc(t.day)}: ${t.side === 'buy' ? 'Bought' : 'Sold'} ${esc(t.symbol)} at $${(+t.px).toFixed(2)}${t.ret_pct != null ? ' (' + sg(t.ret_pct) + ' on the hold)' : ''}</li>`).join('')}</ul>` : '<p class="sx-cap">No virtual trades yet: first orders fill at the next US close after the first run.</p>';
+    out.innerHTML = h;
+  };
   const drawStart = async () => {
     if (stDone) return; stDone = true;
     let bots = {}; try { bots = (await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json()).bots || {}; } catch (e) { return; }
@@ -2501,6 +2555,7 @@ dash.calc('vs_industry', {
       wireCustom();
     }
     if (name === 'start') drawStart();
+    if (name === 'crypto') drawCrypto();
     if (name === 'paper' && !pbuilt) {
       pbuilt = true;
       pages.paper.appendChild(document.getElementById('sx-paper-tpl').content.cloneNode(true));
@@ -3960,6 +4015,7 @@ const IN2 = (() => {
   if (h === 'paper') show('paper', false);
   if (h === 'start') show('start', false);
   if (h === 'liverules') show('liverules', false);
+  if (h === 'crypto') show('crypto', false);
   if (h === 'trading' || h.startsWith('trading-')) show('trading', false);
   if (h === 'tested' || h.startsWith('tested-')) show('tested', false);
   dash.onData(() => { draw(); drawCustom(); drawTrading(); });

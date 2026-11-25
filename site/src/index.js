@@ -118,7 +118,7 @@ export function marketJobs(when) {
   return jobs;
 }
 export function eveningJobs(when) {
-  const jobs = [['screen.yml', {}], ['paper-india-mom.yml', { dry_run: '0', notify: '1' }]];   // India momentum + Alpha 50 paper bots: 3:15 / 5:15 am IST, NSE archive surely out, before the 9:15 open (they catch up missed days)
+  const jobs = [['screen.yml', {}], ['paper-india-mom.yml', { dry_run: '0', notify: '1' }], ['paper-crypto.yml', { dry_run: '0', notify: '1' }]];   // crypto paper bot 15: after the US close (4:45 / 6:45 pm ET); skips non-trading days itself   // India momentum + Alpha 50 paper bots: 3:15 / 5:15 am IST, NSE archive surely out, before the 9:15 open (they catch up missed days)
   if (when.getUTCDate() >= 25) jobs.push(['clear-leader-alert.yml', { mode: 'auto' }]);   // month-end final decision after the close
   return jobs;
 }
