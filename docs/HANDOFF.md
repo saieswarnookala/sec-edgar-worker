@@ -9,6 +9,12 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0g. Next 3 tests (Nov 24; next3.yml -> data/next3.json, data/intraday_wf.json) -> no changes
+- Pre-earnings buys in idle slots (realistic, v3.0 16.8/-27.3): 5d before, sell day before 11.9/-35; hold through 10.5/-52; 1d before hold through 1.8/-83 (turnover); max 2 slots 14.0/-29. DROP.
+- FOMC even-week parking: 9.7/-27 vs 16.8 (placebo odd weeks 11.1). Parking all the time beats both. DROP.
+- Walk-forward v3.0 daily 2004-26 realistic: fixed 10%/5d/200 13.4%; pick-by-all-past 11.3 (stuck on 8%/7d); pick-by-last-5y 13.4; best in hindsight 14.9 (10%/7d/100). Fixed settings not overfit.
+- Walk-forward v3.2 replay 2017-26: fixed dip 10% +5% 31.7%; pick-by-past 28.6-29.3. Grid: dip 8% 23.6-25.3 (worse), 10% 29.2-30.9, 12% 28.5-29.2. Keep fixed; plan ~2-3 pts below backtest.
+
 ## 0f. Trailing stop vs +5% target (Nov 24; trail-test.yml -> data/intraday_trail.json) -> KEEP +5% every 15 min
 - Live-exact v3.2 (target +5%, checks every 15 min from 10:00): 30.3%/yr, worst -16.8 (16-20 21.9, 21-26 38.1); old replay (5 min from 9:35) 30.5. v3.0: 27.2.
 - Trailing (arm / drop / interval): 5/1/15 29.9 | 5/1/5 30.4 | 5/2/15 30.5 | 5/2/5 30.9 (16-20 21.7, worst -17.0) | 3/1 29.7-29.8 | 7/2 29.6-29.7. None wins both halves without a deeper drop.
