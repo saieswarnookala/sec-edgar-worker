@@ -1,0 +1,334 @@
+{
+ "note": "Crypto lab, round 4 (Nov 25 2026): is the 50-day trend rule real or luck? Research only, not financial advice.\n1) Unseen coins: the same rule (above the 50-day average, else T-bills; next-day trade; 0.10%/side) on 20 other large coins it was never tuned on.\n2) Rolling windows: in every 1-year and 2-year window since 2016, did the rule beat holding (return) and lose less (worst drop)?\n3) Walk-forward: each year pick the average length (20-200) that did best in all EARLIER years, use it for that year only.\n4) Late trading: the switch done 1, 2 or 3 days late (slow human / missed alert).\n5) Luck check: deflated Sharpe (Bailey & Lopez de Prado) for the BTC 50-day rule, counting every length we looked at (19) x 3 cost levels.\nDRY=1: fake prices.",
+ "unseen_coins": {
+  "XRP": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 5.4,
+    "worst_drop_pct": -83.2
+   },
+   "rule_50d": {
+    "per_year_pct": 1.4,
+    "worst_drop_pct": -74.8
+   }
+  },
+  "LTC": {
+   "from": "2015-04-05",
+   "hold": {
+    "per_year_pct": 31.9,
+    "worst_drop_pct": -93.5
+   },
+   "rule_50d": {
+    "per_year_pct": 27.7,
+    "worst_drop_pct": -92.6
+   }
+  },
+  "BCH": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": -16.9,
+    "worst_drop_pct": -94.2
+   },
+   "rule_50d": {
+    "per_year_pct": -1.4,
+    "worst_drop_pct": -82.4
+   }
+  },
+  "ADA": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": -3.8,
+    "worst_drop_pct": -95.2
+   },
+   "rule_50d": {
+    "per_year_pct": 42.9,
+    "worst_drop_pct": -68.5
+   }
+  },
+  "DOGE": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 38.8,
+    "worst_drop_pct": -92.3
+   },
+   "rule_50d": {
+    "per_year_pct": 89.4,
+    "worst_drop_pct": -68.7
+   }
+  },
+  "SOL": {
+   "from": "2020-10-27",
+   "hold": {
+    "per_year_pct": 88.5,
+    "worst_drop_pct": -96.3
+   },
+   "rule_50d": {
+    "per_year_pct": 123.2,
+    "worst_drop_pct": -70.8
+   }
+  },
+  "DOT": {
+   "from": "2021-03-08",
+   "hold": {
+    "per_year_pct": -50.8,
+    "worst_drop_pct": -98.8
+   },
+   "rule_50d": {
+    "per_year_pct": -11.3,
+    "worst_drop_pct": -85.4
+   }
+  },
+  "LINK": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 46.6,
+    "worst_drop_pct": -90.2
+   },
+   "rule_50d": {
+    "per_year_pct": 67.2,
+    "worst_drop_pct": -83.3
+   }
+  },
+  "AVAX": {
+   "from": "2021-01-29",
+   "hold": {
+    "per_year_pct": -9.7,
+    "worst_drop_pct": -95.6
+   },
+   "rule_50d": {
+    "per_year_pct": 14.4,
+    "worst_drop_pct": -80.2
+   }
+  },
+  "TRX": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 19.9,
+    "worst_drop_pct": -86.5
+   },
+   "rule_50d": {
+    "per_year_pct": 30.1,
+    "worst_drop_pct": -63.0
+   }
+  },
+  "XLM": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": -8.9,
+    "worst_drop_pct": -90.3
+   },
+   "rule_50d": {
+    "per_year_pct": 7.4,
+    "worst_drop_pct": -80.2
+   }
+  },
+  "BNB": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 56.0,
+    "worst_drop_pct": -75.8
+   },
+   "rule_50d": {
+    "per_year_pct": 101.0,
+    "worst_drop_pct": -46.0
+   }
+  },
+  "ETC": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": -10.7,
+    "worst_drop_pct": -95.9
+   },
+   "rule_50d": {
+    "per_year_pct": 34.0,
+    "worst_drop_pct": -67.2
+   }
+  },
+  "XMR": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": 15.0,
+    "worst_drop_pct": -80.5
+   },
+   "rule_50d": {
+    "per_year_pct": 14.0,
+    "worst_drop_pct": -76.5
+   }
+  },
+  "ATOM": {
+   "from": "2019-09-30",
+   "hold": {
+    "per_year_pct": -9.5,
+    "worst_drop_pct": -97.4
+   },
+   "rule_50d": {
+    "per_year_pct": 9.3,
+    "worst_drop_pct": -82.5
+   }
+  },
+  "FIL": {
+   "from": "2018-07-01",
+   "hold": {
+    "per_year_pct": -26.1,
+    "worst_drop_pct": -99.7
+   },
+   "rule_50d": {
+    "per_year_pct": -13.5,
+    "worst_drop_pct": -95.7
+   }
+  },
+  "ALGO": {
+   "from": "2020-01-07",
+   "hold": {
+    "per_year_pct": -14.4,
+    "worst_drop_pct": -96.9
+   },
+   "rule_50d": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -80.7
+   }
+  },
+  "VET": {
+   "from": "2019-02-19",
+   "hold": {
+    "per_year_pct": 1.5,
+    "worst_drop_pct": -98.3
+   },
+   "rule_50d": {
+    "per_year_pct": 70.6,
+    "worst_drop_pct": -77.4
+   }
+  },
+  "EOS": {
+   "from": "2018-05-28",
+   "hold": {
+    "per_year_pct": -46.0,
+    "worst_drop_pct": -99.6
+   },
+   "rule_50d": {
+    "per_year_pct": -12.7,
+    "worst_drop_pct": -88.2
+   }
+  },
+  "summary": {
+   "coins": 19,
+   "rule_beat_hold_on_return": 16.0,
+   "rule_had_smaller_worst_drop": 19
+  }
+ },
+ "rolling": {
+  "BTC": {
+   "1-year windows": {
+    "windows": 119,
+    "rule_beat_hold_pct": 59.0,
+    "rule_smaller_drop_pct": 81.0
+   },
+   "2-year windows": {
+    "windows": 107,
+    "rule_beat_hold_pct": 65.0,
+    "rule_smaller_drop_pct": 86.0
+   }
+  },
+  "ETH": {
+   "1-year windows": {
+    "windows": 90,
+    "rule_beat_hold_pct": 54.0,
+    "rule_smaller_drop_pct": 87.0
+   },
+   "2-year windows": {
+    "windows": 78,
+    "rule_beat_hold_pct": 67.0,
+    "rule_smaller_drop_pct": 90.0
+   }
+  }
+ },
+ "walk_forward": {
+  "BTC": {
+   "years": "2017-2026",
+   "walk_forward_per_year": 49.1,
+   "fixed_50d_per_year": 69.0,
+   "hold_per_year": 51.2,
+   "picks": {
+    "2017": 50,
+    "2018": 190,
+    "2019": 190,
+    "2020": 140,
+    "2021": 140,
+    "2022": 40,
+    "2023": 140,
+    "2024": 140,
+    "2025": 140,
+    "2026": 120
+   }
+  },
+  "ETH": {
+   "years": "2020-2026",
+   "walk_forward_per_year": 68.6,
+   "fixed_50d_per_year": 63.7,
+   "hold_per_year": 44.3,
+   "picks": {
+    "2020": 30,
+    "2021": 30,
+    "2022": 30,
+    "2023": 30,
+    "2024": 30,
+    "2025": 30,
+    "2026": 30
+   }
+  }
+ },
+ "late": {
+  "BTC": {
+   "on time (next close)": {
+    "per_year_pct": 70.9,
+    "worst_drop_pct": -61.9
+   },
+   "1 day(s) late": {
+    "per_year_pct": 62.8,
+    "worst_drop_pct": -67.8
+   },
+   "2 day(s) late": {
+    "per_year_pct": 63.6,
+    "worst_drop_pct": -64.6
+   },
+   "3 day(s) late": {
+    "per_year_pct": 64.2,
+    "worst_drop_pct": -64.5
+   },
+   "hold": {
+    "per_year_pct": 50.1,
+    "worst_drop_pct": -83.4
+   }
+  },
+  "ETH": {
+   "on time (next close)": {
+    "per_year_pct": 56.2,
+    "worst_drop_pct": -56.7
+   },
+   "1 day(s) late": {
+    "per_year_pct": 40.7,
+    "worst_drop_pct": -63.1
+   },
+   "2 day(s) late": {
+    "per_year_pct": 46.8,
+    "worst_drop_pct": -57.2
+   },
+   "3 day(s) late": {
+    "per_year_pct": 31.5,
+    "worst_drop_pct": -70.8
+   },
+   "hold": {
+    "per_year_pct": 21.1,
+    "worst_drop_pct": -94.0
+   }
+  }
+ },
+ "luck": {
+  "trials": 57,
+  "sharpe_50d": 1.47,
+  "sharpe_hold": 1.07,
+  "luck_bar_sharpe": 0.34,
+  "deflated_sharpe_prob": 0.9999,
+  "t_stat": 5.0
+ }
+}
