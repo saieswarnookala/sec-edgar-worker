@@ -1,0 +1,40 @@
+{
+ "start": "2026-11-25",
+ "start_cash": 10000.0,
+ "sleeves": {
+  "BTC": {
+   "etf": "IBIT",
+   "cash": 5000.0,
+   "units": 0.0,
+   "pending": null,
+   "coin_px": 60201.5,
+   "ma50": 75130.64,
+   "pct_vs_ma": -19.9,
+   "signal": "cash"
+  },
+  "ETH": {
+   "etf": "ETHA",
+   "cash": 5000.0,
+   "units": 0.0,
+   "pending": null,
+   "coin_px": 1687.3,
+   "ma50": 2184.82,
+   "pct_vs_ma": -22.8,
+   "signal": "cash"
+  }
+ },
+ "last_day": "2026-11-25",
+ "history": [
+  {
+   "day": "2026-11-25",
+   "equity": 10000.0,
+   "hold_both": 10000.0
+  }
+ ],
+ "trades": [],
+ "hold_units": {
+  "IBIT": 146.75667874336906,
+  "ETHA": 130.9929326658429
+ },
+ "updated": "2026-11-25 21:46 UTC"
+}
