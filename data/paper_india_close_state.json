@@ -33,6 +33,21 @@
     "BOUGHT 3035 NIFTYBEES @ 289.43"
    ],
    "orders": 2
+  },
+  {
+   "day": "2026-11-25",
+   "equity": 1005607.38,
+   "nifty": 25750.8,
+   "cash": 20710.18,
+   "liquid": 0.0,
+   "stocks": 1,
+   "park": {
+    "NIFTYBEES": 3035
+   },
+   "park_target": "NIFTYBEES",
+   "dips": 1,
+   "filled": [],
+   "orders": 0
   }
  ],
  "started": "2026-11-23",
