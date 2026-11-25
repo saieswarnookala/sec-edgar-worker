@@ -9,6 +9,12 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0i. India buyback tender offers (Nov 24) - not backtested by us (no free deal dataset; list pages are JS-loaded)
+- Independent study (Ganesh S, Oct 2026, 346 tender offers since 2012, Rs 1 lakh per deal, tender all, sell rest on settlement): from cum date 74% profitable, median 3.6%, 50 days, ~28% annualised; worst decile -13 to -15%.
+  Small-holder acceptance 95% (2012-19) -> 43% (2020+) -> 37% (2023+). Premium bands: 0-10% 3.5%/90% profitable; 10-20% 6.2%/74%; 20-30% 5.3%/79%; >30% 4.1%/69%. Market at/above offer: 27 deals, none profitable (median -8.2%).
+- Tax: before Oct 2024 tax-free to holder; Oct 2024-Mar 2026 whole payout = dividend at slab (bad); from Apr 2026 capital gains on the gain only (20% STCG). Rs 2 lakh small-holder test per PAN.
+- Verdict: optional small side trade for family; added to the friend doc. A forward 'buyback watcher' alert is possible if wanted.
+
 ## 0h. Last tests (Nov 24; last-tests.yml) -> no changes
 - Daily step time (5-min replay 2016-26): v3.0 3:15 25.6 | 3:30 25.6 | 3:45 27.2 | 3:55 26.1. v3.2 3:15 29.9 | 3:30 29.1 | 3:45 30.3 | 3:55 30.8 (16-20 23.1 vs 21.9, 21-26 37.8 vs 38.1). Keep 3:47.
 - US short-term momentum (last month's top 10/20, most-traded third): 0.5-3.8%/yr, worst -82 to -88% (1999-2012 negative); blends with dip worse. Classic 12-1 top 20: 8.5-9.1%. DROP.
