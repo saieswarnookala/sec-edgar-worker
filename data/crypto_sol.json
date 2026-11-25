@@ -1,0 +1,292 @@
+{
+ "note": "50-day rule, weekdays/ETF route, 0.05%/side + 0.25%/yr. SOL data from Yahoo SOL-USD. Not financial advice.",
+ "sol_start": "2020-06-04",
+ "end": "2026-11-25",
+ "table": {
+  "BTC+ETH 50/50 (today's bot) | rule": {
+   "all (SOL era)": {
+    "per_year_pct": 57.9,
+    "worst_drop_pct": -56.8,
+    "sharpe": 1.26
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 316.1,
+    "worst_drop_pct": -28.9,
+    "sharpe": 2.57
+   },
+   "2022 (crash)": {
+    "per_year_pct": -50.9,
+    "worst_drop_pct": -51.3,
+    "sharpe": -1.79
+   },
+   "2023-2026": {
+    "per_year_pct": 44.0,
+    "worst_drop_pct": -38.1,
+    "sharpe": 1.21
+   },
+   "last 2 years": {
+    "per_year_pct": 26.7,
+    "worst_drop_pct": -32.8,
+    "sharpe": 0.87
+   }
+  },
+  "BTC+ETH 50/50 (today's bot) | hold": {
+   "all (SOL era)": {
+    "per_year_pct": 37.3,
+    "worst_drop_pct": -76.5,
+    "sharpe": 0.82
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 314.8,
+    "worst_drop_pct": -52.6,
+    "sharpe": 2.19
+   },
+   "2022 (crash)": {
+    "per_year_pct": -66.5,
+    "worst_drop_pct": -68.6,
+    "sharpe": -1.11
+   },
+   "2023-2026": {
+    "per_year_pct": 25.1,
+    "worst_drop_pct": -60.8,
+    "sharpe": 0.69
+   },
+   "last 2 years": {
+    "per_year_pct": -23.4,
+    "worst_drop_pct": -60.8,
+    "sharpe": -0.21
+   }
+  },
+  "BTC+ETH+SOL thirds | rule": {
+   "all (SOL era)": {
+    "per_year_pct": 108.4,
+    "worst_drop_pct": -57.4,
+    "sharpe": 1.69
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 949.6,
+    "worst_drop_pct": -28.2,
+    "sharpe": 3.48
+   },
+   "2022 (crash)": {
+    "per_year_pct": -47.5,
+    "worst_drop_pct": -48.6,
+    "sharpe": -1.7
+   },
+   "2023-2026": {
+    "per_year_pct": 54.5,
+    "worst_drop_pct": -39.0,
+    "sharpe": 1.27
+   },
+   "last 2 years": {
+    "per_year_pct": 14.2,
+    "worst_drop_pct": -34.9,
+    "sharpe": 0.56
+   }
+  },
+  "BTC+ETH+SOL thirds | hold": {
+   "all (SOL era)": {
+    "per_year_pct": 79.7,
+    "worst_drop_pct": -85.3,
+    "sharpe": 1.16
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 1129.1,
+    "worst_drop_pct": -50.6,
+    "sharpe": 3.13
+   },
+   "2022 (crash)": {
+    "per_year_pct": -79.9,
+    "worst_drop_pct": -80.0,
+    "sharpe": -1.49
+   },
+   "2023-2026": {
+    "per_year_pct": 43.6,
+    "worst_drop_pct": -65.1,
+    "sharpe": 0.9
+   },
+   "last 2 years": {
+    "per_year_pct": -30.8,
+    "worst_drop_pct": -65.1,
+    "sharpe": -0.32
+   }
+  },
+  "BTC 40 / ETH 40 / SOL 20 | rule": {
+   "all (SOL era)": {
+    "per_year_pct": 89.5,
+    "worst_drop_pct": -57.1,
+    "sharpe": 1.61
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 665.9,
+    "worst_drop_pct": -27.8,
+    "sharpe": 3.38
+   },
+   "2022 (crash)": {
+    "per_year_pct": -48.8,
+    "worst_drop_pct": -49.1,
+    "sharpe": -1.76
+   },
+   "2023-2026": {
+    "per_year_pct": 50.8,
+    "worst_drop_pct": -36.8,
+    "sharpe": 1.27
+   },
+   "last 2 years": {
+    "per_year_pct": 19.1,
+    "worst_drop_pct": -31.9,
+    "sharpe": 0.69
+   }
+  },
+  "BTC 40 / ETH 40 / SOL 20 | hold": {
+   "all (SOL era)": {
+    "per_year_pct": 64.6,
+    "worst_drop_pct": -81.8,
+    "sharpe": 1.07
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 744.0,
+    "worst_drop_pct": -51.3,
+    "sharpe": 2.95
+   },
+   "2022 (crash)": {
+    "per_year_pct": -75.1,
+    "worst_drop_pct": -75.4,
+    "sharpe": -1.36
+   },
+   "2023-2026": {
+    "per_year_pct": 36.7,
+    "worst_drop_pct": -63.1,
+    "sharpe": 0.83
+   },
+   "last 2 years": {
+    "per_year_pct": -27.8,
+    "worst_drop_pct": -63.1,
+    "sharpe": -0.28
+   }
+  },
+  "SOL alone | rule": {
+   "all (SOL era)": {
+    "per_year_pct": 170.7,
+    "worst_drop_pct": -66.6,
+    "sharpe": 1.55
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 2443.4,
+    "worst_drop_pct": -66.6,
+    "sharpe": 2.93
+   },
+   "2022 (crash)": {
+    "per_year_pct": -41.4,
+    "worst_drop_pct": -56.4,
+    "sharpe": -1.01
+   },
+   "2023-2026": {
+    "per_year_pct": 62.2,
+    "worst_drop_pct": -52.5,
+    "sharpe": 1.07
+   },
+   "last 2 years": {
+    "per_year_pct": -9.1,
+    "worst_drop_pct": -48.8,
+    "sharpe": 0.02
+   }
+  },
+  "SOL alone | hold": {
+   "all (SOL era)": {
+    "per_year_pct": 108.7,
+    "worst_drop_pct": -96.4,
+    "sharpe": 1.21
+   },
+   "2020-2021 (SOL bubble)": {
+    "per_year_pct": 3554.6,
+    "worst_drop_pct": -74.8,
+    "sharpe": 2.97
+   },
+   "2022 (crash)": {
+    "per_year_pct": -94.7,
+    "worst_drop_pct": -94.8,
+    "sharpe": -1.84
+   },
+   "2023-2026": {
+    "per_year_pct": 65.7,
+    "worst_drop_pct": -76.7,
+    "sharpe": 1.01
+   },
+   "last 2 years": {
+    "per_year_pct": -45.7,
+    "worst_drop_pct": -76.7,
+    "sharpe": -0.42
+   }
+  }
+ },
+ "luck_check": {
+  "thirds vs 2-coin, full": {
+   "gap_pts_per_year": 31.2,
+   "chance_gap_above_0_pct": 99.1,
+   "range_90pct": [
+    9.4,
+    55.2
+   ]
+  },
+  "thirds vs 2-coin, 2022+": {
+   "gap_pts_per_year": 8.5,
+   "chance_gap_above_0_pct": 83.5,
+   "range_90pct": [
+    -4.4,
+    23.4
+   ]
+  },
+  "40/40/20 vs 2-coin, 2022+": {
+   "gap_pts_per_year": 5.1,
+   "chance_gap_above_0_pct": 83.7,
+   "range_90pct": [
+    -2.7,
+    14.2
+   ]
+  }
+ },
+ "correlation_daily_2022plus": {
+  "BTC-ETH": 0.85,
+  "BTC-SOL": 0.76,
+  "ETH-SOL": 0.77
+ },
+ "sol_rule_stats": {
+  "switches_per_year": 20.1,
+  "pct_time_in": 51.0,
+  "today_in": false,
+  "today_vs_avg_pct": -23.4
+ },
+ "real_sol_etf": {
+  "BSOL": {
+   "from": "2025-10-28",
+   "days": 272,
+   "rule": {
+    "per_year_pct": 6.0,
+    "worst_drop_pct": -33.7,
+    "sharpe": 0.34
+   },
+   "hold_etf": {
+    "per_year_pct": -59.0,
+    "worst_drop_pct": -66.4,
+    "sharpe": -0.91
+   },
+   "daily_corr_with_SOL": 0.923
+  },
+  "GSOL": {
+   "from": "2024-10-28",
+   "days": 522,
+   "rule": {
+    "per_year_pct": -34.6,
+    "worst_drop_pct": -77.8,
+    "sharpe": -0.04
+   },
+   "hold_etf": {
+    "per_year_pct": -72.9,
+    "worst_drop_pct": -94.2,
+    "sharpe": -0.66
+   },
+   "daily_corr_with_SOL": 0.587
+  }
+ }
+}
