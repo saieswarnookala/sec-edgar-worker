@@ -9,6 +9,14 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0j. Crypto lab round 1 (Nov 24; crypto-lab.yml -> data/crypto_lab.json; Yahoo daily, 37 coins incl. LUNC/FTT/BSV; trade next day's close)
+- BTC trend (from 2015, per yr / worst): hold 59.7/-83. 50d: 77.0/-62 (0.10%/side), 64.5/-66 (0.50%), 51.3/-70 (0.95% Robinhood). 100d+40% vol target 39.4/-42 (0.5%). 20d dies at Robinhood cost (19.9).
+- ETH (from 2018): hold 13.6/-86; 50d 45.3/-62 (0.5%); 200d+vol target 25.9/-43. Trend helps ETH most (2022: -46 vs -68).
+- Rotation (top 20 coins by volume, weekly): no filter loses (-94..-98% drops). With BTC>50d filter: top 3 by 28d 95.3/-70 vs BTC 50.7/-83 (2017+), BUT 2023-26 23.2 vs BTC 38.7. Watch.
+- Dip bot on coins: win 45-49%, avg -0.5%/trade at 0.5% -> DROP (crypto trends, doesn't mean-revert in 5 days).
+- Analogue patterns: BTC hit rate 53%, ~0 at 0.5%; ETH noise. Calendar: weekday effects flip between halves; weekend-only ~0. DROP.
+- Research notes: /home/claude/research_notes/Crypto trading strategy evidence/ (onchain: funding<0 90-day buy, MVRV bands, F&G tilt; calendar: 10-day-high overnight; costs: Robinhood ~2% round trip, ETFs 0.25%/yr; no wash-sale on direct crypto as of May 2026).
+
 ## 0i. India buyback tender offers (Nov 24) - not backtested by us (no free deal dataset; list pages are JS-loaded)
 - Independent study (Ganesh S, Oct 2026, 346 tender offers since 2012, Rs 1 lakh per deal, tender all, sell rest on settlement): from cum date 74% profitable, median 3.6%, 50 days, ~28% annualised; worst decile -13 to -15%.
   Small-holder acceptance 95% (2012-19) -> 43% (2020+) -> 37% (2023+). Premium bands: 0-10% 3.5%/90% profitable; 10-20% 6.2%/74%; 20-30% 5.3%/79%; >30% 4.1%/69%. Market at/above offer: 27 deals, none profitable (median -8.2%).
