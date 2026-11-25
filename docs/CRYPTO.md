@@ -27,6 +27,7 @@ Plan on 15-30% a year with big swings: the 56% comes mostly from 2018-2021. The 
 | 3 | crypto_lab3.py | Weekday-only (ETF) execution, BTC+ETH 50/50, weekly checks, 2-5% buffers | Weekday trading keeps the edge; buffers/weekly don't help |
 | 4 | crypto_lab4.py | 19 unseen coins, rolling 1/2-year windows, walk-forward MA choice, 1-3 days late, deflated Sharpe | Smaller worst drop 19/19, higher return 16/19; beats hold 54-67% of windows, smaller drop 81-90%; re-tuning worse; late still beats hold; DSR 0.9999, t 5.0 |
 | 5 | crypto_exec.py | Real IBIT/ETHA + hourly coin prices, next close vs 3 pm same-day | Signals 98-99% same as backtest; same-day best |
+| 6 | crypto_sol.py, data/crypto_sol.json | Add Solana? BTC+ETH 50/50 vs thirds vs 40/40/20, 2020-26; bootstrap luck check; real BSOL ETF | Thirds 108%/yr vs 58% overall, but that is SOL's 2020-21 bubble. From 2022: +8.5 pts/yr, only 84% chance it's real (bar 95%); last 2 years worse (14% vs 27%); same worst drop. BSOL rule +6% vs hold -59%. Not added; recheck mid-2027 |
 
 ## Example
 
