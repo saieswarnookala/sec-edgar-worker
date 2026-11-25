@@ -12,6 +12,9 @@ on:
       notify:
         description: '0 = no phone alert this run'
         default: '1'
+      mode:
+        description: 'decide = 3:30 pm ET decision (trade at today''s close); empty = after-close run'
+        default: ''
 permissions:
   contents: write
 concurrency:
@@ -35,6 +38,7 @@ jobs:
           NTFY_TOPIC_CRYPTO: ${{ secrets.NTFY_TOPIC_CRYPTO }}
           NO_SAVE: ${{ inputs.dry_run == '1' && '1' || '' }}
           NO_NOTIFY: ${{ (inputs.dry_run == '1' || inputs.notify == '0') && '1' || '' }}
+          MODE: ${{ inputs.mode }}
         run: set -o pipefail; python -u scripts/paper_crypto.py 2>&1 | tee /tmp/run.log
       - name: Commit
         if: inputs.dry_run != '1'
@@ -42,5 +46,5 @@ jobs:
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
           [ -f data/paper_crypto_state.json ] && git add data/paper_crypto_state.json
-          git commit -qm "Crypto paper $(date -u +%F)" || exit 0
+          git commit -qm "Crypto paper $(date -u +%F) ${{ inputs.mode }}" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1

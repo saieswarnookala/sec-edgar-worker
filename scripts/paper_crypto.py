@@ -2,7 +2,8 @@
 Rules (crypto lab rounds 1-3, data/crypto_lab3.json):
   - Two halves: Bitcoin via IBIT, Ether via ETHA ($5,000 each at the start, no rebalancing between halves).
   - Each weekday after the US close: if the coin's price is above its 50-day average of daily closes -> it should be held, else T-bills.
-  - A change is decided today and traded at the NEXT US trading day's close (as tested). 0.05% cost per trade.
+  - A change is decided at ~3:30 pm ET with the live coin price (MODE=decide) and traded at TODAY's close; if that run is missed,
+    the evening run decides after the close and trades at the next close. 0.05% cost per trade. (Nov 25 execution check: same-day 11.3%/43.3% vs backtest 11.7%/27.5% for BTC/ETH.)
   - Backtest 2018-2026 (both halves, weekdays only): ~56%/yr, worst drop -57% vs holding both 23%/yr, -77%.
 Alerts only to NTFY_TOPIC_CRYPTO, only when something changes (plus a short Friday summary).
 Env: STATE (default data/paper_crypto_state.json), NO_SAVE=1, NO_NOTIFY=1, DRY=1 (fake prices, nothing saved), FORCE_DAY=YYYY-MM-DD (tests)."""
@@ -35,7 +36,28 @@ def load():
     if os.path.exists(STATE) and not DRY: return json.load(open(STATE))
     return {"start": None, "start_cash": START_CASH, "sleeves": {c: {"etf": e, "cash": START_CASH / 2, "units": 0.0, "pending": None} for c, e in SLEEVES},
             "last_day": None, "history": [], "trades": [], "hold_units": None}
+def decide():
+    """3:30 pm ET run: live coin price vs its 50-day average -> trade at TODAY's close (the execution check showed same-day beats next-day)."""
+    st = load(); now = pd.Timestamp(os.environ["FORCE_NOW"]) if os.environ.get("FORCE_NOW") else pd.Timestamp.now(tz="America/New_York").tz_localize(None)
+    today = str(now.date()); m = now.hour * 60 + now.minute
+    if now.weekday() >= 5 or not (14 * 60 + 30 <= m <= 15 * 60 + 55): print("outside the 2:30-3:55 pm ET window", now); return
+    if st.get("decided_on") == today: print("already decided today"); return
+    etf = yahoo("IBIT")
+    if etf.index[-1].date() != now.date(): print("US market closed today"); return
+    msgs = []
+    for c, e in SLEEVES:
+        s = st["sleeves"][c]; px = yahoo(f"{c}-USD"); live = float(px.iloc[-1]); ma = (float(px.iloc[-50:-1].sum()) + live) / 50
+        want, held = live > ma, s["units"] > 0
+        s.update({"coin_px": round(live, 2), "ma50": round(ma, 2), "pct_vs_ma": round((live / ma - 1) * 100, 1), "signal": "hold" if want else "cash"})
+        if s["pending"]: continue
+        if want != held:
+            s["pending"] = "buy" if want else "sell"; s["pending_day"] = today; s["decided_day"] = today
+            msgs.append(f"{c} is {s['pct_vs_ma']:+.1f}% vs its 50-day average -> {s['pending'].upper()} {e} at TODAY's close (order by 3:55 pm ET)")
+    st["decided_on"] = today; print("\n".join(msgs) or "no change today")
+    if msgs: notify("Crypto trend: " + "; ".join(x.split(" -> ")[-1].split(" at ")[0] for x in msgs) + " today", "\n".join(msgs) + "\nPaper bot 15, virtual money. The fill is recorded at today's close.")
+    if not (os.environ.get("NO_SAVE") or DRY): json.dump(st, open(STATE, "w"), indent=1, default=float)
 def main():
+    if os.environ.get("MODE") == "decide": return decide()
     st = load(); coins = {c: yahoo(f"{c}-USD") for c, _ in SLEEVES}; etfs = {e: yahoo(e) for _, e in SLEEVES}; irx = yahoo("^IRX")
     days = etfs["IBIT"].index.intersection(etfs["ETHA"].index)                         # US trading days with both ETF closes
     if os.environ.get("FORCE_DAY"): days = days[days <= pd.Timestamp(os.environ["FORCE_DAY"])]
@@ -53,20 +75,24 @@ def main():
         for c, e in SLEEVES:
             s = st["sleeves"][c]; px = float(etfs[e].loc[d])
             s["cash"] *= (1 + rate) ** (gap / 365)                                          # idle money earns T-bills
-            if s["pending"] == "buy" and s["cash"] > 1:
+            due = s["pending"] and (s.get("pending_day") == str(d.date()) or (s.get("pending_day", "next") == "next" and str(d.date()) > s.get("decided_day", "")))
+            if not due: pass
+            elif s["pending"] == "buy" and s["cash"] > 1:
                 u = s["cash"] * (1 - COST) / px; s["units"] += u; st["trades"].append({"day": str(d.date()), "symbol": e, "side": "buy", "px": round(px, 2), "usd": round(s["cash"], 2)}); s["cash"] = 0.0; s["entry_px"] = px
                 msgs.append(f"BOUGHT {e} (virtual) at ${px:.2f}"); changed = True
             elif s["pending"] == "sell" and s["units"] > 0:
                 usd = s["units"] * px * (1 - COST); ret = (px / s.get("entry_px", px) - 1) * 100
                 st["trades"].append({"day": str(d.date()), "symbol": e, "side": "sell", "px": round(px, 2), "usd": round(usd, 2), "ret_pct": round(ret, 1)}); s["cash"] += usd; s["units"] = 0.0
                 msgs.append(f"SOLD {e} (virtual) at ${px:.2f} ({ret:+.1f}% on this hold)"); changed = True
-            s["pending"] = None
-            # today's signal: coin price vs its 50-day average of daily closes (Yahoo crypto day = UTC day; latest close on or before today)
+            if due: s["pending"] = None
+            if st.get("decided_on") == str(d.date()): continue                               # decided this afternoon (3:30 pm run); filled at today's close above
+            # fallback (afternoon run missed): today's signal after the close, traded at the NEXT close: coin price vs its 50-day average of daily closes (Yahoo crypto day = UTC day; latest close on or before today)
             cp = coins[c][coins[c].index <= d]; ma = float(cp.iloc[-MA:].mean()); p_ = float(cp.iloc[-1])
             want = p_ > ma; held = s["units"] > 0
             s.update({"coin_px": round(p_, 2), "ma50": round(ma, 2), "pct_vs_ma": round((p_ / ma - 1) * 100, 1), "signal": "hold" if want else "cash"})
-            if want and not held: s["pending"] = "buy"; msgs.append(f"{c} is {s['pct_vs_ma']:+.1f}% vs its 50-day average -> BUY {e} at the next US close"); changed = True
-            if not want and held: s["pending"] = "sell"; msgs.append(f"{c} is {s['pct_vs_ma']:+.1f}% vs its 50-day average -> SELL {e} at the next US close"); changed = True
+            if s["pending"]: continue
+            if want and not held: s["pending"] = "buy"; s["pending_day"] = "next"; s["decided_day"] = str(d.date()); msgs.append(f"{c} is {s['pct_vs_ma']:+.1f}% vs its 50-day average -> BUY {e} at the next US close"); changed = True
+            if not want and held: s["pending"] = "sell"; s["pending_day"] = "next"; s["decided_day"] = str(d.date()); msgs.append(f"{c} is {s['pct_vs_ma']:+.1f}% vs its 50-day average -> SELL {e} at the next US close"); changed = True
         if st["start"] is None:
             st["start"] = str(d.date()); st["hold_units"] = {e: (START_CASH / 2) / float(etfs[e].loc[d]) for _, e in SLEEVES}
         eq = sum(s["cash"] + s["units"] * float(etfs[s["etf"]].loc[d]) for s in st["sleeves"].values())

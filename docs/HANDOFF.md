@@ -9,6 +9,11 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0o. Crypto execution check (Nov 25; crypto-exec.yml -> data/crypto_exec.json; real IBIT/ETHA + hourly coins, Nov 2024-Nov 2026)
+- BTC: backtest 11.7/-29.4 | ETF next close 11.1/-27.0 | 3 pm decision + same close 11.3/-25.1 | hold IBIT -21.6/-53.7. ETH: 27.5/-42.5 | 22.4/-42.7 | 43.3/-35.3 | hold -32.3/-67.9.
+- Signal agreement with backtest 98-99%; IBIT vs BTC daily tracking std 0.66%, ETHA 1.09%. Yahoo range=max returns sparse daily bars -> always period1/period2.
+- Paper bot 15 now: MODE=decide at 3:30 pm ET (Cloudflare marketJobs 19:30/20:30 UTC) -> fill at that day's close in the evening run; evening fallback decides + next close.
+
 ## 0n. Crypto lab round 4 (Nov 25; crypto-lab4.yml -> data/crypto_lab4.json): the 50-day rule is real
 - 19 unseen coins (XRP..EOS, 0.10%/side): rule smaller worst drop 19/19, higher return 16/19 (e.g. ADA 42.9 vs -3.8, BNB 101 vs 56; XRP/LTC/XMR slightly worse).
 - Rolling windows: BTC beats hold 59% (1y) / 65% (2y) of windows, smaller drop 81% / 86%; ETH 54/67, 87/90.

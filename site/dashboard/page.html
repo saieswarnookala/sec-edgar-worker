@@ -1124,10 +1124,10 @@ dash.calc('vs_industry', {
   <div class="sx-pb-cols">
   <section class="sx-card"><h3>Rules (paper bot 15)</h3><ul class="sx-notes">
     <li>Two halves: <b>Bitcoin via IBIT</b>, <b>Ether via ETHA</b> ($5,000 each to start).</li>
-    <li>Every weekday after the US close: is the coin above its <b>50-day average</b> of daily closes? Yes = hold the ETF; no = T-bills.</li>
-    <li>A change is traded at the <b>next</b> US close (as tested). Weekend moves wait for Monday.</li>
+    <li>Every weekday at <b>3:30 pm ET</b>: is the coin's live price above its <b>50-day average</b> of daily closes? Yes = hold the ETF; no = T-bills.</li>
+    <li>A change is traded at <b>that day's close</b> (order by 3:55 pm). If the 3:30 run is missed, the evening run decides and trades at the next close. Weekend moves wait for Monday.</li>
     <li>About 16 switches a year per coin; 0.05% cost per trade. Suits a Roth (short-term gains).</li>
-    <li>Alerts: the crypto ntfy channel, only when a switch is due, plus a Friday summary.</li></ul></section>
+    <li>Alerts: the crypto ntfy channel, only when a switch is due (around 3:30 pm ET), plus a Friday summary.</li></ul></section>
   <section class="sx-card"><h3>Backtest (weekdays only, ETF costs)</h3>
     <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th></th><th>Per year</th><th>Worst drop</th><th>2022–26</th></tr></thead><tbody>
       <tr><td><b>BTC + ETH, 50-day rule</b> (2018–26)</td><td>56%</td><td>−57%</td><td>+16%/yr</td></tr>
@@ -1136,7 +1136,8 @@ dash.calc('vs_industry', {
       <tr><td>Hold BTC only</td><td>62%</td><td>−83%</td><td>+4%/yr</td></tr>
     </tbody></table></div>
     <p class="sx-cap">Every average from 30 to 150 days beat holding; none of 300 random in/out schedules beat the 50-day rule. On Robinhood's ~1% crypto spread only slow rules (120–140 days) survive.</p>
-    <p class="sx-cap"><b>Confidence checks (Nov 25):</b> on 19 other coins it was never tuned on, the rule had a smaller worst drop on all 19 and a higher return on 16. It beat holding in about 60–65% of 1- and 2-year windows and had the smaller drop in 81–90%. Trading 1–3 days late still beat holding. Luck check: Sharpe 1.47 vs 1.07 holding, t-stat 5.0. Re-picking the average length each year did worse than keeping 50, so no tuning.</p></section>
+    <p class="sx-cap"><b>Confidence checks (Nov 25):</b> on 19 other coins it was never tuned on, the rule had a smaller worst drop on all 19 and a higher return on 16. It beat holding in about 60–65% of 1- and 2-year windows and had the smaller drop in 81–90%. Trading 1–3 days late still beat holding. Luck check: Sharpe 1.47 vs 1.07 holding, t-stat 5.0. Re-picking the average length each year did worse than keeping 50, so no tuning.</p>
+    <p class="sx-cap"><b>Real-order check (real IBIT/ETHA prices, Nov 2024–Nov 2026):</b> BTC backtest 11.7%/yr vs trading IBIT the next day 11.1% vs deciding at 3 pm and trading at that day's close 11.3% (holding IBIT −21.6%). ETH: backtest 27.5% vs next day 22.4% vs same day 43.3% (holding ETHA −32.3%). Signals matched the backtest on 98–99% of days; IBIT tracks Bitcoin within ~0.7% a day. So the bot decides at 3:30 pm and trades at the close.</p></section>
   </div>
   <section class="sx-card"><h3>What we tested (Nov 24–25 2026)</h3>
     <div class="sx-tablewrap"><table class="sx-scr"><thead><tr><th>Idea</th><th>Result</th><th>Verdict</th></tr></thead><tbody>
@@ -1408,7 +1409,7 @@ dash.calc('vs_industry', {
   <section class="sx-card" id="pb-crypto">
     <div class="sx-ch"><h3>15. Crypto trend: Bitcoin + Ether ($10,000 virtual, from Nov 25 2026)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">IBIT + ETHA</span><span class="sx-badge">Weekdays after the US close</span><span class="sx-badge">Alerts: crypto ntfy channel</span></div>
-    <p class="sx-cap">Hold each coin's ETF only while the coin is above its 50-day average, else T-bills; switches trade at the next US close. Backtest 2018–2026: ~56%/yr, worst drop −57% (holding both: 23%, −77%). Full details on the <a href="#crypto" class="st-go" data-go-tab="crypto">Crypto</a> tab.</p>
+    <p class="sx-cap">Hold each coin's ETF only while the coin is above its 50-day average, else T-bills; decided at 3:30 pm ET, traded at that day's close. Backtest 2018–2026: ~56%/yr, worst drop −57% (holding both: 23%, −77%). Full details on the <a href="#crypto" class="st-go" data-go-tab="crypto">Crypto</a> tab.</p>
     <div class="pb-live" data-bot="crypto"></div>
   </section>
 

@@ -1,8 +1,8 @@
 """Paper bot 15 checks on fake prices: first run starts flat, next days fill pending orders at the next close, no double buys, state round-trips."""
 import os, json, subprocess, sys, tempfile
 tmp = tempfile.mkdtemp(); st = os.path.join(tmp, "s.json")
-def run(day):
-    env = dict(os.environ, STATE=st, FORCE_DAY=day, NO_NOTIFY="1", FAKE_SAVE="1")
+def run(day, mode="", now=""):
+    env = dict(os.environ, STATE=st, FORCE_DAY=day, NO_NOTIFY="1", FAKE_SAVE="1", MODE=mode, FORCE_NOW=now)
     src = open("scripts/paper_crypto.py").read().replace('DRY = os.environ.get("DRY") == "1"', 'DRY = True').replace('if os.path.exists(STATE) and not DRY', 'if os.path.exists(STATE)').replace('if not (os.environ.get("NO_SAVE") or DRY):', 'if True:')
     p = os.path.join(tmp, "pc.py"); open(p, "w").write(src); out = subprocess.run([sys.executable, p], env=env, capture_output=True, text=True); assert out.returncode == 0, out.stderr; return json.load(open(st))
 s1 = run("2026-11-02"); assert len(s1["history"]) == 1 and s1["start"] == "2026-11-02", s1["history"]
@@ -15,4 +15,12 @@ assert len(s2["history"]) == 2
 s3 = run("2026-11-03"); assert len(s3["history"]) == 2, "same day twice does nothing"
 s4 = run("2026-11-13"); assert len(s4["history"]) == 10, len(s4["history"])            # catches up 8 missed weekdays
 for v in s4["sleeves"].values(): assert v["units"] >= 0 and v["cash"] >= 0 and not (v["units"] > 0 and v["cash"] > 1)
-print("ok   crypto paper bot: starts flat, fills next close, no repeats, catches up missed days")
+# afternoon decision -> filled at the SAME day's close by the evening run
+s5 = run("2026-11-16", "decide", "2026-11-16 15:30"); assert s5["decided_on"] == "2026-11-16"
+due = {c: v["pending"] for c, v in s5["sleeves"].items() if v["pending"] and v.get("pending_day") == "2026-11-16"}
+s6 = run("2026-11-16", "decide", "2026-11-16 15:40"); assert s6["sleeves"] == s5["sleeves"], "second decide the same day changes nothing"
+s7 = run("2026-11-16")
+for c, side in due.items():
+    v = s7["sleeves"][c]; assert v["pending"] is None and any(t["day"] == "2026-11-16" for t in s7["trades"]), (c, v)
+s8 = run("2026-11-17", "decide", "2026-11-17 11:00"); assert s8.get("decided_on") == "2026-11-16", "outside the afternoon window: no decision"
+print("ok   crypto paper bot: starts flat, fills next close, no repeats, catches up missed days, 3:30 pm decision fills at that day's close")

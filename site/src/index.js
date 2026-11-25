@@ -114,7 +114,8 @@ export function marketJobs(when) {
   const h = when.getUTCHours(), m = when.getUTCMinutes(), jobs = [];
   if ([25, 40].includes(m) && [16, 17, 19, 20].includes(h)) jobs.push(['paper-dip.yml', { dry_run: '0', force: '0' }]);
   if ([0, 15, 30, 45, 50, 55].includes(m)) jobs.push(['paper-v32.yml', { dry_run: '0', phase: '' }]);
-  if (when.getUTCDate() >= 25 && [5, 35].includes(m) && [19, 20].includes(h)) jobs.push(['clear-leader-alert.yml', { mode: 'auto' }]);   // month-end heads-up ~3:05 pm ET (script checks NY time, sends once)
+  if (when.getUTCDate() >= 25 && [5, 35].includes(m) && [19, 20].includes(h)) jobs.push(['clear-leader-alert.yml', { mode: 'auto' }]);
+  if (m === 30 && [19, 20].includes(h)) jobs.push(['paper-crypto.yml', { dry_run: '0', notify: '1', mode: 'decide' }]);   // crypto bot 15: 3:30 pm ET decision (EDT 19:30 / EST 20:30 UTC; the script checks the ET window)   // month-end heads-up ~3:05 pm ET (script checks NY time, sends once)
   return jobs;
 }
 export function eveningJobs(when) {
