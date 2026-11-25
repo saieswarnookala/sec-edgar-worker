@@ -9,6 +9,14 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0k. Crypto lab round 2 (Nov 25; crypto-lab2.yml -> data/crypto_lab2.json)
+- Trend is REAL: BTC every MA 30-150 beats hold (ETF route 63-83%/yr vs hold 61.9%, worst ~-60 vs -83); placebo 0% of 300 random schedules beat the 50-day (ETH 0.7%). ETH all lengths beat hold (31-62 vs 12.6).
+  BTC 50d ETF route 80.9/-61 (2023-26 49.6/-29 vs hold 37.9/-53); Robinhood 0.95%: 50d 54.0, 120-140d 67-68 best (fewer switches).
+- Fear & Greed: contrarian timing loses (fear-only -12.8%/yr); savings-plan tilt buys 4.9% cheaper. DROP as timing.
+- MVRV < 1 (452 days, ~3 episodes): median fwd 90d 28.8% vs 10.0, 365d 127% vs 75%. Trend OR MVRV<1: 71.0/-71.5 vs trend 67.1/-65.6 (0.5%/side). Rare-bottom add-on, few events.
+- Funding (BitMEX) not reachable from GitHub runners; skipped.
+- Candidate: BTC+ETH 50-day trend via IBIT/ETHA (Roth), or 120-140 day on Robinhood. Not started; paper bot possible.
+
 ## 0j. Crypto lab round 1 (Nov 24; crypto-lab.yml -> data/crypto_lab.json; Yahoo daily, 37 coins incl. LUNC/FTT/BSV; trade next day's close)
 - BTC trend (from 2015, per yr / worst): hold 59.7/-83. 50d: 77.0/-62 (0.10%/side), 64.5/-66 (0.50%), 51.3/-70 (0.95% Robinhood). 100d+40% vol target 39.4/-42 (0.5%). 20d dies at Robinhood cost (19.9).
 - ETH (from 2018): hold 13.6/-86; 50d 45.3/-62 (0.5%); 200d+vol target 25.9/-43. Trend helps ETH most (2022: -46 vs -68).
