@@ -20,7 +20,7 @@ def yahoo(sym, interval="1d", rng="max"):
         return pd.Series(50 * np.exp(np.cumsum(g.normal(0.001, 0.03, len(ix)))), index=ix)
     for a in range(4):
         try:
-            j = json.loads(urllib.request.urlopen(urllib.request.Request(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range={rng}&interval={interval}", headers=UA), timeout=60).read())["chart"]["result"][0]
+            j = json.loads(urllib.request.urlopen(urllib.request.Request((f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range={rng}&interval={interval}" if interval != "1d" else f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?period1=1400000000&period2={int(time.time())}&interval=1d")   # range=max can return weekly bars, headers=UA), timeout=60).read())["chart"]["result"][0]
             s = pd.Series(j["indicators"]["quote"][0]["close"], index=pd.to_datetime(j["timestamp"], unit="s", utc=True), dtype=float).dropna()
             return s[~s.index.duplicated(keep="last")]
         except Exception as e: print("retry", sym, interval, str(e)[:60], flush=True); time.sleep(5 * (a + 1))
