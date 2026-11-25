@@ -595,6 +595,32 @@ def run():
                 "base": {}, "junk_filters": {}, "slot_check": {}, "low_vol": {}, "blends": {}}
         BASE = dict(score=scm, M=M500, N=20)
         OUT3["base"]["paper bot 13 rules"], c_base = both("BASE momentum (paper bot 13)", BASE)
+        if os.environ.get("VALUEPROXY") == "1":
+            # Nov 24: no point-in-time book values / earnings in our data, so 'value' is proxied by LONG-TERM LOSERS (De Bondt-Thaler reversal: the
+            # cheapest stocks are usually the ones that fell most over 3-5 years). Plain, and 'turnaround' (also back above its own 200-day average).
+            r36, r60 = Pf.pct_change(744).values, Pf.pct_change(1240).values
+            VP = {"3-year losers": -r36, "5-year losers": -r60, "3-year losers now above their 200-day (turnaround)": np.where(above, -r36, np.nan)}
+            OUTV = {"note": "India 'value' proxy = long-term losers (prices only; no point-in-time fundamentals). Honest = split days 1/6/11/16, next-day trades, 0.3%/side, before tax. "
+                            "Blends = honest curves rebalanced monthly. Base = paper bot 13.", "built": str(pd.Timestamp.today().date()), "base": OUT3["base"], "value_proxy": {}, "blends": {}}
+            vcur = {}
+            for nm, sc_ in VP.items():
+                for uni, M_ in (("top 200", M200), ("top 500", M500)):
+                    for fr, frl in (("S", "every 6 months"), ("M", "monthly, 1.5N buffer")):
+                        for filt in (False, True):
+                            lbl = f"{nm} | {uni}, 30 stocks, {frl}" + (" | Nifty crash filter" if filt else "")
+                            OUTV["value_proxy"][lbl], vcur[lbl] = both("VALUE " + lbl, dict(score=sc_, M=M_, N=30, freq=fr, filt=filt))
+            bestv = max(OUTV["value_proxy"], key=lambda k: OUTV["value_proxy"][k]["honest_4days_nextday"]["cagr"]); OUTV["best_value_proxy"] = bestv
+            def blendv(c1, c2, w1):
+                r1 = np.r_[0, c1[1:] / c1[:-1] - 1]; r2 = np.r_[0, c2[1:] / c2[:-1] - 1]; a_, b_ = w1, 1 - w1; out = np.ones(D)
+                for t in range(START, D):
+                    if t in mstarts: tot = a_ + b_; a_, b_ = w1 * tot, (1 - w1) * tot
+                    a_ *= 1 + r1[t]; b_ *= 1 + r2[t]; out[t] = a_ + b_
+                return out
+            mo = lambda c: pd.Series(c[START:], index=dates[START:]).resample("ME").last().pct_change().dropna()
+            OUTV["blends"]["monthly_correlation_momentum_vs_best_value_proxy"] = round(float(mo(c_base).corr(mo(vcur[bestv]))), 2)
+            for w1 in (0.8, 0.7, 0.5):
+                o = summ(blendv(c_base, vcur[bestv], w1)); kk = f"{int(w1 * 100)}% momentum + {100 - int(w1 * 100)}% value proxy ({bestv}), honest"; OUTV["blends"][kk] = o; pr("BLEND " + kk, o)
+            os.makedirs("data", exist_ok=True); json.dump(OUTV, open("data/india_valueproxy.json" if not DRY else "/tmp/india_valueproxy_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
         for lbl, ex in (("circuit-locked 20%+ of last 60 days", "circ60"), ("circuit-locked 10%+ of last 120 days", "circ120"), ("bottom 10% turnover of the universe", "lowturn"),
                         ("any -10% day in last 3 months", "drop10"), ("any -10% day on 3x volume in last 3 months (results-crash proxy)", "drop10v"),
                         ("all three: circuit60 + low turnover + -10% on 3x volume", "circ60+lowturn+drop10v")):

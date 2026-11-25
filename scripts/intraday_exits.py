@@ -232,14 +232,14 @@ def vol_ok(t, j, T, cut=2.0):
     if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
     VSTAT[0] += 1; r = vol_ratio(t, j, T)
     return r is None or r <= cut
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None, fin_off=0):
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
     for t in range(tr0, D):
         want = "SPY" if S.park_on[t] else ("IEF" if bond and S.BOND_OK[t] else "CASH")
         if want != held_park: cash *= 1 - cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
-        cu = cash; FIN = fin_of(t)            # cu = idle money in 'yesterday's close' units; worth cu * park_f(t, held_park, T) at time T
+        cu = cash; FIN = fin_of(t) - fin_off            # cu = idle money in 'yesterday's close' units; worth cu * park_f(t, held_park, T) at time T
         for p in pos: p["ref"] = (S.S_C if p["k"] != "E" else S.E_C)[t - 1, p["j"]]; p["armed"] = False; p["hi"] = 0.0
         sold_today = set()
         checks = list(range(600, FIN, xn)) if (xn and exit_mode in ("target", "trail")) else \
@@ -369,6 +369,10 @@ if os.environ.get("COMBO") == "1":                      # Nov 19: v3.1 + v3.2 to
          ("v3.2 | 8 slots x 12.5%", dict(slots=8, w=0.125, **i32)), ("v3.2 | 12 slots x 8.3%", dict(slots=12, w=1 / 12, **i32)),
          ("v3.2 | 15 slots x 6.7%", dict(slots=15, w=1 / 15, **i32)), ("v3.2 | 12 slots x 10% (more invested)", dict(slots=12, w=0.10, **i32)),
          ("v3.2 | dip 9%", dict(dip=0.09, **i32)), ("v3.2 | dip 11%", dict(dip=0.11, **i32)), ("v3.2 | dip 12%", dict(dip=0.12, **i32))]
+if os.environ.get("TIMING") == "1":                     # Nov 24: time of the daily final step (buys + 5-day-average sells), 3:15 / 3:30 / 3:45 (today) / 3:55
+    V = []
+    for bot, kw in (("v3.0 (one daily run)", dict(etf=True, bond=True)), ("v3.2 live-exact", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05, xn=15))):
+        for off, lbl in ((30, "3:15"), (15, "3:30"), (0, "3:45 (today)"), (-10, "3:55")): V.append((f"{bot} | daily step at {lbl}", dict(fin_off=off, **kw)))
 if os.environ.get("WF") == "1":                         # Nov 24: walk-forward grid for v3.2 (live-exact: target checks every 15 min from 10:00)
     V = [(f"v3.2 | dip {int(dp*100)}% | target +{int(x*100)}%", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=x, xn=15, dip=dp))
          for dp in (0.08, 0.10, 0.12) for x in (0.03, 0.05, 0.07)]
@@ -400,7 +404,8 @@ for name, kw in V:
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.2 | dip 10% | target +5%", "v3.2 | dip 10% | target +3%"),) if os.environ.get("WF") == "1" else \
+PAIRS = (("v3.2 live-exact | daily step at 3:45 (today)", "v3.2 live-exact | daily step at 3:30"),) if os.environ.get("TIMING") == "1" else \
+        (("v3.2 | dip 10% | target +5%", "v3.2 | dip 10% | target +3%"),) if os.environ.get("WF") == "1" else \
         (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \
         (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
         (("v3.0 | 3:45 only | max hold 5 days", "v3.0 | 3:45 only | max hold 10 days"), ("v3.0 | v3.2 (15 min) target +5% | max hold 5 days", "v3.0 | v3.2 (15 min) target +10% | max hold 5 days")) if os.environ.get("HOLD") == "1" else \
