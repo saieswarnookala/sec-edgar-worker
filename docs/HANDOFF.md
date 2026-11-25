@@ -9,6 +9,13 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0n. Crypto lab round 4 (Nov 25; crypto-lab4.yml -> data/crypto_lab4.json): the 50-day rule is real
+- 19 unseen coins (XRP..EOS, 0.10%/side): rule smaller worst drop 19/19, higher return 16/19 (e.g. ADA 42.9 vs -3.8, BNB 101 vs 56; XRP/LTC/XMR slightly worse).
+- Rolling windows: BTC beats hold 59% (1y) / 65% (2y) of windows, smaller drop 81% / 86%; ETH 54/67, 87/90.
+- Walk-forward picking the length yearly: BTC 49.1 vs fixed 50d 69.0 vs hold 51.2 (2017-26); ETH 68.6 vs 63.7 vs 44.3. Don't tune; keep 50.
+- Late trading 1-3 days: BTC 62.8-64.2 vs on time 70.9 vs hold 50.1; ETH 31.5-46.8 vs 56.2 vs 21.1.
+- Deflated Sharpe 0.9999 (57 trials), Sharpe 1.47 vs hold 1.07, t 5.0.
+
 ## 0m. Paper bot 15: crypto trend (Nov 25) - scripts/paper_crypto.py, paper-crypto.yml, data/paper_crypto_state.json, test-crypto.py
 - 50/50 BTC (IBIT) + ETH (ETHA), $10k virtual; weekday after close: coin > 50-day avg of daily closes -> hold ETF else T-bills; trade at NEXT US close; 0.05%/trade.
 - Started on its first run (no back-fill); catches up missed days; never repeats a day. Alerts only on NTFY_TOPIC_CRYPTO secret (Sai adds it), on switches + Friday summary.
