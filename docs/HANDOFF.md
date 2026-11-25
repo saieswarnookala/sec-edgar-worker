@@ -9,6 +9,12 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0h. Last tests (Nov 24; last-tests.yml) -> no changes
+- Daily step time (5-min replay 2016-26): v3.0 3:15 25.6 | 3:30 25.6 | 3:45 27.2 | 3:55 26.1. v3.2 3:15 29.9 | 3:30 29.1 | 3:45 30.3 | 3:55 30.8 (16-20 23.1 vs 21.9, 21-26 37.8 vs 38.1). Keep 3:47.
+- US short-term momentum (last month's top 10/20, most-traded third): 0.5-3.8%/yr, worst -82 to -88% (1999-2012 negative); blends with dip worse. Classic 12-1 top 20: 8.5-9.1%. DROP.
+- India value proxy (3/5-year losers): best 7.3%/yr, worst -64%; blends 80/20 23.1 / 70/30 21.3 vs momentum 26.7. DROP.
+- Summary doc for Sai's friend: https://claude.ai/artifact/4p7QCQgvtcyQr6SsMayb2E
+
 ## 0g. Next 3 tests (Nov 24; next3.yml -> data/next3.json, data/intraday_wf.json) -> no changes
 - Pre-earnings buys in idle slots (realistic, v3.0 16.8/-27.3): 5d before, sell day before 11.9/-35; hold through 10.5/-52; 1d before hold through 1.8/-83 (turnover); max 2 slots 14.0/-29. DROP.
 - FOMC even-week parking: 9.7/-27 vs 16.8 (placebo odd weeks 11.1). Parking all the time beats both. DROP.
