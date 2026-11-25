@@ -39,6 +39,9 @@ def main():
     st = load(); coins = {c: yahoo(f"{c}-USD") for c, _ in SLEEVES}; etfs = {e: yahoo(e) for _, e in SLEEVES}; irx = yahoo("^IRX")
     days = etfs["IBIT"].index.intersection(etfs["ETHA"].index)                         # US trading days with both ETF closes
     if os.environ.get("FORCE_DAY"): days = days[days <= pd.Timestamp(os.environ["FORCE_DAY"])]
+    else:                                                                                  # never record today's bar before the US close (a manual run during the day)
+        now_et = pd.Timestamp.now(tz="America/New_York")
+        if now_et.hour * 60 + now_et.minute < 16 * 60 + 15: days = days[days < pd.Timestamp(now_et.date())]
     last = pd.Timestamp(st["last_day"]) if st["last_day"] else None
     new = [d for d in days if last is None or d > last]
     if last is None: new = new[-1:]                                                      # first run: start today, no back-filling
