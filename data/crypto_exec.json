@@ -8,7 +8,7 @@
     "worst_drop_pct": -51.8
    },
    "B paper bot (ETF, next US close)": {
-    "per_year_pct": -23.8,
+    "per_year_pct": -23.7,
     "worst_drop_pct": -52.7,
     "trades": 2
    },
@@ -39,8 +39,8 @@
     "trades": 12
    },
    "C same day (3 pm decision, ETF at today's close)": {
-    "per_year_pct": -29.8,
-    "worst_drop_pct": -58.6,
+    "per_year_pct": -29.9,
+    "worst_drop_pct": -58.7,
     "trades": 12
    },
    "D hold ETHA": {
@@ -49,9 +49,9 @@
    },
    "signal agreement with backtest: B / C (%)": [
     93.3,
-    93.3
+    92.4
    ],
-   "ETF vs coin daily tracking gap, std (%)": 10.749
+   "ETF vs coin daily tracking gap, std (%)": 10.75
   }
  }
 }
