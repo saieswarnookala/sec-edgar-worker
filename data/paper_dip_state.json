@@ -985,7 +985,77 @@
     "SELL 15 CNC (bounced above 5-day average)",
     "SELL 2 ELV (bounced above 5-day average)"
    ]
+  },
+  {
+   "run": "2026-11-25T20:25:32.194Z",
+   "today": "2026-11-25",
+   "ny_time": "15:25",
+   "equity": 9811.11,
+   "dry": false,
+   "own_account": true,
+   "skipped_heavy_volume": [
+    "CRWD (2.0x)"
+   ],
+   "volume_check": {
+    "CRWD": {
+     "ratio": 2.04,
+     "today_est": 14428515
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 716.02,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {},
+   "sells": [],
+   "buys": [],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.492,
+    "equity": 9982.02,
+    "orders": 0
+   },
+   "etf_bot": {
+    "equity": 10030.75,
+    "twin_equity": 9987.48,
+    "etf_signals": 0,
+    "orders": 1
+   },
+   "mix_bot": {
+    "equity": 10005.98,
+    "drift_signals": 0,
+    "orders": 0
+   },
+   "short_bot": {
+    "equity": 9987.48,
+    "twin_equity": 9987.48,
+    "si_date": "20261113",
+    "skipped": [],
+    "orders": 0
+   },
+   "bond_bot": {
+    "equity": 9993.83,
+    "twin_equity": 9950.87,
+    "park": "IEF",
+    "orders": 0
+   },
+   "v3_bot": {
+    "equity": 10031.05,
+    "park": "IEF",
+    "orders": 2
+   },
+   "v31_bot": {
+    "equity": 10048.46,
+    "drift": 1,
+    "orders": 2
+   },
+   "tuned_bot": {
+    "equity": 10166.58,
+    "signals": 0,
+    "orders": 2
+   },
+   "orders": []
   }
  ],
- "updated": "2026-11-24T20:25:35.443Z"
+ "updated": "2026-11-25T20:25:32.194Z"
 }

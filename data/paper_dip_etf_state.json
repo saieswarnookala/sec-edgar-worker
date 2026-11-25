@@ -77,10 +77,21 @@
     "SELL CNC (bounced above 5-day average)",
     "SELL ELV (bounced above 5-day average)"
    ]
+  },
+  {
+   "today": "2026-11-25",
+   "equity": 10030.75,
+   "twin_equity": 9987.48,
+   "spy": 716.02,
+   "park": "CASH",
+   "etf_signals": {},
+   "orders": [
+    "SELL XLE (bounced above 5-day average)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8213.46894499,
+  "cash": 9204.95155027,
   "positions": [
    {
     "symbol": "AMD",
@@ -88,15 +99,6 @@
     "qty": 2.043919,
     "entry_px": 484.215,
     "dip_pct": -12,
-    "size_pct": 10
-   },
-   {
-    "symbol": "XLE",
-    "kind": "etf",
-    "entry_date": "2026-11-19",
-    "qty": 16.236512,
-    "entry_px": 60.955,
-    "dip_pct": -5.2,
     "size_pct": 10
    }
   ],
@@ -148,6 +150,14 @@
     "entry_date": "2026-11-23",
     "exit_date": "2026-11-24",
     "ret_pct": 2.6,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "XLE",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-25",
+    "ret_pct": 0.18,
     "reason": "bounced above 5-day average"
    }
   ]
@@ -208,5 +218,5 @@
    }
   ]
  },
- "updated": "2026-11-24T20:25:35.443Z"
+ "updated": "2026-11-25T20:25:32.194Z"
 }

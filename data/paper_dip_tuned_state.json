@@ -80,20 +80,23 @@
     "SELL ACN (bounced above 5-day average)",
     "BUY $1019 CNC (dip -8%)"
    ]
+  },
+  {
+   "today": "2026-11-25",
+   "equity": 10166.58,
+   "spy": 716.02,
+   "park": "CASH",
+   "stock_signals": 0,
+   "etf_signals": [],
+   "orders": [
+    "SELL XLE (bounced above 5-day average)",
+    "SELL CNC (bounced above 5-day average)"
+   ]
   }
  ],
  "vs": {
-  "cash": 6212.5922289499995,
+  "cash": 8216.92362797,
   "positions": [
-   {
-    "symbol": "XLE",
-    "kind": "etf",
-    "entry_date": "2026-11-19",
-    "qty": 16.179712,
-    "entry_px": 60.955,
-    "dip_pct": -5.2,
-    "size_pct": 10
-   },
    {
     "symbol": "MPC",
     "entry_date": "2026-11-23",
@@ -108,14 +111,6 @@
     "qty": 3.024682,
     "entry_px": 330.79,
     "dip_pct": -8.4,
-    "size_pct": 10
-   },
-   {
-    "symbol": "CNC",
-    "entry_date": "2026-11-24",
-    "qty": 15.640463,
-    "entry_px": 65.12,
-    "dip_pct": -8,
     "size_pct": 10
    }
   ],
@@ -168,8 +163,24 @@
     "exit_date": "2026-11-24",
     "ret_pct": 4.44,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "XLE",
+    "kind": "etf",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-25",
+    "ret_pct": 0.18,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "CNC",
+    "kind": "stock",
+    "entry_date": "2026-11-24",
+    "exit_date": "2026-11-25",
+    "ret_pct": -0.21,
+    "reason": "bounced above 5-day average"
    }
   ]
  },
- "updated": "2026-11-24T20:25:35.443Z"
+ "updated": "2026-11-25T20:25:32.194Z"
 }

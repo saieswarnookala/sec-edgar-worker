@@ -101,6 +101,18 @@
     "SELL CNC (bounced above 5-day average)",
     "SELL ELV (bounced above 5-day average)"
    ]
+  },
+  {
+   "today": "2026-11-25",
+   "equity": 9987.48,
+   "twin_equity": 9987.48,
+   "spy": 716.02,
+   "park": "CASH",
+   "si_date": "20261113",
+   "dip_signals": 0,
+   "days_to_cover": {},
+   "skipped": {},
+   "orders": []
   }
  ],
  "vs": {
@@ -215,5 +227,5 @@
    }
   ]
  },
- "updated": "2026-11-24T20:25:35.443Z"
+ "updated": "2026-11-25T20:25:32.194Z"
 }

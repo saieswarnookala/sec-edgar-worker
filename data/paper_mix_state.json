@@ -78,6 +78,16 @@
     "SELL CNC dip (bounced above 5-day average)",
     "SELL ELV dip (bounced above 5-day average)"
    ]
+  },
+  {
+   "today": "2026-11-25",
+   "equity": 10005.98,
+   "spy": 716.02,
+   "park": "CASH",
+   "dip_signals": 0,
+   "drift_signals": [],
+   "drift_signals_found": true,
+   "orders": []
   }
  ],
  "vs": {
@@ -144,5 +154,5 @@
    }
   ]
  },
- "updated": "2026-11-24T20:25:35.443Z"
+ "updated": "2026-11-25T20:25:32.194Z"
 }
