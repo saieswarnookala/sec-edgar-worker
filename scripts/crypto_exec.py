@@ -65,6 +65,10 @@ for coin, etf in (("BTC", "IBIT"), ("ETH", "ETHA")):
     yrs = (days[-1] - days[0]).days / 365
     st = lambda s: {"per_year_pct": round(((s.iloc[-1] / s.iloc[0]) ** (1 / yrs) - 1) * 100, 1), "worst_drop_pct": round(float((s / s.cummax() - 1).min()) * 100, 1)}
     sa = sA.reindex(days); agreeB = float((pd.Series(sigB) == sa).mean()) * 100; agreeC = float((pd.Series(sigC) == sa).mean()) * 100
+    rat = pd.Series([float(ef.loc[d]) / coin_at(d, 16) for d in days], index=days)
+    print(coin, "ETF/coin ratio quantiles", rat.quantile([0, 0.01, 0.5, 0.99, 1]).round(7).to_dict(), "| hourly bars", len(ch), ch.index[0], ch.index[-1], "| etf rows", len(ef), ef.index[0], ef.index[-1], flush=True)
+    print(coin, "sample", [(str(d.date()), round(float(ef.loc[d]), 2), round(coin_at(d, 16), 0), sigB.get(d), float(sA.reindex(days).loc[d])) for d in days[::40]], flush=True)
+    print(coin, "A switches", int(sA.diff().abs().sum()), "B signal switches", int(pd.Series(sigB).diff().abs().sum()), flush=True)
     trk = (ef.loc[days].pct_change() - pd.Series([coin_at(d, 16) for d in days], index=days).pct_change()).dropna()
     RES["results"][coin] = {"window": f"{days[0].date()} to {days[-1].date()}", "A backtest (coin, next day)": st(A), "B paper bot (ETF, next US close)": st(B) | {"trades": nB},
                             "C same day (3 pm decision, ETF at today's close)": st(C) | {"trades": nC}, f"D hold {etf}": st(Hd),
