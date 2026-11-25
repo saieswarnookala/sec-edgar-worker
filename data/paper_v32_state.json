@@ -954,10 +954,24 @@
     "SELL ELV (bounced above 5-day average)",
     "BUY IEF (parking)"
    ]
+  },
+  {
+   "at": "2026-11-25T15:00:40.281Z",
+   "ny_time": "10:00",
+   "phase": "intraday",
+   "stock_signals": [
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10111.08,
+   "orders": [
+    "BUY $1011 CRWD (dip -10.38%, during the day)"
+   ]
   }
  ],
  "vs": {
-  "cash": 202.10931446280006,
+  "cash": 0.00005245178010682139,
   "positions": [
    {
     "symbol": "CNC",
@@ -986,10 +1000,19 @@
     "dip_pct": -5.18,
     "size_pct": 10,
     "bought_intraday": true
+   },
+   {
+    "symbol": "CRWD",
+    "entry_date": "2026-11-25",
+    "qty": 4.968833,
+    "entry_px": 203.49,
+    "dip_pct": -10.38,
+    "size_pct": 10,
+    "bought_intraday": true
    }
   ],
   "park": {
-   "IEF": 74.886003
+   "IEF": 66.117321
   },
   "trades": [
    {
@@ -1010,7 +1033,7 @@
    }
   ]
  },
- "updated": "2026-11-24T20:45:46.687Z",
+ "updated": "2026-11-25T15:00:40.281Z",
  "twin": {
   "cash": 202.61358251499905,
   "positions": [
