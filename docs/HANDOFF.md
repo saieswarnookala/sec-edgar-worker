@@ -9,6 +9,12 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0l. Crypto lab round 3 (Nov 25; crypto-lab3.yml -> data/crypto_lab3.json): how to run it
+- ETF route, weekday-only trading (weekend signals wait for Monday) keeps the edge: BTC 50d 76.9/-62 (7-day 80.9); BTC 100d 79.4/-56 (2022-26 21.2/-39 vs hold 4.0/-67).
+- 50/50 BTC+ETH (2018-06+): hold 23.3/-76.5; 50d weekdays 56.3/-56.8 (2022-26 15.6 vs -4.8); 100d 47.5/-52; 140d 44.2/-51.
+- Weekly checks: lower drops sometimes, lower return; buffers 2-5% don't help the 50d. Robinhood direct: BTC 140d 67.6/-63 vs hold 62.1/-83 (slow rules only).
+- Pick for paper bot: 50/50 BTC+ETH, 50-day average, decided at weekday close, traded next weekday close, via IBIT/ETHA; T-bills when out.
+
 ## 0k. Crypto lab round 2 (Nov 25; crypto-lab2.yml -> data/crypto_lab2.json)
 - Trend is REAL: BTC every MA 30-150 beats hold (ETF route 63-83%/yr vs hold 61.9%, worst ~-60 vs -83); placebo 0% of 300 random schedules beat the 50-day (ETH 0.7%). ETH all lengths beat hold (31-62 vs 12.6).
   BTC 50d ETF route 80.9/-61 (2023-26 49.6/-29 vs hold 37.9/-53); Robinhood 0.95%: 50d 54.0, 120-140d 67-68 best (fewer switches).
