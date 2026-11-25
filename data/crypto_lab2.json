@@ -1,0 +1,2960 @@
+{
+ "note": "Crypto lab, round 2 (Nov 25 2026). Research only, not financial advice.\nSignals on day t's close, traded at day t+1's close. Idle money earns T-bills. Bitcoin (from 2015) and Ether (from 2018), Yahoo daily.\nA) Trend robustness: every moving-average length 20-200 (step 10) for BTC and ETH, costs: ETF route 0.05%/side + 0.25%/yr fee, 0.50%, Robinhood 0.95%.\n   Placebo: 300 random on/off schedules with the same time invested and the same number of switches as the 50-day rule (shuffled run lengths).\nB) Fear & Greed index (alternative.me, from Feb 2018): (1) hold BTC only when the index is below 50 / 80; (2) 50-day trend OR extreme fear (<= 20);\n   (3) weekly $100 savings plan vs 2x in extreme fear and 0 in extreme greed (same dates), BTC value per dollar put in.\nC) MVRV (Coin Metrics community API, BTC price / average price holders paid): (1) forward 90 / 180 / 365-day BTC returns after MVRV < 1 vs all days;\n   (2) 50-day trend OR MVRV < 1; (3) hold, but half out when MVRV is above its rolling 2-year 95th percentile.\nD) Funding rates (BitMEX XBTUSD perpetual, from 2016): 30-day average funding < 0 -> hold BTC 90 days; forward returns vs all days; 50-day trend OR that window.\nDRY=1: fake data (code test). Data sources that fail are reported and skipped.",
+ "A_trend_grid": {
+  "BTC hold": {
+   "all": {
+    "per_year_pct": 61.9,
+    "worst_drop_pct": -83.4
+   },
+   "2015-2019": {
+    "per_year_pct": 112.0,
+    "worst_drop_pct": -83.4
+   },
+   "2018-2021": {
+    "per_year_pct": 35.3,
+    "worst_drop_pct": -81.6
+   },
+   "2020-2026": {
+    "per_year_pct": 35.2,
+    "worst_drop_pct": -76.7
+   },
+   "2023-2026": {
+    "per_year_pct": 37.9,
+    "worst_drop_pct": -53.1
+   }
+  },
+  "BTC | above 20-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 72.2,
+    "worst_drop_pct": -65.6
+   },
+   "2015-2019": {
+    "per_year_pct": 133.9,
+    "worst_drop_pct": -53.1
+   },
+   "2018-2021": {
+    "per_year_pct": 56.4,
+    "worst_drop_pct": -39.4
+   },
+   "2020-2026": {
+    "per_year_pct": 40.5,
+    "worst_drop_pct": -65.6
+   },
+   "2023-2026": {
+    "per_year_pct": 46.4,
+    "worst_drop_pct": -32.3
+   },
+   "switches_per_year": 38.1
+  },
+  "BTC | above 20-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 45.2,
+    "worst_drop_pct": -75.8
+   },
+   "2015-2019": {
+    "per_year_pct": 102.7,
+    "worst_drop_pct": -59.4
+   },
+   "2018-2021": {
+    "per_year_pct": 30.7,
+    "worst_drop_pct": -46.1
+   },
+   "2020-2026": {
+    "per_year_pct": 16.4,
+    "worst_drop_pct": -75.8
+   },
+   "2023-2026": {
+    "per_year_pct": 21.3,
+    "worst_drop_pct": -42.1
+   },
+   "switches_per_year": 38.1
+  },
+  "BTC | above 20-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 22.2,
+    "worst_drop_pct": -84.6
+   },
+   "2015-2019": {
+    "per_year_pct": 75.3,
+    "worst_drop_pct": -65.2
+   },
+   "2018-2021": {
+    "per_year_pct": 9.1,
+    "worst_drop_pct": -52.1
+   },
+   "2020-2026": {
+    "per_year_pct": -3.8,
+    "worst_drop_pct": -84.6
+   },
+   "2023-2026": {
+    "per_year_pct": 0.3,
+    "worst_drop_pct": -57.3
+   },
+   "switches_per_year": 38.1
+  },
+  "BTC | above 30-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 73.1,
+    "worst_drop_pct": -60.8
+   },
+   "2015-2019": {
+    "per_year_pct": 125.0,
+    "worst_drop_pct": -60.4
+   },
+   "2018-2021": {
+    "per_year_pct": 77.2,
+    "worst_drop_pct": -43.5
+   },
+   "2020-2026": {
+    "per_year_pct": 45.4,
+    "worst_drop_pct": -60.8
+   },
+   "2023-2026": {
+    "per_year_pct": 35.4,
+    "worst_drop_pct": -30.4
+   },
+   "switches_per_year": 29.2
+  },
+  "BTC | above 30-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 51.9,
+    "worst_drop_pct": -66.3
+   },
+   "2015-2019": {
+    "per_year_pct": 102.1,
+    "worst_drop_pct": -65.4
+   },
+   "2018-2021": {
+    "per_year_pct": 56.0,
+    "worst_drop_pct": -49.5
+   },
+   "2020-2026": {
+    "per_year_pct": 25.8,
+    "worst_drop_pct": -66.3
+   },
+   "2023-2026": {
+    "per_year_pct": 16.4,
+    "worst_drop_pct": -43.8
+   },
+   "switches_per_year": 29.2
+  },
+  "BTC | above 30-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 33.1,
+    "worst_drop_pct": -74.1
+   },
+   "2015-2019": {
+    "per_year_pct": 81.1,
+    "worst_drop_pct": -70.3
+   },
+   "2018-2021": {
+    "per_year_pct": 37.1,
+    "worst_drop_pct": -55.6
+   },
+   "2020-2026": {
+    "per_year_pct": 8.6,
+    "worst_drop_pct": -74.1
+   },
+   "2023-2026": {
+    "per_year_pct": -0.1,
+    "worst_drop_pct": -57.0
+   },
+   "switches_per_year": 29.2
+  },
+  "BTC | above 40-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 82.5,
+    "worst_drop_pct": -59.5
+   },
+   "2015-2019": {
+    "per_year_pct": 125.1,
+    "worst_drop_pct": -53.1
+   },
+   "2018-2021": {
+    "per_year_pct": 93.9,
+    "worst_drop_pct": -48.8
+   },
+   "2020-2026": {
+    "per_year_pct": 58.8,
+    "worst_drop_pct": -59.5
+   },
+   "2023-2026": {
+    "per_year_pct": 49.3,
+    "worst_drop_pct": -28.6
+   },
+   "switches_per_year": 22.4
+  },
+  "BTC | above 40-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 65.2,
+    "worst_drop_pct": -64.2
+   },
+   "2015-2019": {
+    "per_year_pct": 104.3,
+    "worst_drop_pct": -61.8
+   },
+   "2018-2021": {
+    "per_year_pct": 74.8,
+    "worst_drop_pct": -57.6
+   },
+   "2020-2026": {
+    "per_year_pct": 43.4,
+    "worst_drop_pct": -64.2
+   },
+   "2023-2026": {
+    "per_year_pct": 33.8,
+    "worst_drop_pct": -34.0
+   },
+   "switches_per_year": 22.4
+  },
+  "BTC | above 40-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 49.2,
+    "worst_drop_pct": -69.0
+   },
+   "2015-2019": {
+    "per_year_pct": 85.1,
+    "worst_drop_pct": -69.0
+   },
+   "2018-2021": {
+    "per_year_pct": 57.3,
+    "worst_drop_pct": -65.0
+   },
+   "2020-2026": {
+    "per_year_pct": 29.3,
+    "worst_drop_pct": -68.5
+   },
+   "2023-2026": {
+    "per_year_pct": 19.7,
+    "worst_drop_pct": -44.1
+   },
+   "switches_per_year": 22.4
+  },
+  "BTC | above 50-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 80.9,
+    "worst_drop_pct": -61.4
+   },
+   "2015-2019": {
+    "per_year_pct": 116.4,
+    "worst_drop_pct": -61.4
+   },
+   "2018-2021": {
+    "per_year_pct": 80.8,
+    "worst_drop_pct": -57.0
+   },
+   "2020-2026": {
+    "per_year_pct": 60.6,
+    "worst_drop_pct": -57.1
+   },
+   "2023-2026": {
+    "per_year_pct": 49.6,
+    "worst_drop_pct": -29.4
+   },
+   "switches_per_year": 17.9
+  },
+  "BTC | above 50-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 67.1,
+    "worst_drop_pct": -65.6
+   },
+   "2015-2019": {
+    "per_year_pct": 101.5,
+    "worst_drop_pct": -65.6
+   },
+   "2018-2021": {
+    "per_year_pct": 67.9,
+    "worst_drop_pct": -61.8
+   },
+   "2020-2026": {
+    "per_year_pct": 47.5,
+    "worst_drop_pct": -61.3
+   },
+   "2023-2026": {
+    "per_year_pct": 36.3,
+    "worst_drop_pct": -36.9
+   },
+   "switches_per_year": 17.9
+  },
+  "BTC | above 50-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 54.0,
+    "worst_drop_pct": -69.5
+   },
+   "2015-2019": {
+    "per_year_pct": 87.3,
+    "worst_drop_pct": -69.5
+   },
+   "2018-2021": {
+    "per_year_pct": 55.6,
+    "worst_drop_pct": -66.0
+   },
+   "2020-2026": {
+    "per_year_pct": 35.3,
+    "worst_drop_pct": -65.6
+   },
+   "2023-2026": {
+    "per_year_pct": 23.9,
+    "worst_drop_pct": -45.0
+   },
+   "switches_per_year": 17.9
+  },
+  "BTC | above 60-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 68.8,
+    "worst_drop_pct": -70.4
+   },
+   "2015-2019": {
+    "per_year_pct": 100.2,
+    "worst_drop_pct": -70.4
+   },
+   "2018-2021": {
+    "per_year_pct": 62.3,
+    "worst_drop_pct": -67.0
+   },
+   "2020-2026": {
+    "per_year_pct": 50.8,
+    "worst_drop_pct": -56.8
+   },
+   "2023-2026": {
+    "per_year_pct": 42.7,
+    "worst_drop_pct": -31.1
+   },
+   "switches_per_year": 15.0
+  },
+  "BTC | above 60-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 58.1,
+    "worst_drop_pct": -72.7
+   },
+   "2015-2019": {
+    "per_year_pct": 87.5,
+    "worst_drop_pct": -72.7
+   },
+   "2018-2021": {
+    "per_year_pct": 52.7,
+    "worst_drop_pct": -69.6
+   },
+   "2020-2026": {
+    "per_year_pct": 41.1,
+    "worst_drop_pct": -60.0
+   },
+   "2023-2026": {
+    "per_year_pct": 32.1,
+    "worst_drop_pct": -37.2
+   },
+   "switches_per_year": 15.0
+  },
+  "BTC | above 60-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 47.7,
+    "worst_drop_pct": -74.8
+   },
+   "2015-2019": {
+    "per_year_pct": 75.3,
+    "worst_drop_pct": -74.8
+   },
+   "2018-2021": {
+    "per_year_pct": 43.5,
+    "worst_drop_pct": -72.0
+   },
+   "2020-2026": {
+    "per_year_pct": 31.8,
+    "worst_drop_pct": -63.1
+   },
+   "2023-2026": {
+    "per_year_pct": 22.1,
+    "worst_drop_pct": -44.2
+   },
+   "switches_per_year": 15.0
+  },
+  "BTC | above 70-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 68.0,
+    "worst_drop_pct": -64.7
+   },
+   "2015-2019": {
+    "per_year_pct": 115.6,
+    "worst_drop_pct": -64.7
+   },
+   "2018-2021": {
+    "per_year_pct": 62.2,
+    "worst_drop_pct": -60.7
+   },
+   "2020-2026": {
+    "per_year_pct": 42.4,
+    "worst_drop_pct": -56.3
+   },
+   "2023-2026": {
+    "per_year_pct": 37.5,
+    "worst_drop_pct": -32.5
+   },
+   "switches_per_year": 15.3
+  },
+  "BTC | above 70-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 57.0,
+    "worst_drop_pct": -67.7
+   },
+   "2015-2019": {
+    "per_year_pct": 103.9,
+    "worst_drop_pct": -67.7
+   },
+   "2018-2021": {
+    "per_year_pct": 50.6,
+    "worst_drop_pct": -64.1
+   },
+   "2020-2026": {
+    "per_year_pct": 32.0,
+    "worst_drop_pct": -59.5
+   },
+   "2023-2026": {
+    "per_year_pct": 27.3,
+    "worst_drop_pct": -37.2
+   },
+   "switches_per_year": 15.3
+  },
+  "BTC | above 70-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 46.5,
+    "worst_drop_pct": -70.5
+   },
+   "2015-2019": {
+    "per_year_pct": 92.6,
+    "worst_drop_pct": -70.5
+   },
+   "2018-2021": {
+    "per_year_pct": 39.6,
+    "worst_drop_pct": -67.2
+   },
+   "2020-2026": {
+    "per_year_pct": 22.2,
+    "worst_drop_pct": -62.6
+   },
+   "2023-2026": {
+    "per_year_pct": 17.6,
+    "worst_drop_pct": -42.6
+   },
+   "switches_per_year": 15.3
+  },
+  "BTC | above 80-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 69.7,
+    "worst_drop_pct": -63.0
+   },
+   "2015-2019": {
+    "per_year_pct": 135.6,
+    "worst_drop_pct": -55.9
+   },
+   "2018-2021": {
+    "per_year_pct": 67.4,
+    "worst_drop_pct": -50.9
+   },
+   "2020-2026": {
+    "per_year_pct": 36.5,
+    "worst_drop_pct": -63.0
+   },
+   "2023-2026": {
+    "per_year_pct": 33.7,
+    "worst_drop_pct": -32.6
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 80-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 59.1,
+    "worst_drop_pct": -67.7
+   },
+   "2015-2019": {
+    "per_year_pct": 122.9,
+    "worst_drop_pct": -58.2
+   },
+   "2018-2021": {
+    "per_year_pct": 56.9,
+    "worst_drop_pct": -53.5
+   },
+   "2020-2026": {
+    "per_year_pct": 27.2,
+    "worst_drop_pct": -67.7
+   },
+   "2023-2026": {
+    "per_year_pct": 24.3,
+    "worst_drop_pct": -38.9
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 80-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 48.9,
+    "worst_drop_pct": -73.5
+   },
+   "2015-2019": {
+    "per_year_pct": 110.4,
+    "worst_drop_pct": -60.4
+   },
+   "2018-2021": {
+    "per_year_pct": 46.7,
+    "worst_drop_pct": -55.9
+   },
+   "2020-2026": {
+    "per_year_pct": 18.4,
+    "worst_drop_pct": -73.5
+   },
+   "2023-2026": {
+    "per_year_pct": 15.4,
+    "worst_drop_pct": -44.7
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 90-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 63.5,
+    "worst_drop_pct": -62.8
+   },
+   "2015-2019": {
+    "per_year_pct": 122.9,
+    "worst_drop_pct": -62.8
+   },
+   "2018-2021": {
+    "per_year_pct": 62.9,
+    "worst_drop_pct": -58.6
+   },
+   "2020-2026": {
+    "per_year_pct": 33.1,
+    "worst_drop_pct": -62.8
+   },
+   "2023-2026": {
+    "per_year_pct": 28.0,
+    "worst_drop_pct": -38.2
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 90-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 53.3,
+    "worst_drop_pct": -67.9
+   },
+   "2015-2019": {
+    "per_year_pct": 110.9,
+    "worst_drop_pct": -64.8
+   },
+   "2018-2021": {
+    "per_year_pct": 53.0,
+    "worst_drop_pct": -60.8
+   },
+   "2020-2026": {
+    "per_year_pct": 24.1,
+    "worst_drop_pct": -67.9
+   },
+   "2023-2026": {
+    "per_year_pct": 20.1,
+    "worst_drop_pct": -43.5
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 90-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 43.5,
+    "worst_drop_pct": -73.7
+   },
+   "2015-2019": {
+    "per_year_pct": 99.1,
+    "worst_drop_pct": -66.6
+   },
+   "2018-2021": {
+    "per_year_pct": 43.4,
+    "worst_drop_pct": -62.9
+   },
+   "2020-2026": {
+    "per_year_pct": 15.4,
+    "worst_drop_pct": -73.7
+   },
+   "2023-2026": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -48.4
+   },
+   "switches_per_year": 14.6
+  },
+  "BTC | above 100-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 70.9,
+    "worst_drop_pct": -63.7
+   },
+   "2015-2019": {
+    "per_year_pct": 119.4,
+    "worst_drop_pct": -63.7
+   },
+   "2018-2021": {
+    "per_year_pct": 59.1,
+    "worst_drop_pct": -59.6
+   },
+   "2020-2026": {
+    "per_year_pct": 44.8,
+    "worst_drop_pct": -45.2
+   },
+   "2023-2026": {
+    "per_year_pct": 34.6,
+    "worst_drop_pct": -35.5
+   },
+   "switches_per_year": 12.4
+  },
+  "BTC | above 100-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 61.9,
+    "worst_drop_pct": -66.2
+   },
+   "2015-2019": {
+    "per_year_pct": 109.2,
+    "worst_drop_pct": -66.2
+   },
+   "2018-2021": {
+    "per_year_pct": 50.8,
+    "worst_drop_pct": -62.4
+   },
+   "2020-2026": {
+    "per_year_pct": 36.6,
+    "worst_drop_pct": -47.8
+   },
+   "2023-2026": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -40.5
+   },
+   "switches_per_year": 12.4
+  },
+  "BTC | above 100-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 53.1,
+    "worst_drop_pct": -68.5
+   },
+   "2015-2019": {
+    "per_year_pct": 99.1,
+    "worst_drop_pct": -68.5
+   },
+   "2018-2021": {
+    "per_year_pct": 42.6,
+    "worst_drop_pct": -65.0
+   },
+   "2020-2026": {
+    "per_year_pct": 28.6,
+    "worst_drop_pct": -51.7
+   },
+   "2023-2026": {
+    "per_year_pct": 18.4,
+    "worst_drop_pct": -45.1
+   },
+   "switches_per_year": 12.4
+  },
+  "BTC | above 110-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 73.8,
+    "worst_drop_pct": -63.4
+   },
+   "2015-2019": {
+    "per_year_pct": 120.0,
+    "worst_drop_pct": -63.4
+   },
+   "2018-2021": {
+    "per_year_pct": 66.2,
+    "worst_drop_pct": -59.3
+   },
+   "2020-2026": {
+    "per_year_pct": 48.6,
+    "worst_drop_pct": -41.7
+   },
+   "2023-2026": {
+    "per_year_pct": 33.4,
+    "worst_drop_pct": -31.1
+   },
+   "switches_per_year": 10.1
+  },
+  "BTC | above 110-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 66.3,
+    "worst_drop_pct": -64.8
+   },
+   "2015-2019": {
+    "per_year_pct": 109.7,
+    "worst_drop_pct": -64.8
+   },
+   "2018-2021": {
+    "per_year_pct": 60.8,
+    "worst_drop_pct": -60.9
+   },
+   "2020-2026": {
+    "per_year_pct": 42.6,
+    "worst_drop_pct": -43.5
+   },
+   "2023-2026": {
+    "per_year_pct": 26.7,
+    "worst_drop_pct": -35.2
+   },
+   "switches_per_year": 10.1
+  },
+  "BTC | above 110-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 58.9,
+    "worst_drop_pct": -66.2
+   },
+   "2015-2019": {
+    "per_year_pct": 99.6,
+    "worst_drop_pct": -66.2
+   },
+   "2018-2021": {
+    "per_year_pct": 55.2,
+    "worst_drop_pct": -62.5
+   },
+   "2020-2026": {
+    "per_year_pct": 36.5,
+    "worst_drop_pct": -45.3
+   },
+   "2023-2026": {
+    "per_year_pct": 20.1,
+    "worst_drop_pct": -39.6
+   },
+   "switches_per_year": 10.1
+  },
+  "BTC | above 120-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 80.1,
+    "worst_drop_pct": -62.7
+   },
+   "2015-2019": {
+    "per_year_pct": 137.9,
+    "worst_drop_pct": -62.7
+   },
+   "2018-2021": {
+    "per_year_pct": 70.6,
+    "worst_drop_pct": -58.5
+   },
+   "2020-2026": {
+    "per_year_pct": 49.6,
+    "worst_drop_pct": -38.0
+   },
+   "2023-2026": {
+    "per_year_pct": 33.1,
+    "worst_drop_pct": -32.7
+   },
+   "switches_per_year": 8.5
+  },
+  "BTC | above 120-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 73.5,
+    "worst_drop_pct": -64.7
+   },
+   "2015-2019": {
+    "per_year_pct": 129.5,
+    "worst_drop_pct": -64.7
+   },
+   "2018-2021": {
+    "per_year_pct": 66.1,
+    "worst_drop_pct": -60.7
+   },
+   "2020-2026": {
+    "per_year_pct": 44.1,
+    "worst_drop_pct": -39.3
+   },
+   "2023-2026": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -38.2
+   },
+   "switches_per_year": 8.5
+  },
+  "BTC | above 120-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 66.9,
+    "worst_drop_pct": -66.6
+   },
+   "2015-2019": {
+    "per_year_pct": 121.1,
+    "worst_drop_pct": -66.6
+   },
+   "2018-2021": {
+    "per_year_pct": 61.4,
+    "worst_drop_pct": -62.8
+   },
+   "2020-2026": {
+    "per_year_pct": 38.5,
+    "worst_drop_pct": -43.4
+   },
+   "2023-2026": {
+    "per_year_pct": 19.9,
+    "worst_drop_pct": -43.4
+   },
+   "switches_per_year": 8.5
+  },
+  "BTC | above 130-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 75.0,
+    "worst_drop_pct": -69.0
+   },
+   "2015-2019": {
+    "per_year_pct": 124.0,
+    "worst_drop_pct": -69.0
+   },
+   "2018-2021": {
+    "per_year_pct": 51.0,
+    "worst_drop_pct": -65.5
+   },
+   "2020-2026": {
+    "per_year_pct": 48.5,
+    "worst_drop_pct": -40.6
+   },
+   "2023-2026": {
+    "per_year_pct": 37.7,
+    "worst_drop_pct": -25.8
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 130-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 69.8,
+    "worst_drop_pct": -70.6
+   },
+   "2015-2019": {
+    "per_year_pct": 118.7,
+    "worst_drop_pct": -70.6
+   },
+   "2018-2021": {
+    "per_year_pct": 47.7,
+    "worst_drop_pct": -67.3
+   },
+   "2020-2026": {
+    "per_year_pct": 43.6,
+    "worst_drop_pct": -41.9
+   },
+   "2023-2026": {
+    "per_year_pct": 31.4,
+    "worst_drop_pct": -29.9
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 130-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 64.6,
+    "worst_drop_pct": -72.1
+   },
+   "2015-2019": {
+    "per_year_pct": 113.1,
+    "worst_drop_pct": -72.1
+   },
+   "2018-2021": {
+    "per_year_pct": 44.2,
+    "worst_drop_pct": -69.0
+   },
+   "2020-2026": {
+    "per_year_pct": 38.6,
+    "worst_drop_pct": -43.4
+   },
+   "2023-2026": {
+    "per_year_pct": 25.1,
+    "worst_drop_pct": -34.0
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 140-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 77.6,
+    "worst_drop_pct": -60.0
+   },
+   "2015-2019": {
+    "per_year_pct": 142.4,
+    "worst_drop_pct": -60.0
+   },
+   "2018-2021": {
+    "per_year_pct": 60.0,
+    "worst_drop_pct": -55.5
+   },
+   "2020-2026": {
+    "per_year_pct": 44.4,
+    "worst_drop_pct": -40.6
+   },
+   "2023-2026": {
+    "per_year_pct": 31.4,
+    "worst_drop_pct": -31.6
+   },
+   "switches_per_year": 6.6
+  },
+  "BTC | above 140-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 72.7,
+    "worst_drop_pct": -61.5
+   },
+   "2015-2019": {
+    "per_year_pct": 139.0,
+    "worst_drop_pct": -61.5
+   },
+   "2018-2021": {
+    "per_year_pct": 56.5,
+    "worst_drop_pct": -57.2
+   },
+   "2020-2026": {
+    "per_year_pct": 39.1,
+    "worst_drop_pct": -41.9
+   },
+   "2023-2026": {
+    "per_year_pct": 24.8,
+    "worst_drop_pct": -35.7
+   },
+   "switches_per_year": 6.6
+  },
+  "BTC | above 140-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 67.6,
+    "worst_drop_pct": -63.1
+   },
+   "2015-2019": {
+    "per_year_pct": 135.3,
+    "worst_drop_pct": -63.1
+   },
+   "2018-2021": {
+    "per_year_pct": 52.8,
+    "worst_drop_pct": -58.9
+   },
+   "2020-2026": {
+    "per_year_pct": 33.7,
+    "worst_drop_pct": -43.4
+   },
+   "2023-2026": {
+    "per_year_pct": 18.3,
+    "worst_drop_pct": -39.7
+   },
+   "switches_per_year": 6.6
+  },
+  "BTC | above 150-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 73.1,
+    "worst_drop_pct": -63.3
+   },
+   "2015-2019": {
+    "per_year_pct": 138.3,
+    "worst_drop_pct": -63.3
+   },
+   "2018-2021": {
+    "per_year_pct": 44.9,
+    "worst_drop_pct": -59.1
+   },
+   "2020-2026": {
+    "per_year_pct": 40.0,
+    "worst_drop_pct": -43.2
+   },
+   "2023-2026": {
+    "per_year_pct": 31.0,
+    "worst_drop_pct": -29.3
+   },
+   "switches_per_year": 6.8
+  },
+  "BTC | above 150-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 68.1,
+    "worst_drop_pct": -64.7
+   },
+   "2015-2019": {
+    "per_year_pct": 134.9,
+    "worst_drop_pct": -64.7
+   },
+   "2018-2021": {
+    "per_year_pct": 40.8,
+    "worst_drop_pct": -60.7
+   },
+   "2020-2026": {
+    "per_year_pct": 34.6,
+    "worst_drop_pct": -47.4
+   },
+   "2023-2026": {
+    "per_year_pct": 25.3,
+    "worst_drop_pct": -34.0
+   },
+   "switches_per_year": 6.8
+  },
+  "BTC | above 150-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 63.0,
+    "worst_drop_pct": -66.1
+   },
+   "2015-2019": {
+    "per_year_pct": 131.2,
+    "worst_drop_pct": -66.1
+   },
+   "2018-2021": {
+    "per_year_pct": 36.5,
+    "worst_drop_pct": -62.3
+   },
+   "2020-2026": {
+    "per_year_pct": 29.2,
+    "worst_drop_pct": -51.4
+   },
+   "2023-2026": {
+    "per_year_pct": 19.6,
+    "worst_drop_pct": -40.0
+   },
+   "switches_per_year": 6.8
+  },
+  "BTC | above 160-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 68.0,
+    "worst_drop_pct": -67.1
+   },
+   "2015-2019": {
+    "per_year_pct": 123.0,
+    "worst_drop_pct": -67.1
+   },
+   "2018-2021": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -63.4
+   },
+   "2020-2026": {
+    "per_year_pct": 39.2,
+    "worst_drop_pct": -51.6
+   },
+   "2023-2026": {
+    "per_year_pct": 34.0,
+    "worst_drop_pct": -24.7
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 160-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 63.1,
+    "worst_drop_pct": -68.7
+   },
+   "2015-2019": {
+    "per_year_pct": 119.4,
+    "worst_drop_pct": -68.7
+   },
+   "2018-2021": {
+    "per_year_pct": 21.3,
+    "worst_drop_pct": -65.2
+   },
+   "2020-2026": {
+    "per_year_pct": 33.9,
+    "worst_drop_pct": -54.9
+   },
+   "2023-2026": {
+    "per_year_pct": 27.9,
+    "worst_drop_pct": -27.9
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 160-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 58.0,
+    "worst_drop_pct": -70.4
+   },
+   "2015-2019": {
+    "per_year_pct": 115.6,
+    "worst_drop_pct": -70.4
+   },
+   "2018-2021": {
+    "per_year_pct": 16.9,
+    "worst_drop_pct": -67.1
+   },
+   "2020-2026": {
+    "per_year_pct": 28.5,
+    "worst_drop_pct": -58.0
+   },
+   "2023-2026": {
+    "per_year_pct": 21.8,
+    "worst_drop_pct": -33.2
+   },
+   "switches_per_year": 7.0
+  },
+  "BTC | above 170-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 62.7,
+    "worst_drop_pct": -69.5
+   },
+   "2015-2019": {
+    "per_year_pct": 120.2,
+    "worst_drop_pct": -69.5
+   },
+   "2018-2021": {
+    "per_year_pct": 17.7,
+    "worst_drop_pct": -66.0
+   },
+   "2020-2026": {
+    "per_year_pct": 33.0,
+    "worst_drop_pct": -58.4
+   },
+   "2023-2026": {
+    "per_year_pct": 29.9,
+    "worst_drop_pct": -32.5
+   },
+   "switches_per_year": 5.6
+  },
+  "BTC | above 170-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 58.9,
+    "worst_drop_pct": -70.4
+   },
+   "2015-2019": {
+    "per_year_pct": 117.2,
+    "worst_drop_pct": -70.4
+   },
+   "2018-2021": {
+    "per_year_pct": 13.8,
+    "worst_drop_pct": -67.1
+   },
+   "2020-2026": {
+    "per_year_pct": 29.1,
+    "worst_drop_pct": -61.6
+   },
+   "2023-2026": {
+    "per_year_pct": 26.2,
+    "worst_drop_pct": -34.8
+   },
+   "switches_per_year": 5.6
+  },
+  "BTC | above 170-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 54.9,
+    "worst_drop_pct": -71.5
+   },
+   "2015-2019": {
+    "per_year_pct": 113.8,
+    "worst_drop_pct": -71.5
+   },
+   "2018-2021": {
+    "per_year_pct": 9.9,
+    "worst_drop_pct": -68.2
+   },
+   "2020-2026": {
+    "per_year_pct": 25.1,
+    "worst_drop_pct": -64.6
+   },
+   "2023-2026": {
+    "per_year_pct": 22.5,
+    "worst_drop_pct": -37.1
+   },
+   "switches_per_year": 5.6
+  },
+  "BTC | above 180-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 60.7,
+    "worst_drop_pct": -69.2
+   },
+   "2015-2019": {
+    "per_year_pct": 119.8,
+    "worst_drop_pct": -69.2
+   },
+   "2018-2021": {
+    "per_year_pct": 17.1,
+    "worst_drop_pct": -65.7
+   },
+   "2020-2026": {
+    "per_year_pct": 30.5,
+    "worst_drop_pct": -59.1
+   },
+   "2023-2026": {
+    "per_year_pct": 27.0,
+    "worst_drop_pct": -32.6
+   },
+   "switches_per_year": 7.7
+  },
+  "BTC | above 180-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 55.5,
+    "worst_drop_pct": -70.7
+   },
+   "2015-2019": {
+    "per_year_pct": 114.2,
+    "worst_drop_pct": -70.7
+   },
+   "2018-2021": {
+    "per_year_pct": 11.5,
+    "worst_drop_pct": -67.4
+   },
+   "2020-2026": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -62.9
+   },
+   "2023-2026": {
+    "per_year_pct": 22.6,
+    "worst_drop_pct": -37.0
+   },
+   "switches_per_year": 7.7
+  },
+  "BTC | above 180-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 50.2,
+    "worst_drop_pct": -72.2
+   },
+   "2015-2019": {
+    "per_year_pct": 108.4,
+    "worst_drop_pct": -72.2
+   },
+   "2018-2021": {
+    "per_year_pct": 5.9,
+    "worst_drop_pct": -69.1
+   },
+   "2020-2026": {
+    "per_year_pct": 20.8,
+    "worst_drop_pct": -66.4
+   },
+   "2023-2026": {
+    "per_year_pct": 18.1,
+    "worst_drop_pct": -41.7
+   },
+   "switches_per_year": 7.7
+  },
+  "BTC | above 190-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 65.7,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 136.0,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 29.6,
+    "worst_drop_pct": -60.3
+   },
+   "2020-2026": {
+    "per_year_pct": 31.0,
+    "worst_drop_pct": -55.8
+   },
+   "2023-2026": {
+    "per_year_pct": 24.2,
+    "worst_drop_pct": -34.7
+   },
+   "switches_per_year": 7.1
+  },
+  "BTC | above 190-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 60.7,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 130.9,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 24.2,
+    "worst_drop_pct": -60.3
+   },
+   "2020-2026": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -59.2
+   },
+   "2023-2026": {
+    "per_year_pct": 19.3,
+    "worst_drop_pct": -38.1
+   },
+   "switches_per_year": 7.1
+  },
+  "BTC | above 190-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 55.6,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 125.5,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 18.8,
+    "worst_drop_pct": -61.4
+   },
+   "2020-2026": {
+    "per_year_pct": 21.6,
+    "worst_drop_pct": -62.4
+   },
+   "2023-2026": {
+    "per_year_pct": 14.4,
+    "worst_drop_pct": -42.1
+   },
+   "switches_per_year": 7.1
+  },
+  "BTC | above 200-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 63.6,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 126.6,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 27.5,
+    "worst_drop_pct": -60.3
+   },
+   "2020-2026": {
+    "per_year_pct": 31.8,
+    "worst_drop_pct": -53.4
+   },
+   "2023-2026": {
+    "per_year_pct": 23.3,
+    "worst_drop_pct": -34.8
+   },
+   "switches_per_year": 6.6
+  },
+  "BTC | above 200-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 59.0,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 123.0,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -60.3
+   },
+   "2020-2026": {
+    "per_year_pct": 27.0,
+    "worst_drop_pct": -57.4
+   },
+   "2023-2026": {
+    "per_year_pct": 18.8,
+    "worst_drop_pct": -37.6
+   },
+   "switches_per_year": 6.6
+  },
+  "BTC | above 200-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 54.3,
+    "worst_drop_pct": -64.3
+   },
+   "2015-2019": {
+    "per_year_pct": 119.0,
+    "worst_drop_pct": -64.3
+   },
+   "2018-2021": {
+    "per_year_pct": 17.9,
+    "worst_drop_pct": -60.3
+   },
+   "2020-2026": {
+    "per_year_pct": 22.3,
+    "worst_drop_pct": -61.1
+   },
+   "2023-2026": {
+    "per_year_pct": 14.2,
+    "worst_drop_pct": -42.7
+   },
+   "switches_per_year": 6.6
+  },
+  "ETH hold": {
+   "all": {
+    "per_year_pct": 12.6,
+    "worst_drop_pct": -86.4
+   },
+   "2015-2019": {
+    "per_year_pct": -61.7,
+    "worst_drop_pct": -86.4
+   },
+   "2018-2021": {
+    "per_year_pct": 66.0,
+    "worst_drop_pct": -86.4
+   },
+   "2020-2026": {
+    "per_year_pct": 44.0,
+    "worst_drop_pct": -79.4
+   },
+   "2023-2026": {
+    "per_year_pct": 8.3,
+    "worst_drop_pct": -67.7
+   }
+  },
+  "ETH | above 20-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 31.0,
+    "worst_drop_pct": -57.8
+   },
+   "2015-2019": {
+    "per_year_pct": -22.8,
+    "worst_drop_pct": -57.8
+   },
+   "2018-2021": {
+    "per_year_pct": 92.4,
+    "worst_drop_pct": -57.8
+   },
+   "2020-2026": {
+    "per_year_pct": 47.9,
+    "worst_drop_pct": -57.0
+   },
+   "2023-2026": {
+    "per_year_pct": 8.7,
+    "worst_drop_pct": -54.5
+   },
+   "switches_per_year": 36.0
+  },
+  "ETH | above 20-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 11.5,
+    "worst_drop_pct": -77.0
+   },
+   "2015-2019": {
+    "per_year_pct": -33.0,
+    "worst_drop_pct": -61.6
+   },
+   "2018-2021": {
+    "per_year_pct": 64.4,
+    "worst_drop_pct": -61.6
+   },
+   "2020-2026": {
+    "per_year_pct": 25.3,
+    "worst_drop_pct": -77.0
+   },
+   "2023-2026": {
+    "per_year_pct": -8.1,
+    "worst_drop_pct": -69.2
+   },
+   "switches_per_year": 36.0
+  },
+  "ETH | above 20-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": -5.3,
+    "worst_drop_pct": -89.6
+   },
+   "2015-2019": {
+    "per_year_pct": -41.9,
+    "worst_drop_pct": -65.1
+   },
+   "2018-2021": {
+    "per_year_pct": 40.2,
+    "worst_drop_pct": -65.1
+   },
+   "2020-2026": {
+    "per_year_pct": 5.9,
+    "worst_drop_pct": -89.6
+   },
+   "2023-2026": {
+    "per_year_pct": -22.4,
+    "worst_drop_pct": -79.5
+   },
+   "switches_per_year": 36.0
+  },
+  "ETH | above 30-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 52.8,
+    "worst_drop_pct": -54.2
+   },
+   "2015-2019": {
+    "per_year_pct": -8.4,
+    "worst_drop_pct": -45.9
+   },
+   "2018-2021": {
+    "per_year_pct": 128.9,
+    "worst_drop_pct": -45.9
+   },
+   "2020-2026": {
+    "per_year_pct": 71.9,
+    "worst_drop_pct": -54.2
+   },
+   "2023-2026": {
+    "per_year_pct": 31.2,
+    "worst_drop_pct": -46.1
+   },
+   "switches_per_year": 27.1
+  },
+  "ETH | above 30-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 35.4,
+    "worst_drop_pct": -60.0
+   },
+   "2015-2019": {
+    "per_year_pct": -19.1,
+    "worst_drop_pct": -50.2
+   },
+   "2018-2021": {
+    "per_year_pct": 102.6,
+    "worst_drop_pct": -50.2
+   },
+   "2020-2026": {
+    "per_year_pct": 52.4,
+    "worst_drop_pct": -60.0
+   },
+   "2023-2026": {
+    "per_year_pct": 15.6,
+    "worst_drop_pct": -52.5
+   },
+   "switches_per_year": 27.1
+  },
+  "ETH | above 30-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 19.8,
+    "worst_drop_pct": -69.5
+   },
+   "2015-2019": {
+    "per_year_pct": -28.7,
+    "worst_drop_pct": -54.3
+   },
+   "2018-2021": {
+    "per_year_pct": 79.1,
+    "worst_drop_pct": -54.3
+   },
+   "2020-2026": {
+    "per_year_pct": 34.9,
+    "worst_drop_pct": -69.5
+   },
+   "2023-2026": {
+    "per_year_pct": 1.8,
+    "worst_drop_pct": -58.5
+   },
+   "switches_per_year": 27.1
+  },
+  "ETH | above 40-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 62.0,
+    "worst_drop_pct": -58.3
+   },
+   "2015-2019": {
+    "per_year_pct": 4.9,
+    "worst_drop_pct": -39.6
+   },
+   "2018-2021": {
+    "per_year_pct": 134.1,
+    "worst_drop_pct": -41.0
+   },
+   "2020-2026": {
+    "per_year_pct": 79.0,
+    "worst_drop_pct": -58.3
+   },
+   "2023-2026": {
+    "per_year_pct": 48.8,
+    "worst_drop_pct": -38.5
+   },
+   "switches_per_year": 21.2
+  },
+  "ETH | above 40-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 47.4,
+    "worst_drop_pct": -65.4
+   },
+   "2015-2019": {
+    "per_year_pct": -4.7,
+    "worst_drop_pct": -42.0
+   },
+   "2018-2021": {
+    "per_year_pct": 115.2,
+    "worst_drop_pct": -42.5
+   },
+   "2020-2026": {
+    "per_year_pct": 62.9,
+    "worst_drop_pct": -65.4
+   },
+   "2023-2026": {
+    "per_year_pct": 34.9,
+    "worst_drop_pct": -41.7
+   },
+   "switches_per_year": 21.2
+  },
+  "ETH | above 40-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 33.9,
+    "worst_drop_pct": -73.5
+   },
+   "2015-2019": {
+    "per_year_pct": -13.5,
+    "worst_drop_pct": -44.3
+   },
+   "2018-2021": {
+    "per_year_pct": 97.5,
+    "worst_drop_pct": -45.5
+   },
+   "2020-2026": {
+    "per_year_pct": 48.0,
+    "worst_drop_pct": -73.5
+   },
+   "2023-2026": {
+    "per_year_pct": 22.1,
+    "worst_drop_pct": -44.8
+   },
+   "switches_per_year": 21.2
+  },
+  "ETH | above 50-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 57.9,
+    "worst_drop_pct": -56.2
+   },
+   "2015-2019": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -40.1
+   },
+   "2018-2021": {
+    "per_year_pct": 148.6,
+    "worst_drop_pct": -44.4
+   },
+   "2020-2026": {
+    "per_year_pct": 66.1,
+    "worst_drop_pct": -56.2
+   },
+   "2023-2026": {
+    "per_year_pct": 34.3,
+    "worst_drop_pct": -47.5
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 50-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 45.3,
+    "worst_drop_pct": -62.4
+   },
+   "2015-2019": {
+    "per_year_pct": 17.5,
+    "worst_drop_pct": -44.0
+   },
+   "2018-2021": {
+    "per_year_pct": 126.8,
+    "worst_drop_pct": -46.5
+   },
+   "2020-2026": {
+    "per_year_pct": 52.6,
+    "worst_drop_pct": -62.4
+   },
+   "2023-2026": {
+    "per_year_pct": 24.3,
+    "worst_drop_pct": -52.7
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 50-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 33.6,
+    "worst_drop_pct": -68.7
+   },
+   "2015-2019": {
+    "per_year_pct": 9.1,
+    "worst_drop_pct": -47.7
+   },
+   "2018-2021": {
+    "per_year_pct": 106.6,
+    "worst_drop_pct": -50.7
+   },
+   "2020-2026": {
+    "per_year_pct": 40.0,
+    "worst_drop_pct": -68.7
+   },
+   "2023-2026": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -58.0
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 60-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 47.2,
+    "worst_drop_pct": -57.6
+   },
+   "2015-2019": {
+    "per_year_pct": -1.2,
+    "worst_drop_pct": -50.3
+   },
+   "2018-2021": {
+    "per_year_pct": 104.8,
+    "worst_drop_pct": -51.5
+   },
+   "2020-2026": {
+    "per_year_pct": 61.4,
+    "worst_drop_pct": -57.6
+   },
+   "2023-2026": {
+    "per_year_pct": 32.1,
+    "worst_drop_pct": -51.0
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 60-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 35.5,
+    "worst_drop_pct": -63.4
+   },
+   "2015-2019": {
+    "per_year_pct": -9.2,
+    "worst_drop_pct": -53.6
+   },
+   "2018-2021": {
+    "per_year_pct": 88.3,
+    "worst_drop_pct": -53.7
+   },
+   "2020-2026": {
+    "per_year_pct": 48.6,
+    "worst_drop_pct": -63.4
+   },
+   "2023-2026": {
+    "per_year_pct": 21.7,
+    "worst_drop_pct": -55.2
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 60-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 24.6,
+    "worst_drop_pct": -71.9
+   },
+   "2015-2019": {
+    "per_year_pct": -16.7,
+    "worst_drop_pct": -56.6
+   },
+   "2018-2021": {
+    "per_year_pct": 72.8,
+    "worst_drop_pct": -56.9
+   },
+   "2020-2026": {
+    "per_year_pct": 36.6,
+    "worst_drop_pct": -71.9
+   },
+   "2023-2026": {
+    "per_year_pct": 12.0,
+    "worst_drop_pct": -59.7
+   },
+   "switches_per_year": 18.6
+  },
+  "ETH | above 70-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 32.9,
+    "worst_drop_pct": -65.9
+   },
+   "2015-2019": {
+    "per_year_pct": 3.7,
+    "worst_drop_pct": -48.7
+   },
+   "2018-2021": {
+    "per_year_pct": 85.6,
+    "worst_drop_pct": -65.9
+   },
+   "2020-2026": {
+    "per_year_pct": 40.6,
+    "worst_drop_pct": -61.2
+   },
+   "2023-2026": {
+    "per_year_pct": 21.3,
+    "worst_drop_pct": -49.2
+   },
+   "switches_per_year": 15.1
+  },
+  "ETH | above 70-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 24.3,
+    "worst_drop_pct": -67.7
+   },
+   "2015-2019": {
+    "per_year_pct": -0.9,
+    "worst_drop_pct": -50.7
+   },
+   "2018-2021": {
+    "per_year_pct": 75.9,
+    "worst_drop_pct": -67.7
+   },
+   "2020-2026": {
+    "per_year_pct": 30.9,
+    "worst_drop_pct": -66.6
+   },
+   "2023-2026": {
+    "per_year_pct": 11.8,
+    "worst_drop_pct": -54.4
+   },
+   "switches_per_year": 15.1
+  },
+  "ETH | above 70-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 16.1,
+    "worst_drop_pct": -77.0
+   },
+   "2015-2019": {
+    "per_year_pct": -5.3,
+    "worst_drop_pct": -52.7
+   },
+   "2018-2021": {
+    "per_year_pct": 66.3,
+    "worst_drop_pct": -69.4
+   },
+   "2020-2026": {
+    "per_year_pct": 21.6,
+    "worst_drop_pct": -77.0
+   },
+   "2023-2026": {
+    "per_year_pct": 2.8,
+    "worst_drop_pct": -59.1
+   },
+   "switches_per_year": 15.1
+  },
+  "ETH | above 80-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 32.0,
+    "worst_drop_pct": -70.7
+   },
+   "2015-2019": {
+    "per_year_pct": 1.9,
+    "worst_drop_pct": -50.7
+   },
+   "2018-2021": {
+    "per_year_pct": 68.8,
+    "worst_drop_pct": -66.6
+   },
+   "2020-2026": {
+    "per_year_pct": 40.0,
+    "worst_drop_pct": -70.7
+   },
+   "2023-2026": {
+    "per_year_pct": 28.7,
+    "worst_drop_pct": -43.5
+   },
+   "switches_per_year": 13.9
+  },
+  "ETH | above 80-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 24.1,
+    "worst_drop_pct": -74.3
+   },
+   "2015-2019": {
+    "per_year_pct": -2.6,
+    "worst_drop_pct": -52.6
+   },
+   "2018-2021": {
+    "per_year_pct": 60.3,
+    "worst_drop_pct": -68.1
+   },
+   "2020-2026": {
+    "per_year_pct": 31.2,
+    "worst_drop_pct": -74.3
+   },
+   "2023-2026": {
+    "per_year_pct": 20.0,
+    "worst_drop_pct": -47.4
+   },
+   "switches_per_year": 13.9
+  },
+  "ETH | above 80-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 16.5,
+    "worst_drop_pct": -79.0
+   },
+   "2015-2019": {
+    "per_year_pct": -6.9,
+    "worst_drop_pct": -54.5
+   },
+   "2018-2021": {
+    "per_year_pct": 52.0,
+    "worst_drop_pct": -69.5
+   },
+   "2020-2026": {
+    "per_year_pct": 22.7,
+    "worst_drop_pct": -79.0
+   },
+   "2023-2026": {
+    "per_year_pct": 11.6,
+    "worst_drop_pct": -51.1
+   },
+   "switches_per_year": 13.9
+  },
+  "ETH | above 90-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 34.6,
+    "worst_drop_pct": -73.2
+   },
+   "2015-2019": {
+    "per_year_pct": 33.6,
+    "worst_drop_pct": -36.8
+   },
+   "2018-2021": {
+    "per_year_pct": 87.3,
+    "worst_drop_pct": -61.1
+   },
+   "2020-2026": {
+    "per_year_pct": 34.8,
+    "worst_drop_pct": -73.2
+   },
+   "2023-2026": {
+    "per_year_pct": 24.7,
+    "worst_drop_pct": -53.0
+   },
+   "switches_per_year": 16.3
+  },
+  "ETH | above 90-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 25.2,
+    "worst_drop_pct": -76.9
+   },
+   "2015-2019": {
+    "per_year_pct": 27.8,
+    "worst_drop_pct": -39.3
+   },
+   "2018-2021": {
+    "per_year_pct": 74.8,
+    "worst_drop_pct": -62.4
+   },
+   "2020-2026": {
+    "per_year_pct": 24.6,
+    "worst_drop_pct": -76.9
+   },
+   "2023-2026": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -57.4
+   },
+   "switches_per_year": 16.3
+  },
+  "ETH | above 90-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 16.3,
+    "worst_drop_pct": -83.4
+   },
+   "2015-2019": {
+    "per_year_pct": 22.1,
+    "worst_drop_pct": -41.7
+   },
+   "2018-2021": {
+    "per_year_pct": 62.9,
+    "worst_drop_pct": -63.8
+   },
+   "2020-2026": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -83.4
+   },
+   "2023-2026": {
+    "per_year_pct": 5.7,
+    "worst_drop_pct": -61.5
+   },
+   "switches_per_year": 16.3
+  },
+  "ETH | above 100-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 33.7,
+    "worst_drop_pct": -72.8
+   },
+   "2015-2019": {
+    "per_year_pct": 27.9,
+    "worst_drop_pct": -36.9
+   },
+   "2018-2021": {
+    "per_year_pct": 97.8,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 35.0,
+    "worst_drop_pct": -72.8
+   },
+   "2023-2026": {
+    "per_year_pct": 21.3,
+    "worst_drop_pct": -49.1
+   },
+   "switches_per_year": 14.4
+  },
+  "ETH | above 100-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 25.4,
+    "worst_drop_pct": -76.5
+   },
+   "2015-2019": {
+    "per_year_pct": 24.4,
+    "worst_drop_pct": -39.4
+   },
+   "2018-2021": {
+    "per_year_pct": 88.8,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 25.7,
+    "worst_drop_pct": -76.5
+   },
+   "2023-2026": {
+    "per_year_pct": 12.3,
+    "worst_drop_pct": -55.1
+   },
+   "switches_per_year": 14.4
+  },
+  "ETH | above 100-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 17.5,
+    "worst_drop_pct": -82.4
+   },
+   "2015-2019": {
+    "per_year_pct": 20.9,
+    "worst_drop_pct": -41.8
+   },
+   "2018-2021": {
+    "per_year_pct": 80.0,
+    "worst_drop_pct": -62.0
+   },
+   "2020-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -82.4
+   },
+   "2023-2026": {
+    "per_year_pct": 3.8,
+    "worst_drop_pct": -60.4
+   },
+   "switches_per_year": 14.4
+  },
+  "ETH | above 110-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 33.9,
+    "worst_drop_pct": -70.2
+   },
+   "2015-2019": {
+    "per_year_pct": 26.2,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 114.2,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 35.8,
+    "worst_drop_pct": -70.2
+   },
+   "2023-2026": {
+    "per_year_pct": 15.7,
+    "worst_drop_pct": -59.3
+   },
+   "switches_per_year": 12.0
+  },
+  "ETH | above 110-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 27.0,
+    "worst_drop_pct": -74.8
+   },
+   "2015-2019": {
+    "per_year_pct": 24.9,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 108.1,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 27.5,
+    "worst_drop_pct": -74.8
+   },
+   "2023-2026": {
+    "per_year_pct": 8.8,
+    "worst_drop_pct": -62.4
+   },
+   "switches_per_year": 12.0
+  },
+  "ETH | above 110-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 20.3,
+    "worst_drop_pct": -81.9
+   },
+   "2015-2019": {
+    "per_year_pct": 23.5,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 101.9,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 19.6,
+    "worst_drop_pct": -81.9
+   },
+   "2023-2026": {
+    "per_year_pct": 2.2,
+    "worst_drop_pct": -65.4
+   },
+   "switches_per_year": 12.0
+  },
+  "ETH | above 120-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 38.7,
+    "worst_drop_pct": -66.9
+   },
+   "2015-2019": {
+    "per_year_pct": 24.5,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 114.0,
+    "worst_drop_pct": -60.5
+   },
+   "2020-2026": {
+    "per_year_pct": 42.1,
+    "worst_drop_pct": -66.9
+   },
+   "2023-2026": {
+    "per_year_pct": 21.5,
+    "worst_drop_pct": -46.9
+   },
+   "switches_per_year": 10.4
+  },
+  "ETH | above 120-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 32.5,
+    "worst_drop_pct": -70.1
+   },
+   "2015-2019": {
+    "per_year_pct": 21.8,
+    "worst_drop_pct": -41.0
+   },
+   "2018-2021": {
+    "per_year_pct": 108.0,
+    "worst_drop_pct": -61.1
+   },
+   "2020-2026": {
+    "per_year_pct": 35.1,
+    "worst_drop_pct": -70.1
+   },
+   "2023-2026": {
+    "per_year_pct": 15.1,
+    "worst_drop_pct": -51.0
+   },
+   "switches_per_year": 10.4
+  },
+  "ETH | above 120-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -73.2
+   },
+   "2015-2019": {
+    "per_year_pct": 19.1,
+    "worst_drop_pct": -42.3
+   },
+   "2018-2021": {
+    "per_year_pct": 101.8,
+    "worst_drop_pct": -62.5
+   },
+   "2020-2026": {
+    "per_year_pct": 28.2,
+    "worst_drop_pct": -73.2
+   },
+   "2023-2026": {
+    "per_year_pct": 8.8,
+    "worst_drop_pct": -54.8
+   },
+   "switches_per_year": 10.4
+  },
+  "ETH | above 130-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 46.2,
+    "worst_drop_pct": -63.6
+   },
+   "2015-2019": {
+    "per_year_pct": 22.2,
+    "worst_drop_pct": -42.3
+   },
+   "2018-2021": {
+    "per_year_pct": 118.7,
+    "worst_drop_pct": -63.6
+   },
+   "2020-2026": {
+    "per_year_pct": 52.3,
+    "worst_drop_pct": -61.0
+   },
+   "2023-2026": {
+    "per_year_pct": 31.6,
+    "worst_drop_pct": -39.5
+   },
+   "switches_per_year": 9.0
+  },
+  "ETH | above 130-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 40.6,
+    "worst_drop_pct": -65.5
+   },
+   "2015-2019": {
+    "per_year_pct": 18.9,
+    "worst_drop_pct": -44.1
+   },
+   "2018-2021": {
+    "per_year_pct": 111.4,
+    "worst_drop_pct": -65.5
+   },
+   "2020-2026": {
+    "per_year_pct": 46.1,
+    "worst_drop_pct": -64.2
+   },
+   "2023-2026": {
+    "per_year_pct": 26.7,
+    "worst_drop_pct": -43.2
+   },
+   "switches_per_year": 9.0
+  },
+  "ETH | above 130-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 35.0,
+    "worst_drop_pct": -67.3
+   },
+   "2015-2019": {
+    "per_year_pct": 15.5,
+    "worst_drop_pct": -45.8
+   },
+   "2018-2021": {
+    "per_year_pct": 104.1,
+    "worst_drop_pct": -67.3
+   },
+   "2020-2026": {
+    "per_year_pct": 39.9,
+    "worst_drop_pct": -67.2
+   },
+   "2023-2026": {
+    "per_year_pct": 21.8,
+    "worst_drop_pct": -48.1
+   },
+   "switches_per_year": 9.0
+  },
+  "ETH | above 140-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 42.4,
+    "worst_drop_pct": -65.9
+   },
+   "2015-2019": {
+    "per_year_pct": 12.3,
+    "worst_drop_pct": -44.6
+   },
+   "2018-2021": {
+    "per_year_pct": 108.8,
+    "worst_drop_pct": -65.9
+   },
+   "2020-2026": {
+    "per_year_pct": 50.3,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 23.0,
+    "worst_drop_pct": -41.6
+   },
+   "switches_per_year": 6.6
+  },
+  "ETH | above 140-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 38.4,
+    "worst_drop_pct": -67.1
+   },
+   "2015-2019": {
+    "per_year_pct": 9.2,
+    "worst_drop_pct": -45.8
+   },
+   "2018-2021": {
+    "per_year_pct": 102.4,
+    "worst_drop_pct": -67.1
+   },
+   "2020-2026": {
+    "per_year_pct": 46.1,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 20.3,
+    "worst_drop_pct": -44.6
+   },
+   "switches_per_year": 6.6
+  },
+  "ETH | above 140-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 34.3,
+    "worst_drop_pct": -68.3
+   },
+   "2015-2019": {
+    "per_year_pct": 6.1,
+    "worst_drop_pct": -47.0
+   },
+   "2018-2021": {
+    "per_year_pct": 95.9,
+    "worst_drop_pct": -68.3
+   },
+   "2020-2026": {
+    "per_year_pct": 41.7,
+    "worst_drop_pct": -61.6
+   },
+   "2023-2026": {
+    "per_year_pct": 17.6,
+    "worst_drop_pct": -47.5
+   },
+   "switches_per_year": 6.6
+  },
+  "ETH | above 150-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 46.1,
+    "worst_drop_pct": -65.5
+   },
+   "2015-2019": {
+    "per_year_pct": 23.8,
+    "worst_drop_pct": -42.9
+   },
+   "2018-2021": {
+    "per_year_pct": 121.6,
+    "worst_drop_pct": -65.5
+   },
+   "2020-2026": {
+    "per_year_pct": 51.8,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 22.2,
+    "worst_drop_pct": -41.4
+   },
+   "switches_per_year": 8.0
+  },
+  "ETH | above 150-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 41.1,
+    "worst_drop_pct": -67.0
+   },
+   "2015-2019": {
+    "per_year_pct": 19.7,
+    "worst_drop_pct": -44.1
+   },
+   "2018-2021": {
+    "per_year_pct": 112.7,
+    "worst_drop_pct": -67.0
+   },
+   "2020-2026": {
+    "per_year_pct": 46.5,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 18.7,
+    "worst_drop_pct": -44.9
+   },
+   "switches_per_year": 8.0
+  },
+  "ETH | above 150-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 36.1,
+    "worst_drop_pct": -68.4
+   },
+   "2015-2019": {
+    "per_year_pct": 15.7,
+    "worst_drop_pct": -45.4
+   },
+   "2018-2021": {
+    "per_year_pct": 103.7,
+    "worst_drop_pct": -68.4
+   },
+   "2020-2026": {
+    "per_year_pct": 41.2,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 15.2,
+    "worst_drop_pct": -48.3
+   },
+   "switches_per_year": 8.0
+  },
+  "ETH | above 160-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 40.4,
+    "worst_drop_pct": -63.1
+   },
+   "2015-2019": {
+    "per_year_pct": 31.2,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 119.9,
+    "worst_drop_pct": -63.1
+   },
+   "2020-2026": {
+    "per_year_pct": 42.6,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 15.3,
+    "worst_drop_pct": -45.8
+   },
+   "switches_per_year": 6.8
+  },
+  "ETH | above 160-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 36.3,
+    "worst_drop_pct": -64.4
+   },
+   "2015-2019": {
+    "per_year_pct": 29.1,
+    "worst_drop_pct": -40.9
+   },
+   "2018-2021": {
+    "per_year_pct": 113.4,
+    "worst_drop_pct": -64.4
+   },
+   "2020-2026": {
+    "per_year_pct": 38.1,
+    "worst_drop_pct": -62.3
+   },
+   "2023-2026": {
+    "per_year_pct": 12.0,
+    "worst_drop_pct": -49.1
+   },
+   "switches_per_year": 6.8
+  },
+  "ETH | above 160-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 32.2,
+    "worst_drop_pct": -65.7
+   },
+   "2015-2019": {
+    "per_year_pct": 26.9,
+    "worst_drop_pct": -41.1
+   },
+   "2018-2021": {
+    "per_year_pct": 106.8,
+    "worst_drop_pct": -65.7
+   },
+   "2020-2026": {
+    "per_year_pct": 33.4,
+    "worst_drop_pct": -65.3
+   },
+   "2023-2026": {
+    "per_year_pct": 8.7,
+    "worst_drop_pct": -52.2
+   },
+   "switches_per_year": 6.8
+  },
+  "ETH | above 170-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 37.3,
+    "worst_drop_pct": -63.8
+   },
+   "2015-2019": {
+    "per_year_pct": 11.0,
+    "worst_drop_pct": -43.5
+   },
+   "2018-2021": {
+    "per_year_pct": 104.7,
+    "worst_drop_pct": -63.8
+   },
+   "2020-2026": {
+    "per_year_pct": 44.1,
+    "worst_drop_pct": -61.8
+   },
+   "2023-2026": {
+    "per_year_pct": 17.9,
+    "worst_drop_pct": -48.4
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 170-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 33.7,
+    "worst_drop_pct": -65.1
+   },
+   "2015-2019": {
+    "per_year_pct": 8.6,
+    "worst_drop_pct": -44.7
+   },
+   "2018-2021": {
+    "per_year_pct": 99.7,
+    "worst_drop_pct": -65.1
+   },
+   "2020-2026": {
+    "per_year_pct": 40.3,
+    "worst_drop_pct": -64.1
+   },
+   "2023-2026": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -51.9
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 170-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 30.0,
+    "worst_drop_pct": -66.3
+   },
+   "2015-2019": {
+    "per_year_pct": 6.1,
+    "worst_drop_pct": -45.9
+   },
+   "2018-2021": {
+    "per_year_pct": 94.4,
+    "worst_drop_pct": -66.3
+   },
+   "2020-2026": {
+    "per_year_pct": 36.3,
+    "worst_drop_pct": -66.3
+   },
+   "2023-2026": {
+    "per_year_pct": 11.7,
+    "worst_drop_pct": -55.3
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 180-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 33.5,
+    "worst_drop_pct": -66.6
+   },
+   "2015-2019": {
+    "per_year_pct": 6.5,
+    "worst_drop_pct": -48.2
+   },
+   "2018-2021": {
+    "per_year_pct": 107.0,
+    "worst_drop_pct": -66.6
+   },
+   "2020-2026": {
+    "per_year_pct": 40.6,
+    "worst_drop_pct": -61.8
+   },
+   "2023-2026": {
+    "per_year_pct": 10.7,
+    "worst_drop_pct": -51.2
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 180-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 30.0,
+    "worst_drop_pct": -67.5
+   },
+   "2015-2019": {
+    "per_year_pct": 5.3,
+    "worst_drop_pct": -48.8
+   },
+   "2018-2021": {
+    "per_year_pct": 102.9,
+    "worst_drop_pct": -67.5
+   },
+   "2020-2026": {
+    "per_year_pct": 36.4,
+    "worst_drop_pct": -63.8
+   },
+   "2023-2026": {
+    "per_year_pct": 7.1,
+    "worst_drop_pct": -55.0
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 180-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 26.4,
+    "worst_drop_pct": -68.3
+   },
+   "2015-2019": {
+    "per_year_pct": 4.1,
+    "worst_drop_pct": -49.5
+   },
+   "2018-2021": {
+    "per_year_pct": 98.6,
+    "worst_drop_pct": -68.3
+   },
+   "2020-2026": {
+    "per_year_pct": 32.2,
+    "worst_drop_pct": -65.7
+   },
+   "2023-2026": {
+    "per_year_pct": 3.4,
+    "worst_drop_pct": -58.5
+   },
+   "switches_per_year": 6.1
+  },
+  "ETH | above 190-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 37.1,
+    "worst_drop_pct": -74.0
+   },
+   "2015-2019": {
+    "per_year_pct": -9.0,
+    "worst_drop_pct": -59.6
+   },
+   "2018-2021": {
+    "per_year_pct": 90.6,
+    "worst_drop_pct": -74.0
+   },
+   "2020-2026": {
+    "per_year_pct": 50.7,
+    "worst_drop_pct": -63.0
+   },
+   "2023-2026": {
+    "per_year_pct": 17.6,
+    "worst_drop_pct": -42.4
+   },
+   "switches_per_year": 5.4
+  },
+  "ETH | above 190-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 34.0,
+    "worst_drop_pct": -74.6
+   },
+   "2015-2019": {
+    "per_year_pct": -10.5,
+    "worst_drop_pct": -60.5
+   },
+   "2018-2021": {
+    "per_year_pct": 86.9,
+    "worst_drop_pct": -74.6
+   },
+   "2020-2026": {
+    "per_year_pct": 47.0,
+    "worst_drop_pct": -64.0
+   },
+   "2023-2026": {
+    "per_year_pct": 14.6,
+    "worst_drop_pct": -45.4
+   },
+   "switches_per_year": 5.4
+  },
+  "ETH | above 190-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 30.7,
+    "worst_drop_pct": -75.3
+   },
+   "2015-2019": {
+    "per_year_pct": -12.0,
+    "worst_drop_pct": -61.4
+   },
+   "2018-2021": {
+    "per_year_pct": 82.9,
+    "worst_drop_pct": -75.3
+   },
+   "2020-2026": {
+    "per_year_pct": 43.2,
+    "worst_drop_pct": -64.9
+   },
+   "2023-2026": {
+    "per_year_pct": 11.4,
+    "worst_drop_pct": -48.3
+   },
+   "switches_per_year": 5.4
+  },
+  "ETH | above 200-day | ETF route 0.05% + 0.25%/yr": {
+   "all": {
+    "per_year_pct": 37.5,
+    "worst_drop_pct": -73.5
+   },
+   "2015-2019": {
+    "per_year_pct": -6.4,
+    "worst_drop_pct": -57.7
+   },
+   "2018-2021": {
+    "per_year_pct": 90.8,
+    "worst_drop_pct": -73.5
+   },
+   "2020-2026": {
+    "per_year_pct": 50.1,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 18.0,
+    "worst_drop_pct": -43.3
+   },
+   "switches_per_year": 5.4
+  },
+  "ETH | above 200-day | 0.50%/side": {
+   "all": {
+    "per_year_pct": 34.3,
+    "worst_drop_pct": -74.2
+   },
+   "2015-2019": {
+    "per_year_pct": -7.9,
+    "worst_drop_pct": -58.7
+   },
+   "2018-2021": {
+    "per_year_pct": 87.0,
+    "worst_drop_pct": -74.2
+   },
+   "2020-2026": {
+    "per_year_pct": 46.5,
+    "worst_drop_pct": -60.5
+   },
+   "2023-2026": {
+    "per_year_pct": 14.7,
+    "worst_drop_pct": -46.2
+   },
+   "switches_per_year": 5.4
+  },
+  "ETH | above 200-day | Robinhood 0.95%/side": {
+   "all": {
+    "per_year_pct": 31.1,
+    "worst_drop_pct": -74.9
+   },
+   "2015-2019": {
+    "per_year_pct": -9.5,
+    "worst_drop_pct": -59.6
+   },
+   "2018-2021": {
+    "per_year_pct": 83.0,
+    "worst_drop_pct": -74.9
+   },
+   "2020-2026": {
+    "per_year_pct": 42.7,
+    "worst_drop_pct": -60.6
+   },
+   "2023-2026": {
+    "per_year_pct": 11.2,
+    "worst_drop_pct": -49.1
+   },
+   "switches_per_year": 5.4
+  }
+ },
+ "A_placebo": {
+  "BTC": {
+   "rule_50d_per_year": 80.9,
+   "random_median": 32.7,
+   "random_95th": 56.31,
+   "share_random_beating_rule_pct": 0.0
+  },
+  "ETH": {
+   "rule_50d_per_year": 57.9,
+   "random_median": 7.4,
+   "random_95th": 36.510000000000005,
+   "share_random_beating_rule_pct": 0.7
+  }
+ },
+ "B_fear_greed": {
+  "BTC hold": {
+   "all": {
+    "per_year_pct": 26.1,
+    "worst_drop_pct": -76.6
+   },
+   "2015-2019": {
+    "per_year_pct": -3.2,
+    "worst_drop_pct": -72.0
+   },
+   "2018-2021": {
+    "per_year_pct": 58.5,
+    "worst_drop_pct": -72.0
+   },
+   "2020-2026": {
+    "per_year_pct": 35.6,
+    "worst_drop_pct": -76.6
+   },
+   "2023-2026": {
+    "per_year_pct": 38.3,
+    "worst_drop_pct": -53.1
+   }
+  },
+  "50-day trend": {
+   "all": {
+    "per_year_pct": 32.4,
+    "worst_drop_pct": -61.3
+   },
+   "2015-2019": {
+    "per_year_pct": -10.5,
+    "worst_drop_pct": -55.6
+   },
+   "2018-2021": {
+    "per_year_pct": 69.3,
+    "worst_drop_pct": -55.6
+   },
+   "2020-2026": {
+    "per_year_pct": 47.5,
+    "worst_drop_pct": -61.3
+   },
+   "2023-2026": {
+    "per_year_pct": 36.3,
+    "worst_drop_pct": -36.9
+   }
+  },
+  "hold only when index < 50 (fear side)": {
+   "all": {
+    "per_year_pct": -12.8,
+    "worst_drop_pct": -83.3
+   },
+   "2015-2019": {
+    "per_year_pct": -35.8,
+    "worst_drop_pct": -70.0
+   },
+   "2018-2021": {
+    "per_year_pct": -14.0,
+    "worst_drop_pct": -81.1
+   },
+   "2020-2026": {
+    "per_year_pct": -5.1,
+    "worst_drop_pct": -69.5
+   },
+   "2023-2026": {
+    "per_year_pct": 6.8,
+    "worst_drop_pct": -51.6
+   }
+  },
+  "hold except when index >= 80 (extreme greed)": {
+   "all": {
+    "per_year_pct": 4.8,
+    "worst_drop_pct": -76.9
+   },
+   "2015-2019": {
+    "per_year_pct": -14.7,
+    "worst_drop_pct": -72.0
+   },
+   "2018-2021": {
+    "per_year_pct": 10.0,
+    "worst_drop_pct": -72.0
+   },
+   "2020-2026": {
+    "per_year_pct": 10.9,
+    "worst_drop_pct": -76.9
+   },
+   "2023-2026": {
+    "per_year_pct": 31.3,
+    "worst_drop_pct": -53.1
+   }
+  },
+  "50-day trend OR extreme fear (<= 20)": {
+   "all": {
+    "per_year_pct": 24.0,
+    "worst_drop_pct": -81.1
+   },
+   "2015-2019": {
+    "per_year_pct": 5.4,
+    "worst_drop_pct": -51.6
+   },
+   "2018-2021": {
+    "per_year_pct": 73.4,
+    "worst_drop_pct": -60.1
+   },
+   "2020-2026": {
+    "per_year_pct": 29.6,
+    "worst_drop_pct": -81.1
+   },
+   "2023-2026": {
+    "per_year_pct": 34.6,
+    "worst_drop_pct": -44.6
+   }
+  },
+  "50-day trend AND index < 80": {
+   "all": {
+    "per_year_pct": 10.2,
+    "worst_drop_pct": -61.7
+   },
+   "2015-2019": {
+    "per_year_pct": -21.1,
+    "worst_drop_pct": -55.6
+   },
+   "2018-2021": {
+    "per_year_pct": 17.8,
+    "worst_drop_pct": -55.6
+   },
+   "2020-2026": {
+    "per_year_pct": 20.8,
+    "worst_drop_pct": -61.7
+   },
+   "2023-2026": {
+    "per_year_pct": 29.4,
+    "worst_drop_pct": -36.9
+   }
+  },
+  "savings plan": {
+   "plain_avg_price": 16513.0,
+   "tilted_avg_price": 15701.0,
+   "plain_invested": 45900,
+   "tilted_invested": 49800.0,
+   "tilted_buys_cheaper_by_pct": 4.9
+  }
+ },
+ "C_mvrv": {
+  "forward 90 days after MVRV < 1 (vs all days)": {
+   "days": 452,
+   "median_fwd_pct": 28.8,
+   "all_days_median_pct": 10.0
+  },
+  "forward 180 days after MVRV < 1 (vs all days)": {
+   "days": 452,
+   "median_fwd_pct": 72.8,
+   "all_days_median_pct": 30.5
+  },
+  "forward 365 days after MVRV < 1 (vs all days)": {
+   "days": 452,
+   "median_fwd_pct": 126.7,
+   "all_days_median_pct": 75.3
+  },
+  "BTC hold": {
+   "all": {
+    "per_year_pct": 62.2,
+    "worst_drop_pct": -83.4
+   },
+   "2015-2019": {
+    "per_year_pct": 112.4,
+    "worst_drop_pct": -83.4
+   },
+   "2018-2021": {
+    "per_year_pct": 35.7,
+    "worst_drop_pct": -81.5
+   },
+   "2020-2026": {
+    "per_year_pct": 35.6,
+    "worst_drop_pct": -76.6
+   },
+   "2023-2026": {
+    "per_year_pct": 38.3,
+    "worst_drop_pct": -53.1
+   }
+  },
+  "50-day trend": {
+   "all": {
+    "per_year_pct": 67.1,
+    "worst_drop_pct": -65.6
+   },
+   "2015-2019": {
+    "per_year_pct": 101.5,
+    "worst_drop_pct": -65.6
+   },
+   "2018-2021": {
+    "per_year_pct": 67.9,
+    "worst_drop_pct": -61.8
+   },
+   "2020-2026": {
+    "per_year_pct": 47.5,
+    "worst_drop_pct": -61.3
+   },
+   "2023-2026": {
+    "per_year_pct": 36.3,
+    "worst_drop_pct": -36.9
+   }
+  },
+  "50-day trend OR MVRV < 1": {
+   "all": {
+    "per_year_pct": 71.0,
+    "worst_drop_pct": -71.5
+   },
+   "2015-2019": {
+    "per_year_pct": 97.5,
+    "worst_drop_pct": -71.5
+   },
+   "2018-2021": {
+    "per_year_pct": 68.6,
+    "worst_drop_pct": -68.3
+   },
+   "2020-2026": {
+    "per_year_pct": 55.4,
+    "worst_drop_pct": -50.7
+   },
+   "2023-2026": {
+    "per_year_pct": 36.9,
+    "worst_drop_pct": -36.9
+   }
+  },
+  "hold, half out above the 2-year 95th percentile": {
+   "all": {
+    "per_year_pct": 41.0,
+    "worst_drop_pct": -81.5
+   },
+   "2015-2019": {
+    "per_year_pct": 79.0,
+    "worst_drop_pct": -81.5
+   },
+   "2018-2021": {
+    "per_year_pct": 16.5,
+    "worst_drop_pct": -81.5
+   },
+   "2020-2026": {
+    "per_year_pct": 20.3,
+    "worst_drop_pct": -76.6
+   },
+   "2023-2026": {
+    "per_year_pct": 30.9,
+    "worst_drop_pct": -53.1
+   }
+  },
+  "50-day trend, half size above that band": {
+   "all": {
+    "per_year_pct": 45.7,
+    "worst_drop_pct": -61.8
+   },
+   "2015-2019": {
+    "per_year_pct": 71.2,
+    "worst_drop_pct": -61.8
+   },
+   "2018-2021": {
+    "per_year_pct": 44.2,
+    "worst_drop_pct": -61.8
+   },
+   "2020-2026": {
+    "per_year_pct": 30.9,
+    "worst_drop_pct": -61.3
+   },
+   "2023-2026": {
+    "per_year_pct": 28.9,
+    "worst_drop_pct": -36.9
+   }
+  }
+ },
+ "D_funding": {
+  "error": "BitMEX funding not reachable"
+ },
+ "data": {
+  "fear_greed_from": "2018-02-06",
+  "mvrv_from": "2014-09-17"
+ }
+}
