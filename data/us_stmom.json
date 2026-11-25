@@ -1,0 +1,185 @@
+{
+ "note": "US short-term momentum sleeve (Nov 24 2026; research only, not financial advice). Point-in-time S&P 500, 1999-2026.\nIdea (Medhat & Schmeling 2022): last month's winners keep winning among HEAVILY traded stocks (and reverse among lightly traded ones).\nRules: at each month-end close, rank S&P 500 members by last month's return among the most-traded third (60-day dollar volume, vs the other members),\nhold the top 10 or 20 equally for a month. Monthly turnover is high, so this is a Roth-only idea (no tax drag). Costs 0.15%/side (realistic: next open)\nor 0.08% (live-like); both trade at the month-end close (the overnight gap is ignored). References: same rules on ALL members (should be weaker), classic 12-1 month momentum top 20, SPY.\nThen: blend with the dip bot v3.0 (realistic) 50/50 and 70/30 dip/momentum, rebalanced monthly, and the monthly correlation. DRY=1: fake ETF data.",
+ "sleeves": {
+  "SPY": {
+   "1999-2026": {
+    "per_year_pct": 8.6,
+    "worst_drop_pct": -55.2
+   },
+   "1999-2012": {
+    "per_year_pct": 2.8,
+    "worst_drop_pct": -55.2
+   },
+   "2013-2026": {
+    "per_year_pct": 14.8,
+    "worst_drop_pct": -33.7
+   }
+  },
+  "short-term: last month's top 10, most-traded third | live-like 0.08%": {
+   "1999-2026": {
+    "per_year_pct": 2.1,
+    "worst_drop_pct": -86.2
+   },
+   "1999-2012": {
+    "per_year_pct": -6.3,
+    "worst_drop_pct": -86.2
+   },
+   "2013-2026": {
+    "per_year_pct": 11.3,
+    "worst_drop_pct": -40.3
+   },
+   "turnover_per_year": 21.8
+  },
+  "short-term: last month's top 10, most-traded third | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 0.5,
+    "worst_drop_pct": -88.0
+   },
+   "1999-2012": {
+    "per_year_pct": -7.8,
+    "worst_drop_pct": -88.0
+   },
+   "2013-2026": {
+    "per_year_pct": 9.7,
+    "worst_drop_pct": -40.3
+   },
+   "turnover_per_year": 21.8
+  },
+  "short-term: top 20, most-traded third | live-like 0.08%": {
+   "1999-2026": {
+    "per_year_pct": 3.8,
+    "worst_drop_pct": -82.0
+   },
+   "1999-2012": {
+    "per_year_pct": -4.2,
+    "worst_drop_pct": -82.0
+   },
+   "2013-2026": {
+    "per_year_pct": 12.5,
+    "worst_drop_pct": -34.9
+   },
+   "turnover_per_year": 20.3
+  },
+  "short-term: top 20, most-traded third | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 2.3,
+    "worst_drop_pct": -84.2
+   },
+   "1999-2012": {
+    "per_year_pct": -5.6,
+    "worst_drop_pct": -84.2
+   },
+   "2013-2026": {
+    "per_year_pct": 10.9,
+    "worst_drop_pct": -35.2
+   },
+   "turnover_per_year": 20.3
+  },
+  "short-term: top 20, ALL members (should be weaker) | live-like 0.08%": {
+   "1999-2026": {
+    "per_year_pct": 3.0,
+    "worst_drop_pct": -73.1
+   },
+   "1999-2012": {
+    "per_year_pct": -1.1,
+    "worst_drop_pct": -73.1
+   },
+   "2013-2026": {
+    "per_year_pct": 7.4,
+    "worst_drop_pct": -46.4
+   },
+   "turnover_per_year": 22.3
+  },
+  "short-term: top 20, ALL members (should be weaker) | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 1.4,
+    "worst_drop_pct": -76.7
+   },
+   "1999-2012": {
+    "per_year_pct": -2.7,
+    "worst_drop_pct": -76.7
+   },
+   "2013-2026": {
+    "per_year_pct": 5.7,
+    "worst_drop_pct": -50.6
+   },
+   "turnover_per_year": 22.3
+  },
+  "classic 12-1 month momentum: top 20, all members | live-like 0.08%": {
+   "1999-2026": {
+    "per_year_pct": 9.1,
+    "worst_drop_pct": -66.2
+   },
+   "1999-2012": {
+    "per_year_pct": 4.7,
+    "worst_drop_pct": -66.2
+   },
+   "2013-2026": {
+    "per_year_pct": 13.7,
+    "worst_drop_pct": -39.4
+   },
+   "turnover_per_year": 8.7
+  },
+  "classic 12-1 month momentum: top 20, all members | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 8.5,
+    "worst_drop_pct": -66.5
+   },
+   "1999-2012": {
+    "per_year_pct": 4.1,
+    "worst_drop_pct": -66.5
+   },
+   "2013-2026": {
+    "per_year_pct": 13.1,
+    "worst_drop_pct": -39.5
+   },
+   "turnover_per_year": 8.7
+  },
+  "dip bot v3.0 realistic": {
+   "1999-2026": {
+    "per_year_pct": 16.8,
+    "worst_drop_pct": -27.3
+   },
+   "1999-2012": {
+    "per_year_pct": 15.7,
+    "worst_drop_pct": -27.3
+   },
+   "2013-2026": {
+    "per_year_pct": 18.0,
+    "worst_drop_pct": -14.9
+   }
+  }
+ },
+ "blends": {
+  "monthly_correlation_dip_vs_best": 0.47,
+  "70% dip bot + 30% short-term: top 20, most-traded third | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 12.8,
+    "worst_drop_pct": -29.9
+   },
+   "1999-2012": {
+    "per_year_pct": 9.5,
+    "worst_drop_pct": -29.9
+   },
+   "2013-2026": {
+    "per_year_pct": 16.2,
+    "worst_drop_pct": -15.2
+   }
+  },
+  "50% dip bot + 50% short-term: top 20, most-traded third | realistic 0.15%": {
+   "1999-2026": {
+    "per_year_pct": 9.9,
+    "worst_drop_pct": -44.5
+   },
+   "1999-2012": {
+    "per_year_pct": 5.3,
+    "worst_drop_pct": -44.5
+   },
+   "2013-2026": {
+    "per_year_pct": 14.9,
+    "worst_drop_pct": -18.7
+   }
+  }
+ },
+ "best_sleeve": "short-term: top 20, most-traded third | realistic 0.15%"
+}
