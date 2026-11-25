@@ -1,0 +1,196 @@
+{
+ "note": "How often are all 10 dip slots full? v3.0 daily rules (the live bot's 3:47 run), point-in-time S&P 500, 1999-2026. Research only.\nSlot count per day = dip positions (stock + ETF) held at that day's close, from the trade log. DRY=1: fake data.",
+ "live-like (v3.0, close fills)": {
+  "years": 27.4,
+  "avg_slots_used": 1.8,
+  "pct_days_full": 4.0,
+  "full_days_per_year": 10.0,
+  "full_spells_per_year": 4.1,
+  "median_spell_days": 2.0,
+  "longest_spell_days": 7,
+  "years_with_no_full_day": 6,
+  "distribution_pct": {
+   "0": 43.2,
+   "1": 22.3,
+   "2": 11.2,
+   "3": 6.8,
+   "4": 4.1,
+   "5": 2.8,
+   "6": 1.7,
+   "7": 1.8,
+   "8": 1.1,
+   "9": 1.0,
+   "10": 4.0
+  },
+  "by_year": {
+   "1999": {
+    "full_days": 2,
+    "full_spells": 1,
+    "avg_slots": 3.1,
+    "max": 10
+   },
+   "2000": {
+    "full_days": 44,
+    "full_spells": 23,
+    "avg_slots": 5.3,
+    "max": 10
+   },
+   "2001": {
+    "full_days": 17,
+    "full_spells": 4,
+    "avg_slots": 2.4,
+    "max": 10
+   },
+   "2002": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 1.5,
+    "max": 8
+   },
+   "2003": {
+    "full_days": 4,
+    "full_spells": 3,
+    "avg_slots": 1.6,
+    "max": 10
+   },
+   "2004": {
+    "full_days": 5,
+    "full_spells": 4,
+    "avg_slots": 1.4,
+    "max": 10
+   },
+   "2005": {
+    "full_days": 7,
+    "full_spells": 3,
+    "avg_slots": 1.0,
+    "max": 10
+   },
+   "2006": {
+    "full_days": 9,
+    "full_spells": 4,
+    "avg_slots": 1.3,
+    "max": 10
+   },
+   "2007": {
+    "full_days": 11,
+    "full_spells": 5,
+    "avg_slots": 1.5,
+    "max": 10
+   },
+   "2008": {
+    "full_days": 4,
+    "full_spells": 2,
+    "avg_slots": 1.5,
+    "max": 10
+   },
+   "2009": {
+    "full_days": 23,
+    "full_spells": 6,
+    "avg_slots": 2.5,
+    "max": 10
+   },
+   "2010": {
+    "full_days": 11,
+    "full_spells": 3,
+    "avg_slots": 1.6,
+    "max": 10
+   },
+   "2011": {
+    "full_days": 2,
+    "full_spells": 1,
+    "avg_slots": 1.0,
+    "max": 10
+   },
+   "2012": {
+    "full_days": 1,
+    "full_spells": 1,
+    "avg_slots": 0.7,
+    "max": 10
+   },
+   "2013": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 0.8,
+    "max": 5
+   },
+   "2014": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 0.6,
+    "max": 5
+   },
+   "2015": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 0.4,
+    "max": 3
+   },
+   "2016": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 0.9,
+    "max": 8
+   },
+   "2017": {
+    "full_days": 0,
+    "full_spells": 0,
+    "avg_slots": 0.5,
+    "max": 7
+   },
+   "2018": {
+    "full_days": 7,
+    "full_spells": 2,
+    "avg_slots": 1.4,
+    "max": 10
+   },
+   "2019": {
+    "full_days": 2,
+    "full_spells": 1,
+    "avg_slots": 0.8,
+    "max": 10
+   },
+   "2020": {
+    "full_days": 14,
+    "full_spells": 8,
+    "avg_slots": 2.2,
+    "max": 10
+   },
+   "2021": {
+    "full_days": 22,
+    "full_spells": 9,
+    "avg_slots": 3.2,
+    "max": 10
+   },
+   "2022": {
+    "full_days": 11,
+    "full_spells": 4,
+    "avg_slots": 1.7,
+    "max": 10
+   },
+   "2023": {
+    "full_days": 6,
+    "full_spells": 2,
+    "avg_slots": 1.3,
+    "max": 10
+   },
+   "2024": {
+    "full_days": 8,
+    "full_spells": 4,
+    "avg_slots": 2.2,
+    "max": 10
+   },
+   "2025": {
+    "full_days": 6,
+    "full_spells": 3,
+    "avg_slots": 2.4,
+    "max": 10
+   },
+   "2026": {
+    "full_days": 59,
+    "full_spells": 19,
+    "avg_slots": 5.7,
+    "max": 10
+   }
+  }
+ }
+}
