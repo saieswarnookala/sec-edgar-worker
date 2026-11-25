@@ -48,8 +48,17 @@ const ny = (d = new Date()) => { const p = Object.fromEntries(new Intl.DateTimeF
 // ---- alerts ----
 export async function notify(title, body, { priority = 3, tags = '' } = {}) {
   console.log(`[alert p${priority}] ${title}\n${body}`);
-  if (!E.NTFY_TOPIC) return;
-  try { await fetch(`${E.NTFY_URL || 'https://ntfy.sh'}/${E.NTFY_TOPIC}`, { method: 'POST', body: String(body).slice(0, 3800), headers: { Title: title, Priority: String(priority), Tags: tags } }); } catch (e) { console.error('ntfy failed', e.message); }
+  if (!E.NTFY_TOPIC) { console.error('ntfy skipped: NTFY_TOPIC is empty in config.env'); return; }
+  // headers must be plain ASCII (a stray symbol in the title makes fetch throw); a non-200 reply used to be ignored silently
+  const headers = { Title: String(title).replace(/[^\x20-\x7E]/g, '-'), Priority: String(priority), Tags: tags };
+  for (let i = 1; i <= 3; i++) {
+    try {
+      const r = await fetch(`${E.NTFY_URL || 'https://ntfy.sh'}/${E.NTFY_TOPIC}`, { method: 'POST', body: String(body).slice(0, 3800), headers, signal: AbortSignal.timeout(15000) });
+      if (r.ok) return;
+      console.error(`ntfy failed (try ${i}): HTTP ${r.status} ${(await r.text()).slice(0, 200)}`);
+    } catch (e) { console.error(`ntfy failed (try ${i}):`, e.message); }
+    if (i < 3) await new Promise((res) => setTimeout(res, 5000 * i));
+  }
 }
 const ping = async (suffix = '') => { if (E.HC_PING_URL) try { await fetch(E.HC_PING_URL + suffix, { method: 'POST' }); } catch {} };
 
@@ -470,7 +479,8 @@ function cmdStatus() {
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
   const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
+    'ntfy-test': () => notify('Dip bot: test alert', 'If you see this on your phone, alerts from the VM work. ' + new Date().toISOString()),
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|ntfy-test|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
 }

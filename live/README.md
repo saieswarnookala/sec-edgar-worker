@@ -72,7 +72,7 @@ Dry day first: also add `INTRADAY_MODE=dry` (3:47 run stays live with v3.0 rules
 Switch: `sed -i 's/^LIVE_STRATEGY=.*/LIVE_STRATEGY=v32/' ~/.sentinel-live/config.env`, re-run setup-vm.sh once (adds the timer). Logs: `journalctl --user -u dip-intraday -n 50`.
 
 ## Commands (on the VM, in ~/sec-edgar-worker/live)
-`node live-dip.mjs status` · `preview` · `preview-intraday` · `health` · `doctor` · `login` · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
+`node live-dip.mjs status` · `preview` · `preview-intraday` · `health` · `doctor` · `login` · `ntfy-test` (send a test alert) · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
 Instant stop from anywhere: disconnect the agent in the Robinhood app.
 Logs: `journalctl --user -u dip-trade -n 100`
 
