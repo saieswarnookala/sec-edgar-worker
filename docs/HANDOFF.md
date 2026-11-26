@@ -9,6 +9,12 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## TO-DO for Sai (open)
+- [ ] Journal brain: console.anthropic.com -> ~$5 credit + spend limit -> API key 'sentinel-journal'. VM ~/.sentinel-live/config.env: ANTHROPIC_API_KEY=... and SEC_USER_AGENT="Sai <email>".
+      Test: rm ~/.sentinel-live/journal.json; cd ~/sec-edgar-worker/live; node journal.mjs --date 2026-11-25; tail -2 ~/.sentinel-live/journal.md (Brain column shows a verdict).
+- [ ] Crypto alerts: new ntfy topic + GitHub secret NTFY_TOPIC_CRYPTO.
+- Shadow journal (VM only, live/journal.mjs, dip-journal.timer 4:50 pm ET, ~/.sentinel-live/journal.md): review ~monthly, judge after 6-12 months / 100+ dips.
+
 ## 0r. "Brain" tests (Nov 25; report: AI reasoning layer for trading bots) - nothing adopted
 - Dip cause tags (dip-news-tags.yml -> data/dip_news_tags.json, v3.0 live-like 2016-26, 2,936 signals, 1,378 trades): Alpaca/Benzinga headlines
   effectively start 2021 for our tickers (0 tagged trades 2016-20; 2021-26 most trades still have no own headline) -> category samples tiny (downgrade 19, legal 17, guidance 2).
