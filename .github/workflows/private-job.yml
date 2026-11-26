@@ -29,7 +29,7 @@ jobs:
           set +x
           [[ "$JOB" =~ ^[a-z0-9_]+$ ]] || { echo "bad job name"; exit 1; }
           [ -n "$FR_KEY" ] || { echo "FR_KEY secret missing"; exit 1; }
-          mkdir -p /tmp/w/out
+          mkdir -p /tmp/w/out private/out
           openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:FR_KEY -in "private/jobs/$JOB.py.enc" -out /tmp/w/job.py 2>/dev/null || { echo "decrypt failed"; exit 1; }
           python -I /tmp/w/job.py /tmp/w/out > /tmp/w/out/log.txt 2>&1; echo "exit=$?" >> /tmp/w/out/log.txt
           tar -czf /tmp/w/out.tgz -C /tmp/w out
