@@ -48,6 +48,21 @@
    "dips": 1,
    "filled": [],
    "orders": 0
+  },
+  {
+   "day": "2026-11-26",
+   "equity": 1018049.76,
+   "nifty": 25926.2,
+   "cash": 20710.18,
+   "liquid": 0.0,
+   "stocks": 1,
+   "park": {
+    "NIFTYBEES": 3035
+   },
+   "park_target": "NIFTYBEES",
+   "dips": 1,
+   "filled": [],
+   "orders": 0
   }
  ],
  "started": "2026-11-23",
