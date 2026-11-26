@@ -1,0 +1,28 @@
+{
+ "updated": "2026-11-26T14:14Z",
+ "status": "ok",
+ "start": "2026-11-25",
+ "data_through": "2026-11-25",
+ "bots": {
+  "Frontrunner": {
+   "value": 9990.0,
+   "return_pct": -0.1
+  },
+  "Frontrunner-R": {
+   "value": 9990.0,
+   "return_pct": -0.1
+  },
+  "SPY": {
+   "value": 9990.0,
+   "return_pct": -0.1
+  }
+ },
+ "hist": [
+  [
+   "2026-11-25",
+   9990.0,
+   9990.0,
+   9990.0
+  ]
+ ]
+}
