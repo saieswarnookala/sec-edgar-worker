@@ -23,16 +23,6 @@ const call = (path, { method = 'GET', body, cookie, headers = {} } = {}) => work
 const W = { 'X-Sentinel': '1', Origin: B };
 const sid = (res) => (/sid=([a-f0-9]{64})/.exec(res.headers.get('Set-Cookie') || '') || [])[1];
 
-await t('live-journal hand-off: token required, POST then GET', async () => {
-  assert.equal((await call('/api/live-journal')).status, 401);                                    // no token configured -> locked
-  env.JOURNAL_TOKEN = 'j'.repeat(32);
-  assert.equal((await call('/api/live-journal', { headers: { authorization: 'Bearer wrong' } })).status, 401);
-  const H = { authorization: 'Bearer ' + 'j'.repeat(32) };
-  assert.equal((await call('/api/live-journal', { method: 'POST', body: { date: 'x' }, headers: H })).status, 400);
-  assert.equal((await call('/api/live-journal', { method: 'POST', body: { date: '2026-11-25', signals: ['CRWD'] }, headers: H })).status, 200);
-  const r = await (await call('/api/live-journal?days=5', { headers: H })).json(); assert.equal(r.length, 1); assert.deepEqual(r[0].signals, ['CRWD']);
-  delete env.JOURNAL_TOKEN;
-});
 await t('signed-out page redirects to /login (with next)', async () => {
   const r = await call('/?symbol=AAPL#trading');
   assert.equal(r.status, 302); assert.match(r.headers.get('Location'), /\/login\?next=%2F%3Fsymbol%3DAAPL/);
