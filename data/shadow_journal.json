@@ -1,0 +1,96 @@
+{
+ "note": "Shadow journal for the dip bot (from Nov 26 2026). Research only; it NEVER trades and never touches the live bot or the VM.\nEvery weekday evening:\n  1) reads today's stock dip signals from paper bot 12 (data/paper_v32_state.json, same v3.2 rules as the live bot, every 15-min check)\n  2) for each new signal: headlines from the 7 days before the moment it first showed up (Alpaca/Benzinga), SEC 8-K items from the last\n     5 days, rule-based tags (downgrade, guidance cut, legal, ...) and, if ANTHROPIC_API_KEY is set, a 'brain' label from Claude\n     (cause, company-specific or not, severity 1-3, verdict take/caution/avoid, one-line reason; 3 votes, majority wins)\n  3) fills outcomes once 5 trading days have passed: stock return from the signal-day close to 5 days later, and paper bot 12's trade result\n  4) summary: average 5-day return by verdict / cause -> after ~6-12 months we see whether 'avoid' dips really did worse.\nRaw headline text is not saved (news licence; public repo): only counts, tags and the model's own short reason.\nEnv: APCA_API_KEY_ID / APCA_API_SECRET_KEY (news), SEC_USER_AGENT (8-K), ANTHROPIC_API_KEY (optional), BRAIN_MODEL (default claude-haiku-5-5).\nDRY=1: fake news/prices/LLM, writes /tmp/shadow_journal_dry.json. Not financial advice.",
+ "entries": [
+  {
+   "date": "2026-11-23",
+   "symbol": "CNC",
+   "first_seen": "2026-11-23T15:00:36.659Z",
+   "paper_bot_bought": true,
+   "headlines": 6,
+   "headlines_all": 6,
+   "tags": [],
+   "sec_8k_items": [],
+   "brain": null,
+   "outcome": {
+    "ret5_pct": null,
+    "paper_trade_pct": 2.53
+   }
+  },
+  {
+   "date": "2026-11-23",
+   "symbol": "ELV",
+   "first_seen": "2026-11-23T15:00:36.659Z",
+   "paper_bot_bought": true,
+   "headlines": 7,
+   "headlines_all": 7,
+   "tags": [
+    "legal / probe"
+   ],
+   "sec_8k_items": [],
+   "brain": null,
+   "outcome": {
+    "ret5_pct": null,
+    "paper_trade_pct": 0.64
+   }
+  },
+  {
+   "date": "2026-11-23",
+   "symbol": "HUM",
+   "first_seen": "2026-11-23T15:00:36.659Z",
+   "paper_bot_bought": true,
+   "headlines": 12,
+   "headlines_all": 12,
+   "tags": [
+    "legal / probe"
+   ],
+   "sec_8k_items": [
+    "8.01"
+   ],
+   "brain": null,
+   "outcome": {
+    "ret5_pct": null,
+    "paper_trade_pct": 5.17
+   }
+  },
+  {
+   "date": "2026-11-23",
+   "symbol": "XYZ",
+   "first_seen": "2026-11-23T15:30:39.034Z",
+   "paper_bot_bought": true,
+   "headlines": 0,
+   "headlines_all": 0,
+   "tags": [],
+   "sec_8k_items": [],
+   "brain": null,
+   "outcome": {
+    "ret5_pct": null,
+    "paper_trade_pct": 4.01
+   }
+  },
+  {
+   "date": "2026-11-25",
+   "symbol": "CRWD",
+   "first_seen": "2026-11-25T15:00:40.281Z",
+   "paper_bot_bought": true,
+   "headlines": 8,
+   "headlines_all": 8,
+   "tags": [],
+   "sec_8k_items": [
+    "1.01",
+    "2.02",
+    "7.01"
+   ],
+   "brain": null,
+   "outcome": null
+  }
+ ],
+ "summary": {
+  "updated": "2026-11-26",
+  "signals": 5,
+  "with_outcome": 0,
+  "by_verdict": {},
+  "by_cause": {},
+  "by_rule_tag": {},
+  "by_8k": {}
+ }
+}
