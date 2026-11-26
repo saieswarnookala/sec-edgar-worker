@@ -1,0 +1,44 @@
+name: "Private job (encrypted)"
+# Runs an encrypted script from private/jobs/<job>.py.enc with the FR_KEY secret. Nothing readable is printed:
+# all output (including errors) goes into an encrypted bundle committed as private/out/<job>.tar.enc.
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'job name (file private/jobs/<job>.py.enc)'
+        required: true
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q pandas pyarrow numpy > /dev/null 2>&1
+      - name: Run (silent)
+        shell: bash
+        env:
+          FR_KEY: ${{ secrets.FR_KEY }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          JOB: ${{ inputs.job }}
+        run: |
+          set +x
+          [[ "$JOB" =~ ^[a-z0-9_]+$ ]] || { echo "bad job name"; exit 1; }
+          [ -n "$FR_KEY" ] || { echo "FR_KEY secret missing"; exit 1; }
+          mkdir -p /tmp/w/out
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:FR_KEY -in "private/jobs/$JOB.py.enc" -out /tmp/w/job.py 2>/dev/null || { echo "decrypt failed"; exit 1; }
+          python -I /tmp/w/job.py /tmp/w/out > /tmp/w/out/log.txt 2>&1; echo "exit=$?" >> /tmp/w/out/log.txt
+          tar -czf /tmp/w/out.tgz -C /tmp/w out
+          openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:FR_KEY -in /tmp/w/out.tgz -out "private/out/$JOB.tar.enc"
+          rm -rf /tmp/w
+          echo "done (output encrypted)"
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add private/out && git commit -qm "private job output" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1
