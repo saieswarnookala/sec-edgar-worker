@@ -1,20 +1,38 @@
 {
- "updated": "2026-11-26T14:14Z",
+ "updated": "2026-11-26T22:08Z",
  "status": "ok",
  "start": "2026-11-25",
  "data_through": "2026-11-25",
  "bots": {
   "Frontrunner": {
    "value": 9990.0,
-   "return_pct": -0.1
+   "return_pct": -0.1,
+   "since": "2026-11-25"
   },
   "Frontrunner-R": {
    "value": 9990.0,
-   "return_pct": -0.1
+   "return_pct": -0.1,
+   "since": "2026-11-25"
   },
   "SPY": {
    "value": 9990.0,
-   "return_pct": -0.1
+   "return_pct": -0.1,
+   "since": "2026-11-25"
+  },
+  "Mix 50/50": {
+   "value": 10000.0,
+   "return_pct": 0.0,
+   "since": "2026-11-25"
+  },
+  "Mix 50/50 x1.3": {
+   "value": 10000.0,
+   "return_pct": 0.0,
+   "since": "2026-11-25"
+  },
+  "Mix 50/50 x1.5": {
+   "value": 10000.0,
+   "return_pct": 0.0,
+   "since": "2026-11-25"
   }
  },
  "hist": [
