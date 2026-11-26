@@ -1,0 +1,422 @@
+{
+ "note": "India momentum brain ideas (price-only), survivorship-free NSE 2009-2026, 0.30%/side, before tax. Research only.",
+ "built": "2026-11-26",
+ "variants": {
+  "TODAY: paper bot 13 (100-day filter)": {
+   "cagr": 32.6,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 101.2,
+    "2010-2015": 22.1,
+    "2016-2020": 35.5,
+    "2021-2026": 31.9
+   },
+   "train_2009_2018": {
+    "cagr": 29.8,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 36.0,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 26.4,
+   "turnover_per_year": 6.2,
+   "months_flagged": 0
+  },
+  "crash flag HALF size when: Nifty 2-year return < 0": {
+   "cagr": 30.0,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 83.4,
+    "2010-2015": 19.5,
+    "2016-2020": 33.5,
+    "2021-2026": 30.7
+   },
+   "train_2009_2018": {
+    "cagr": 26.7,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 34.1,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 24.2,
+   "turnover_per_year": 6.0,
+   "months_flagged": 16
+  },
+  "crash flag OUT (hide) when: Nifty 2-year return < 0": {
+   "cagr": 27.1,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 66.1,
+    "2010-2015": 16.2,
+    "2016-2020": 31.4,
+    "2021-2026": 29.4
+   },
+   "train_2009_2018": {
+    "cagr": 23.1,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 32.1,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 21.8,
+   "turnover_per_year": 5.7,
+   "months_flagged": 16
+  },
+  "crash flag HALF size when: Nifty 1-year < 0 and last month > +5% (rebound under way)": {
+   "cagr": 31.8,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 84.4,
+    "2010-2015": 22.0,
+    "2016-2020": 35.0,
+    "2021-2026": 31.9
+   },
+   "train_2009_2018": {
+    "cagr": 28.3,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 36.0,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 25.7,
+   "turnover_per_year": 6.0,
+   "months_flagged": 7
+  },
+  "crash flag OUT (hide) when: Nifty 1-year < 0 and last month > +5% (rebound under way)": {
+   "cagr": 30.9,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 70.1,
+    "2010-2015": 22.1,
+    "2016-2020": 34.0,
+    "2021-2026": 31.9
+   },
+   "train_2009_2018": {
+    "cagr": 26.9,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 36.0,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 25.0,
+   "turnover_per_year": 5.9,
+   "months_flagged": 7
+  },
+  "crash flag HALF size when: Nifty 1-year < 0": {
+   "cagr": 29.2,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 72.8,
+    "2010-2015": 21.8,
+    "2016-2020": 29.9,
+    "2021-2026": 30.0
+   },
+   "train_2009_2018": {
+    "cagr": 26.8,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 32.1,
+    "dd": -21.7
+   },
+   "after_tax_rough_cagr": 23.6,
+   "turnover_per_year": 5.9,
+   "months_flagged": 22
+  },
+  "crash flag OUT (hide) when: Nifty 1-year < 0": {
+   "cagr": 25.6,
+   "dd": -24.1,
+   "per": {
+    "2009-2009": 48.9,
+    "2010-2015": 20.8,
+    "2016-2020": 24.4,
+    "2021-2026": 27.9
+   },
+   "train_2009_2018": {
+    "cagr": 23.6,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 27.9,
+    "dd": -24.1
+   },
+   "after_tax_rough_cagr": 20.6,
+   "turnover_per_year": 5.6,
+   "months_flagged": 22
+  },
+  "crash flag HALF size when: Nifty still 15%+ below its 1-year high": {
+   "cagr": 31.9,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 85.7,
+    "2010-2015": 23.1,
+    "2016-2020": 34.0,
+    "2021-2026": 31.9
+   },
+   "train_2009_2018": {
+    "cagr": 29.4,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 35.1,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 25.8,
+   "turnover_per_year": 6.1,
+   "months_flagged": 4
+  },
+  "crash flag OUT (hide) when: Nifty still 15%+ below its 1-year high": {
+   "cagr": 31.2,
+   "dd": -23.8,
+   "per": {
+    "2009-2009": 70.8,
+    "2010-2015": 24.0,
+    "2016-2020": 32.4,
+    "2021-2026": 31.9
+   },
+   "train_2009_2018": {
+    "cagr": 28.9,
+    "dd": -23.8
+   },
+   "test_2019_2026": {
+    "cagr": 34.1,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 25.2,
+   "turnover_per_year": 6.0,
+   "months_flagged": 4
+  },
+  "steady risers: drop the jumpiest third of the top 60": {
+   "cagr": 29.7,
+   "dd": -25.9,
+   "per": {
+    "2009-2009": 101.9,
+    "2010-2015": 20.8,
+    "2016-2020": 28.4,
+    "2021-2026": 30.5
+   },
+   "train_2009_2018": {
+    "cagr": 27.0,
+    "dd": -25.9
+   },
+   "test_2019_2026": {
+    "cagr": 33.0,
+    "dd": -22.3
+   },
+   "after_tax_rough_cagr": 24.0,
+   "turnover_per_year": 6.6,
+   "months_flagged": 0
+  },
+  "steady risers: rank = momentum rank + smoothness rank (top 60)": {
+   "cagr": 29.0,
+   "dd": -24.3,
+   "per": {
+    "2009-2009": 93.9,
+    "2010-2015": 18.4,
+    "2016-2020": 32.0,
+    "2021-2026": 29.1
+   },
+   "train_2009_2018": {
+    "cagr": 25.8,
+    "dd": -21.4
+   },
+   "test_2019_2026": {
+    "cagr": 33.1,
+    "dd": -24.3
+   },
+   "after_tax_rough_cagr": 23.5,
+   "turnover_per_year": 6.4,
+   "months_flagged": 0
+  },
+  "volatility target 20%": {
+   "cagr": 31.9,
+   "dd": -23.1,
+   "per": {
+    "2009-2009": 90.3,
+    "2010-2015": 23.3,
+    "2016-2020": 34.2,
+    "2021-2026": 31.0
+   },
+   "train_2009_2018": {
+    "cagr": 29.4,
+    "dd": -22.0
+   },
+   "test_2019_2026": {
+    "cagr": 34.9,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 25.8,
+   "turnover_per_year": 6.0,
+   "months_flagged": 0
+  },
+  "volatility target 25%": {
+   "cagr": 32.4,
+   "dd": -23.1,
+   "per": {
+    "2009-2009": 97.2,
+    "2010-2015": 22.8,
+    "2016-2020": 35.1,
+    "2021-2026": 31.4
+   },
+   "train_2009_2018": {
+    "cagr": 29.8,
+    "dd": -23.0
+   },
+   "test_2019_2026": {
+    "cagr": 35.5,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 26.2,
+   "turnover_per_year": 6.2,
+   "months_flagged": 0
+  },
+  "combo: steady filter + crash HALF (2-year < 0)": {
+   "cagr": 27.7,
+   "dd": -25.9,
+   "per": {
+    "2009-2009": 87.2,
+    "2010-2015": 18.8,
+    "2016-2020": 27.1,
+    "2021-2026": 29.3
+   },
+   "train_2009_2018": {
+    "cagr": 24.6,
+    "dd": -25.9
+   },
+   "test_2019_2026": {
+    "cagr": 31.5,
+    "dd": -22.3
+   },
+   "after_tax_rough_cagr": 22.3,
+   "turnover_per_year": 6.3,
+   "months_flagged": 16
+  },
+  "combo: steady blend + crash HALF (2-year < 0)": {
+   "cagr": 27.2,
+   "dd": -24.3,
+   "per": {
+    "2009-2009": 79.6,
+    "2010-2015": 16.7,
+    "2016-2020": 30.7,
+    "2021-2026": 28.0
+   },
+   "train_2009_2018": {
+    "cagr": 23.6,
+    "dd": -21.4
+   },
+   "test_2019_2026": {
+    "cagr": 31.7,
+    "dd": -24.3
+   },
+   "after_tax_rough_cagr": 22.0,
+   "turnover_per_year": 6.1,
+   "months_flagged": 16
+  },
+  "check: 2x costs, today": {
+   "cagr": 30.1,
+   "dd": -24.9,
+   "per": {
+    "2009-2009": 97.3,
+    "2010-2015": 19.8,
+    "2016-2020": 33.0,
+    "2021-2026": 29.6
+   },
+   "train_2009_2018": {
+    "cagr": 27.3,
+    "dd": -24.3
+   },
+   "test_2019_2026": {
+    "cagr": 33.6,
+    "dd": -21.1
+   },
+   "after_tax_rough_cagr": 24.4,
+   "turnover_per_year": 6.2,
+   "months_flagged": 0
+  },
+  "check: 2x costs, steady filter": {
+   "cagr": 27.1,
+   "dd": -26.4,
+   "per": {
+    "2009-2009": 97.3,
+    "2010-2015": 18.4,
+    "2016-2020": 25.9,
+    "2021-2026": 28.1
+   },
+   "train_2009_2018": {
+    "cagr": 24.4,
+    "dd": -26.4
+   },
+   "test_2019_2026": {
+    "cagr": 30.5,
+    "dd": -23.5
+   },
+   "after_tax_rough_cagr": 21.9,
+   "turnover_per_year": 6.6,
+   "months_flagged": 0
+  }
+ },
+ "flag_months": {
+  "Nifty 2-year return < 0": [
+   "2009-11-03",
+   "2009-12-01",
+   "2010-01-04",
+   "2012-04-02",
+   "2012-05-02",
+   "2012-07-02",
+   "2012-08-01",
+   "2012-09-03",
+   "2012-10-01",
+   "2012-11-01",
+   "2012-12-03",
+   "2013-01-02",
+   "2017-02-01",
+   "2020-07-01",
+   "2026-08-03",
+   "2026-09-01"
+  ],
+  "Nifty 1-year < 0 and last month > +5% (rebound under way)": [
+   "2009-04-01",
+   "2009-05-04",
+   "2009-06-01",
+   "2011-11-01",
+   "2012-02-01",
+   "2012-03-01",
+   "2016-04-01"
+  ],
+  "Nifty 1-year < 0": [
+   "2009-04-01",
+   "2009-05-04",
+   "2009-06-01",
+   "2009-07-01",
+   "2011-11-01",
+   "2012-02-01",
+   "2012-03-01",
+   "2012-04-02",
+   "2012-05-02",
+   "2012-08-01",
+   "2016-04-01",
+   "2016-05-02",
+   "2016-06-01",
+   "2016-07-01",
+   "2019-02-01",
+   "2020-07-01",
+   "2020-08-03",
+   "2020-10-01",
+   "2020-11-02",
+   "2022-10-03",
+   "2026-08-03",
+   "2026-09-01"
+  ],
+  "Nifty still 15%+ below its 1-year high": [
+   "2009-04-01",
+   "2009-05-04",
+   "2011-11-01",
+   "2020-07-01"
+  ]
+ }
+}
