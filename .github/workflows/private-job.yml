@@ -2,11 +2,15 @@ name: "Private job (encrypted)"
 # Runs an encrypted script from private/jobs/<job>.py.enc with the FR_KEY secret. Nothing readable is printed:
 # all output (including errors) goes into an encrypted bundle committed as private/out/<job>.tar.enc.
 on:
+  schedule:
+    - cron: '20 22 * * 1-5'   # daily private job after the US close (catches up if GitHub runs it late)
+    - cron: '0 11 2 * *'      # monthly data refresh
   workflow_dispatch:
     inputs:
       job:
         description: 'job name (file private/jobs/<job>.py.enc)'
         required: true
+concurrency: private-job
 permissions:
   contents: write
 jobs:
@@ -18,13 +22,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -q pandas pyarrow numpy > /dev/null 2>&1
+      - run: pip install -q pandas pyarrow numpy pandas_market_calendars > /dev/null 2>&1
       - name: Run (silent)
         shell: bash
         env:
           FR_KEY: ${{ secrets.FR_KEY }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
-          JOB: ${{ inputs.job }}
+          APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
+          APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
+          NTFY_TOPIC_FR: ${{ secrets.NTFY_TOPIC_FR }}
+          JOB: ${{ inputs.job || (github.event.schedule == '0 11 2 * *' && 'fetch' || 'frpaper') }}
         run: |
           set +x
           [[ "$JOB" =~ ^[a-z0-9_]+$ ]] || { echo "bad job name"; exit 1; }
@@ -40,5 +47,5 @@ jobs:
         shell: bash
         run: |
           git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
-          git add private/out && git commit -qm "private job output" || exit 0
+          git add private/out; [ -f data/paper_fr_public.json ] && git add data/paper_fr_public.json; git commit -qm "private job output" || exit 0
           for i in 1 2 3 4 5; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep 7; done; exit 1

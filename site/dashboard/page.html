@@ -1047,6 +1047,8 @@ dash.calc('vs_industry', {
       <tr class="st-india"><td colspan="6"><b>India (for friends and family; not for Sai's own money: Indian funds are PFICs)</b></td></tr>
       <tr data-bot="inmom"><td>13</td><td>India momentum basket (₹10 lakh)</td><td>Top 20 steady risers, monthly, crash filter</td><td><b class="sx-good">Keep</b> (main India pick, ~27%/yr realistic)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="crypto"><td>15</td><td>Crypto trend: BTC + ETH ($10,000)</td><td>Hold IBIT / ETHA only above the 50-day average</td><td><b>New</b> (paper from Nov 25)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="frontrunner"><td>16</td><td>Frontrunner ($10,000)</td><td>Private</td><td><b>New</b> (paper from Nov 27)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="frontrunner_r"><td>17</td><td>Frontrunner-R ($10,000)</td><td>Private</td><td><b>New</b> (paper from Nov 27)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="inalpha"><td>14</td><td>India Alpha 50 (₹10 lakh)</td><td>50 stocks beating the market, quarterly</td><td><b>Watch</b> (barely beats Nifty after tax)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr><td>–</td><td>India dip bot (₹10 lakh)</td><td>India version of the US dip rules; morning watchlist alerts</td><td><b class="sx-bad">Weak</b> (matches Nifty, loses after tax)</td><td>—</td><td>—</td></tr>
     </tbody></table></div>
@@ -1423,6 +1425,12 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="inalpha"></div>
   </section>
+  <section class="sx-card" id="pb-fr">
+    <div class="sx-ch"><h3>16–17. Frontrunner and Frontrunner-R ($10,000 virtual each, from Nov 27 2026)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Private</span><span class="sx-badge">Virtual: no broker</span></div>
+    <div id="fr-live"><p class="sx-cap">Loading…</p></div>
+  </section>
+
   <section class="sx-card" id="pb-crypto">
     <div class="sx-ch"><h3>15. Crypto trend: Bitcoin + Ether ($10,000 virtual, from Nov 25 2026)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">IBIT + ETHA</span><span class="sx-badge">Weekdays after the US close</span><span class="sx-badge">Alerts: crypto ntfy channel</span></div>
@@ -2503,6 +2511,11 @@ dash.calc('vs_industry', {
     try {
       const st = await (await fetch('/data/paper_status.json', { credentials: 'same-origin', cache: 'no-store' })).json();
       root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = block(el.dataset.bot, st.bots[el.dataset.bot]); });
+      { const el = root.querySelector('#fr-live'), a = st.bots.frontrunner, b = st.bots.frontrunner_r;
+        if (el) { if (!a || !(a.curve || []).length) el.innerHTML = '<p class="sx-cap">Not started yet.</p>'; else {
+          const L = (x) => x.curve.at(-1), pc = (v) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(1) + '%', cl = (v) => (v >= 0 ? 'sx-good' : 'sx-bad');
+          const rows = [['Frontrunner', L(a).eq], ['Frontrunner-R', L(b).eq], ['SPY', L(a).spy]].map(([n, v]) => { const r = (v / 10000 - 1) * 100; return `<tr><td>${n}</td><td>$${Math.round(v).toLocaleString()}</td><td class="${cl(r)}">${pc(r)}</td></tr>`; }).join('');
+          el.innerHTML = `<table class="sx-scr"><tr><th>Bot</th><th>Value</th><th>Since ${esc(a.start_day)}</th></tr>${rows}</table><p class="sx-cap">Data through ${esc(a.data_through || '')} · ${a.status === 'ok' ? 'updated ' + esc(a.updated || '') : '<span class="sx-bad">last run failed</span>'}</p>`; } } }
     } catch (e) { root.querySelectorAll('.pb-live').forEach((el) => { el.innerHTML = '<p class="sx-cap">Couldn’t load the latest bot data.</p>'; }); }
     const hel = root.querySelector('#pb-health');
     const loadTimers = async () => { try {
