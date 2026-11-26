@@ -700,6 +700,80 @@ def run():
                 for ma in ((100, 200) if len(days) > 1 else (100,)):
                     o = runs(days, lag, ma); key = f"{lbl} | lag {lag} | filter {ma}"; OUTS["split"][key] = o; pr("SPLIT " + key, o)
         os.makedirs("data", exist_ok=True); json.dump(OUTS, open("data/india_momsplit.json" if not DRY else "/tmp/india_momsplit_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
+    if MODE == "brain":
+        # Nov 25 2026 "brain" research, India momentum (paper bot 13 rules: top 500, (6m+12m)/vol, 20 stocks, monthly day 1, keep top 30,
+        # Nifty 100-day filter at reshuffle, hide in gold-if-trending else liquid). Price-only ideas from the literature, no LLM:
+        #  (a) momentum-crash flag (Daniel & Moskowitz): after a bear market the rebound is when momentum crashes -> half size / stay out
+        #  (b) frog-in-the-pan (Da, Gurun & Warachka): prefer stocks that rose in many small steps over ones that rose in a few jumps
+        #  (c) volatility target re-check on today's 100-day bot (Nov 21 test used the old 200-day base)
+        Mk = members(500); sc = SC["(6m+12m)/volatility"].values; ok = Mk & ~glitch & np.isfinite(sc)
+        n100 = (n > n.rolling(100).mean()).shift(1, fill_value=False).values; hide_r = np.where(gtr, gr, liq)
+        sh = lambda x: pd.Series(x, index=dates).shift(1).fillna(False).astype(bool).values
+        r2y = n.pct_change(496); r1y = n.pct_change(248); r1m = n.pct_change(21); ddn = n / n.rolling(248, min_periods=100).max() - 1
+        FLAG = {"Nifty 2-year return < 0": sh((r2y < 0).values),
+                "Nifty 1-year < 0 and last month > +5% (rebound under way)": sh(((r1y < 0) & (r1m > 0.05)).values),
+                "Nifty 1-year < 0": sh((r1y < 0).values),
+                "Nifty still 15%+ below its 1-year high": sh((ddn < -0.15).values)}
+        Rd = R.where(pd.DataFrame(traded, index=R.index, columns=R.columns))
+        pos = (Rd > 0).rolling(248, min_periods=180).mean(); neg = (Rd < 0).rolling(248, min_periods=180).mean()
+        ID = (np.sign(Pf.pct_change(248)) * (neg - pos)).values          # lower = smoother rise ("frog in the pan" information discreteness)
+        def mom3(N=20, cost=0.003, voltgt=None, flag=None, flag_mode="half", fip=None):
+            w = {}; eq = 1.0; curve = np.ones(D); turn = 0.0; hist = []; nflag = 0; rebal = set(months); inside = True
+            for t in range(START, D):
+                day = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values())
+                day += cash * (hide_r[t] if not inside else liq[t]); eq *= 1 + day; hist.append(day)
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day) for j, wi in w.items()}
+                for j in list(w):
+                    if not traded[t, j]: eq *= 1 - cost * w[j]; turn += w[j]; w.pop(j)
+                if t in rebal:
+                    inside = bool(n100[t])
+                    if inside:
+                        cand = np.where(ok[t])[0]; order = cand[np.argsort(-sc[t, cand])]
+                        if fip:
+                            top = order[: 3 * N]; idv = np.nan_to_num(ID[t, top], nan=0.0)
+                            if fip == "filter": cut = np.quantile(idv, 2 / 3); top = top[idv <= cut]
+                            elif fip == "blend":
+                                rk = np.argsort(np.argsort(-sc[t, top])) + np.argsort(np.argsort(idv)); top = top[np.argsort(rk, kind="stable")]
+                            order = np.r_[top, [j for j in order if j not in set(top)]].astype(int)
+                        rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in w if rank.get(j, 1e9) < 1.5 * N][:N]; new = kept + [j for j in order if j not in kept][: N - len(kept)]
+                        scale = 1.0
+                        if voltgt and len(hist) > 60: rv = float(np.std(hist[-60:]) * np.sqrt(248)); scale = min(1.0, voltgt / max(rv, 1e-6))
+                        if flag and FLAG[flag][t]: scale *= 0.5 if flag_mode == "half" else 0.0; nflag += 1
+                        tgt = {j: scale / N for j in new} if scale > 0 else {}
+                    else: tgt = {}
+                    tv_ = sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); eq *= 1 - cost * tv_; turn += tv_; w = dict(tgt)
+                curve[t] = eq
+            o = summ(curve); o["turnover_per_year"] = round(turn / ((D - START) / 248), 1); o["months_flagged"] = nflag; return o, curve
+        def mom2ref():   # same loop as MODE momrisk mom2(ma=100): the check that mom3 reproduces today's bot
+            w = {}; eq = 1.0; curve = np.ones(D); inside = True
+            for t in range(START, D):
+                day = sum(wi * Rt[t, j] for j, wi in w.items()); cash = 1 - sum(w.values()); day += cash * (hide_r[t] if not inside else liq[t]); eq *= 1 + day
+                w = {j: wi * (1 + Rt[t, j]) / (1 + day) for j, wi in w.items()}
+                for j in list(w):
+                    if not traded[t, j]: eq *= 1 - 0.003 * w[j]; w.pop(j)
+                if t in set(months):
+                    inside = bool(n100[t])
+                    if inside:
+                        cand = np.where(ok[t])[0]; order = cand[np.argsort(-sc[t, cand])]; rank = {j: r for r, j in enumerate(order)}
+                        kept = [j for j in w if rank.get(j, 1e9) < 30][:20]; new = kept + [j for j in order if j not in kept][: 20 - len(kept)]; tgt = {j: 1 / 20 for j in new}
+                    else: tgt = {}
+                    eq *= 1 - 0.003 * sum(abs(tgt.get(j, 0) - w.get(j, 0)) for j in set(tgt) | set(w)); w = dict(tgt)
+                curve[t] = eq
+            return summ(curve)
+        V = [("TODAY: paper bot 13 (100-day filter)", {})]
+        for f in FLAG: V += [(f"crash flag HALF size when: {f}", dict(flag=f)), (f"crash flag OUT (hide) when: {f}", dict(flag=f, flag_mode="out"))]
+        V += [("steady risers: drop the jumpiest third of the top 60", dict(fip="filter")), ("steady risers: rank = momentum rank + smoothness rank (top 60)", dict(fip="blend")),
+              ("volatility target 20%", dict(voltgt=0.20)), ("volatility target 25%", dict(voltgt=0.25)),
+              ("combo: steady filter + crash HALF (2-year < 0)", dict(fip="filter", flag="Nifty 2-year return < 0")),
+              ("combo: steady blend + crash HALF (2-year < 0)", dict(fip="blend", flag="Nifty 2-year return < 0")),
+              ("check: 2x costs, today", dict(cost=0.006)), ("check: 2x costs, steady filter", dict(cost=0.006, fip="filter"))]
+        OUTB = {"note": "India momentum brain ideas (price-only), survivorship-free NSE 2009-2026, 0.30%/side, before tax. Research only.", "built": str(pd.Timestamp.today().date()), "variants": {},
+                "flag_months": {f: [str(dates[i].date()) for i in months if FLAG[f][i] and n100[i]] for f in FLAG}}
+        ref = mom2ref(); chk, _ = mom3(); print("CHECK mom3 == reference:", ref["cagr"], chk["cagr"], ref["dd"], chk["dd"], flush=True); assert abs(ref["cagr"] - chk["cagr"]) < 0.25, "engine mismatch"
+        for lbl, kw in V:
+            o, c = mom3(**kw); OUTB["variants"][lbl] = o; pr("BRAIN " + lbl, o)
+        os.makedirs("data", exist_ok=True); json.dump(OUTB, open("data/india_brain.json" if not DRY else "/tmp/india_brain_dry.json", "w"), indent=1, default=float); print("wrote", flush=True); return
     if MODE == "momrisk":
         # Ways to cut the momentum basket's worst drop (base = the picked version: top 500, (6m+12m)/vol, 20 stocks, monthly,
         # Nifty-200-day filter at reshuffles, hide in gold-if-trending else liquid).
