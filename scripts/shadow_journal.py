@@ -1,13 +1,14 @@
 """Shadow journal for the dip bot (from Nov 26 2026). Research only; it NEVER trades and never touches the live bot or the VM.
 Every weekday evening:
-  1) reads today's stock dip signals from paper bot 12 (data/paper_v32_state.json, same v3.2 rules as the live bot, every 15-min check)
+  1) reads the LIVE bot's own decisions (signals, orders, fills) that the VM hands off after the close (live/export-journal.mjs ->
+     dashboard worker /api/live-journal, JOURNAL_TOKEN); days with no live record fall back to paper bot 12's signals (same v3.2 rules)
   2) for each new signal: headlines from the 7 days before the moment it first showed up (Alpaca/Benzinga), SEC 8-K items from the last
      5 days, rule-based tags (downgrade, guidance cut, legal, ...) and, if ANTHROPIC_API_KEY is set, a 'brain' label from Claude
      (cause, company-specific or not, severity 1-3, verdict take/caution/avoid, one-line reason; 3 votes, majority wins)
   3) fills outcomes once 5 trading days have passed: stock return from the signal-day close to 5 days later, and paper bot 12's trade result
   4) summary: average 5-day return by verdict / cause -> after ~6-12 months we see whether 'avoid' dips really did worse.
 Raw headline text is not saved (news licence; public repo): only counts, tags and the model's own short reason.
-Env: APCA_API_KEY_ID / APCA_API_SECRET_KEY (news), SEC_USER_AGENT (8-K), ANTHROPIC_API_KEY (optional), BRAIN_MODEL (default claude-haiku-5-5).
+Env: JOURNAL_TOKEN (+ optional JOURNAL_URL), APCA_API_KEY_ID / APCA_API_SECRET_KEY (news), SEC_USER_AGENT (8-K), ANTHROPIC_API_KEY (optional), BRAIN_MODEL (default claude-haiku-5-5).
 DRY=1: fake news/prices/LLM, writes /tmp/shadow_journal_dry.json. Not financial advice."""
 import os, re, json, time, urllib.request, urllib.parse, urllib.error
 from collections import Counter
@@ -102,14 +103,32 @@ def brain(sym, dip_pct, heads, items):
     pick = next(x for x in votes if x["verdict"] == v)
     return {**pick, "cause": c, "verdict": v, "votes": len(votes), "agree": sum(x["verdict"] == v for x in votes), "model": MODEL}
 # ---------------------------------------------------------------- run
+def live_records():
+    """the live bot's own day records (sent by the VM after the close)"""
+    if DRY:
+        return [{"date": "2026-11-25", "signals": [{"symbol": "CRWD", "first_seen": "10:00"}], "orders": [{"run": "intraday", "symbol": "CRWD", "side": "buy", "mode": "live"}], "fills": [{"symbol": "CRWD", "side": "buy", "price": 204.39}]}]
+    tok = os.environ.get("JOURNAL_TOKEN")
+    if not tok: print("JOURNAL_TOKEN not set: using paper bot 12 signals only", flush=True); return []
+    try: return http((os.environ.get("JOURNAL_URL") or "https://sentinel-web.saiesh-dev.workers.dev/api/live-journal") + "?days=60", {"authorization": "Bearer " + tok, "User-Agent": "shadow-journal"}) or []
+    except Exception as e: print("live records unavailable:", str(e)[:150], flush=True); return []
+def et_to_utc(day, hm):
+    from zoneinfo import ZoneInfo
+    return datetime.fromisoformat(f"{day}T{hm}:00").replace(tzinfo=ZoneInfo("America/New_York")).astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 def main():
     st = json.load(open(SRC)); J = json.load(open(OUT)) if os.path.exists(OUT) and not DRY else {"note": __doc__, "entries": []}
     have = {(e["date"], e["symbol"]) for e in J["entries"]}
-    first = {}   # (date, symbol) -> first check time + dip
+    first, source, live_buy = {}, {}, set()   # (date, symbol) -> first time seen (UTC ISO) / 'live' or 'paper' / live bot bought it
+    LIVE = live_records(); live_days = {r["date"] for r in LIVE}
+    for r in LIVE:
+        for x in r.get("signals", []):
+            k = (r["date"], x["symbol"]); first.setdefault(k, et_to_utc(r["date"], x.get("first_seen") or "15:47")); source[k] = "live"
+        for o in r.get("orders", []):
+            if o.get("side") == "buy" and not str(o.get("why", "")).startswith("parking") and o.get("mode") == "live": live_buy.add((r["date"], o["symbol"]))
     for c in st.get("checks", []):
         d = c["at"][:10]
+        if d in live_days: continue   # the live record wins for that day
         for s in c.get("stock_signals", []):
-            if (d, s) not in first: first[(d, s)] = c["at"]
+            if (d, s) not in first: first[(d, s)] = c["at"]; source[(d, s)] = "paper"
     bought = {}
     for h in st.get("history", []):
         for o in (h.get("intraday_orders") or []) + (h.get("orders") or []):
@@ -124,11 +143,15 @@ def main():
         txt = [((a.get("headline") or "") + " " + (a.get("summary") or "")).lower() for a in own]
         items = eightk(s, d)
         heads = [{"time": a.get("created_at", "")[:16], "headline": a.get("headline", "")[:200]} for a in own]
-        e = {"date": d, "symbol": s, "first_seen": at, "paper_bot_bought": (d, s) in bought,
+        e = {"date": d, "symbol": s, "first_seen": at, "source": source.get((d, s)), "live_bot_bought": (d, s) in live_buy, "paper_bot_bought": (d, s) in bought,
              "headlines": None if arts is None else len(own), "headlines_all": None if arts is None else len(arts),
              "tags": [c for c, p in CATS.items() if any(re.search(p, x) for x in txt)], "sec_8k_items": items,
              "brain": brain(s, None, heads, items), "outcome": None}
         J["entries"].append(e); added += 1; print("journal", d, s, e["tags"], (e["brain"] or {}).get("verdict"), flush=True)
+    for e in J["entries"]:
+        k = (e["date"], e["symbol"])
+        if k in live_buy: e["live_bot_bought"] = True
+        if source.get(k) == "live": e["source"] = "live"
     # outcomes: 5 trading days after the signal day close
     trades = {(t["entry_date"], t["symbol"]): t.get("ret_pct") for t in st.get("vs", {}).get("trades", [])}
     today = datetime.now(timezone.utc).date().isoformat()
@@ -147,7 +170,8 @@ def main():
         return {k: {"n": len(v), "avg5_pct": round(sum(v) / len(v), 2), "win_pct": round(100 * sum(x > 0 for x in v) / len(v))} for k, v in sorted(g.items(), key=lambda x: str(x[0]))}
     J["summary"] = {"updated": today, "signals": len(J["entries"]), "with_outcome": len(done),
                     "by_verdict": grp(lambda e: (e.get("brain") or {}).get("verdict", "no brain")), "by_cause": grp(lambda e: (e.get("brain") or {}).get("cause", "no brain")),
-                    "by_rule_tag": grp(lambda e: "bad-news tag" if e["tags"] else "no tag"), "by_8k": grp(lambda e: "8-K filed" if e.get("sec_8k_items") else "none")}
+                    "by_rule_tag": grp(lambda e: "bad-news tag" if e["tags"] else "no tag"), "by_8k": grp(lambda e: "8-K filed" if e.get("sec_8k_items") else "none"),
+                    "live_bought_by_verdict": grp(lambda e: (e.get("brain") or {}).get("verdict", "no brain") if e.get("live_bot_bought") else "not bought live")}
     os.makedirs(os.path.dirname(OUT) or ".", exist_ok=True); json.dump(J, open(OUT, "w"), indent=1)
     print(f"added {added}, total {len(J['entries'])}, with outcome {len(done)}", json.dumps(J["summary"]["by_verdict"]), flush=True)
 if __name__ == "__main__": main()

@@ -24,6 +24,7 @@ function sameOrigin(request) {
   return request.headers.get('X-Sentinel') === '1' && (!o || o === new URL(request.url).origin);
 }
 async function body(request) { try { return await request.json(); } catch { return {}; } }
+const safeEq = (a, b) => { a = String(a); b = String(b); if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; };
 
 export default {
   async fetch(request, env, ctx) {
@@ -32,6 +33,25 @@ export default {
     const method = request.method;
 
     if (!env.AUTH) return new Response('AUTH storage is not configured', { status: 500 });
+
+    // ---- live bot -> shadow journal hand-off (machine to machine, bearer token JOURNAL_TOKEN; the VM POSTs its day's decisions, the journal job GETs them) ----
+    if (path === '/api/live-journal') {
+      const tok = (request.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
+      if (!env.JOURNAL_TOKEN || env.JOURNAL_TOKEN.length < 24 || !safeEq(tok, env.JOURNAL_TOKEN)) return json({ error: 'Not allowed' }, 401);
+      if (method === 'POST') {
+        const b = await body(request);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(b.date || '')) return json({ error: 'bad date' }, 400);
+        const txt = JSON.stringify(b); if (txt.length > 60000) return json({ error: 'too big' }, 413);
+        await env.CACHE.put('live:journal:' + b.date, txt, { expirationTtl: 60 * 60 * 24 * 400 }); return json({ ok: true });
+      }
+      if (method === 'GET') {
+        const days = Math.max(1, Math.min(+url.searchParams.get('days') || 30, 120)); const out = [];
+        const keys = (await env.CACHE.list({ prefix: 'live:journal:' })).keys.map((k) => k.name).sort().slice(-days);
+        for (const k of keys) { const v = await env.CACHE.get(k); if (v) out.push(JSON.parse(v)); }
+        return json(out);
+      }
+      return json({ error: 'GET or POST' }, 405);
+    }
 
     // ---- public ----
     if (path === '/api/login' && method === 'POST') {

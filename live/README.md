@@ -78,3 +78,9 @@ Logs: `journalctl --user -u dip-trade -n 100`
 
 ## If Oracle reclaims the free VM
 Create a new one and repeat setup + login (about 15 minutes). Upgrading the Oracle account to pay-as-you-go (add a card, stay inside free limits, set a $1 budget alert) stops idle reclaiming.
+
+## Shadow journal hand-off (optional, read-only)
+`export-journal.mjs` runs from its own timer (`bash setup-journal.sh`, Mon-Fri 4:50 pm ET). It only reads `dip-state.json` and sends the day's
+signals, orders and fills (no account size) to the dashboard worker; the GitHub "Shadow journal" job labels each dip and tracks how it did.
+It never imports `live-dip.mjs` and never talks to Robinhood. Needs `JOURNAL_TOKEN=` in config.env (same value as the GitHub secret).
+Check: `node export-journal.mjs --dry`.

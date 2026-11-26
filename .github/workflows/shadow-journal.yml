@@ -1,7 +1,7 @@
 name: "Shadow journal (dip bot brain, log only)"
 on:
   schedule:
-    - cron: '30 22 * * 1-5'   # ~5:30 pm ET; late runs are fine (headlines are cut at the moment each signal first appeared)
+    - cron: '30 22 * * 1-5'   # ~5:30 pm ET, after the VM hand-off at 4:50 pm ET; late runs are fine (headlines are cut at the moment each signal first appeared)
   workflow_dispatch:
 permissions:
   contents: write
@@ -22,6 +22,7 @@ jobs:
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JOURNAL_TOKEN: ${{ secrets.JOURNAL_TOKEN }}
         run: |
           DRY=1 python scripts/shadow_journal.py > /dev/null   # self-test on fake data first
           python -u scripts/shadow_journal.py
