@@ -1,0 +1,643 @@
+{
+ "note": "WHY did the stock dip? Tag every dip-bot signal by cause and compare how each kind bounced (Nov 25 2026 \"brain\" research). Research only.\nEngine: scripts/stack_and_rebound.py, dip bot v3.0 (point-in-time S&P 500, volume filter on), live-like fills, 2016-2026.\nCauses (no LLM; the labels an LLM 'brain' would produce, made with plain rules so they can be backtested honestly):\n  - headlines (Alpaca / Benzinga news, 7 days before the 3:45 pm decision, articles naming <= 3 tickers):\n    downgrade, price-target cut, guidance cut / warning, earnings miss, legal / probe, short-seller report, FDA / trial, exec exit, share offering\n  - SEC 8-K item codes filed in the 5 days before (2.02 earnings, 5.02 exec change, other)\n  - peers: same SEC industry (2-digit SIC) S&P members' median 5-day move (sector-wide dip vs stock alone); SPY's 5-day move\nOutput: per-tag trade stats (n, avg %, win %, t) for 2016-20 / 2021-26, and the full bot with a tag's dips skipped.\nRaw headlines are NOT saved (licence); only counts and tags. DRY=1: fake data + fake news.",
+ "news_ok": true,
+ "news_error": null,
+ "signals": 2936,
+ "trades": 1378,
+ "news_tagged_signals": 2936,
+ "per_trade": {
+  "ALL trades": {
+   "all": {
+    "n": 1378,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.71
+   },
+   "2016-2020": {
+    "n": 341,
+    "avg_pct": 0.61,
+    "median_pct": 1.21,
+    "win_pct": 64.8,
+    "t": 2.37
+   },
+   "2021-2026": {
+    "n": 1037,
+    "avg_pct": 0.87,
+    "median_pct": 1.42,
+    "win_pct": 64.4,
+    "t": 5.2
+   }
+  },
+  "4+ own headlines (lots of attention)": {
+   "with": {
+    "n": 151,
+    "avg_pct": 1.6,
+    "median_pct": 1.93,
+    "win_pct": 71.5,
+    "t": 3.38
+   },
+   "without": {
+    "n": 1227,
+    "avg_pct": 0.71,
+    "median_pct": 1.3,
+    "win_pct": 63.7,
+    "t": 4.81
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 151,
+    "avg_pct": 1.6,
+    "median_pct": 1.93,
+    "win_pct": 71.5,
+    "t": 3.38
+   }
+  },
+  "8-K earnings (2.02)": {
+   "with": {
+    "n": 320,
+    "avg_pct": 0.32,
+    "median_pct": 0.88,
+    "win_pct": 60.0,
+    "t": 1.24
+   },
+   "without": {
+    "n": 1058,
+    "avg_pct": 0.95,
+    "median_pct": 1.51,
+    "win_pct": 65.9,
+    "t": 5.73
+   },
+   "with 2016-2020": {
+    "n": 77,
+    "avg_pct": 0.08,
+    "median_pct": 0.38,
+    "win_pct": 57.1,
+    "t": 0.19
+   },
+   "with 2021-2026": {
+    "n": 243,
+    "avg_pct": 0.4,
+    "median_pct": 1.04,
+    "win_pct": 60.9,
+    "t": 1.26
+   }
+  },
+  "8-K exec change (5.02)": {
+   "with": {
+    "n": 58,
+    "avg_pct": 0.96,
+    "median_pct": 1.47,
+    "win_pct": 67.2,
+    "t": 2.07
+   },
+   "without": {
+    "n": 1320,
+    "avg_pct": 0.8,
+    "median_pct": 1.32,
+    "win_pct": 64.4,
+    "t": 5.48
+   },
+   "with 2016-2020": {
+    "n": 17,
+    "avg_pct": 1.41,
+    "median_pct": 1.48,
+    "win_pct": 70.6,
+    "t": 1.61
+   },
+   "with 2021-2026": {
+    "n": 41,
+    "avg_pct": 0.77,
+    "median_pct": 1.47,
+    "win_pct": 65.9,
+    "t": 1.41
+   }
+  },
+  "8-K other company news": {
+   "with": {
+    "n": 192,
+    "avg_pct": 0.51,
+    "median_pct": 0.75,
+    "win_pct": 58.9,
+    "t": 1.53
+   },
+   "without": {
+    "n": 1186,
+    "avg_pct": 0.86,
+    "median_pct": 1.47,
+    "win_pct": 65.4,
+    "t": 5.51
+   },
+   "with 2016-2020": {
+    "n": 42,
+    "avg_pct": 0.96,
+    "median_pct": 0.66,
+    "win_pct": 61.9,
+    "t": 1.38
+   },
+   "with 2021-2026": {
+    "n": 150,
+    "avg_pct": 0.38,
+    "median_pct": 0.9,
+    "win_pct": 58.0,
+    "t": 1.01
+   }
+  },
+  "ANY firm-specific bad news": {
+   "with": {
+    "n": 48,
+    "avg_pct": 1.3,
+    "median_pct": 1.82,
+    "win_pct": 72.9,
+    "t": 2.02
+   },
+   "without": {
+    "n": 1330,
+    "avg_pct": 0.79,
+    "median_pct": 1.32,
+    "win_pct": 64.2,
+    "t": 5.46
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 48,
+    "avg_pct": 1.3,
+    "median_pct": 1.82,
+    "win_pct": 72.9,
+    "t": 2.02
+   }
+  },
+  "FDA / trial": {
+   "with": {
+    "n": 6,
+    "avg_pct": 0.19,
+    "median_pct": 1.6,
+    "win_pct": 66.7,
+    "t": 0.1
+   },
+   "without": {
+    "n": 1372,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.71
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 6,
+    "avg_pct": 0.19,
+    "median_pct": 1.6,
+    "win_pct": 66.7,
+    "t": 0.1
+   }
+  },
+  "downgrade": {
+   "with": {
+    "n": 19,
+    "avg_pct": 1.85,
+    "median_pct": 2.53,
+    "win_pct": 73.7,
+    "t": 2.03
+   },
+   "without": {
+    "n": 1359,
+    "avg_pct": 0.79,
+    "median_pct": 1.32,
+    "win_pct": 64.4,
+    "t": 5.55
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 19,
+    "avg_pct": 1.85,
+    "median_pct": 2.53,
+    "win_pct": 73.7,
+    "t": 2.03
+   }
+  },
+  "earnings miss": {
+   "with": {
+    "n": 2
+   },
+   "without": {
+    "n": 1376,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.7
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 2
+   }
+  },
+  "exec exit": {
+   "with": {
+    "n": 3
+   },
+   "without": {
+    "n": 1375,
+    "avg_pct": 0.8,
+    "median_pct": 1.32,
+    "win_pct": 64.4,
+    "t": 5.67
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 3
+   }
+  },
+  "firm bad news AND peers flat": {
+   "with": {
+    "n": 22,
+    "avg_pct": 0.37,
+    "median_pct": 0.84,
+    "win_pct": 72.7,
+    "t": 0.44
+   },
+   "without": {
+    "n": 1356,
+    "avg_pct": 0.81,
+    "median_pct": 1.33,
+    "win_pct": 64.4,
+    "t": 5.69
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 22,
+    "avg_pct": 0.37,
+    "median_pct": 0.84,
+    "win_pct": 72.7,
+    "t": 0.44
+   }
+  },
+  "guidance cut / warning": {
+   "with": {
+    "n": 2
+   },
+   "without": {
+    "n": 1376,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.69
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 2
+   }
+  },
+  "legal / probe": {
+   "with": {
+    "n": 17,
+    "avg_pct": 0.02,
+    "median_pct": 0.38,
+    "win_pct": 52.9,
+    "t": 0.02
+   },
+   "without": {
+    "n": 1361,
+    "avg_pct": 0.82,
+    "median_pct": 1.33,
+    "win_pct": 64.7,
+    "t": 5.74
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 17,
+    "avg_pct": 0.02,
+    "median_pct": 0.38,
+    "win_pct": 52.9,
+    "t": 0.02
+   }
+  },
+  "market down 3%+ (SPY 5-day)": {
+   "with": {
+    "n": 52,
+    "avg_pct": 1.73,
+    "median_pct": 1.37,
+    "win_pct": 57.7,
+    "t": 2.36
+   },
+   "without": {
+    "n": 1326,
+    "avg_pct": 0.77,
+    "median_pct": 1.32,
+    "win_pct": 64.8,
+    "t": 5.35
+   },
+   "with 2016-2020": {
+    "n": 15,
+    "avg_pct": 0.74,
+    "median_pct": -0.22,
+    "win_pct": 46.7,
+    "t": 0.61
+   },
+   "with 2021-2026": {
+    "n": 37,
+    "avg_pct": 2.13,
+    "median_pct": 1.56,
+    "win_pct": 62.2,
+    "t": 2.35
+   }
+  },
+  "no headlines at all": {
+   "with": {
+    "n": 1140,
+    "avg_pct": 0.67,
+    "median_pct": 1.25,
+    "win_pct": 63.6,
+    "t": 4.51
+   },
+   "without": {
+    "n": 238,
+    "avg_pct": 1.46,
+    "median_pct": 2.05,
+    "win_pct": 68.9,
+    "t": 3.64
+   },
+   "with 2016-2020": {
+    "n": 341,
+    "avg_pct": 0.61,
+    "median_pct": 1.21,
+    "win_pct": 64.8,
+    "t": 2.37
+   },
+   "with 2021-2026": {
+    "n": 799,
+    "avg_pct": 0.7,
+    "median_pct": 1.28,
+    "win_pct": 63.1,
+    "t": 3.84
+   }
+  },
+  "peers down 5%+ too (sector-wide)": {
+   "with": {
+    "n": 168,
+    "avg_pct": 1.34,
+    "median_pct": 1.82,
+    "win_pct": 69.6,
+    "t": 3.76
+   },
+   "without": {
+    "n": 1210,
+    "avg_pct": 0.73,
+    "median_pct": 1.25,
+    "win_pct": 63.8,
+    "t": 4.79
+   },
+   "with 2016-2020": {
+    "n": 22,
+    "avg_pct": 0.09,
+    "median_pct": 1.11,
+    "win_pct": 54.5,
+    "t": 0.1
+   },
+   "with 2021-2026": {
+    "n": 146,
+    "avg_pct": 1.53,
+    "median_pct": 2.17,
+    "win_pct": 71.9,
+    "t": 3.99
+   }
+  },
+  "peers flat, stock alone (peers > -2%)": {
+   "with": {
+    "n": 784,
+    "avg_pct": 0.63,
+    "median_pct": 1.17,
+    "win_pct": 62.2,
+    "t": 3.41
+   },
+   "without": {
+    "n": 594,
+    "avg_pct": 1.04,
+    "median_pct": 1.59,
+    "win_pct": 67.5,
+    "t": 4.76
+   },
+   "with 2016-2020": {
+    "n": 227,
+    "avg_pct": 0.73,
+    "median_pct": 1.08,
+    "win_pct": 64.8,
+    "t": 2.43
+   },
+   "with 2021-2026": {
+    "n": 557,
+    "avg_pct": 0.59,
+    "median_pct": 1.18,
+    "win_pct": 61.2,
+    "t": 2.57
+   }
+  },
+  "price target cut": {
+   "with": {
+    "n": 4
+   },
+   "without": {
+    "n": 1374,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.71
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 4
+   }
+  },
+  "share offering": {
+   "with": {
+    "n": 8,
+    "avg_pct": 2.23,
+    "median_pct": 3.13,
+    "win_pct": 87.5,
+    "t": 1.93
+   },
+   "without": {
+    "n": 1370,
+    "avg_pct": 0.8,
+    "median_pct": 1.32,
+    "win_pct": 64.4,
+    "t": 5.62
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 8,
+    "avg_pct": 2.23,
+    "median_pct": 3.13,
+    "win_pct": 87.5,
+    "t": 1.93
+   }
+  },
+  "short-seller report": {
+   "with": {
+    "n": 0
+   },
+   "without": {
+    "n": 1378,
+    "avg_pct": 0.81,
+    "median_pct": 1.32,
+    "win_pct": 64.5,
+    "t": 5.71
+   },
+   "with 2016-2020": {
+    "n": 0
+   },
+   "with 2021-2026": {
+    "n": 0
+   }
+  }
+ },
+ "full_bot": {
+  "TODAY (take every signal)": {
+   "2016-2026": 27.3,
+   "2016-2020": 19.0,
+   "2021-2026": 34.8,
+   "worst_drop_2016+": -15.7
+  },
+  "skip: ANY firm-specific bad news": {
+   "2016-2026": 26.6,
+   "2016-2020": 19.0,
+   "2021-2026": 33.5,
+   "worst_drop_2016+": -15.9,
+   "signals_skipped": 135,
+   "random_skip_same_count_2016-2026": [
+    27.1,
+    27.4,
+    28.2
+   ]
+  },
+  "skip: firm bad news AND peers flat": {
+   "2016-2026": 27.5,
+   "2016-2020": 19.0,
+   "2021-2026": 35.2,
+   "worst_drop_2016+": -15.5,
+   "signals_skipped": 58,
+   "random_skip_same_count_2016-2026": [
+    26.8,
+    27.4,
+    27.6
+   ]
+  },
+  "skip: downgrade": {
+   "2016-2026": 26.7,
+   "2016-2020": 19.0,
+   "2021-2026": 33.6,
+   "worst_drop_2016+": -15.5,
+   "signals_skipped": 58,
+   "random_skip_same_count_2016-2026": [
+    26.9,
+    27.2,
+    27.7
+   ]
+  },
+  "skip: guidance cut / warning": {
+   "2016-2026": 27.3,
+   "2016-2020": 19.0,
+   "2021-2026": 34.9,
+   "worst_drop_2016+": -15.7,
+   "signals_skipped": 6,
+   "random_skip_same_count_2016-2026": [
+    27.3,
+    27.3,
+    27.4
+   ]
+  },
+  "skip: legal / probe": {
+   "2016-2026": 27.4,
+   "2016-2020": 19.0,
+   "2021-2026": 35.0,
+   "worst_drop_2016+": -16.2,
+   "signals_skipped": 44,
+   "random_skip_same_count_2016-2026": [
+    27.2,
+    27.3,
+    27.5
+   ]
+  },
+  "skip: short-seller report": {
+   "2016-2026": 27.3,
+   "2016-2020": 19.0,
+   "2021-2026": 34.8,
+   "worst_drop_2016+": -15.7,
+   "signals_skipped": 0,
+   "random_skip_same_count_2016-2026": [
+    27.3,
+    27.3,
+    27.3
+   ]
+  },
+  "skip: earnings miss": {
+   "2016-2026": 27.3,
+   "2016-2020": 19.0,
+   "2021-2026": 34.9,
+   "worst_drop_2016+": -15.7,
+   "signals_skipped": 8,
+   "random_skip_same_count_2016-2026": [
+    27.2,
+    27.3,
+    27.5
+   ]
+  },
+  "skip: 4+ own headlines (lots of attention)": {
+   "2016-2026": 26.2,
+   "2016-2020": 19.0,
+   "2021-2026": 32.7,
+   "worst_drop_2016+": -15.5,
+   "signals_skipped": 441,
+   "random_skip_same_count_2016-2026": [
+    26.4,
+    27.7,
+    29.1
+   ]
+  },
+  "skip: peers flat, stock alone (peers > -2%)": {
+   "2016-2026": 24.4,
+   "2016-2020": 16.1,
+   "2021-2026": 31.9,
+   "worst_drop_2016+": -14.3,
+   "signals_skipped": 1578,
+   "random_skip_same_count_2016-2026": [
+    22.5,
+    24.5,
+    27.3
+   ]
+  },
+  "skip: no headlines at all": {
+   "2016-2026": 20.4,
+   "2016-2020": 14.7,
+   "2021-2026": 25.5,
+   "worst_drop_2016+": -15.2,
+   "signals_skipped": 2260,
+   "random_skip_same_count_2016-2026": [
+    21.1,
+    21.8,
+    23.7
+   ]
+  }
+ }
+}
