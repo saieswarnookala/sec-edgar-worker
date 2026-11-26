@@ -9,6 +9,16 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0r. "Brain" tests (Nov 25; report: AI reasoning layer for trading bots) - nothing adopted
+- Dip cause tags (dip-news-tags.yml -> data/dip_news_tags.json, v3.0 live-like 2016-26, 2,936 signals, 1,378 trades): Alpaca/Benzinga headlines
+  effectively start 2021 for our tickers (0 tagged trades 2016-20; 2021-26 most trades still have no own headline) -> category samples tiny (downgrade 19, legal 17, guidance 2).
+  Firm bad-news dips did NOT bounce worse (any bad news +1.30%/trade n48 vs +0.79; downgrade +1.85; legal +0.02 n17). Sector-wide dips (peers -5%+) +1.34 vs +0.73;
+  8-K earnings dips +0.32 vs +0.95. Full bot 2016-26: today 27.3; skip firm bad news 26.6 (random skip 27.1-28.2); skip downgrade 26.7; skip stock-alone dips 24.4; skip no-headline dips 20.4. Keep taking every signal.
+- India momentum brain (india-pit.yml MODE=brain -> data/india_brain.json): today 32.6/-23.8 (test 36.0). Crash flag half/out (2y<0, 1y<0, rebound, 15% below high): 25.6-31.9, same -23.8 drop.
+  Steady risers (frog-in-pan) 29.0-29.7 (worse). Vol target 20/25%: 31.9/32.4 (dd -23.1). Combos 27-28. Keep the bot as is.
+- Parking alternatives (park-alt.yml -> data/park_alt.json, live-like/realistic 1999-26): today IEF 21.9/16.6; + cash earns T-bills 22.1/16.8 (+0.2, = SGOV when IEF filter is off);
+  always T-bills 20.7/15.5; always IEF 21.9 (2022 -13.8); TLT 21.6; GLD 21.2 (dd -28.9, but 2013-26 24.9); IEF-or-GLD 21.6. Keep IEF. Robinhood Gold ($60/yr) not worth it below ~$2k cash.
+
 ## 0q. Slot usage + return split (Nov 25; slot-usage.yml, return-split.yml; v3.0 daily 1999-2026)
 - All 10 slots full ~4 times/yr, ~2 days each (10 days/yr, 4% of days); avg 1.8 slots used; 0 slots 43% of days. 2026 unusually busy (59 full days).
 - Return split %/yr (1999-2026): full bot 21.9 live-like / 16.6 realistic; dips only with idle cash in T-bills 13.2 / 8.3. Parking adds ~8 pts/yr.
