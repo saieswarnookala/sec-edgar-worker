@@ -16,13 +16,13 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -q pandas pyarrow numpy pandas_market_calendars > /dev/null 2>&1
+      - run: pip install -q pandas pyarrow numpy pandas_market_calendars boto3 > /dev/null 2>&1
       - name: Run (silent)
         shell: bash
         env:
@@ -31,6 +31,10 @@ jobs:
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
           NTFY_TOPIC_FR: ${{ secrets.NTFY_TOPIC_FR }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           JOB: ${{ inputs.job || (github.event.schedule == '0 11 2 * *' && 'fetch' || 'frpaper') }}
         run: |
           set +x
