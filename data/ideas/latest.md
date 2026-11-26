@@ -1,4 +1,4 @@
-# Idea Scout: 2026-11-25
+# Idea Scout: 2026-11-26
 
 Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-growing open-source projects, 3 funding stories, 3 screener leads. (Add an ANTHROPIC_API_KEY secret for researched, ranked ideas.)
 
@@ -6,43 +6,43 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 
 **Category:** build
 
-- **What:** Popular launch (360 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (362 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50599762>
 
 ## 2. Show HN: Old Nvidia and ATI tech demos, running again in the browser
 
 **Category:** build
 
-- **What:** Popular launch (322 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **What:** Popular launch (353 points). Ideas: a niche version, integrations, or a hosted service around it.
 - **Evidence:** <https://news.ycombinator.com/item?id=50638503>
 
-## 3. Show HN: Cornhole News – A Hacker News inspired site for news across the Midwest
+## 3. Show HN: Zero C# – C# without a runtime or GC
 
 **Category:** build
 
-- **What:** Popular launch (238 points). Ideas: a niche version, integrations, or a hosted service around it.
-- **Evidence:** <https://news.ycombinator.com/item?id=50561515>
+- **What:** Popular launch (181 points). Ideas: a niche version, integrations, or a hosted service around it.
+- **Evidence:** <https://news.ycombinator.com/item?id=50590279>
 
-## 4. erkamyaman/rust-anything: Rewrite your whole app in Rust, one piece at a time, checked against the original's recorded behavior at every step. CLIs, HTTP servers and libraries in TypeScript, Python, C
+## 4. erkamyaman/rust-anything: Rewrite your app in Rust, piece by piece, checked against the original at every step. Works with TypeScript, JavaScript, Python, Go, Ruby, Java, C, PHP, C#, Kotlin and PowerS
 
 **Category:** build
 
-- **What:** New GitHub project with 9577 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 10169 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/erkamyaman/rust-anything>
 
 ## 5. xcl-dev/xcl: Xbox Series compatibility layer for Windows - runs console game code natively, reimplements the console system libraries and recompiles RDNA2 shaders to DXIL
 
 **Category:** build
 
-- **What:** New GitHub project with 8288 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
+- **What:** New GitHub project with 8586 stars in 2 weeks (Rust). Look for a hosted/paid version, support, or plugins.
 - **Evidence:** <https://github.com/xcl-dev/xcl>
 
-## 6. deepseek-ai/chat-demo: Chat Demo
+## 6. 4lwayz/portwatch-vi: Does GTA VI run on PC yet? A live tracker of community recompilation and emulation efforts, updated daily.
 
 **Category:** build
 
-- **What:** New GitHub project with 5443 stars in 2 weeks (TypeScript). Look for a hosted/paid version, support, or plugins.
-- **Evidence:** <https://github.com/deepseek-ai/chat-demo>
+- **What:** New GitHub project with 5628 stars in 2 weeks (JavaScript). Look for a hosted/paid version, support, or plugins.
+- **Evidence:** <https://github.com/4lwayz/portwatch-vi>
 
 ## 7. Seed Funding Explained: A Guide for Tech Startups - Oracle NetSuite
 
@@ -58,30 +58,30 @@ Free signal digest: 0 pain points people want solved, 3 hot launches, 3 fast-gro
 - **What:** Where investors are putting money this week. Look for adjacent problems these customers have.
 - **Evidence:** <https://news.google.com/rss/articles/CBMioAFBVV95cUxNNTAyZWdEUVNnSWU5UXJLNk5FX1NDNWR0d29DYWppVC1EbGJvWlVCRDNmdjdBb09YaS1OVjkwSFRHNzRZZmp0WWQ4SWFBa3dtYzFfRi00WGRhTW55WklhSFpMZFJ4dWdZaFJpeW1GTmNySEN6cHhpRjdMYnlDZk9aYUZ1WElseEkxM3M0Um8xbmVtWVlSeWhGY05NSlIzQmFp?oc=5>
 
-## 9. Former Imperva executives raise $10 million Seed to secure AI agents inside companies - CTech
+## 9. Telehealth startup scores $2 million Seed round - Startup Daily
 
 **Category:** service
 
 - **What:** Where investors are putting money this week. Look for adjacent problems these customers have.
-- **Evidence:** <https://news.google.com/rss/articles/CBMiaEFVX3lxTE5NN2lrYV9scDVySTdRMUZYNjR5UEJDbzdqWUQtZW02WDBXQmE3bUlFRkt6VGJSYjZockdEeVNFLWREaXlZQlI2dmp6SHdSeENKM1B4bGNQQmlsN0lROFFlVFdsekl0TFF2?oc=5>
+- **Evidence:** <https://news.google.com/rss/articles/CBMilAFBVV95cUxQVWp3NVlxX281OWYtNzBLUExRRVNKTlZCclJlYUJXVzFJSi1JeEF6eEV6Z1paREhhNzRoZ2hvbnpDYUNFRkJlcUZ5TDEyTWR5VDVGSXFPd2pjSU1rb2QyQk9HbFV3U0IzZklkd2FLVDBfM3I3UXBtRk44UUNJYlppUTZKUmJvZkpxWVhwX3EzOV9aakww?oc=5>
 
 ## 10. NVDA NVIDIA Corporation (Technology)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 30.5, net margin 55.6%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 30.0, net margin 55.6%. A research lead, not a buy signal.
 
 ## 11. NFLX Netflix Inc. (Consumer Discretionary)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 21.9, net margin 24.3%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 22.2, net margin 24.3%. A research lead, not a buy signal.
 
-## 12. META Meta Platforms Inc. (Technology)
+## 12. JNJ Johnson & Johnson (Health Care)
 
 **Category:** invest
 
-- **What:** From your screener: profitable and growing, P/E 24.8, net margin 30.1%. A research lead, not a buy signal.
+- **What:** From your screener: profitable and growing, P/E 24.6, net margin 28.5%. A research lead, not a buy signal.
 
 
 <sub>Sources unavailable this run: reddit (403)</sub>
