@@ -9,6 +9,10 @@ Details live in this repo (scripts/, data/, live/), the doc and the dashboard. N
 - Results doc: https://claude.ai/artifact/5NywFGd5djz8cSM3gJHg3m ("Buy the Dip in Strong Stocks: Backtest Results").
 - GitHub access: Sai gives a token when needed. The old full-access token was pasted in chat and must be revoked; use a fine-grained, repo-only, short-expiry token.
 
+## 0q. Slot usage + return split (Nov 25; slot-usage.yml, return-split.yml; v3.0 daily 1999-2026)
+- All 10 slots full ~4 times/yr, ~2 days each (10 days/yr, 4% of days); avg 1.8 slots used; 0 slots 43% of days. 2026 unusually busy (59 full days).
+- Return split %/yr (1999-2026): full bot 21.9 live-like / 16.6 realistic; dips only with idle cash in T-bills 13.2 / 8.3. Parking adds ~8 pts/yr.
+
 ## 0p. Solana add-on test (Nov 25; crypto-sol.yml -> data/crypto_sol.json; SOL era 2020-06 to 2026-11)
 - %/yr, worst drop: BTC+ETH 50/50 rule 57.9/-56.8 | thirds 108.4/-57.4 | 40/40/20 89.5/-57.1. 2022+: gap +8.5 pts/yr, bootstrap 83.5% >0 (range -4.4..23.4). Last 2 yrs: 2-coin 26.7 vs thirds 14.2.
 - Correlation 2022+: BTC-ETH 0.85, BTC-SOL 0.76, ETH-SOL 0.77. SOL rule: 20 switches/yr, in 51% of days; today -23% below avg (out).
