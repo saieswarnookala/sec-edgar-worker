@@ -41,6 +41,18 @@
    "entry_date": "2026-11-23",
    "qty": 74,
    "reaction_pct": 5.2
+  },
+  {
+   "symbol": "HPQ",
+   "entry_date": "2026-11-27",
+   "qty": 315,
+   "reaction_pct": 11.8
+  },
+  {
+   "symbol": "ADI",
+   "entry_date": "2026-11-27",
+   "qty": 29,
+   "reaction_pct": 6.7
   }
  ],
  "history": [
@@ -722,7 +734,49 @@
     "stock_value": 63598
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-27T11:06:09.959Z",
+   "today": "2026-11-27",
+   "equity": 98217.38,
+   "dry": false,
+   "tif": "day",
+   "earnings_reactions_checked": 9,
+   "signals": [
+    {
+     "symbol": "ADI",
+     "r": 0.0672970515657042
+    },
+    {
+     "symbol": "HPQ",
+     "r": 0.11778284021901964
+    }
+   ],
+   "sells": [],
+   "buys": [
+    {
+     "symbol": "HPQ",
+     "qty": 315,
+     "r": 0.11778284021901964
+    },
+    {
+     "symbol": "ADI",
+     "qty": 29,
+     "r": 0.0672970515657042
+    }
+   ],
+   "park": {
+    "spy_held": 40,
+    "spy_delta": -26,
+    "spy_price": 716.7,
+    "stock_value": 85737
+   },
+   "orders": [
+    "SELL 26 SPY (park)",
+    "BUY 315 HPQ",
+    "BUY 29 ADI"
+   ]
   }
  ],
- "updated": "2026-11-25T11:06:10.862Z"
+ "updated": "2026-11-27T11:06:09.959Z"
 }
