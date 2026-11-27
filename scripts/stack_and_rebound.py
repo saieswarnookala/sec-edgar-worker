@@ -159,7 +159,7 @@ try:
             c0, c1 = S_C[k, j], S_C[k - 1, j]
             if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
 except Exception as e: print("no earnings events:", e, flush=True)
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None, trace=None):
     """log: list to receive (kind, j, entry_t, exit_t, dollars_in, net_return) per closed trade. cool: None | "31d" (no re-buy within 31 days of a
     losing sale of the same ticker) | "dec" (same, only for losing sales made from Dec 1 on)"""
     LOSS = {}
@@ -214,6 +214,7 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
         if fill == "open":                                        # yesterday's signals, bought at today's open
             cs_, ce_, cd_ = cands(t - 1); buy(t, cs_, ce_, True, 0.10 * (VSCALE[t - 1] if vol else 1.0), cd_)
         used = sum(p["w"] for p in pos); idle = max(0.0, 1 - used)
+        if trace is not None: trace.append((t, idle))                       # Nov 27: idle share each day (downstream test)
         pon = park_on[t] and (parkx is None or parkx[t])                      # Nov 24: parkx = extra on/off filter for the stock parking (e.g. FOMC even weeks)
         want = (("REB:" + ",".join(REB[t])) if t in REB and pon else "SPY") if pon else ("IEF" if bond and BOND_OK[t] else "CASH")
         if want != held_park: eq *= 1 - idle * cp * ((held_park != "CASH") + (want != "CASH")); held_park = want
