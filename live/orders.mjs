@@ -188,8 +188,7 @@ export function formatTradeAlert(o) {
   if (live && ok) L.push('   fills get confirmed after the close (fill alert comes after 4 pm ET)');
   const head = live ? (bad ? `${bad} order${bad > 1 ? 's' : ''} NOT placed` : planned.length ? `${ok} order${ok === 1 ? '' : 's'} placed` : 'no trades today') : `${planned.length} orders planned`;
   const title = `${live ? 'LIVE' : 'DRY RUN'} dip bot ${o.today}: ${head}${bought.size ? ` | buys ${[...bought].join(', ')}` : ''}`;
-  const data = { title: `${live ? 'Dip bot' : 'DRY RUN dip bot'} · ${o.time} ET check`, when: o.today, account: o.account, free: o.buyingPower, picked, orders: rows,
-    result: [`${live ? `${ok} of ${planned.length} orders placed` : `DRY RUN: ${planned.length} planned`}${bad ? ` · ${bad} NOT placed` : ''} · dip slots used ${nowHeld} of ${o.slots}`,
-      `Spare cash: ${o.park ? `in ${o.park}${o.park === 'IEF' ? ' (bonds: SPY below its 100-day average)' : ' (market uptrend)'}` : 'cash (SPY below its 100-day average)'}`, ...(o.heavyVolume?.length ? [`Ignored (panic volume): ${o.heavyVolume.join(', ')}`] : []), ...(live && ok ? ['Fill report with profits comes after the close'] : [])] };
+  const data = { title: `${live ? 'Dip bot' : 'DRY RUN dip bot'} · ${o.time} ET check`, when: o.today, account: o.account, free: o.buyingPower, picked, orders: rows, slotsUsed: nowHeld, slots: o.slots,
+    result: [`Spare cash: ${o.park ? `in ${o.park}${o.park === 'IEF' ? ' (bonds: SPY below its 100-day average)' : ' (market uptrend)'}` : 'cash (SPY below its 100-day average)'}`, ...(o.heavyVolume?.length ? [`Ignored (panic volume): ${o.heavyVolume.join(', ')}`] : [])] };
   return { title, body: L.join('\n'), priority: bad ? 4 : live ? 3 : 2, tags: bad ? 'warning' : !planned.length ? 'zzz' : 'chart_with_upwards_trend', data };
 }

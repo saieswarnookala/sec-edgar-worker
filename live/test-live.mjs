@@ -267,7 +267,7 @@ if (!mode) {
   assert.deepEqual(R.buys.map((x) => x.symbol), ['ANET', 'CRWD']); assert.equal(+R.buys[1].target.toFixed(2), 226.05);
   assert.ok(R.park.IEF && !R.sells.some((x) => x.symbol === 'IEF'));                                                    // parking kept out of the tables
   assert.match(reportText(R), /CRWD: \$204\.39 -> \$214\.60  \+\$0\.51/);
-  assert.match(reportSvg(R), /^<svg[\s\S]*Total profit[\s\S]*<\/svg>$/);
+  assert.match(reportSvg(R), /^<svg[\s\S]*SOLD[\s\S]*Total \+\$0\.94[\s\S]*HOLDING NOW[\s\S]*<\/svg>$/);
   const png = await reportPng(reportSvg(R));
   assert.ok(png === null || (png.length > 10000 && png.slice(1, 4).toString() === 'PNG'));
   console.log('ok   end-of-day report: sells with buy price + profit, buys with +5% target, parking separate' + (png ? ', table image renders' : ' (image renderer not installed: text only)'));
@@ -286,7 +286,7 @@ if (!mode) {
   const a = sampleOrders();
   assert.deepEqual(a.data.orders.map((o) => [o.side, o.symbol, o.reason, o.status]), [['sell', 'AMD', 'Bounced above 5-day avg', 'Placed'], ['sell', 'IEF', 'Parking: cash for dips', 'Placed'], ['buy', 'WST', 'Dip at close -10.5%', 'Placed']]);
   assert.deepEqual(a.data.picked.map((p) => [p.symbol, p.decision]), [['WST', 'BUY'], ['CRWD', 'skip: already own it']]);
-  assert.match(ordersSvg(a.data), /Stocks picked[\s\S]*Orders[\s\S]*dip slots used 3 of 10/);
+  assert.match(ordersSvg(a.data), /3 \/ 10[\s\S]*STOCKS PICKED[\s\S]*ORDERS/);
   console.log('ok   alert images: reason labels for every sell/buy, order table (picked / orders / result)');
 }
 
