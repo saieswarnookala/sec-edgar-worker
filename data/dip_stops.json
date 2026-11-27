@@ -1,0 +1,523 @@
+{
+ "note": "Stop-loss check for the dip bot (Nov 27). v3.0 daily rules, point-in-time S&P 500, 1999-2026. Research only.\nA) per-position stop: sell a dip position at the close once it is down X% from its buy price (else the normal exits)\nB) account breaker: when the whole account is X% below its peak, sell everything into T-bills, buy back in when\n   (i) SPY closes back above its 100-day average, (ii) after 20 trading days, or (iii) the strategy (tracked on paper) recovers 10% from its low.\n   The live bot today does NOT sell at its 35% breaker: it stops trading and alerts. DRY=1: fake data.",
+ "live-like": {
+  "per_position_stop": {
+   "no stop": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "trades": 3888,
+    "win_pct": 65.9,
+    "avg_trade_pct": 0.79,
+    "worst_trade_pct": -46.7
+   },
+   "stop -5%": {
+    "cagr": 20.1,
+    "worst": -23.6,
+    "1999-2012": 19.6,
+    "2013-2026": 20.7,
+    "trades": 4316,
+    "win_pct": 64.2,
+    "avg_trade_pct": 0.66,
+    "worst_trade_pct": -51.6
+   },
+   "stop -8%": {
+    "cagr": 21.1,
+    "worst": -24.0,
+    "1999-2012": 20.7,
+    "2013-2026": 21.5,
+    "trades": 4042,
+    "win_pct": 65.7,
+    "avg_trade_pct": 0.74,
+    "worst_trade_pct": -49.1
+   },
+   "stop -10%": {
+    "cagr": 21.1,
+    "worst": -23.8,
+    "1999-2012": 20.2,
+    "2013-2026": 22.0,
+    "trades": 3968,
+    "win_pct": 65.8,
+    "avg_trade_pct": 0.75,
+    "worst_trade_pct": -49.1
+   },
+   "stop -15%": {
+    "cagr": 21.6,
+    "worst": -24.2,
+    "1999-2012": 21.0,
+    "2013-2026": 22.2,
+    "trades": 3901,
+    "win_pct": 65.9,
+    "avg_trade_pct": 0.77,
+    "worst_trade_pct": -51.6
+   },
+   "stop -20%": {
+    "cagr": 21.8,
+    "worst": -23.5,
+    "1999-2012": 21.2,
+    "2013-2026": 22.4,
+    "trades": 3893,
+    "win_pct": 66.0,
+    "avg_trade_pct": 0.79,
+    "worst_trade_pct": -49.1
+   },
+   "stop -30%": {
+    "cagr": 22.0,
+    "worst": -23.5,
+    "1999-2012": 21.7,
+    "2013-2026": 22.3,
+    "trades": 3891,
+    "win_pct": 66.0,
+    "avg_trade_pct": 0.79,
+    "worst_trade_pct": -49.1
+   },
+   "stop -40%": {
+    "cagr": 22.0,
+    "worst": -23.5,
+    "1999-2012": 21.6,
+    "2013-2026": 22.4,
+    "trades": 3891,
+    "win_pct": 66.0,
+    "avg_trade_pct": 0.79,
+    "worst_trade_pct": -49.1
+   }
+  },
+  "account_breaker": {
+   "breaker 10%, back in when SPY above 100-day avg": {
+    "cagr": 17.5,
+    "worst": -33.0,
+    "1999-2012": 15.1,
+    "2013-2026": 20.0,
+    "times_triggered": 31,
+    "days_in_cash": 450
+   },
+   "breaker 10%, back in when after 20 trading days": {
+    "cagr": 13.8,
+    "worst": -28.7,
+    "1999-2012": 8.8,
+    "2013-2026": 19.1,
+    "times_triggered": 30,
+    "days_in_cash": 591
+   },
+   "breaker 10%, back in when strategy recovers 10% from its low": {
+    "cagr": 12.3,
+    "worst": -39.0,
+    "1999-2012": 7.4,
+    "2013-2026": 17.4,
+    "times_triggered": 30,
+    "days_in_cash": 1529
+   },
+   "breaker 15%, back in when SPY above 100-day avg": {
+    "cagr": 19.9,
+    "worst": -28.7,
+    "1999-2012": 18.1,
+    "2013-2026": 21.9,
+    "times_triggered": 10,
+    "days_in_cash": 239
+   },
+   "breaker 15%, back in when after 20 trading days": {
+    "cagr": 19.9,
+    "worst": -25.1,
+    "1999-2012": 18.8,
+    "2013-2026": 21.1,
+    "times_triggered": 9,
+    "days_in_cash": 170
+   },
+   "breaker 15%, back in when strategy recovers 10% from its low": {
+    "cagr": 17.9,
+    "worst": -36.9,
+    "1999-2012": 15.8,
+    "2013-2026": 20.1,
+    "times_triggered": 10,
+    "days_in_cash": 566
+   },
+   "breaker 20%, back in when SPY above 100-day avg": {
+    "cagr": 21.2,
+    "worst": -31.1,
+    "1999-2012": 20.1,
+    "2013-2026": 22.4,
+    "times_triggered": 1,
+    "days_in_cash": 3
+   },
+   "breaker 20%, back in when after 20 trading days": {
+    "cagr": 21.2,
+    "worst": -27.0,
+    "1999-2012": 20.0,
+    "2013-2026": 22.4,
+    "times_triggered": 1,
+    "days_in_cash": 20
+   },
+   "breaker 20%, back in when strategy recovers 10% from its low": {
+    "cagr": 21.2,
+    "worst": -31.6,
+    "1999-2012": 20.0,
+    "2013-2026": 22.4,
+    "times_triggered": 1,
+    "days_in_cash": 2
+   },
+   "breaker 25%, back in when SPY above 100-day avg": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 25%, back in when after 20 trading days": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 25%, back in when strategy recovers 10% from its low": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 30%, back in when SPY above 100-day avg": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 30%, back in when after 20 trading days": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 30%, back in when strategy recovers 10% from its low": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when SPY above 100-day avg": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when after 20 trading days": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when strategy recovers 10% from its low": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when SPY above 100-day avg": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when after 20 trading days": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when strategy recovers 10% from its low": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "no breaker": {
+    "cagr": 21.9,
+    "worst": -24.7,
+    "1999-2012": 21.4,
+    "2013-2026": 22.4
+   }
+  }
+ },
+ "realistic": {
+  "per_position_stop": {
+   "no stop": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "trades": 3888,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.47,
+    "worst_trade_pct": -43.7
+   },
+   "stop -5%": {
+    "cagr": 14.0,
+    "worst": -24.0,
+    "1999-2012": 12.7,
+    "2013-2026": 15.3,
+    "trades": 4302,
+    "win_pct": 61.8,
+    "avg_trade_pct": 0.31,
+    "worst_trade_pct": -46.2
+   },
+   "stop -8%": {
+    "cagr": 16.0,
+    "worst": -25.1,
+    "1999-2012": 15.2,
+    "2013-2026": 16.8,
+    "trades": 4049,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.44,
+    "worst_trade_pct": -46.2
+   },
+   "stop -10%": {
+    "cagr": 16.1,
+    "worst": -25.4,
+    "1999-2012": 15.1,
+    "2013-2026": 17.2,
+    "trades": 3964,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.45,
+    "worst_trade_pct": -53.6
+   },
+   "stop -15%": {
+    "cagr": 16.3,
+    "worst": -27.0,
+    "1999-2012": 14.9,
+    "2013-2026": 17.8,
+    "trades": 3903,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.45,
+    "worst_trade_pct": -52.4
+   },
+   "stop -20%": {
+    "cagr": 16.8,
+    "worst": -25.1,
+    "1999-2012": 15.7,
+    "2013-2026": 17.9,
+    "trades": 3893,
+    "win_pct": 63.6,
+    "avg_trade_pct": 0.48,
+    "worst_trade_pct": -46.2
+   },
+   "stop -30%": {
+    "cagr": 16.7,
+    "worst": -26.4,
+    "1999-2012": 15.6,
+    "2013-2026": 17.7,
+    "trades": 3891,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.47,
+    "worst_trade_pct": -46.2
+   },
+   "stop -40%": {
+    "cagr": 16.7,
+    "worst": -26.4,
+    "1999-2012": 15.6,
+    "2013-2026": 17.8,
+    "trades": 3891,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.47,
+    "worst_trade_pct": -46.2
+   }
+  },
+  "account_breaker": {
+   "breaker 10%, back in when SPY above 100-day avg": {
+    "cagr": 13.3,
+    "worst": -25.1,
+    "1999-2012": 11.7,
+    "2013-2026": 14.9,
+    "times_triggered": 32,
+    "days_in_cash": 514
+   },
+   "breaker 10%, back in when after 20 trading days": {
+    "cagr": 10.1,
+    "worst": -29.5,
+    "1999-2012": 6.4,
+    "2013-2026": 13.9,
+    "times_triggered": 30,
+    "days_in_cash": 591
+   },
+   "breaker 10%, back in when strategy recovers 10% from its low": {
+    "cagr": 7.7,
+    "worst": -35.8,
+    "1999-2012": 4.1,
+    "2013-2026": 11.4,
+    "times_triggered": 30,
+    "days_in_cash": 1689
+   },
+   "breaker 15%, back in when SPY above 100-day avg": {
+    "cagr": 15.0,
+    "worst": -30.8,
+    "1999-2012": 12.4,
+    "2013-2026": 17.8,
+    "times_triggered": 8,
+    "days_in_cash": 188
+   },
+   "breaker 15%, back in when after 20 trading days": {
+    "cagr": 15.2,
+    "worst": -30.6,
+    "1999-2012": 12.7,
+    "2013-2026": 17.8,
+    "times_triggered": 7,
+    "days_in_cash": 140
+   },
+   "breaker 15%, back in when strategy recovers 10% from its low": {
+    "cagr": 13.5,
+    "worst": -38.7,
+    "1999-2012": 9.4,
+    "2013-2026": 17.8,
+    "times_triggered": 8,
+    "days_in_cash": 370
+   },
+   "breaker 20%, back in when SPY above 100-day avg": {
+    "cagr": 15.7,
+    "worst": -33.5,
+    "1999-2012": 13.7,
+    "2013-2026": 17.8,
+    "times_triggered": 2,
+    "days_in_cash": 54
+   },
+   "breaker 20%, back in when after 20 trading days": {
+    "cagr": 15.8,
+    "worst": -29.9,
+    "1999-2012": 13.8,
+    "2013-2026": 17.8,
+    "times_triggered": 2,
+    "days_in_cash": 40
+   },
+   "breaker 20%, back in when strategy recovers 10% from its low": {
+    "cagr": 15.5,
+    "worst": -34.6,
+    "1999-2012": 13.2,
+    "2013-2026": 17.8,
+    "times_triggered": 2,
+    "days_in_cash": 119
+   },
+   "breaker 25%, back in when SPY above 100-day avg": {
+    "cagr": 16.0,
+    "worst": -33.5,
+    "1999-2012": 14.3,
+    "2013-2026": 17.8,
+    "times_triggered": 1,
+    "days_in_cash": 3
+   },
+   "breaker 25%, back in when after 20 trading days": {
+    "cagr": 16.0,
+    "worst": -29.9,
+    "1999-2012": 14.3,
+    "2013-2026": 17.8,
+    "times_triggered": 1,
+    "days_in_cash": 20
+   },
+   "breaker 25%, back in when strategy recovers 10% from its low": {
+    "cagr": 15.9,
+    "worst": -34.6,
+    "1999-2012": 14.1,
+    "2013-2026": 17.8,
+    "times_triggered": 1,
+    "days_in_cash": 2
+   },
+   "breaker 30%, back in when SPY above 100-day avg": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 30%, back in when after 20 trading days": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 30%, back in when strategy recovers 10% from its low": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when SPY above 100-day avg": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when after 20 trading days": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 35%, back in when strategy recovers 10% from its low": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when SPY above 100-day avg": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when after 20 trading days": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "breaker 40%, back in when strategy recovers 10% from its low": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8,
+    "times_triggered": 0,
+    "days_in_cash": 0
+   },
+   "no breaker": {
+    "cagr": 16.6,
+    "worst": -27.3,
+    "1999-2012": 15.5,
+    "2013-2026": 17.8
+   }
+  }
+ }
+}
