@@ -92,25 +92,39 @@
     "SELL XLE (bounced above 5-day average)",
     "SELL CNC (bounced above 5-day average)"
    ]
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10223.73,
+   "spy": 727.04,
+   "park": "CASH",
+   "stock_signals": 2,
+   "etf_signals": [],
+   "orders": [
+    "SELL MPC (bounced above 5-day average)",
+    "SELL VLO (bounced above 5-day average)",
+    "BUY $1022 CRWD (dip -12.7%)",
+    "BUY $1022 WST (dip -8.9%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8216.92362797,
+  "cash": 8178.984510750001,
   "positions": [
    {
-    "symbol": "MPC",
-    "entry_date": "2026-11-23",
-    "qty": 2.790736,
-    "entry_px": 358.52,
-    "dip_pct": -8.5,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.727736,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 10
    },
    {
-    "symbol": "VLO",
-    "entry_date": "2026-11-23",
-    "qty": 3.024682,
-    "entry_px": 330.79,
-    "dip_pct": -8.4,
+    "symbol": "WST",
+    "entry_date": "2026-11-27",
+    "qty": 2.78208,
+    "entry_px": 367.485,
+    "dip_pct": -8.9,
     "size_pct": 10
    }
   ],
@@ -179,8 +193,24 @@
     "exit_date": "2026-11-25",
     "ret_pct": -0.21,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "MPC",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-27",
+    "ret_pct": 1.09,
+    "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "VLO",
+    "kind": "stock",
+    "entry_date": "2026-11-23",
+    "exit_date": "2026-11-27",
+    "ret_pct": -0.52,
+    "reason": "bounced above 5-day average"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

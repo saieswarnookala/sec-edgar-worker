@@ -85,17 +85,30 @@
    "spy_vol_pct": 31.6,
    "park": "CASH",
    "orders": []
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10029.86,
+   "spy": 727.04,
+   "scale": 1.5,
+   "vol_rank": 1,
+   "spy_vol_pct": 32.3,
+   "park": "CASH",
+   "orders": [
+    "SELL AMD (held 5 days (max 5))",
+    "BUY $1504 CRWD (dip -12.7%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8749.765906065,
+  "cash": 8525.380447685,
   "positions": [
    {
-    "symbol": "AMD",
-    "entry_date": "2026-11-19",
-    "qty": 3.049947,
-    "entry_px": 484.215,
-    "dip_pct": -12,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 6.957127,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 15
    }
   ],
@@ -140,8 +153,16 @@
     "exit_date": "2026-11-24",
     "ret_pct": 2.6,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "stock",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

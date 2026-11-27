@@ -59,22 +59,38 @@
    "ief_ma100": 91.06,
    "dip_signals": 0,
    "orders": []
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 9981.48,
+   "twin_equity": 9983.26,
+   "spy": 727.04,
+   "park": "IEF",
+   "twin_park": "CASH",
+   "ief": 91.655,
+   "ief_ma100": 91.05,
+   "dip_signals": 1,
+   "orders": [
+    "SELL IEF (resize parking)",
+    "SELL AMD (held 5 days (max 5))",
+    "BUY $998 CRWD (dip -12.7%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 199.4888165000002,
+  "cash": 199.62950133500033,
   "positions": [
    {
-    "symbol": "AMD",
-    "entry_date": "2026-11-19",
-    "qty": 2.065198,
-    "entry_px": 484.215,
-    "dip_pct": -12,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.615711,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 10
    }
   ],
   "park": {
-   "IEF": 97.269139
+   "IEF": 95.834368
   },
   "trades": [
    {
@@ -100,18 +116,26 @@
     "exit_date": "2026-11-24",
     "ret_pct": 2.6,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "stock",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ]
  },
  "twin": {
-  "cash": 9116.476617695,
+  "cash": 8984.934960275,
   "positions": [
    {
-    "symbol": "AMD",
-    "entry_date": "2026-11-19",
-    "qty": 2.065198,
-    "entry_px": 484.215,
-    "dip_pct": -12,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.616536,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 10
    }
   ],
@@ -140,8 +164,16 @@
     "exit_date": "2026-11-24",
     "ret_pct": 2.6,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "stock",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

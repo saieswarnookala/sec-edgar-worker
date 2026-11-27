@@ -58,22 +58,35 @@
     "SELL XLE (bounced above 5-day average)",
     "BUY IEF (parking)"
    ]
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10018.52,
+   "spy": 727.04,
+   "park": "IEF",
+   "stock_signals": 1,
+   "etf_signals": [],
+   "orders": [
+    "SELL IEF (resize parking)",
+    "SELL AMD (held 5 days (max 5))",
+    "BUY $1002 CRWD (dip -12.7%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 200.6210491500001,
+  "cash": 200.3703660550001,
   "positions": [
    {
-    "symbol": "AMD",
-    "entry_date": "2026-11-19",
-    "qty": 2.065198,
-    "entry_px": 484.215,
-    "dip_pct": -12,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.63284,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 10
    }
   ],
   "park": {
-   "IEF": 97.660927
+   "IEF": 96.190012
   },
   "trades": [
    {
@@ -115,8 +128,16 @@
     "exit_date": "2026-11-25",
     "ret_pct": 0.18,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "stock",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

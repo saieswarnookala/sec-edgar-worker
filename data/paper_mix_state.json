@@ -88,19 +88,29 @@
    "drift_signals": [],
    "drift_signals_found": true,
    "orders": []
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10044.08,
+   "spy": 727.04,
+   "park": "CASH",
+   "dip_signals": 1,
+   "drift_signals": [
+    "ADI",
+    "HPQ"
+   ],
+   "drift_signals_found": true,
+   "orders": [
+    "SELL AMD dip (held 5 days (max 5))",
+    "BUY $1004 HPQ drift (reaction +11.8% vs SPY)",
+    "BUY $1004 ADI drift (reaction +6.7% vs SPY)",
+    "BUY $1004 CRWD dip (dip -12.7%)"
+   ]
   }
  ],
  "vs": {
-  "cash": 8164.98742416,
+  "cash": 6009.6167541800005,
   "positions": [
-   {
-    "symbol": "AMD",
-    "kind": "dip",
-    "entry_date": "2026-11-19",
-    "qty": 2.043919,
-    "entry_px": 484.215,
-    "info": "dip -12.0%"
-   },
    {
     "symbol": "WMT",
     "kind": "drift",
@@ -108,6 +118,30 @@
     "qty": 7.694702,
     "entry_px": 129.53,
     "info": "reaction +5.2% vs SPY"
+   },
+   {
+    "symbol": "HPQ",
+    "kind": "drift",
+    "entry_date": "2026-11-27",
+    "qty": 31.299724,
+    "entry_px": 32.09,
+    "info": "reaction +11.8% vs SPY"
+   },
+   {
+    "symbol": "ADI",
+    "kind": "drift",
+    "entry_date": "2026-11-27",
+    "qty": 2.924764,
+    "entry_px": 343.415,
+    "info": "reaction +6.7% vs SPY"
+   },
+   {
+    "symbol": "CRWD",
+    "kind": "dip",
+    "entry_date": "2026-11-27",
+    "qty": 4.644661,
+    "entry_px": 216.25,
+    "info": "dip -12.7%"
    }
   ],
   "park": {},
@@ -151,8 +185,16 @@
     "exit_date": "2026-11-24",
     "ret_pct": 2.6,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "dip",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

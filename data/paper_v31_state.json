@@ -70,22 +70,42 @@
     "SELL XLE (bounced above 5-day average)",
     "BUY IEF (parking)"
    ]
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10041.86,
+   "spy": 727.04,
+   "park": "IEF",
+   "stock_signals": 1,
+   "etf_signals": [],
+   "drift_signals": [
+    "ADI",
+    "HPQ"
+   ],
+   "drift_signals_found": true,
+   "orders": [
+    "SELL IEF (resize parking)",
+    "SELL AMD (held 5 days (max 5))",
+    "BUY $1004 CRWD (dip -12.7%)",
+    "SELL IEF (parking, for drift)",
+    "BUY $1004 HPQ drift (reaction +11.8% vs SPY)"
+   ]
   }
  ],
  "vs": {
-  "cash": -810.0521832150004,
+  "cash": 0.000060244999531278154,
   "positions": [
    {
-    "symbol": "AMD",
-    "entry_date": "2026-11-19",
-    "qty": 2.065198,
-    "entry_px": 484.215,
-    "dip_pct": -12,
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.643633,
+    "entry_px": 216.25,
+    "dip_pct": -12.7,
     "size_pct": 10
    }
   ],
   "park": {
-   "IEF": 97.846155
+   "IEF": 76.552831
   },
   "trades": [
    {
@@ -127,6 +147,14 @@
     "exit_date": "2026-11-25",
     "ret_pct": 0.18,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "AMD",
+    "kind": "stock",
+    "entry_date": "2026-11-19",
+    "exit_date": "2026-11-27",
+    "ret_pct": -13.32,
+    "reason": "held 5 days (max 5)"
    }
   ],
   "drift": [
@@ -137,8 +165,16 @@
     "qty": 7.663027,
     "entry_px": 129.53,
     "info": "reaction +5.2% vs SPY"
+   },
+   {
+    "symbol": "HPQ",
+    "kind": "drift",
+    "entry_date": "2026-11-27",
+    "qty": 31.292801,
+    "entry_px": 32.09,
+    "info": "reaction +11.8% vs SPY"
    }
   ]
  },
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }

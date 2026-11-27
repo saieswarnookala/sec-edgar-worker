@@ -1,10 +1,10 @@
 {
  "positions": [
   {
-   "symbol": "AMD",
-   "entry_date": "2026-11-19",
-   "qty": 1,
-   "dip_pct": -12
+   "symbol": "CRWD",
+   "entry_date": "2026-11-27",
+   "qty": 4,
+   "dip_pct": -12.7
   }
  ],
  "history": [
@@ -1055,7 +1055,96 @@
     "orders": 2
    },
    "orders": []
+  },
+  {
+   "run": "2026-11-27T17:25:31.722Z",
+   "today": "2026-11-27",
+   "ny_time": "12:25",
+   "equity": 9826.88,
+   "dry": false,
+   "own_account": true,
+   "half_day_close": "13:00",
+   "volume_check": {
+    "CRWD": {
+     "ratio": 1.98,
+     "today_est": 9317950
+    },
+    "WST": {
+     "ratio": 1.13,
+     "today_est": 564857
+    }
+   },
+   "clear_leader": "DBC",
+   "clear_leader_why": "DBC still leads #2 by 37 pts (needs 7.5+ to stay)",
+   "spy": 727.04,
+   "park": "CASH (SPY below 100-day average)",
+   "signals": {
+    "CRWD": -0.12736713110057374
+   },
+   "sells": [
+    {
+     "symbol": "AMD",
+     "qty": 1,
+     "reason": "held 5 days (max 5)"
+    }
+   ],
+   "buys": [
+    {
+     "symbol": "CRWD",
+     "qty": 4,
+     "dip_pct": -12.7
+    }
+   ],
+   "park_trades": [],
+   "vol_bot": {
+    "scale": 1.5,
+    "equity": 10029.86,
+    "orders": 2
+   },
+   "etf_bot": {
+    "equity": 10062.8,
+    "twin_equity": 10019.54,
+    "etf_signals": 0,
+    "orders": 2
+   },
+   "mix_bot": {
+    "equity": 10044.08,
+    "drift_signals": 2,
+    "orders": 4
+   },
+   "short_bot": {
+    "equity": 10019.54,
+    "twin_equity": 10019.54,
+    "si_date": "20261113",
+    "skipped": [],
+    "orders": 2
+   },
+   "bond_bot": {
+    "equity": 9981.48,
+    "twin_equity": 9983.26,
+    "park": "IEF",
+    "orders": 3
+   },
+   "v3_bot": {
+    "equity": 10018.52,
+    "park": "IEF",
+    "orders": 3
+   },
+   "v31_bot": {
+    "equity": 10041.86,
+    "drift": 2,
+    "orders": 5
+   },
+   "tuned_bot": {
+    "equity": 10223.73,
+    "signals": 2,
+    "orders": 4
+   },
+   "orders": [
+    "SELL 1 AMD (held 5 days (max 5))",
+    "BUY 4 CRWD (dip -12.7%)"
+   ]
   }
  ],
- "updated": "2026-11-25T20:25:32.194Z"
+ "updated": "2026-11-27T17:25:31.722Z"
 }
