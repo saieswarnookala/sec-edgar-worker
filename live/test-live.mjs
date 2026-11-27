@@ -274,6 +274,23 @@ if (!mode) {
 }
 
 {
+  const { category, ordersSvg } = await import('./report.mjs');
+  const { sampleOrders } = await import('./live-dip.mjs');
+  assert.equal(category('target +5% (now +5.1%)', 'sell'), 'Profit target +5%');
+  assert.equal(category('bounced above 5-day average', 'sell'), 'Bounced above 5-day avg');
+  assert.equal(category('held 5 days (max 5)', 'sell'), 'Time limit (5 days)');
+  assert.equal(category('dip -13.57% (intraday)', 'buy', 'CRWD'), 'Intraday dip -13.6%');
+  assert.equal(category('dip -10.5%', 'buy', 'WST'), 'Dip at close -10.5%');
+  assert.equal(category('dip -5.2%', 'buy', 'XLE', ['XLE']), 'ETF dip -5.2%');
+  assert.equal(category('parking: fund intraday dip buys', 'sell', 'IEF'), 'Parking: cash for dips');
+  const a = sampleOrders();
+  assert.deepEqual(a.data.orders.map((o) => [o.side, o.symbol, o.reason, o.status]), [['sell', 'AMD', 'Bounced above 5-day avg', 'Placed'], ['sell', 'IEF', 'Parking: cash for dips', 'Placed'], ['buy', 'WST', 'Dip at close -10.5%', 'Placed']]);
+  assert.deepEqual(a.data.picked.map((p) => [p.symbol, p.decision]), [['WST', 'BUY'], ['CRWD', 'skip: already own it']]);
+  assert.match(ordersSvg(a.data), /Stocks picked[\s\S]*Orders[\s\S]*dip slots used 3 of 10/);
+  console.log('ok   alert images: reason labels for every sell/buy, order table (picked / orders / result)');
+}
+
+{
   const { rhCloseOn } = await import('./live-dip.mjs');
   const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
   const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };

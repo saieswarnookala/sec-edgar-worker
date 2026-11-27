@@ -21,7 +21,7 @@ import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
 import { readPositions, readOrders, readMoney, readAvgPrices, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
-import { fillReport, reportText, reportTitle, reportSvg, reportPng } from './report.mjs';
+import { fillReport, reportText, reportTitle, reportSvg, reportPng, ordersSvg, category } from './report.mjs';
 import { gatherSignalsRH, compareSignals, shadowAlert } from './rh-data.mjs';
 
 // Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
@@ -62,11 +62,16 @@ export async function notify(title, body, { priority = 3, tags = '' } = {}) {
   }
 }
 // Image attachment (PUT + Filename); the one-line message goes in a header, so ASCII only. Falls back to a text alert.
-export const sampleReport = () => fillReport({ today: '2026-11-27', isParking: (sym) => sym === 'IEF', equity: 102.65, prevEquity: 101.69, vsClosePct: -0.027,
+export const sampleReport = () => fillReport({ today: '2026-11-27', isParking: (sym) => sym === 'IEF', equity: 102.65, prevEquity: 101.69, vsClosePct: -0.027, etfs: ['XLE'],
+  whyOf: (sym, side) => ({ 'CRWD:sell': 'target +5% (now +5.1%)', 'AMD:sell': 'bounced above 5-day average', 'CRWD:buy': 'dip -13.57% (intraday)', 'ANET:buy': 'dip -11.33% (intraday)' })[sym + ':' + side] || '',
+  holding: [{ symbol: 'CRWD', buy: 215.29, now: 217.2, pct: (217.2 / 215.29 - 1) * 100, day: 0 }, { symbol: 'ANET', buy: 170.4, now: 174.73, pct: (174.73 / 170.4 - 1) * 100, day: 0 }],
   orders: [{ symbol: 'AMD', side: 'buy', state: 'filled', avg_price: 398.2, filled_qty: 0.025, created_at: '2026-11-20T20:47:00Z' }, { symbol: 'CRWD', side: 'buy', state: 'filled', avg_price: 204.39, filled_qty: 0.049562, created_at: '2026-11-25T15:00:00Z' }],
   todayFills: [{ symbol: 'CRWD', side: 'sell', state: 'filled', avg_price: 214.6, filled_qty: 0.049562, created_at: '2026-11-27T16:00:00Z' }, { symbol: 'CRWD', side: 'buy', state: 'filled', avg_price: 215.29, filled_qty: 0.047611, created_at: '2026-11-27T16:15:00Z' },
     { symbol: 'ANET', side: 'buy', state: 'filled', avg_price: 170.4, filled_qty: 0.0598, created_at: '2026-11-27T15:30:00Z' }, { symbol: 'AMD', side: 'sell', state: 'filled', avg_price: 415.7, filled_qty: 0.025, created_at: '2026-11-27T17:47:00Z' },
     { symbol: 'IEF', side: 'buy', state: 'filled', avg_price: 91.71, filled_qty: 0.0937, created_at: '2026-11-27T16:01:00Z' }, { symbol: 'IEF', side: 'sell', state: 'filled', avg_price: 91.69, filled_qty: 0.08956, created_at: '2026-11-27T16:14:00Z' }] });
+export const sampleOrders = () => formatTradeAlert({ mode: 'live', today: '2026-11-27', time: '12:47', planBuys: ['WST'], frac: {}, prices: { WST: 361 }, spy5: 0.013, moves: { WST: -0.092, CRWD: -0.122 }, signals: [['WST', -0.105], ['CRWD', -0.135]],
+  keep: [{ symbol: 'CRWD' }, { symbol: 'ANET' }], orders: [{ symbol: 'AMD', side: 'sell', shares: 0.025, why: 'bounced above 5-day average' }, { symbol: 'IEF', side: 'sell', shares: 0.11, why: 'parking: fund dip buys' }, { symbol: 'WST', side: 'buy', dollars: 10.2, why: 'dip -10.5%' }],
+  placed: [{ symbol: 'AMD', side: 'sell', shares: 0.025, state: 'queued' }, { symbol: 'IEF', side: 'sell', shares: 0.11, state: 'queued' }, { symbol: 'WST', side: 'buy', dollars: 10.2, state: 'queued' }], failed: [], skipped: [], park: 'IEF', account: 102.4, buyingPower: 0.8, slots: 10, heavyVolume: [], etfs: ['XLE'] });
 export async function notifyImage(title, png, line, fallbackBody, { priority = 3, tags = '' } = {}) {
   if (!png || !E.NTFY_TOPIC) return notify(title, fallbackBody, { priority, tags });
   const headers = { Title: String(title).replace(/[^\x20-\x7E]/g, '-'), Message: String(line).replace(/[^\x20-\x7E]/g, '-').slice(0, 900), Filename: 'trades.png', Priority: String(priority), Tags: tags };
@@ -266,8 +271,9 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (MODE === 'live') state.positions = state.positions.filter((p) => !placed.some((x) => x.side === 'sell' && x.symbol === p.symbol));
     Object.assign(log, { placed, failed, prices_at_order: Object.fromEntries(placed.map((p) => [p.symbol, g.prices[p.symbol]])) });
     const r5 = (s) => { const c = g.closes?.[s] || [], p = g.prices?.[s]; return c.length >= 5 && p > 0 ? p / c.at(-5) - 1 : null; };   // same 5-day window as dipScore
-    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x) });
-    await notify((preview ? 'PREVIEW (nothing placed) ' : '') + a.title, a.body, { priority: a.priority, tags: a.tags });
+    const a = formatTradeAlert({ mode: MODE, today, time: now.hm, planBuys: plan.buys.map((b) => b.symbol), frac, prices: g.prices, spy5: r5('SPY'), moves: Object.fromEntries(Object.keys(g.scores).map((s) => [s, r5(s)])), signals: Object.entries(g.scores).sort((x, y) => x[1] - y[1]), keep: plan.keep, orders, placed, failed, skipped: log.skipped_already_placed || [], park, account: accountValue, buyingPower: bp, slots: SLOTS, heavyVolume: (g.skipped_heavy_volume || []).map((x) => x.symbol ?? x), etfs: ETF_DIP_LIST });
+    const aLine = [a.data.picked.length ? 'Picked ' + a.data.picked.map((x) => x.symbol).join(', ') : 'No new dips', a.data.orders.length ? 'Orders ' + a.data.orders.map((x) => x.side.toUpperCase() + ' ' + x.symbol).join(', ') : 'no orders'].join(' | ');
+    await notifyImage((preview ? 'PREVIEW (nothing placed) ' : '') + a.title, await reportPng(ordersSvg({ ...a.data, title: (preview ? 'PREVIEW · ' : '') + a.data.title })), aLine, a.body, { priority: a.priority, tags: a.tags });
     // SHADOW: the same picks from Robinhood data only (after the orders, so it can never delay or change them). RH_SHADOW=0 turns it off.
     if (!preview && E.RH_SHADOW !== '0' && EXECUTOR !== 'claude') {
       try { const rg = await gatherSignalsRH({ client, call, today, members: g.members, closeMin: closeMins[today] ?? 960 }); log.shadow = compareSignals(g, rg); const sa = shadowAlert(log.shadow); await notify(sa.title, sa.body, { priority: 2, tags: 'mag' }); }
@@ -381,8 +387,17 @@ export async function cmdIntraday({ gather = gatherSignals, getDays = tradingDay
     }
     const sig = placed.map((o) => o.side + o.symbol).sort().join(',');   // dry mode: alert only when the plan changes, not every 15 minutes
     const quiet = mode !== 'live' && !preview && (state.intraday || []).some((x) => x.today === today && (x.placed || []).map((o) => o.side + o.symbol).sort().join(',') === sig);
-    if ((placed.length || failed.length || preview) && !quiet) await notify(`${preview ? 'PREVIEW (nothing placed) ' : ''}${mode === 'live' ? 'LIVE' : 'DRY'} dip bot v3.2 ${today} ${now.hm} ET: ${placed.length} order(s)${failed.length ? `, ${failed.length} failed` : ''}`,
-      [...placed.map((o) => `${o.side.toUpperCase()} ${o.symbol} ${o.dollars != null ? '$' + o.dollars : o.shares + ' sh'} - ${o.why}`), ...failed.map((o) => `FAILED ${o.side} ${o.symbol}: ${o.error}`), `park: ${park || 'CASH'} | dips seen: ${Object.keys(g.scores).length} stocks, ${Object.keys(g.etfScores || {}).length} ETFs`].join('\n') || 'no orders', { priority: failed.length ? 4 : 3, tags: 'chart_with_upwards_trend' });
+    if ((placed.length || failed.length || preview) && !quiet) {
+      const iTitle = `${preview ? 'PREVIEW (nothing placed) ' : ''}${mode === 'live' ? 'LIVE' : 'DRY'} dip bot v3.2 ${today} ${now.hm} ET: ${placed.length} order(s)${failed.length ? `, ${failed.length} failed` : ''}`;
+      const iBody = [...placed.map((o) => `${o.side.toUpperCase()} ${o.symbol} ${o.dollars != null ? '$' + o.dollars : o.shares + ' sh'} - ${o.why}`), ...failed.map((o) => `FAILED ${o.side} ${o.symbol}: ${o.error}`), `park: ${park || 'CASH'} | dips seen: ${Object.keys(g.scores).length} stocks, ${Object.keys(g.etfScores || {}).length} ETFs`].join('\n') || 'no orders';
+      const amt = (o) => (o.dollars != null ? '$' + (+o.dollars).toFixed(2) : `${+(+o.shares).toFixed(4)} sh`);
+      const D = { title: `${preview ? 'PREVIEW · ' : mode === 'live' ? '' : 'DRY · '}Dip bot · ${now.hm} ET check`, when: today, account: accountValue,
+        orders: [...placed.map((o) => ({ side: o.side, symbol: o.symbol, amount: amt(o), reason: category(o.why, o.side, o.symbol, ETF_DIP_LIST), status: o.dry ? 'Dry run' : 'Placed', ok: o.dry ? null : true })),
+          ...failed.map((o) => ({ side: o.side, symbol: o.symbol, amount: amt(o), reason: category(o.why, o.side, o.symbol, ETF_DIP_LIST), status: 'FAILED', ok: false }))],
+        result: [`Dips seen now: ${Object.keys(g.scores).length} stocks, ${Object.keys(g.etfScores || {}).length} ETFs · spare cash in ${park || 'cash'}`, ...failed.map((o) => `FAILED ${o.symbol}: ${String(o.error).slice(0, 80)}`)] };
+      const iLine = D.orders.map((o) => `${o.side.toUpperCase()} ${o.symbol} (${o.reason})`).join(', ');
+      await notifyImage(iTitle, await reportPng(ordersSvg(D)), iLine || 'no orders', iBody, { priority: failed.length ? 4 : 3, tags: 'chart_with_upwards_trend' });
+    }
   } catch (e) {
     log.error = String(e?.message || e).slice(0, 1000);
     const auth = e instanceof AuthRequired || /sign in|login|unauthorized|401/i.test(log.error);
@@ -457,7 +472,7 @@ async function cmdVerify() {
     const unfilled = todays.filter((o) => mine.has(o) && !/fill/.test(o.state));
     // fill quality vs the official close (the backtest's "ideal" price)
     let closes = {}, log_close_err = null;
-    const syms = [...new Set(todays.map((o) => o.symbol))];
+    const syms = [...new Set([...todays.map((o) => o.symbol), ...state.positions.map((p) => p.symbol)])];
     // 1) Alpaca's official SIP close. Free data: SIP only for data older than 15 minutes (an end time in the future is refused) -> end = now - 16 min, IEX as a fallback
     for (const feed of ['sip', 'iex']) {
       if (!syms.length || syms.every((s) => closes[s])) break;
@@ -478,7 +493,14 @@ async function cmdVerify() {
     const whys = {};
     for (const p of [...(h?.placed || []), ...(state.intraday || []).filter((x) => x.today === today).flatMap((x) => x.placed || [])]) (whys[p.symbol + ':' + p.side] ||= []).push(String(p.why || ''));
     const isParking = (sym, side) => { const w = whys[sym + ':' + side]; return w?.length ? w.every((x) => /parking/i.test(x)) : [BOND, 'BIL', ...POOL].includes(sym); };
-    const R = fillReport({ today, orders: r.orders, todayFills: todays.filter((o) => mine.has(o) && /fill/.test(o.state)), isParking, equity: r.money.equity, prevEquity: prevEq, vsClosePct: v.avg_cost_vs_close_pct });
+    const whyOf = (sym, side) => { const w = whys[sym + ':' + side] || []; return w.find((x) => !/parking/i.test(x)) ?? w[0] ?? ''; };
+    let tdays = []; try { tdays = await tradingDays(today); } catch {}
+    const lastBuy = (sym) => r.orders.filter((o) => o.symbol === sym && o.side === 'buy' && /fill/.test(o.state) && +o.avg_price > 0).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+    const holding = state.positions.map((p) => {
+      const buy = +(lastBuy(p.symbol)?.avg_price || p.entry_px || 0) || null, now = closes[p.symbol] ?? null, ti = tdays.indexOf(today), ei = tdays.indexOf(p.entry_date);
+      return { symbol: p.symbol, buy, now, pct: buy && now ? (now / buy - 1) * 100 : null, day: ti >= 0 && ei >= 0 ? ti - ei : null };
+    });
+    const R = fillReport({ today, orders: r.orders, todayFills: todays.filter((o) => mine.has(o) && /fill/.test(o.state)), isParking, equity: r.money.equity, prevEquity: prevEq, vsClosePct: v.avg_cost_vs_close_pct, whyOf, etfs: ETF_DIP_LIST, holding });
     const line = [R.sells.length ? 'Sold ' + R.sells.map((x) => `${x.symbol} ${x.pl == null ? '' : (x.pl >= 0 ? '+$' : '-$') + Math.abs(x.pl).toFixed(2)}`).join(', ') : '', R.buys.length ? 'Bought ' + R.buys.map((x) => x.symbol).join(', ') : '', `Account $${(R.equity || 0).toFixed(2)}`].filter(Boolean).join(' | ');
     if (strangers.length) { writeFileSync(HALT, `Orders today that the bot did not place: ${v.strangers.join(', ')}. Check Robinhood, then: node live-dip.mjs resume`); await notify('Dip bot HALTED: unknown orders in the account', v.strangers.join('\n'), { priority: 5, tags: 'rotating_light' }); }
     else if (unfilled.length) await notify(`LIVE dip bot ${today}: ${unfilled.length} order(s) NOT filled`, ['Not filled (check Robinhood):', ...v.unfilled, '', reportText(R)].join('\n'), { priority: 4, tags: 'warning' });
@@ -515,7 +537,10 @@ const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
   const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
     'ntfy-test': () => notify('Dip bot: test alert', 'If you see this on your phone, alerts from the VM work. ' + new Date().toISOString()),
-    'report-test': async () => { const R = sampleReport(); await notifyImage('SAMPLE ' + reportTitle(R), await reportPng(reportSvg(R)), 'Sample of the new end-of-day table (made-up AMD buy price)', reportText(R), { priority: 2, tags: 'white_check_mark' }); },
+    'report-test': async () => {
+      const a = sampleOrders(); await notifyImage('SAMPLE ' + a.title, await reportPng(ordersSvg(a.data)), 'Sample of the new order alert', a.body, { priority: 2, tags: 'chart_with_upwards_trend' });
+      const R = sampleReport(); await notifyImage('SAMPLE ' + reportTitle(R), await reportPng(reportSvg(R)), 'Sample of the new end-of-day table (made-up AMD buy price)', reportText(R), { priority: 2, tags: 'white_check_mark' });
+    },
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
   if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|ntfy-test|report-test|halt|resume'); process.exit(2); }
   Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });

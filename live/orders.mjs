@@ -1,3 +1,4 @@
+import { category } from './report.mjs';
 import { DIP, LOOKBACK, TREND } from '../scripts/paper-dip.mjs';
 // Pure helpers for the live runner: turn the strategy's plan into Robinhood MCP calls, enforce hard limits,
 // and read Robinhood replies whose exact field names are not documented (tolerant, fail closed).
@@ -162,15 +163,19 @@ export function formatTradeAlert(o) {
   const whySkip = (s) => (!full && o.planBuys?.includes(s) && o.frac?.[s] === false
     ? `skip: Robinhood says no fractional shares for ${s}, and the ${usd(slotUsd)} slot can't buy 1 whole share${o.prices?.[s] ? ` (${usd(o.prices[s])})` : ''}`
     : whySkip0);
+  const picked = o.signals.slice(0, 12).map(([s, d]) => ({ symbol: s, move: pc(o.moves?.[s] != null && o.spy5 != null ? o.moves[s] - o.spy5 : d), decision: bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip(s).replace(/^skip: /, 'skip: ') }));
+  if (o.signals.length > 12) picked.push({ symbol: `+${o.signals.length - 12} more`, move: '', decision: 'skipped: ' + whySkip0.replace(/^skip: /, '') });
   o.signals.slice(0, 12).forEach(([s, d], i) => L.push(`   ${s} ${o.moves?.[s] != null && o.spy5 != null ? `${pc(o.moves[s])} (SPY ${pc(o.spy5)})` : pc(d)} -> ${bought.has(s) ? 'BUY' : keepSet.has(s) ? 'skip: already own it' : whySkip(s)}`));
   if (o.signals.length > 12) L.push(`   +${o.signals.length - 12} more, all skipped: ${whySkip0.replace(/^skip: /, '')}`);
   if (o.heavyVolume?.length) L.push(`   ignored (panic-level volume): ${o.heavyVolume.join(', ')}`);
   L.push('', '2) ORDERS TRIGGERED');
   if (!planned.length) L.push(`   none: nothing to sell, ${o.signals.length ? 'no dip could be bought (see 1)' : 'no new dips'}, idle money already ${o.park ? 'in ' + o.park : 'in cash'}`);
+  const rows = [];
   for (const x of [...sells, ...buys]) {
     const why = x.why || '', reason = /parking/.test(why) ? (x.side === 'buy' ? `park spare cash in ${x.symbol} (${why})` : `free cash from parking ETF ${x.symbol} (${why})`) : x.side === 'sell' && /held|bounced/.test(why) ? `exit rule: ${why}` : x.side === 'buy' ? `dip buy: fell ${why.replace(/^dip -?/, '').replace(/^([\d.]+%)/, '$1 more than SPY')}` : why;
     const sent = o.placed.find((y) => y.symbol === x.symbol && y.side === x.side) || x;
     L.push(`   ${x.side.toUpperCase()} ${x.symbol} ${sent.dollars == null && sent.shares == null ? '' : amt(sent)}`.trimEnd(), `     why: ${reason || 'see earlier run'}`, `     -> ${status(x)}`);
+    const st = status(x); rows.push({ side: x.side, symbol: x.symbol, amount: sent.dollars == null && sent.shares == null ? '' : amt(sent), reason: category(why, x.side, x.symbol, o.etfs || []), status: /^PLACED/.test(st) ? 'Placed' : /^DRY/.test(st) ? 'Dry run' : /already placed/.test(st) ? 'Placed earlier' : 'NOT placed', ok: /^PLACED|already placed/.test(st) ? true : /^NOT/.test(st) ? false : null });
   }
   const ok = o.placed.filter((p) => !p.dry).length, bad = o.failed.length;
   L.push('', '3) RESULT');
@@ -183,5 +188,8 @@ export function formatTradeAlert(o) {
   if (live && ok) L.push('   fills get confirmed after the close (fill alert comes after 4 pm ET)');
   const head = live ? (bad ? `${bad} order${bad > 1 ? 's' : ''} NOT placed` : planned.length ? `${ok} order${ok === 1 ? '' : 's'} placed` : 'no trades today') : `${planned.length} orders planned`;
   const title = `${live ? 'LIVE' : 'DRY RUN'} dip bot ${o.today}: ${head}${bought.size ? ` | buys ${[...bought].join(', ')}` : ''}`;
-  return { title, body: L.join('\n'), priority: bad ? 4 : live ? 3 : 2, tags: bad ? 'warning' : !planned.length ? 'zzz' : 'chart_with_upwards_trend' };
+  const data = { title: `${live ? 'Dip bot' : 'DRY RUN dip bot'} · ${o.time} ET check`, when: o.today, account: o.account, free: o.buyingPower, picked, orders: rows,
+    result: [`${live ? `${ok} of ${planned.length} orders placed` : `DRY RUN: ${planned.length} planned`}${bad ? ` · ${bad} NOT placed` : ''} · dip slots used ${nowHeld} of ${o.slots}`,
+      `Spare cash: ${o.park ? `in ${o.park}${o.park === 'IEF' ? ' (bonds: SPY below its 100-day average)' : ' (market uptrend)'}` : 'cash (SPY below its 100-day average)'}`, ...(o.heavyVolume?.length ? [`Ignored (panic volume): ${o.heavyVolume.join(', ')}`] : []), ...(live && ok ? ['Fill report with profits comes after the close'] : [])] };
+  return { title, body: L.join('\n'), priority: bad ? 4 : live ? 3 : 2, tags: bad ? 'warning' : !planned.length ? 'zzz' : 'chart_with_upwards_trend', data };
 }
