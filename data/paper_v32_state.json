@@ -1356,26 +1356,42 @@
    "park": "IEF",
    "equity": 10210.31,
    "orders": []
+  },
+  {
+   "at": "2026-11-27T16:00:33.263Z",
+   "ny_time": "11:00",
+   "phase": "intraday",
+   "stock_signals": [
+    "ANET",
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10210.9,
+   "orders": [
+    "SELL CRWD (+5.02%, target)",
+    "BUY $1021 CRWD (dip -13.57%, during the day)"
+   ]
   }
  ],
  "vs": {
-  "cash": 0.00015024967819954327,
+  "cash": 40.799953769678154,
   "positions": [
-   {
-    "symbol": "CRWD",
-    "entry_date": "2026-11-25",
-    "qty": 4.968833,
-    "entry_px": 203.49,
-    "dip_pct": -10.38,
-    "size_pct": 10,
-    "bought_intraday": true
-   },
    {
     "symbol": "ANET",
     "entry_date": "2026-11-27",
     "qty": 5.987778,
     "entry_px": 170.1,
     "dip_pct": -11.33,
+    "size_pct": 10,
+    "bought_intraday": true
+   },
+   {
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.777921,
+    "entry_px": 213.71,
+    "dip_pct": -13.57,
     "size_pct": 10,
     "bought_intraday": true
    }
@@ -1423,10 +1439,18 @@
     "exit_date": "2026-11-25",
     "ret_pct": 0.91,
     "reason": "bounced above 5-day average"
+   },
+   {
+    "symbol": "CRWD",
+    "kind": "stock",
+    "entry_date": "2026-11-25",
+    "exit_date": "2026-11-27",
+    "ret_pct": 5.02,
+    "reason": "target +5% during the day"
    }
   ]
  },
- "updated": "2026-11-27T15:55:36.983Z",
+ "updated": "2026-11-27T16:00:33.263Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
