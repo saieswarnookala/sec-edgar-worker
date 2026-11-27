@@ -2753,6 +2753,10 @@ dash.calc('vs_industry', {
       { id: 'mix', name: 'Dip + drift mix (6+4, 2004–2026)', pre: 15.8, post: 12.3, ideal: [19.1, 14.9], dd: -24, c: '#db2777' },
       { id: 'drift', name: 'Earnings drift (blend of 9)', pre: 13.0, post: 10.0, est: true, dd: -51, c: '#059669' },
       { id: 'cl', name: 'Clear leader v2.0', pre: 13.6, post: null, ideal: [13.7, null], dd: -43, c: '#d97706' },
+      { id: 'fr50', name: 'Mix 50/50: Frontrunner-R + dip bot (private paper bot)', pre: 24.2, post: 19.0, live: [32.4, 24.7], recent: [53.2, 41.7], est: true, fr: true, dd: -27, c: '#16a34a' },
+      { id: 'fr60', name: 'Mix 60/40: Frontrunner-R + dip bot', pre: 24.4, post: 19.4, live: [34.2, 26.5], recent: [58.3, 46.2], est: true, fr: true, dd: -29, c: '#15803d' },
+      { id: 'fr75', name: 'Mix 75/25: Frontrunner-R + dip bot (private paper bot)', pre: 24.5, post: 19.6, live: [36.8, 29.0], recent: [65.8, 52.7], est: true, fr: true, dd: -33, c: '#166534' },
+      { id: 'fr', name: 'Frontrunner-R alone (private paper bot)', pre: 24.2, post: 19.8, live: [40.4, 33.0], recent: [78.1, 63.8], est: true, fr: true, dd: -42, c: '#b91c1c' },
       { id: 'spy', name: 'SPY buy & hold', pre: 9.2, post: 8.4, live: [9.2, 8.4], recent: [14.7, 13.4], dd: -55, c: '#6b7280', bench: true },
     ],
     in: [
@@ -2820,7 +2824,7 @@ dash.calc('vs_industry', {
         marks.map((y) => '<td>' + (y === yrs ? '<b>' + esc(fmt(o.p[y])) + '</b>' : esc(fmt(o.p[y]))) + '</td>').join('') + '<td>' + o.sx.dd + '%</td><td>' + esc(fmt(o.p[yrs] * (1 + o.sx.dd / 100))) + ' (temporarily)</td></tr>').join('');
       const added = a0 + m * 12 * yrs;
       const untestedNote = untested.length ? untested.join(', ') + (st.fill === 'recent' ? ': no 2016–2026 number for this one. ' : ': after-tax not tested yet, switch to “Before tax” to see it. ') : '';
-      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return: “Worst case” = next-morning fills with 3× costs, “Expected” = the live 3:45 pm bot over 1999–2026 (ideal minus ~1%, matched by the 2016–2026 minute replay and the first real fill), “Last 10 years” = 2016–2026 replay; compounded monthly; after tax = 24% bracket. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
+      q('.sx-calc-note').innerHTML = esc(untestedNote) + 'You put in <b>' + esc(fmt(added)) + '</b> in total. Uses each strategy’s average yearly return: “Worst case” = next-morning fills with 3× costs, “Expected” = the live 3:45 pm bot over 1999–2026 (ideal minus ~1%, matched by the 2016–2026 minute replay and the first real fill), “Last 10 years” = 2016–2026 replay; Frontrunner rows: “Expected” = 1999–2026 backtest, “Worst case” = its 5 biggest winners never happened, “Last 10 years” = 2016–2026 backtest (unusually strong, do not plan on it); compounded monthly; after tax = 24% bracket. Real returns jump around: some years lose money, and the worst drop shown can happen at any time. ' +
         (st.tax === 'post' ? (st.mkt === 'us' ? 'After tax = 24% federal bracket, Texas; SPY taxed 15% long-term. ' : 'After tax = Indian resident rates; Nifty taxed long-term. ') : 'Before tax = what a Roth IRA (US) would keep. ') +
         'Backtests, not a forecast; not financial or tax advice.';
     };
