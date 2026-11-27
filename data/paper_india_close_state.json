@@ -1,20 +1,20 @@
 {
- "cash": 20710.181044280995,
+ "cash": 20091.573196502664,
  "liquid": 0.0,
- "positions": [
-  {
-   "symbol": "STLTECH",
-   "qty": 168,
-   "entry_px": 590.7999877929688,
-   "entry_day": "2026-11-23",
-   "dip_pct": -12.7
-  }
- ],
+ "positions": [],
  "park": {
-  "NIFTYBEES": 3035
+  "NIFTYBEES": 3391
  },
  "pending": [],
- "trades": [],
+ "trades": [
+  {
+   "symbol": "STLTECH",
+   "entry_day": "2026-11-23",
+   "exit_day": "2026-11-27",
+   "ret_pct": 4.06,
+   "why": "bounced above its 5-day average (held 3 days)"
+  }
+ ],
  "history": [
   {
    "day": "2026-11-23",
@@ -63,6 +63,24 @@
    "dips": 1,
    "filled": [],
    "orders": 0
+  },
+  {
+   "day": "2026-11-27",
+   "equity": 1011280.83,
+   "nifty": 25632.3,
+   "cash": 20091.57,
+   "liquid": 0.0,
+   "stocks": 0,
+   "park": {
+    "NIFTYBEES": 3391
+   },
+   "park_target": "NIFTYBEES",
+   "dips": 0,
+   "filled": [
+    "SOLD 168 STLTECH @ 618.50",
+    "BOUGHT 356 NIFTYBEES @ 292.30"
+   ],
+   "orders": 2
   }
  ],
  "started": "2026-11-23",
@@ -71,15 +89,14 @@
   "BHARATCOAL",
   "CLEANMAX",
   "CMPDI",
-  "DUMMYHEG",
   "EMMVEE",
   "FRACTAL",
   "GROWW",
+  "HEGRAPHITE",
   "ICICIAMC",
   "LENSKART",
   "MEESHO",
   "PINELABS",
-  "PIRAMALFIN",
   "PWL",
   "TENNIND",
   "TMCV",
