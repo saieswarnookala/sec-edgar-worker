@@ -259,6 +259,21 @@ if (!mode) {
 }
 
 {
+  const { sampleReport } = await import('./live-dip.mjs');
+  const { reportText, reportSvg, reportPng } = await import('./report.mjs');
+  const R = sampleReport();
+  assert.deepEqual(R.sells.map((x) => [x.symbol, x.buy, x.sell]), [['CRWD', 204.39, 214.6], ['AMD', 398.2, 415.7]]);   // sell matched to the buy BEFORE it, not the same-day rebuy
+  assert.equal(+R.sells[0].pl.toFixed(2), 0.51); assert.equal(+R.realized.toFixed(2), 0.94);
+  assert.deepEqual(R.buys.map((x) => x.symbol), ['ANET', 'CRWD']); assert.equal(+R.buys[1].target.toFixed(2), 226.05);
+  assert.ok(R.park.IEF && !R.sells.some((x) => x.symbol === 'IEF'));                                                    // parking kept out of the tables
+  assert.match(reportText(R), /CRWD: \$204\.39 -> \$214\.60  \+\$0\.51/);
+  assert.match(reportSvg(R), /^<svg[\s\S]*Total profit[\s\S]*<\/svg>$/);
+  const png = await reportPng(reportSvg(R));
+  assert.ok(png === null || (png.length > 10000 && png.slice(1, 4).toString() === 'PNG'));
+  console.log('ok   end-of-day report: sells with buy price + profit, buys with +5% target, parking separate' + (png ? ', table image renders' : ' (image renderer not installed: text only)'));
+}
+
+{
   const { rhCloseOn } = await import('./live-dip.mjs');
   const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
   const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };
