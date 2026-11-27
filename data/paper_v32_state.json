@@ -1372,6 +1372,19 @@
     "SELL CRWD (+5.02%, target)",
     "BUY $1021 CRWD (dip -13.57%, during the day)"
    ]
+  },
+  {
+   "at": "2026-11-27T16:15:35.157Z",
+   "ny_time": "11:15",
+   "phase": "intraday",
+   "stock_signals": [
+    "ANET",
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10207.33,
+   "orders": []
   }
  ],
  "vs": {
@@ -1450,7 +1463,7 @@
    }
   ]
  },
- "updated": "2026-11-27T16:00:33.263Z",
+ "updated": "2026-11-27T16:15:35.157Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
