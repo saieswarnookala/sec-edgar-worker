@@ -7,9 +7,9 @@
    "cash": 5000.0,
    "units": 0.0,
    "pending": null,
-   "coin_px": 60201.5,
-   "ma50": 75130.64,
-   "pct_vs_ma": -19.9,
+   "coin_px": 59887.07,
+   "ma50": 74242.76,
+   "pct_vs_ma": -19.3,
    "signal": "cash"
   },
   "ETH": {
@@ -17,9 +17,9 @@
    "cash": 5000.0,
    "units": 0.0,
    "pending": null,
-   "coin_px": 1687.3,
-   "ma50": 2184.82,
-   "pct_vs_ma": -22.8,
+   "coin_px": 1671.22,
+   "ma50": 2151.16,
+   "pct_vs_ma": -22.3,
    "signal": "cash"
   }
  },
@@ -36,5 +36,6 @@
   "IBIT": 146.75667874336906,
   "ETHA": 130.9929326658429
  },
- "updated": "2026-11-25 21:46 UTC"
+ "updated": "2026-11-25 21:46 UTC",
+ "decided_on": "2026-11-27"
 }
