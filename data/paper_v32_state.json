@@ -74,6 +74,28 @@
     "SELL XLE (bounced above 5-day average)",
     "BUY IEF (parking)"
    ]
+  },
+  {
+   "today": "2026-11-27",
+   "equity": 10219.49,
+   "twin_equity": 10126.16,
+   "spy": 726.05,
+   "park": "IEF",
+   "stock_signals": 1,
+   "etf_signals": [],
+   "intraday_checks": 15,
+   "intraday_orders": [
+    "10:30 BUY $1019 ANET (dip -11.33%, during the day)",
+    "11:00 SELL CRWD (+5.02%, target)",
+    "11:00 BUY $1021 CRWD (dip -13.57%, during the day)"
+   ],
+   "orders": [
+    "SELL IEF (resize parking)"
+   ],
+   "twin_orders": [
+    "SELL IEF (resize parking)",
+    "BUY $1013 CRWD (dip -13%)"
+   ]
   }
  ],
  "checks": [
@@ -1469,10 +1491,25 @@
    "park": "IEF",
    "equity": 10222.77,
    "orders": []
+  },
+  {
+   "at": "2026-11-27T17:45:34.046Z",
+   "ny_time": "12:45",
+   "phase": "final",
+   "stock_signals": [
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10219.49,
+   "twin_equity": 10126.16,
+   "orders": [
+    "SELL IEF (resize parking)"
+   ]
   }
  ],
  "vs": {
-  "cash": 40.799953769678154,
+  "cash": 204.38991106967816,
   "positions": [
    {
     "symbol": "ANET",
@@ -1494,7 +1531,7 @@
    }
   ],
   "park": {
-   "IEF": 88.39266
+   "IEF": 86.608691
   },
   "trades": [
    {
@@ -1547,12 +1584,21 @@
    }
   ]
  },
- "updated": "2026-11-27T17:30:43.640Z",
+ "updated": "2026-11-27T17:45:34.046Z",
  "twin": {
-  "cash": 203.4754121899989,
-  "positions": [],
+  "cash": 202.52317150999886,
+  "positions": [
+   {
+    "symbol": "CRWD",
+    "entry_date": "2026-11-27",
+    "qty": 4.705682,
+    "entry_px": 215.19,
+    "dip_pct": -13,
+    "size_pct": 10
+   }
+  ],
   "park": {
-   "IEF": 108.208104
+   "IEF": 97.175787
   },
   "trades": [
    {
