@@ -1317,6 +1317,19 @@
    "orders": [
     "BUY $1019 ANET (dip -11.33%, during the day)"
    ]
+  },
+  {
+   "at": "2026-11-27T15:45:43.227Z",
+   "ny_time": "10:45",
+   "phase": "intraday",
+   "stock_signals": [
+    "ANET",
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10204.06,
+   "orders": []
   }
  ],
  "vs": {
@@ -1387,7 +1400,7 @@
    }
   ]
  },
- "updated": "2026-11-27T15:30:36.538Z",
+ "updated": "2026-11-27T15:45:43.227Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
