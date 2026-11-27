@@ -1282,6 +1282,16 @@
     "SELL XLE (bounced above 5-day average)",
     "BUY IEF (parking)"
    ]
+  },
+  {
+   "at": "2026-11-27T15:00:40.742Z",
+   "ny_time": "10:00",
+   "phase": "intraday",
+   "stock_signals": [],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10191.4,
+   "orders": []
   }
  ],
  "vs": {
@@ -1343,7 +1353,7 @@
    }
   ]
  },
- "updated": "2026-11-25T20:45:36.456Z",
+ "updated": "2026-11-27T15:00:40.742Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
