@@ -248,6 +248,17 @@ if (!mode) {
 }
 
 {
+  const { verifyGate } = await import('./live-dip.mjs');
+  assert.equal(verifyGate({ nowMin: 13 * 60 + 35, closeMin: 780, doneToday: false }), 'run');                 // half day 13:35
+  assert.match(verifyGate({ nowMin: 16 * 60 + 35, closeMin: 780, doneToday: true }), /already/);             // half day 16:35: no second message
+  assert.match(verifyGate({ nowMin: 13 * 60 + 35, closeMin: 960, doneToday: false }), /too early/);          // normal day 13:35
+  assert.equal(verifyGate({ nowMin: 16 * 60 + 35, closeMin: 960, doneToday: false }), 'run');                 // normal day 16:35
+  assert.match(verifyGate({ nowMin: 16 * 60 + 35, closeMin: null, doneToday: false }), /closed/);            // holiday
+  assert.equal(verifyGate({ nowMin: 9 * 60, closeMin: 960, doneToday: true, force: true }), 'run');
+  console.log('ok   verify gate: 13:35 only on half days, once a day, skips holidays');
+}
+
+{
   const { rhCloseOn } = await import('./live-dip.mjs');
   const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
   const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };

@@ -61,7 +61,7 @@ timer() { # name calendar...
 }
 unit health health;  timer health "Mon..Fri 08:45 America/New_York"
 unit trade trade;    timer trade  "Mon..Fri 15:47 America/New_York" "Mon..Fri 15:52 America/New_York" "Mon..Fri 12:47 America/New_York" "Mon..Fri 12:52 America/New_York"   # 12:4x only acts on 1 pm half days
-unit verify verify;  timer verify "Mon..Fri 16:35 America/New_York"
+unit verify verify;  timer verify "Mon..Fri 13:35 America/New_York" "Mon..Fri 16:35 America/New_York"   # acts once a day, 30+ min after the real close
 unit intraday intraday; timer intraday "Mon..Fri 10..15:00/15 America/New_York"   # v3.2 checks; does nothing unless LIVE_STRATEGY=v32 (and only 10:00 to 20 min before the close)
 sudo loginctl enable-linger "$USER"
 systemctl --user daemon-reload

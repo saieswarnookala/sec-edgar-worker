@@ -417,8 +417,17 @@ export function matchOurOrders(placed, todays) {
   return mine;
 }
 // After the close: confirm fills from Robinhood's own order history, measure fill vs closing price, catch strangers.
+// Runs at 13:35 and 16:35 ET: acts once per day, at least 30 min after that day's real close (13:35 only on 1 pm half days). 'verify force' = run now.
+export const verifyGate = ({ nowMin, closeMin, doneToday, force = false }) => force ? 'run' : closeMin == null ? 'skip: market closed today' : nowMin < closeMin + 30 ? 'skip: too early (close ' + fmtMin(closeMin) + ')' : doneToday ? 'skip: already verified today' : 'run';
 async function cmdVerify() {
-  const today = ny().date, state = loadState(), h = [...state.history].reverse().find((x) => x.today === today && x.placed);
+  const now = ny(), today = now.date, state = loadState(), h = [...state.history].reverse().find((x) => x.today === today && x.placed);
+  const force = process.argv.includes('force');
+  if (!force) {
+    let cm = 960;
+    try { const days = await tradingDays(today); cm = days.includes(today) ? closeMins[today] ?? 960 : null; } catch (e) { cm = 960; }
+    const gate = verifyGate({ nowMin: now.min, closeMin: cm, doneToday: (state.verify || []).some((x) => x.today === today) });
+    if (gate !== 'run') return console.log('verify', gate, now.hm);
+  }
   try {
     const { client } = await rh(); const r = await rhRead(client);
     state.positions = state.positions.filter((p) => r.held[p.symbol] > 0).map((p) => ({ ...p, qty: r.held[p.symbol] }));
