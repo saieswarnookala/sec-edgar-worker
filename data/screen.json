@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T04:27:30.305Z",
+ "generated_at": "2026-11-27T21:45:46.280Z",
  "earnings_year": "CY2025",
  "rules": {
   "per_bucket": 15,
@@ -47,8 +47,8 @@
   }
  ],
  "counts": {
-  "universe": 3947,
-  "with_financials": 3140,
+  "universe": 3945,
+  "with_financials": 3139,
   "passed": 590,
   "quality_passed": 200
  },
@@ -938,14 +938,14 @@
    "market_cap": 1478440174,
    "score": 86,
    "pe": 7.95,
-   "roe": 0.2184,
+   "roe": 0.2266,
    "net_margin": 0.2213,
    "fcf_yield": 0.2969,
    "sales_g3": 0.1179,
    "sales_growth": 0.0533,
    "profit_growth": 0.0145,
    "profit_g3": 0.0714,
-   "de": 0.2363,
+   "de": 0.0409,
    "net_income": 185872000,
    "revenue": 839894000,
    "fy_end": "2025-09-30"
@@ -1914,8 +1914,8 @@
    "sector": "Technology",
    "industry": "Semiconductors",
    "price": 333.105,
-   "market_cap": 161411179219,
-   "pe": 71.19,
+   "market_cap": 160781926552,
+   "pe": 70.91,
    "net_income": 2267342000,
    "revenue": 11019707000,
    "net_margin": 0.2058,
