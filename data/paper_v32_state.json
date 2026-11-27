@@ -1397,6 +1397,18 @@
    "park": "IEF",
    "equity": 10208.68,
    "orders": []
+  },
+  {
+   "at": "2026-11-27T16:45:40.020Z",
+   "ny_time": "11:45",
+   "phase": "intraday",
+   "stock_signals": [
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10214.63,
+   "orders": []
   }
  ],
  "vs": {
@@ -1475,7 +1487,7 @@
    }
   ]
  },
- "updated": "2026-11-27T16:30:42.559Z",
+ "updated": "2026-11-27T16:45:40.020Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
