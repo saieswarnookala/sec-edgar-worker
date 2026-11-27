@@ -4,6 +4,7 @@ Writes data/dip_downstream.csv.gz, one row per day:
   idle   = share of the account NOT in dip trades that day (free slots)
   full   = today's full bot (dips + Clear Leader / IEF parking), for checking
   park_on, bond_ok, cl, ief, tbill, spy, qqq = parking inputs and plain ETF returns
+  dips_real, idle_real, full_real = same with 'realistic' fills (next open, 0.15%/0.05% costs)
 Any downstream X then gives: dips + idle * X - switching costs. DRY=1: fake data."""
 import os, sys
 import numpy as np, pandas as pd
@@ -18,6 +19,12 @@ for t, x in tr: idle.iloc[t] = x
 q = S.yahoo("QQQ"); qqq = q.reindex(q.index.union(dn)).ffill(limit=5).reindex(dn).pct_change(fill_method=None).fillna(0) if q is not None else pd.Series(0.0, index=dn)
 df = pd.DataFrame({"dips": pd.Series(dips, index=dn).pct_change().fillna(0), "idle": idle, "full": pd.Series(full, index=dn).pct_change().fillna(0),
                    "park_on": S.park_on.astype(int), "bond_ok": S.BOND_OK.astype(int), "cl": S.CLR, "ief": S.BOND_R, "tbill": S.TBILL_R, "spy": S.spyr, "qqq": qqq.values}, index=dn)
+# realistic variant: yesterday's signals bought at today's open, higher costs (the park-alt 'realistic' setting)
+kr = dict(fill="open", park="cl", cs=0.0015, ce=0.0005, etf=True)
+tr2 = []; dr, _ = S.sim(bond=False, parkx=np.zeros(len(S.dn), bool), cash_interest=False, trace=tr2, **kr); fr_, _ = S.sim(bond=True, **kr)
+idle2 = pd.Series(1.0, index=dn)
+for t, x in tr2: idle2.iloc[t] = x
+df["dips_real"] = pd.Series(dr, index=dn).pct_change().fillna(0); df["idle_real"] = idle2; df["full_real"] = pd.Series(fr_, index=dn).pct_change().fillna(0)
 df = df[df.index >= "1999-01-01"]
 chk = (1 + df.dips + df.idle.shift(0) * np.where(df.park_on == 1, df.cl, np.where(df.bond_ok == 1, df.ief, 0))).prod()
 print("rows", len(df), "| avg idle", round(df.idle.mean(), 3), "| full bot growth", round((1 + df.full).prod(), 2), "| rebuilt from dips+idle", round(chk, 2), flush=True)
