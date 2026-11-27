@@ -1302,10 +1302,25 @@
    "park": "IEF",
    "equity": 10183.99,
    "orders": []
+  },
+  {
+   "at": "2026-11-27T15:30:36.538Z",
+   "ny_time": "10:30",
+   "phase": "intraday",
+   "stock_signals": [
+    "ANET",
+    "CRWD"
+   ],
+   "etf_signals": [],
+   "park": "IEF",
+   "equity": 10185.21,
+   "orders": [
+    "BUY $1019 ANET (dip -11.33%, during the day)"
+   ]
   }
  ],
  "vs": {
-  "cash": 203.99818937678037,
+  "cash": 0.00015024967819954327,
   "positions": [
    {
     "symbol": "CRWD",
@@ -1315,10 +1330,19 @@
     "dip_pct": -10.38,
     "size_pct": 10,
     "bought_intraday": true
+   },
+   {
+    "symbol": "ANET",
+    "entry_date": "2026-11-27",
+    "qty": 5.987778,
+    "entry_px": 170.1,
+    "dip_pct": -11.33,
+    "size_pct": 10,
+    "bought_intraday": true
    }
   ],
   "park": {
-   "IEF": 97.264976
+   "IEF": 88.39266
   },
   "trades": [
    {
@@ -1363,7 +1387,7 @@
    }
   ]
  },
- "updated": "2026-11-27T15:15:36.425Z",
+ "updated": "2026-11-27T15:30:36.538Z",
  "twin": {
   "cash": 203.4754121899989,
   "positions": [],
