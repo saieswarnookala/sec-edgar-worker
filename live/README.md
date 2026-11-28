@@ -85,3 +85,9 @@ headlines (Alpaca news, same keys), SEC 8-K items (if `SEC_USER_AGENT=` is set) 
 (cause / take-caution-avoid / reason). Later it fills the 5-day move and the live trade result. Output: `~/.sentinel-live/journal.md`
 (readable) and `journal.json`. Never imports `live-dip.mjs`, never talks to Robinhood, never changes a decision.
 `node journal.mjs report` prints the report; `node test-journal.mjs` runs the offline test.
+
+## Second account as a Roth IRA (later, optional)
+Run a second copy of the bot for the Roth with its own folder: `SENTINEL_HOME=~/.sentinel-roth` (own `config.env`, state, Robinhood login)
+and `ACCOUNT_TYPE=roth` in that config. Wash-sale guard (`wash.mjs`): the regular-account bot writes its loss sales to
+`~/.sentinel-shared/loss-sales.json`; the Roth bot skips buying any stock the regular account sold at a loss in the last 31 days
+(a Roth buy inside that window would make the loss disappear for good). With one account nothing changes.

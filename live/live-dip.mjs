@@ -24,6 +24,7 @@ import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
 import { fillReport, reportText, reportTitle, reportSvg, reportPng, ordersSvg, category, weeklySvg, monthlySvg, watchSvg } from './report.mjs';
 import { addToLedger, backfillLedger, weeklyData, monthlyData, weekKey, monthKey } from './periodic.mjs';
 import { watchRows, etfRows } from '../scripts/dip-watch.mjs';
+import { recordLosses, washBlocked } from './wash.mjs';
 import { gatherSignalsRH, compareSignals, shadowAlert } from './rh-data.mjs';
 
 // Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
@@ -41,7 +42,7 @@ export function parseConfig(text) {
 }
 const CFG = join(HOME, 'config.env');
 if (existsSync(CFG)) Object.assign(process.env, parseConfig(readFileSync(CFG, 'utf8')));
-const E = process.env; let MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry'; const STRAT = ['v3', 'v32'].includes(E.LIVE_STRATEGY) ? E.LIVE_STRATEGY : 'v1';
+const E = process.env; const ROTH = E.ACCOUNT_TYPE === 'roth'; let MODE = E.LIVE_MODE === 'live' ? 'live' : 'dry'; const STRAT = ['v3', 'v32'].includes(E.LIVE_STRATEGY) ? E.LIVE_STRATEGY : 'v1';
 const STATE = join(HOME, 'dip-state.json'), HALT = join(HOME, 'HALT'), TOOLS = join(HOME, 'tools.json'), LOCK = join(HOME, 'run.lock');
 mkdirSync(HOME, { recursive: true, mode: 0o700 });
 const loadState = () => (existsSync(STATE) ? JSON.parse(readFileSync(STATE, 'utf8')) : { positions: [], history: [] });
@@ -87,6 +88,15 @@ export async function notifyImage(title, png, line, fallbackBody, { priority = 3
   }
   return notify(title, fallbackBody, { priority, tags });
 }
+// wash-sale guard (see wash.mjs): Roth bot drops buys of stocks the regular account sold at a loss in the last 31 days
+export function dropWashBuys(orders, blocked, log) {
+  if (!blocked?.size) return orders;
+  const skip = orders.filter((o) => o.side === 'buy' && blocked.has(o.symbol));
+  if (skip.length && log) log.skipped_wash_sale = skip.map((o) => `${o.symbol} (loss sale ${blocked.get(o.symbol)} in the regular account)`);
+  return orders.filter((o) => !skip.includes(o));
+}
+// regular account: write down sells placed below the average cost (estimate; 'verify' replaces it with the real result)
+const noteLossSells = (placed, prices, avg, today) => { if (ROTH || MODE !== 'live') return; try { recordLosses(placed.filter((o) => o.side === 'sell' && !o.dry && avg[o.symbol] > 0 && prices[o.symbol] > 0 && prices[o.symbol] < avg[o.symbol]).map((o) => ({ symbol: o.symbol, date: today, est: true })), today); } catch (e) { console.error('loss note:', e.message); } };
 const ping = async (suffix = '', url = E.HC_PING_URL) => { if (url) try { await fetch(url + suffix, { method: 'POST', signal: AbortSignal.timeout(10000) }); } catch {} };
 
 // ---- one run at a time (a slow run must never overlap the backup run and double-trade) ----
@@ -239,6 +249,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     const todays = before.orders.filter((o) => o.created_at && ny(new Date(o.created_at)).date === today && !/cancel|reject|fail/.test(o.state) && !dayIds.has(String(o.id)) && !(STRAT === 'v32' && ny(new Date(o.created_at)).min < win.start - 1));   // v32: today's intraday orders are not duplicates
     const dupes = orders.filter((o) => todays.some((t) => t.symbol === o.symbol && t.side === o.side));
     if (dupes.length) { log.skipped_already_placed = dupes.map((o) => o.symbol + ' ' + o.side); orders = orders.filter((o) => !dupes.includes(o)); }
+    if (ROTH) orders = dropWashBuys(orders, washBlocked(today), log);
     const allowed = new Set([...g.members, ...etfs, ...(V3 ? ETF_DIP_LIST : []), ...Object.keys(held)]);
     const maxOrderUsd = +(E.MAX_ORDER_USD || Math.max(5, equity * 0.2));
     const problems = checkLimits(orders, { equity, held, prices: g.prices, allowed, maxOrderUsd });
@@ -264,6 +275,7 @@ export async function cmdTrade({ force = E.FORCE === '1', gather = gatherSignals
     if (MODE === 'live' && placed.some((p) => p.side === 'sell')) { await new Promise((r) => setTimeout(r, 4000)); bp = readMoney(await call(client, 'get_portfolio', acctArgs('get_portfolio'))).buying_power ?? bp; }
     else bp = (bp ?? 0) + orders.filter((o) => o.side === 'sell').reduce((a, o) => a + o.shares * (g.prices[o.symbol] || 0), 0);
     for (const o of fitBuys(orders.filter((x) => x.side === 'buy'), bp ?? equity, g.prices)) await place(o);
+    if (!preview) noteLossSells(placed, g.prices, readAvgPrices(before.raw.pos), today);
     // record entries: share counts get corrected from real holdings on the next run / verify
     // record strategy entries (stock dips and, in v3, ETF dips); parking buys are not positions
     for (const p of placed.filter((x) => x.side === 'buy' && plan.buys.some((b) => b.symbol === x.symbol))) {
@@ -364,6 +376,7 @@ export async function cmdIntraday({ gather = gatherSignals, getDays = tradingDay
     // never buy a dip symbol twice in a day, never sell a dip position twice (parking orders may repeat across checks)
     const todays = before.orders.filter((o) => o.created_at && ny(new Date(o.created_at)).date === today && !/cancel|reject|fail/.test(o.state));
     orders = orders.filter((o) => /^parking/.test(o.why) || !todays.some((t) => t.symbol === o.symbol && t.side === o.side));
+    if (ROTH) orders = dropWashBuys(orders, washBlocked(today), log);
     const allowed = new Set([...g.members, ...etfs, ...ETF_DIP_LIST, ...Object.keys(held)]);
     const problems = checkLimits(orders, { equity, held, prices: g.prices, allowed, maxOrderUsd: +(E.MAX_ORDER_USD || Math.max(5, equity * 0.2)) });
     log.holding = positions.map((p) => ({ symbol: p.symbol, entry_date: p.entry_date, entry_px: p.entry_px ?? null, now: g.prices[p.symbol] ?? null, pct: p.entry_px && g.prices[p.symbol] ? +((g.prices[p.symbol] / p.entry_px - 1) * 100).toFixed(1) : null }));   // dry day: check every position has an entry price
@@ -380,6 +393,7 @@ export async function cmdIntraday({ gather = gatherSignals, getDays = tradingDay
       if (o.side === 'sell' && mode === 'live') await new Promise((r) => setTimeout(r, 2000));
     }
     Object.assign(log, { placed, failed });
+    if (!preview && mode === 'live') noteLossSells(placed, g.prices, readAvgPrices(before.raw.pos), today);
     if (!preview && mode === 'live') {   // dry runs record nothing (holdings don't change), so a dry day shows the same plan each check
       for (const p of placed.filter((x) => x.side === 'buy' && !/^parking/.test(x.why))) {
         const b = plan.buys.find((x) => x.symbol === p.symbol);
@@ -510,6 +524,7 @@ async function cmdVerify() {
     else if (unfilled.length) await notify(`LIVE dip bot ${today}: ${unfilled.length} order(s) NOT filled`, ['Not filled (check Robinhood):', ...v.unfilled, '', reportText(R)].join('\n'), { priority: 4, tags: 'warning' });
     else if ((h?.placed?.length || fills.length) && MODE === 'live') await notifyImage(reportTitle(R), await reportPng(reportSvg(R)), line, reportText(R), { priority: 3, tags: 'white_check_mark' });
     console.log(JSON.stringify(v, null, 1));
+    if (MODE === 'live' && !ROTH) { try { recordLosses(R.sells.filter((x) => x.pl != null).map((x) => ({ symbol: x.symbol, date: today, pl: +x.pl.toFixed(2) })), today); } catch (e) { console.error('loss note:', e.message); } }
     if (MODE === 'live' && !strangers.length) { try { await periodicReports({ state, r, today, R, holding }); } catch (e) { console.error('weekly/monthly report failed:', e.message); } }
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
 }

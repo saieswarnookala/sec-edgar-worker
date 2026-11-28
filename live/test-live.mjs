@@ -312,6 +312,21 @@ if (!mode) {
 }
 
 {
+  const W = await import('./wash.mjs'); const { dropWashBuys } = await import('./live-dip.mjs');
+  const { mkdtempSync } = await import('node:fs'); const { tmpdir } = await import('node:os'); const { join } = await import('node:path');
+  const f = join(mkdtempSync(join(tmpdir(), 'wash-')), 'loss-sales.json');
+  W.recordLosses([{ symbol: 'XLE', date: '2026-11-20', est: true }, { symbol: 'AMD', date: '2026-11-20', est: true }], '2026-11-20', f);
+  W.recordLosses([{ symbol: 'AMD', date: '2026-11-20', pl: 0.44 }, { symbol: 'XLE', date: '2026-11-20', pl: -0.17 }], '2026-11-20', f);   // verify: AMD was a gain -> estimate removed
+  assert.deepEqual([...W.washBlocked('2026-12-15', f).keys()], ['XLE']);                    // 25 days later: still blocked
+  assert.deepEqual([...W.washBlocked('2026-12-22', f).keys()], []);                         // 32 days later: free again
+  const orders = [{ symbol: 'XLE', side: 'buy', dollars: 10 }, { symbol: 'XLE', side: 'sell', shares: 1 }, { symbol: 'WST', side: 'buy', dollars: 10 }], log = {};
+  assert.deepEqual(dropWashBuys(orders, W.washBlocked('2026-12-01', f), log).map((o) => o.side + ' ' + o.symbol), ['sell XLE', 'buy WST']);
+  assert.match(log.skipped_wash_sale[0], /XLE/);
+  assert.equal(dropWashBuys(orders, new Map(), {}).length, 3);                                  // regular account / no losses: nothing changes
+  console.log('ok   wash-sale guard: Roth skips stocks the regular account sold at a loss in the last 31 days; off otherwise');
+}
+
+{
   const { rhCloseOn } = await import('./live-dip.mjs');
   const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
   const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };

@@ -153,7 +153,7 @@ export async function reportPng(svg) {
     const { Resvg } = await import('@resvg/resvg-js');
     const req = createRequire(import.meta.url);
     const dir = join(dirname(req.resolve('dejavu-fonts-ttf/package.json')), 'ttf');
-    const r = new Resvg(svg, { fitTo: { mode: 'zoom', value: 2 }, font: { loadSystemFonts: false, fontFiles: ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf', 'DejaVuSansMono.ttf', 'DejaVuSansMono-Bold.ttf'].map((f) => join(dir, f)), defaultFontFamily: 'DejaVu Sans' } });
+    const r = new Resvg(svg, { fitTo: { mode: 'zoom', value: 3 }, font: { loadSystemFonts: false, fontFiles: ['DejaVuSans.ttf', 'DejaVuSans-Bold.ttf', 'DejaVuSansMono.ttf', 'DejaVuSansMono-Bold.ttf'].map((f) => join(dir, f)), defaultFontFamily: 'DejaVu Sans' } });
     return Buffer.from(r.render().asPng());
   } catch (e) { console.error('report image skipped:', e.message); return null; }
 }
