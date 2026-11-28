@@ -323,5 +323,12 @@ if G == "mc":   # bad-year odds: block bootstrap of daily returns (1-month block
         print(lab, json.dumps(RES[f"dip bot {lab}: all years"]), json.dumps(RES[f"dip bot {lab}: bear-market years only"]), flush=True)
     sp = np.array(S.spyr[t0:]); RES["SPY: all years"] = mc(sp)
 
+if G == "tuned":   # Nov 28: realistic-fill test of the tuned dip (paper bot 6: 8% dip, 150-day trend, hold up to 7 days), never run before
+    T8 = S.make_sig(0.08, 150)
+    for eng, extra in (("bot 5 style (ETF dips, no bonds)", dict(bond=False)), ("v3.0 engine (ETF dips + bonds)", {})):
+        for lab, kw in (("live-like (3:45 close)", LIVE), ("realistic (next open, higher costs)", REAL), ("realistic x2 costs", {**REAL, "cs": 0.003, "ce": 0.001, "cp": 0.001})):
+            for nm, sg, mh in (("today's rules (10% dip, 200-day, 5 days)", None, 5), ("tuned (8% dip, 150-day, 7 days)", T8, 7)):
+                name = f"{eng} | {lab} | {nm}"; r, _ = run(kw, sig=sg, mhs=mh, **extra); RES[name] = r; log(name, r)
+
 os.makedirs("data", exist_ok=True); json.dump(RES, open(OUT, "w"), indent=1, default=str)
 print("DONE", G, int(time.time() - T_START), "s")

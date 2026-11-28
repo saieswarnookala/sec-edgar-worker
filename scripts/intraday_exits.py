@@ -232,7 +232,9 @@ def vol_ok(t, j, T, cut=2.0):
     if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
     VSTAT[0] += 1; r = vol_ratio(t, j, T)
     return r is None or r <= cut
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None, fin_off=0):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None, fin_off=0, wmul=None, skip=None, sect=None, sect_lag=None, smul=1.5):
+    """wmul/skip/sect (Nov 28, v3.3): per stock-day size multiplier (12-month strength), skip mask (earnings 8-K window), sector-wide
+    dip mask (close-based for the 3:45 step; sect_lag = previous-close version for buys during the day, no look-ahead) -> x smul."""
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
     prng = np.random.default_rng(seed)
     early_sells = [0]; early_buys = [0]; DT = []          # DT = days with a same-day sell (day trade)
@@ -298,6 +300,7 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     now = px_at(t, "S", j, T)
                     if now is None: continue
                     g5 = now / S.S_C[t - 5, j] - 1 - spy5
+                    if skip is not None and skip[t, j]: continue
                     if g5 <= -dip and now > np.mean(np.r_[S.S_C[t - 199:t, j], now]): cand.append((g5, "S", j))
                 cand.sort(key=lambda z: z[0])
                 ce_ = []
@@ -312,7 +315,11 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     f = px_at(t, k, j, T, fill=True)
                     if f is None or not np.isfinite(f) or f <= 0: continue
                     hv = vhalf is not None and k == "S" and (lambda r_: r_ is not None and r_ > vhalf)(vol_ratio(t, j, T))   # busy dip: half size
-                    a = min(w * eq_now * (0.5 if hv else 1.0), cu * pf); c = cs if k == "S" else ce
+                    mu = 1.0
+                    if wmul is not None and k == "S":
+                        sx = sect if final else sect_lag
+                        mu = wmul[t, j] * (smul if sx is not None and sx[t, j] else 1.0)
+                    a = min(w * eq_now * (0.5 if hv else 1.0) * mu, cu * pf); c = cs if k == "S" else ce
                     if a < 0.02 * eq_now: break
                     cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
                     if not final: early_buys[0] += 1
@@ -386,6 +393,48 @@ if os.environ.get("TRAIL") == "1":                      # Nov 24: trailing stop 
         for xn in (15, 5):
             V.append((f"v3.2 trailing: arm +{int(arm*100)}%, sell {int(y*100)}% below high, every {xn} min", dict(exit_mode="trail", x=arm, y=y, xn=xn, **i15)))
     V.append(("v3.2 trailing +5% / 1%, every 5 min, buys every 5 min too", dict(exit_mode="trail", x=0.05, y=0.01, xn=5, **i5)))
+if os.environ.get("V33") == "1":                        # Nov 28: v3.3 = v3.2 + strength sizing 1.5x/0.5x + skip earnings dips + sector-wide dips 1.5x
+    def v33_parts():
+        Cs, Mv = S.Cs, S.M
+        mom12 = Cs.shift(5) / Cs.shift(257) - 1; mr = np.nan_to_num(mom12.where(Mv).rank(axis=1, pct=True).values, nan=0.5)
+        wm = np.where(mr >= 2 / 3, 1.5, np.where(mr <= 1 / 3, 0.5, 1.0))
+        ITEMS = json.load(open("data/sec_8k_items.json"))["tickers"] if os.path.exists("data/sec_8k_items.json") else {}
+        SIC = {t: (v.get("sic") or "")[:2] for t, v in json.load(open("data/sec_events_sic.json"))["tickers"].items()} if os.path.exists("data/sec_events_sic.json") else {}
+        dstr = np.array(ds); earn = np.zeros(S.S_C.shape, bool)
+        for j, tk in enumerate(S.tick):
+            for d, mi, it in ITEMS.get(tk) or []:
+                if not ({"2.02", "12"} & set((it or "").split(","))): continue
+                i = int(np.searchsorted(dstr, d))
+                if i >= len(dstr): continue
+                if dstr[i] == d and mi is not None and mi > 15 * 60 + 45: i += 1
+                earn[i:i + 5, j] = True
+        r5 = np.vstack([np.full((5, len(S.tick)), np.nan), S.S_C[5:] / S.S_C[:-5] - 1]); r5l = np.vstack([np.full((1, len(S.tick)), np.nan), r5[:-1]])
+        grp = {}
+        for j, t_ in enumerate(S.tick):
+            if SIC.get(t_): grp.setdefault(SIC[t_], []).append(j)
+        gid = {j: np.array([x for x in grp[SIC[t_]] if x != j], dtype=int) for j, t_ in enumerate(S.tick) if SIC.get(t_)}
+        sect = np.zeros(S.S_C.shape, bool); sectl = np.zeros(S.S_C.shape, bool); Mm = S.M.values
+        for t, j in zip(*np.nonzero(NEAR)):
+            if t < tr0 or j not in gid: continue
+            g = gid[j]; g = g[Mm[t, g]]
+            for arr, out in ((r5, sect), (r5l, sectl)):
+                v = arr[t, g]; v = v[np.isfinite(v)]
+                if len(v) >= 3 and np.median(v) <= -0.05: out[t, j] = True
+        print("v3.3 parts: strong/weak share", round(float((wm[tr0:] == 1.5).mean()), 3), round(float((wm[tr0:] == 0.5).mean()), 3),
+              "| earnings-window stock-days", int(earn[tr0:].sum()), "| sector-wide candidate days", int(sect[tr0:].sum()), "(lagged", int(sectl[tr0:].sum()), ")", "| 8-K tickers", len(ITEMS), "SIC", len(SIC), flush=True)
+        return wm, earn, sect, sectl
+    WM, EARN, SECT, SECTL = v33_parts()
+    V32 = dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05); V30 = dict(etf=True, bond=True)
+    B33 = dict(wmul=WM, skip=EARN, sect=SECT, sect_lag=SECTL); C2 = dict(cs=0.001, ce=0.0004)
+    def placebo(seed):                                   # same multipliers shuffled across stocks each day + random skips at the same daily rate
+        r_ = np.random.default_rng(seed); wmp = r_.permuted(WM, axis=1); rate = EARN[tr0:].mean()
+        return dict(wmul=wmp, skip=r_.random(EARN.shape) < rate, sect=r_.permuted(SECT, axis=1), sect_lag=r_.permuted(SECTL, axis=1))
+    V = [("v3.2", V32), ("v3.3 = v3.2 + strength sizing + skip earnings dips + sector-wide 1.5x", {**V32, **B33}),
+         ("v3.2 | 2x costs", {**V32, **C2}), ("v3.3 | 2x costs", {**V32, **B33, **C2}),
+         ("v3.2 + strength sizing only", {**V32, "wmul": WM}), ("v3.2 + skip earnings dips only", {**V32, "skip": EARN}),
+         ("v3.2 + sector-wide 1.5x only", {**V32, "wmul": np.ones_like(WM), "sect": SECT, "sect_lag": SECTL}),
+         ("v3.0 | 3:45 only", V30), ("v3.0 + v3.3 changes | 3:45 only", {**V30, **B33}),
+         ("PLACEBO v3.3 shuffled (seed 1)", {**V32, **placebo(1)}), ("PLACEBO v3.3 shuffled (seed 2)", {**V32, **placebo(2)})]
 if os.environ.get("VOLTEST") == "1":                    # Nov 24: skip or half-size busy dips (volume ratio known at that moment), v3.0 3:45 only and v3.2
     V = []
     for bot, kw in (("v3.0 (3:45 only)", dict(etf=True, bond=True)), ("v3.2 (15 min + target +5%)", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05))):
@@ -404,7 +453,8 @@ for name, kw in V:
     print(f"{name:62s} {a['per_year_pct']}%/yr same-day {a['same_day_sells_per_month']}/mo | worst {a['worst_drop_pct']}% | 16-20 {a['2016-2020']} 21-26 {a['2021-2026']} | {a['trades_per_month']}/mo avg {a['avg_trade_pct']}% win {a['win_pct']}% | early sells {a['sold_during_day_per_month']}/mo buys {a['bought_during_day_per_month']}/mo", flush=True)
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
-PAIRS = (("v3.2 live-exact | daily step at 3:45 (today)", "v3.2 live-exact | daily step at 3:30"),) if os.environ.get("TIMING") == "1" else \
+PAIRS = (("v3.2", "v3.3 = v3.2 + strength sizing + skip earnings dips + sector-wide 1.5x"), ("v3.0 | 3:45 only", "v3.0 + v3.3 changes | 3:45 only")) if os.environ.get("V33") == "1" else \
+        (("v3.2 live-exact | daily step at 3:45 (today)", "v3.2 live-exact | daily step at 3:30"),) if os.environ.get("TIMING") == "1" else \
         (("v3.2 | dip 10% | target +5%", "v3.2 | dip 10% | target +3%"),) if os.environ.get("WF") == "1" else \
         (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \
         (("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | skip > 1.4x"), ("v3.2 (15 min + target +5%) | today (skip > 2x)", "v3.2 (15 min + target +5%) | half size > 1.4x")) if os.environ.get("VOLTEST") == "1" else \
