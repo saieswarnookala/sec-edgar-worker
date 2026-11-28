@@ -13,6 +13,7 @@
 //     v32 = v3 at 3:47 pm + the 'intraday' command every 15 min (10:00 ET to 20 min before the close): sell at +5% if held >= 1 day, buy new dips.
 //   EXECUTOR=direct|claude (default direct). claude = every Robinhood call goes through official Claude Code + Robinhood MCP
 //     (CLAUDE_BIN, CLAUDE_MCP_SERVER=robinhood); our code still decides the orders and checks each call Claude makes.
+import { fillStats, fillsText } from './fills.mjs';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, openSync, closeSync, unlinkSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { gatherSignals, decide, PAPER, DATA, SLOTS, BOND, bondParkSymbol, ETF_DIP_LIST, WEIGHT, BUFFER } from '../scripts/paper-dip.mjs';
@@ -604,6 +605,26 @@ async function cmdShadow() {
   console.log(sa.title + '\n' + sa.body + '\n' + JSON.stringify({ ...c, watch: c.watch.slice(0, 15) }, null, 1));
 }
 
+// 'fills': real fills vs the backtest's close / next-open assumptions (reads state.verify; next-day opens from Alpaca daily bars)
+async function cmdFills() {
+  const state = loadState(), verify = state.verify || [];
+  const syms = [...new Set(verify.flatMap((v) => (v.fills || []).map((f) => f.symbol)))], first = verify.find((v) => (v.fills || []).length)?.today;
+  const opens = {};
+  if (syms.length && first) {
+    for (const feed of ['sip', 'iex']) {
+      try {
+        const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: syms.join(','), timeframe: '1Day', start: first, end: new Date(Date.now() - 16 * 60e3).toISOString(), feed, limit: '10000' }));
+        for (const [s, bars] of Object.entries(js.bars || {})) for (let i = 0; i + 1 < bars.length; i++) opens[`${s}:${bars[i].t.slice(0, 10)}`] = bars[i + 1].o;
+        if (Object.keys(opens).length) break;
+      } catch (e) { console.error('next-open lookup', feed, String(e.message || e).slice(0, 160)); }
+    }
+  }
+  const S = fillStats(verify, opens, (sym) => [BOND, 'BIL', ...POOL].includes(sym));
+  console.log(JSON.stringify({ dip_buys: S.dip_buys, dip_sells: S.dip_sells, parking: S.parking, fills: S.rows.length }, null, 1));
+  console.log(fillsText(S));
+  if (!process.argv.includes('quiet')) await notify('Dip bot: real fills vs backtest', fillsText(S), { priority: 2, tags: 'mag' });
+}
+
 function cmdStatus() {
   const s = loadState();
   console.log(JSON.stringify({ mode: MODE, halted: existsSync(HALT) ? readFileSync(HALT, 'utf8') : false, token_hours_left: Math.round((tokenSecondsLeft() || 0) / 3600), positions: s.positions, peak_equity: s.peak_equity, last_runs: s.history.slice(-3).map((h) => ({ today: h.today, mode: h.mode, placed: h.placed?.length, failed: h.failed?.length, error: h.error })), last_verify: s.verify?.at(-1) }, null, 1));
@@ -611,14 +632,14 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus, weekly: () => cmdPeriodic('weekly'), monthly: () => cmdPeriodic('monthly'), watch: () => cmdWatch(),
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus, weekly: () => cmdPeriodic('weekly'), fills: cmdFills, monthly: () => cmdPeriodic('monthly'), watch: () => cmdWatch(),
     'ntfy-test': () => notify('Dip bot: test alert', 'If you see this on your phone, alerts from the VM work. ' + new Date().toISOString()),
     'report-test': async () => {
       const a = sampleOrders(); await notifyImage('SAMPLE ' + a.title, await reportPng(ordersSvg(a.data)), 'Sample of the new order alert', a.body, { priority: 2, tags: 'chart_with_upwards_trend' });
       const R = sampleReport(); await notifyImage('SAMPLE ' + reportTitle(R), await reportPng(reportSvg(R)), 'Sample of the new end-of-day table (made-up AMD buy price)', reportText(R), { priority: 2, tags: 'white_check_mark' });
     },
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|weekly|monthly|watch|ntfy-test|report-test|halt|resume'); process.exit(2); }
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|weekly|monthly|watch|fills|ntfy-test|report-test|halt|resume'); process.exit(2); }
   // dead-man pings (healthchecks.io): HC_PING_URL = morning health check, HC_TRADE_URL = every trade-step run (also on holidays, so no false alarms)
   Promise.resolve(run()).then(async () => { if (cmd === 'trade') await ping(process.exitCode ? '/fail' : '', E.HC_TRADE_URL); })
     .catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); await ping('/fail', cmd === 'trade' ? E.HC_TRADE_URL : E.HC_PING_URL); process.exit(1); });

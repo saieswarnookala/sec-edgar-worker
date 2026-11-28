@@ -330,5 +330,116 @@ if G == "tuned":   # Nov 28: realistic-fill test of the tuned dip (paper bot 6: 
             for nm, sg, mh in (("today's rules (10% dip, 200-day, 5 days)", None, 5), ("tuned (8% dip, 150-day, 7 days)", T8, 7)):
                 name = f"{eng} | {lab} | {nm}"; r, _ = run(kw, sig=sg, mhs=mh, **extra); RES[name] = r; log(name, r)
 
+# ---------------- Nov 28 research round (jobs 1, 4, 6) ----------------
+def item_mask(items, days=5):
+    """True on the filing's effective day (after 15:45 SEC time -> next day) and the next days-1 trading days, for 8-Ks with any of `items`"""
+    ITEMS = json.load(open("data/sec_8k_items.json"))["tickers"] if os.path.exists("data/sec_8k_items.json") and not S.DRY else {}
+    dstr = np.array([str(x)[:10] for x in dn]); m = np.zeros(S.SIG.shape, bool)
+    for j, tk in enumerate(tick):
+        for d, mins, it in ITEMS.get(tk) or []:
+            if not (set(items) & set((it or "").split(","))): continue
+            i = int(np.searchsorted(dstr, d))
+            if i >= len(dstr): continue
+            if dstr[i] == d and mins is not None and mins > 15 * 60 + 45: i += 1
+            m[i:i + days, j] = True
+    return m
+def combo_b(mr, sector, hi=1.5, lo=0.5, sm=1.5): return np.where(mr >= 2 / 3, hi, np.where(mr <= 1 / 3, lo, 1.0)) * np.where(sector, sm, 1.0)
+
+if G == "badnews":   # job 1: skip dips that follow company bad-news filings (not just earnings)
+    mr, earn, sector = strength_parts(); W = combo_b(mr, sector)
+    SETS = {"CEO/CFO/director change (5.02)": ["5.02"], "restructuring or write-down (2.05, 2.06)": ["2.05", "2.06"], "auditor change or restatement (4.01, 4.02)": ["4.01", "4.02"],
+            "delisting, debt trigger, bankruptcy (3.01, 2.04, 1.03)": ["3.01", "2.04", "1.03"], "big contract ended (1.02)": ["1.02"], "control: other news (8.01)": ["8.01"],
+            "control: investor presentation (7.01)": ["7.01"], "ALL bad news (5.02, 2.05, 2.06, 4.01, 4.02, 3.01, 2.04, 1.03, 1.02)": ["5.02", "2.05", "2.06", "4.01", "4.02", "3.01", "2.04", "1.03", "1.02"]}
+    RES["base"] = with_placebo("base (v3.0 rules)")
+    RES["v3.3 sizing (COMBO B)"] = with_placebo("v3.3 sizing (COMBO B)", sig=S.SIG & ~earn, wmul=W, k=0)
+    for nm, its in SETS.items():
+        for days in (5, 10):
+            mk = item_mask(its, days); n = int((S.SIG & mk)[t0:].sum())
+            row = with_placebo(f"skip {nm}, {days}d", sig=S.SIG & ~mk); row["dips_skipped"] = n
+            if "ALL" in nm or "5.02" in nm:
+                r_, _ = run(LIVE, sig=S.SIG & ~earn & ~mk, wmul=W); rr_, _ = run(REAL, sig=S.SIG & ~earn & ~mk, wmul=W); row["on top of v3.3"] = {"live": r_, "realistic": rr_}; log(f"  + on top of v3.3", r_)
+            RES[f"skip {nm} | {days} days"] = row
+
+if G == "sectoretf":   # job 4: buy the sector ETF instead of the stock when a dip is sector-wide (or always / only weak stocks)
+    mr, earn, sector = strength_parts(); W = combo_b(mr, sector); W1 = combo_b(mr, np.zeros_like(sector))
+    SICF = {t: (v.get("sic") or "") for t, v in json.load(open("data/sec_events_sic.json"))["tickers"].items()} if os.path.exists("data/sec_events_sic.json") and not S.DRY else {}
+    def etf_for(sic):
+        if not sic: return None
+        c4 = int(sic); c2 = c4 // 100; c3 = c4 // 10
+        if c3 in (283,) or c2 == 80 or c3 in (384, 385) or c4 in (8731,): return "XLV"
+        if c3 in (357, 367, 366, 369, 737) or c4 in (3661, 3663, 3669, 3674, 3825): return "XLK"
+        if c2 == 48 or c4 in (7812, 7822, 2711, 2721): return "XLC" if "XLC" in S.EI else "XLK"
+        if c2 == 49: return "XLU"
+        if c2 == 13 or c3 in (291,) or c4 in (4922, 4923): return "XLE"
+        if c4 == 6798: return "XLRE" if "XLRE" in S.EI else "XLF"
+        if 60 <= c2 <= 67: return "XLF"
+        if c2 in (20, 21) or c4 in (5411, 5912, 2844) or c3 in (514,): return "XLP"
+        if c2 in (10, 12, 14, 24, 26, 28, 32, 33): return "XLB"
+        if c4 in (3711, 3714) or 52 <= c2 <= 59 or c2 in (70, 78, 79, 23, 25, 31) or c4 in (2511,): return "XLY"
+        return "XLI"
+    MAP = {j: S.EI.get(etf_for(SICF.get(tk, ""))) for j, tk in enumerate(tick)}
+    RES["sector map"] = {e: sum(1 for j in MAP if MAP[j] == S.EI.get(e)) for e in S.SECTORS}; print("sector map (stocks per ETF):", RES["sector map"], "unmapped", sum(1 for j in MAP if MAP[j] is None), flush=True)
+    def swap_mask(when):
+        sw = np.full(S.SIG.shape, -1, dtype=np.int32)
+        for t, j in zip(*np.nonzero(S.SIG & when)):
+            if MAP.get(j) is not None: sw[t, j] = MAP[j]
+        return sw
+    RES["base (v3.0 rules)"] = {"live": run(LIVE)[0], "realistic": run(REAL)[0]}; log("base", RES["base (v3.0 rules)"]["live"])
+    RES["v3.3 sizing"] = {"live": run(LIVE, sig=S.SIG & ~earn, wmul=W)[0], "realistic": run(REAL, sig=S.SIG & ~earn, wmul=W)[0]}; log("v3.3", RES["v3.3 sizing"]["live"])
+    weak = np.where(mr <= 1 / 3, True, False)
+    for nm, when, w_, sg in (("sector ETF instead of stock on sector-wide dips", sector, None, None), ("same, on v3.3 (ETF at 1x, no sector 1.5x)", sector, W1, S.SIG & ~earn),
+                             ("sector ETF instead of weak stocks (bottom third)", weak, None, None), ("sector ETF instead of EVERY stock dip", np.ones_like(sector), None, None)):
+        sw = swap_mask(when); row = {"live": run(LIVE, swap=sw, wmul=w_, sig=sg)[0], "realistic": run(REAL, swap=sw, wmul=w_, sig=sg)[0], "dips_swapped": int((sw[t0:] >= 0).sum())}
+        RES[nm] = row; log(nm, row["live"]); log("   realistic", row["realistic"])
+
+if G == "quality":   # job 6: dip quality score, walk-forward (each year scored by a model trained on earlier years only)
+    from sklearn.ensemble import HistGradientBoostingRegressor
+    from sklearn.linear_model import Ridge
+    mr, earn, sector = strength_parts(); bad = item_mask(["5.02", "2.05", "2.06", "4.01", "4.02", "3.01", "2.04", "1.03", "1.02"], 5)
+    C = S.S_C; SPx = np.asarray(S.SP, float); Dn = len(dn)
+    def ret(a, k): out = np.full_like(a, np.nan); out[k:] = a[k:] / a[:-k] - 1; return out
+    r1, r5, r20, r60 = ret(C, 1), ret(C, 5), ret(C, 20), ret(C, 60)
+    ma200 = pd.DataFrame(C).rolling(200, min_periods=150).mean().values; v20 = pd.DataFrame(r1).rolling(20, min_periods=15).std().values
+    s5 = np.r_[np.full(5, np.nan), SPx[5:] / SPx[:-5] - 1]; s200 = SPx / pd.Series(SPx).rolling(200).mean().values - 1; sv20 = pd.Series(SPx).pct_change().rolling(20).std().values
+    ncand = S.SIG.sum(axis=1)
+    rows = []
+    for t, j in zip(*np.nonzero(S.SIG)):
+        if t < t0 or t >= Dn - 7 or not (C[t, j] > 0): continue
+        e = None                                           # label: live-style trade from the close of day t: sell at the first close above the 5-day average, or after 5 days
+        for k in range(1, 6):
+            if t + k >= Dn or not np.isfinite(C[t + k, j]): break
+            e = t + k
+            if C[t + k, j] > S.S_M5[t + k, j]: break
+        if e is None: continue
+        rows.append((t, j, r1[t, j], r5[t, j] - s5[t], r20[t, j], r60[t, j], mr[t, j], C[t, j] / ma200[t, j] - 1, v20[t, j], s5[t], s200[t], sv20[t], float(earn[t, j]), float(bad[t, j]), float(sector[t, j]), ncand[t], C[e, j] / C[t, j] - 1))
+    F = pd.DataFrame(rows, columns=["t", "j", "r1", "r5x", "r20", "r60", "mom_rank", "above200", "vol20", "spy5", "spy200", "spyvol", "earn", "badnews", "sectorwide", "n_dips", "y"])
+    F["year"] = pd.DatetimeIndex(S.dates[F.t.values]).year; feats = [c for c in F.columns if c not in ("t", "j", "y", "year")]
+    RES["dips"] = len(F); RES["corr with trade return (all years)"] = {c: round(float(F[c].corr(F.y)), 3) for c in feats}
+    preds = {"gbm": pd.Series(np.nan, index=F.index), "ridge": pd.Series(np.nan, index=F.index)}; thr = {}
+    for y in range(2004, int(F.year.max()) + 1):
+        tr = F[(F.year < y) & (F.t < S.dates.searchsorted(pd.Timestamp(f"{y}-01-01")) - 8)]; te = F[F.year == y]
+        if len(tr) < 500 or not len(te): continue
+        X, Y = tr[feats].fillna(0).values, np.clip(tr.y.values, -0.3, 0.3)
+        g = HistGradientBoostingRegressor(max_iter=200, learning_rate=0.05, max_leaf_nodes=15, min_samples_leaf=200, random_state=1).fit(X, Y)
+        rg = Ridge(alpha=10.0).fit((X - X.mean(0)) / (X.std(0) + 1e-9), Y)
+        preds["gbm"][te.index] = g.predict(te[feats].fillna(0).values)
+        preds["ridge"][te.index] = rg.predict((te[feats].fillna(0).values - X.mean(0)) / (X.std(0) + 1e-9))
+        thr[y] = {m: np.quantile(mdl.predict(X if m == "gbm" else (X - X.mean(0)) / (X.std(0) + 1e-9)), [0.2, 0.35, 0.5, 1 / 3, 2 / 3]) for m, mdl in (("gbm", g), ("ridge", rg))}
+    for m in preds:
+        F[m] = preds[m]
+        ok = F[m].notna(); q = pd.qcut(F.loc[ok, m], 5, labels=False, duplicates="drop")
+        RES[f"{m}: avg trade return by score fifth (2004+, out of sample)"] = {int(k): round(float(v) * 100, 2) for k, v in F.loc[ok].groupby(q).y.mean().items()}
+        print(m, RES[f"{m}: avg trade return by score fifth (2004+, out of sample)"], flush=True)
+        for qi, lab in ((0, "skip bottom 20%"), (1, "skip bottom 35%"), (2, "skip bottom 50%")):
+            keep = np.array(S.SIG, copy=True)
+            for _, r_ in F[ok].iterrows():
+                if r_[m] < thr[int(r_.year)][m][qi]: keep[int(r_.t), int(r_.j)] = False
+            RES[f"{m}: {lab}"] = with_placebo(f"quality {m}: {lab}", sig=keep, k=4)
+        wq = np.ones(S.SIG.shape)
+        for _, r_ in F[ok].iterrows():
+            th = thr[int(r_.year)][m]; wq[int(r_.t), int(r_.j)] = 1.5 if r_[m] >= th[4] else (0.5 if r_[m] <= th[3] else 1.0)
+        RES[f"{m}: size by score 1.5x top third / 0.5x bottom third"] = with_placebo(f"quality {m}: size by score", wmul=wq, k=0)
+    RES["base (v3.0 rules)"] = with_placebo("base", k=0)
+
 os.makedirs("data", exist_ok=True); json.dump(RES, open(OUT, "w"), indent=1, default=str)
 print("DONE", G, int(time.time() - T_START), "s")

@@ -232,7 +232,7 @@ def vol_ok(t, j, T, cut=2.0):
     if not ((np.nan_to_num(RAWC[t, j], nan=0) >= 5) and S.M.values[t, j]): return False
     VSTAT[0] += 1; r = vol_ratio(t, j, T)
     return r is None or r <= cut
-def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None, fin_off=0, wmul=None, skip=None, sect=None, sect_lag=None, smul=1.5):
+def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=1, no_rebuy=False, etf=False, bond=False, cs=0.0005, ce=0.0002, cp=0.0005, same_day=False, sd_x=None, sd_cap=None, dip=0.10, slots=10, w=0.10, drift=0, dth=0.05, dhold=60, mhs=5, vcut=2.0, vhalf=None, xn=None, fin_off=0, wmul=None, skip=None, sect=None, sect_lag=None, smul=1.5, wfin_only=False, tlog=None):
     """wmul/skip/sect (Nov 28, v3.3): per stock-day size multiplier (12-month strength), skip mask (earnings 8-K window), sector-wide
     dip mask (close-based for the 3:45 step; sect_lag = previous-close version for buys during the day, no look-ahead) -> x smul."""
     cash, pos, curve, held_park, trades = 1.0, [], np.ones(D), "CASH", []
@@ -282,6 +282,9 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     f = f if f is not None and np.isfinite(f) else Cx[t, j]
                     c = cs if p["k"] != "E" else ce
                     cu += p["v"] * (f / p["ref"]) * (1 - c) / pf; trades.append(f / p["px"] - 1 - 2 * c)
+                    if tlog is not None and "a0" in p:
+                        d0 = p["d"]; Ox = S.S_O if p["k"] != "E" else S.E_O
+                        tlog.append((p["k"], int(j), int(d0), int(t), float(p["a0"]), float(p["e0"]), float(trades[-1]), float(p["px"]), float(Cx[d0, j]), float(Ox[d0 + 1, j]) if d0 + 1 < D else np.nan, float(f), float(Cx[t, j]), bool(p["fin"]), bool(final)))
                     if not final: early_sells[0] += 1
                     if age < 1: DT.append(t)
                     sold_today.add((p["k"], j))
@@ -316,12 +319,12 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
                     if f is None or not np.isfinite(f) or f <= 0: continue
                     hv = vhalf is not None and k == "S" and (lambda r_: r_ is not None and r_ > vhalf)(vol_ratio(t, j, T))   # busy dip: half size
                     mu = 1.0
-                    if wmul is not None and k == "S":
+                    if wmul is not None and k == "S" and (final or not wfin_only):
                         sx = sect if final else sect_lag
                         mu = wmul[t, j] * (smul if sx is not None and sx[t, j] else 1.0)
                     a = min(w * eq_now * (0.5 if hv else 1.0) * mu, cu * pf); c = cs if k == "S" else ce
                     if a < 0.02 * eq_now: break
-                    cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0}); held.add((k, j))
+                    cu -= a / pf; pos.append({"k": k, "j": j, "d": t, "px": f, "v": a * (1 - c), "ref": f, "armed": False, "hi": 0.0, "a0": a, "e0": eq_now, "fin": final}); held.add((k, j))
                     if not final: early_buys[0] += 1
                 if final and drift:                                  # earnings drift (v3.1): extra slots, bought at the 3:45 step on the reaction day
                     for j in sorted(np.flatnonzero(np.nan_to_num(S.RXC[t], nan=-1) >= dth), key=lambda j: -S.RXC[t, j]):
@@ -347,6 +350,8 @@ def run(exit_mode="base", n=15, x=0.03, y=0.01, intraday_buy=False, bn=15, seed=
         c2 = cv[jj] / (cv[jj[0] - 1] if jj[0] > 0 else 1); o[name] = round((c2[-1] ** (252 / len(jj)) - 1) * 100, 1)
     yrs = pd.Series(cv, index=pd.DatetimeIndex(dn[ix])).resample("YE").last(); prev = np.r_[1.0, yrs.values[:-1]]
     o["years"] = {str(k.year): round((v / p_ - 1) * 100, 1) for k, v, p_ in zip(yrs.index, yrs.values, prev)}
+    if tlog is not None:
+        mo = pd.Series(cv, index=pd.DatetimeIndex(dn[ix])).resample("ME").last(); o["_months"] = {str(k)[:7]: float(v) for k, v in (mo / mo.shift(1).fillna(1.0) - 1).items()}
     return o
 V = []
 for bot, kw in (("Robinhood rules", {}), ("v3.0", dict(etf=True, bond=True))):
@@ -393,7 +398,7 @@ if os.environ.get("TRAIL") == "1":                      # Nov 24: trailing stop 
         for xn in (15, 5):
             V.append((f"v3.2 trailing: arm +{int(arm*100)}%, sell {int(y*100)}% below high, every {xn} min", dict(exit_mode="trail", x=arm, y=y, xn=xn, **i15)))
     V.append(("v3.2 trailing +5% / 1%, every 5 min, buys every 5 min too", dict(exit_mode="trail", x=0.05, y=0.01, xn=5, **i5)))
-if os.environ.get("V33") == "1":                        # Nov 28: v3.3 = v3.2 + strength sizing 1.5x/0.5x + skip earnings dips + sector-wide dips 1.5x
+if os.environ.get("V33") in ("1", "B", "T", "F"):     # Nov 28: v3.3 = v3.2 + strength sizing 1.5x/0.5x + skip earnings dips + sector-wide dips 1.5x
     def v33_parts():
         Cs, Mv = S.Cs, S.M
         mom12 = Cs.shift(5) / Cs.shift(257) - 1; mr = np.nan_to_num(mom12.where(Mv).rank(axis=1, pct=True).values, nan=0.5)
@@ -429,12 +434,69 @@ if os.environ.get("V33") == "1":                        # Nov 28: v3.3 = v3.2 + 
     def placebo(seed):                                   # same multipliers shuffled across stocks each day + random skips at the same daily rate
         r_ = np.random.default_rng(seed); wmp = r_.permuted(WM, axis=1); rate = EARN[tr0:].mean()
         return dict(wmul=wmp, skip=r_.random(EARN.shape) < rate, sect=r_.permuted(SECT, axis=1), sect_lag=r_.permuted(SECTL, axis=1))
+    MODE33 = os.environ.get("V33")
+    def wm_of(hi, lo): return np.where(WM == 1.5, hi, np.where(WM == 0.5, lo, 1.0))
     V = [("v3.2", V32), ("v3.3 = v3.2 + strength sizing + skip earnings dips + sector-wide 1.5x", {**V32, **B33}),
          ("v3.2 | 2x costs", {**V32, **C2}), ("v3.3 | 2x costs", {**V32, **B33, **C2}),
          ("v3.2 + strength sizing only", {**V32, "wmul": WM}), ("v3.2 + skip earnings dips only", {**V32, "skip": EARN}),
          ("v3.2 + sector-wide 1.5x only", {**V32, "wmul": np.ones_like(WM), "sect": SECT, "sect_lag": SECTL}),
          ("v3.0 | 3:45 only", V30), ("v3.0 + v3.3 changes | 3:45 only", {**V30, **B33}),
          ("PLACEBO v3.3 shuffled (seed 1)", {**V32, **placebo(1)}), ("PLACEBO v3.3 shuffled (seed 2)", {**V32, **placebo(2)})]
+    if MODE33 == "B":   # job 2: gentler strength sizing (all with skip earnings + sector-wide 1.5x)
+        E_ = dict(skip=EARN, sect=SECT, sect_lag=SECTL)
+        V = [("v3.2", V32), ("v3.3 (1.5x / 0.5x)", {**V32, **B33})]
+        for hi, lo in ((1.25, 0.75), (1.5, 0.75), (1.25, 1.0), (1.5, 1.0), (1.0, 0.75), (1.0, 0.5), (1.25, 0.5)):
+            V.append((f"v3.3 sizing {hi}x / {lo}x", {**V32, **E_, "wmul": wm_of(hi, lo)}))
+        V += [("v3.3 (1.5x / 0.5x), strength only at the 3:45 step", {**V32, **B33, "wfin_only": True}),
+              ("v3.3 sizing 1.25x / 0.75x, strength only at the 3:45 step", {**V32, **E_, "wmul": wm_of(1.25, 0.75), "wfin_only": True}),
+              ("v3.2 + skip earnings dips + sector-wide 1.5x (no strength)", {**V32, **E_, "wmul": np.ones_like(WM)}),
+              ("v3.3 sizing 1.25x / 0.75x | 2x costs", {**V32, **E_, "wmul": wm_of(1.25, 0.75), **C2}), ("v3.3 (1.5x / 0.5x) | 2x costs", {**V32, **B33, **C2})]
+    if MODE33 in ("T", "F"):   # job 3 (is 2026 a fluke?) and job 5 (3:45 fills vs close vs next open), from per-trade logs
+        SICm = {t_: (v.get("sic") or "")[:2] for t_, v in json.load(open("data/sec_events_sic.json"))["tickers"].items()} if os.path.exists("data/sec_events_sic.json") else {}
+        def tl_df(tl):
+            X_ = pd.DataFrame(tl, columns=["k", "j", "d0", "t1", "a0", "e0", "ret", "buy", "buy_close", "next_open", "sell", "sell_close", "buy_345", "sell_345"])
+            X_["sym"] = [S.tick[j] if k != "E" else S.EN[j] for k, j in zip(X_.k, X_.j)]; X_["date"] = [ds[i] for i in X_.d0]; X_["year"] = X_.date.str[:4]; X_["month"] = X_.date.str[:7]
+            X_["pnl_pct"] = X_.a0 / X_.e0 * X_.ret * 100; X_["sector"] = [SICm.get(sy, "") if k == "S" else "ETF" for k, sy in zip(X_.k, X_.sym)]; return X_
+        OUTX = {"note": "Nov 28 research. pnl_pct = trade size / account x trade return (percent of the account at entry)."}
+        if MODE33 == "T":
+            L2, L3 = [], []; R2 = run(**V32, tlog=L2); R3 = run(**{**V32, **B33}, tlog=L3); A_, B_ = tl_df(L2), tl_df(L3)
+            OUTX["v3.2"] = {k: v for k, v in R2.items() if k != "_months"}; OUTX["v3.3"] = {k: v for k, v in R3.items() if k != "_months"}
+            yrs = sorted(set(R2["years"]))
+            OUTX["by year: return v3.2 / v3.3 / gap"] = {y: [R2["years"][y], R3["years"].get(y), round(R3["years"].get(y, 0) - R2["years"][y], 1)] for y in yrs}
+            g = lambda y: np.prod([1 + R3["years"][x] / 100 for x in yrs if x != y]) ** (1 / (len(yrs) - 1)) - np.prod([1 + R2["years"][x] / 100 for x in yrs if x != y]) ** (1 / (len(yrs) - 1))
+            OUTX["per-year gain if one year is left out"] = {y: round(g(y) * 100, 1) for y in yrs}
+            OUTX["2025-2026 by month: v3.2 / v3.3 (%)"] = {m: [round(R2["_months"][m] * 100, 1), round(R3["_months"].get(m, 0) * 100, 1)] for m in sorted(R2["_months"]) if m >= "2025-01"}
+            for lab, f_ in (("2026", lambda X: X[X.year == "2026"]), ("2016-2025", lambda X: X[X.year < "2026"])):
+                a_, b_ = f_(A_), f_(B_)
+                sec = (b_.groupby("sector").pnl_pct.sum() - a_.groupby("sector").pnl_pct.sum().reindex(b_.groupby("sector").pnl_pct.sum().index).fillna(0)).sort_values()
+                OUTX[f"{lab}: gap v3.3 - v3.2 by SIC sector (pct points of account)"] = {k: round(float(v), 1) for k, v in sec.items()}
+                sy = (b_.groupby("sym").pnl_pct.sum().sub(a_.groupby("sym").pnl_pct.sum(), fill_value=0)).sort_values()
+                OUTX[f"{lab}: symbols that helped v3.3 most"] = {k: round(float(v), 1) for k, v in sy.tail(12)[::-1].items()}
+                OUTX[f"{lab}: symbols that hurt v3.3 most"] = {k: round(float(v), 1) for k, v in sy.head(8).items()}
+                OUTX[f"{lab}: trades v3.2 / v3.3"] = [len(a_), len(b_)]
+            top = list(OUTX["2026: symbols that helped v3.3 most"])[:5]; mk = np.zeros(S.S_C.shape, bool)
+            for t_ in top:
+                if t_ in S.TI: mk[:, S.TI[t_]] = True
+            R2x = run(**{**V32, "skip": mk}); R3x = run(**{**V32, **B33, "skip": EARN | mk})
+            OUTX[f"without 2026's top 5 helpers ({', '.join(top)}) in BOTH versions"] = {"v3.2": {k: R2x[k] for k in ("per_year_pct", "worst_drop_pct", "years")}, "v3.3": {k: R3x[k] for k in ("per_year_pct", "worst_drop_pct", "years")}}
+            print(json.dumps({k: v for k, v in OUTX.items() if "symbols" not in k and "month" not in k}, default=float)[:3000], flush=True)
+        else:
+            L2 = []; R2 = run(**V32, tlog=L2); A_ = tl_df(L2); Sx = A_[A_.k == "S"].copy()
+            def st(x): x = x[np.isfinite(x)]; return {"avg_pct": round(float(x.mean()) * 100, 3), "median_pct": round(float(x.median()) * 100, 3), "n": int(len(x))}
+            for lab, m_ in (("bought at the 3:45 step", Sx.buy_345), ("bought during the day", ~Sx.buy_345)):
+                b = Sx[m_]
+                OUTX[f"buys, {lab}: close vs our fill (+ = close was higher, backtest 'expected' too pessimistic)"] = st(b.buy_close / b.buy - 1)
+                OUTX[f"buys, {lab}: next open vs our fill (+ = next open was higher, backtest 'worst case' too pessimistic)"] = st(b.next_open / b.buy - 1)
+            for lab, m_ in (("sold at the 3:45 step", Sx.sell_345), ("sold during the day (+5% target)", ~Sx.sell_345)):
+                b = Sx[m_]; OUTX[f"sells, {lab}: our fill vs close (+ = we sold above the close)"] = st(b.sell / b.sell_close - 1)
+            n_yr = len(Sx) / (len(ds[tr0:]) / 252)
+            OUTX["stock trades per year"] = round(n_yr, 1)
+            bb = Sx[Sx.buy_345]; ss = Sx[Sx.sell_345]
+            drag = (np.nanmean(bb.buy_close / bb.buy - 1) * len(bb) + np.nanmean(ss.sell / ss.sell_close - 1) * len(ss)) / len(Sx) if len(Sx) else 0
+            OUTX["3:45 fills vs close fills: avg effect per trade (percent)"] = round(float(drag) * 100, 3)
+            OUTX["v3.2 run"] = {k: v for k, v in R2.items() if k != "_months"}
+            print(json.dumps(OUTX, default=float)[:3000], flush=True)
+        json.dump(OUTX, open(OUT, "w"), indent=1, default=float); print("wrote", OUT, flush=True); sys.exit(0)
 if os.environ.get("VOLTEST") == "1":                    # Nov 24: skip or half-size busy dips (volume ratio known at that moment), v3.0 3:45 only and v3.2
     V = []
     for bot, kw in (("v3.0 (3:45 only)", dict(etf=True, bond=True)), ("v3.2 (15 min + target +5%)", dict(etf=True, bond=True, intraday_buy=True, bn=15, exit_mode="target", x=0.05))):

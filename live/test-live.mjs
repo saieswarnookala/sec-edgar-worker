@@ -369,3 +369,13 @@ if (!mode) {
   if (c2.same_picks || c2.stock_dips.only_alpaca[0] !== 'MSFT' || c2.stock_dips.only_robinhood[0] !== 'AMD') throw new Error('compareSignals diff');
   console.log('ok   Robinhood data path: bars/quotes parsed, same dips as the Alpaca path on the same data, differences reported');
 }
+
+{ // fills: real fills vs backtest assumptions
+  const { fillStats, fillsText } = await import('./fills.mjs');
+  const verify = [{ today: '2026-11-20', fills: [{ symbol: 'AMD', side: 'buy', price: 100.2, close: 100, vs_close_pct: 0.2 }, { symbol: 'IEF', side: 'buy', price: 91.7, close: 91.7, vs_close_pct: 0 }] },
+                  { today: '2026-11-23', fills: [{ symbol: 'AMD', side: 'sell', price: 104.9, close: 105, vs_close_pct: 0.095 }] }];
+  const S = fillStats(verify, { 'AMD:2026-11-20': 101 }, (s) => s === 'IEF');
+  if (S.dip_buys.vs_close.avg !== 0.2 || S.dip_buys.vs_next_open.avg !== -0.792 || S.dip_sells.vs_close.avg !== 0.095 || S.parking.vs_close.n !== 1) throw new Error('fills stats ' + JSON.stringify(S));
+  if (!/Dip buys vs close: \+0.20% \(1 fills\)/.test(fillsText(S))) throw new Error('fills text');
+  console.log('ok   fills: real fill cost vs close / next open, parking split');
+}

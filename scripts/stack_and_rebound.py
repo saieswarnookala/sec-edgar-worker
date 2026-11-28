@@ -159,7 +159,7 @@ try:
             c0, c1 = S_C[k, j], S_C[k - 1, j]
             if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
 except Exception as e: print("no earnings events:", e, flush=True)
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None, trace=None, stop=None, exit_ma=None, target=None, ma_exit=True):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None, trace=None, stop=None, exit_ma=None, target=None, ma_exit=True, swap=None):
     """log: list to receive (kind, j, entry_t, exit_t, dollars_in, net_return) per closed trade. cool: None | "31d" (no re-buy within 31 days of a
     losing sale of the same ticker) | "dec" (same, only for losing sales made from Dec 1 on)"""
     LOSS = {}
@@ -209,6 +209,9 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
         c = [j for j in np.flatnonzero(SIGX[t]) if not (short and np.isfinite(DTC[t, j]) and DTC[t, j] >= 5)]; c.sort(key=lambda j: S_RK[t, j])
         e = sorted([j for j in np.flatnonzero(E_SIG[t]) if np.isfinite(E_C[t, j])], key=lambda j: E_RK[t, j]) if etf else []
         d = (sorted(np.flatnonzero(pre[t]), key=lambda j: pre_rank[t, j]) if pre is not None else sorted(np.flatnonzero(np.nan_to_num(RXC[t], nan=-1) >= dth), key=lambda j: -RXC[t, j])) if drift else []
+        if swap is not None:                                      # Nov 28: swap[t, j] = ETF index -> buy that sector ETF instead of the stock (first in line)
+            sw = [int(swap[t, j]) for j in c if swap[t, j] >= 0 and np.isfinite(E_C[t, int(swap[t, j])])]
+            c = [j for j in c if not (swap[t, j] >= 0 and np.isfinite(E_C[t, int(swap[t, j])]))]; e = list(dict.fromkeys(sw + list(e)))
         return c, e, d
     for t in range(t0, D):
         if fill == "open":                                        # yesterday's signals, bought at today's open

@@ -1,0 +1,47 @@
+name: "Research: AI news check on 8-K filings before dips (job 7)"
+on:
+  workflow_dispatch:
+    inputs:
+      max_labels:
+        description: 'how many news dips to label (5 = quick test)'
+        default: '900'
+      model:
+        description: 'Claude model'
+        default: 'claude-haiku-5-5'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/*.parquet
+          key: sp500data-snapshot-2026-11
+      - run: pip install pandas pyarrow numpy boto3
+      - name: Run
+        shell: bash
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MAX_LABELS: ${{ inputs.max_labels || '900' }}
+          MODEL: ${{ inputs.model || 'claude-haiku-5-5' }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          echo "AI key set: $([ -n "$ANTHROPIC_API_KEY" ] && echo yes || echo no) | SEC agent set: $([ -n "$SEC_USER_AGENT" ] && echo yes || echo no)"
+          set -o pipefail; python -u scripts/news_ai.py 2>&1 | grep -v "^r2cache: loaded" | tee /tmp/run.log || { echo "::error::$(tail -c 1500 /tmp/run.log | tr "\n" " ")"; exit 1; }
+      - name: Commit
+        if: ${{ inputs.max_labels != '5' }}
+        shell: bash
+        run: |
+          git config user.name strategies-bot && git config user.email strategies-bot@users.noreply.github.com
+          git add data/news_ai.json; git commit -qm "research: AI news check" || exit 0
+          for i in 1 2 3 4 5 6; do git pull --rebase --autostash -X theirs && git push && exit 0; sleep $((5 + RANDOM % 15)); done; exit 1

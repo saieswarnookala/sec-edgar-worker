@@ -9,7 +9,7 @@ on:
         description: '1 = v3.1+v3.2, slots, dip size test -> data/intraday_combo.json'
         default: '0'
       v33:
-        description: '1 = v3.3 (strength sizing, skip earnings dips, sector-wide 1.5x) vs v3.2 -> data/intraday_v33.json'
+        description: '1 = v3.3 vs v3.2 | B = gentler sizing | T = trade breakdown (is 2026 a fluke?) | F = 3:45 fills vs close vs next open'
         default: '0'
 permissions:
   contents: write
@@ -33,7 +33,7 @@ jobs:
           APCA_API_KEY_ID: ${{ secrets.APCA_API_KEY_ID }}
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
           RATE_PER_MIN: '150'
-          OUT_FILE: ${{ inputs.v33 == '1' && 'data/intraday_v33.json' || inputs.combo == '1' && 'data/intraday_combo.json' || (inputs.same_day == '1' && 'data/intraday_sameday.json' || 'data/intraday_final.json') }}
+          OUT_FILE: ${{ inputs.v33 == '1' && 'data/intraday_v33.json' || inputs.v33 == 'B' && 'data/intraday_v33_sizing.json' || inputs.v33 == 'T' && 'data/intraday_v33_trades.json' || inputs.v33 == 'F' && 'data/intraday_fillgap.json' || inputs.combo == '1' && 'data/intraday_combo.json' || (inputs.same_day == '1' && 'data/intraday_sameday.json' || 'data/intraday_final.json') }}
           COMBO: ${{ inputs.combo || '0' }}
           V33: ${{ inputs.v33 || '0' }}
           DIP_MIN: ${{ inputs.combo == '1' && '0.09' || '0.10' }}

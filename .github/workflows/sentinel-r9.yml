@@ -25,7 +25,7 @@ jobs:
         with:
           path: /tmp/*.parquet
           key: sp500data-snapshot-2026-11
-      - run: pip install pandas pyarrow numpy boto3
+      - run: pip install pandas pyarrow numpy boto3 scikit-learn
       - name: Run
         shell: bash
         env:
