@@ -1349,7 +1349,7 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="bond"></div>
   </section>
-  <section class="sx-card">
+  <section class="sx-card" id="pb-v3">
     <div class="sx-ch"><h3>10. Dip bot v3.0: Robinhood rules + ETF dips + bonds ($10k virtual, new Nov 19)</h3></div>
     <div class="sx-badges"><span class="sx-badge">Starts next trading day</span><span class="sx-badge">Virtual: no broker, fills at the 3:45 pm price</span><span class="sx-badge">Not connected to Robinhood</span><span class="sx-badge">Candidate to replace the Robinhood rules</span></div>
     <div class="sx-pb-cols">
@@ -1502,6 +1502,7 @@ dash.calc('vs_industry', {
   <section class="sx-sec" id="trading-top">
     <div class="sx-sech"><div><h2 class="sx-tr-title">Strategy tests</h2><p class="sx-tr-intro"></p></div></div>
     <div class="sx-seg sx-tr-tabs" role="tablist" aria-label="Strategies">
+      <button type="button" data-sub="index">Start here: all strategies</button>
       <button type="button" data-sub="dip">Dip + smart parking</button>
       <button type="button" data-sub="drift">Earnings drift</button>
       <button type="button" data-sub="clv2">Clear leader v2.0</button>
@@ -1533,6 +1534,16 @@ dash.calc('vs_industry', {
       <button type="button" data-sub="rsi2v2">RSI(2) dip v2.0</button>
     </div>
 
+    <div class="sx-tr-panel" data-panel="index" id="trading-index" hidden>
+      <div class="sx-card"><div class="sx-ch"><h3>Start here: every strategy on one page</h3></div>
+        <p class="sx-cap">Click <b>Open</b> to jump to a strategy's full page. *Per year and worst drop are backtest averages with realistic fills, before tax (same numbers as the Growth calculator; ~ = estimate). †v3.3: 1999–2026 test on the v3.0 engine; 2013–2026 only it is 18.0% vs 17.8%. Backtests are not promises. Not financial advice.</p>
+        <h4 style="margin-top:12px">1. Live with real money</h4><div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>What</th><th>In plain words</th><th>Status</th><th>Open</th></tr></thead><tbody><tr><td><b>Robinhood dip bot (v3.2)</b></td><td>Buys S&amp;P 500 stocks that fell 10%+ in 5 days while still in an uptrend, sells when they bounce (or after 5 days, or +5%). Idle money sits in Clear Leader or IEF bonds.</td><td><b class="sx-good">Live, real money</b></td><td><a href="#trading-live" data-sub-go="live">Live status</a> · <a href="#trading-v3all" data-sub-go="v3all">All numbers</a> · <a href="#liverules" data-tab-go="liverules">Rules</a></td></tr></tbody></table></div>
+        <h4 style="margin-top:16px">2. US dip bot: every version</h4><div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Strategy</th><th>In plain words</th><th>Status</th><th>Per year*</th><th>Worst drop*</th><th>Open</th></tr></thead><tbody><tr><td>Dip + smart parking</td><td>The original dip bot: S&amp;P 500 dips + smart place for idle money</td><td>Previous live</td><td>13.4%</td><td>−26%</td><td><a href="#trading-dip" data-sub-go="dip">Open</a></td></tr><tr><td>Dip bot v3.0</td><td>+ dips in index/sector ETFs, + bonds instead of cash when stocks are weak</td><td>Paper bot 10</td><td>16.6%</td><td>−27%</td><td><a href="#trading-v3" data-sub-go="v3">Open</a> · <a href="#paper" data-paper-go="pb-v3">Paper</a></td></tr><tr><td>Dip bot v3.1</td><td>v3.0 + 2 slots for stocks that just beat earnings</td><td>Paper bot 11 (watch)</td><td>~18.6%</td><td>−26%</td><td><a href="#trading-v31" data-sub-go="v31">Open</a> · <a href="#paper" data-paper-go="pb-v31">Paper</a></td></tr><tr><td><b>Dip bot v3.2</b></td><td>v3.0 + buys dips during the day + sells at +5%</td><td><b class="sx-good">Live now</b> · paper bot 12</td><td>~19.1%</td><td>−27%</td><td><a href="#trading-v3all" data-sub-go="v3all">Open</a> · <a href="#paper" data-paper-go="pb-v32">Paper</a></td></tr><tr><td><b>Dip bot v3.3</b></td><td>v3.2 + bigger buys in strong stocks, smaller in weak, skip earnings dips, bigger when a whole sector dips</td><td><b>Next live?</b> · paper bot 19 (from Nov 30)</td><td>18.5%†</td><td>−24.1%†</td><td><a href="#paper" data-paper-go="pb-v33">Open</a></td></tr></tbody></table></div>
+        <h4 style="margin-top:16px">3. Other US strategies and add-ons</h4><div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Strategy</th><th>In plain words</th><th>Status</th><th>Per year*</th><th>Worst drop*</th><th>Open</th></tr></thead><tbody><tr><td>Earnings drift</td><td>Buy a stock that beat the market on its earnings day, hold ~3 months</td><td>Paper bot 3 (watch)</td><td>~13.0%</td><td>−51%</td><td><a href="#trading-drift" data-sub-go="drift">Open</a> · <a href="#paper" data-paper-go="pb-drift">Paper</a></td></tr><tr><td>Clear Leader v2.0</td><td>Hold the strongest of a few ETFs each month; also decides where the dip bot parks idle money</td><td>Used inside the dip bot</td><td>13.6%</td><td>−43%</td><td><a href="#trading-clv2" data-sub-go="clv2">Open</a></td></tr><tr><td>Dip + drift mix (6+4)</td><td>6 dip slots + 4 earnings-drift slots in one account</td><td>Paper bot 7</td><td>15.8%</td><td>−24%</td><td><a href="#trading-mix" data-sub-go="mix">Open</a> · <a href="#paper" data-paper-go="pb-mix">Paper</a></td></tr><tr><td>Dip + ETF dips</td><td>Fill free slots with dipping index/sector ETFs</td><td>Merged into v3.0</td><td>~15.0%</td><td>−27%</td><td><a href="#trading-etfdip" data-sub-go="etfdip">Open</a> · <a href="#paper" data-paper-go="pb-etf">Paper</a></td></tr><tr><td>Bonds instead of cash</td><td>IEF Treasury bonds instead of cash on weak-market days</td><td>Merged into v3.0</td><td>—</td><td>—</td><td><a href="#trading-bonds" data-sub-go="bonds">Open</a></td></tr><tr><td>Volatility sizing</td><td>Bigger buys when the market is jumpy</td><td>Paper bot 2 (watch)</td><td>—</td><td>—</td><td><a href="#trading-volsize" data-sub-go="volsize">Open</a> · <a href="#paper" data-paper-go="pb-vol">Paper</a></td></tr><tr><td>Tuned dip</td><td>Looser entry (8% dip, 150-day trend), up to 7-day holds</td><td>Paper bot 6 (watch)</td><td>—</td><td>—</td><td><a href="#trading-tuned" data-sub-go="tuned">Open</a> · <a href="#paper" data-paper-go="pb-tuned">Paper</a></td></tr><tr><td>Short-interest filter</td><td>Skip dips in heavily shorted stocks</td><td>Paper bot 8 (watch)</td><td>—</td><td>—</td><td><a href="#trading-shortf" data-sub-go="shortf">Open</a> · <a href="#paper" data-paper-go="pb-short">Paper</a></td></tr><tr><td>Frontrunner, Frontrunner-R, mixes</td><td>Private strategy (rules not shown)</td><td>Paper bots 16–18</td><td>—</td><td>—</td><td><a href="#paper" data-paper-go="pb-fr">Paper bots</a></td></tr></tbody></table></div>
+        <h4 style="margin-top:16px">4. India</h4><div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Strategy</th><th>In plain words</th><th>Status</th><th>Per year*</th><th>Worst drop*</th><th>Open</th></tr></thead><tbody><tr><td>India: dip + Nifty trend</td><td>The dip idea on Indian stocks; idle money in liquid fund + gold</td><td>Research</td><td>~15.0%</td><td>−19%</td><td><a href="#trading-indiadip" data-sub-go="indiadip">Open</a></td></tr><tr><td>India: real numbers (NSE data)</td><td>Same idea tested on real NSE prices, 2009–2026</td><td>Research</td><td>14.0%</td><td>−20%</td><td><a href="#trading-indiapit" data-sub-go="indiapit">Open</a></td></tr><tr><td>India: Nifty + gold (ETFs)</td><td>Simple ETF switch between Nifty and gold</td><td>Research</td><td>—</td><td>—</td><td><a href="#trading-india" data-sub-go="india">Open</a></td></tr><tr><td>India momentum basket</td><td>The 20 strongest stocks, reshuffled monthly</td><td>Paper bot 13</td><td>~32.6%</td><td>−24%</td><td><a href="#trading-inmonth" data-sub-go="inmonth">This month's 20</a> · <a href="#paper" data-paper-go="pb-inmom">Paper</a></td></tr><tr><td>India Alpha 50, our version</td><td>50 stocks, reshuffled quarterly</td><td>Paper bot 14</td><td>~22.0%</td><td>−47%</td><td><a href="#trading-inalpha" data-sub-go="inalpha">This quarter's 50</a> · <a href="#paper" data-paper-go="pb-inalpha">Paper</a></td></tr></tbody></table></div>
+        <h4 style="margin-top:16px">5. Tools and other tabs</h4><div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Tool</th><th>What it is for</th><th>Open</th></tr></thead><tbody><tr><td>Growth calculator</td><td>See what an amount could grow to with each strategy (before and after tax)</td><td><a href="#trading-calc" data-sub-go="calc">Open</a></td></tr><tr><td>Paper bots</td><td>Live fake-money results for every bot, updated daily</td><td><a href="#paper" data-tab-go="paper">Open</a></td></tr><tr><td>Crypto</td><td>Bitcoin + Ether trend bot (paper bot 15)</td><td><a href="#crypto" data-tab-go="crypto">Open</a> · <a href="#paper" data-paper-go="pb-crypto">Paper</a></td></tr><tr><td>Tested strategies</td><td>Ideas we tested and dropped (intraday, short selling, RSI(2), momentum v1…)</td><td><a href="#tested" data-tab-go="tested">Open</a></td></tr></tbody></table></div>
+      </div>
+    </div>
     <div class="sx-tr-panel" data-panel="overview" id="trading-overview">
       <div class="sx-card">
         <div class="sx-ch"><h3>All three vs. holding SPY</h3></div>
@@ -2762,8 +2773,8 @@ dash.calc('vs_industry', {
     return e;
   };
   // "Day trading" shows only the strategies we paper trade or rely on; everything else lives under "Tested strategies"
-  const LIVE = ['dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'inmonth', 'inalpha', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
-  const ALLSUBS = ['overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc', 'mix', 'leaders', 'shorts', 'live'];
+  const LIVE = ['index', 'dip', 'drift', 'clv2', 'mix', 'v3all', 'v3', 'v31', 'etfdip', 'bonds', 'volsize', 'tuned', 'shortf', 'inmonth', 'inalpha', 'indiapit', 'indiadip', 'india', 'calc', 'live'];
+  const ALLSUBS = ['index', 'overview', 'momentum', 'momv2', 'clv2', 'drift', 'dip', 'india', 'sma10', 'rsi2', 'rsi2v2', 'intraday', 'indiadip', 'calc', 'mix', 'leaders', 'shorts', 'live'];
   let mode = 'trading';
   // ---- Growth calculator (steady average returns from the backtests; not a forecast)
   const CALC = {
@@ -3001,7 +3012,7 @@ dash.calc('vs_industry', {
     if (k === 'calc') initCalc();
     if (k === 'inmonth') drawInMonth();
     if (k === 'inalpha') drawInAlpha();
-    if (link) dash.setLink(mode === 'trading' ? (k === 'dip' ? 'trading' : 'trading-' + k) : (k === 'overview' ? 'tested' : 'tested-' + k));
+    if (link) dash.setLink(mode === 'trading' ? (k === 'index' ? 'trading' : 'trading-' + k) : (k === 'overview' ? 'tested' : 'tested-' + k));
   };
   const setMode = (m, link = true, k) => {
     mode = m;
@@ -3012,10 +3023,15 @@ dash.calc('vs_industry', {
     if (p) p.textContent = m === 'trading'
       ? 'The best results from all our testing. Dip + smart parking and Earnings drift are being paper traded now, along with the paper-bot variants (v3.0, ETF dips, bonds, volatility sizing, tuned, short filter); Clear leader v2.0 decides where the dip strategy parks idle money. India: dip + Nifty trend (stock trading) and India: Nifty + gold (simple ETF mix, monthly signal) are the Indian versions; neither is paper traded yet. The dip strategy is also in a dry-run week on a real Robinhood account (Live: Robinhood bot).'
       : 'Everything else we backtested, kept for reference. Each was tested and not chosen; the Overview compares the Oct 10 strategies with simply holding SPY.';
-    showSub(k && inMode(k) ? k : (m === 'trading' ? 'dip' : 'overview'), link);
+    showSub(k && inMode(k) ? k : (m === 'trading' ? 'index' : 'overview'), link);
   };
   const wireTrading = (tab) => {
     tqa('.sx-tr-tabs button').forEach((b) => b.addEventListener('click', () => { showSub(b.dataset.sub); drawTrading(); }));
+    // index page links: a Day trading page, a paper bot card, or another top tab
+    tqa('[data-sub-go]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showSub(a.dataset.subGo); drawTrading(); tq('#trading-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+    const goTab = (t, id) => { const b = document.querySelector(`.sx-tab[data-tab="${t}"]`); if (!b) return; b.click(); setTimeout(() => { const el = id && document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); else window.scrollTo({ top: 0, behavior: 'smooth' }); }, 200); };
+    tqa('[data-paper-go]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); goTab('paper', a.dataset.paperGo); }));
+    tqa('[data-tab-go]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); goTab(a.dataset.tabGo); }));
     tqa('[data-gopaper]').forEach((b) => b.addEventListener('click', () => { const t = document.querySelector('.sx-tab[data-tab="paper"]'); if (t) { t.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }));
     const hh = location.hash.slice(1), k = hh.replace(/^(trading|tested)-/, '');
     setMode(tab, false, ALLSUBS.includes(k) ? k : null);
