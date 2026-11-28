@@ -516,6 +516,7 @@ for name, kw in V:
 print(f"5-minute series: {BAD[1]} looked up, {BAD[0]} fell back to the daily close", flush=True)
 print(f"idle-money value by time of day: {PSTAT[0]} from the parked ETF's own bars, {PSTAT[1]} SPY stand-in, {PSTAT[2]} straight line | half-days: {sum(v != 945 for v in FINC.values())}", flush=True)
 PAIRS = (("v3.2", "v3.3 = v3.2 + strength sizing + skip earnings dips + sector-wide 1.5x"), ("v3.0 | 3:45 only", "v3.0 + v3.3 changes | 3:45 only")) if os.environ.get("V33") == "1" else \
+        (("v3.2", "v3.3 (1.5x / 0.5x)"), ("v3.2", "v3.2 + skip earnings dips + sector-wide 1.5x (no strength)")) if os.environ.get("V33") == "B" else \
         (("v3.2 live-exact | daily step at 3:45 (today)", "v3.2 live-exact | daily step at 3:30"),) if os.environ.get("TIMING") == "1" else \
         (("v3.2 | dip 10% | target +5%", "v3.2 | dip 10% | target +3%"),) if os.environ.get("WF") == "1" else \
         (("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 15 min"), ("v3.2 live: target +5%, checks every 15 min from 10:00", "v3.2 trailing: arm +5%, sell 1% below high, every 5 min")) if os.environ.get("TRAIL") == "1" else \

@@ -1,0 +1,131 @@
+{
+ "note": "Job 2 (Nov 28): gentler strength sizing on the 2016-2026 5-minute replay (all with skip earnings dips + sector-wide 1.5x unless noted). Parsed from the run log (the run crashed after all variants finished; fixed).",
+ "results": {
+  "v3.2": {
+   "per_year_pct": 30.5,
+   "worst_drop_pct": -16.8,
+   "2016-2020": 21.9,
+   "2021-2026": 38.4,
+   "trades_per_month": 18.8,
+   "avg_trade_pct": 0.77,
+   "win_pct": 66
+  },
+  "v3.3 (1.5x / 0.5x)": {
+   "per_year_pct": 33.9,
+   "worst_drop_pct": -16.9,
+   "2016-2020": 21.1,
+   "2021-2026": 46.0,
+   "trades_per_month": 13.8,
+   "avg_trade_pct": 0.94,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.25x / 0.75x": {
+   "per_year_pct": 32.9,
+   "worst_drop_pct": -16.3,
+   "2016-2020": 21.6,
+   "2021-2026": 43.5,
+   "trades_per_month": 14.4,
+   "avg_trade_pct": 0.94,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.5x / 0.75x": {
+   "per_year_pct": 34.1,
+   "worst_drop_pct": -17.0,
+   "2016-2020": 21.7,
+   "2021-2026": 45.7,
+   "trades_per_month": 13.8,
+   "avg_trade_pct": 0.94,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.25x / 1.0x": {
+   "per_year_pct": 33.3,
+   "worst_drop_pct": -16.3,
+   "2016-2020": 22.2,
+   "2021-2026": 43.7,
+   "trades_per_month": 14.4,
+   "avg_trade_pct": 0.94,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.5x / 1.0x": {
+   "per_year_pct": 34.2,
+   "worst_drop_pct": -17.0,
+   "2016-2020": 22.2,
+   "2021-2026": 45.3,
+   "trades_per_month": 13.7,
+   "avg_trade_pct": 0.92,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.0x / 0.75x": {
+   "per_year_pct": 31.3,
+   "worst_drop_pct": -15.3,
+   "2016-2020": 21.5,
+   "2021-2026": 40.3,
+   "trades_per_month": 14.9,
+   "avg_trade_pct": 0.95,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.0x / 0.5x": {
+   "per_year_pct": 31.1,
+   "worst_drop_pct": -15.0,
+   "2016-2020": 20.9,
+   "2021-2026": 40.5,
+   "trades_per_month": 14.9,
+   "avg_trade_pct": 0.95,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.25x / 0.5x": {
+   "per_year_pct": 32.6,
+   "worst_drop_pct": -16.2,
+   "2016-2020": 21.1,
+   "2021-2026": 43.3,
+   "trades_per_month": 14.4,
+   "avg_trade_pct": 0.94,
+   "win_pct": 69
+  },
+  "v3.3 (1.5x / 0.5x), strength only at the 3:45 step": {
+   "per_year_pct": 31.2,
+   "worst_drop_pct": -15.3,
+   "2016-2020": 22.0,
+   "2021-2026": 39.7,
+   "trades_per_month": 14.8,
+   "avg_trade_pct": 0.93,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.25x / 0.75x, strength only at the 3:45 step": {
+   "per_year_pct": 31.3,
+   "worst_drop_pct": -15.3,
+   "2016-2020": 22.1,
+   "2021-2026": 39.8,
+   "trades_per_month": 14.9,
+   "avg_trade_pct": 0.93,
+   "win_pct": 69
+  },
+  "v3.2 + skip earnings dips + sector-wide 1.5x (no strength)": {
+   "per_year_pct": 31.6,
+   "worst_drop_pct": -15.6,
+   "2016-2020": 22.2,
+   "2021-2026": 40.2,
+   "trades_per_month": 14.9,
+   "avg_trade_pct": 0.95,
+   "win_pct": 69
+  },
+  "v3.3 sizing 1.25x / 0.75x | 2x costs": {
+   "per_year_pct": 30.7,
+   "worst_drop_pct": -16.4,
+   "2016-2020": 20.4,
+   "2021-2026": 40.2,
+   "trades_per_month": 14.4,
+   "avg_trade_pct": 0.85,
+   "win_pct": 68
+  },
+  "v3.3 (1.5x / 0.5x) | 2x costs": {
+   "per_year_pct": 31.4,
+   "worst_drop_pct": -17.0,
+   "2016-2020": 19.8,
+   "2021-2026": 42.4,
+   "trades_per_month": 13.8,
+   "avg_trade_pct": 0.85,
+   "win_pct": 68
+  }
+ }
+}
