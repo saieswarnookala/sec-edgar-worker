@@ -212,3 +212,69 @@ console.log('ok   fractional sizing for small live account');
   eqp(phase(760, 780), 'final'); eqp(phase(755, 780), 'intraday'); eqp(phase(778, 780), 'closed');
   console.log(`ok   bot 12 v3.2: dip buys funded from parking (stocks then ETFs), +${V32.target * 100}% target only after 1 day, proceeds re-parked, half-day timing`);
 }
+
+// Bot 19: v3.3 = v3.2 + strength sizing, skip earnings dips, sector-wide 1.5x
+{
+  const { momRanks, earningsInWindow, peerMedian, comboB, decideSized, v33Step, runV33, parse8k, V33 } = await import('./scripts/paper-v33.mjs');
+  const { v32Intraday } = await import('./scripts/paper-v32.mjs');
+  const ok = (c, m) => { if (!c) throw new Error('bot 19: ' + m); };
+  // momentum rank: close 5 days ago vs 257 days ago, average ties, short history -> no rank
+  const ser = (a, b) => [...Array(300)].map((_, i) => (i === 300 - 257 ? a : i === 300 - 5 ? b : 100));
+  const mr = momRanks({ A: ser(100, 150), B: ser(100, 120), C: ser(100, 120), D: ser(100, 80), E: [1, 2, 3] }, ['A', 'B', 'C', 'D', 'E']);
+  ok(mr.A === 1 && mr.D === 0.25 && mr.B === 0.625 && mr.C === 0.625 && !('E' in mr), 'momentum ranks ' + JSON.stringify(mr));
+  // earnings window: filing day + next 4 trading days; after 15:45 (SEC time) starts the next day; only items 2.02 / 12
+  const days = ['2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06', '2026-11-09', '2026-11-10'];
+  ok(earningsInWindow([['2026-11-02', 600, '2.02,9.01']], '2026-11-06', days), 'day 5 of window');
+  ok(!earningsInWindow([['2026-11-02', 600, '2.02,9.01']], '2026-11-09', days), 'day 6 is outside');
+  ok(earningsInWindow([['2026-11-02', 1290, '2.02']], '2026-11-09', days), 'after-15:45 filing shifts the window a day');
+  ok(!earningsInWindow([['2026-11-02', 1290, '2.02']], '2026-11-02', days), 'after-15:45 filing does not block its own day');
+  ok(!earningsInWindow([['2026-11-03', 600, '5.02,9.01']], '2026-11-04', days), 'non-earnings 8-K ignored');
+  ok(earningsInWindow([['2026-11-07', 600, '2.02']], '2026-11-09', days), 'weekend filing counts from Monday');
+  ok(!earningsInWindow(null, '2026-11-04', days), 'no data = not skipped');
+  const sub = { filings: { recent: { form: ['8-K', '10-Q', '8-K'], items: ['2.02,9.01', '', '8.01'], acceptanceDateTime: ['2026-11-02T21:30:05.000Z', '2026-11-02T21:31:00.000Z', '2026-11-05T13:00:00.000Z'], filingDate: ['2026-11-02', '2026-11-02', '2026-11-05'] } } };
+  ok(JSON.stringify(parse8k(sub)) === JSON.stringify([['2026-11-02', 1290, '2.02,9.01'], ['2026-11-05', 780, '8.01']]), 'parse SEC submissions ' + JSON.stringify(parse8k(sub)));
+  // sector-wide: median 5-day move of 3+ peers (excluding itself) <= -5%
+  const c5 = { A: [100, 100, 100, 100, 100], P1: [100, 100, 100, 100, 100], P2: [100, 100, 100, 100, 100], P3: [100, 100, 100, 100, 100], Q: [100, 100, 100, 100, 100] };
+  const sic2 = { A: '36', P1: '36', P2: '36', P3: '36', Q: '28' };
+  ok(Math.abs(peerMedian('A', sic2, Object.keys(c5), c5, { A: 80, P1: 90, P2: 94, P3: 99, Q: 50 }) + 0.06) < 1e-9, 'peer median -6%');
+  ok(peerMedian('A', { A: '36', P1: '36', P2: '36' }, Object.keys(c5), c5, { A: 80, P1: 90, P2: 90 }) === null, 'needs 3 peers');
+  // combo: strong 1.5x, weak 0.5x, sector-wide x1.5, earnings skipped
+  const mem = ['S', 'M', 'W', 'X', 'E', 'P1', 'P2', 'P3'];
+  const cl = { S: ser(100, 200), M: ser(100, 110), W: ser(100, 50), X: ser(100, 40), E: ser(100, 120), P1: ser(100, 100), P2: ser(100, 130), P3: ser(100, 90) };
+  const px = Object.fromEntries(mem.map((s) => [s, 100])); px.P1 = px.P2 = px.P3 = 90;
+  const cb = comboB({ scores: { S: -0.12, M: -0.11, W: -0.13, X: -0.15, E: -0.2 }, members: mem, closes: cl, prices: px, sic2: { X: '36', P1: '36', P2: '36', P3: '36' }, filings: { E: [['2026-11-04', 600, '2.02']] }, today: '2026-11-05', days });
+  ok(cb.mult.S === 1.5 && cb.mult.W === 0.5 && cb.mult.X === 0.75 && cb.mult.M === 1 && cb.skipped.join() === 'E' && !('E' in cb.scores), 'combo sizes ' + JSON.stringify(cb.mult) + ' ' + JSON.stringify(cb.why));
+  // 3:45 step: sizes 15% / 10% / 5%, ETF 1x, room cap fills one by one, money adds up
+  const tot = (vs, p) => vs.cash + vs.positions.reduce((a, x) => a + x.qty * p[x.symbol], 0) + Object.entries(vs.park).reduce((a, [s, q]) => a + q * p[s], 0);
+  const P = { SPY: 100, QQQ: 400, AAA: 50, BBB: 20, CCC: 10, XLE: 80 };
+  let r = v33Step({ vs: undefined, today: days[0], days, prices: P, closes: {}, scores: { AAA: -0.12, BBB: -0.15, CCC: -0.11 }, etfScores: { XLE: -0.06 }, park: 'QQQ', mult: { AAA: 1.5, BBB: 0.5 } });
+  const sz = Object.fromEntries(r.vs.positions.map((p) => [p.symbol, Math.round(p.qty * P[p.symbol])]));
+  ok(sz.BBB === 500 && sz.AAA === 1500 && sz.CCC === 1000 && sz.XLE === 1000, 'sizes ' + JSON.stringify(sz));
+  ok(r.vs.positions.map((p) => p.symbol).join() === 'BBB,AAA,CCC,XLE', 'order: biggest dip first, ETF last');
+  ok(Math.abs(tot(r.vs, P) - 10000) < 1 && r.vs.park.QQQ > 0, 'rest parked, total $10k');
+  const many = Object.fromEntries([...Array(9)].map((_, i) => ['S' + i, -0.1 - i / 100])), P2 = { ...P, ...Object.fromEntries(Object.keys(many).map((s) => [s, 10])) };
+  r = v33Step({ vs: undefined, today: days[0], days, prices: P2, closes: {}, scores: many, park: 'QQQ', mult: Object.fromEntries(Object.keys(many).map((s) => [s, 1.5])) });
+  const used = r.vs.positions.reduce((a, p) => a + p.qty * P2[p.symbol], 0);
+  ok(r.vs.positions.length === 7 && used <= 10000.01 && Math.round(r.vs.positions.at(-1).qty * 10) === 1000, 'room cap: 6 x 15% + last gets the 10% left, then stop: ' + r.vs.positions.length + ' ' + used);
+  // all 1x = same as v3.2 virtualStep when there is room
+  const a = v33Step({ vs: undefined, today: days[0], days, prices: P, closes: {}, scores: { AAA: -0.12, BBB: -0.15 }, etfScores: { XLE: -0.06 }, park: 'QQQ' });
+  const b = virtualStep({ vs: undefined, today: days[0], days, prices: P, closes: {}, scores: { AAA: -0.12, BBB: -0.15 }, etfScores: { XLE: -0.06 }, park: 'QQQ', scale: 1 });
+  ok(JSON.stringify(a.vs.positions.map((p) => [p.symbol, p.qty])) === JSON.stringify(b.vs.positions.map((p) => [p.symbol, p.qty])) && Math.abs(a.vs.park.QQQ - b.vs.park.QQQ) < 1e-3, 'all 1x matches v3.2');
+  // intraday with multipliers; no multipliers = unchanged v3.2
+  let iv = v32Intraday({ vs: undefined, today: days[0], days, prices: P, scores: {}, park: 'QQQ' });
+  iv = v32Intraday({ vs: iv.vs, today: days[1], days, prices: P, scores: { AAA: -0.12, BBB: -0.15 }, etfScores: { XLE: -0.06 }, park: 'QQQ', mult: { AAA: 1.5, BBB: 0.5 } });
+  const iz = Object.fromEntries(iv.vs.positions.map((p) => [p.symbol, Math.round(p.qty * P[p.symbol])]));
+  ok(iz.BBB === 500 && iz.AAA === 1500 && iz.XLE === 1000 && Math.abs(tot(iv.vs, P) - 10000) < 1, 'intraday sizes ' + JSON.stringify(iz));
+  // full run with fake SEC + fake market data: earnings dip skipped, twin buys it, SEC failure = no skip (never crash)
+  const D = ['2026-11-25', '2026-11-27', '2026-11-30'];
+  const g = { members: ['AAA', 'BBB'], prices: P, closes: { AAA: ser(100, 120), BBB: ser(100, 90) }, scores: { AAA: -0.12, BBB: -0.15 }, etfScores: {} };
+  const fakeFetch = async (url) => ({ ok: true, status: 200, json: async () => url.includes('company_tickers') ? {} : { sic: '3600', filings: { recent: { form: ['8-K'], items: [url.includes('0000000001') ? '2.02,9.01' : '8.01'], acceptanceDateTime: ['2026-11-27T12:00:00.000Z'], filingDate: ['2026-11-27'] } } } });
+  const st = { history: [], checks: [] }, mod = await import('./scripts/paper-v33.mjs');
+  const orig = mod.loadSecMeta;
+  const out = await runV33({ st, g, today: D[2], days: D, ph: 'final', park: 'QQQ', ny: { hour: '15', minute: '45' }, dry: true, v32Intraday, virtualStep, ua: 'test test@example.com', fetchFn: fakeFetch });
+  ok(out.phase === 'final' && st.history.length === 1 && st.twin.positions.length === 2, 'run: twin holds both dips');
+  const st2 = { history: [], checks: [] };
+  const out2 = await runV33({ st: st2, g, today: D[2], days: D, ph: 'intraday', park: 'QQQ', ny: { hour: '11', minute: '00' }, dry: true, v32Intraday, virtualStep, ua: '', fetchFn: async () => { throw new Error('offline'); } });
+  ok(out2.skipped_earnings.length === 0 && st2.vs.positions.length === 2 && out2.sec.ua === false, 'no SEC access: nothing skipped, still trades');
+  console.log(`ok   bot 19 v3.3: momentum ranks, 8-K earnings window (after-${V33.earnCutMin / 60 | 0}:45 shift), sector-wide peers, 15/10/5% sizes, room cap, all-1x = v3.2, SEC outage safe`);
+}

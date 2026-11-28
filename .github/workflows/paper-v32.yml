@@ -1,4 +1,4 @@
-name: "Paper bot 12: Dip bot v3.2 (intraday checks)"
+name: "Paper bots 12 + 19: Dip bot v3.2 and v3.3 (intraday checks)"
 on:
   schedule:
     # Main clock = the Cloudflare Worker (site/src/index.js marketJobs: every 15 min + 3:50/3:55, started within seconds).
@@ -33,13 +33,14 @@ jobs:
           APCA_API_SECRET_KEY: ${{ secrets.APCA_API_SECRET_KEY }}
           DRY_RUN: ${{ inputs.dry_run || '0' }}
           PHASE: ${{ inputs.phase || '' }}
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
         run: node scripts/paper-v32.mjs
       - name: Commit state
         if: always()
         run: |
           git config user.name "strategies-bot"
           git config user.email "strategies-bot@users.noreply.github.com"
-          [ -f data/paper_v32_state.json ] && git add data/paper_v32_state.json; true
+          for f in data/paper_v32_state.json data/paper_v33_state.json data/paper_v33_sec.json; do [ -f $f ] && git add $f; done; true
           git diff --cached --quiet && exit 0
-          git commit -m "paper v3.2: $(date -u +%FT%H:%M)"
+          git commit -m "paper v3.2/v3.3: $(date -u +%FT%H:%M)"
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 10; done

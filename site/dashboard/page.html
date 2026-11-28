@@ -1036,6 +1036,7 @@ dash.calc('vs_industry', {
       <tr data-bot="dip"><td>1</td><td>Dip bot (Alpaca $10k)</td><td>Exactly the live rules, on paper</td><td><b>Keep</b> (live twin)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="v3"><td>10</td><td>Dip bot v3.0</td><td>Live rules + ETF dips + bonds when stocks are weak</td><td><b>Previous live</b> (Nov 23–24)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="v32"><td>12</td><td>Dip bot v3.2</td><td>v3.0 + buying dips during the day + 5% profit target</td><td><b class="sx-good">Live now</b> (since Nov 25)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
+      <tr data-bot="v33"><td>19</td><td>Dip bot v3.3</td><td>v3.2 + bigger buys in strong stocks, smaller in weak ones, skip earnings dips, bigger buys when a whole sector dips</td><td><b>Next live?</b> (paper from Nov 30)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="v31"><td>11</td><td>Dip bot v3.1</td><td>v3.0 + 2 earnings-drift slots</td><td><b>Watch</b> (drift fading since 2021)</td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="drift"><td>3</td><td>Earnings drift (Alpaca $100k)</td><td>Buy big earnings beats, hold 3 months</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
       <tr data-bot="vol"><td>2</td><td>Volatility sizing</td><td>Bigger buys when the market is jumpy</td><td><b>Watch</b></td><td class="st-r">—</td><td class="st-b">—</td></tr>
@@ -1394,6 +1395,23 @@ dash.calc('vs_industry', {
     </div>
     <div class="pb-live" data-bot="v32"></div>
   </section>
+  <section class="sx-card" id="pb-v33">
+    <div class="sx-ch"><h3>19. Dip bot v3.3: v3.2 + smarter buy sizes ($10k virtual, from Nov 30)</h3></div>
+    <div class="sx-badges"><span class="sx-badge">Starts Nov 30</span><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">Same checks and prices as bot 12</span><span class="sx-badge">Not connected to Robinhood</span></div>
+    <div class="sx-pb-cols">
+      <div><h4>Rules</h4><ul>
+        <li><b>Everything in v3.2</b> (bot 12): dips bought during the day and at ~3:45 pm, +5% target, sell above the 5-day average or after max hold, park the rest.</li>
+        <li><b>Strong stocks 1.5×, weak 0.5×:</b> by 12-month momentum among S&amp;P 500 stocks (top third 15% of the account, bottom third 5%, middle 10%).</li>
+        <li><b>Skip earnings dips:</b> no buy if the company filed an earnings 8-K with the SEC in the last 5 trading days.</li>
+        <li><b>Sector-wide dips 1.5×:</b> when 3+ same-industry peers are down 5%+ (median) over 5 days.</li>
+        <li>A <b>twin</b> runs plain v3.2 from the same day with the same prices, so the comparison is fair.</li>
+      </ul></div>
+      <div><h4>Backtest (1999–2026, realistic fills, before tax)</h4>
+        <div class="sx-stats"><div class="sx-stat"><span>v3.3 per year</span><b>18.5%</b></div><div class="sx-stat"><span>v3.2 rules, same test</span><b>16.6%</b></div><div class="sx-stat"><span>Worst drop</span><b>−24.1%</b> <span class="sx-cap">vs −27.3%</span></div><div class="sx-stat"><span>2013–2026 only</span><b>18.0%</b> <span class="sx-cap">vs 17.8%</span></div></div>
+        <p class="sx-cap">Most of the gain came from 2000–2009 crash years; since 2013 it is about even, with a bigger worst drop (−18.6% vs −14.9%). Passed walk-forward (picked on 1999–2012, ranked #1 of 16 on 2013–2026) and shuffled-size luck checks. Data: data/r9_r2.json, data/r9_wf.json.</p></div>
+    </div>
+    <div class="pb-live" data-bot="v33"></div>
+  </section>
   <section class="sx-card" id="pb-inmom">
     <div class="sx-ch"><h3>13. India momentum basket (₹10 lakh virtual, from Nov 20 2026)</h3></div>
     <div class="sx-badges"><span class="sx-badge">India only</span><span class="sx-badge">Virtual: no broker</span><span class="sx-badge">Reshuffles the 1st trading day of each month</span><span class="sx-badge">Alerts: India ntfy channel</span></div>
@@ -1722,7 +1740,7 @@ dash.calc('vs_industry', {
 </tbody></table></div>
     <p class="sx-cap"><b>Plan with "Expected".</b> Worst case = buy the next morning at worse prices with 3× costs. Expected = the live bot's 3:45 pm trades over 1999–2026 (includes the 2000 and 2008 crashes; the minute replay and the first real AMD fill match it). Last 10 years = 2016–2026, a strong decade (even SPY made 14.7%). After tax = 24% bracket. Some single years lose money.</p>
     <h4>The versions</h4>
-<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Adds</th><th>Status</th></tr></thead><tbody><tr><td>Robinhood bot (today)</td><td>S&amp;P 500 dips (10%+ worse than SPY in 5 days, above 200-day, normal volume), bought 3:45 pm, sold above 5-day avg or after 5 days; idle money in Clear Leader or cash</td><td>Live since Nov 19</td></tr><tr><td><b>v3.0</b></td><td>+ ETF dips in free slots; + IEF bonds instead of cash in weak markets</td><td>Paper bot 10; Robinhood ~Dec 3</td></tr><tr><td><b>v3.1</b></td><td>+ 2 earnings-drift slots (beat SPY by 5%+ on earnings day, hold 60 days)</td><td>Paper bot 11</td></tr><tr><td><b>v3.2</b></td><td>+ buy dips during the day (every 15 min, 10:00–3:30) + sell at +5% during the day (every 5 min)</td><td>Paper bot 12 (from Nov 20)</td></tr></tbody></table></div>
+<div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Adds</th><th>Status</th></tr></thead><tbody><tr><td>Robinhood bot (today)</td><td>S&amp;P 500 dips (10%+ worse than SPY in 5 days, above 200-day, normal volume), bought 3:45 pm, sold above 5-day avg or after 5 days; idle money in Clear Leader or cash</td><td>Live since Nov 19</td></tr><tr><td><b>v3.0</b></td><td>+ ETF dips in free slots; + IEF bonds instead of cash in weak markets</td><td>Paper bot 10; Robinhood ~Dec 3</td></tr><tr><td><b>v3.1</b></td><td>+ 2 earnings-drift slots (beat SPY by 5%+ on earnings day, hold 60 days)</td><td>Paper bot 11</td></tr><tr><td><b>v3.2</b></td><td>+ buy dips during the day (every 15 min, 10:00–3:30) + sell at +5% during the day (every 5 min)</td><td>Paper bot 12 (from Nov 20)</td></tr><tr><td><b>v3.3</b></td><td>+ 1.5× buys in strong stocks, 0.5× in weak ones (12-month momentum), skip dips with an earnings filing in the last 5 days, 1.5× when the whole sector dips</td><td>Paper bot 19 (from Nov 30)</td></tr></tbody></table></div>
     <h4>Long run, 1999–2026 (v3.1 / v3.2 estimated from their own tests)</h4>
 <div class="sx-tablewrap"><table class="sx-scr sx-wrap"><thead><tr><th>Version</th><th>Realistic (next open, 3× costs)</th><th>Ideal (close)</th><th>Live (expected)</th><th>Live after tax</th><th>Worst drop</th></tr></thead><tbody><tr><td>SPY buy &amp; hold</td><td>9.2%</td><td>9.2%</td><td>9.2%</td><td>8.4%</td><td>−55%</td></tr><tr><td>Robinhood bot today</td><td>13.4%</td><td>18.5%</td><td>~17.7%</td><td>~13.5%</td><td>−26%</td></tr><tr><td>v3.0</td><td>16.6%</td><td>22.8%</td><td>21.9%</td><td>~16.6%</td><td>−25%</td></tr><tr><td>v3.1 (est.)</td><td>~18.6%</td><td>~24.4%</td><td>~23.5%</td><td>~17.9%</td><td>~−26%</td></tr><tr><td><b>v3.2 (est.)</b></td><td>~19.1%</td><td>~26.1%</td><td><b>~24%</b></td><td><b>~18.5%</b></td><td>~−27%</td></tr></tbody></table></div>
     <h4>Intraday replay, 2016–2026 (final run: 5-minute prices, fair volume filter, idle money valued by time of day)</h4>
@@ -2473,13 +2491,13 @@ dash.calc('vs_industry', {
       if (bot === 'inmom') return inmomBlock(b);
       if (bot === 'inalpha') return inmomBlock(b).replace('Twin: 200-day filter', 'Twin: + crash filter');
       if (bot === 'crypto') { if (!b || !(b.curve || []).length) return '<p class="sx-cap" style="margin-top:12px">No runs recorded yet: it runs every weekday after the US close.</p>'; const l = b.curve.at(-1); return `<div class="sx-stats" style="margin-top:12px"><div class="sx-stat"><span>Now</span><b>$${Math.round(l.eq).toLocaleString('en-US')}</b></div><div class="sx-stat"><span>Holding both</span><b>$${Math.round(l.spy || 0).toLocaleString('en-US')}</b></div>${(b.sleeves || []).map((x) => `<div class="sx-stat"><span>${x.coin} (${x.etf})</span><b>${x.held ? 'held' : 'cash'}${x.pending ? ' → ' + x.pending : ''}</b></div>`).join('')}</div>` + chart(b.curve).replace('grey = SPY', 'grey = holding both').replace('Bot vs SPY', 'Bot vs holding both'); }
-      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
+      if (!b) return `<p class="sx-cap" style="margin-top:12px">No runs recorded yet${bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' || bot === 'v33' ? ': the first one is the next trading day at ~3:45 pm ET.' : '.'}</p>`;
       const c = b.curve || [], first = c[0], last = c.at(-1);
       const ret = last ? (last.eq / b.start - 1) * 100 : null, sp0 = c.find((x) => x.spy > 0), spyRet = sp0 && last && last.spy ? (last.spy / sp0.spy - 1) * 100 : null;
       let h = `<h4 style="margin-top:14px">Right now</h4><div class="sx-stats">
         <div class="sx-stat"><span>Started with</span><b>${money(b.start)}</b></div><div class="sx-stat"><span>Now</span><b>${money(last?.eq)}</b></div>
         <div class="sx-stat"><span>Bot</span><b class="${cls(ret)}">${pctTxt(ret)}</b></div><div class="sx-stat"><span>SPY same days</span><b class="${cls(spyRet)}">${pctTxt(spyRet)}</b></div>
-        ${bot === 'etf' || bot === 'short' || bot === 'bond' || bot === 'v32' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>${bot === 'short' ? 'Twin without filter' : bot === 'bond' ? 'Twin with cash' : bot === 'v32' ? 'Twin: plain v3.0' : 'Twin without ETFs'}</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
+        ${bot === 'etf' || bot === 'short' || bot === 'bond' || bot === 'v32' || bot === 'v33' ? (() => { const tw = (b.twin || []).at(-1), twr = tw ? (tw.eq / b.start - 1) * 100 : null; return `<div class="sx-stat"><span>${bot === 'short' ? 'Twin without filter' : bot === 'bond' ? 'Twin with cash' : bot === 'v32' ? 'Twin: plain v3.0' : bot === 'v33' ? 'Twin: plain v3.2' : 'Twin without ETFs'}</span><b class="${cls(twr)}">${pctTxt(twr)}</b></div>`; })() : ''}
         <div class="sx-stat"><span>Last run</span><b>${fmtDay(b.last?.day)}</b></div>${bot === 'vol' && b.last?.scale != null ? `<div class="sx-stat"><span>Buy size now</span><b>${b.last.scale.toFixed(2)}× (${Math.round(1000 * b.last.scale) / 100}%)</b></div>` : ''}</div>`;
       h += chart(c);
       const pos = b.positions || [];
@@ -2499,6 +2517,7 @@ dash.calc('vs_industry', {
         h += `<p class="sx-cap" style="margin-top:8px"><b>Last run (${fmtDay(L.day)}):</b> ${esc(txt)}${L.park ? ' · Idle money: ' + esc(L.park) : ''}</p>`;
       }
       if (bot === 'tuned' && b.last) h += `<p class="sx-cap"><b>Stock dips today (8% rule):</b> ${b.last.stock_signals ?? 0} · <b>ETFs dipping:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'}</p>`;
+      if (bot === 'v33' && b.last) h += `<p class="sx-cap"><b>Today:</b> ${b.last.intraday_checks ?? 0} checks during the day${(b.last.intraday_orders || []).length ? ': ' + b.last.intraday_orders.map(esc).join(' · ') : ', no trades'}${(b.last.skipped_earnings || []).length ? ' · <b>Skipped (earnings):</b> ' + b.last.skipped_earnings.map(esc).join(', ') : ''} · <b>Twin (plain v3.2):</b> $${b.last.twin_equity ?? '—'} · <b>Idle money:</b> ${esc(b.last.park || 'CASH')}</p>`;
       if (bot === 'v32' && b.last) h += `<p class="sx-cap"><b>Today:</b> ${b.last.intraday_checks ?? 0} checks during the day${(b.last.intraday_orders || []).length ? ': ' + b.last.intraday_orders.map(esc).join(' · ') : ', no trades'} · <b>Twin (plain v3.0):</b> $${b.last.twin_equity ?? '—'} · <b>Idle money:</b> ${esc(b.last.park || 'CASH')}</p>`;
       if (bot === 'v31' && b.last) h += `<p class="sx-cap"><b>Earnings drift today:</b> ${b.last.drift_signals_found === false ? 'no morning signal file for today' : (b.last.drift_signals || []).length ? b.last.drift_signals.map(esc).join(', ') : 'none'} · <b>Stock dips:</b> ${b.last.stock_signals ?? 0} · <b>ETFs dipping:</b> ${(b.last.etf_signals || []).length} · <b>Idle money:</b> ${esc(b.last.park || 'CASH')}</p>`;
       if (bot === 'v3' && b.last) h += `<p class="sx-cap"><b>Stock dips today:</b> ${b.last.stock_signals ?? 0} · <b>ETFs dipping:</b> ${(b.last.etf_signals || []).length ? b.last.etf_signals.map(esc).join(', ') : 'none'} · <b>Idle money:</b> ${esc(b.last.park || 'CASH')}</p>`;
@@ -2506,7 +2525,7 @@ dash.calc('vs_industry', {
       if (bot === 'mix' && b.last) h += `<p class="sx-cap"><b>Dip signals today:</b> ${b.last.dip_signals ?? 0} · <b>Earnings-drift signals:</b> ${b.last.drift_found === false ? 'morning run not found' : (b.last.drift_signals || []).length ? b.last.drift_signals.map(esc).join(', ') : 'none'}</p>`;
       if (bot === 'short' && b.last) { const sk = Object.entries(b.last.skipped || {}); h += `<p class="sx-cap"><b>Short data:</b> ${b.last.si_date ? 'FINRA report of ' + esc(b.last.si_date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')) : 'missing (' + esc(b.last.si_error || '') + '), no dips skipped'} · <b>Dips today:</b> ${b.last.dip_signals ?? 0} · <b>Skipped (heavily shorted):</b> ${sk.length ? sk.map(([k, v]) => esc(k) + ' ' + v + ' days').join(', ') : 'none'}</p>`; }
       if (bot === 'bond' && b.last) h += `<p class="sx-cap"><b>Idle money today:</b> ${esc(b.last.park || 'CASH')} (twin: ${esc(b.last.twin_park || 'CASH')}) · <b>IEF</b> ${b.last.ief != null ? '$' + (+b.last.ief).toFixed(2) : '—'} vs its 100-day avg ${b.last.ief_ma100 != null ? '$' + b.last.ief_ma100 : '—'}</p>`;
-      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
+      if ((bot === 'vol' || bot === 'etf' || bot === 'tuned' || bot === 'mix' || bot === 'short' || bot === 'bond' || bot === 'v3' || bot === 'v31' || bot === 'v32' || bot === 'v33') && (b.trades || []).length) h += `<p class="sx-cap"><b>Recent closed trades:</b> ${b.trades.slice(-8).map((t) => esc(t.symbol) + ' ' + pctTxt(t.ret_pct)).join(' · ')}</p>`;
       return h;
     };
     try {
