@@ -198,5 +198,49 @@ if G == "engine":
     ser = pd.DataFrame({"dip_live": DIP, "dip_real": DIPR, "spy": S.spyr, **{k.split(":")[0].split(" (")[0]: v for k, v in ENG.items()}}, index=S.dates).loc["1999":]
     if not S.DRY: ser.round(7).to_csv("data/r9_series.csv.gz", compression="gzip")
 
+if G == "r2":   # round 2: the promising ideas from round 1 as SIZE changes (not filters), with random-sizing luck checks, then combined
+    mom12 = (Cs.shift(5) / Cs.shift(257) - 1); mr = np.nan_to_num(mom12.where(M).rank(axis=1, pct=True).values, nan=0.5)
+    ITEMS = json.load(open("data/sec_8k_items.json"))["tickers"] if os.path.exists("data/sec_8k_items.json") and not S.DRY else {}
+    SIC = {t: (v.get("sic") or "")[:2] for t, v in json.load(open("data/sec_events_sic.json"))["tickers"].items()} if os.path.exists("data/sec_events_sic.json") and not S.DRY else {}
+    dstr = np.array([str(x)[:10] for x in dn]); earn = np.zeros(S.SIG.shape, bool)
+    for j, tk in enumerate(tick):
+        for d, mins, it in ITEMS.get(tk) or []:
+            if not ({"2.02", "12"} & set((it or "").split(","))): continue
+            i = int(np.searchsorted(dstr, d))
+            if i >= len(dstr): continue
+            if dstr[i] == d and mins is not None and mins > 15 * 60 + 45: i += 1
+            earn[i:i + 5, j] = True
+    r5 = np.vstack([np.full((5, len(tick)), np.nan), S.S_C[5:] / S.S_C[:-5] - 1]); grp = {}
+    for j, t_ in enumerate(tick): grp.setdefault(SIC.get(t_, ""), []).append(j)
+    sector = np.zeros(S.SIG.shape, bool)
+    for t, j in zip(*np.nonzero(S.SIG)):
+        g = [x for x in grp.get(SIC.get(tick[j], ""), []) if x != j and M.values[t, x] and np.isfinite(r5[t, x])] if SIC.get(tick[j]) else []
+        if len(g) >= 3 and np.median(r5[t, g]) <= -0.05: sector[t, j] = True
+    s200 = np.repeat((spy > spy.rolling(200).mean()).values[:, None], len(tick), axis=1)
+    def sized(name, w, k=6, seed=7, sig=None):
+        """w = size multiplier per signal; sig = optional signal filter (skips must not become zero-size positions that hold a slot)"""
+        row = {}; sg = S.SIG if sig is None else sig
+        for lab, kw in (("live", LIVE), ("realistic", REAL)):
+            r, _ = run(kw, wmul=w, sig=sig); row[lab] = r; log(f"{name} [{lab}]", r)
+        sub_sig = sg[t0:]; vals = w[t0:][sub_sig]; rng = np.random.default_rng(seed); pl = []
+        for i in range(k):                                       # same sizes, shuffled across the same signals (luck check)
+            wr = np.ones_like(w); sub = wr[t0:]; sub[sub_sig] = rng.permutation(vals); r, _ = run(LIVE, wmul=wr, sig=sig); pl.append(float(cagr(r)))
+        row["placebo_live_cagr"] = sorted(pl); row["beats_placebos"] = f"{sum(cagr(row['live']) > x for x in pl)}/{k}"
+        print(f"   shuffled sizes: {sorted(pl)} -> beats {row['beats_placebos']}", flush=True)
+        return row
+    RES["variants"] = {"base (live rules)": with_placebo("base", None)}
+    one = np.ones(S.SIG.shape)
+    V2 = {"strength: top third 1.5x, bottom third 0.5x": np.where(mr >= 2 / 3, 1.5, np.where(mr <= 1 / 3, 0.5, 1.0)),
+          "strength: top half 1.5x, bottom half 0.5x": np.where(mr >= 0.5, 1.5, 0.5),
+          "strength: top third 1.5x only": np.where(mr >= 2 / 3, 1.5, 1.0),
+          "sector-wide dips 1.5x": np.where(sector, 1.5, 1.0),
+          "earnings dips 0.5x": np.where(earn, 0.5, 1.0),
+          "double size when SPY < 200-day": np.where(~s200, 2.0, 1.0)}
+    for name, w in V2.items(): RES["variants"][name] = sized(name, w)
+    noE = S.SIG & ~earn; wA = V2["strength: top third 1.5x, bottom third 0.5x"]; wB = wA * np.where(sector, 1.5, 1.0)
+    RES["variants"]["COMBO A: strength sizing + skip earnings dips"] = sized("COMBO A", wA, sig=noE)
+    RES["variants"]["COMBO B: A + sector-wide dips 1.5x"] = sized("COMBO B", wB, sig=noE)
+    RES["variants"]["COMBO C: B + double size when SPY < 200-day"] = sized("COMBO C", wB * np.where(~s200, 2.0, 1.0), sig=noE)
+
 os.makedirs("data", exist_ok=True); json.dump(RES, open(OUT, "w"), indent=1, default=str)
 print("DONE", G, int(time.time() - T_START), "s")
