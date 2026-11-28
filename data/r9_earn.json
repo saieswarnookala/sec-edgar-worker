@@ -1,0 +1,561 @@
+{
+ "note": "Sentinel research round 9 (Nov 28 2026): five ways to improve the dip bot. Research only, not financial advice.\nEngine: scripts/stack_and_rebound.py = dip bot v3.0 (point-in-time S&P 500, 1999-2026), live-like (buy at the close, low costs) and\nrealistic (yesterday's signal bought at today's open, 0.15%/0.05% costs). GROUP (env) picks the test:\n  park   - \"rally mode\": when spare cash sits in stocks (Clear Leader/SPY) vs bonds: SPY trend filter 20/50/100/200 days, faster re-entry, always/never\n  picks  - better dip picks: prior strength filters (12-month momentum, near 52-week high, low volatility), strength-based sizing\n  brake  - market brake: skip or half-size new stock dips when SPY < 200-day, SPY volatility high, few stocks above 200-day, SPY deep below its high\n  earn   - earnings/news filter: skip dips with an SEC 8-K earnings release (item 2.02, item 12 before Aug 2004) in the 5-day dip window,\n           stock-alone vs sector-wide dips (SEC industry peers), 1999-2026\n  engine - second engine: trend-following ETF engines (time-series momentum, dual momentum, Clear Leader) and mixes with the dip bot\nLuck check: every filter is compared with 6 random filters that skip the same share of signals (placebo).\nOutput: data/r9_<group>.json (+ data/r9_series.csv.gz for engine). DRY=1: fake data.",
+ "group": "earn",
+ "coverage": {
+  "tickers_with_8k": 715,
+  "tickers": 1279,
+  "signals_with_8k_data_pct": 82.3
+ },
+ "variants": {
+  "base (live rules)": {
+   "live": {
+    "1999-2026": {
+     "per_year_pct": 21.9,
+     "worst_drop_pct": -24.7
+    },
+    "1999-2012": {
+     "per_year_pct": 21.4,
+     "worst_drop_pct": -24.7
+    },
+    "2013-2026": {
+     "per_year_pct": 22.4,
+     "worst_drop_pct": -15.7
+    },
+    "dot-com 2000-02": {
+     "return_pct": 48.7,
+     "worst_drop_pct": -24.7
+    },
+    "2008 crash": {
+     "return_pct": 18.9,
+     "worst_drop_pct": -18.7
+    },
+    "2020 covid": {
+     "return_pct": -4.0,
+     "worst_drop_pct": -10.3
+    },
+    "2022 bear": {
+     "return_pct": 8.3,
+     "worst_drop_pct": -9.8
+    },
+    "2009 rebound": {
+     "return_pct": 22.6,
+     "worst_drop_pct": -14.6
+    },
+    "2020 rebound": {
+     "return_pct": 75.7,
+     "worst_drop_pct": -12.4
+    },
+    "sharpe": 1.23,
+    "trades": 3887,
+    "win_pct": 65.9,
+    "avg_trade_pct": 0.79
+   },
+   "realistic": {
+    "1999-2026": {
+     "per_year_pct": 16.6,
+     "worst_drop_pct": -27.3
+    },
+    "1999-2012": {
+     "per_year_pct": 15.4,
+     "worst_drop_pct": -27.3
+    },
+    "2013-2026": {
+     "per_year_pct": 17.8,
+     "worst_drop_pct": -14.9
+    },
+    "dot-com 2000-02": {
+     "return_pct": 24.2,
+     "worst_drop_pct": -27.3
+    },
+    "2008 crash": {
+     "return_pct": 11.8,
+     "worst_drop_pct": -18.9
+    },
+    "2020 covid": {
+     "return_pct": -4.3,
+     "worst_drop_pct": -10.5
+    },
+    "2022 bear": {
+     "return_pct": 3.7,
+     "worst_drop_pct": -11.1
+    },
+    "2009 rebound": {
+     "return_pct": 10.2,
+     "worst_drop_pct": -18.9
+    },
+    "2020 rebound": {
+     "return_pct": 49.0,
+     "worst_drop_pct": -13.4
+    },
+    "sharpe": 1.03,
+    "trades": 3887,
+    "win_pct": 63.5,
+    "avg_trade_pct": 0.47
+   }
+  },
+  "skip dips with an earnings release in the window": {
+   "live": {
+    "1999-2026": {
+     "per_year_pct": 21.9,
+     "worst_drop_pct": -24.7
+    },
+    "1999-2012": {
+     "per_year_pct": 21.8,
+     "worst_drop_pct": -24.7
+    },
+    "2013-2026": {
+     "per_year_pct": 22.0,
+     "worst_drop_pct": -15.7
+    },
+    "dot-com 2000-02": {
+     "return_pct": 48.7,
+     "worst_drop_pct": -24.7
+    },
+    "2008 crash": {
+     "return_pct": 22.4,
+     "worst_drop_pct": -18.3
+    },
+    "2020 covid": {
+     "return_pct": -4.4,
+     "worst_drop_pct": -10.9
+    },
+    "2022 bear": {
+     "return_pct": 6.9,
+     "worst_drop_pct": -9.8
+    },
+    "2009 rebound": {
+     "return_pct": 26.5,
+     "worst_drop_pct": -13.8
+    },
+    "2020 rebound": {
+     "return_pct": 63.8,
+     "worst_drop_pct": -12.4
+    },
+    "sharpe": 1.28,
+    "trades": 3475,
+    "win_pct": 67.0,
+    "avg_trade_pct": 0.88
+   },
+   "realistic": {
+    "1999-2026": {
+     "per_year_pct": 17.0,
+     "worst_drop_pct": -27.3
+    },
+    "1999-2012": {
+     "per_year_pct": 16.2,
+     "worst_drop_pct": -27.3
+    },
+    "2013-2026": {
+     "per_year_pct": 17.8,
+     "worst_drop_pct": -14.9
+    },
+    "dot-com 2000-02": {
+     "return_pct": 24.2,
+     "worst_drop_pct": -27.3
+    },
+    "2008 crash": {
+     "return_pct": 14.9,
+     "worst_drop_pct": -18.1
+    },
+    "2020 covid": {
+     "return_pct": -4.7,
+     "worst_drop_pct": -11.1
+    },
+    "2022 bear": {
+     "return_pct": 1.7,
+     "worst_drop_pct": -10.3
+    },
+    "2009 rebound": {
+     "return_pct": 17.0,
+     "worst_drop_pct": -15.4
+    },
+    "2020 rebound": {
+     "return_pct": 42.5,
+     "worst_drop_pct": -13.4
+    },
+    "sharpe": 1.07,
+    "trades": 3475,
+    "win_pct": 64.5,
+    "avg_trade_pct": 0.54
+   },
+   "signals_kept_pct": 84.6,
+   "placebo_live_cagr": [
+    20.6,
+    20.9,
+    21.2,
+    21.7,
+    21.7,
+    22.2
+   ],
+   "beats_placebos": "5/6"
+  },
+  "skip stock-alone dips (peers > -2%)": {
+   "live": {
+    "1999-2026": {
+     "per_year_pct": 19.7,
+     "worst_drop_pct": -28.6
+    },
+    "1999-2012": {
+     "per_year_pct": 19.6,
+     "worst_drop_pct": -28.6
+    },
+    "2013-2026": {
+     "per_year_pct": 19.7,
+     "worst_drop_pct": -16.3
+    },
+    "dot-com 2000-02": {
+     "return_pct": 29.1,
+     "worst_drop_pct": -28.6
+    },
+    "2008 crash": {
+     "return_pct": 24.8,
+     "worst_drop_pct": -16.1
+    },
+    "2020 covid": {
+     "return_pct": -4.4,
+     "worst_drop_pct": -10.9
+    },
+    "2022 bear": {
+     "return_pct": 6.1,
+     "worst_drop_pct": -9.6
+    },
+    "2009 rebound": {
+     "return_pct": 27.0,
+     "worst_drop_pct": -14.1
+    },
+    "2020 rebound": {
+     "return_pct": 45.8,
+     "worst_drop_pct": -12.4
+    },
+    "sharpe": 1.21,
+    "trades": 2826,
+    "win_pct": 67.8,
+    "avg_trade_pct": 0.88
+   },
+   "realistic": {
+    "1999-2026": {
+     "per_year_pct": 16.1,
+     "worst_drop_pct": -29.6
+    },
+    "1999-2012": {
+     "per_year_pct": 15.3,
+     "worst_drop_pct": -29.6
+    },
+    "2013-2026": {
+     "per_year_pct": 16.9,
+     "worst_drop_pct": -14.9
+    },
+    "dot-com 2000-02": {
+     "return_pct": 12.8,
+     "worst_drop_pct": -29.6
+    },
+    "2008 crash": {
+     "return_pct": 16.3,
+     "worst_drop_pct": -18.5
+    },
+    "2020 covid": {
+     "return_pct": -5.2,
+     "worst_drop_pct": -11.5
+    },
+    "2022 bear": {
+     "return_pct": 2.5,
+     "worst_drop_pct": -10.5
+    },
+    "2009 rebound": {
+     "return_pct": 17.6,
+     "worst_drop_pct": -18.4
+    },
+    "2020 rebound": {
+     "return_pct": 32.7,
+     "worst_drop_pct": -13.4
+    },
+    "sharpe": 1.02,
+    "trades": 2826,
+    "win_pct": 65.1,
+    "avg_trade_pct": 0.58
+   },
+   "signals_kept_pct": 60.2,
+   "placebo_live_cagr": [
+    19.7,
+    20.4,
+    20.4,
+    20.8,
+    21.1,
+    21.7
+   ],
+   "beats_placebos": "0/6"
+  },
+  "only sector-wide dips (peers down 3%+)": {
+   "live": {
+    "1999-2026": {
+     "per_year_pct": 18.4,
+     "worst_drop_pct": -26.3
+    },
+    "1999-2012": {
+     "per_year_pct": 17.3,
+     "worst_drop_pct": -26.3
+    },
+    "2013-2026": {
+     "per_year_pct": 19.4,
+     "worst_drop_pct": -16.9
+    },
+    "dot-com 2000-02": {
+     "return_pct": 2.8,
+     "worst_drop_pct": -26.3
+    },
+    "2008 crash": {
+     "return_pct": 25.1,
+     "worst_drop_pct": -15.6
+    },
+    "2020 covid": {
+     "return_pct": -4.4,
+     "worst_drop_pct": -10.9
+    },
+    "2022 bear": {
+     "return_pct": -0.3,
+     "worst_drop_pct": -11.7
+    },
+    "2009 rebound": {
+     "return_pct": 25.8,
+     "worst_drop_pct": -13.9
+    },
+    "2020 rebound": {
+     "return_pct": 40.1,
+     "worst_drop_pct": -12.4
+    },
+    "sharpe": 1.19,
+    "trades": 1775,
+    "win_pct": 71.9,
+    "avg_trade_pct": 1.22
+   },
+   "realistic": {
+    "1999-2026": {
+     "per_year_pct": 16.0,
+     "worst_drop_pct": -27.8
+    },
+    "1999-2012": {
+     "per_year_pct": 15.0,
+     "worst_drop_pct": -27.8
+    },
+    "2013-2026": {
+     "per_year_pct": 17.1,
+     "worst_drop_pct": -16.5
+    },
+    "dot-com 2000-02": {
+     "return_pct": -2.6,
+     "worst_drop_pct": -27.8
+    },
+    "2008 crash": {
+     "return_pct": 18.3,
+     "worst_drop_pct": -18.0
+    },
+    "2020 covid": {
+     "return_pct": -5.2,
+     "worst_drop_pct": -11.5
+    },
+    "2022 bear": {
+     "return_pct": -3.6,
+     "worst_drop_pct": -13.6
+    },
+    "2009 rebound": {
+     "return_pct": 20.7,
+     "worst_drop_pct": -15.4
+    },
+    "2020 rebound": {
+     "return_pct": 29.9,
+     "worst_drop_pct": -13.4
+    },
+    "sharpe": 1.05,
+    "trades": 1775,
+    "win_pct": 68.8,
+    "avg_trade_pct": 0.9
+   },
+   "signals_kept_pct": 24.8,
+   "placebo_live_cagr": [
+    17.7,
+    17.9,
+    18.0,
+    18.1,
+    18.1,
+    18.7
+   ],
+   "beats_placebos": "5/6"
+  },
+  "skip earnings dips that are stock-alone": {
+   "live": {
+    "1999-2026": {
+     "per_year_pct": 22.0,
+     "worst_drop_pct": -24.7
+    },
+    "1999-2012": {
+     "per_year_pct": 21.7,
+     "worst_drop_pct": -24.7
+    },
+    "2013-2026": {
+     "per_year_pct": 22.3,
+     "worst_drop_pct": -15.7
+    },
+    "dot-com 2000-02": {
+     "return_pct": 48.7,
+     "worst_drop_pct": -24.7
+    },
+    "2008 crash": {
+     "return_pct": 21.2,
+     "worst_drop_pct": -18.3
+    },
+    "2020 covid": {
+     "return_pct": -4.4,
+     "worst_drop_pct": -10.9
+    },
+    "2022 bear": {
+     "return_pct": 8.8,
+     "worst_drop_pct": -9.8
+    },
+    "2009 rebound": {
+     "return_pct": 24.5,
+     "worst_drop_pct": -14.4
+    },
+    "2020 rebound": {
+     "return_pct": 67.8,
+     "worst_drop_pct": -12.4
+    },
+    "sharpe": 1.27,
+    "trades": 3635,
+    "win_pct": 66.8,
+    "avg_trade_pct": 0.86
+   },
+   "realistic": {
+    "1999-2026": {
+     "per_year_pct": 16.9,
+     "worst_drop_pct": -27.3
+    },
+    "1999-2012": {
+     "per_year_pct": 15.8,
+     "worst_drop_pct": -27.3
+    },
+    "2013-2026": {
+     "per_year_pct": 18.0,
+     "worst_drop_pct": -14.9
+    },
+    "dot-com 2000-02": {
+     "return_pct": 24.2,
+     "worst_drop_pct": -27.3
+    },
+    "2008 crash": {
+     "return_pct": 13.4,
+     "worst_drop_pct": -18.1
+    },
+    "2020 covid": {
+     "return_pct": -4.7,
+     "worst_drop_pct": -11.1
+    },
+    "2022 bear": {
+     "return_pct": 3.9,
+     "worst_drop_pct": -10.7
+    },
+    "2009 rebound": {
+     "return_pct": 12.7,
+     "worst_drop_pct": -18.7
+    },
+    "2020 rebound": {
+     "return_pct": 45.9,
+     "worst_drop_pct": -13.4
+    },
+    "sharpe": 1.06,
+    "trades": 3635,
+    "win_pct": 64.3,
+    "avg_trade_pct": 0.53
+   },
+   "signals_kept_pct": 90.8,
+   "placebo_live_cagr": [
+    21.0,
+    21.3,
+    21.4,
+    21.6,
+    21.6,
+    22.3
+   ],
+   "beats_placebos": "5/6"
+  }
+ },
+ "per_trade": {
+  "earnings 8-K in dip window": {
+   "with": {
+    "n": 485,
+    "avg_pct": 0.06,
+    "win_pct": 58.6,
+    "t": 0.29
+   },
+   "without": {
+    "n": 2582,
+    "avg_pct": 0.9,
+    "win_pct": 65.2,
+    "t": 7.74
+   },
+   "with 1999-2012": {
+    "n": 107,
+    "avg_pct": -1.15,
+    "win_pct": 48.6,
+    "t": -2.25
+   },
+   "with 2013-2026": {
+    "n": 378,
+    "avg_pct": 0.41,
+    "win_pct": 61.4,
+    "t": 1.79
+   }
+  },
+  "sector-wide dip (peers down 5%+)": {
+   "with": {
+    "n": 340,
+    "avg_pct": 1.55,
+    "win_pct": 70.9,
+    "t": 4.98
+   },
+   "without": {
+    "n": 2727,
+    "avg_pct": 0.67,
+    "win_pct": 63.3,
+    "t": 6.09
+   },
+   "with 1999-2012": {
+    "n": 169,
+    "avg_pct": 1.77,
+    "win_pct": 72.8,
+    "t": 3.44
+   },
+   "with 2013-2026": {
+    "n": 171,
+    "avg_pct": 1.34,
+    "win_pct": 69.0,
+    "t": 3.78
+   }
+  },
+  "stock alone (peers > -2%)": {
+   "with": {
+    "n": 1299,
+    "avg_pct": 0.67,
+    "win_pct": 63.4,
+    "t": 4.46
+   },
+   "without": {
+    "n": 1768,
+    "avg_pct": 0.83,
+    "win_pct": 64.8,
+    "t": 5.91
+   },
+   "with 1999-2012": {
+    "n": 557,
+    "avg_pct": 0.64,
+    "win_pct": 63.9,
+    "t": 2.52
+   },
+   "with 2013-2026": {
+    "n": 742,
+    "avg_pct": 0.7,
+    "win_pct": 62.9,
+    "t": 3.8
+   }
+  }
+ }
+}
