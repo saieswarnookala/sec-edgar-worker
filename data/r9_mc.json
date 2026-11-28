@@ -1,0 +1,79 @@
+{
+ "note": "Sentinel research round 9 (Nov 28 2026): five ways to improve the dip bot. Research only, not financial advice.\nEngine: scripts/stack_and_rebound.py = dip bot v3.0 (point-in-time S&P 500, 1999-2026), live-like (buy at the close, low costs) and\nrealistic (yesterday's signal bought at today's open, 0.15%/0.05% costs). GROUP (env) picks the test:\n  park   - \"rally mode\": when spare cash sits in stocks (Clear Leader/SPY) vs bonds: SPY trend filter 20/50/100/200 days, faster re-entry, always/never\n  picks  - better dip picks: prior strength filters (12-month momentum, near 52-week high, low volatility), strength-based sizing\n  brake  - market brake: skip or half-size new stock dips when SPY < 200-day, SPY volatility high, few stocks above 200-day, SPY deep below its high\n  earn   - earnings/news filter: skip dips with an SEC 8-K earnings release (item 2.02, item 12 before Aug 2004) in the 5-day dip window,\n           stock-alone vs sector-wide dips (SEC industry peers), 1999-2026\n  engine - second engine: trend-following ETF engines (time-series momentum, dual momentum, Clear Leader) and mixes with the dip bot\nLuck check: every filter is compared with 6 random filters that skip the same share of signals (placebo).\nOutput: data/r9_<group>.json (+ data/r9_series.csv.gz for engine). DRY=1: fake data.",
+ "group": "mc",
+ "dip bot live-like: all years": {
+  "1y return p5/p25/p50/p75/p95 %": [
+   -6.2,
+   9.3,
+   21.1,
+   34.7,
+   58.4
+  ],
+  "chance of losing money in a year %": 10.5,
+  "chance of a 10%+ drop within the year %": 67.4,
+  "chance of a 15%+ drop within the year %": 25.4,
+  "chance of a 20%+ drop within the year %": 8.7,
+  "chance of a 25%+ drop within the year %": 2.3,
+  "chance of a 30%+ drop within the year %": 0.5
+ },
+ "dip bot live-like: bear-market years only": {
+  "1y return p5/p25/p50/p75/p95 %": [
+   -9.4,
+   6.3,
+   19.2,
+   34.4,
+   60.9
+  ],
+  "chance of losing money in a year %": 14.8,
+  "chance of a 10%+ drop within the year %": 87.8,
+  "chance of a 15%+ drop within the year %": 51.3,
+  "chance of a 20%+ drop within the year %": 23.4,
+  "chance of a 25%+ drop within the year %": 8.8,
+  "chance of a 30%+ drop within the year %": 2.6
+ },
+ "dip bot realistic: all years": {
+  "1y return p5/p25/p50/p75/p95 %": [
+   -9.5,
+   5.2,
+   16.2,
+   28.7,
+   49.9
+  ],
+  "chance of losing money in a year %": 15.5,
+  "chance of a 10%+ drop within the year %": 68.8,
+  "chance of a 15%+ drop within the year %": 27.4,
+  "chance of a 20%+ drop within the year %": 9.9,
+  "chance of a 25%+ drop within the year %": 4.0,
+  "chance of a 30%+ drop within the year %": 1.1
+ },
+ "dip bot realistic: bear-market years only": {
+  "1y return p5/p25/p50/p75/p95 %": [
+   -15.0,
+   0.4,
+   12.2,
+   25.5,
+   48.4
+  ],
+  "chance of losing money in a year %": 24.3,
+  "chance of a 10%+ drop within the year %": 88.6,
+  "chance of a 15%+ drop within the year %": 53.5,
+  "chance of a 20%+ drop within the year %": 27.3,
+  "chance of a 25%+ drop within the year %": 14.0,
+  "chance of a 30%+ drop within the year %": 4.8
+ },
+ "SPY: all years": {
+  "1y return p5/p25/p50/p75/p95 %": [
+   -19.0,
+   -1.9,
+   9.6,
+   21.9,
+   40.0
+  ],
+  "chance of losing money in a year %": 28.4,
+  "chance of a 10%+ drop within the year %": 76.2,
+  "chance of a 15%+ drop within the year %": 44.4,
+  "chance of a 20%+ drop within the year %": 23.6,
+  "chance of a 25%+ drop within the year %": 12.9,
+  "chance of a 30%+ drop within the year %": 6.3
+ }
+}
