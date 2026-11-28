@@ -1,0 +1,316 @@
+{
+ "note": "Sentinel research round 9 (Nov 28 2026): five ways to improve the dip bot. Research only, not financial advice.\nEngine: scripts/stack_and_rebound.py = dip bot v3.0 (point-in-time S&P 500, 1999-2026), live-like (buy at the close, low costs) and\nrealistic (yesterday's signal bought at today's open, 0.15%/0.05% costs). GROUP (env) picks the test:\n  park   - \"rally mode\": when spare cash sits in stocks (Clear Leader/SPY) vs bonds: SPY trend filter 20/50/100/200 days, faster re-entry, always/never\n  picks  - better dip picks: prior strength filters (12-month momentum, near 52-week high, low volatility), strength-based sizing\n  brake  - market brake: skip or half-size new stock dips when SPY < 200-day, SPY volatility high, few stocks above 200-day, SPY deep below its high\n  earn   - earnings/news filter: skip dips with an SEC 8-K earnings release (item 2.02, item 12 before Aug 2004) in the 5-day dip window,\n           stock-alone vs sector-wide dips (SEC industry peers), 1999-2026\n  engine - second engine: trend-following ETF engines (time-series momentum, dual momentum, Clear Leader) and mixes with the dip bot\nLuck check: every filter is compared with 6 random filters that skip the same share of signals (placebo).\nOutput: data/r9_<group>.json (+ data/r9_series.csv.gz for engine). DRY=1: fake data.",
+ "group": "engine",
+ "period": "2005-2026 (all engines have data)",
+ "dip bot alone (live)": {
+  "cagr": 18.3,
+  "worst": -18.7,
+  "sharpe": 1.18,
+  "2005-2015": 10.1,
+  "2016-2026": 27.2,
+  "crash 2008": 18.8,
+  "crash 2020": -4.0,
+  "crash 2022": 8.3
+ },
+ "dip bot alone (realistic)": {
+  "cagr": 14.2,
+  "worst": -21.2,
+  "sharpe": 1.01,
+  "2005-2015": 8.0,
+  "2016-2026": 20.9,
+  "crash 2008": 11.7,
+  "crash 2020": -4.3,
+  "crash 2022": 3.7
+ },
+ "SPY": {
+  "cagr": 10.8,
+  "worst": -55.2,
+  "sharpe": 0.77,
+  "2005-2015": 7.0,
+  "2016-2026": 14.7,
+  "crash 2008": -54.8,
+  "crash 2020": -33.4,
+  "crash 2022": -24.1
+ },
+ "engines": {
+  "trend: 8 asset classes, each held when above its 10-month avg": {
+   "alone": {
+    "cagr": 6.4,
+    "worst": -11.5,
+    "sharpe": 1.03,
+    "2005-2015": 6.4,
+    "2016-2026": 6.4,
+    "crash 2008": 3.2,
+    "crash 2020": -3.1,
+    "crash 2022": -3.2
+   },
+   "corr_with_dip_monthly": 0.52,
+   "dip 80 / engine 20 (live)": {
+    "cagr": 16.0,
+    "worst": -15.9,
+    "sharpe": 1.22,
+    "2005-2015": 9.5,
+    "2016-2026": 23.0,
+    "crash 2008": 15.9,
+    "crash 2020": -3.8,
+    "crash 2022": 6.1
+   },
+   "dip 80 / engine 20 (realistic)": {
+    "cagr": 12.8,
+    "worst": -17.5,
+    "sharpe": 1.06,
+    "2005-2015": 7.8,
+    "2016-2026": 18.1,
+    "crash 2008": 10.3,
+    "crash 2020": -4.0,
+    "crash 2022": 2.4
+   },
+   "dip 70 / engine 30 (live)": {
+    "cagr": 14.8,
+    "worst": -14.4,
+    "sharpe": 1.24,
+    "2005-2015": 9.1,
+    "2016-2026": 20.9,
+    "crash 2008": 14.4,
+    "crash 2020": -3.7,
+    "crash 2022": 4.9
+   },
+   "dip 70 / engine 30 (realistic)": {
+    "cagr": 12.0,
+    "worst": -15.5,
+    "sharpe": 1.08,
+    "2005-2015": 7.7,
+    "2016-2026": 16.6,
+    "crash 2008": 9.6,
+    "crash 2020": -3.9,
+    "crash 2022": 1.8
+   },
+   "dip 60 / engine 40 (live)": {
+    "cagr": 13.6,
+    "worst": -13.0,
+    "sharpe": 1.26,
+    "2005-2015": 8.8,
+    "2016-2026": 18.8,
+    "crash 2008": 12.9,
+    "crash 2020": -3.6,
+    "crash 2022": 3.8
+   },
+   "dip 60 / engine 40 (realistic)": {
+    "cagr": 11.3,
+    "worst": -13.6,
+    "sharpe": 1.11,
+    "2005-2015": 7.5,
+    "2016-2026": 15.2,
+    "crash 2008": 8.8,
+    "crash 2020": -3.8,
+    "crash 2022": 1.1
+   },
+   "dip 50 / engine 50 (live)": {
+    "cagr": 12.4,
+    "worst": -11.5,
+    "sharpe": 1.28,
+    "2005-2015": 8.4,
+    "2016-2026": 16.7,
+    "crash 2008": 11.4,
+    "crash 2020": -3.5,
+    "crash 2022": 2.7
+   },
+   "dip 50 / engine 50 (realistic)": {
+    "cagr": 10.5,
+    "worst": -11.6,
+    "sharpe": 1.14,
+    "2005-2015": 7.4,
+    "2016-2026": 13.7,
+    "crash 2008": 7.9,
+    "crash 2020": -3.7,
+    "crash 2022": 0.4
+   }
+  },
+  "dual momentum (SPY / EFA / IEF)": {
+   "alone": {
+    "cagr": 8.6,
+    "worst": -33.7,
+    "sharpe": 0.73,
+    "2005-2015": 8.7,
+    "2016-2026": 8.6,
+    "crash 2008": -2.2,
+    "crash 2020": -33.4,
+    "crash 2022": -18.7
+   },
+   "corr_with_dip_monthly": 0.51,
+   "dip 80 / engine 20 (live)": {
+    "cagr": 16.5,
+    "worst": -15.6,
+    "sharpe": 1.2,
+    "2005-2015": 10.0,
+    "2016-2026": 23.6,
+    "crash 2008": 14.8,
+    "crash 2020": -10.2,
+    "crash 2022": 2.6
+   },
+   "dip 80 / engine 20 (realistic)": {
+    "cagr": 13.3,
+    "worst": -18.3,
+    "sharpe": 1.04,
+    "2005-2015": 8.3,
+    "2016-2026": 18.7,
+    "crash 2008": 9.2,
+    "crash 2020": -10.5,
+    "crash 2022": -1.0
+   },
+   "dip 70 / engine 30 (live)": {
+    "cagr": 15.6,
+    "worst": -15.5,
+    "sharpe": 1.19,
+    "2005-2015": 9.9,
+    "2016-2026": 21.7,
+    "crash 2008": 12.7,
+    "crash 2020": -13.3,
+    "crash 2022": -0.2
+   },
+   "dip 70 / engine 30 (realistic)": {
+    "cagr": 12.8,
+    "worst": -16.8,
+    "sharpe": 1.05,
+    "2005-2015": 8.5,
+    "2016-2026": 17.5,
+    "crash 2008": 7.9,
+    "crash 2020": -13.5,
+    "crash 2022": -3.3
+   },
+   "dip 60 / engine 40 (live)": {
+    "cagr": 14.7,
+    "worst": -16.7,
+    "sharpe": 1.17,
+    "2005-2015": 9.8,
+    "2016-2026": 19.9,
+    "crash 2008": 10.6,
+    "crash 2020": -16.3,
+    "crash 2022": -3.0
+   },
+   "dip 60 / engine 40 (realistic)": {
+    "cagr": 12.3,
+    "worst": -16.9,
+    "sharpe": 1.04,
+    "2005-2015": 8.6,
+    "2016-2026": 16.3,
+    "crash 2008": 6.5,
+    "crash 2020": -16.5,
+    "crash 2022": -5.5
+   },
+   "dip 50 / engine 50 (live)": {
+    "cagr": 13.8,
+    "worst": -19.6,
+    "sharpe": 1.14,
+    "2005-2015": 9.7,
+    "2016-2026": 18.0,
+    "crash 2008": 8.5,
+    "crash 2020": -19.3,
+    "crash 2022": -5.7
+   },
+   "dip 50 / engine 50 (realistic)": {
+    "cagr": 11.8,
+    "worst": -19.8,
+    "sharpe": 1.02,
+    "2005-2015": 8.7,
+    "2016-2026": 15.0,
+    "crash 2008": 5.1,
+    "crash 2020": -19.4,
+    "crash 2022": -7.8
+   }
+  },
+  "Clear Leader (10 ETFs)": {
+   "alone": {
+    "cagr": 12.3,
+    "worst": -61.2,
+    "sharpe": 0.8,
+    "2005-2015": 5.3,
+    "2016-2026": 20.0,
+    "crash 2008": -55.8,
+    "crash 2020": -33.4,
+    "crash 2022": 7.0
+   },
+   "corr_with_dip_monthly": 0.54,
+   "dip 80 / engine 20 (live)": {
+    "cagr": 17.4,
+    "worst": -19.7,
+    "sharpe": 1.2,
+    "2005-2015": 9.4,
+    "2016-2026": 26.1,
+    "crash 2008": -1.0,
+    "crash 2020": -10.2,
+    "crash 2022": 8.5
+   },
+   "dip 80 / engine 20 (realistic)": {
+    "cagr": 14.1,
+    "worst": -18.5,
+    "sharpe": 1.05,
+    "2005-2015": 7.7,
+    "2016-2026": 21.0,
+    "crash 2008": -5.7,
+    "crash 2020": -10.5,
+    "crash 2022": 4.8
+   },
+   "dip 70 / engine 30 (live)": {
+    "cagr": 16.9,
+    "worst": -25.5,
+    "sharpe": 1.19,
+    "2005-2015": 9.0,
+    "2016-2026": 25.4,
+    "crash 2008": -9.9,
+    "crash 2020": -13.3,
+    "crash 2022": 8.6
+   },
+   "dip 70 / engine 30 (realistic)": {
+    "cagr": 14.0,
+    "worst": -24.5,
+    "sharpe": 1.05,
+    "2005-2015": 7.5,
+    "2016-2026": 21.0,
+    "crash 2008": -13.7,
+    "crash 2020": -13.5,
+    "crash 2022": 5.3
+   },
+   "dip 60 / engine 40 (live)": {
+    "cagr": 16.3,
+    "worst": -31.1,
+    "sharpe": 1.17,
+    "2005-2015": 8.6,
+    "2016-2026": 24.8,
+    "crash 2008": -18.2,
+    "crash 2020": -16.3,
+    "crash 2022": 8.5
+   },
+   "dip 60 / engine 40 (realistic)": {
+    "cagr": 13.9,
+    "worst": -30.7,
+    "sharpe": 1.04,
+    "2005-2015": 7.3,
+    "2016-2026": 21.0,
+    "crash 2008": -21.1,
+    "crash 2020": -16.5,
+    "crash 2022": 5.7
+   },
+   "dip 50 / engine 50 (live)": {
+    "cagr": 15.7,
+    "worst": -37.1,
+    "sharpe": 1.13,
+    "2005-2015": 8.1,
+    "2016-2026": 24.0,
+    "crash 2008": -25.8,
+    "crash 2020": -19.3,
+    "crash 2022": 8.4
+   },
+   "dip 50 / engine 50 (realistic)": {
+    "cagr": 13.7,
+    "worst": -36.8,
+    "sharpe": 1.02,
+    "2005-2015": 7.1,
+    "2016-2026": 20.9,
+    "crash 2008": -28.0,
+    "crash 2020": -19.4,
+    "crash 2022": 6.1
+   }
+  }
+ }
+}
