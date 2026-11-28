@@ -1,42 +1,42 @@
 {
- "updated": "2026-11-27T04:20Z",
+ "updated": "2026-11-28T00:19Z",
  "status": "ok",
  "start": "2026-11-25",
- "data_through": "2026-11-25",
+ "data_through": "2026-11-27",
  "bots": {
   "Frontrunner": {
-   "value": 9990.0,
-   "return_pct": -0.1,
+   "value": 11584.65,
+   "return_pct": 15.85,
    "since": "2026-11-25"
   },
   "Frontrunner-R": {
-   "value": 9990.0,
-   "return_pct": -0.1,
+   "value": 11345.87,
+   "return_pct": 13.46,
    "since": "2026-11-25"
   },
   "SPY": {
-   "value": 9990.0,
-   "return_pct": -0.1,
+   "value": 10151.97,
+   "return_pct": 1.52,
    "since": "2026-11-25"
   },
   "Mix 50/50": {
-   "value": 10000.0,
-   "return_pct": 0.0,
+   "value": 10688.21,
+   "return_pct": 6.88,
    "since": "2026-11-25"
   },
   "Mix 50/50 x1.3": {
-   "value": 10000.0,
-   "return_pct": 0.0,
+   "value": 10895.23,
+   "return_pct": 8.95,
    "since": "2026-11-25"
   },
   "Mix 50/50 x1.5": {
-   "value": 10000.0,
-   "return_pct": 0.0,
+   "value": 11033.25,
+   "return_pct": 10.33,
    "since": "2026-11-25"
   },
   "Mix 75/25": {
-   "value": 10000.0,
-   "return_pct": 0.0,
+   "value": 11022.72,
+   "return_pct": 10.23,
    "since": "2026-11-25"
   }
  },
@@ -46,6 +46,12 @@
    9990.0,
    9990.0,
    9990.0
+  ],
+  [
+   "2026-11-27",
+   11584.65,
+   11345.87,
+   10151.97
   ]
  ]
 }
