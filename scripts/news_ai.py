@@ -93,7 +93,8 @@ def claude(text):
 RES = {"note": __doc__, "model": MODEL if KEY else None, "start": START, "dip_signals": len(allsig), "news_dips": len(news)}
 keys = sorted(news); random.Random(7).shuffle(keys); keys = sorted(keys[:MAXL])
 LAB = {}
-if KEY or DRY:
+FETCH_ONLY = os.environ.get("FETCH_ONLY") == "1"; TLEN = []
+if KEY or DRY or FETCH_ONLY:
     random.seed(3); done = 0
     for (t, j) in keys:
         tk = tick[j]; cik = (META.get(tk) or {}).get("cik")
@@ -105,12 +106,14 @@ if KEY or DRY:
             for f in m[:1]: texts.append(doc_text(cik, f[2], f[3]))
         txt = " \n---\n ".join(x for x in texts if x)
         if not txt: continue
+        TLEN.append(len(txt))
+        if FETCH_ONLY: continue
         lab = claude(txt[:9000])
         if lab: LAB[(t, j)] = lab; done += 1
         if done % 50 == 0 and done: print(f"labeled {done} ({int(time.time() - T_START)}s)", flush=True)
 else:
     print("ANTHROPIC_API_KEY not set: no AI labels (add the repo secret to run this part)", flush=True)
-RES["labeled"] = len(LAB)
+RES["labeled"] = len(LAB); RES["filing texts found"] = {"n": len(TLEN), "median_chars": int(np.median(TLEN)) if TLEN else 0}; print("filing texts found", RES["filing texts found"], "of", len(keys), flush=True)
 # 3) outcomes
 rows = [{"t": t, "j": j, "y": tret(t, j), "news": (t, j) in news, "label": LAB.get((t, j))} for t, j in allsig]
 F = pd.DataFrame(rows); F = F[np.isfinite(F.y)]
