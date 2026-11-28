@@ -14,6 +14,12 @@ export function addToLedger(ledger, date, R) {
   return ledger.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 }
 
+/** merge rows into the ledger without duplicates */
+export function mergeLedger(ledger, rows) {
+  const key = (x) => `${x.date}:${x.side}:${x.symbol}:${(+x.price).toFixed(4)}`, have = new Set(ledger.map(key));
+  for (const r of rows) if (!have.has(key(r))) { ledger.push(r); have.add(key(r)); }
+  return ledger.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+}
 /** rebuild past days from Robinhood's order list (first run only). dateOf(order) -> 'YYYY-MM-DD' (New York). */
 export function backfillLedger({ orders, before, dateOf, whysFor, isParkingFor, etfs = [] }) {
   const byDay = {};

@@ -22,7 +22,7 @@ import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired
 import { readPositions, readOrders, readMoney, readAvgPrices, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
 import { fillReport, reportText, reportTitle, reportSvg, reportPng, ordersSvg, category, weeklySvg, monthlySvg, watchSvg } from './report.mjs';
-import { addToLedger, backfillLedger, weeklyData, monthlyData, weekKey, monthKey } from './periodic.mjs';
+import { addToLedger, backfillLedger, mergeLedger, weeklyData, monthlyData, weekKey, monthKey } from './periodic.mjs';
 import { watchRows, etfRows } from '../scripts/dip-watch.mjs';
 import { recordLosses, washBlocked } from './wash.mjs';
 import { gatherSignalsRH, compareSignals, shadowAlert } from './rh-data.mjs';
@@ -540,8 +540,11 @@ async function spyCloses(from) {
 }
 const whysFor = (state) => (d) => { const w = {}; for (const p of [...state.history.filter((x) => x.today === d).flatMap((x) => x.placed || []), ...(state.intraday || []).filter((x) => x.today === d).flatMap((x) => x.placed || [])]) (w[p.symbol + ':' + p.side] ||= []).push(String(p.why || '')); return w; };
 const isParkingFor = (w) => (sym, side) => { const x = w[sym + ':' + side]; return x?.length ? x.every((y) => /parking/i.test(y)) : [BOND, 'BIL', ...POOL].includes(sym); };
+// sync the ledger with Robinhood's filled orders up to and including today (no duplicates), so on-demand reports include today's trades
 function ensureLedger(state, r, today) {
-  if (!state.ledger) state.ledger = backfillLedger({ orders: r.orders, before: today, dateOf: (o) => (o.created_at ? ny(new Date(o.created_at)).date : null), whysFor: whysFor(state), isParkingFor, etfs: ETF_DIP_LIST });
+  const tomorrow = new Date(Date.parse(today + 'T12:00:00Z') + 86400e3).toISOString().slice(0, 10);
+  const rows = backfillLedger({ orders: r.orders, before: tomorrow, dateOf: (o) => (o.created_at ? ny(new Date(o.created_at)).date : null), whysFor: whysFor(state), isParkingFor, etfs: ETF_DIP_LIST });
+  state.ledger = mergeLedger(state.ledger || [], rows);
   return state.ledger;
 }
 async function sendWeekly(state, today, holding = []) {

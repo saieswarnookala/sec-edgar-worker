@@ -308,6 +308,8 @@ if (!mode) {
   const orders = [{ symbol: 'AMD', side: 'buy', state: 'filled', avg_price: 100, filled_qty: 1, created_at: '2026-11-20T20:50:00Z' }, { symbol: 'AMD', side: 'sell', state: 'filled', avg_price: 104, filled_qty: 1, created_at: '2026-11-24T20:50:00Z' }];
   const B = P.backfillLedger({ orders, before: '2026-11-27', dateOf: (o) => o.created_at.slice(0, 10), whysFor: () => ({ 'AMD:sell': ['bounced above 5-day average'] }), isParkingFor: () => () => false });
   assert.deepEqual(B.filter((x) => x.side === 'sell').map((x) => [x.date, x.symbol, x.reason, x.pl]), [['2026-11-24', 'AMD', 'Bounced above 5-day avg', 4]]);
+  const L2 = P.mergeLedger([...B], P.backfillLedger({ orders: [...orders, { symbol: 'CRWD', side: 'sell', state: 'filled', avg_price: 214.6, filled_qty: 0.05, created_at: '2026-11-27T16:00:00Z' }], before: '2026-11-28', dateOf: (o) => o.created_at.slice(0, 10), whysFor: () => ({}), isParkingFor: () => () => false }));
+  assert.deepEqual(L2.filter((x) => x.side === 'sell').map((x) => x.symbol), ['AMD', 'CRWD']);                 // today's sale added, AMD not doubled
   console.log('ok   weekly / monthly: ledger without duplicates, week and month math, backfill from past orders');
 }
 
