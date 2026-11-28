@@ -159,7 +159,7 @@ try:
             c0, c1 = S_C[k, j], S_C[k - 1, j]
             if c0 > 0 and c1 > 0: RXC[k, j] = c0 / c1 - 1 - (SP[k] / SP[k - 1] - 1)
 except Exception as e: print("no earnings events:", e, flush=True)
-def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None, trace=None, stop=None):
+def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, ce=0.0002, cp=0.0005, fill="close", park="spy", sig=None, mhs=5, grp=None, cap=None, drift=0, drift_mode="reserve", dth=0.05, dhold=60, cash_interest=False, log=None, cool=None, lev=1.0, lev_cost=0.0, lev_trend=False, park_vt=0.0, park_vw=20, wmul=None, pre=None, pre_rank=None, dlast=False, parkx=None, trace=None, stop=None, exit_ma=None, target=None, ma_exit=True):
     """log: list to receive (kind, j, entry_t, exit_t, dollars_in, net_return) per closed trade. cool: None | "31d" (no re-buy within 31 days of a
     losing sale of the same ticker) | "dec" (same, only for losing sales made from Dec 1 on)"""
     LOSS = {}
@@ -233,9 +233,9 @@ def sim(etf=False, bond=False, vol=False, short=False, rebound=None, cs=0.0005, 
             ss = held_park[4:].split(","); r += idle * float(np.mean([Er[t, EI[s]] for s in ss]))
         eq *= 1 + r; keep = []
         for p in pos:
-            Cx, Mx = (E_C, E_M5) if p["k"] == "E" else (S_C, S_M5)
+            Cx, Mx = (E_C, E_M5) if p["k"] == "E" else (S_C, S_M5 if exit_ma is None else exit_ma)   # Nov 28: exit_ma = other average for stock exits
             age = t - p["d"] + (1 if p["open"] else 0); mh = {"S": mhs, "E": 10, "D": dhold}[p["k"]]
-            out = (age >= mh or not np.isfinite(Cx[t, p["j"]])) if p["k"] == "D" else (age >= 1 and (Cx[t, p["j"]] > Mx[t, p["j"]] or age >= mh))
+            out = (age >= mh or not np.isfinite(Cx[t, p["j"]])) if p["k"] == "D" else (age >= 1 and ((ma_exit and Cx[t, p["j"]] > Mx[t, p["j"]]) or age >= mh or (target is not None and p["k"] == "S" and Cx[t, p["j"]] / p["px"] - 1 >= target)))
             if stop and not out and p["k"] != "D" and age >= 1 and np.isfinite(Cx[t, p["j"]]) and Cx[t, p["j"]] / p["px"] - 1 <= -stop: out = True   # Nov 27: per-position stop-loss at the close
             if out:
                 c = ce if p["k"] == "E" else cs; eq *= 1 - p["w"] * c; trades.append((p["d"], p["k"], Cx[t, p["j"]] / p["px"] - 1 - 2 * c))

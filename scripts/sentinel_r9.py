@@ -242,5 +242,86 @@ if G == "r2":   # round 2: the promising ideas from round 1 as SIZE changes (not
     RES["variants"]["COMBO B: A + sector-wide dips 1.5x"] = sized("COMBO B", wB, sig=noE)
     RES["variants"]["COMBO C: B + double size when SPY < 200-day"] = sized("COMBO C", wB * np.where(~s200, 2.0, 1.0), sig=noE)
 
+def strength_parts():
+    mom12 = (Cs.shift(5) / Cs.shift(257) - 1); mr = np.nan_to_num(mom12.where(M).rank(axis=1, pct=True).values, nan=0.5)
+    ITEMS = json.load(open("data/sec_8k_items.json"))["tickers"] if os.path.exists("data/sec_8k_items.json") and not S.DRY else {}
+    SIC = {t: (v.get("sic") or "")[:2] for t, v in json.load(open("data/sec_events_sic.json"))["tickers"].items()} if os.path.exists("data/sec_events_sic.json") and not S.DRY else {}
+    dstr = np.array([str(x)[:10] for x in dn]); earn = np.zeros(S.SIG.shape, bool)
+    for j, tk in enumerate(tick):
+        for d, mins, it in ITEMS.get(tk) or []:
+            if not ({"2.02", "12"} & set((it or "").split(","))): continue
+            i = int(np.searchsorted(dstr, d))
+            if i >= len(dstr): continue
+            if dstr[i] == d and mins is not None and mins > 15 * 60 + 45: i += 1
+            earn[i:i + 5, j] = True
+    r5 = np.vstack([np.full((5, len(tick)), np.nan), S.S_C[5:] / S.S_C[:-5] - 1]); grp = {}
+    for j, t_ in enumerate(tick): grp.setdefault(SIC.get(t_, ""), []).append(j)
+    sector = np.zeros(S.SIG.shape, bool)
+    for t, j in zip(*np.nonzero(S.SIG)):
+        g = [x for x in grp.get(SIC.get(tick[j], ""), []) if x != j and M.values[t, x] and np.isfinite(r5[t, x])] if SIC.get(tick[j]) else []
+        if len(g) >= 3 and np.median(r5[t, g]) <= -0.05: sector[t, j] = True
+    return mr, earn, sector
+
+def yearly(curve):
+    c = pd.Series(curve[t0:], index=S.dates[t0:]); return (c.groupby(c.index.year).last() / c.groupby(c.index.year).last().shift(1).fillna(1.0) - 1)
+
+if G == "wf":   # walk-forward: choose the sizing settings each year using only earlier years
+    mr, earn, sector = strength_parts(); RES["configs"] = {}; YR = {}; YRr = {}
+    for hi, lo in ((1.0, 1.0), (1.25, 0.75), (1.5, 0.5), (2.0, 0.5)):
+        for sk in (False, True):
+            for sm in (1.0, 1.5):
+                name = f"strong {hi}x / weak {lo}x | skip earnings {'yes' if sk else 'no'} | sector-wide {sm}x"
+                w = np.where(mr >= 2 / 3, hi, np.where(mr <= 1 / 3, lo, 1.0)) * np.where(sector, sm, 1.0); sig = (S.SIG & ~earn) if sk else None
+                r, c = run(LIVE, wmul=w, sig=sig); rr, cr = run(REAL, wmul=w, sig=sig); log(name, r)
+                RES["configs"][name] = {"live": r, "realistic": rr}; YR[name] = yearly(c); YRr[name] = yearly(cr)
+    Y = pd.DataFrame(YR); Yr = pd.DataFrame(YRr); base = "strong 1.0x / weak 1.0x | skip earnings no | sector-wide 1.0x"
+    def cg(s): return round(float((np.prod(1 + s.values) ** (1 / len(s)) - 1) * 100), 1)
+    picks, wf, wfr = {}, [], []
+    for y in Y.index:
+        if y < 2004: continue
+        past = Y.loc[:y - 1]; sc = {c: np.prod(1 + past[c].values) for c in Y.columns}; best = max(sc, key=sc.get); picks[int(y)] = best
+        wf.append(Y.at[y, best]); wfr.append(Yr.at[y, best])
+    yrs = [y for y in Y.index if y >= 2004]
+    RES["walk_forward_2004_2026"] = {"walk-forward (live)": cg(pd.Series(wf)), "walk-forward (realistic)": cg(pd.Series(wfr)), "base (live)": cg(Y.loc[yrs, base]), "base (realistic)": cg(Yr.loc[yrs, base]),
+        "COMBO B fixed (live)": cg(Y.loc[yrs, "strong 1.5x / weak 0.5x | skip earnings yes | sector-wide 1.5x"]), "years where walk-forward beat base": int(sum(a > b for a, b in zip(wf, Y.loc[yrs, base].values))), "years": len(yrs), "picks": picks}
+    early = Y.loc[:2012]; best_early = max(Y.columns, key=lambda c: np.prod(1 + early[c].values))
+    RES["split_1999_2012_pick_then_2013_2026"] = {"picked_on_1999_2012": best_early, "its 2013-2026 live": cg(Y.loc[2013:, best_early]), "its 2013-2026 realistic": cg(Yr.loc[2013:, best_early]),
+        "base 2013-2026 live": cg(Y.loc[2013:, base]), "base 2013-2026 realistic": cg(Yr.loc[2013:, base]), "rank of picked among 16 in 2013-2026": int(sorted([cg(Y.loc[2013:, c]) for c in Y.columns], reverse=True).index(cg(Y.loc[2013:, best_early])) + 1)}
+    print(json.dumps({k: v for k, v in RES["walk_forward_2004_2026"].items() if k != "picks"}), json.dumps(RES["split_1999_2012_pick_then_2013_2026"]), flush=True)
+
+if G == "exits":
+    RES["variants"] = {}
+    def ex(name, **k):
+        row = {}
+        for lab, kw in (("live", LIVE), ("realistic", REAL)):
+            r, _ = run(kw, **k); row[lab] = r; log(f"{name} [{lab}]", r)
+        RES["variants"][name] = row
+    m3, m10 = Cs.rolling(3).mean().values, Cs.rolling(10).mean().values
+    ex("base: above 5-day avg or 5 days")
+    for h in (3, 4, 7, 10): ex(f"5-day avg exit, max {h} days", mhs=h)
+    ex("3-day avg exit, max 5 days", exit_ma=m3); ex("10-day avg exit, max 5 days", exit_ma=m10); ex("10-day avg exit, max 10 days", exit_ma=m10, mhs=10)
+    for tg in (0.03, 0.05, 0.07): ex(f"+{int(tg*100)}% target (close) + 5-day avg, max 5", target=tg)
+    for tg in (0.03, 0.05, 0.07, 0.10): ex(f"+{int(tg*100)}% target only (no avg exit), max 5", target=tg, ma_exit=False)
+    ex("+5% target only, max 10 days", target=0.05, ma_exit=False, mhs=10)
+
+if G == "mc":   # bad-year odds: block bootstrap of daily returns (1-month blocks), 1-year horizon, 10,000 paths
+    _, c = run(LIVE); _, cr = run(REAL)
+    rng = np.random.default_rng(11)
+    def mc(r, n=10000, L=21, H=252):
+        r = r[~np.isnan(r)]; nb = H // L + 1; out = {"dd": [], "ret": []}
+        for _ in range(n):
+            st = rng.integers(0, len(r) - L, nb); p = np.concatenate([r[s:s + L] for s in st])[:H]; nv = np.cumprod(1 + p)
+            out["dd"].append((nv / np.maximum.accumulate(np.r_[1, nv])[1:] - 1).min()); out["ret"].append(nv[-1] - 1)
+        dd, rt = np.array(out["dd"]), np.array(out["ret"])
+        return {"1y return p5/p25/p50/p75/p95 %": [round(float(x) * 100, 1) for x in np.percentile(rt, [5, 25, 50, 75, 95])], "chance of losing money in a year %": round(float((rt < 0).mean()) * 100, 1),
+                **{f"chance of a {k}%+ drop within the year %": round(float((dd <= -k / 100).mean()) * 100, 1) for k in (10, 15, 20, 25, 30)}}
+    for lab, cv in (("live-like", c), ("realistic", cr)):
+        r = pd.Series(cv[t0:]).pct_change().dropna().values
+        RES[f"dip bot {lab}: all years"] = mc(r)
+        idx = S.dates[t0 + 1:]; bad = ((idx >= "2000-03-01") & (idx <= "2002-12-31")) | ((idx >= "2007-10-01") & (idx <= "2009-06-30")) | ((idx >= "2022-01-01") & (idx <= "2022-12-31"))
+        RES[f"dip bot {lab}: bear-market years only"] = mc(r[bad[:len(r)]])
+        print(lab, json.dumps(RES[f"dip bot {lab}: all years"]), json.dumps(RES[f"dip bot {lab}: bear-market years only"]), flush=True)
+    sp = np.array(S.spyr[t0:]); RES["SPY: all years"] = mc(sp)
+
 os.makedirs("data", exist_ok=True); json.dump(RES, open(OUT, "w"), indent=1, default=str)
 print("DONE", G, int(time.time() - T_START), "s")
