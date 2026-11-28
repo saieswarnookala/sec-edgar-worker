@@ -7,7 +7,7 @@
 //     (a filing stamped after 15:45 in SEC's acceptance time counts from the next trading day, exactly as in the backtest)
 //   * sector-wide dips: 1.5x when the median 5-day return of 3+ same-industry peers (2-digit SEC SIC code) is -5% or worse
 //   ETF dips keep 1x. Slots are filled biggest dip first; each buy takes min(size, room left), like the backtest.
-// Backtest 1999-2026 (v3.0 engine): live-like 21.9 -> 24.9%/yr, worst -24.7 -> -20.6%; realistic fills 16.6 -> 18.5%, -27.3 -> -24.1%.
+// Backtest 1999-2026 (v3.0 engine): live-like 21.9 -> 24.8%/yr, worst -24.7 -> -20.6%; realistic fills 16.6 -> 18.5%, -27.3 -> -24.1%.
 // 2013-2026 only: realistic 17.8 -> 18.0% (most of the gain came from 2000-2009), so this runs on paper first.
 // A twin (plain v3.2, same start day, same prices) runs in the same state file for a fair comparison.
 import { readFileSync, existsSync } from 'node:fs';
