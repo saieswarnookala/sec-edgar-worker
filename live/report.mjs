@@ -157,3 +157,61 @@ export async function reportPng(svg) {
     return Buffer.from(r.render().asPng());
   } catch (e) { console.error('report image skipped:', e.message); return null; }
 }
+
+// ---------- weekly / monthly / watch list (same Sentinel sheet)
+const shortDate = (d) => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const monthLabel = (m) => new Date(m + '-15T12:00:00Z').toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const chg = (a, b) => (a > 0 && b != null ? (b / a - 1) * 100 : null);
+/** W = { from, to, startEq, endEq, spyPct, sells: [ledger rows], buys: n, holding: [...] } */
+export function weeklySvg(W) {
+  const S = sheet();
+  S.brand('Dip bot · Weekly summary', `${shortDate(W.from)} – ${shortDate(W.to)}`);
+  const wk = chg(W.startEq, W.endEq), realized = W.sells.reduce((a, x) => a + (x.pl || 0), 0), wins = W.sells.filter((x) => x.pl > 0).length;
+  S.kpis([{ label: 'Account', value: money(W.endEq) },
+    { label: 'This week', value: wk == null ? 'n/a' : arrow(wk) + Math.abs(wk).toFixed(1) + '%', color: tone(wk), sub: W.startEq != null && W.endEq != null ? money(W.endEq - W.startEq, true) : '', subColor: tone(wk) },
+    { label: 'Realized', value: money(realized, true), color: tone(realized), sub: W.sells.length ? `${wins}/${W.sells.length} wins` : 'no sells' },
+    { label: W.spyPct == null ? 'vs SPY' : `vs SPY (${pct(W.spyPct)})`, value: wk == null || W.spyPct == null ? 'n/a' : (wk - W.spyPct >= 0 ? '+' : '') + (wk - W.spyPct).toFixed(1), color: wk == null || W.spyPct == null ? C.muted : tone(wk - W.spyPct), sub: wk == null || W.spyPct == null ? '' : 'pts' }]);
+  if (W.sells.length) {
+    S.section('Trades closed this week', { v: 'Total ' + money(realized, true), c: tone(realized) });
+    S.table([{ h: 'Day', w: 8, a: 'start', text: true }, { h: 'Stock', w: 10, a: 'start' }, { h: 'Reason', w: 33, a: 'start' }, { h: 'Bought', w: 13 }, { h: 'Sold', w: 13 }, { h: 'Profit', w: 12 }, { h: 'Return', w: 11 }],
+      W.sells.map((x) => [{ v: new Date(x.date + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' }), c: C.muted }, { v: x.symbol, b: true }, { v: x.reason, pill: PILL(x.reason) }, { v: money(x.buy) }, { v: money(x.sell) }, { v: money(x.pl, true), c: tone(x.pl), b: true }, { v: arrow(x.plPct) + pct(x.plPct).replace(/^[+-]/, ''), c: tone(x.pl) }]));
+    const best = [...W.sells].sort((a, b) => (b.plPct ?? -1e9) - (a.plPct ?? -1e9))[0], worst = [...W.sells].sort((a, b) => (a.plPct ?? 1e9) - (b.plPct ?? 1e9))[0];
+    if (W.sells.length > 1) S.note(`Best: ${best.symbol} ${pct(best.plPct)}   ·   Worst: ${worst.symbol} ${pct(worst.plPct)}   ·   New buys this week: ${W.buys}`);
+  } else S.note(`No trades closed this week · new buys: ${W.buys}`, C.muted, 17);
+  if (W.holding?.length) { S.section('Holding into next week');
+    S.table([{ h: 'Stock', w: 12, a: 'start' }, { h: 'Bought', w: 15 }, { h: 'Now', w: 15 }, { h: 'Gain', w: 14 }, { h: 'Days held (max 5)', w: 22 }],
+      W.holding.map((h) => [{ v: h.symbol }, { v: money(h.buy) }, { v: money(h.now) }, { v: arrow(h.pct) + pct(h.pct).replace(/^[+-]/, ''), c: tone(h.pct) }, { bar: { n: h.day ?? 0, of: 5 } }])); }
+  return S.svg('Sentinel · weekly summary · account change includes any deposits or withdrawals');
+}
+/** M = { month: 'YYYY-MM', rows: [{ month, startEq, endEq, spyPct, realized, trades, wins }] } newest last */
+export function monthlySvg(M) {
+  const S = sheet();
+  const cur = M.rows.at(-1) || {}, mc = chg(cur.startEq, cur.endEq);
+  S.brand('Dip bot · Monthly report card', monthLabel(M.month));
+  S.kpis([{ label: 'Account', value: money(cur.endEq) },
+    { label: 'This month', value: mc == null ? 'n/a' : arrow(mc) + Math.abs(mc).toFixed(1) + '%', color: tone(mc), sub: cur.startEq != null ? money(cur.endEq - cur.startEq, true) : '', subColor: tone(mc) },
+    { label: 'Realized', value: money(cur.realized || 0, true), color: tone(cur.realized), sub: cur.trades ? `${cur.trades} trades` : 'no trades' },
+    { label: 'Win rate', value: cur.trades ? Math.round((cur.wins / cur.trades) * 100) + '%' : 'n/a', sub: cur.trades ? `${cur.wins} of ${cur.trades}` : '' }]);
+  S.section('Month by month');
+  S.table([{ h: 'Month', w: 14, a: 'start', text: true }, { h: 'Start', w: 13 }, { h: 'End', w: 13 }, { h: 'Return', w: 12 }, { h: 'SPY', w: 11 }, { h: 'Realized', w: 13 }, { h: 'Trades', w: 9 }, { h: 'Wins', w: 9 }],
+    M.rows.map((m) => { const c = chg(m.startEq, m.endEq); return [{ v: monthLabel(m.month), b: m.month === M.month }, { v: money(m.startEq) }, { v: money(m.endEq) }, { v: c == null ? 'n/a' : arrow(c) + pct(c).replace(/^[+-]/, ''), c: tone(c) }, { v: pct(m.spyPct), c: C.muted }, { v: money(m.realized || 0, true), c: m.realized ? tone(m.realized) : C.muted }, { v: String(m.trades || 0) }, { v: m.trades ? Math.round((m.wins / m.trades) * 100) + '%' : '–' }]; }));
+  const all = M.rows.filter((m) => m.startEq != null && m.endEq != null), first = all[0], last = all.at(-1);
+  if (first && last) { const tot = chg(first.startEq, last.endEq), spy = all.reduce((a, m) => a * (1 + (m.spyPct ?? 0) / 100), 1); S.note(`Since ${monthLabel(first.month)}: bot ${pct(tot)} vs SPY ${pct((spy - 1) * 100)} · realized ${money(all.reduce((a, m) => a + (m.realized || 0), 0), true)}`, C.ink, 16); }
+  return S.svg('Sentinel · monthly report card · returns include any deposits or withdrawals');
+}
+/** D = { today, time, spy5, signals: [symbols], rows: [{ s, px, r5, ex, buyAt, own }], etfs: [{ s, px, r5, buyAt }], free, slotsUsed } */
+export function watchSvg(D) {
+  const S = sheet();
+  S.brand('Dip bot · Morning watch list', `${dateLabel(D.today)} · ${D.time} ET`);
+  const close = D.rows.filter((x) => !x.own && x.ex > -0.10);
+  S.kpis([{ label: 'SPY 5 days', value: pct(D.spy5 * 100), color: tone(D.spy5) },
+    { label: 'Buy signals', value: String(D.signals.length), color: D.signals.length ? C.green : C.ink, sub: D.signals.slice(0, 3).join(', ') },
+    { label: 'Closest', value: close[0] ? close[0].s : '–', sub: close[0] ? `needs ${pct((close[0].buyAt / close[0].px - 1) * 100)}` : '' },
+    { label: 'Dip slots', value: `${D.slotsUsed ?? 0} / 10`, sub: 'in use' }]);
+  S.section('Closest to a buy', { v: 'buys at 10%+ below SPY over 5 days', c: C.dim });
+  S.table([{ h: 'Stock', w: 12, a: 'start' }, { h: 'Price', w: 14 }, { h: '5-day', w: 12 }, { h: 'vs SPY', w: 12 }, { h: 'Needs to fall', w: 16 }, { h: 'Buys below', w: 15 }, { h: 'Status', w: 15, a: 'start' }],
+    D.rows.map((x) => { const q = x.ex <= -0.10; return [{ v: x.s }, { v: money(x.px) }, { v: pct(x.r5 * 100), c: tone(x.r5) }, { v: pct(x.ex * 100), c: C.red }, { v: q ? '—' : pct((x.buyAt / x.px - 1) * 100), c: C.muted }, { v: money(x.buyAt) }, x.own ? { v: 'Own it', pill: C.blue } : q ? { v: 'Buy signal', pill: C.green } : { v: 'Watching', pill: C.dim }]; }));
+  if (D.etfs?.length) S.note('ETFs closest (buy at -5% in 5 days): ' + D.etfs.map((x) => `${x.s} ${pct(x.r5 * 100)}`).join('   '));
+  S.note('Checked again every 15 minutes until 20 min before the close; buys happen automatically.');
+  return S.svg('Sentinel · watch list · "buys below" assumes SPY stays where it is');
+}

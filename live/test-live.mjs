@@ -291,6 +291,27 @@ if (!mode) {
 }
 
 {
+  const P = await import('./periodic.mjs');
+  const { weeklySvg, monthlySvg } = await import('./report.mjs');
+  assert.equal(P.mondayOf('2026-11-27'), '2026-11-23'); assert.equal(P.mondayOf('2026-11-23'), '2026-11-23'); assert.equal(P.mondayOf('2026-11-29'), '2026-11-23');
+  const R = { sells: [{ symbol: 'AMD', reason: 'Profit target +5%', buy: 100, sell: 105, qty: 1, pl: 5, plPct: 5 }], buys: [{ symbol: 'WST', reason: 'Dip at close -10.5%', price: 360, amount: 10 }] };
+  const L = P.addToLedger([], '2026-11-27', R); P.addToLedger(L, '2026-11-27', R);
+  assert.equal(L.length, 2);                                                                                   // same day twice = no duplicates
+  P.addToLedger(L, '2026-11-20', { sells: [{ symbol: 'XLE', reason: 'Time limit (5 days)', buy: 90, sell: 88, qty: 1, pl: -2, plPct: -2.2 }], buys: [] });
+  const verify = [{ today: '2026-11-20', equity: 100 }, { today: '2026-11-25', equity: 101 }, { today: '2026-11-27', equity: 103 }];
+  const spy = { '2026-11-20': 600, '2026-11-25': 603, '2026-11-27': 606 };
+  const W = P.weeklyData({ ledger: L, verify, today: '2026-11-27', spy });
+  assert.deepEqual([W.from, W.startEq, W.endEq, W.sells.map((x) => x.symbol), W.buys, +W.spyPct.toFixed(2)], ['2026-11-23', 100, 103, ['AMD'], 1, 1]);   // last week's XLE sale not counted
+  const M = P.monthlyData({ ledger: L, verify, today: '2026-11-27', spy });
+  assert.deepEqual(M.rows.map((m) => [m.month, m.startEq, m.endEq, m.trades, m.wins, +m.realized.toFixed(2)]), [['2026-11', 100, 103, 2, 1, 3]]);
+  assert.match(weeklySvg(W), /Weekly summary[\s\S]*AMD/); assert.match(monthlySvg(M), /Monthly report card[\s\S]*Nov 2026/);
+  const orders = [{ symbol: 'AMD', side: 'buy', state: 'filled', avg_price: 100, filled_qty: 1, created_at: '2026-11-20T20:50:00Z' }, { symbol: 'AMD', side: 'sell', state: 'filled', avg_price: 104, filled_qty: 1, created_at: '2026-11-24T20:50:00Z' }];
+  const B = P.backfillLedger({ orders, before: '2026-11-27', dateOf: (o) => o.created_at.slice(0, 10), whysFor: () => ({ 'AMD:sell': ['bounced above 5-day average'] }), isParkingFor: () => () => false });
+  assert.deepEqual(B.filter((x) => x.side === 'sell').map((x) => [x.date, x.symbol, x.reason, x.pl]), [['2026-11-24', 'AMD', 'Bounced above 5-day avg', 4]]);
+  console.log('ok   weekly / monthly: ledger without duplicates, week and month math, backfill from past orders');
+}
+
+{
   const { rhCloseOn } = await import('./live-dip.mjs');
   const a = { results: [{ symbol: 'AMD', historicals: [{ begins_at: '2026-11-18T05:00:00Z', close_price: '500.10' }, { begins_at: '2026-11-19T05:00:00Z', close_price: '479.30' }] }] };
   const b = { data: { bars: { AMD: [{ t: '2026-11-19T00:00:00Z', c: 479.3 }] } } };

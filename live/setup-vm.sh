@@ -31,7 +31,8 @@ RH_ACCOUNT=                   # agentic account number (from: node live-dip.mjs 
 APCA_API_KEY_ID=              # Alpaca keys, market data only (free account is fine)
 APCA_API_SECRET_KEY=
 NTFY_TOPIC=                   # your ntfy topic for phone alerts
-HC_PING_URL=                  # optional: healthchecks.io ping URL (alerts you if the VM itself dies)
+HC_PING_URL=                  # optional: healthchecks.io ping URL for the 8:45 am health check (alerts you if the VM dies)
+HC_TRADE_URL=                 # optional: healthchecks.io ping URL pinged by every 3:47 pm trade-step run
 MAX_DRAWDOWN=0.35             # stop everything if the account falls 35% from its peak
 # MAX_ORDER_USD=200           # default: 20% of the account per order
 # EQUITY_CAP=1000             # only trade this much even if the account holds more
@@ -63,9 +64,10 @@ unit health health;  timer health "Mon..Fri 08:45 America/New_York"
 unit trade trade;    timer trade  "Mon..Fri 15:47 America/New_York" "Mon..Fri 15:52 America/New_York" "Mon..Fri 12:47 America/New_York" "Mon..Fri 12:52 America/New_York"   # 12:4x only acts on 1 pm half days
 unit verify verify;  timer verify "Mon..Fri 13:35 America/New_York" "Mon..Fri 16:35 America/New_York"   # acts once a day, 30+ min after the real close
 unit intraday intraday; timer intraday "Mon..Fri 10..15:00/15 America/New_York"   # v3.2 checks; does nothing unless LIVE_STRATEGY=v32 (and only 10:00 to 20 min before the close)
+unit watch watch;    timer watch "Mon..Fri 10:15 America/New_York"   # morning watch list image (read-only; skips market holidays)
 sudo loginctl enable-linger "$USER"
 systemctl --user daemon-reload
-systemctl --user enable --now dip-health.timer dip-trade.timer dip-verify.timer dip-intraday.timer >/dev/null
+systemctl --user enable --now dip-health.timer dip-trade.timer dip-verify.timer dip-intraday.timer dip-watch.timer >/dev/null
 
 echo "== self-test (fake broker, no real account)"
 node test-live.mjs | tail -1

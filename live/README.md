@@ -32,7 +32,7 @@ A missed run is never re-run late.
 3. **Connect**: `ssh ubuntu@<public-ip>`
 4. **Install**: `curl -fsSL https://raw.githubusercontent.com/saieswarnookala/sec-edgar-worker/main/live/setup-vm.sh | bash`
 5. **Config**: `nano ~/.sentinel-live/config.env` (Alpaca data keys, ntfy topic, optional healthchecks URL). Leave `LIVE_MODE=dry`.
-6. **Optional dead-man alert**: free check at healthchecks.io, schedule "weekdays 8:45 am New York", grace 1 hour, ntfy integration; put the ping URL in `HC_PING_URL`.
+6. **Dead-man alerts** (free, healthchecks.io, ntfy integration): check 1 "health" cron `45 8 * * 1-5`, time zone America/New_York, grace 1 h -> `HC_PING_URL`; check 2 "trade" cron `52 15 * * 1-5`, grace 30 min -> `HC_TRADE_URL` (every trade-step run pings, holidays too, so no false alarms; a crash pings /fail).
 
 ## Connect Robinhood (once)
 1. On a computer: robinhood.com, open the **agentic / MCP account** as **limited margin**, fund it ($1,000 planned).
@@ -72,7 +72,7 @@ Dry day first: also add `INTRADAY_MODE=dry` (3:47 run stays live with v3.0 rules
 Switch: `sed -i 's/^LIVE_STRATEGY=.*/LIVE_STRATEGY=v32/' ~/.sentinel-live/config.env`, re-run setup-vm.sh once (adds the timer). Logs: `journalctl --user -u dip-intraday -n 50`.
 
 ## Commands (on the VM, in ~/sec-edgar-worker/live)
-`node live-dip.mjs status` · `preview` · `preview-intraday` · `health` · `doctor` · `login` · `ntfy-test` (send a test alert) · `report-test` (sample end-of-day table image) · `verify force` (send the fill report now) · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
+`node live-dip.mjs status` · `preview` · `preview-intraday` · `health` · `doctor` · `login` · `ntfy-test` (send a test alert) · `report-test` (sample images) · `weekly` / `monthly` (send the summary now; also sent automatically on the last trading day of the week / month) · `watch` (morning watch list; timer 10:15) · `verify force` (send the fill report now) · `halt` (kill switch) · `resume` · `node test-live.mjs` (fake broker)
 Instant stop from anywhere: disconnect the agent in the Robinhood app.
 Logs: `journalctl --user -u dip-trade -n 100`
 

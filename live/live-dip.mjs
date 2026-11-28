@@ -21,7 +21,9 @@ import { POOL } from '../scripts/clear-leader.mjs';
 import { HOME, connect, call, login, ensureFresh, tokenSecondsLeft, AuthRequired } from './rh-client.mjs';
 import { readPositions, readOrders, readMoney, readAvgPrices, buildOrderArgs, planToOrders, checkLimits, fitBuys, formatTradeAlert } from './orders.mjs';
 import { claudeClient, UnexpectedAction } from './claude-exec.mjs';
-import { fillReport, reportText, reportTitle, reportSvg, reportPng, ordersSvg, category } from './report.mjs';
+import { fillReport, reportText, reportTitle, reportSvg, reportPng, ordersSvg, category, weeklySvg, monthlySvg, watchSvg } from './report.mjs';
+import { addToLedger, backfillLedger, weeklyData, monthlyData, weekKey, monthKey } from './periodic.mjs';
+import { watchRows, etfRows } from '../scripts/dip-watch.mjs';
 import { gatherSignalsRH, compareSignals, shadowAlert } from './rh-data.mjs';
 
 // Read ~/.sentinel-live/config.env ourselves. systemd's EnvironmentFile keeps inline "# comments" as part of the value
@@ -85,7 +87,7 @@ export async function notifyImage(title, png, line, fallbackBody, { priority = 3
   }
   return notify(title, fallbackBody, { priority, tags });
 }
-const ping = async (suffix = '') => { if (E.HC_PING_URL) try { await fetch(E.HC_PING_URL + suffix, { method: 'POST' }); } catch {} };
+const ping = async (suffix = '', url = E.HC_PING_URL) => { if (url) try { await fetch(url + suffix, { method: 'POST', signal: AbortSignal.timeout(10000) }); } catch {} };
 
 // ---- one run at a time (a slow run must never overlap the backup run and double-trade) ----
 function lock() {
@@ -387,7 +389,9 @@ export async function cmdIntraday({ gather = gatherSignals, getDays = tradingDay
     }
     const sig = placed.map((o) => o.side + o.symbol).sort().join(',');   // dry mode: alert only when the plan changes, not every 15 minutes
     const quiet = mode !== 'live' && !preview && (state.intraday || []).some((x) => x.today === today && (x.placed || []).map((o) => o.side + o.symbol).sort().join(',') === sig);
-    if ((placed.length || failed.length || preview) && !quiet) {
+    const parkingOnly = placed.length > 0 && !failed.length && placed.every((o) => /^parking/i.test(String(o.why || '')));   // IEF in/out only: shown in the evening report instead
+    if (parkingOnly && !preview) console.log('parking-only orders, no alert:', placed.map((o) => `${o.side} ${o.symbol}`).join(', '));
+    if ((placed.length || failed.length || preview) && !quiet && (!parkingOnly || preview)) {
       const iTitle = `${preview ? 'PREVIEW (nothing placed) ' : ''}${mode === 'live' ? 'LIVE' : 'DRY'} dip bot v3.2 ${today} ${now.hm} ET: ${placed.length} order(s)${failed.length ? `, ${failed.length} failed` : ''}`;
       const iBody = [...placed.map((o) => `${o.side.toUpperCase()} ${o.symbol} ${o.dollars != null ? '$' + o.dollars : o.shares + ' sh'} - ${o.why}`), ...failed.map((o) => `FAILED ${o.side} ${o.symbol}: ${o.error}`), `park: ${park || 'CASH'} | dips seen: ${Object.keys(g.scores).length} stocks, ${Object.keys(g.etfScores || {}).length} ETFs`].join('\n') || 'no orders';
       const amt = (o) => (o.dollars != null ? '$' + (+o.dollars).toFixed(2) : `${+(+o.shares).toFixed(4)} sh`);
@@ -506,7 +510,61 @@ async function cmdVerify() {
     else if (unfilled.length) await notify(`LIVE dip bot ${today}: ${unfilled.length} order(s) NOT filled`, ['Not filled (check Robinhood):', ...v.unfilled, '', reportText(R)].join('\n'), { priority: 4, tags: 'warning' });
     else if ((h?.placed?.length || fills.length) && MODE === 'live') await notifyImage(reportTitle(R), await reportPng(reportSvg(R)), line, reportText(R), { priority: 3, tags: 'white_check_mark' });
     console.log(JSON.stringify(v, null, 1));
+    if (MODE === 'live' && !strangers.length) { try { await periodicReports({ state, r, today, R, holding }); } catch (e) { console.error('weekly/monthly report failed:', e.message); } }
   } catch (e) { await notify('Dip bot: verify failed', String(e.message).slice(0, 500), { priority: 4, tags: 'warning' }); process.exitCode = 1; }
+}
+
+// ---- weekly / monthly summaries (sent by 'verify' on the last trading day of the week / month; 'weekly' / 'monthly' send them now)
+const nextTradingDay = async (today) => { const end = new Date(Date.parse(today + 'T12:00:00Z') + 14 * 86400e3).toISOString().slice(0, 10), start = new Date(Date.parse(today + 'T12:00:00Z') + 86400e3).toISOString().slice(0, 10); return (await api(PAPER, `/v2/calendar?start=${start}&end=${end}`))[0]?.date ?? null; };
+async function spyCloses(from) {
+  const out = {};
+  for (const feed of ['sip', 'iex']) {
+    try { const js = await api(DATA, '/v2/stocks/bars?' + new URLSearchParams({ symbols: 'SPY', timeframe: '1Day', start: from, end: new Date(Date.now() - 16 * 60e3).toISOString(), feed, limit: '10000' })); for (const b of js.bars?.SPY || []) out[b.t.slice(0, 10)] = b.c; if (Object.keys(out).length) break; } catch {}
+  }
+  return out;
+}
+const whysFor = (state) => (d) => { const w = {}; for (const p of [...state.history.filter((x) => x.today === d).flatMap((x) => x.placed || []), ...(state.intraday || []).filter((x) => x.today === d).flatMap((x) => x.placed || [])]) (w[p.symbol + ':' + p.side] ||= []).push(String(p.why || '')); return w; };
+const isParkingFor = (w) => (sym, side) => { const x = w[sym + ':' + side]; return x?.length ? x.every((y) => /parking/i.test(y)) : [BOND, 'BIL', ...POOL].includes(sym); };
+function ensureLedger(state, r, today) {
+  if (!state.ledger) state.ledger = backfillLedger({ orders: r.orders, before: today, dateOf: (o) => (o.created_at ? ny(new Date(o.created_at)).date : null), whysFor: whysFor(state), isParkingFor, etfs: ETF_DIP_LIST });
+  return state.ledger;
+}
+async function sendWeekly(state, today, holding = []) {
+  const W = weeklyData({ ledger: state.ledger || [], verify: state.verify || [], today, holding, spy: await spyCloses(new Date(Date.parse(today + 'T12:00:00Z') - 20 * 86400e3).toISOString().slice(0, 10)) });
+  const wk = W.startEq && W.endEq ? (W.endEq / W.startEq - 1) * 100 : null, realized = W.sells.reduce((a, x) => a + (x.pl || 0), 0);
+  const line = `Week ${wk == null ? 'n/a' : (wk >= 0 ? '+' : '') + wk.toFixed(1) + '%'} | realized ${realized >= 0 ? '+' : '-'}$${Math.abs(realized).toFixed(2)} | ${W.sells.length} closed, ${W.buys} bought${W.spyPct != null ? ` | SPY ${(W.spyPct >= 0 ? '+' : '') + W.spyPct.toFixed(1)}%` : ''}`;
+  await notifyImage(`Dip bot weekly summary (${W.from} to ${W.to})`, await reportPng(weeklySvg(W)), line, line + '\n' + W.sells.map((x) => `${x.date} ${x.symbol} ${x.reason}: $${x.buy?.toFixed(2)} -> $${x.sell?.toFixed(2)} ${(x.pl >= 0 ? '+' : '-')}$${Math.abs(x.pl || 0).toFixed(2)}`).join('\n'), { priority: 3, tags: 'calendar' });
+}
+async function sendMonthly(state, today) {
+  const first = (state.verify || []).find((v) => v.equity > 0)?.today || today;
+  const M = monthlyData({ ledger: state.ledger || [], verify: state.verify || [], today, spy: await spyCloses(new Date(Date.parse(first + 'T12:00:00Z') - 20 * 86400e3).toISOString().slice(0, 10)) });
+  const cur = M.rows.at(-1) || {}, mc = cur.startEq && cur.endEq ? (cur.endEq / cur.startEq - 1) * 100 : null;
+  const line = `${M.month}: ${mc == null ? 'n/a' : (mc >= 0 ? '+' : '') + mc.toFixed(1) + '%'} | realized ${(cur.realized || 0) >= 0 ? '+' : '-'}$${Math.abs(cur.realized || 0).toFixed(2)} | ${cur.trades || 0} trades, ${cur.wins || 0} wins`;
+  await notifyImage(`Dip bot monthly report card (${M.month})`, await reportPng(monthlySvg(M)), line, M.rows.map((m) => `${m.month}: $${(m.startEq || 0).toFixed(2)} -> $${(m.endEq || 0).toFixed(2)}, realized ${(m.realized || 0).toFixed(2)}, ${m.trades} trades`).join('\n'), { priority: 3, tags: 'bar_chart' });
+}
+export async function periodicReports({ state, r, today, R, holding }) {
+  ensureLedger(state, r, today); addToLedger(state.ledger, today, R); saveState(state);
+  let next = null; try { next = await nextTradingDay(today); } catch (e) { console.error('calendar:', e.message); return; }
+  if (next && weekKey(next) !== weekKey(today) && state.sent_week !== weekKey(today)) { await sendWeekly(state, today, holding); state.sent_week = weekKey(today); saveState(state); }
+  if (next && monthKey(next) !== monthKey(today) && state.sent_month !== monthKey(today)) { await sendMonthly(state, today); state.sent_month = monthKey(today); saveState(state); }
+}
+async function cmdPeriodic(kind) {
+  const today = ny().date, state = loadState(), { client } = await rh(), r = await rhRead(client);
+  ensureLedger(state, r, today); saveState(state);
+  if (kind === 'weekly') await sendWeekly(state, today); else await sendMonthly(state, today);
+}
+
+// ---- morning watch list (10:15 ET): stocks closest to a dip buy. Read-only.
+async function cmdWatch({ force = process.argv.includes('force') } = {}) {
+  const now = ny(), today = now.date, days = await tradingDays(today);
+  if (!force && !days.includes(today)) return console.log('watch: market closed today');
+  const g = await gatherSignals({ api, today, days }), state = loadState(), own = new Set(state.positions.map((p) => p.symbol));
+  const rows = watchRows({ ...g, n: 10 }).map((x) => ({ ...x, own: own.has(x.s) })), etfs = etfRows({ ...g, n: 3 });
+  const spy5 = g.prices.SPY / g.closes.SPY.at(-5) - 1, signals = Object.keys(g.scores);
+  const D = { today, time: now.hm, spy5, signals, rows, etfs, slotsUsed: state.positions.length };
+  const closest = rows.filter((x) => !x.own && x.ex > -0.10)[0];
+  const line = `${signals.length ? 'Buy signals: ' + signals.join(', ') + ' | ' : ''}Closest: ${closest ? `${closest.s} needs ${((closest.buyAt / closest.px - 1) * 100).toFixed(1)}%` : 'none'} | SPY 5d ${(spy5 * 100).toFixed(1)}%`;
+  await notifyImage(`Dip bot watch list ${now.hm} ET`, await reportPng(watchSvg(D)), line, rows.map((x) => `${x.s} $${x.px.toFixed(2)} vs SPY ${(x.ex * 100).toFixed(1)}% buys below $${x.buyAt.toFixed(2)}${x.own ? ' (own it)' : ''}`).join('\n'), { priority: 2, tags: 'eyes' });
 }
 
 // Read-only peek at any Robinhood tool: node live-dip.mjs rhcall get_equity_quotes '{"symbols":["AMD"]}'
@@ -535,13 +593,15 @@ function cmdStatus() {
 
 const cmd = process.argv[2];
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus,
+  const run = { login: async () => { await login(); console.log('Next: node live-dip.mjs doctor'); }, doctor: cmdDoctor, health: cmdHealth, trade: () => cmdTrade(), preview: () => cmdTrade({ preview: true }), intraday: () => cmdIntraday(), 'preview-intraday': () => cmdIntraday({ preview: true }), rhcall: cmdRhCall, shadow: cmdShadow, tradable: cmdTradable, verify: cmdVerify, status: cmdStatus, weekly: () => cmdPeriodic('weekly'), monthly: () => cmdPeriodic('monthly'), watch: () => cmdWatch(),
     'ntfy-test': () => notify('Dip bot: test alert', 'If you see this on your phone, alerts from the VM work. ' + new Date().toISOString()),
     'report-test': async () => {
       const a = sampleOrders(); await notifyImage('SAMPLE ' + a.title, await reportPng(ordersSvg(a.data)), 'Sample of the new order alert', a.body, { priority: 2, tags: 'chart_with_upwards_trend' });
       const R = sampleReport(); await notifyImage('SAMPLE ' + reportTitle(R), await reportPng(reportSvg(R)), 'Sample of the new end-of-day table (made-up AMD buy price)', reportText(R), { priority: 2, tags: 'white_check_mark' });
     },
     halt: () => { writeFileSync(HALT, 'Stopped by hand ' + new Date().toISOString()); console.log('halted'); }, resume: () => { try { unlinkSync(HALT); } catch {} console.log('resumed'); } }[cmd];
-  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|ntfy-test|report-test|halt|resume'); process.exit(2); }
-  Promise.resolve(run()).catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); process.exit(1); });
+  if (!run) { console.log('usage: node live-dip.mjs login|doctor|health|trade|preview|intraday|preview-intraday|tradable SYM..|verify|shadow|rhcall get_tool {json}|status|weekly|monthly|watch|ntfy-test|report-test|halt|resume'); process.exit(2); }
+  // dead-man pings (healthchecks.io): HC_PING_URL = morning health check, HC_TRADE_URL = every trade-step run (also on holidays, so no false alarms)
+  Promise.resolve(run()).then(async () => { if (cmd === 'trade') await ping(process.exitCode ? '/fail' : '', E.HC_TRADE_URL); })
+    .catch(async (e) => { console.error(e); await notify('Dip bot: ' + cmd + ' crashed', String(e?.message || e).slice(0, 500), { priority: 4 }); await ping('/fail', cmd === 'trade' ? E.HC_TRADE_URL : E.HC_PING_URL); process.exit(1); });
 }
