@@ -13,6 +13,9 @@ on:
       phase:
         description: 'force a phase for testing: intraday | final (empty = by clock)'
         default: ''
+      v33_test_syms:
+        description: 'dry run only: fake dips for these tickers (tests the v3.3 SEC/sizing path)'
+        default: ''
 permissions:
   contents: write
 concurrency: paper-v32
@@ -34,6 +37,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run || '0' }}
           PHASE: ${{ inputs.phase || '' }}
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          V33_TEST_SYMS: ${{ inputs.v33_test_syms || '' }}
         run: node scripts/paper-v32.mjs
       - name: Commit state
         if: always()

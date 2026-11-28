@@ -107,7 +107,9 @@ async function main() {
   if (!done33) {
     try {
       const { runV33 } = await import('./paper-v33.mjs');   // loaded here only, so the live bot (imports V32 from this file) never loads v3.3 code
-      const out = await runV33({ st: st33, g, today, days, ph, park: bpark, ny, dry, v32Intraday, virtualStep });
+      // DRY_RUN only: V33_TEST_SYMS=AAPL,NVDA adds fake -12% dips to exercise the SEC / sizing path on a quiet day
+      const gx = dry && process.env.V33_TEST_SYMS ? { ...g, scores: { ...g.scores, ...Object.fromEntries(process.env.V33_TEST_SYMS.split(',').filter((x) => prices[x]).map((x) => [x, -0.12])) } } : g;
+      const out = await runV33({ st: st33, g: gx, today, days, ph, park: bpark, ny, dry, v32Intraday, virtualStep });
       console.log('v3.3', JSON.stringify(out, null, 1));
       if (!dry) writeFileSync(f33, JSON.stringify(st33, null, 1));
     } catch (e) {
