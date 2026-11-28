@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 
 const num = (x) => (x == null || x === '' ? null : +x);
-const money = (v, sign = false) => (v == null ? 'n/a' : (sign ? (v >= 0 ? '+' : '-') : v < 0 ? '-' : '') + '$' + Math.abs(v).toFixed(2));
+const money = (v, sign = false) => (v == null ? 'n/a' : (sign ? (v >= 0 ? '+' : '-') : v < 0 ? '-' : '') + '$' + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 const pct = (v) => (v == null ? 'n/a' : (v >= 0 ? '+' : '') + v.toFixed(1) + '%');
 const t = (o) => new Date(o.created_at || 0).getTime();
 
@@ -71,8 +71,8 @@ function sheet(W = 960) {
     },
     kpis(items) {
       const g = 14, w = (W - 2 * P - g * (items.length - 1)) / items.length;
-      items.forEach((k, i) => { const x = P + i * (w + g); rect(x, y, w, 86, C.card, 12, C.line); text(x + 18, y + 30, k.label.toUpperCase(), { size: 13, weight: 700, fill: C.muted, ls: 1 }); text(x + 18, y + 66, k.value, { size: 26, weight: 700, fill: k.color || C.ink }); if (k.sub) text(x + w - 16, y + 66, k.sub, { size: 15, fill: k.subColor || C.muted, anchor: 'end' }); });
-      y += 86 + 26;
+      items.forEach((k, i) => { const x = P + i * (w + g); rect(x, y, w, 108, C.card, 12, C.line); text(x + 18, y + 30, k.label.toUpperCase(), { size: 13, weight: 700, fill: C.muted, ls: 1 }); text(x + 18, y + 66, k.value, { size: 26, weight: 700, fill: k.color || C.ink }); if (k.sub) text(x + 18, y + 92, k.sub, { size: 15, fill: k.subColor || C.muted }); });
+      y += 108 + 26;
     },
     section(title, right) { text(P, y + 20, title.toUpperCase(), { size: 15, weight: 700, fill: C.muted, ls: 2 }); if (right) text(W - P, y + 20, right.v, { size: 17, weight: 700, fill: right.c || C.ink, anchor: 'end' }); y += 34; },
     table(cols, rows) {
@@ -214,4 +214,18 @@ export function watchSvg(D) {
   if (D.etfs?.length) S.note('ETFs closest (buy at -5% in 5 days): ' + D.etfs.map((x) => `${x.s} ${pct(x.r5 * 100)}`).join('   '));
   S.note('Checked again every 15 minutes until 20 min before the close; buys happen automatically.');
   return S.svg('Sentinel · watch list · "buys below" assumes SPY stays where it is');
+}
+/** private paper bots, monthly card. D = { month: 'YYYY-MM', data_through, rows: [{ name, value, month_pct, total_pct, since }] } (names and numbers only) */
+export function paperSvg(D) {
+  const S = sheet(), rows = [...D.rows].sort((a, b) => (a.name === 'SPY') - (b.name === 'SPY') || b.total_pct - a.total_pct);
+  const spy = D.rows.find((r) => r.name === 'SPY'), best = rows.filter((r) => r.name !== 'SPY')[0];
+  S.brand('Paper bots (private) · Monthly card', `${monthLabel(D.month)} · data to ${shortDate(D.data_through)}`);
+  S.kpis([{ label: 'Bots tracked', value: String(rows.length - (spy ? 1 : 0)), sub: '$10,000 each' }, { label: `Best ${monthLabel(D.month).split(' ')[0]}`, value: best ? pct([...rows].filter((r) => r.name !== 'SPY').sort((a, b) => b.month_pct - a.month_pct)[0].month_pct) : 'n/a', color: C.green, sub: best ? [...rows].filter((r) => r.name !== 'SPY').sort((a, b) => b.month_pct - a.month_pct)[0].name.replace('Mix ', '') : '' },
+    { label: 'Leader overall', value: best ? pct(best.total_pct) : 'n/a', color: best ? tone(best.total_pct) : C.muted, sub: best ? best.name.replace('Mix ', '') : '' }, { label: 'SPY', value: spy ? pct(spy.total_pct) : 'n/a', color: spy ? tone(spy.total_pct) : C.muted, sub: spy ? `month ${pct(spy.month_pct)}` : '' }]);
+  S.section('All paper bots');
+  S.table([{ h: 'Bot', w: 26, a: 'start' }, { h: 'Value', w: 14 }, { h: monthLabel(D.month).split(' ')[0], w: 12 }, { h: 'vs SPY', w: 12 }, { h: 'Since start', w: 14 }, { h: 'Started', w: 12, a: 'start', text: true }],
+    rows.map((r) => [{ v: r.name, c: r.name === 'SPY' ? C.muted : C.ink }, { v: money(r.value) }, { v: arrow(r.month_pct) + pct(r.month_pct).replace(/^[+-]/, ''), c: tone(r.month_pct) },
+      { v: r.name === 'SPY' || !spy ? '—' : (r.month_pct - spy.month_pct >= 0 ? '+' : '') + (r.month_pct - spy.month_pct).toFixed(1), c: r.name === 'SPY' || !spy ? C.dim : tone(r.month_pct - spy.month_pct) }, { v: pct(r.total_pct), c: tone(r.total_pct), b: true }, { v: shortDate(r.since), c: C.muted }]));
+  S.note('Virtual money only. One month says little: Frontrunner changes stock a few times a year.');
+  return S.svg('Sentinel · private paper bots · names and numbers only');
 }

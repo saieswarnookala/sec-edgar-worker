@@ -24,6 +24,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -q pandas pyarrow numpy pandas_market_calendars boto3 > /dev/null 2>&1
       - name: Run (silent)
+        id: run
         shell: bash
         env:
           FR_KEY: ${{ secrets.FR_KEY }}
@@ -46,7 +47,21 @@ jobs:
           tar -czf /tmp/w/out.tgz -C /tmp/w out
           openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:FR_KEY -in /tmp/w/out.tgz -out "private/out/$JOB.tar.enc"
           rm -rf /tmp/w
+          [ -f /tmp/fr_notify.json ] && echo "card=1" >> "$GITHUB_OUTPUT"
           echo "done (output encrypted)"
+      # monthly phone card for the private paper bots: the job writes bot names + numbers only (no holdings, no rules)
+      - uses: actions/setup-node@v4
+        if: steps.run.outputs.card == '1'
+        with:
+          node-version: 22
+      - name: Send monthly card
+        if: steps.run.outputs.card == '1'
+        shell: bash
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC_FR }}   # card skipped if this secret is not set
+        run: |
+          cd live && npm ci --silent >/dev/null 2>&1 && node paper-notify.mjs /tmp/fr_notify.json || echo "card not sent"
+          rm -f /tmp/fr_notify.json
       - name: Commit
         shell: bash
         run: |
